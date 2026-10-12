@@ -1,7 +1,7 @@
 # Yol haritası: küresel Tağşiş
 
 Bu dosya projenin ana iş planıdır. Her oturumun başında okunur. Bir iş başlayınca, bitince ya da plan değişince aynı PR içinde güncellenir (durum, tarih, PR numarası).
-İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 09.10.2026 (§9 öngörülen engeller ve önleyici işler).
+İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 12.10.2026 (Faz G topluluk ve oyunlaştırma, O-22 katkıcı kimliği).
 
 Durum işaretleri: ⬜ başlamadı · 🔄 sürüyor · ✅ bitti · ⏸ bekletiliyor · 👤 kullanıcının işi
 
@@ -48,8 +48,9 @@ Her PR açıklamasında bu beş soru yanıtlanır:
 | **D. Gelir** | Sürdürülebilir gelir, ilkeyi bozmadan | Premium satışta, Bağımsızlık sayfası yayında |
 | **E. Güven ve yönetişim** | Küresel ölçekte güven ve hukuki koruma | Yöntem sayfası, değişiklik kaydı, danışma kurulu, hukuki görüş |
 | **F. Pazarlar** | Türkiye'den dünyaya | Sırayla: Türkiye → DACH ve Benelux → İngilizce pazarlar → MENA → ABD → 60 dil |
+| **G. Topluluk ve oyunlaştırma** | Kullanıcıyı ürün eklemeye ve doğrulamaya teşvik etmek | Rozetler yayında, katkılar sahiplendiriliyor, barkodla bulunma oranı artıyor |
 
-Fazlar kısmen paralel yürür. A ve B şimdi; C, B'nin ilk PR'larından sonra; D, C'den sonra (mağaza içi satın alma gerekiyor); E'nin bir kısmı her fazda; F, C'den sonra.
+Fazlar kısmen paralel yürür. A ve B şimdi; C, B'nin ilk PR'larından sonra; D, C'den sonra (mağaza içi satın alma gerekiyor); E'nin bir kısmı her fazda; F, C'den sonra; G, C-05 barkod katkısından sonra (O-22 hemen).
 
 ---
 
@@ -128,6 +129,22 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | F-06 | **ABD** | En çok ödeme yapan pazar; en kalabalık | B-05 (FDA + eyaletler), D-02 | ⬜ |
 | F-07 | **60 dile ölçek.** Yeni dil ölçütü: kullanıcı talebi + resmi kaynak varlığı + çeviri kontrolcüsü | Küresel hedef | B-06 | ⬜ |
 
+### Faz G: Topluluk ve oyunlaştırma (12.10.2026, kullanıcı isteği)
+
+Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamaya teşvik etmek; ürün veritabanı büyüdükçe barkodla bulma oranı artar, tarama maliyeti düşer.
+
+**Kurallar (§0'dan):** Ödül ve rozet kullanıcının **katkısına** verilir, ürüne değil (ürüne puan/rozet yok). Güvenlik bilgisi hiçbir zaman ödülle açılan bir hak olmaz. Ödül yalnızca **doğrulanmış** katkıya verilir (iki eşleşen katkı, C-05), yoksa sahte katkı teşvik edilir (O-08, O-21). Korku ve kaygı dili yok; gün serisi ("streak") gibi baskı kuran mekanikler yok. Rozet adları ve açıklamaları çeviri anahtarıyla; rozet tanımları veri dosyasında (yeni rozet = veri, kod değil).
+
+**"1 ürün ekle, 1 tarama hakkı kazan" (kullanıcı önerisi) hakkında:** Tarama hakkı sınırlanırsa uyarılar sınırlanmış olur; bu §0'daki "güvenlik uyarıları her zaman ücretsiz" ilkesine ve ilke denetiminin 3. sorusuna aykırı. Yuka da taramayı sınırlamıyor; sınırlamak rakip karşısında zayıflık. Öneri: aynı "ver-al" mantığı, ödül olarak **Premium kolaylık günü** (G-03). Tek istisna adayı maliyet: bulut okuma (Google Vision) cihaz içi okumaya (C-04) kadar ücretli; günlük kota gerekirse yalnızca kötüye kullanıma karşı yüksek bir sınır olur (ör. günde 50), ödül mekanizması olmaz.
+
+| Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
+|---|---|---|---|---|---|
+| G-01 | **Rozet sistemi (kullanıcı kararı 12.10.2026: kesin).** Hesapsız, cihazda (localStorage `rozetler`, şema sürümüyle, O-06). Taslak rozetler: *Katkı* (ilk ürün; 10, 50, 250 doğrulanmış ürün), *Öncü* (veritabanında olmayan bir ürünü ilk ekleyen; doğrulanınca), *Doğrulayıcı* (başkasının eklediği ürünü etiket fotoğrafıyla doğrulayan), *Kâşif* (gıda, kozmetik ve temizlikte en az birer tarama), *Okur* (ansiklopedide 10/50/100 madde), *Düzeltici* (hata bildirimi kabul edildi, E-03). Hassasiyetlerim'de "Rozetlerim" ekranı; kazanınca küçük kutlama kartı; rozet paylaşım kartı (payDraw altyapısı; ürün adı ve uyarı içermez). Rozetler yedek dosyasına girer (alan adı ve mağaza geçişinde kaybolmasın, O-01). Tanımlar data/rozetler.json, metinler i18n | Claude | C-05 (katkı rozetleri), O-22 | Rozet kuralları saf mantıkta ve testli; Türkçe ve İngilizce; yedekten geri yüklenir; paylaşım kartında ürün bilgisi yok | ⬜ |
+| G-02 | **Katkı ilerlemesi ve sunucu sayımı.** Katkı rozetleri yalnızca cihazda sayılırsa doğrulanma (iki eşleşen katkı) cihaza dönmez. Worker: GET /katki/:kimlik → {gönderilen, doğrulanan, öncü}. "Katkılarım" ekranı: eklediğim ürünler ve durumları (bekliyor / doğrulandı) | Claude | O-22 | Kimlik olmadan sayım yok; IP saklanmaz; testli | ⬜ |
+| G-03 | **Ver-al teşviki (öneri).** Doğrulanmış her katkı → N gün Premium kolaylık (D-01'deki liste; ör. 1 katkı = 3 gün, üst sınır 90 gün). Premium satışa çıkana kadar katkılar birikir; açılışta "kurucu katkıcı" olarak karşılığı verilir. Mağaza kuralları (Apple 3.1.1, ödüllendirilmiş eylemler) ve KVKK E-05'te sorulur | 👤 karar (ödül türü ve oranı), Claude | G-02, D-01, D-02 | Ödül yalnızca doğrulanmış katkıya; güvenlik bilgisi ödüle bağlı değil (ilke denetimi 3) | ⬜ 👤 |
+| G-04 | **Topluluk hedefleri.** "Eksik ürünler" listesi (çok aranan ama içeriği olmayan barkodlar; arama sayısı Worker'da barkod başına, IP'siz), herkese açık ortak hedef ("Türkiye'de 10.000 ürün"; ilerleme çubuğu). Kişisel sıralama tablosu başlangıçta yok (sahte katkıyı teşvik eder); gerekirse yalnızca doğrulanmış katkıyla, takma adla ve isteğe bağlı | Claude | G-02 | Eksik ürün listesi kişisel veri içermez | ⬜ |
+| G-05 | Ölçüm (A-03 ile): katkı sayısı, doğrulanma oranı, rozet kazananların 7/30 gün geri dönüşü, barkodla bulunma oranının zamanla değişimi | Claude | A-03, G-01 | §5'te izlenir | ⬜ |
+
 ### Sürekli ürün işleri (her fazla paralel)
 
 | Kimlik | İş | Durum |
@@ -147,6 +164,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 
 1. **C-05 barkod** (kullanıcı kararı: birinci öncelik). Ölçüm → OFF Türkiye verisi + barkod okuma + Worker canlı sorgu → D1 kullanıcı katkısı.
    - Paralelde, ucuzken yapılacak önleyici işler (§9.1): 👤 O-01 alan adı, O-02 küresel ad, O-03 lisans, O-04 hesap güvenliği, O-08 bütçe uyarıları kararları; Claude O-05 değişiklik kaydı, O-06 cihaz verisi sürümü, O-07 bağlantı denetimi.
+   - C-05'ten hemen sonra: **O-22 katkıcı kimliği** (ucuz, geç kalınırsa geri alınamaz) → **G-01 rozetler** → G-02 katkı ilerlemesi. G-03 ödülü D-01 kararını bekler.
 2. A-02 besin değeri tablosu
 3. C-01 👤 hesaplar → C-02 Android → C-04 cihaz içi okuma → **C-08 sayaç ve sınır denetimi**
 4. A-03 ölçüm
@@ -166,6 +184,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 | D | Premium'a geçiş oranı (kıyas: Yuka Fransa %0,3, ABD %2), kullanıcı başına gelir, iptal oranı |
 | E | Hata bildirimi sayısı ve çözülme süresi, değerlendirme değişikliği sayısı |
 | F | Ülke ve dil başına kullanıcı, mağaza puanı, arama motorundan gelen trafik |
+| G | Günlük katkı ve doğrulanma oranı, barkodla bulunma oranı, rozet kazananların geri dönüş oranı |
 
 ---
 
@@ -179,6 +198,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 - 👤 Hukuki görüş, tetik gelince (E-05)
 - 👤 Barkod kararı, C-05 ölçümünden sonra (CLAUDE.md'deki "barkod en sona, belki hiç" kararı bu ölçümle yeniden değerlendirilecek)
 - 👤 Çeviri kontrolcüleri (B-06)
+- 👤 Ver-al ödülünün türü ve oranı (G-03; öneri: tarama hakkı değil Premium günü), rozet listesinin onayı (G-01)
 - 👤 **Önleyici kararlar (§9.1, ucuzken):** alan adı (O-01), küresel marka adı (O-02), depo ve veri lisansı (O-03), hesaplarda iki aşamalı doğrulama ve organizasyon (O-04), bulut bütçe uyarıları (O-08)
 
 ---
@@ -234,6 +254,7 @@ Amaç: bugün bir saatte yapılabilecek bir önlemin, iş büyüdükten sonra g�
 | O-06 | 🟠 | **Cihazdaki kullanıcı verisinin sürümü.** localStorage'daki kayıtlarda (kayitli, taramalar, profil) şema sürümü yok. Yapı değişince ya da mağaza uygulamasına geçince eski veri okunamayabilir. Ayrıca web'deki veri mağaza uygulamasına kendiliğinden geçmez. | Veri yapısı değişikliği, mağaza sürümü | Her kayda `v` alanı + açılışta sürüm yükseltme işlevi + testi: ~2 saat. Yedek dosyası zaten var (aktarma yolu). | Bozuk kayıtlar, kullanıcı şikâyeti, tek tek göç kodu | Claude |
 | O-07 | 🟠 | **Kaynak bağlantılarının çürümesi.** Binlerce kaynak bağlantısı (EUR-Lex, EFSA, PMC…) zamanla taşınıyor ya da kırılıyor; ilkemiz kaynağa dayalı olduğu için kırık bağlantı güveni zedeler. | Sürekli; birikerek | Aylık bağlantı denetimi (GitHub Actions; kırık listesi issue olarak) + önemli kaynaklar için Wayback arşiv bağlantısı | Yüzlerce kırık bağlantıyı bir anda düzeltmek | Claude |
 | O-08 | 🟠 | **Bulut maliyet ve kötüye kullanım koruması.** Worker herkese açık; ALLOWED_ORIGIN tarayıcı dışı istemcileri durdurmaz. Google Vision anahtarı kötüye kullanılırsa fatura çıkar. D1 katkılarına sahte veri girilebilir. | Uygulama duyulunca | Google Cloud'da bütçe uyarısı + günlük kota (kota düşürülmüştü, bütçe uyarısı kontrol edilmeli); Cloudflare'de Worker kullanım uyarısı; D1 katkıları için basit inceleme sayfası (TEKNIK_BORC.md) | Sürpriz fatura, kirli veritabanı | 👤 Bütçe uyarıları (Claude adım adım tarif eder); Claude inceleme sayfası |
+| O-22 | 🔴 | **Katkıcı kimliği yok.** D1 `katki` tablosunda yalnızca {kod, tur, dil, metin, t} var; kimin eklediği bilinmiyor. Rozet, "Katkılarım" ve ver-al ödülü (G-01–G-03) geldiğinde o güne kadarki katkılar kimseye yazılamaz; ilk ve en değerli katkıcılar ödülsüz kalır. | Faz G başladığı gün | Cihazda bir kez üretilen rastgele takma kimlik (kişisel bilgiden türetilmez), katkıyla birlikte gönderilir; `katki` tablosuna `kim` sütunu (ALTER TABLE, boş olabilir); gizlilik notuna bir satır; yedek dosyasına girer: ~2 saat | Geçmiş katkılar geri dönüp sahiplendirilemez; kullanıcı güveni | Claude: bir sonraki barkod/Worker PR'ında |
 | O-09 | 🟡 | **Dağınık kaynak dili.** Yeni içerik Türkçe yazıldıkça çevrilecek metin birikiyor (bugün 1.164 veri + 4.038 ansiklopedi metni). | Her yeni dilde | Bundan sonra yazılan yeni içerik İngilizce anahtarla da girer (B-03'ün "yeni içerik" kısmı hemen başlar) | Her dil için katlanan çeviri | Claude: kural CLAUDE.md'de |
 
 ### 9.2 Yakın (4. dilden, 2. ülkeden ya da mağazadan önce)
