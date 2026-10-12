@@ -16,7 +16,7 @@ var RICON={
 function notr(r){return r.risk_level==="green"&&!(r.production&&r.production.class==="dogal")}
 function rico(r){return RICON[notr(r)?"notr":r.risk_level]}
 var PWICON='<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.5" fill="#fff"/>';
-function tarih(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?m[3]+"."+m[2]+"."+m[1]:""}
+function tarih(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?dilTarih(Date.UTC(+m[1],m[2]-1,+m[3],12),"gun"):""}
 function prof(){try{return JSON.parse(localStorage.getItem("profil")||"null")}catch(e){return null}}
 function marks(){try{var a=JSON.parse(localStorage.getItem("yerimleri")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
 function setMarks(a){try{localStorage.setItem("yerimleri",JSON.stringify(a))}catch(e){}}
@@ -26,34 +26,34 @@ function link(r){return "ansiklopedi.html?m="+encodeURIComponent(r.slug)}
 function showRecord(r){
   ACUR=r;var box=a$("ana");box.textContent="";
   var name=at(r.names.primary);
-  document.title=r.id+" "+name+" · Ansiklopedi";
+  document.title=r.id+" "+name+" · "+t("nav.ansiklopedi");
   var bm=a$("kaydet");bm.hidden=false;syncMark();
   var bd=h("div","badges");bd.appendChild(h("span","ecode",r.id));bd.appendChild(h("span","cat",at("cat."+r.category)));box.appendChild(bd);
   box.appendChild(h("h2","name",name));
   if(r.summary)box.appendChild(h("p","sum",at(r.summary)));
   // Genel değerlendirme
-  var rk=h("section","card risk "+r.risk_level+(notr(r)?" n":""));rk.setAttribute("aria-label","Genel değerlendirme");
+  var rk=h("section","card risk "+r.risk_level+(notr(r)?" n":""));rk.setAttribute("aria-label",t("ans.genel_aria"));
   rk.appendChild(svg(rico(r),"ico"));
   var rt=h("div");rt.appendChild(h("div","lbl",at("risk."+r.risk_level)));
-  rt.appendChild(h("div","mut",r.review==="curated"?"Kanıt düzeyi: "+at("evidence."+r.evidence_level)+" · Son inceleme: "+tarih(r.last_reviewed):"Kanıt düzeyi henüz değerlendirilmedi"));
+  rt.appendChild(h("div","mut",r.review==="curated"?t("ans.kanit",{kanit:at("evidence."+r.evidence_level),tarih:tarih(r.last_reviewed)}):t("ans.kanit_yok")));
   if(r.evaluation)rt.appendChild(h("p",null,at(r.evaluation)));
   rk.appendChild(rt);box.appendChild(rk);
   // Profil uyarısı: yalnızca kullanıcının seçtiği hassasiyetle eşleşirse
   ansProfileWarnings(r,prof()).forEach(function(w){
     var d=h("section","pw "+w.severity);d.setAttribute("role","note");
     var tt=h("div","t");var ic=svg(PWICON);ic.style.color=w.severity==="high"?"#B3261E":"#8A5A00";tt.appendChild(ic);
-    tt.appendChild(document.createTextNode("Hassasiyetinizle eşleşti: "+(at("profile."+w.profile)||w.profile)));d.appendChild(tt);
+    tt.appendChild(document.createTextNode(t("ans.profil_eslesti",{ad:at("profile."+w.profile)||w.profile})));d.appendChild(tt);
     d.appendChild(h("p",null,at(w.text)));box.appendChild(d);
   });
-  if(r.review!=="curated")box.appendChild(h("div","auto","Bu sayfa uygulamanın katkı maddesi listesinden otomatik oluşturuldu ve henüz elle incelenmedi. Ayrıntılı bilgiler eklendikçe güncellenecek."));
+  if(r.review!=="curated")box.appendChild(h("div","auto",t("ans.otomatik")));
   // Hızlı bilgi kartları (otomatik kayıtta bilinmeyenler gösterilmez)
   var q=h("div","quick"),df=r.diet_flags,cur=r.review==="curated";
-  [["Vegan",df.vegan==="unknown"&&!cur?null:at("diet."+df.vegan)],["Kaynak",(df.source==="unknown"&&!cur)||(r.production&&(df.source==="synthetic"||df.source==="mineral"))?null:at("source."+df.source)],["Üretim",r.production?PROD_AD[r.production.class]:null],["Glüten",df.gluten==="unknown"&&!cur?null:(df.gluten==="no"?"İçermez":df.gluten==="yes"?"İçerir":at("diet.unknown"))]]
+  [[t("ans.hizli.vegan"),df.vegan==="unknown"&&!cur?null:at("diet."+df.vegan)],[t("ans.hizli.kaynak"),(df.source==="unknown"&&!cur)||(r.production&&(df.source==="synthetic"||df.source==="mineral"))?null:at("source."+df.source)],[t("ans.hizli.uretim"),r.production?uretimAd(r.production.class):null],[t("ans.hizli.gluten"),df.gluten==="unknown"&&!cur?null:(df.gluten==="no"?t("ans.gluten.icermez"):df.gluten==="yes"?t("ans.gluten.icerir"):at("diet.unknown"))]]
     .forEach(function(x){if(x[1]==null)return;var c=h("div");c.appendChild(h("b",null,x[0]));c.appendChild(h("span",null,x[1]));q.appendChild(c)});
   if(q.childNodes.length)box.appendChild(q);
   // Sekmeler
-  var tabs=h("div","tabs");tabs.setAttribute("role","tablist");tabs.setAttribute("aria-label","Madde bilgileri");box.appendChild(tabs);
-  var P=[["genel","Genel",panelGenel(r)],["otorite","Otoriteler",panelOtorite(r)],["kaynak","Kaynaklar",panelKaynak(r)]];
+  var tabs=h("div","tabs");tabs.setAttribute("role","tablist");tabs.setAttribute("aria-label",t("ans.sekme_aria"));box.appendChild(tabs);
+  var P=[["genel",t("ans.sekme.genel"),panelGenel(r)],["otorite",t("ans.sekme.otorite"),panelOtorite(r)],["kaynak",t("ans.sekme.kaynak"),panelKaynak(r)]];
   P.forEach(function(p,i){
     var b=h("button","tab",p[1]);b.type="button";b.id="tab-"+p[0];b.setAttribute("role","tab");b.setAttribute("aria-controls","pn-"+p[0]);
     var pn=p[2];pn.id="pn-"+p[0];pn.className="panel";pn.setAttribute("role","tabpanel");pn.setAttribute("aria-labelledby",b.id);pn.tabIndex=0;
@@ -66,74 +66,74 @@ function showRecord(r){
   // Benzer maddeler
   var rel=r.related_ids.map(function(x){return ABY[x]}).filter(Boolean);
   if(rel.length){
-    box.appendChild(h("h2","sec","Benzer maddeler"));
+    box.appendChild(h("h2","sec",t("ans.benzer")));
     var rw=h("div","rel");
     rel.forEach(function(x){var a=h("a");a.href=link(x);var b=h("b");b.appendChild(svg(rico(x),"mini"));b.appendChild(document.createTextNode(x.id));a.appendChild(b);a.appendChild(h("span",null,at(x.names.primary)));a.setAttribute("aria-label",x.id+" "+at(x.names.primary)+", "+at("risk."+x.risk_level));rw.appendChild(a)});
     box.appendChild(rw);
   }
   footer(box,r);
 }
-var PROD_AD={dogal:"Doğal kaynaktan",fermente:"Fermentasyonla",islenmis:"İşlenmiş",sentetik:"Sentetik",belirsiz:"Birden çok yol"};
+function uretimAd(c){return {dogal:t("ans.uretim.dogal"),fermente:t("ans.uretim.fermente"),islenmis:t("ans.uretim.islenmis"),sentetik:t("ans.uretim.sentetik"),belirsiz:t("ans.uretim.belirsiz")}[c]}
 function panelGenel(r){
   var p=h("div"),c=r.content;
-  p.appendChild(h("h3",null,"Ne işe yarar?"));p.appendChild(h("p",null,at(c.what_it_does)));
+  p.appendChild(h("h3",null,t("ans.ne_ise")));p.appendChild(h("p",null,at(c.what_it_does)));
   if(r.production){
-    p.appendChild(h("h3",null,"Nasıl üretilir?"));p.appendChild(h("p",null,at(r.production.note)));
-    p.appendChild(h("p","mut","Üretim yolu bir risk değerlendirmesi değildir."+(r.production.verified?"":" Bu bilgi genel bilgiye dayanır, kaynakla doğrulanmadı.")));
+    p.appendChild(h("h3",null,t("ans.nasil")));p.appendChild(h("p",null,at(r.production.note)));
+    p.appendChild(h("p","mut",t(r.production.verified?"ans.uretim_not":"ans.uretim_not_dogrulanmadi")));
   }
-  if(c.found_in.length){p.appendChild(h("h3",null,"Nerede bulunur?"));var ul=h("ul");c.found_in.forEach(function(k){ul.appendChild(h("li",null,at(k)))});p.appendChild(ul)}
+  if(c.found_in.length){p.appendChild(h("h3",null,t("ans.nerede")));var ul=h("ul");c.found_in.forEach(function(k){ul.appendChild(h("li",null,at(k)))});p.appendChild(ul)}
   if(r.effects&&r.effects.length){
-    p.appendChild(h("h3",null,"Olası etkiler"));
+    p.appendChild(h("h3",null,t("ans.etkiler")));
     var el=h("ul","eff");
     r.effects.forEach(function(x){
       var li=h("li"),s=x.source;
       li.appendChild(h("span","lv",at("eff."+x.level)));
       li.appendChild(h("p",null,at(x.text)));
-      if(x.who)li.appendChild(effRow("Kimde",at(x.who)));
-      if(x.amount)li.appendChild(effRow("Hangi miktarda",at(x.amount)));
+      if(x.who)li.appendChild(effRow(t("ans.kimde"),at(x.who)));
+      if(x.amount)li.appendChild(effRow(t("ans.miktar"),at(x.amount)));
       var k=h("div","mut"),a=h("a",null,s.label+(s.year?", "+s.year:""));a.href=s.url;a.target="_blank";a.rel="noopener";a.title=s.title;
-      k.appendChild(document.createTextNode("Kaynak: "));k.appendChild(a);li.appendChild(k);
+      k.appendChild(document.createTextNode(t("ortak.kaynak")));k.appendChild(a);li.appendChild(k);
       el.appendChild(li);
     });
     p.appendChild(el);p.appendChild(h("p","mut",at("eff.doctor")));
   }
-  if(c.in_the_body){p.appendChild(h("h3",null,"Vücutta nasıl işlenir?"));p.appendChild(h("p",null,at(c.in_the_body)))}
-  if(r.review!=="curated")p.appendChild(h("p","mut","“Nerede bulunur?” ve “Olası etkiler” bölümleri bu madde için henüz yazılmadı."));
+  if(c.in_the_body){p.appendChild(h("h3",null,t("ans.vucut")));p.appendChild(h("p",null,at(c.in_the_body)))}
+  if(r.review!=="curated")p.appendChild(h("p","mut",t("ans.yazilmadi")));
   return p;
 }
-function effRow(k,v){var d=h("div","er");d.appendChild(h("b",null,k+": "));d.appendChild(document.createTextNode(v));return d}
+function effRow(k,v){var d=h("div","er");d.appendChild(h("b",null,t("ortak.etiket_iki_nokta",{ad:k})));d.appendChild(document.createTextNode(v));return d}
 function panelOtorite(r){
   var p=h("div");
-  if(r.agency_note){p.appendChild(h("h3",null,"Kurumların değerlendirmesi"));p.appendChild(h("p",null,at(r.agency_note)))}
-  if(!r.regulatory.length){p.appendChild(h("p","mut","Bu madde için henüz kurum bilgisi eklenmedi."));return p}
+  if(r.agency_note){p.appendChild(h("h3",null,t("ans.kurum_not")));p.appendChild(h("p",null,at(r.agency_note)))}
+  if(!r.regulatory.length){p.appendChild(h("p","mut",t("ans.kurum_yok")));return p}
   r.regulatory.forEach(function(g){
     var row=h("div","ag"),l=h("div");
     l.appendChild(h("div","who",g.agency+" · "+(at("region."+g.region)||g.region)+(g.year?" · "+g.year:"")));
     l.appendChild(h("div","d",at(g.detail)));
-    if(g.source_url){var a=h("a",null,"Kaynağı aç");a.href=g.source_url;a.target="_blank";a.rel="noopener";a.style.fontSize="14px";l.appendChild(a)}
+    if(g.source_url){var a=h("a",null,t("ans.kaynagi_ac"));a.href=g.source_url;a.target="_blank";a.rel="noopener";a.style.fontSize="14px";l.appendChild(a)}
     row.appendChild(l);row.appendChild(h("span","st "+g.status,at("status."+g.status)));p.appendChild(row);
   });
   return p;
 }
 function panelKaynak(r){
   var p=h("div");
-  if(!r.sources.length){p.appendChild(h("p","mut","Bu madde için henüz kaynak eklenmedi."));return p}
+  if(!r.sources.length){p.appendChild(h("p","mut",t("ans.kaynak_yok")));return p}
   r.sources.forEach(function(s){
     var d=h("div","src");
     if(s.url){var a=h("a",null,s.title);a.href=s.url;a.target="_blank";a.rel="noopener";d.appendChild(a)}else d.appendChild(h("span","ttl",s.title));
-    if(s.official)d.appendChild(h("span","tag","Resmi"));
-    d.appendChild(h("div","mut",s.publisher+(s.year?", "+s.year:"")+(s.todo?" · Bağlantı henüz eklenmedi":"")));
+    if(s.official)d.appendChild(h("span","tag",t("ans.resmi")));
+    d.appendChild(h("div","mut",s.publisher+(s.year?", "+s.year:"")+(s.todo?" · "+t("ans.baglanti_yok"):"")));
     p.appendChild(d);
   });
   return p;
 }
 function footer(box,r){
-  var f=h("div","foot");f.appendChild(h("div",null,"Bilgilendirme amaçlıdır, tıbbi tavsiye yerine geçmez."));
-  var a=h("a",null,"Hata bildir");
-  a.href=AREPO+"?title="+encodeURIComponent("Ansiklopedi hatası"+(r?": "+r.id+" "+at(r.names.primary):""))+"&body="+encodeURIComponent("Sayfa: "+location.href+"\n\nHatalı bilgi:\n\nDoğrusu ve kaynağı (varsa):\n");
+  var f=h("div","foot");f.appendChild(h("div",null,t("ans.sorumluluk")));
+  var a=h("a",null,t("ans.hata_bildir"));
+  a.href=AREPO+"?title="+encodeURIComponent(r?t("ans.hata.baslik_madde",{ad:r.id+" "+at(r.names.primary)}):t("ans.hata.baslik"))+"&body="+encodeURIComponent(t("ans.hata.govde",{url:location.href}));
   a.target="_blank";a.rel="noopener";f.appendChild(a);box.appendChild(f);
 }
-function syncMark(){var b=a$("kaydet"),on=!!ACUR&&marks().indexOf(ACUR.id)>-1;b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?"Kaydedilenlerden çıkar":"Kaydet")}
+function syncMark(){var b=a$("kaydet"),on=!!ACUR&&marks().indexOf(ACUR.id)>-1;b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?t("ans.kaydet_cikar"):t("ans.kaydet"))}
 a$("kaydet").onclick=function(){if(!ACUR)return;var m=marks().filter(function(x){return x!==ACUR.id});if(m.length===marks().length)m.unshift(ACUR.id);setMarks(m);syncMark()};
 a$("geri").onclick=function(){
   var same=document.referrer&&document.referrer.indexOf(location.origin)===0;
@@ -146,25 +146,25 @@ function rowFor(r){
   var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",at("cat."+r.category)+" · "+at("risk."+r.risk_level)));a.appendChild(n);return a;
 }
 function showSearch(){
-  ACUR=null;a$("kaydet").hidden=true;document.title="Ansiklopedi";
+  ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
-  var lb=h("label","vh","Madde ara");lb.htmlFor="ara";box.appendChild(lb);
-  var inp=h("input");inp.type="search";inp.id="ara";inp.placeholder="Ad ya da E kodu: lesitin, E322…";inp.autocomplete="off";inp.setAttribute("enterkeyhint","search");box.appendChild(inp);
+  var lb=h("label","vh",t("ans.ara"));lb.htmlFor="ara";box.appendChild(lb);
+  var inp=h("input");inp.type="search";inp.id="ara";inp.placeholder=t("ans.ara_yer");inp.autocomplete="off";inp.setAttribute("enterkeyhint","search");box.appendChild(inp);
   var out=h("div","list");out.setAttribute("aria-live","polite");box.appendChild(out);
   function draw(){
     var q=inp.value;out.textContent="";
     try{history.replaceState(null,"",q.trim()?"ansiklopedi.html?q="+encodeURIComponent(q):"ansiklopedi.html")}catch(e){}
     if(q.trim()){
       var res=ansSearch(AIDX,q,40);
-      out.appendChild(h("p","mut",res.length?res.length+(res.length===40?"+":"")+" sonuç":"Sonuç bulunamadı. Başka bir yazımla deneyin."));
+      out.appendChild(h("p","mut",res.length?t("ans.sonuc",{n:res.length,s:res.length+(res.length===40?"+":"")}):t("ans.sonuc_yok")));
       res.forEach(function(r){out.appendChild(rowFor(r))});return;
     }
     var m=marks().map(function(x){return ABY[x]}).filter(Boolean);
-    out.appendChild(h("h2","sec","Kaydettiklerim"));
-    if(m.length)m.forEach(function(r){out.appendChild(rowFor(r))});else out.appendChild(h("p","mut","Henüz kayıtlı madde yok. Bir maddenin sayfasındaki yer imi düğmesiyle kaydedebilirsiniz."));
-    out.appendChild(h("h2","sec","Ayrıntılı incelenen maddeler"));
+    out.appendChild(h("h2","sec",t("ans.kaydettiklerim")));
+    if(m.length)m.forEach(function(r){out.appendChild(rowFor(r))});else out.appendChild(h("p","mut",t("ans.kayit_yok")));
+    out.appendChild(h("h2","sec",t("ans.incelenen")));
     AD.records.filter(function(r){return r.review==="curated"}).forEach(function(r){out.appendChild(rowFor(r))});
-    out.appendChild(h("p","mut",AD.records.length+" maddenin sayfası var; ayrıntılı incelenen maddeler zamanla artacak."));
+    out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.length})));
   }
   var tm=null;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(draw,150)});
   var q0=new URLSearchParams(location.search).get("q");if(q0)inp.value=q0;
@@ -199,12 +199,12 @@ Promise.all([aGet("data/ansiklopedi.json"),DIL_HAZIR.then(ansMetin)]).then(funct
   if(r){
     try{if(sp.get("m")!==r.slug)history.replaceState(null,"","ansiklopedi.html?m="+r.slug)}catch(e){}
     return ansSayfa(r).then(showRecord,function(){
-      document.title=r.id+" "+at(r.names.primary)+" · Ansiklopedi";var box=a$("ana");box.textContent="";
+      document.title=r.id+" "+at(r.names.primary)+" · "+t("nav.ansiklopedi");var box=a$("ana");box.textContent="";
       box.appendChild(h("h2","name",r.id+" "+at(r.names.primary)));
-      box.appendChild(h("p","mut","Bu maddenin sayfası henüz bu cihaza inmedi. İnternete bağlanınca açılır; açtığınız sayfalar sonra internetsiz de görünür."));
+      box.appendChild(h("p","mut",t("ans.inmedi")));
       footer(box,r);
     });
   }
-  showSearch();if(m||id)a$("ana").insertBefore(h("p","mut","Aradığınız madde bulunamadı."),a$("ana").firstChild);
-}).catch(function(){a$("ana").textContent="Ansiklopedi verisi yüklenemedi. İnternet bağlantınızı kontrol edip sayfayı yenileyin."});
+  showSearch();if(m||id)a$("ana").insertBefore(h("p","mut",t("ans.bulunamadi")),a$("ana").firstChild);
+}).catch(function(){a$("ana").textContent=t("ans.yuklenemedi")});
 try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}

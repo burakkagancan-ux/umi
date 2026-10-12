@@ -30,7 +30,7 @@ Her PR açıklamasında bu beş soru yanıtlanır:
 ## 1. Bugünkü durum (08.10.2026)
 
 - **Ürün:** Tarayıcıdan çalışan uygulama (PWA). Bakanlık taklit/tağşiş listesi; fotoğraftan etiket okuma (gıda, kozmetik, temizlik); 333 sayfalık kaynaklı E kodu ansiklopedisi; karşılaştırma; kaydedilen ürünler; paylaşım kartı (hikâye ve gönderi boyutu).
-- **Diller:** Türkçe ve İngilizce arayüz (#95, #96). Veri metinlerinden 1.164'ü ve ansiklopedinin 4.038 metni henüz İngilizce değil; İngilizcede "not yet translated" işaretiyle Türkçe görünüyor. Liste sayfası (index.html) ve ansiklopedi arayüzü yalnızca Türkçe.
+- **Diller:** Türkçe ve İngilizce arayüz (#95, #96). Veri metinleri ve ansiklopedinin 4.043 metni İngilizce (#105). Üç sayfanın da (Etiket Oku, Ansiklopedi, Liste) arayüzü iki dilde (12.10.2026); Liste'deki Bakanlık verisi Türkçe kalır.
 - **Mevzuat:** AB, Türkiye (TGK 2013 listesi, kozmetik ekleri), ABD (FDA renkleri), Kaliforniya, ASEAN, AB endokrin listeleri, REACH.
 - **Dağıtım:** GitHub Pages. Mağazada yok.
 - **Gelir:** Yok, model seçilmedi.

@@ -21,7 +21,7 @@ var DIL_HAZIR=dilGetir("i18n/diller.json").catch(function(){return {diller:{tr:{
   });
 });
 /* <html lang dir>, yazı tipi (dil dosyasında tanımlıysa) ve data-i18n / data-i18n-attr ("aria-label:anahtar;placeholder:anahtar").
-   lang/dir yalnızca arayüzü çevrilen sayfada değişir (<html data-cevrilen>); ansiklopedi sayfasının arayüzü henüz Türkçe. */
+   lang/dir yalnızca arayüzü çevrilen sayfada değişir (<html data-cevrilen>: ocr.html, ansiklopedi.html, index.html). */
 function dilUygula(doc){
   var h=doc.documentElement;if(!h.hasAttribute("data-cevrilen"))return;
   h.lang=DIL.kod;h.dir=DIL.yon;
