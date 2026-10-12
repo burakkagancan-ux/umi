@@ -50,6 +50,8 @@ jobs:
         run: node test/paylas.js
       - name: Kaydedilen ürünler
         run: node test/kayit.js
+      - name: Cihaz verisi sürümü
+        run: node test/veri_surum.js
       - name: Barkod
         run: node test/barkod.js
       - name: Çevrimdışı önbellek listesi

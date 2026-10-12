@@ -54,7 +54,12 @@ async function scan(p,mode,text){
   let ctx=await br.newContext(opt),errs=[],p=await newPage(ctx);watch(p,errs);
   await p.goto(B+'index.html');await p.waitForLoadState('networkidle');
   ok(!errs.length,'index.html konsol hatası: '+errs.join(' | '));errs.length=0;
+  ok(await p.evaluate(()=>localStorage.getItem('veri_surum')===String(VERI_SURUM)),'açılışta cihaz verisi sürümü yazılır (O-06)');
+  // Sürümsüz eski veri: bozuk kayıt açılıştan önce temizlenir, sayfa hatasız açılır
+  await p.evaluate(()=>{localStorage.removeItem('veri_surum');localStorage.setItem('kayitli','{bozuk');localStorage.setItem('dil','tr')});
   await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX,null,{timeout:15000});
+  ok(await p.evaluate(()=>localStorage.getItem('kayitli')===null&&localStorage.getItem('dil')==='tr'&&localStorage.getItem('veri_surum')===String(VERI_SURUM)),'sürümsüz veri yükseltilir: bozuk kayıt silinir, ayar kalır');
+  ok(!errs.length,'eski veriyle ocr.html konsol hatası: '+errs.join(' | '));errs.length=0;
 
   // 1b) Fotoğraf: kameranın yanında galeriden/dosyadan yükleme (capture olmayan ikinci girdi) kırpma ekranını açar
   ok(await p.isVisible('label.dosya')&&await p.getAttribute('#dosya','capture')===null&&await p.getAttribute('#foto','capture')==='environment','kamera ve dosya yükleme düğmeleri');
