@@ -337,6 +337,28 @@ def main():
     p2 = os.path.join(HERE, "data", "ansiklopedi_tr.json")
     dump(p2, '{"meta":' + json.dumps({"lang": "tr", "generated": today, "count": len(T)}, ensure_ascii=False) + ',\n"t":{\n'
          + ",\n".join(json.dumps(k, ensure_ascii=False) + ":" + json.dumps(v, ensure_ascii=False) for k, v in sorted(index_t.items())) + "\n}}\n")
+    # Başka diller: kaynak/ansiklopedi_<dil>.json (anahtar → metin; elle/çeviriyle). Türkçeyle aynı bölünme; eksik anahtar Türkçeye düşer
+    # (arayüz "henüz çevrilmedi" işaretler). Türkçesi değişen metnin çevirisi "_tr" parmak iziyle bayatlar ve yazılmaz.
+    for f in sorted(os.listdir(os.path.join(HERE, "kaynak"))):
+        m = re.fullmatch(r"ansiklopedi_([a-z]{2}(?:-[a-z]+)?)\.json", f)
+        if not m:
+            continue
+        dil, C = m.group(1), json.load(open(os.path.join(HERE, "kaynak", f), encoding="utf-8"))["t"]
+        ok = {k: c["s"] for k, c in C.items() if k in T and c.get("tr") == T[k]}
+        bayat = sum(1 for k, c in C.items() if k in T and c.get("tr") != T[k])
+        dd = os.path.join(d, dil)
+        os.makedirs(dd, exist_ok=True)
+        for x in os.listdir(dd):
+            if x.endswith(".json"):
+                os.remove(os.path.join(dd, x))
+        for r in recs:
+            pt = {k: ok[k] for k in page_t[r["id"]] if k in ok}
+            if pt:
+                dump(os.path.join(dd, r["id"] + ".json"), json.dumps({"t": pt}, ensure_ascii=False, separators=(",", ":"), sort_keys=True) + "\n")
+        it = {k: ok[k] for k in index_t if k in ok}
+        dump(os.path.join(HERE, "data", "ansiklopedi_%s.json" % dil), '{"meta":' + json.dumps({"lang": dil, "generated": today, "count": len(ok)}, ensure_ascii=False) + ',\n"t":{\n'
+             + ",\n".join(json.dumps(k, ensure_ascii=False) + ":" + json.dumps(v, ensure_ascii=False) for k, v in sorted(it.items())) + "\n}}\n")
+        print("ansiklopedi %s: %d/%d metin çevrili, %d bayat" % (dil, len(ok), len(T), bayat))
     print("ansiklopedi: %d kayıt (%d elle incelenmiş, %d resmi kaynaksız), %d metin" % (len(recs), n_cur, n_noff, len(T)))
 
 

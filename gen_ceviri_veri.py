@@ -32,7 +32,8 @@ def uret(dil):
     out = {"_aciklama": "Üretildi: gen_ceviri_veri.py (kaynak/ceviri_%s.tsv%s). Elle düzenlemeyin." % (dil, " + CosIng işlev adları" if dil == "en" else "")}
     if dil == "en":
         out.update(cosing_islevler())
-    for r in tsv(os.path.join(K, "kaynak", "ceviri_%s.tsv" % dil)):
+    ekler = sorted(f for f in os.listdir(os.path.join(K, "kaynak")) if f.startswith("ceviri_%s_" % dil) and f.endswith(".tsv"))
+    for r in (r for f in ["ceviri_%s.tsv" % dil] + ekler for r in tsv(os.path.join(K, "kaynak", f))):
         if len(r) < 2:
             raise SystemExit("eksik sütun: %r" % r)
         if r[0] in out and out[r[0]] != r[1]:
@@ -46,5 +47,5 @@ def uret(dil):
 
 if __name__ == "__main__":
     for f in sorted(os.listdir(os.path.join(K, "kaynak"))):
-        if f.startswith("ceviri_") and f.endswith(".tsv"):
+        if f.startswith("ceviri_") and f.endswith(".tsv") and len(f) == len("ceviri_xx.tsv"):   # ceviri_<dil>_<ek>.tsv uret() içinde birleşir
             uret(f[len("ceviri_"):-4])
