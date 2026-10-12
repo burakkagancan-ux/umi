@@ -1,0 +1,1173 @@
+# Uzun veri metinlerinin (gerekçe, not, açıklama, üretim yolu) İngilizcesi (09.10.2026) → gen_ceviri_veri.py → i18n/veri/en.json. Sütunlar: anahtar<TAB>İngilizce
+b.alkol.not	Some of the alcohol may remain in the product after cooking and baking.
+b.aroma.not	The source of flavourings is usually not stated on the label.
+b.balik_jelatini.not	Regulatory exemption: fish gelatine/isinglass used as a carrier in vitamin or carotenoid preparations or as a fining agent in beer and wine is not considered an allergen. In other uses it is a fish allergen.
+b.bugday_glukoz.not	Regulatory exemption: wheat- or barley-based glucose syrup and maltodextrin are not considered gluten allergens.
+b.cig_sut.not	Unpasteurised dairy products may carry bacteria such as listeria; they are not recommended during pregnancy or for infants.
+b.deniz_urunu.not	The type is not specified; it may be crustaceans, molluscs or fish.
+b.fistik.not	It may be peanut or pistachio.
+b.gfs.not	Also known as starch-based sugar (NBŞ).
+b.hidrolize_protein.not	It is a natural source of glutamate and is often used in products labelled 'no flavour enhancers'.
+b.kafein.not	If a drink contains more than 150 mg/L of caffeine, the label must carry the warning "High caffeine content. Not recommended for children or pregnant or breast-feeding women." EFSA recommends not exceeding 200 mg per day during pregnancy.
+b.kakao.not	It contains theobromine, which is toxic to dogs and cats. It also contains a small amount of caffeine.
+b.kazein.not	The lactose content is very low, but it causes problems in milk allergy.
+b.malt.not	It is usually obtained from barley and contains gluten.
+b.maltodekstrin.not	Chemically it does not count as a sugar, but it is a starch derivative that raises blood sugar rapidly.
+b.meyve_konsantre.not	Added fruit juice concentrate is a free sugar according to the WHO definition.
+b.mikrobiyal_maya.not	It is not of animal origin.
+b.n_alkolsuz.not	"Alcohol-free" products may contain up to 0.5% alcohol by volume.
+b.n_bitkisel_krema.not	It is not dairy cream; it is usually made with vegetable fat and additives.
+b.n_bulyon.not	Stock cubes usually contain a lot of salt; whether they contain meat or chicken is stated separately on the label.
+b.n_bulyon_et.not	Stock cubes and powdered meat stock usually contain a lot of salt.
+b.n_cam_fistigi.not	It is not on the regulation's list of nuts; it may be a separate allergy.
+b.n_glutensiz_un.not	It does not come from cereals containing gluten; check the label for cross-contamination.
+b.n_hindistan.not	It is not on the regulation's list of nuts.
+b.n_kafeinsiz.not	The caffeine has been removed; a small amount of caffeine may remain.
+b.n_kakao.not	It is not a dairy product.
+b.n_sterol.not	Regulatory exemption: plant sterol and stanol esters are not considered soy allergens, even if derived from soya.
+b.n_sut_aroma.not	It is listed as a flavouring; it is unclear whether it contains milk.
+b.peynir.not	Lactose is very low in matured hard cheeses.
+b.peynir_mayasi.not	It may be of animal origin (from rennet) or microbial; microbial rennet is suitable for vegetarians.
+b.sogan.not	Plants of the onion family may cause anaemia in dogs and cats; the powdered form is more concentrated.
+b.soya.not	Soy sauce often also contains wheat; check the label.
+b.soya_sosu.not	Soy sauce often also contains wheat; check the label. Its salt content is high.
+b.soya_yagi.not	Regulatory exemption: refined soybean oil (solid and liquid) is not considered a soy allergen.
+b.sulfit.not	Sulphur dioxide and sulphites at concentrations above 10 mg/kg or 10 mg/L, expressed as total SO2, must be declared as allergens. An unspecified "sulphite" is one of the preservatives E220–E228.
+b.tereyagi.not	The lactose content is low; it causes problems in milk allergy.
+b.un.not	'Flour' with no type specified is usually wheat flour.
+b.uzum.not	Grapes and raisins may cause kidney failure in dogs.
+b.yulaf.not	Oats are among the cereals containing gluten in the regulation; check the label for a 'gluten-free oats' statement.
+e.E100.about	A yellow dye obtained from turmeric root. It gives colour to mustard, curry, sauces and confectionery.
+e.E100.uretim	Obtained from turmeric root by solvent extraction.
+e.E101.about	Vitamin B2; yellow-orange in colour. It is used both as a vitamin supplement and as a colour.
+e.E101.uretim	Riboflavin may be produced by fermentation or by chemical synthesis; the phosphate form is obtained by chemical processing.
+e.E102.about	A synthetic yellow azo dye. Used in confectionery, drinks, puddings and snacks.
+e.E102.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study). In the USA it is permitted under the name “Yellow 5”.
+e.E102.uretim	An azo dye produced by chemical synthesis.
+e.E104.about	A synthetic greenish-yellow dye. Used in confectionery, drinks and desserts.
+e.E104.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study). In the USA its use in food is not permitted.
+e.E104.uretim	A dye produced by chemical synthesis.
+e.E110.about	A synthetic orange-yellow azo dye. Used in orange-flavoured drinks, confectionery and ready-made desserts.
+e.E110.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study).
+e.E110.uretim	An azo dye produced by chemical synthesis.
+e.E1103.about	An enzyme that splits sugar into glucose and fructose. It is used in soft-centred confectionery and in the production of invert sugar.
+e.E1103.uretim	An enzyme obtained from yeast.
+e.E1105.about	An enzyme obtained from egg white. It prevents the growth of unwanted bacteria in some cheeses.
+e.E1105.reason	Obtained from egg white (relevant for people with egg allergy).
+e.E1105.uretim	An enzyme obtained from hen's egg white.
+e.E120.about	A red dye obtained from red insects called cochineal. Used in confectionery, yoghurt, sucuk-type products and drinks.
+e.E120.reason	A red dye obtained from the cochineal insect (not vegan). Its halal status varies according to religious authorities. Rare allergic reactions have been reported.
+e.E120.uretim	Obtained from the cochineal insect by extraction with water or alcohol.
+e.E1200.about	A bulking agent synthesised from glucose that acts as a soluble fibre. It adds volume in low-sugar and low-calorie products.
+e.E1200.uretim	Produced by condensation polymerisation of glucose with small amounts of sorbitol and citric acid.
+e.E1201.about	A synthetic polymer (PVP). It is used as a binder in supplement tablets.
+e.E1201.uretim	A polymer produced by polymerisation of N-vinyl-2-pyrrolidone in water.
+e.E1202.about	A synthetic polymer (PVPP). It is used to clarify beer and wine.
+e.E1202.uretim	A polymer produced by polymerisation of N-vinyl-2-pyrrolidone.
+e.E1203.about	A synthetic polymer. It is used in the coating of supplement tablets.
+e.E1203.uretim	A polymer produced by chemical synthesis.
+e.E1204.about	A polysaccharide produced by fermenting starch with a fungus-like microorganism. It is used in capsules and breath-freshening strips.
+e.E1204.uretim	Produced by fermentation with the fungus Aureobasidium pullulans.
+e.E1205.about	A synthetic polymer. It is used in the coating of supplement tablets.
+e.E1205.uretim	A polymer produced by controlled polymerisation of methyl methacrylate, butyl methacrylate and dimethylaminoethyl methacrylate.
+e.E122.about	A synthetic red azo dye. Used in confectionery, jellies and drinks.
+e.E122.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study). In the USA it is not permitted in food.
+e.E122.uretim	An azo dye produced by chemical synthesis.
+e.E123.about	A synthetic dark red azo dye. In the EU it is permitted in a very limited range of products (some aperitif wines, fish roe).
+e.E123.reason	Banned in the USA in 1976 (as Red No. 2); in the EU it is permitted only in a limited range of products.
+e.E123.uretim	An azo dye produced by chemical synthesis.
+e.E124.about	A synthetic red azo dye. Used in confectionery, drinks and desserts.
+e.E124.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study). In the USA it is not permitted in food.
+e.E124.uretim	An azo dye produced by chemical synthesis.
+e.E127.about	A synthetic pink-red dye. It has been used in cocktail cherries and some confectionery.
+e.E127.reason	The US FDA revoked its authorisation on 15 January 2025 because of tumour findings in male rats (deadline for use in food: 15 January 2027); the FDA also states that there is no evidence of harm in humans. In the EU it is permitted only in a limited range of products such as cocktail and candied cherries.
+e.E127.uretim	Produced by chemical synthesis through iodination of fluorescein.
+e.E128.about	A synthetic red azo dye. It was formerly used in sausages and burgers.
+e.E128.reason	Its authorisation as a food colour in the EU was withdrawn in 2007.
+e.E128.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E128.uretim	An azo dye produced by chemical synthesis.
+e.E129.about	A synthetic red azo dye. Used in confectionery, drinks and desserts.
+e.E129.reason	In the EU, the label of products containing this colour must carry the warning “may have an adverse effect on activity and attention in children” (following the 2007 Southampton study).
+e.E129.uretim	An azo dye produced by chemical synthesis.
+e.E131.about	A synthetic blue dye. Used in confectionery and desserts; it is also known in medicine as a diagnostic dye.
+e.E131.uretim	A dye produced by chemical synthesis.
+e.E132.about	A synthetic blue dye (the synthetic form of indigo). Used in confectionery, drinks and desserts.
+e.E132.uretim	Produced chemically by sulphonation of indigo.
+e.E133.about	A synthetic bright blue dye. Used in confectionery, drinks and ice cream; together with yellow dyes it gives a green colour.
+e.E133.uretim	A dye produced by chemical synthesis.
+e.E140.about	Chlorophyll, the natural green pigment in green plants. Used in green-coloured confectionery, ice cream and sauces.
+e.E140.uretim	Chlorophyll is obtained from plants by solvent extraction; chlorophyllin is produced by chemically modifying this extract (saponification).
+e.E1404.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1404.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E141.about	Copper-stabilised chlorophyllin; it gives a more stable green colour. Used in canned vegetables, confectionery and ice cream.
+e.E141.uretim	Obtained by chemical processing, by adding a copper salt to a plant extract.
+e.E1410.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1410.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1412.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1412.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1413.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1413.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1414.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1414.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E142.about	A synthetic green dye. Used in canned peas, confectionery and sauces.
+e.E142.uretim	A dye produced by chemical synthesis.
+e.E1420.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1420.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1422.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1422.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1440.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1440.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1442.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1442.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1450.about	A modified starch that can disperse fat in water. It is used as an emulsifier in infant formulas, flavouring emulsions and drinks.
+e.E1450.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1451.about	Modified starch: maize, potato or wheat starch that has been chemically or physically treated to make it resistant to heat, acid and freezing. It thickens sauces, soups, instant desserts and yoghurts.
+e.E1451.uretim	Produced by modifying starch through chemical reaction (modified starch).
+e.E1452.about	A modified starch containing aluminium. It is used as a coating in vitamin supplements.
+e.E1452.uretim	Produced by esterifying starch with octenyl succinic anhydride and treating it with aluminium sulphate (modified starch).
+e.E1505.about	A carrier produced from citric acid and ethanol. It is a foam stabiliser and solvent in egg white powder and flavourings.
+e.E1505.uretim	Produced by esterification of citric acid with ethyl alcohol.
+e.E150a.about	Plain caramel colour obtained by heating sugar. It gives a brown colour; used in cola, beer, sauces and bakery products.
+e.E150a.uretim	Obtained by controlled heat treatment of carbohydrates such as sugar.
+e.E150b.about	A caramel colour obtained by heating sugar with sulphite compounds. It gives a brown colour to wine, liqueurs and vinegar.
+e.E150b.uretim	Obtained by heat treatment of carbohydrates together with sulphite compounds.
+e.E150c.about	A caramel colour obtained by heating sugar with ammonia compounds. Used in beer, soy sauce and meat sauces.
+e.E150c.reason	The production by-product 4-methylimidazole (4-MEI) is classified by IARC in Group 2B (possibly carcinogenic); it is common in cola and similar carbonated drinks.
+e.E150c.uretim	Obtained by heat treatment of carbohydrates together with ammonium compounds.
+e.E150d.about	A caramel colour obtained by heating sugar with sulphite and ammonia compounds. It is the most widely used caramel in cola and other dark-coloured drinks.
+e.E150d.reason	The production by-product 4-methylimidazole (4-MEI) is classified by IARC in Group 2B (possibly carcinogenic); it is common in cola and similar carbonated drinks.
+e.E150d.uretim	Obtained by heat treatment of carbohydrates together with sulphite and ammonium compounds.
+e.E151.about	A synthetic black-violet azo dye. Used in black confectionery and fish roe substitutes.
+e.E151.uretim	An azo dye produced by chemical synthesis.
+e.E1517.about	A carrier produced from glycerol and acetic acid. It is used as a solvent in flavourings.
+e.E1517.uretim	Produced by esterification of citric acid or glycerol through chemical reaction.
+e.E1518.about	A humectant produced from glycerol and acetic acid. It is used in chewing gum and flavourings.
+e.E1518.uretim	May be produced by heating glycerol with acetic anhydride or by chemical reaction from allyl acetate and acetic acid.
+e.E1519.about	An alcohol found naturally in some fruits. It is used as a solvent and carrier in flavourings.
+e.E1519.uretim	Produced chemically by reacting benzyl chloride, obtained by chlorination of toluene, with sodium or potassium carbonate.
+e.E1520.about	Propylene glycol. It is a carrier and solvent in flavourings and food colours.
+e.E1520.uretim	May be produced by chemical synthesis from propylene or by heating glycerol with sodium hydroxide.
+e.E1521.about	A synthetic polymer. It is used as a coating and carrier in supplement tablets.
+e.E1521.uretim	A polymer produced by chemical synthesis.
+e.E153.about	Black carbon obtained by burning plant material. Used in black confectionery and cheese rinds.
+e.E153.uretim	Obtained by carbonisation of plant material such as wood.
+e.E154.about	A synthetic brown azo dye. It was formerly used to colour smoked herring (kippers).
+e.E154.reason	Not permitted as a food additive in the EU: in 2010 EFSA could not reach a conclusion on its safety because of insufficient data; as it is no longer used, it was not included in the EU list of permitted additives by Regulation (EU) No 1129/2011.
+e.E154.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E154.uretim	An azo dye produced by chemical synthesis.
+e.E155.about	A synthetic reddish-brown azo dye. Used in chocolate-flavoured cakes and confectionery.
+e.E155.uretim	An azo dye produced by chemical synthesis.
+e.E160a.about	Orange pigments found in plants such as carrots (beta-carotene etc.); a precursor of vitamin A. Used in margarine, fruit juice and confectionery.
+e.E160a.uretim	Beta-carotene may be obtained by chemical synthesis, by extraction from plants, by fungal fermentation or from algae.
+e.E160b.about	A yellow-orange dye obtained from the seeds of the annatto tree. Used in Cheddar cheese, butter and snacks.
+e.E160b.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E160b.uretim	Obtained from the seed coat of the annatto tree by extraction with solvents, alkali or oil.
+e.E160c.about	Red pepper (paprika) extract; it gives a red-orange colour and a mild flavour. Used in sucuk, sauces and crisps.
+e.E160c.uretim	Obtained from red pepper by solvent extraction.
+e.E160d.about	The red pigment found in tomatoes. It gives a red colour; used in drinks, sauces and desserts.
+e.E160d.uretim	Lycopene may be obtained by chemical synthesis, by extraction from tomatoes or from fungal biomass.
+e.E160e.about	An orange-red pigment of the carotenoid group. It also occurs in nature but is usually synthesised; used in sauces and confectionery.
+e.E160e.uretim	A carotenoid produced by chemical synthesis.
+e.E160f.about	An orange pigment derived from carotenoids. It has not been permitted in the EU since 2011.
+e.E160f.reason	Removed from the EU list of permitted additives in November 2011 (Regulation 1129/2011) because it is no longer produced.
+e.E160f.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E160f.uretim	A carotenoid produced by chemical synthesis.
+e.E161b.about	A yellow carotenoid found in marigold and green leafy vegetables. Used in confectionery, drinks and milk-based desserts.
+e.E161b.uretim	Obtained from plants such as marigold by solvent extraction.
+e.E161g.about	An orange-red carotenoid. In the EU it is permitted in food only in Strasbourg sausage; it is also used in animal feed.
+e.E161g.reason	Colour. In the EU it is permitted in food only in Strasbourg sausage (saucisse de Strasbourg); EFSA set the ADI at 0.03 mg/kg and reported that intake is unlikely to exceed this value.
+e.E161g.tgk_not	It was not on the 2013 list of permitted additives; it is on the current permitted list of the Turkish Food Codex (2023 regulation, Ministry guidance October 2024).
+e.E161g.uretim	Produced by chemical synthesis; it is a carotenoid that also occurs in nature.
+e.E162.about	A red-violet dye obtained from red beetroot. Used in yoghurt, ice cream, confectionery and drinks.
+e.E162.uretim	Obtained by pressing red beetroot or by extraction with water.
+e.E163.about	Red-violet-blue pigments in fruit and vegetables such as grape skins, purple carrots and blackberries. Used in drinks, jams and confectionery.
+e.E163.uretim	Obtained from fruit and vegetables by extraction.
+e.E170.about	A white mineral that is the main component of limestone and chalk. It gives a white colour, is a source of calcium and prevents caking; used in bread, confectionery and supplements.
+e.E170.uretim	May be obtained by grinding limestone or by chemical precipitation.
+e.E171.about	A white mineral pigment. It was used to give an opaque white colour to confectionery coatings, chewing gum and white sauces.
+e.E171.reason	In 2021 EFSA could not rule out a genotoxicity concern; its use in food was banned in the EU in 2022. In Türkiye, under the Regulation on Food Additives of 13 October 2023, foods containing E171 were allowed to be placed on the market until 1 April 2024.
+e.E171.tgk_not	In Türkiye, it was removed from the permitted list of the Turkish Food Codex by an amendment dated 13.10.2023; it may not be placed on the market after 1 April 2024.
+e.E171.uretim	Pure titanium dioxide produced from titanium ore by chemical processes.
+e.E172.about	Oxides and hydroxides of iron; they give a yellow, red or black colour. Used in confectionery coatings and medicinal tablets.
+e.E172.uretim	Produced synthetically.
+e.E173.about	Metallic aluminium powder; it gives a silver colour. Used only on the outer surface of confectionery and cake decorations.
+e.E173.uretim	A powder of the metal produced by electrolytic reduction of alumina obtained from bauxite.
+e.E174.about	Metallic silver; it gives a silver colour. Used for cake decoration and on the outer surface of confectionery.
+e.E174.uretim	Obtained by melting silver metal and separating it into droplets, then rolling and beating it (mechanical processing).
+e.E175.about	Metallic gold; in leaf form it gives a gold colour. Used for cake decoration, in confectionery and in some liqueurs.
+e.E175.uretim	A metal obtained from ore by mechanical separation or by dissolution with cyanide followed by electrolytic refining; it is also obtained as a by-product of copper and nickel refining.
+e.E180.about	A synthetic red azo dye. Used only in cheese rinds.
+e.E180.uretim	An azo dye produced by chemical synthesis.
+e.E200.about	A preservative that occurs naturally in rowan berries and is now synthesised. It is effective against moulds and yeasts; used in cheese, wine, bakery products and sauces.
+e.E200.uretim	Sorbic acid and its salts are produced by chemical synthesis; sorbic acid also occurs naturally in rowan berries.
+e.E202.about	The potassium salt of sorbic acid; one of the most widely used preservatives. It prevents moulds and yeasts in cheese, wine, jam, bakery products and sauces.
+e.E202.uretim	Sorbic acid and its salts are produced by chemical synthesis; sorbic acid also occurs naturally in rowan berries.
+e.E203.about	The calcium salt of sorbic acid; a preservative used against moulds and yeasts.
+e.E203.reason	Removed from the EU list of food additives on 12 August 2018; the reason is the lack of sufficient genotoxicity data (lack of data, not proven harm).
+e.E203.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E203.uretim	Sorbic acid and its salts are produced by chemical synthesis; sorbic acid also occurs naturally in rowan berries.
+e.E210.about	A preservative that occurs naturally in some fruits and is now synthesised. It prevents the growth of yeasts and bacteria in acidic foods; used in drinks, pickles and sauces.
+e.E210.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
+e.E210.uretim	Produced chemically from phthalic anhydride, benzotrichloride or toluene; benzoic acid also occurs naturally in some fruits.
+e.E211.about	The sodium salt of benzoic acid. It prevents the growth of yeasts and bacteria in acidic drinks, fruit juices, pickles and sauces.
+e.E211.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
+e.E211.uretim	Obtained by neutralising chemically produced benzoic acid with sodium carbonate, sodium bicarbonate or sodium hydroxide.
+e.E212.about	The potassium salt of benzoic acid. Used as a preservative in acidic drinks and sauces.
+e.E212.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
+e.E212.uretim	Produced by chemical synthesis; benzoic acid also occurs naturally in some fruits.
+e.E213.about	The calcium salt of benzoic acid. Used as a preservative in acidic foods.
+e.E213.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
+e.E213.uretim	Produced by chemical synthesis; benzoic acid also occurs naturally in some fruits.
+e.E214.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E214.reason	Preservative of the paraben group. In 2004 EFSA set a group ADI of 0–10 mg/kg body weight/day for methyl and ethyl paraben and their sodium salts; in animal studies these two parabens showed no effects on reproduction at up to 1000 mg/kg per day. Propyl paraben (E216), for which reproductive effects were reported, was not included in this group and was removed from the EU list.
+e.E214.uretim	A paraben produced chemically by esterification of p-hydroxybenzoic acid with ethanol.
+e.E215.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E215.reason	Preservative of the paraben group. In 2004 EFSA set a group ADI of 0–10 mg/kg body weight/day for methyl and ethyl paraben and their sodium salts; in animal studies these two parabens showed no effects on reproduction at up to 1000 mg/kg per day. Propyl paraben (E216), for which reproductive effects were reported, was not included in this group and was removed from the EU list.
+e.E215.uretim	A paraben produced by chemical synthesis.
+e.E216.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E216.reason	Removed from the EU list of additives by Directive 2006/52/EC (EFSA 2004: no ADI could be proposed because of effects on hormones and the male reproductive system in young rats). In the USA it will be banned in food in California from 2027 under AB 418.
+e.E216.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E216.uretim	A paraben produced chemically by esterification of p-hydroxybenzoic acid with n-propanol.
+e.E217.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E217.reason	Removed from the EU list of additives by Directive 2006/52/EC (EFSA 2004: no ADI could be proposed for propyl paraben). California AB 418 bans propyl paraben in food from 2027.
+e.E217.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E217.uretim	A paraben produced by chemical synthesis.
+e.E218.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E218.reason	Preservative of the paraben group. In 2004 EFSA set a group ADI of 0–10 mg/kg body weight/day for methyl and ethyl paraben and their sodium salts; in animal studies these two parabens showed no effects on reproduction at up to 1000 mg/kg per day. Propyl paraben (E216), for which reproductive effects were reported, was not included in this group and was removed from the EU list.
+e.E218.uretim	A paraben produced chemically by esterification of p-hydroxybenzoic acid with methanol.
+e.E219.about	A synthetic preservative of the paraben group (an ester of p-hydroxybenzoic acid). Used against moulds and yeasts; it is more common in cosmetics than in food.
+e.E219.reason	Preservative of the paraben group. In 2004 EFSA set a group ADI of 0–10 mg/kg body weight/day for methyl and ethyl paraben and their sodium salts; in animal studies these two parabens showed no effects on reproduction at up to 1000 mg/kg per day. Propyl paraben (E216), for which reproductive effects were reported, was not included in this group and was removed from the EU list.
+e.E219.uretim	A paraben produced by chemical synthesis.
+e.E220.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E220.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E220.uretim	Obtained chemically by burning sulphur or from gases of metal smelting.
+e.E221.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E221.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E221.uretim	Produced chemically by reacting sodium hydroxide or sodium carbonate with sulphur dioxide.
+e.E222.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E222.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E222.uretim	Produced chemically by saturating a sodium carbonate solution with sulphur dioxide.
+e.E223.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E223.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E223.uretim	Produced chemically by reacting sodium hydroxide or sodium carbonate with gases containing sulphur dioxide.
+e.E224.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E224.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E224.uretim	Produced chemically by heating potassium bisulphite so that it loses water.
+e.E226.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E226.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E226.uretim	Produced chemically from sulphur compounds.
+e.E227.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E227.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E227.uretim	Produced chemically from sulphur compounds.
+e.E228.about	A preservative and antioxidant that is a sulphur compound. It prevents browning and microbial growth in dried fruit, wine, vinegar and some potato products.
+e.E228.reason	Preservative of the sulphite group: in the EU, products containing more than 10 mg/kg (or 10 mg/l) must declare it as an allergen on the label; it may cause reactions in people with asthma.
+e.E228.uretim	Produced chemically by passing sulphur dioxide through a potassium carbonate solution.
+e.E230.about	A synthetic antifungal agent. It was used to prevent mould on citrus peel.
+e.E230.reason	No longer permitted as a food additive in the EU: its use for surface treatment of citrus peel was removed from the list of additives by Directive 2003/114/EC.
+e.E230.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E230.uretim	Produced chemically by condensation of benzene at high temperature or from toluene processing residues.
+e.E234.about	A natural antimicrobial peptide produced by bacteria through fermentation. It prevents bacterial growth in processed cheese, puddings and canned foods.
+e.E234.uretim	Produced by fermentation with lactic acid bacteria (Streptococcus lactis).
+e.E235.about	An antifungal agent produced by bacteria through fermentation. It prevents mould on cheese rinds and on the surface of dry sucuk.
+e.E235.uretim	Produced by fermentation with Streptomyces natalensis.
+e.E239.about	A preservative produced from formaldehyde and ammonia. In the EU it is permitted only in Italian Provolone cheese.
+e.E239.reason	Preservative; it breaks down into formaldehyde in an acidic environment. IARC classifies formaldehyde in Group 1 (carcinogenic to humans) (Monograph 100F, 2012). In the EU it is permitted only in Provolone cheese. In 2014 EFSA could not set its own ADI because of insufficient data; it concluded that use at the maximum permitted level (25 mg/kg, expressed as formaldehyde) does not raise a safety concern.
+e.E239.uretim	Produced chemically by reacting formaldehyde with ammonia in water.
+e.E242.about	A preservative that breaks down shortly after being added to drinks. Used to kill yeasts in fruit juices, iced teas and wines.
+e.E242.reason	Used in drinks for cold sterilisation against yeasts and moulds; shortly after addition it breaks down mainly into methanol and carbon dioxide. In 1990 JECFA found its use in drinks at up to 250 mg per litre acceptable; in 2001 the EU Scientific Committee on Food (SCF) considered its residues harmless.
+e.E242.uretim	A synthetic product (OIV International Oenological Codex).
+e.E243.about	A preservative produced from the amino acid arginine and lauric acid. It prevents bacterial growth in meat products and cheese.
+e.E243.reason	Preservative in heat-treated meat products; in the body it breaks down into L-arginine and lauric acid. In 2019 EFSA maintained the ADI of 0.5 mg/kg body weight/day; it reported that at the permitted level (160 mg/kg) this limit may be reached by high-consuming toddlers and children.
+e.E243.tgk_not	It was not on the 2013 list of permitted additives; it was later added to the permitted list of the Turkish Food Codex.
+e.E243.uretim	Produced by chemical synthesis by esterifying arginine with ethanol and reacting it with lauroyl chloride.
+e.E249.about	A nitrite salt. In processed meats it preserves the pink colour and prevents the growth of the botulism bacterium.
+e.E249.reason	IARC classifies the ingestion of nitrite and nitrate under conditions that may lead to the formation of nitrosamines in the body as Group 2A (probably carcinogenic). It is used in processed meats such as sucuk, sausages and salami to preserve colour and prevent botulism.
+e.E249.uretim	Produced chemically by reduction of potassium nitrate.
+e.E250.about	A nitrite salt. In sucuk, salami, sausages and ham it preserves the pink colour and prevents the growth of the botulism bacterium.
+e.E250.reason	IARC classifies the ingestion of nitrite and nitrate under conditions that may lead to the formation of nitrosamines in the body as Group 2A (probably carcinogenic). It is used in processed meats such as sucuk, sausages and salami to preserve colour and prevent botulism.
+e.E250.uretim	Produced chemically by absorbing nitrogen oxide gases from nitric acid production into a sodium hydroxide or sodium carbonate solution.
+e.E251.about	A nitrate salt; it is converted to nitrite in the body and in meat. Used in cured meats and some cheeses.
+e.E251.reason	IARC classifies the ingestion of nitrite and nitrate under conditions that may lead to the formation of nitrosamines in the body as Group 2A (probably carcinogenic). It is used in processed meats such as sucuk, sausages and salami to preserve colour and prevent botulism.
+e.E251.uretim	Mostly obtained from natural deposits (caliche) in Chile by dissolving them in brine and crystallising; it may also be produced chemically.
+e.E252.about	A nitrate salt (saltpetre). Used in cured meats and some cheeses.
+e.E252.reason	IARC classifies the ingestion of nitrite and nitrate under conditions that may lead to the formation of nitrosamines in the body as Group 2A (probably carcinogenic). It is used in processed meats such as sucuk, sausages and salami to preserve colour and prevent botulism.
+e.E252.uretim	Produced chemically by reacting potassium chloride with sodium nitrate, ammonium nitrate or nitric acid.
+e.E260.about	The acid that gives vinegar its sour taste. It provides acidity and preservation in pickles, sauces, ketchup and mayonnaise.
+e.E260.uretim	Produced by fermentation of carbohydrates or by chemical synthesis (from acetaldehyde, butane or methanol).
+e.E261.about	The potassium salt of acetic acid. It regulates acidity and is a preservative.
+e.E261.reason	The potassium salt of acetic acid (vinegar acid); acetate is part of the body's normal metabolism. In 1973 JECFA set the group ADI for acetic acid and its potassium/sodium salts as 'not limited'; the decision was maintained in 1997.
+e.E261.uretim	Acetic acid may be produced by fermentation or by chemical synthesis; its salts are obtained by neutralising the acid.
+e.E262.about	The sodium salts of acetic acid. They regulate acidity, give a vinegar taste to crisp seasonings and prevent mould in bakery products.
+e.E262.reason	The sodium salt of acetic acid (vinegar acid); acetate is part of the body's normal metabolism. In 1973 JECFA set the group ADI for acetic acid and its potassium/sodium salts as 'not limited'; the decision was maintained in 1997. In addition, an ADI of 0–15 mg/kg body weight/day was set for sodium diacetate.
+e.E262.uretim	Obtained by neutralising acetic acid with sodium carbonate; acetic acid may be produced by fermentation or by chemical synthesis.
+e.E263.about	The calcium salt of acetic acid. Used as an acidity regulator, preservative and firming agent.
+e.E263.reason	The calcium salt of acetic acid (vinegar acid); acetate is part of the body's normal metabolism. In 1973 JECFA set the ADI as 'not limited'.
+e.E263.uretim	Obtained by neutralising acetic acid with calcium hydroxide; acetic acid may be produced by fermentation or by chemical synthesis.
+e.E270.about	The acid formed by fermentation that gives yoghurt and pickles their sourness. Today it is usually produced by fermentation of sugar or starch; used as an acidity regulator.
+e.E270.uretim	Produced by lactic fermentation of sugars or by chemical synthesis.
+e.E280.about	An organic acid that also forms naturally in cheese. It prevents mould in bread and bakery products.
+e.E280.uretim	Mostly produced by chemical synthesis from petrochemical raw materials; its salts are obtained by neutralising the acid.
+e.E281.about	The sodium salt of propionic acid. It prevents mould in bread and bakery products.
+e.E281.uretim	Mostly produced by chemical synthesis from petrochemical raw materials; its salts are obtained by neutralising the acid.
+e.E282.about	The calcium salt of propionic acid. It is the most widely used mould inhibitor in packaged bread.
+e.E282.uretim	Mostly produced by chemical synthesis from petrochemical raw materials; its salts are obtained by neutralising the acid.
+e.E283.about	The potassium salt of propionic acid. Used as a mould inhibitor in bakery products.
+e.E283.uretim	Mostly produced by chemical synthesis from petrochemical raw materials; its salts are obtained by neutralising the acid.
+e.E284.about	A boron-containing acid. In the EU it is permitted in food only in sturgeon caviar.
+e.E284.reason	In the EU it is permitted only for caviar (sturgeon roe); boric acid falls under reproductive toxicity (Category 1B) in the EU classification.
+e.E284.uretim	Obtained by treating boron minerals such as borax, kernite or colemanite with sulphuric or hydrochloric acid.
+e.E285.about	A boron-containing mineral salt (borax). In the EU it is permitted in food only in sturgeon caviar.
+e.E285.reason	In the EU it is permitted only for caviar (sturgeon roe). Borax (disodium tetraborate) is classified as reproductive toxicity Category 1B in the EU CLP classification (H360FD; Regulation 790/2009). In 2013 EFSA set a group ADI for boric acid and borax of 0.16 mg/kg body weight/day, expressed as boron.
+e.E285.uretim	Obtained by grinding sodium borate ore, dissolving it in hot water and crystallising it (physical processing).
+e.E290.about	Carbon dioxide gas. It gives fizz to carbonated drinks, replaces air in packaging and plays a role in leavening.
+e.E290.uretim	Collected as a by-product of fermentation, from natural sources or from industrial processes.
+e.E296.about	An acid found naturally in fruits such as apples. It gives a sour taste and is used in confectionery, drinks and jams.
+e.E296.uretim	DL-malic acid is produced by chemical synthesis from petrochemical raw material; its salts are obtained by neutralisation.
+e.E297.about	An organic acid that also occurs in nature. It gives a sour taste and is used in powdered drinks, jellies and desserts.
+e.E297.uretim	Produced by chemical synthesis; it is a molecule that also occurs in nature.
+e.E300.about	Vitamin C. As an antioxidant it prevents discolouration in fruit juices and meat products, and it is a flour treatment agent in bread.
+e.E300.uretim	Produced from glucose by fermentation and chemical steps; it is the same molecule as the vitamin C found in nature.
+e.E301.about	The sodium salt of vitamin C. It helps preserve colour in meat products and is used as an antioxidant.
+e.E301.uretim	Obtained by neutralising vitamin C (ascorbic acid) with sodium bicarbonate; ascorbic acid is produced from glucose by fermentation and chemical steps.
+e.E302.about	The calcium salt of vitamin C. It is used as an antioxidant and as a source of vitamin C.
+e.E302.uretim	Obtained by reacting vitamin C (ascorbic acid) with calcium carbonate; ascorbic acid is produced from glucose by fermentation and chemical steps.
+e.E304.about	The fat-soluble form of vitamin C (ascorbyl palmitate, etc.). It delays fats from going rancid.
+e.E304.uretim	Obtained by esterification of ascorbic acid with palmitic acid (chemically or enzymatically).
+e.E306.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
+e.E306.uretim	Obtained by vacuum steam distillation of vegetable oils.
+e.E307.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
+e.E307.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
+e.E308.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
+e.E308.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
+e.E309.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
+e.E309.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
+e.E310.about	A synthetic antioxidant obtained from gallic acid. It delays fats from going rancid and is used in fats, oils and fatty products.
+e.E310.uretim	Produced by chemical reaction of gallic acid with alcohols.
+e.E311.about	A synthetic antioxidant obtained from gallic acid. It delays fats from going rancid and is used in fats, oils and fatty products.
+e.E311.reason	No longer permitted as a food additive in the EU: it was removed from the permitted list by Regulation (EU) 2018/1481 (in 2015 EFSA found no data with which to assess its safety).
+e.E311.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E311.uretim	Produced by chemical reaction of gallic acid with alcohols.
+e.E312.about	A synthetic antioxidant obtained from gallic acid. It delays fats from going rancid and is used in fats, oils and fatty products.
+e.E312.reason	No longer permitted as a food additive in the EU: it was removed from the permitted list by Regulation (EU) 2018/1481 (in 2015 EFSA found no data with which to assess its safety).
+e.E312.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E312.uretim	Produced by chemical reaction of gallic acid with alcohols.
+e.E315.about	An antioxidant structurally similar to vitamin C. It preserves colour in processed meats and speeds up nitrite curing.
+e.E315.uretim	Produced by fermentation of glucose by bacteria (Pseudomonas) to 2-keto-D-gluconic acid, followed by chemical steps.
+e.E316.about	The sodium salt of erythorbic acid. It preserves colour in processed meats.
+e.E316.uretim	Produced from glucose in steps combining fermentation and chemical synthesis (via 2-keto-D-gluconic acid).
+e.E319.about	A petroleum-derived synthetic antioxidant. It delays rancidity in frying oils and fatty snacks.
+e.E319.uretim	Produced chemically by reacting hydroquinone with isobutylene or tert-butyl alcohol.
+e.E320.about	A petroleum-derived synthetic antioxidant. It delays rancidity in fats, chewing gum and cereal products.
+e.E320.reason	Group 2B according to IARC (possibly carcinogenic). In 2011 EFSA set the acceptable daily intake at 1 mg/kg. In the EU its use is subject to maximum levels; it may be found in frying oils, powdered soups and seasonings.
+e.E320.uretim	Produced chemically by reacting 4-hydroxyanisole with isobutylene (or from hydroquinone).
+e.E321.about	A petroleum-derived synthetic antioxidant. It delays rancidity in fats, chewing gum and packaging.
+e.E321.uretim	Produced by chemical synthesis by reacting p-cresol with isobutylene; its raw materials are obtained from petroleum and coal tar.
+e.E322.about	A natural emulsifier obtained from soya, sunflower, rapeseed or egg. It allows fat and water to mix in chocolate, margarine and bakery products.
+e.E322.reason	Mostly obtained from soya or sunflower; relevant for people with soya allergy. In the EU, GM soya must be labelled; products from outside the EU may be derived from GM soya.
+e.E322.uretim	Obtained by physical methods from foods such as soya, sunflower or egg.
+e.E325.about	The sodium salt of lactic acid. It retains moisture in meat products, extends shelf life and regulates acidity.
+e.E325.uretim	Obtained by neutralising lactic acid; lactic acid may be produced by fermentation or by chemical synthesis.
+e.E326.about	The potassium salt of lactic acid. It is used as an acidity regulator and humectant.
+e.E326.uretim	Obtained by neutralising lactic acid; lactic acid may be produced by fermentation or by chemical synthesis.
+e.E327.about	The calcium salt of lactic acid. It is a firming agent and a source of calcium, and it preserves the texture of canned fruit and vegetables.
+e.E327.uretim	Obtained by neutralising lactic acid; lactic acid may be produced by fermentation or by chemical synthesis.
+e.E330.about	An acid found naturally in citrus fruits such as lemons and oranges; today it is mostly produced by fermenting sugar or starch with a mould. It gives a sour taste, regulates acidity and supports antioxidants, and it is one of the most widely used additives in drinks, confectionery, jams and canned foods.
+e.E330.uretim	Mostly produced by fermentation of sugars with the mould Aspergillus niger (sometimes with Candida yeast).
+e.E331.about	Sodium salts of citric acid. They regulate acidity and are used as emulsifying salts in processed cheese and to soften sourness in drinks.
+e.E331.uretim	Obtained by neutralising citric acid with sodium hydroxide or sodium carbonate.
+e.E332.about	Potassium salts of citric acid. They are used as acidity regulators in drinks and desserts.
+e.E332.uretim	Obtained by neutralising citric acid with potassium hydroxide or potassium carbonate.
+e.E333.about	Calcium salts of citric acid. They are an acidity regulator, a firming agent and a source of calcium.
+e.E333.uretim	Obtained by neutralising citric acid with calcium hydroxide or calcium carbonate.
+e.E334.about	An acid found naturally in grapes. It gives a sour taste and is used in wine, confectionery and baking powder.
+e.E334.uretim	Obtained by chemical processing from winemaking residues; its salts are produced by neutralisation.
+e.E335.about	Sodium salts of tartaric acid. They are used as acidity regulators.
+e.E335.uretim	Obtained by chemical processing from winemaking residues; its salts are produced by neutralisation.
+e.E336.about	Potassium salts of tartaric acid, also known as cream of tartar. They are used in baking powder and meringues.
+e.E336.uretim	Potassium hydrogen tartrate is obtained from winemaking residues by dissolving in hot water and crystallising; the production method of dipotassium tartrate was not found in the source.
+e.E337.about	The sodium potassium salt of tartaric acid (Rochelle salt). It is used as an acidity regulator.
+e.E337.uretim	Obtained by neutralising the tartar in wine lees with sodium hydroxide or sodium carbonate and purifying it.
+e.E338.about	A mineral acid. It gives cola-type drinks a sharp sour taste.
+e.E338.uretim	Obtained chemically from phosphoric acid produced from phosphate rock.
+e.E339.about	Salts of phosphoric acid. They regulate acidity, help leavening and retain water in meat products; they are used in processed meat, processed cheese and baking powder.
+e.E339.uretim	Obtained chemically from phosphoric acid produced from phosphate rock.
+e.E340.about	Salts of phosphoric acid. They regulate acidity, help leavening and retain water in meat products; they are used in processed meat, processed cheese and baking powder.
+e.E340.uretim	Obtained chemically from phosphoric acid produced from phosphate rock.
+e.E341.about	Calcium salts of phosphoric acid. They are used in baking powder, as an anti-caking agent and as a source of calcium.
+e.E341.uretim	Obtained chemically from phosphoric acid produced from phosphate rock.
+e.E343.about	Magnesium salts of phosphoric acid. They are used as anti-caking agents and acidity regulators.
+e.E343.uretim	Produced chemically by precipitation through the reaction of magnesium sulphate with disodium phosphate or of magnesite with phosphoric acid.
+e.E350.about	Sodium salts of malic acid. They are used as acidity regulators.
+e.E350.uretim	DL-malic acid is produced by chemical synthesis from petrochemical raw material; its salts are obtained by neutralisation.
+e.E351.about	The potassium salt of malic acid. It is used as an acidity regulator.
+e.E351.uretim	DL-malic acid is produced by chemical synthesis from petrochemical raw material; its salts are obtained by neutralisation.
+e.E352.about	Calcium salts of malic acid. They are used as acidity regulators and firming agents.
+e.E352.uretim	DL-malic acid is produced by chemical synthesis from petrochemical raw material; its salts are obtained by neutralisation.
+e.E353.about	It is obtained from tartaric acid. It prevents tartar crystals from settling in wine.
+e.E353.uretim	Obtained by heating natural L(+)-tartaric acid above 150 °C (loss of water and esterification).
+e.E354.about	The calcium salt of tartaric acid. It is used as an acidity regulator.
+e.E354.uretim	Obtained by precipitation through the reaction of potassium bitartrate from wine lees with calcium hydroxide and calcium sulphate.
+e.E355.about	A synthetic organic acid. It gives a sour taste to powdered drinks, jellies and desserts.
+e.E355.uretim	Produced by chemical synthesis from petrochemical raw material.
+e.E356.about	The sodium salt of adipic acid. It is used as an acidity regulator.
+e.E356.uretim	Produced by chemical synthesis from petrochemical raw material.
+e.E357.about	The potassium salt of adipic acid. It is used as an acidity regulator.
+e.E357.uretim	Produced by chemical synthesis from petrochemical raw material.
+e.E363.about	An organic acid that also occurs in nature. It gives a sour taste and is used as an acidity regulator in soups and desserts.
+e.E363.uretim	May be produced chemically by hydrogenation of maleic acid or fumaric acid, or by fermentation.
+e.E380.about	The ammonium salt of citric acid. It is used as an acidity regulator.
+e.E380.uretim	Obtained by neutralising citric acid with ammonia.
+e.E385.about	A binding agent known as EDTA. By binding metal ions it prevents changes in colour and taste; it is used in canned foods, mayonnaise and sauces.
+e.E385.uretim	Produced chemically by boiling a disodium EDTA solution with calcium carbonate.
+e.E392.about	A natural antioxidant obtained from rosemary leaves. It delays rancidity in fats, meat products and sauces.
+e.E392.uretim	Obtained from rosemary leaves by extraction.
+e.E400.about	A polysaccharide obtained from brown seaweeds. It thickens and forms gels and is used in ice cream and desserts.
+e.E400.uretim	Obtained from brown seaweeds by extraction.
+e.E401.about	A salt of alginic acid obtained from brown seaweeds. It thickens and forms gels and is used in ice cream, desserts and sauces.
+e.E401.uretim	Obtained from brown seaweeds by extraction.
+e.E402.about	A salt of alginic acid obtained from brown seaweeds. It thickens and forms gels and is used in ice cream, desserts and sauces.
+e.E402.uretim	Obtained from brown seaweeds by extraction.
+e.E403.about	A salt of alginic acid obtained from brown seaweeds. It thickens and forms gels and is used in ice cream, desserts and sauces.
+e.E403.uretim	Obtained from brown seaweeds by extraction.
+e.E404.about	A salt of alginic acid obtained from brown seaweeds. It thickens and forms gels and is used in ice cream, desserts and sauces.
+e.E404.uretim	Obtained from brown seaweeds by extraction.
+e.E405.about	A thickener produced from alginic acid. It stabilises beer foam and thickens salad dressings.
+e.E405.uretim	Obtained by chemical reaction of alginic acid with propylene oxide.
+e.E406.about	A plant-based gelling agent obtained from red seaweeds. It is used instead of gelatine in jellies, milk puddings and desserts.
+e.E406.uretim	Obtained from red seaweeds by extraction with hot water.
+e.E407.about	A thickener obtained from red seaweeds. It is used in dairy products, desserts, ice cream and processed meats.
+e.E407.reason	Obtained from red seaweed. In its 2018 re-evaluation EFSA considered the existing group ADI (75 mg/kg body weight/day) temporary because of data gaps and reported that estimated intake in some population groups may exceed this value by up to 10 times.
+e.E407.uretim	Obtained from red seaweeds by extraction with water or dilute alkali.
+e.E407a.about	A less purified seaweed product similar to carrageenan. It is used as a thickener.
+e.E407a.reason	Obtained from red seaweed. In its 2018 re-evaluation EFSA considered the existing group ADI (75 mg/kg body weight/day) temporary because of data gaps and reported that estimated intake in some population groups may exceed this value by up to 10 times.
+e.E407a.uretim	Obtained by treating red seaweeds with alkali.
+e.E410.about	A plant gum obtained from carob seeds. It thickens ice cream, cream cheese and sauces.
+e.E410.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E412.about	A plant gum obtained from the seeds of the guar plant. It thickens ice cream, sauces and gluten-free products.
+e.E412.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E413.about	A natural gum exuded from the stems of the Astragalus plant (tragacanth). It thickens confectionery and sauces.
+e.E413.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E414.about	A natural gum obtained from the resin of the acacia tree. It is used as a flavour carrier and thickener in confectionery, chewing gum and drinks.
+e.E414.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E415.about	A thickener produced by bacterial fermentation of sugar. It is very common in sauces, salad dressings and gluten-free products.
+e.E415.uretim	Produced by fermentation with the bacterium Xanthomonas campestris.
+e.E416.about	A natural gum obtained from the resin of the karaya tree. It is used as a thickener.
+e.E416.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E417.about	A plant gum obtained from the seeds of the tara tree. It thickens ice cream and sauces.
+e.E417.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E418.about	A gelling agent produced by bacterial fermentation. It provides thickness and suspension in plant-based drinks, desserts and beverages.
+e.E418.uretim	Produced by fermentation with the bacterium Sphingomonas elodea.
+e.E420.about	A polyol (sugar alcohol) produced from glucose. It is used as a sweetener and humectant in sugar-free chewing gum, confectionery and cakes; it occurs naturally in some fruits.
+e.E420.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E420.uretim	Obtained from sugar or starch by hydrogenation (chemical processing).
+e.E421.about	A polyol (sugar alcohol) that occurs naturally in seaweeds and mushrooms. It is used as a sweetener and dusting agent in sugar-free chewing gum and confectionery.
+e.E421.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E421.uretim	Produced by hydrogenation of glucose/fructose syrup or by fermentation with yeast.
+e.E422.about	A sweetish, syrupy liquid also known as glycerine. It is a humectant and prevents confectionery, cakes and dried fruit from drying out.
+e.E422.reason	May be obtained from vegetable or animal fats.
+e.E422.uretim	Obtained by splitting vegetable oils with water at high pressure, by saponification, or as a by-product of biodiesel production, and purified by distillation; EU manufacturers reported using only vegetable oils. The literature also describes chemical synthesis from propylene and fermentation routes.
+e.E425.about	A fibre (glucomannan) obtained from the tuber of the konjac plant. It thickens jellies, noodles and diet products.
+e.E425.reason	Thickens and forms gels. In 2017 EFSA saw no need for a numerical ADI; it found its use acceptable as long as total intake from all sources stays below 3 g per day. Because of choking cases, the EU banned jelly confectionery containing konjac (including mini jelly cups) in 2003.
+e.E425.uretim	Obtained from the tuber of the konjac plant.
+e.E426.about	A fibre obtained from soya beans. It provides thickness and stability in products such as drinks and noodles.
+e.E426.reason	Obtained from soya (relevant for people with soya allergy).
+e.E426.uretim	Obtained from soya fibre by extraction with hot water.
+e.E427.about	A gum obtained from the seeds of the cassia plant. It thickens cream, cheese and meat products.
+e.E427.uretim	Obtained physically from plant seeds or tree sap (gum).
+e.E431.about	A synthetic emulsifier. In the EU it is not permitted for use in food.
+e.E431.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E431.uretim	Produced by reacting stearic acid with polyoxyethylene (an ethylene oxide chain).
+e.E432.about	A synthetic emulsifier from the polysorbate group. It allows fat and water to mix and is used in ice cream, sauces and cake mixes.
+e.E432.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E432.uretim	Produced by chemical reaction of fatty acids and sorbitol with ethylene oxide.
+e.E433.about	A synthetic emulsifier from the polysorbate group. It allows fat and water to mix and is used in ice cream, sauces and cake mixes.
+e.E433.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E433.uretim	Produced by chemical reaction of fatty acids and sorbitol with ethylene oxide.
+e.E434.about	A synthetic emulsifier from the polysorbate group. It allows fat and water to mix and is used in ice cream, sauces and cake mixes.
+e.E434.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E434.uretim	Produced by chemical reaction of fatty acids and sorbitol with ethylene oxide.
+e.E435.about	A synthetic emulsifier from the polysorbate group. It allows fat and water to mix and is used in ice cream, sauces and cake mixes.
+e.E435.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E435.uretim	Produced by chemical reaction of fatty acids and sorbitol with ethylene oxide.
+e.E436.about	A synthetic emulsifier from the polysorbate group. It allows fat and water to mix and is used in ice cream, sauces and cake mixes.
+e.E436.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E436.uretim	Produced by chemical reaction of fatty acids and sorbitol with ethylene oxide.
+e.E440.about	A natural fibre found in the cell walls of fruits (especially apples and citrus peel). It forms gels in jams, marmalades, jellies and fruit yoghurts.
+e.E440.uretim	Pectin is obtained from fruit peel by acid extraction; amidated pectin is then modified by chemical processing.
+e.E441.about	A protein obtained from animal skin and bones (cattle, pig or fish). It forms gels in Turkish delight, confectionery, jellies and some desserts.
+e.E441.reason	Obtained from animal bones and skins; it may be of pork or beef origin. Because in the EU it is considered a food rather than an additive, it is usually listed on the label as “gelatine” rather than by an E-number.
+e.E441.tgk_not	In Türkiye, gelatine is considered a food ingredient rather than an additive; it is therefore not on the list of permitted additives.
+e.E441.uretim	Obtained by partial hydrolysis of animal collagen.
+e.E442.about	A synthetic emulsifier produced from fats. It is used in chocolate instead of lecithin to improve flow.
+e.E442.uretim	Produced by modifying plant raw material through chemical reaction.
+e.E444.about	A weighting agent produced from sugar. It prevents flavouring oils from rising to the surface in cloudy fruit drinks.
+e.E444.uretim	Produced by modifying plant raw material through chemical reaction.
+e.E445.about	A weighting agent produced from pine resin. It helps disperse the flavouring in citrus-flavoured drinks.
+e.E445.uretim	Produced by modifying plant raw material through chemical reaction.
+e.E450.about	Diphosphates: phosphate salts. They are used as raising agents in baking powder and to retain water in processed meats.
+e.E450.uretim	Obtained chemically from phosphoric acid produced from phosphate rock.
+e.E451.about	Triphosphates: phosphate salts. They retain water and improve texture in processed meat, seafood and processed cheese.
+e.E451.uretim	Obtained chemically by neutralising phosphoric acid produced from phosphate rock with sodium or potassium hydroxide and drying it above 250 °C.
+e.E452.about	Polyphosphates: phosphate salts. They retain water in processed meat, seafood and processed cheese.
+e.E452.uretim	Sodium polyphosphate is obtained chemically by melting sodium orthophosphates and cooling them rapidly.
+e.E459.about	A ring-shaped sugar molecule produced from starch using enzymes. It holds flavourings and vitamins and stabilises them.
+e.E459.reason	A ring-shaped sugar obtained from starch; it encapsulates flavourings and vitamins. In its 2016 re-evaluation EFSA maintained the ADI (5 mg/kg body weight/day), but reported that in the brand-loyal consumption scenario this value was exceeded at mean consumption in all age groups except infants, and at high consumption in all groups.
+e.E459.uretim	Produced from starch by enzymatic conversion.
+e.E460.about	Cellulose, the main building block of plant fibres. In powder form it prevents caking and is a bulking agent in products such as grated cheese.
+e.E460.uretim	Obtained from plant fibre mechanically (powdered cellulose) or by acid treatment (microcrystalline cellulose).
+e.E461.about	A thickener obtained by chemical processing of cellulose from plant cell walls. It provides texture in sauces, ice cream, gluten-free products and ready meals.
+e.E461.uretim	Produced by modifying cellulose through chemical reaction.
+e.E462.about	A thickener obtained by chemical processing of cellulose from plant cell walls. It provides texture in sauces, ice cream, gluten-free products and ready meals.
+e.E462.uretim	Produced by modifying cellulose through chemical reaction.
+e.E463.about	A thickener obtained by chemical processing of cellulose from plant cell walls. It provides texture in sauces, ice cream, gluten-free products and ready meals.
+e.E463.uretim	Produced by treating cellulose with alkali and propylene oxide.
+e.E464.about	A thickener obtained by chemical processing of cellulose from plant cell walls. It provides texture in sauces, ice cream, gluten-free products and ready meals.
+e.E464.uretim	Produced by etherification of cellulose obtained from plant fibres with methyl and hydroxypropyl groups.
+e.E465.about	A thickener obtained by chemical processing of cellulose from plant cell walls. It provides texture in sauces, ice cream, gluten-free products and ready meals.
+e.E465.uretim	Produced by treating cellulose with alkali, dimethyl sulphate and ethyl chloride.
+e.E466.about	A thickener produced from cellulose (CMC). It is used in ice cream, drinks, sauces and bakery products.
+e.E466.uretim	Produced by treating cellulose with alkali and monochloroacetic acid.
+e.E468.about	A thickener produced from cellulose. It helps supplement tablets disintegrate.
+e.E468.uretim	Produced by cross-linking carboxymethyl cellulose through acidification and heating.
+e.E469.about	A thickener produced from cellulose using enzymes. It is used as a thickener and stabiliser.
+e.E469.uretim	Produced by partial breakdown of carboxymethyl cellulose with the enzyme cellulase.
+e.E470a.about	Sodium, potassium and calcium salts of fatty acids. They are used as emulsifiers and anti-caking agents; the fat source may be vegetable or animal.
+e.E470a.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E470a.uretim	Obtained by splitting vegetable or animal fats through chemical processing.
+e.E470b.about	The magnesium salt of fatty acids (magnesium stearate, etc.). It prevents caking in tablets and powdered products; the fat source may be vegetable or animal.
+e.E470b.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E470b.uretim	Obtained by splitting vegetable or animal fats through chemical processing.
+e.E471.about	One of the most widely used emulsifiers, produced from fats. It improves texture and delays staling in bread, cakes, margarine, ice cream and cream-like products.
+e.E471.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E471.uretim	An emulsifier produced from vegetable or animal fats by chemical reaction (esterification).
+e.E472a.about	An emulsifier derived from mono- and diglycerides of fatty acids. It improves texture in bread, cakes and margarine; the fat source may be vegetable or animal.
+e.E472a.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472a.uretim	An emulsifier produced by interesterification of fats with triacetin or by reacting mono- and diglycerides with acetic anhydride.
+e.E472b.about	An emulsifier derived from mono- and diglycerides of fatty acids. It improves texture in bread, cakes and margarine; the fat source may be vegetable or animal.
+e.E472b.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472b.uretim	An emulsifier produced by esterification of glycerol with lactic acid and fatty acids or by reacting mono- and diglycerides with lactic acid.
+e.E472c.about	An emulsifier derived from mono- and diglycerides of fatty acids. It improves texture in bread, cakes and margarine; the fat source may be vegetable or animal.
+e.E472c.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472c.uretim	An emulsifier produced by esterification of glycerol with citric acid and fatty acids, or of mono- and diglycerides with citric acid.
+e.E472d.about	An emulsifier derived from mono- and diglycerides of fatty acids. It improves texture in bread, cakes and margarine; the fat source may be vegetable or animal.
+e.E472d.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472d.uretim	An emulsifier obtained by esterification of mono- and diglycerides with tartaric acid; according to the 2020 EFSA assessment, the production method is not described in the sources and there is no manufacturer on the market.
+e.E472e.about	An emulsifier derived from mono- and diglycerides (DATEM). It strengthens bread dough and increases its volume.
+e.E472e.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472e.uretim	An emulsifier produced from vegetable or animal fats by chemical reaction (esterification).
+e.E472f.about	An emulsifier derived from mono- and diglycerides of fatty acids. It improves texture in bread, cakes and margarine; the fat source may be vegetable or animal.
+e.E472f.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E472f.uretim	An emulsifier produced by esterification of mono- and diglycerides with tartaric acid and acetic acid (or their anhydrides).
+e.E473.about	An emulsifier produced from sugar and fatty acids. It is used in cakes, ice cream and cream-like products, and also in fruit coatings.
+e.E473.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E473.uretim	An emulsifier produced by esterification of sucrose with fatty acid esters or by extraction from sucroglycerides.
+e.E474.about	An emulsifier mixture produced from sugar and fats. It is used in cakes and ice cream.
+e.E474.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E474.uretim	An emulsifier produced by reacting sucrose with edible fats.
+e.E475.about	An emulsifier produced from glycerol and fatty acids. It is used in cakes and bakery products.
+e.E475.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E475.uretim	An emulsifier produced by esterification of polyglycerol with edible fats or fatty acids.
+e.E476.about	An emulsifier produced from castor oil and glycerol (PGPR). It improves the flow of chocolate and reduces the need for cocoa butter.
+e.E476.uretim	An emulsifier produced by esterification of polyglycerol with castor oil fatty acids.
+e.E477.about	An emulsifier produced from fatty acids. It is used in whipped cream and cake mixes.
+e.E477.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E477.uretim	An emulsifier produced by esterification of propylene glycol with fatty acids or by transesterification with fats.
+e.E479b.about	An emulsifier produced from thermally oxidised soya bean oil. It is used to reduce spattering in frying fats.
+e.E479b.reason	Obtained from soya bean oil (relevant for people with soya allergy).
+e.E479b.uretim	An emulsifier produced by reacting thermally oxidised soya bean oil with mono- and diglycerides under vacuum.
+e.E481.about	An emulsifier produced from lactic acid and fatty acids. It strengthens dough and preserves softness in bread.
+e.E481.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E481.uretim	An emulsifier produced from vegetable or animal fats by chemical reaction (esterification).
+e.E482.about	An emulsifier produced from lactic acid and fatty acids. It is a dough improver in bread and bakery products.
+e.E482.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E482.uretim	An emulsifier produced by reacting stearic acid with lactic acid and converting the product into the calcium salt.
+e.E483.about	An emulsifier produced from stearyl alcohol and tartaric acid. It is a dough improver in bakery products.
+e.E483.reason	No longer permitted as a food additive in the EU: it was removed from the permitted list by Regulation (EU) 2023/2379; it may not be used in foods placed on the market after 23 April 2024 (in 2020 EFSA found no data with which to assess its safety). The fatty acid source may also be animal.
+e.E483.uretim	An emulsifier produced by esterification of tartaric acid with stearyl alcohol.
+e.E491.about	A synthetic emulsifier produced from sorbitol and fatty acids. It is used in dried yeast, confectionery coatings and cream-like products.
+e.E491.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E491.uretim	Produced by chemical reaction of sorbitol and fatty acids.
+e.E492.about	A synthetic emulsifier produced from sorbitol and fatty acids. It is used in dried yeast, confectionery coatings and cream-like products.
+e.E492.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E492.uretim	Produced by chemical reaction of sorbitol and fatty acids.
+e.E493.about	A synthetic emulsifier produced from sorbitol and fatty acids. It is used in dried yeast, confectionery coatings and cream-like products.
+e.E493.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E493.uretim	Produced by chemical reaction of sorbitol and fatty acids.
+e.E494.about	A synthetic emulsifier produced from sorbitol and fatty acids. It is used in dried yeast, confectionery coatings and cream-like products.
+e.E494.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E494.uretim	Produced by chemical reaction of sorbitol and fatty acids.
+e.E495.about	A synthetic emulsifier produced from sorbitol and fatty acids. It is used in dried yeast, confectionery coatings and cream-like products.
+e.E495.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E495.uretim	Produced by chemical reaction of sorbitol and fatty acids.
+e.E500.about	Sodium carbonate and sodium bicarbonate (soda). The main component of baking powder; it raises dough and regulates acidity.
+e.E500.uretim	May be obtained from natural mineral deposits or by chemical production.
+e.E501.about	Potassium carbonates. They are used as raising agents and acidity regulators, and they darken the colour in cocoa processing.
+e.E501.uretim	Produced by chemical reaction of potassium hydroxide or potassium chloride with carbon dioxide.
+e.E503.about	Ammonium carbonates (baker's ammonia). They are used as raising agents in cookies and biscuits.
+e.E503.uretim	Produced by chemical reaction from ammonium sulphate and calcium carbonate or from ammonia and carbon dioxide.
+e.E504.about	Magnesium carbonates. They are used as anti-caking agents and acidity regulators.
+e.E504.uretim	Produced chemically by adding carbonate to a magnesium sulphate solution or by carbonation of magnesium hydroxide.
+e.E507.about	Hydrochloric acid (spirits of salt). It is used in food production to regulate acidity and to break down starch or protein.
+e.E507.uretim	Mostly produced chemically as a by-product of chlorination processes, or by reacting hydrogen with chlorine.
+e.E508.about	Potassium chloride. It replaces sodium in low-sodium salts and assists gelling agents.
+e.E508.uretim	Obtained by purification from natural potassium salt deposits.
+e.E509.about	Calcium chloride. It firms the texture of canned vegetables and fruit and helps coagulation in cheesemaking.
+e.E509.uretim	May be obtained from natural mineral deposits or by chemical production.
+e.E511.about	Magnesium chloride. It is used as a coagulant (nigari) in tofu making.
+e.E511.uretim	Obtained by dissolving magnesium oxide, hydroxide or carbonate in hydrochloric acid and crystallising it.
+e.E512.about	Stannous chloride. It is used to preserve colour in products such as canned asparagus.
+e.E512.uretim	Produced chemically by reacting tin with chlorine or hydrochloric acid.
+e.E513.about	Sulphuric acid. It is used in food production as an acidity regulator and processing aid.
+e.E513.uretim	Produced chemically by combining with water the sulphur trioxide formed by reacting sulphur dioxide with oxygen.
+e.E514.about	Sodium sulphates. They are used as acidity regulators.
+e.E514.uretim	Produced chemically by reacting sodium chloride with sulphuric acid, or extracted from natural mineral deposits and purified.
+e.E515.about	Potassium sulphates. They are used in salt substitute mixtures.
+e.E515.uretim	May be obtained from natural mineral deposits or by chemical production.
+e.E516.about	Calcium sulphate (gypsum). It is used as a coagulant in tofu making and as a flour treatment agent in bread.
+e.E516.uretim	May be obtained from natural mineral deposits or by chemical production.
+e.E517.about	Ammonium sulphate. It is used as a flour treatment agent that helps feed the yeast.
+e.E517.uretim	Produced chemically by neutralising sulphuric acid with ammonium hydroxide.
+e.E520.about	Aluminium sulphate. It is used as a firming agent, for example in candied fruit.
+e.E520.uretim	Produced chemically by reacting aluminium hydroxide (bauxite) with sulphuric acid.
+e.E521.about	Aluminium sodium sulphate. It is used as a firming agent.
+e.E521.uretim	Produced chemically by mixing and drying aluminium sulphate and sodium sulphate solutions.
+e.E522.about	Aluminium potassium sulphate (alum). It is used as a firming agent.
+e.E522.uretim	Produced chemically by treating bauxite with sulphuric acid and potassium sulphate.
+e.E523.about	Aluminium ammonium sulphate. It is used as a firming agent.
+e.E523.uretim	Produced chemically by crystallisation from a mixture of ammonium and aluminium sulphate or by treating aluminium sulphate with ammonia.
+e.E524.about	Sodium hydroxide (caustic soda). It is used to remove bitterness from olives, for the crust of simit and pretzels, and in cocoa processing.
+e.E524.uretim	Produced chemically by electrolysis of sodium chloride solution or by reacting calcium hydroxide with sodium carbonate.
+e.E525.about	Potassium hydroxide. It is used in cocoa processing and as an acidity regulator.
+e.E525.uretim	Produced chemically by electrolysis of potassium chloride solution.
+e.E526.about	Calcium hydroxide (slaked lime). It is used in processing maize flour and as an acidity regulator.
+e.E526.uretim	Obtained by burning (calcination) limestone or magnesium minerals.
+e.E527.about	Ammonium hydroxide. It is used as an acidity regulator in cocoa and some other products.
+e.E527.uretim	Produced chemically by dissolving in water ammonia obtained from the catalytic reaction of hydrogen with nitrogen.
+e.E528.about	Magnesium hydroxide. It is used as an acidity regulator.
+e.E528.uretim	Precipitated by adding sodium hydroxide to soluble magnesium salts, or obtained by reacting magnesium oxide with water.
+e.E529.about	Calcium oxide (quicklime). It is used as an acidity regulator and flour treatment agent.
+e.E529.uretim	Obtained by burning (calcination) limestone or magnesium minerals.
+e.E530.about	Magnesium oxide. It is used as an anti-caking agent and acidity regulator.
+e.E530.uretim	Obtained by burning (calcination) limestone or magnesium minerals.
+e.E535.about	Sodium ferrocyanide. It prevents table salt from caking.
+e.E535.uretim	Produced entirely chemically by reacting cyanide compounds with iron sulphate.
+e.E536.about	Potassium ferrocyanide. It prevents table salt from caking and is also used to remove metals from wine.
+e.E536.uretim	Produced entirely chemically by reacting cyanide compounds with iron sulphate.
+e.E538.about	Calcium ferrocyanide. It prevents table salt from caking.
+e.E538.uretim	Produced entirely chemically by reacting cyanide compounds with iron sulphate.
+e.E541.about	A phosphate salt containing aluminium. It is used as a leavening acid in baking powders.
+e.E541.uretim	Produced chemically by reacting phosphoric acid with suitable sodium and aluminium compounds and crystallising the product.
+e.E551.about	Silicon dioxide, also known as silica. It prevents caking in powdered spices, salt, coffee whitener and powdered drinks.
+e.E551.uretim	A silicate produced chemically.
+e.E552.about	Calcium silicate. It prevents caking in salt and powdered products.
+e.E552.uretim	A silicate produced chemically.
+e.E553a.about	Magnesium silicate. It prevents caking in powdered products.
+e.E553a.uretim	A silicate produced chemically.
+e.E553b.about	Talc, a natural mineral. It is used as an anti-caking agent and on the surface of some confectionery.
+e.E553b.reason	In 2025 IARC classified talc in Group 2A (probably carcinogenic to humans) (Monograph 136). In 2018 EFSA could not assess its safety as an additive because long-term toxicity data were lacking. In the EU it is permitted as an anti-caking agent on the surface of rice, sausages and boiled eggs, in chewing gum and in powdered foods.
+e.E553b.uretim	A natural clay or mineral (purified).
+e.E554.about	A silicate containing aluminium. It prevents caking in powdered products and is used in salt, icing sugar and spice mixes.
+e.E554.uretim	A silicate produced chemically by precipitation through the reaction of aluminium sulphate with sodium silicate.
+e.E555.about	A mineral containing aluminium, also known as mica. It is the carrier for pigments that give a shiny pearlescent effect in confectionery coatings.
+e.E555.uretim	A potassium aluminium silicate obtained from the natural mica mineral (muscovite).
+e.E556.about	A silicate containing aluminium. It prevents caking in powdered products and is used in salt, icing sugar and spice mixes.
+e.E556.reason	No longer permitted as a food additive in the EU: under Regulation (EU) No 380/2012 its authorisation expired on 31 January 2014 (review of aluminium-containing additives). In Türkiye, it is also not on the current permitted list of the Turkish Food Codex.
+e.E556.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E556.uretim	A silicate produced chemically.
+e.E558.about	A clay of volcanic ash origin. It is used to clarify wine and fruit juice and to prevent caking.
+e.E558.reason	No longer permitted as a food additive in the EU: under Regulation (EU) No 380/2012 its authorisation expired on 31 May 2013 (food manufacturers reported that they no longer use it). JECFA has not set an ADI.
+e.E558.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E558.uretim	Obtained by crushing, drying, grinding and sieving clay extracted from open pits (physical processing).
+e.E559.about	A silicate containing aluminium. It prevents caking in powdered products and is used in salt, icing sugar and spice mixes.
+e.E559.reason	No longer permitted as a food additive in the EU: under Regulation (EU) No 380/2012 its authorisation expired on 31 January 2014 (review of aluminium-containing additives). In Türkiye, it is also not on the current permitted list of the Turkish Food Codex.
+e.E559.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E559.uretim	A natural clay or mineral (purified).
+e.E570.about	Fatty acids (stearic acid, etc.) obtained from vegetable or animal fats. They are used as emulsifiers, coatings and tableting aids.
+e.E570.reason	The fatty acid source may be vegetable or animal (including beef/pork); the source is often not stated on the label.
+e.E570.uretim	Fatty acids (e.g. stearic acid) are obtained by hydrolysis of animal or vegetable fats.
+e.E574.about	A mild acid obtained from glucose. It is used as an acidity regulator.
+e.E574.uretim	Produced by fermentation of glucose.
+e.E575.about	An acidifier obtained from glucose; in water it slowly converts to gluconic acid. It is used in tofu making, baking powder and fermented sausage.
+e.E575.uretim	Produced by fermentation of glucose.
+e.E576.about	The sodium salt of gluconic acid. It is used as a sequestrant and acidity regulator.
+e.E576.uretim	Produced by fermentation or by chemical catalytic oxidation.
+e.E577.about	The potassium salt of gluconic acid. It is used as an acidity regulator.
+e.E577.uretim	Produced by neutralising with potassium hydroxide gluconic acid obtained by electrolytic or chemical oxidation of glucose or by fermentation with the mould Aspergillus niger.
+e.E578.about	The calcium salt of gluconic acid. It is a firming agent and a source of calcium.
+e.E578.uretim	Obtained by neutralising gluconic acid with lime or calcium carbonate.
+e.E579.about	The iron salt of gluconic acid. It stabilises the colour of black olives and is a source of iron.
+e.E579.uretim	Obtained by reacting calcium or barium gluconate with iron sulphate, or iron carbonate with gluconic acid.
+e.E585.about	The iron salt of lactic acid. It stabilises the colour of black olives.
+e.E585.uretim	Obtained by reacting lactic acid or lactate salts with iron compounds; lactic acid may be produced by fermentation or by chemical synthesis.
+e.E586.about	A synthetic antioxidant. It prevents blackening in shrimps and shellfish.
+e.E586.uretim	Produced chemically by catalytic reaction of caproic acid with resorcinol.
+e.E620.about	An amino acid found naturally in tomatoes, cheese and meat stock. It gives an umami (savoury, broth-like) taste.
+e.E620.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E620.uretim	Glutamic acid is produced by bacterial fermentation; its salts are obtained by neutralisation.
+e.E621.about	The sodium salt of glutamic acid (MSG). It enhances the umami (savoury, broth-like) taste and is used in instant soups, crisps, seasonings and ready meals.
+e.E621.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E621.uretim	Glutamic acid is produced by bacterial fermentation; its salts are obtained by neutralisation.
+e.E622.about	A salt of glutamic acid; it is a flavour enhancer. It enhances the umami (savoury, broth-like) taste and is used in instant soups, crisps and seasonings.
+e.E622.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E622.uretim	Glutamic acid is produced from plant sugars by bacterial fermentation (Corynebacterium glutamicum); its salts are obtained by neutralisation.
+e.E623.about	A salt of glutamic acid; it is a flavour enhancer. It enhances the umami (savoury, broth-like) taste and is used in instant soups, crisps and seasonings.
+e.E623.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E623.uretim	Glutamic acid is produced from plant sugars by bacterial fermentation (Corynebacterium glutamicum); its salts are obtained by neutralisation.
+e.E624.about	A salt of glutamic acid; it is a flavour enhancer. It enhances the umami (savoury, broth-like) taste and is used in instant soups, crisps and seasonings.
+e.E624.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E624.uretim	Glutamic acid is produced from plant sugars by bacterial fermentation (Corynebacterium glutamicum); its salts are obtained by neutralisation.
+e.E625.about	A salt of glutamic acid; it is a flavour enhancer. It enhances the umami (savoury, broth-like) taste and is used in instant soups, crisps and seasonings.
+e.E625.reason	Glutamates (E620-E625): in 2017 EFSA set a group ADI (30 mg/kg body weight/day) and stated that this value may be exceeded in some high-consumption scenarios. The “neurotoxin” claim is not classified as such by official bodies; there are reports of headache in sensitive individuals.
+e.E625.uretim	Glutamic acid is produced from plant sugars by bacterial fermentation (Corynebacterium glutamicum); its salts are obtained by neutralisation.
+e.E626.about	Guanylic acid and its salts: a flavour enhancer from the nucleotide group. It is usually used together with glutamate in instant soups and seasonings.
+e.E626.reason	A flavour enhancer that intensifies umami (meat broth) taste. JECFA set the group ADI for guanylic acid and its calcium, disodium and dipotassium salts as 'not specified' (last evaluation 1993); intake as an additive is far below that of the natural nucleotides from food. In the body it breaks down into uric acid; in 1974 JECFA reported that large amounts should be taken into account in people predisposed to gout. The EFSA re-evaluation is ongoing.
+e.E626.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E627.about	The sodium salt of guanylic acid; a flavour enhancer from the nucleotide group. It is usually used together with MSG in instant soups, crisps and seasonings.
+e.E627.reason	A flavour enhancer that intensifies umami (meat broth) taste. JECFA set the group ADI for guanylic acid and its calcium, disodium and dipotassium salts as 'not specified' (last evaluation 1993); intake as an additive is far below that of the natural nucleotides from food. In the body it breaks down into uric acid; in 1974 JECFA reported that large amounts should be taken into account in people predisposed to gout. The EFSA re-evaluation is ongoing.
+e.E627.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E628.about	Guanylic acid and its salts: a flavour enhancer from the nucleotide group. It is usually used together with glutamate in instant soups and seasonings.
+e.E628.reason	A flavour enhancer that intensifies umami (meat broth) taste. JECFA set the group ADI for guanylic acid and its calcium, disodium and dipotassium salts as 'not specified' (last evaluation 1993); intake as an additive is far below that of the natural nucleotides from food. In the body it breaks down into uric acid; in 1974 JECFA reported that large amounts should be taken into account in people predisposed to gout. The EFSA re-evaluation is ongoing.
+e.E628.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E629.about	Guanylic acid and its salts: a flavour enhancer from the nucleotide group. It is usually used together with glutamate in instant soups and seasonings.
+e.E629.reason	A flavour enhancer that intensifies umami (meat broth) taste. JECFA set the group ADI for guanylic acid and its calcium, disodium and dipotassium salts as 'not specified' (last evaluation 1993); intake as an additive is far below that of the natural nucleotides from food. In the body it breaks down into uric acid; in 1974 JECFA reported that large amounts should be taken into account in people predisposed to gout. The EFSA re-evaluation is ongoing.
+e.E629.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E630.about	Inosinic acid and its salts: a flavour enhancer from the nucleotide group. It is obtained from meat or fish or by fermentation and is used in instant soups and crisps.
+e.E630.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E630.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E631.about	The sodium salt of inosinic acid; a flavour enhancer from the nucleotide group. It is obtained from meat or fish or by fermentation and is used together with MSG.
+e.E631.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E631.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E632.about	Inosinic acid and its salts: a flavour enhancer from the nucleotide group. It is obtained from meat or fish or by fermentation and is used in instant soups and crisps.
+e.E632.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E632.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E633.about	Inosinic acid and its salts: a flavour enhancer from the nucleotide group. It is obtained from meat or fish or by fermentation and is used in instant soups and crisps.
+e.E633.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E633.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E634.about	A mixture of guanylate and inosinate salts; it is a flavour enhancer. It is used in instant soups and seasonings.
+e.E634.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E634.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E635.about	A mixture of disodium guanylate and inosinate (I+G); it is a flavour enhancer. It is common in instant soups, crisps and noodle seasonings.
+e.E635.reason	May be of animal (meat/fish) or fermentation origin; the source may not be stated.
+e.E635.uretim	Produced by microbial fermentation or by breakdown of RNA obtained from yeast.
+e.E640.about	Glycine, the simplest amino acid, and its salt. It gives a slightly sweet taste and is a flavour enhancer.
+e.E640.reason	Flavour modifier; an amino acid (glycine), a natural building block of proteins, and its sodium salt. The amount taken in from food is much greater than that from the additive. In 2004 JECFA concluded that there is no safety concern at current intake levels.
+e.E640.uretim	Produced chemically by reacting chloroacetic acid with ammonia, or separated from the hydrolysis of proteins such as gelatine.
+e.E650.about	Zinc acetate. It is used as a flavour enhancer in chewing gum.
+e.E650.reason	A zinc salt; in the EU it is permitted as a flavour enhancer only in chewing gum (at most 1,000 mg/kg). Zinc is an essential mineral for the body; the SCF set the tolerable upper intake for adults at 25 mg per day.
+e.E650.uretim	Produced chemically by reacting zinc oxide with acetic acid.
+e.E900.about	A silicone-based antifoaming agent. It prevents foaming in frying oils, fruit juices and jam boiling.
+e.E900.uretim	A polymer produced by chemical synthesis.
+e.E901.about	A natural wax produced by bees. It is a glazing agent for confectionery, fruit and cheese coatings.
+e.E901.reason	A bee product (not vegan).
+e.E901.uretim	Beeswax obtained from honeybee comb.
+e.E902.about	A plant wax obtained from the candelilla plant. It is a glazing agent in confectionery and chewing gum.
+e.E902.uretim	A wax obtained from the dried stems of the candelilla plant by boiling in water.
+e.E903.about	A plant wax obtained from the leaves of the carnauba palm. It is a glazing agent in confectionery, dragées and fruit.
+e.E903.uretim	A wax obtained from the leaves and buds of the Brazilian wax palm and purified.
+e.E904.about	A resin obtained from the secretion of the lac insect. It is a glazing agent in coatings for dragées, confectionery, fruit and medicines.
+e.E904.reason	Obtained from the secretion of the lac insect (not vegan).
+e.E904.uretim	Obtained from the secretion of the lac insect.
+e.E905.about	A petroleum-derived wax. It is used as a coating on cheese rinds and chewing gum.
+e.E905.uretim	Obtained from petroleum or natural gas by refining.
+e.E907.about	A synthetic, petroleum-derived hydrocarbon. It is used as a glazing coating on confectionery and dried fruit.
+e.E907.uretim	A polymer produced by chemical synthesis.
+e.E912.about	Esters of wax obtained from lignite coal. They are used to coat citrus peel.
+e.E912.reason	No longer permitted as a food additive in the EU: it was removed from the permitted list by Regulation (EU) No 957/2014 (in 2013 EFSA could not assess it because of insufficient data).
+e.E912.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E912.uretim	Produced by modifying lignite wax through chemical processing.
+e.E914.about	A synthetic wax. It is used to coat the peel of citrus and some other fruits.
+e.E914.uretim	A polymer obtained by mild oxidation of polyethylene with air.
+e.E920.about	An amino acid. It is a flour treatment agent that softens dough; in the EU it may not be produced from human hair.
+e.E920.reason	Flour treatment agent (amino acid). In the EU it is permitted in flour at quantum satis and in biscuits for infants and young children at up to 1,000 mg/kg. The EU specification (231/2012) prohibits the use of human hair as a source and does not specify any other raw material; it may therefore be of animal origin.
+e.E920.uretim	Formerly obtained by hydrolysis of keratins such as hair; today it is mostly produced by fermentation or enzymatically; the EU specification prohibits the use of human hair as a source.
+e.E924a.about	A strong flour treatment agent. It used to be used to strengthen bread dough.
+e.E924a.reason	Not permitted as a flour treatment agent in the EU. In 1992 JECFA did not consider its use as a flour treatment agent appropriate. In 1999 IARC classified it in Group 2B (possibly carcinogenic). In the USA it will be banned in California from 1 January 2027 under AB 418.
+e.E924a.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
+e.E924a.uretim	Produced chemically by passing bromine into a potassium hydroxide solution or by electrolysis.
+e.E927b.about	A compound also known as urea. It is used in chewing gum.
+e.E927b.uretim	Produced chemically from carbon dioxide and ammonia or by hydrolysis of cyanamide.
+e.E938.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E938.uretim	A gas obtained by fractional distillation of liquefied air (physical separation).
+e.E939.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E939.uretim	A gas obtained by liquefying and purifying natural gas.
+e.E941.about	Nitrogen gas. It replaces air in crisp and coffee packaging to prevent staling; liquid nitrogen is used in ice cream.
+e.E941.uretim	A gas obtained by fractional distillation of liquid air (fractionation).
+e.E942.about	Nitrous oxide (laughing gas). It is used as a propellant in spray cream.
+e.E942.uretim	Produced chemically by controlled thermal decomposition of ammonium nitrate.
+e.E943a.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E943a.uretim	Obtained from natural gas by physical separation (fractionation).
+e.E943b.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E943b.uretim	Obtained from natural gas by physical separation (fractionation).
+e.E944.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E944.uretim	Obtained from natural gas by physical separation or as a by-product of petroleum refining.
+e.E948.about	Oxygen gas. It is used in fresh meat packaging to preserve the red colour.
+e.E948.uretim	A gas obtained by low-temperature fractional distillation of liquefied air (physical separation).
+e.E949.about	A gas that replaces air in packaging or is used as a propellant. It prevents the product from oxidising or allows it to come out of spray packaging.
+e.E949.uretim	Mostly produced chemically by reacting natural gas with steam at high temperature (steam reforming).
+e.E950.about	A calorie-free synthetic sweetener about 200 times sweeter than sugar. It is used in diet drinks, chewing gum and sugar-free products, usually together with other sweeteners.
+e.E950.uretim	A sweetener produced chemically.
+e.E951.about	A sweetener made from two amino acids, about 200 times sweeter than sugar. It is used in diet drinks, chewing gum and sugar-free desserts.
+e.E951.reason	In 2023 IARC classified aspartame in Group 2B (possibly carcinogenic); JECFA, however, did not change the acceptable daily intake (40 mg/kg). For people with phenylketonuria, the warning “contains a source of phenylalanine” is mandatory on the label.
+e.E951.uretim	A sweetener produced by chemical or enzymatic coupling of L-phenylalanine methyl ester with L-aspartic acid.
+e.E952.about	A synthetic sweetener about 30-50 times sweeter than sugar. It is used in diet drinks and table-top sweeteners.
+e.E952.reason	Not permitted in food in the USA since 1969 (21 CFR 189.135). It is permitted in the EU; in 2000 the SCF set the acceptable daily intake at 7 mg/kg, and the EFSA re-evaluation is ongoing.
+e.E952.uretim	A sweetener produced chemically by sulphonation of cyclohexylamine.
+e.E953.about	A polyol (sugar alcohol) produced from sugar beet. It is used in sugar-free hard sweets and chewing gum.
+e.E953.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E953.uretim	Obtained from sugar or starch by hydrogenation (chemical processing).
+e.E954.about	The oldest synthetic sweetener, hundreds of times sweeter than sugar. It is used in table-top sweeteners and diet drinks.
+e.E954.reason	In 1999 IARC downgraded it to Group 3, concluding that the bladder tumour findings in animal experiments could not be extrapolated to humans; in 2000 the US NTP removed it from its list of carcinogens.
+e.E954.uretim	A sweetener produced chemically.
+e.E955.about	A calorie-free sweetener derived from sugar, about 600 times sweeter than sugar. It is used in diet drinks and sugar-free products.
+e.E955.reason	In its re-evaluation of 16 February 2026 EFSA did not change the ADI (15 mg/kg body weight/day); it reported that even the highest estimated intake is below this value and that there is no safety concern.
+e.E955.uretim	A sweetener produced chemically by replacing three hydroxyl groups of sugar (sucrose) with chlorine.
+e.E957.about	A very sweet protein obtained from a fruit native to Africa. It is used as a sweetener and flavour enhancer.
+e.E957.uretim	A protein obtained from the katemfe fruit by extraction.
+e.E959.about	An intense sweetener produced from a substance obtained from citrus fruits. It is also used to mask bitterness.
+e.E959.uretim	Produced by catalytic hydrogenation of neohesperidin obtained from citrus fruits.
+e.E960.about	A calorie-free sweetener purified from the leaves of the stevia plant. It is used in drinks, yoghurts and sugar-free products.
+e.E960.uretim	May be produced from stevia leaves by extraction, by enzymatic conversion or by fermentation.
+e.E961.about	A synthetic sweetener similar to aspartame but much sweeter. It is used in very small amounts.
+e.E961.uretim	A sweetener produced by chemical synthesis.
+e.E962.about	A combined salt of aspartame and acesulfame K. It is used in diet drinks and chewing gum.
+e.E962.reason	Contains aspartame: in 2023 IARC classified aspartame in Group 2B (possibly carcinogenic). For people with phenylketonuria, the warning “contains a source of phenylalanine” is mandatory on the label.
+e.E962.uretim	A sweetener produced by chemical synthesis.
+e.E964.about	A mixture of polyols (sugar alcohols) obtained by breaking down and hydrogenating starch. It is used as a sweetener in sugar-free confectionery.
+e.E964.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E964.uretim	Obtained from sugar or starch by hydrogenation (chemical processing).
+e.E965.about	A polyol (sugar alcohol) produced from starch. It is used in sugar-free chocolate, confectionery and chewing gum.
+e.E965.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E965.uretim	Obtained from sugar or starch by hydrogenation (chemical processing).
+e.E966.about	A polyol produced from milk sugar (lactose). It is used in sugar-free confectionery and chocolate.
+e.E966.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet.
+e.E966.uretim	Obtained by catalytic hydrogenation of lactose (chemical processing).
+e.E967.about	A polyol obtained from birch wood or corn cobs. It is common in sugar-free chewing gum and tooth-friendly confectionery.
+e.E967.reason	Polyol (sugar alcohol): in the EU, products containing more than 10% added polyols must carry the warning “excessive consumption may produce laxative effects”; it is avoided in the sensitive-gut (FODMAP) diet. It is highly toxic to dogs; it should not be given to pets.
+e.E967.uretim	Obtained from sugar or starch by hydrogenation (chemical processing).
+e.E968.about	A nearly calorie-free polyol produced by fermentation. It is used in sugar-free drinks and desserts, often together with stevia.
+e.E968.reason	In its 2023 re-evaluation EFSA set the ADI at 0.5 g/kg body weight/day (based on the diarrhoea/laxative effect) and reported that estimated intake is above this value. A study published in 2023 reported an association between blood erythritol levels and cardiovascular events; causality has not been proven.
+e.E968.uretim	Produced by fermentation of glucose with yeast.
+e.E969.about	A synthetic sweetener derived from aspartame, thousands of times sweeter than sugar. It is used in very small amounts.
+e.E969.tgk_not	It was not on the 2013 list of permitted additives; it is on the current permitted list of the Turkish Food Codex (2023 regulation, Ministry guidance October 2024).
+e.E969.uretim	A sweetener produced by chemical synthesis.
+e.E999.about	An extract obtained from the bark of the quillaia tree. It creates foam in drinks.
+e.E999.uretim	Obtained from the bark of the quillaia tree by extraction.
+eslesme.a_vitamini.baslik	Caution in combination: more than one vitamin A derivative
+eslesme.a_vitamini.grup.0	Retinol and its esters
+eslesme.a_vitamini.metin	EU 2024/996 introduced a total limit for retinol, retinyl acetate and retinyl palmitate: 0.05% retinol equivalent in body lotions and 0.3% in other products. The limit applies to the total of the three, on the grounds that part of the daily vitamin A intake may come from cosmetics.
+eslesme.aluminyum.baslik	Caution in combination: more than one aluminium-containing additive
+eslesme.aluminyum.grup.0	Aluminium-containing additive
+eslesme.aluminyum.metin	In 2008 EFSA set the tolerable weekly intake for aluminium at 1 mg/kg body weight and reported that this limit may be exceeded in high consumers. The limit applies to the total from all sources.
+eslesme.benzen.baslik	Caution in combination: benzoate + vitamin C
+eslesme.benzen.grup.0	Benzoate
+eslesme.benzen.grup.1	Vitamin C
+eslesme.benzen.metin	When a benzoate preservative and vitamin C (ascorbic acid) are present together, trace amounts of benzene may form under the influence of heat, light and metal ions. Benzene is a carcinogenic substance. In Canada's 2007 survey, levels in most of the 139 drinks were below the drinking water limit (5 µg/L); manufacturers adjusted their formulas accordingly. Storing the product in a cool, dark place reduces its formation.
+eslesme.benzoat_koz.baslik	Caution in combination: benzoic acid and sodium benzoate
+eslesme.benzoat_koz.grup.0	Benzoic acid / benzoate
+eslesme.benzoat_koz.metin	The EU limit for benzoic acid and sodium benzoate as preservatives is calculated as the acid; both count together towards this limit.
+eslesme.florurler.baslik	Caution in combination: more than one fluoride
+eslesme.florurler.grup.0	Fluoride
+eslesme.florurler.metin	In the EU, if fluoride compounds are used together in oral care products, total fluorine may not exceed 0.15%. Toothpaste for children under 6 years of age carries special warnings; for children, also check the label.
+eslesme.formaldehit.baslik	Caution in combination: more than one formaldehyde releaser
+eslesme.formaldehit.grup.0	Formaldehyde releaser
+eslesme.formaldehit.metin	In the EU, the label warning ("releases formaldehyde") depends not on a single preservative but on the total formaldehyde that may be released in the product: if the total exceeds 0.001%, the warning is mandatory. More than one releaser increases this total.
+eslesme.fosfatlar.baslik	Caution in combination: more than one phosphate additive
+eslesme.fosfatlar.grup.0	Phosphate
+eslesme.fosfatlar.metin	In 2019 EFSA set a group daily intake limit for phosphate additives, expressed as phosphorus (40 mg/kg body weight), and reported that this limit may be exceeded in infants, children and adolescents who consume a lot of foods containing phosphates. The limit applies to the total of all phosphate additives.
+eslesme.gallat_tbhq_bha.baslik	Caution in combination: more than one synthetic antioxidant
+eslesme.gallat_tbhq_bha.grup.0	Propyl gallate, TBHQ, BHA
+eslesme.gallat_tbhq_bha.metin	Under the EU additives regulation, if propyl gallate, TBHQ and BHA are used together, the amount of each must be reduced proportionally; the maximum level applies to the total.
+eslesme.glutamatlar.baslik	Caution in combination: more than one glutamate
+eslesme.glutamatlar.grup.0	Glutamate
+eslesme.glutamatlar.metin	In 2017 EFSA set a group daily intake limit for all six of glutamic acid and its salts (E 620–625): 30 mg/kg body weight. It reported that some groups, especially young children, may exceed this limit. The limit applies to the total of all glutamate additives.
+eslesme.kozmetik_sulfit.baslik	Caution in combination: more than one sulphite
+eslesme.kozmetik_sulfit.grup.0	Sulphite
+eslesme.kozmetik_sulfit.metin	In cosmetics, the EU limit for inorganic sulphites and bisulphites is calculated as free sulphur dioxide; all sulphites in the same product count together towards this limit. This is also important for people with sulphite sensitivity.
+eslesme.kuaterner.baslik	Caution in combination: more than one quaternary ammonium conditioning agent
+eslesme.kuaterner.grup.0	Cetrimonium / steartrimonium / behentrimonium chloride
+eslesme.kuaterner.metin	In products such as hair conditioners, the EU limit for these substances is set not individually but on their total when used together (a total of 2.5% in rinse-off hair products, or 5% with behentrimonium).
+eslesme.nitrit_nitrat.baslik	Caution in combination: nitrite + nitrate
+eslesme.nitrit_nitrat.grup.0	Nitrite
+eslesme.nitrit_nitrat.grup.1	Nitrate
+eslesme.nitrit_nitrat.metin	Nitrate is partly converted to nitrite in the body. In 2017 EFSA reported that intake from additives alone remained within safe limits, but that when all sources, such as vegetables and water, are counted together the limit may be exceeded in every age group. It assessed the contribution of nitrite used at authorised levels to nitrosamine formation as being of low concern.
+eslesme.nitrozamin.baslik	Caution in combination: a pair that may form nitrosamines
+eslesme.nitrozamin.grup.0	Substance that must not be used with nitrosating substances
+eslesme.nitrozamin.grup.1	Substance that may form nitrosamines
+eslesme.nitrozamin.metin	Some amines may form nitrosamines together with substances such as nitrite or bronopol; some nitrosamines are carcinogenic. For this reason, the EU Cosmetics Regulation requires that these amines are "not to be used with nitrosating systems". Both groups appear together in this product.
+eslesme.parabenler.baslik	Caution in combination: more than one paraben
+eslesme.parabenler.grup.0	Paraben
+eslesme.parabenler.metin	In the EU, parabens have a total limit in addition to their individual limits: the total of propyl and butyl paraben may not exceed 0.14%, and the total of all parabens may not exceed 0.8%.
+eslesme.peroksit.baslik	Caution in combination: more than one source of hydrogen peroxide
+eslesme.peroksit.grup.0	Hydrogen peroxide or a substance releasing it
+eslesme.peroksit.metin	In the EU, the hydrogen peroxide limit applies to the total amount "present or released" in the product (e.g. a maximum of 0.1% in tooth whiteners sold to consumers). Releasing substances such as carbamide peroxide also count towards this total.
+eslesme.polioller.baslik	Caution in combination: more than one polyol (sugar alcohol)
+eslesme.polioller.grup.0	Polyol
+eslesme.polioller.metin	The laxative effect of polyols depends on the total amount. Under EU rules, if the total of added polyols exceeds 10%, the label must carry the warning "excessive consumption may produce laxative effects".
+eslesme.polisorbatlar.baslik	Caution in combination: more than one polysorbate
+eslesme.polisorbatlar.grup.0	Polysorbate
+eslesme.polisorbatlar.metin	In 2015 EFSA set a group daily intake limit for polysorbates (E 432–436): 25 mg/kg body weight. The limit applies to the total of all polysorbates.
+eslesme.salisilat.baslik	Caution in combination: salicylic acid and its salts
+eslesme.salisilat.grup.0	Salicylic acid / salicylate
+eslesme.salisilat.metin	The EU limit for salicylic acid and its salts is calculated as the acid and assessed together. They are not used in products intended for children under 3 years of age (except shampoos).
+eslesme.sorbat_koz.baslik	Caution in combination: sorbic acid and sorbates
+eslesme.sorbat_koz.grup.0	Sorbic acid / sorbate
+eslesme.sorbat_koz.metin	The EU limit for sorbic acid and its salts as preservatives is 0.6%, calculated as the acid; those present in the same product count together towards this limit.
+eslesme.southampton.baslik	Caution in combination: Southampton colours + sodium benzoate
+eslesme.southampton.grup.1	Sodium benzoate
+eslesme.southampton.metin	In the 2007 Southampton study, children were given these colours together with sodium benzoate as a mixture, and a possible effect on behaviour was observed. This product contains the same pair. It could not be determined which substance the effect came from; the German BfR stated that there is no clear evidence of cause and effect. The EU made a warning label mandatory for the colours.
+eslesme.sulfitler.baslik	Caution in combination: more than one sulphite
+eslesme.sulfitler.grup.0	Sulphite
+eslesme.sulfitler.metin	The threshold for the sulphite allergen applies to the total, not to individual substances: if total sulphur dioxide exceeds 10 mg/kg (or 10 mg/L), it must be declared on the label as an allergen.
+eslesme.tiyoglikolat.baslik	Caution in combination: more than one thioglycolate
+eslesme.tiyoglikolat.grup.0	Thioglycolate
+eslesme.tiyoglikolat.metin	The EU limit for thioglycolates used in perms, hair straighteners and depilatories is calculated as thioglycolic acid; all thioglycolates in the same product count together towards this limit.
+k.II/1397.degisiklik.0	The sodium perborate types (former entries 1398 and 1399) were merged into this entry; trimethyl borate was added. All are banned.
+k.II/1580.degisiklik.0	The (2E) isomer and CAS 166900-80-7 were added to the entry; the ban remains in place.
+k.II/1725.not	The nano form is banned; the non-nano form is not covered by this entry.
+k.II/1726.not	Nano copper is banned.
+k.II/1727.degisiklik.0	The scope was extended: nano (1–100 nm) and coarse-particle (1 mm and above) silver are banned. Micron-sized silver powder in between may be used only under the conditions of Annex III/379 and Annex IV/142.
+k.II/1727.not	Nano silver is banned.
+k.II/1728.not	Nano gold is banned.
+k.II/1729.not	Nano platinum is banned.
+k.II/1730.not	A former UV filter; it was banned following an endocrine disruptor assessment. After 1 May 2026 it may not be found on shelves.
+k.II/1731.not	It was used in gel nail polishes; it was banned because it is classified as toxic for reproduction (CMR 1B).
+k.II/1732.not	Banned because of its CMR classification.
+k.II/1733.not	Banned because of its CMR classification.
+k.II/1734.not	Banned because of its CMR classification.
+k.II/1735.not	Banned because of its CMR classification.
+k.II/1736.not	Banned because of its CMR classification.
+k.II/1737.not	Banned because of its CMR classification.
+k.II/1738.not	Banned because of its CMR classification.
+k.II/1739.not	Banned because of its CMR classification.
+k.II/1740.not	Banned because of its CMR classification.
+k.II/1741.not	Banned because of its CMR classification.
+k.II/1742.not	Banned because of its CMR classification.
+k.II/1743.not	Banned because of its CMR classification.
+k.II/1744.not	Banned because of its CMR classification.
+k.II/1745.not	Banned because of its CMR classification.
+k.II/1746.not	Banned because of its CMR classification.
+k.II/1747.not	Banned because of its CMR classification.
+k.II/1748.not	Banned because of its CMR classification.
+k.II/1749.not	Banned because of its CMR classification.
+k.II/1750.not	Banned because of its CMR classification.
+k.II/1751.not	Banned because of its CMR classification.
+k.II/1752.not	Banned because of its CMR classification.
+k.II/1753.not	Banned because of its CMR classification.
+k.II/1754.not	Banned because of its CMR classification.
+k.II/1755.not	Banned because of its CMR classification.
+k.II/1756.not	Banned because of its CMR classification.
+k.II/1757.not	Banned because of its CMR classification.
+k.II/1758.not	Banned because of its CMR classification.
+k.II/1759.not	Banned because of its CMR classification.
+k.II/1760.not	Banned because of its CMR classification.
+k.II/1761.not	Banned because of its CMR classification.
+k.II/1762.not	Banned because of its CMR classification.
+k.II/1763.not	Banned because of its CMR classification.
+k.II/1764.not	Banned because of its CMR classification.
+k.II/1765.not	Banned because of its CMR classification.
+k.II/1766.not	Banned because of its CMR classification.
+k.II/1767.not	It was used as a plasticiser; it was banned because the SCCS could not rule out a genotoxicity risk. After 1 January 2027 it may not be placed on the market, and after 1 July 2028 it may not be found on shelves.
+k.III/24.degisiklik.0	In toothpaste a maximum of 1% (as zinc), 0.72% for ages 6 months to 1 year; in mouthwash 0.1% only for children over 6 years; 1% in other products. Zinc citrate and zinc sulphate were also brought within the scope.
+k.III/372.not	Only in toothpaste at a maximum of 10% and in mouthwash at a maximum of 0.465%; it may not be used in spray products.
+k.III/373.not	A maximum of 0.007%. It was on the endocrine disruptor priority list.
+k.III/374.not	A maximum of 0.02%. It was on the endocrine disruptor priority list.
+k.III/375.not	Only in face and hand products, at a maximum of 1%. It was on the endocrine disruptor priority list.
+k.III/376.not	A maximum of 0.05% in body lotion and 0.3% in other products (retinol equivalent). The label warning "Contains vitamin A. Consider your daily intake before use" is mandatory.
+k.III/377.not	A maximum of 2% in face cream and 0.5% in body lotion; hydroquinone residues must be kept as low as possible.
+k.III/378.not	Only in face cream, at a maximum of 7%; hydroquinone residues must be kept as low as possible.
+k.III/379.not	Only in toothpaste and mouthwash, at a maximum of 0.05%. Nano and coarse-particle silver are banned (Annex II/1727).
+k.III/380.not	Restricted: a maximum of 2% in perfume, 0.5% in rinse-off products and 0.3% in leave-on products. In products for children under 3 years of age it may be used only in toothpaste (0.001%) and in shampoo, shower gel, cream, lip and fragrance products (0.1%).
+k.III/381.not	An aluminium maximum concentration, according to product type, was introduced for aluminium-containing substances not regulated separately in other annexes; e.g. 7.73% in non-spray deodorants, 3.24% in spray deodorants and 3.18% in toothpaste (as aluminium).
+k.III/382.not	A maximum of 0.05–0.9% according to product type; the raw material must be stabilised with 1% alpha-tocopherol.
+k.III/383.not	Hair dye: a maximum of 0.35% in the mixture applied to the hair. The mixing ratio and the hair dye allergy warning are mandatory on the label; not suitable for under-16s.
+k.III/384.not	Only in oxidative hair dye, at a maximum of 2% in the mixture applied to the hair. The mixing ratio and the hair dye allergy warning are mandatory on the label; not suitable for under-16s.
+k.III/385.not	Hair dye: a maximum of 1% in the mixture for oxidative use and 1.5% for non-oxidative use. The mixing ratio and the hair dye allergy warning are mandatory on the label; not suitable for under-16s.
+k.III/386.not	Hair dye: a maximum of 1.5% in the mixture for oxidative use and 0.5% for non-oxidative use. The mixing ratio and the hair dye allergy warning are mandatory on the label; not suitable for under-16s.
+k.III/70.degisiklik.0	New maximum concentrations (0.032–1.2%) were introduced according to product type; e.g. 0.032% in deodorants, 0.11% in lipsticks and lip products, 0.063% in baby and intimate wipes.
+k.III/75.degisiklik.0	New maximum concentrations (0.004–4%) were introduced according to product type; e.g. 4% in perfume, 0.004% in oral products.
+k.IV/142.degisiklik.0	Only micron-sized silver powder (100 nm–1 mm), in lip products and eye shadow, at a maximum of 0.2%.
+k.V/23.degisiklik.0	A maximum of 0.2% (except mouthwash); it may not be used in toothpaste for children under 6 years of age.
+k.V/25.degisiklik.0	Only in toothpaste, hand and body soap, non-spray deodorant, face powder, concealer and nail cleanser, at a maximum of 0.3%; it may not be used in toothpaste for children under 3 years of age.
+k.V/61.not	Preservative: only in spray deodorant and powder foundation, at a maximum of 1%; the silver it contains may not exceed 2.5%.
+k.V/7.degisiklik.0	A maximum of 0.2% in rinse-off products and 0.15% in leave-on products; it may not be used in oral products or in products that may be inhaled.
+k.VI/28.degisiklik.0	UV filter at a maximum of 10% (unchanged); it may contain at most 10 ppm of di-n-hexyl phthalate (DnHexP) as an impurity.
+k.izle.ab_ed_a.4-METHYLBENZYLIDENE CAMPHOR	Banned in the EU following an SCCS opinion ((EU) 2024/996).
+k.izle.ab_ed_a.BENZOPHENONE	Banned in the EU because of its CMR (carcinogenic) classification; an endocrine assessment was no longer needed.
+k.izle.ab_ed_a.BENZOPHENONE-3	SCCS 2021: endocrine disruption could be neither proven nor ruled out; a maximum of 2.2% in sunscreen was found to be safe, and a limit was set.
+k.izle.ab_ed_a.BENZYL SALICYLATE	After assessment, new limits according to product type were introduced by (EU) 2026/909.
+k.izle.ab_ed_a.BHT	Restricted according to product type following the SCCS 2021 opinion ((EU) 2022/2195).
+k.izle.ab_ed_a.DAIDZEIN	Following an SCCS opinion, it was restricted by (EU) 2024/996 to a maximum of 0.02%.
+k.izle.ab_ed_a.GENISTEIN	Following an SCCS opinion, it was restricted by (EU) 2024/996 to a maximum of 0.007%.
+k.izle.ab_ed_a.HOMOSALATE	SCCS 2021: found to be safe at a maximum of 7.34% in face products, and a limit was set.
+k.izle.ab_ed_a.KOJIC ACID	Following an SCCS opinion, it was restricted by (EU) 2024/996 to a maximum of 1% in face and hand products.
+k.izle.ab_ed_a.OCTOCRYLENE	SCCS 2021: found to be safe within a limit (a maximum of 9% in sprays).
+k.izle.ab_ed_a.PROPYLPARABEN	SCCS 2021: safe at a maximum of 0.14%; banned in products applied to the nappy area of children under 3 years of age.
+k.izle.ab_ed_a.RESORCINOL	SCCS 2021: found to be safe in hair dye within a limit.
+k.izle.ab_ed_a.TRICLOCARBAN	Restricted by (EU) 2024/996 following an SCCS opinion.
+k.izle.ab_ed_a.TRICLOSAN	Following an SCCS opinion, its permitted uses were narrowed by (EU) 2024/996.
+k.izle.ab_ed_b.BENZOPHENONE-1	A ban is proposed in the September 2026 EU draft.
+k.izle.ab_ed_b.BENZOPHENONE-2	SCCS 2025 preliminary opinion: it may pose a risk to consumers. A ban is proposed in the September 2026 EU draft.
+k.izle.ab_ed_b.BENZOPHENONE-5	SCCS 2025 preliminary opinion: safe at a maximum of 5% in sunscreen.
+k.izle.ab_ed_b.BHA	The September 2026 EU draft proposes a maximum limit of 0.07% and a ban in oral care products.
+k.izle.ab_ed_b.BUTYLPARABEN	A maximum of 0.14% in total together with propylparaben; banned in the nappy area for children under 3. The September 2026 EU draft introduces an additional limit for children's products.
+k.izle.ab_ed_b.BUTYLPHENYL METHYLPROPIONAL	Banned in the EU because of its CMR classification ((EU) 2021/1902).
+k.izle.ab_ed_b.CYCLOMETHICONE	It is also restricted under REACH (because of its persistence in the environment).
+k.izle.ab_ed_b.CYCLOPENTASILOXANE	It is also restricted under REACH (because of its persistence in the environment).
+k.izle.ab_ed_b.TRIPHENYL PHOSPHATE	Banned in the EU from 1 January 2027 ((EU) 2026/909).
+k.izle.ab_reach.CYCLOHEXASILOXANE	At 0.1% by weight or above: banned in all rinse-off and leave-on cosmetics from 6 June 2027 (only D4 and D5 have been banned in rinse-off products since 2020).
+k.izle.ab_reach.CYCLOMETHICONE	Cyclomethicone is a mixture of D4/D5/D6: D4 and D5 have been banned in rinse-off products since 31 January 2020, and these three substances are banned at 0.1% by weight or above in all other cosmetics from 6 June 2027.
+k.izle.ab_reach.CYCLOPENTASILOXANE	At 0.1% by weight or above: banned in rinse-off products from 31 January 2020 (D4, D5) and in leave-on products from 6 June 2027.
+k.izle.ab_reach.CYCLOTETRASILOXANE	At 0.1% by weight or above: banned in rinse-off products from 31 January 2020 (D4, D5) and in leave-on products from 6 June 2027.
+k.izle.ab_taslak.BASIC BLUE 99	Hair dye; a ban is proposed: the SCCS did not find it safe because of possible genotoxicity (02.02.2026).
+k.izle.ab_taslak.BASIC BROWN 16	Hair dye; a ban is proposed: the SCCS did not find it safe because of possible mutagenicity (02.02.2026).
+k.izle.ab_taslak.BENZOPHENONE-1	A ban in cosmetics (Annex II) is proposed: in 2025 the SCCS did not find it safe as a light stabiliser.
+k.izle.ab_taslak.BENZOPHENONE-2	A ban in cosmetics (Annex II) is proposed: the SCCS could not rule out genotoxicity; an oestrogenic effect was demonstrated.
+k.izle.ab_taslak.BHA	A maximum of 0.07% in rinse-off and leave-on products; it may not be used in oral care products or in products that may be inhaled (SCCS, 26.03.2026).
+k.izle.ab_taslak.BUTYLPARABEN	It is being moved to a separate entry (Annex V/12b): 0.14% in rinse-off products, 0.002% in leave-on products and 0.092% in oral care (as acid); it was not found to be safe for spray products (SCCS, 30.04.2025).
+k.izle.ab_taslak.CANNABIDIOL - DERIVED FROM EXTRACT OR TINCTURE OR RESIN OF CANNABIS	Limits of a maximum of 0.19% for CBD and a maximum of 2.5 ppm for THC residues (Annex III) are proposed (SCCS, 26.03.2026).
+k.izle.ab_taslak.ETHYL TAFLUPROSTAMIDE	A prostaglandin-like substance used in eyelash growth serums; a ban is proposed: the SCCS could not establish conditions for safe use with regard to eye health and pregnancy (02.02.2026).
+k.izle.ab_taslak.THIMEROSAL	A mercury-containing preservative; it is proposed to remove it from the list of permitted preservatives (Annex V/16, V/17) and ban it: the SCCS did not find it safe at the permitted levels (02.02.2026).
+k.izle.asean.BIFONAZOLE	A medicinal active substance (antifungal); it was added to the list of substances prohibited in cosmetics in version 2026-1 of the ASEAN annexes (22.06.2026). Implementation dates may differ between countries.
+k.izle.asean.CLOTRIMAZOLE	A medicinal active substance (antifungal); it was added to the list of substances prohibited in cosmetics in version 2026-1 of the ASEAN annexes (22.06.2026). Implementation dates may differ between countries.
+k.izle.asean.MICONAZOLE	Banned in cosmetics in ASEAN because it is a medicinal active substance. Verified against version 2026-1 of the ASEAN annexes (22.06.2026); the date of the ban (42nd ACC meeting, November–December 2025) is from secondary sources.
+k.izle.asean.THIABENDAZOLE	A medicinal active substance (antifungal); it was added to the list of substances prohibited in cosmetics in version 2026-1 of the ASEAN annexes (22.06.2026). Implementation dates may differ between countries.
+k.izle.asean.TIOCONAZOLE	A medicinal active substance (antifungal); it was added to the list of substances prohibited in cosmetics in version 2026-1 of the ASEAN annexes (22.06.2026). Implementation dates may differ between countries.
+k.izle.ca_sinir.MUSK KETONE	Not banned, but subject to a maximum limit: 1.4% in fine fragrance, 0.56% in eau de toilette and 0.042% in other products; it may not be used in oral products.
+k.izle.eu_svhc_ed.4-METHYLBENZYLIDENE CAMPHOR	Added on the grounds of its endocrine-disrupting properties for human health; it is the first substance whose main use is in cosmetics. In 2022 the SCCS reported that there was sufficient evidence that 4-MBC may be an endocrine disruptor and that it is not safe at 4%.
+k.izle.eu_svhc_ed.BUTYL BENZYL PHTHALATE	BBP. It was added to the candidate list for its endocrine-disrupting properties for human health by EU decision 2017/1210. It is already banned in cosmetics.
+k.izle.eu_svhc_ed.DIBUTYL PHTHALATE	DBP. It was added to the candidate list for its endocrine-disrupting properties for human health by EU decision 2017/1210. It is already banned in cosmetics.
+k.izle.eu_svhc_ed.DIETHYLHEXYL PHTHALATE	DEHP. It was added to the candidate list for its endocrine-disrupting properties for human health by EU decision 2017/1210. It is already banned in cosmetics.
+k.izle.eu_svhc_ed.DIISOBUTYL PHTHALATE	DIBP. It was added to the candidate list for its endocrine-disrupting properties for human health by EU decision 2017/1210. It is already banned in cosmetics.
+k.izle.fr.4-METHYLBENZYLIDENE CAMPHOR	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.BUTYL BENZYL PHTHALATE	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.BUTYLPARABEN	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.DIBUTYL PHTHALATE	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.DIETHYLHEXYL PHTHALATE	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.DIISOBUTYL PHTHALATE	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.fr.ISOBUTYLPARABEN	Its category on the list (proven / presumed) is not specified separately in this source.
+k.izle.komedo.ACETYLATED LANOLIN ALCOHOL	In Fulton 1989 it was found to be both pore-clogging and irritating. According to Kligman 1996, 4–5 in pure form and 1 at 2.5%.
+k.izle.komedo.CETYL ACETATE	Rated 4 in Fulton 1989 (irritation 2). The table text was read from a scanned page.
+k.izle.komedo.COCOS NUCIFERA OIL	Coconut oil. Rated 4 in Fulton 1989 under the name "coconut butter".
+k.izle.komedo.ETHYLHEXYL PALMITATE	Formerly called octyl palmitate. Rated 4 in Fulton 1989. The table text was read from a scanned page.
+k.izle.komedo.ISOCETYL ALCOHOL	Rated 4 in Fulton 1989 (irritation 4); branched-chain alcohols were found to be more pore-clogging than straight-chain ones. The table text was read from a scanned page.
+k.izle.komedo.ISOPROPYL ISOSTEARATE	Rated 5 in Fulton 1989 (highest). The table text was read from a scanned page.
+k.izle.komedo.ISOPROPYL LINOLEATE	Rated 4 in Fulton 1989 (irritation 2). The table text was read from a scanned page.
+k.izle.komedo.ISOPROPYL MYRISTATE	Rated 5 in Fulton 1989 (highest; the reference substance in the test). According to Kligman 1996, 2–3 in pure form and 0 at 2.5%; the sources conflict.
+k.izle.komedo.ISOPROPYL PALMITATE	Rated 4 in Fulton 1989. The table text was read from a scanned page.
+k.izle.komedo.ISOSTEARYL ISOSTEARATE	Rated 4 in Fulton 1989. The table text was read from a scanned page.
+k.izle.komedo.ISOSTEARYL NEOPENTANOATE	Rated 3 (borderline) in the Fulton 1989 table; in the text it is mentioned among pore-clogging substances.
+k.izle.komedo.LAURETH-4	Rated 5 in Fulton 1989 (highest).
+k.izle.komedo.LAURIC ACID	Lauric acid. Rated 4 in Fulton 1989; 3–4 when tested in sunflower oil. It varies with the solvent. The table text was read from a scanned page.
+k.izle.komedo.MYRISTYL LACTATE	Rated 4 in Fulton 1989 (irritation 2). The table text was read from a scanned page.
+k.izle.komedo.MYRISTYL MYRISTATE	Rated 5 in Fulton 1989 (highest).
+k.izle.komedo.OLETH-3	Rated 5 in Fulton 1989 (highest).
+k.izle.komedo.OLEYL ALCOHOL	Rated 4 in Fulton 1989 (irritation 2). The table text was read from a scanned page.
+k.izle.komedo.POLYGLYCERYL-3 DIISOSTEARATE	Rated 4 in Fulton 1989. The table text was read from a scanned page.
+k.izle.komedo.STEARETH-10	Rated 4 in Fulton 1989.
+k.izle.komedo.STEARYL HEPTANOATE	Rated 4 in Fulton 1989. The table text was read from a scanned page.
+k.izle.komedo.THEOBROMA CACAO SEED BUTTER	Cocoa butter. Rated 4 in Fulton 1989.
+k.izle.tr_taslak.CYCLOPENTASILOXANE	According to news reports, in Türkiye it will not be allowed to be placed on the market in hair spray, sunscreen, moisturiser and foundation from 31 December 2026.
+k.liste.ab_ed_a.metin	On the 28-substance priority list that the European Commission drew up in 2019 for potential endocrine disruptors in cosmetics (substances suspected of possibly affecting the hormone system), in Group A, which is assessed first. The SCCS has issued opinions on most of this group; the current EU rule is stated separately on this card. The list is not a ruling; it shows the order of assessment.
+k.liste.ab_ed_b.metin	On the 28-substance priority list that the European Commission drew up in 2019 for potential endocrine disruptors in cosmetics (substances suspected of possibly affecting the hormone system), in Group B. The assessment of part of this group is ongoing; the status of substances that have been concluded is stated separately. The list is not a ruling; it shows the order of assessment.
+k.liste.ab_reach.metin	Restricted in cosmetics under the EU chemicals legislation REACH (Annex XVII). It is shown separately because it does not appear in the annexes of the Cosmetics Regulation.
+k.liste.ab_taslak.metin	Included in the draft cosmetics regulation that the European Commission notified to the World Trade Organization in July 2026 and submitted to the Council in September 2026. It has not yet been published; if adopted, it will apply to new products 12 months after entry into force and to products on the shelf after 24 months.
+k.liste.asean.metin	In the annex of prohibited substances (Annex II) of the ASEAN Cosmetic Directive. ASEAN covers 10 countries, including Indonesia, Malaysia, Thailand, Vietnam, the Philippines and Singapore.
+k.liste.ca.metin	In California it is prohibited to add it intentionally to cosmetic products (Toxic-Free Cosmetics Act). Its presence in trace amounts as an unavoidable contaminant is not covered by the ban.
+k.liste.ca_sinir.metin	It is not banned in California; there is a maximum limit according to product type (HSC §108980(c)). Because the label does not state the percentage, it cannot be determined whether the limit is exceeded.
+k.liste.dk.metin	Denmark banned this substance nationally, ahead of the EU, in cosmetics intended for children under 3 years of age because of suspected endocrine disruption.
+k.liste.eu_svhc_ed.metin	Added to the candidate list of "substances of very high concern" under the EU chemicals legislation REACH on the grounds of its endocrine-disrupting properties for human health. This list does not in itself ban use in cosmetics; the limits in cosmetics are stated separately.
+k.liste.fr.metin	On France's official 128-substance list of endocrine disruptors published on 12 October 2023. In France, manufacturers must provide digital information for products containing proven or presumed endocrine disruptors on this list. The app includes only those substances from the list that are named in secondary sources; the full list has not been added.
+k.liste.komedo.metin	It was found to clog pores in old laboratory tests (rabbit ear, mostly the pure substance). It is usually present in products at low concentrations, and its effect varies with concentration and formulation; this cannot be determined from the label. This is not a ban or a health warning. If your skin is prone to acne, try the product on a small area first.
+k.liste.sin.metin	On the list of substances that the non-governmental organisation ChemSec considers candidates of 'very high concern' according to EU REACH criteria. It is not an official ban.
+k.liste.tr_taslak.metin	A ban is proposed in the draft amendment to the Cosmetic Products Regulation that the Turkish Ministry of Trade opened for consultation in September 2026. It is a draft and not yet in force.
+k.tr_durum.farkli	Türkiye: In Türkiye, this substance is not on the list of prohibited substances (Annex II) of the Turkish Cosmetic Products Regulation; this EU ban has not been transposed into Turkish law. In Türkiye, the use limits in Annex III (1a, 1b) apply to boric acid and borates.
+k.tr_durum.taslak	Türkiye: This EU amendment is not yet in force in Türkiye; similar provisions appear in the Ministry of Trade's September 2026 draft regulation.
+k.tr_durum.yok	Türkiye: This EU amendment has not yet been published in Türkiye (as of 07.10.2026; the latest amendment on mevzuat.gov.tr is Official Gazette (RG) 05.03.2024). Turkish legislation usually follows the EU months later.
+metin:0,5 g/kg; sınır ishal (müshil) etkisine dayanır.	0.5 g/kg; the limit is based on the diarrhoea (laxative) effect.
+metin:2015'teki geçici 3 mg/kg değerinin yerine.	Replaces the temporary value of 3 mg/kg from 2015.
+metin:Bazı yüksek tüketim senaryolarında aşılabildiği bildirildi.	It has been reported that it may be exceeded in some high-consumption scenarios.
+metin:EFSA artık güvenli kabul etmiyor (genotoksisite dışlanamadı); AB'de 2022'den beri yasak.	EFSA no longer considers it safe (genotoxicity could not be ruled out); banned in the EU since 2022.
+metin:EFSA, uzun süreli yüksek ısıda (fırın, kızartma) klorlu bileşik oluşumunu dışlayamadı.	EFSA could not rule out the formation of chlorinated compounds at prolonged high temperatures (baking, frying).
+metin:Eski geçici sınır (0,7 mg/kg, SO2 olarak) yetersiz veri nedeniyle geri çekildi; yeni sınır konmadı. EFSA çok tüketen kişiler için güvenlik endişesi bildirdi.	The former temporary limit (0.7 mg/kg, expressed as SO2) was withdrawn because of insufficient data; no new limit has been set. EFSA reported a safety concern for high consumers.
+metin:Genotoksisite verisi olmadığı için sorbatların grup sınırının dışında bırakıldı.	Excluded from the group limit for sorbates because there are no genotoxicity data.
+metin:Geçici değerdir; EFSA veri eksiklerinin giderilmesini istedi. 16 haftadan küçük bebekler için geçerli değildir.	This is a temporary value; EFSA has asked for the data gaps to be filled. It does not apply to infants under 16 weeks of age.
+metin:Günlük değil haftalık sınırdır. EFSA, Avrupa'da nüfusun önemli bir kısmında aşılabileceğini belirtti.	This is a weekly, not a daily, limit. EFSA stated that it may be exceeded in a significant part of the population in Europe.
+metin:JECFA 2023'te 40 mg/kg değerini değiştirmedi.	In 2023 JECFA did not change the value of 40 mg/kg.
+metin:Karameller için grup sınırı 300 mg/kg.	The group limit for caramels is 300 mg/kg.
+metin:Küçük çocuklarda yüksek tüketimde aşılabildiği bildirildi.	It has been reported that it may be exceeded in young children with high consumption.
+metin:Mevcut veriler sayısal bir sınır belirlemeye yetmedi.	The available data were not sufficient to set a numerical limit.
+metin:Sınır gıdalardaki doğal fosfor dahil tüm kaynakları kapsar.	The limit covers all sources, including the phosphorus naturally present in foods.
+metin:Sınır sebzelerden gelen doğal nitratı da kapsar; katkı maddesinden gelen pay küçüktür.	The limit also covers natural nitrate from vegetables; the share from the additive is small.
+metin:Çok tüketilirse müshil etkisi yapabilir.	May have a laxative effect if consumed in large amounts.
+metin:Önceki sınır 2 mg/kg idi (2007).	The previous limit was 2 mg/kg (2007).
+metin:Önceki sınır 5 mg/kg idi (SCF 1995).	The previous limit was 5 mg/kg (SCF 1995).
+metin:Önceki sınır 9 mg/kg idi (SCF 2000).	The previous limit was 9 mg/kg (SCF 2000).
+t.grup.amfoterik.about	A cleaning agent that provides foam and softness and is relatively gentle on the skin.
+t.grup.anyonik.about	The main cleaning agent that dissolves dirt and grease (e.g. sodium laureth sulphate).
+t.grup.dezenfektan.about	A substance that kills germs. In Türkiye, disinfectant products also require a separate biocidal product authorisation.
+t.grup.edta.about	It neutralises water hardness by binding metal ions; it breaks down slowly in the environment.
+t.grup.enzim.about	They break down protein, starch and fat stains (protease, amylase, lipase). As a raw material they are respiratory sensitisers; if the finished product carries this hazard, it is stated separately on the label.
+t.grup.fenol.about	A group of substances used as disinfectants and preservatives.
+t.grup.fosfat.about	Water softener. When it reaches lakes and seas through waste water it contributes to excessive algal growth (eutrophication); the EU limited the phosphorus content of household laundry and dishwasher detergents by Regulation 259/2012.
+t.grup.fosfonat.about	Water softener and scale inhibitor; used at much lower concentrations than phosphate.
+t.grup.hidrokarbon.about	Grease solvent. Some may cause dizziness when inhaled and serious damage if swallowed and they enter the lungs; check the hazard statements on the label.
+t.grup.katyonik.about	Mostly found in fabric softeners and some disinfectants (quaternary ammonium compounds).
+t.grup.klor.about	The active substance in bleach (sodium hypochlorite). If mixed with acidic products or ammonia, a toxic gas is released.
+t.grup.koruyucu.about	It prevents the product from spoiling. Its name is given as the INCI name; some (isothiazolinones) may cause skin allergy.
+t.grup.noniyonik.about	A cleaning agent effective on greasy dirt; it is low-foaming.
+t.grup.nta.about	Metal binder. Trisodium NTA is classified in the EU as 'suspected of causing cancer' (Carc. 2); the hazard statement on the product varies with the concentration.
+t.grup.oksijen.about	It bleaches stains with oxygen (e.g. sodium percarbonate). It is different from chlorine bleach.
+t.grup.optik.about	It attaches to fabric and converts ultraviolet light into blue light, making whites look brighter.
+t.grup.parfum.about	The collective name for fragrance substances. If the fragrance allergens it contains exceed 0.01%, they are also listed separately by name.
+t.grup.pdcb.about	Used in mothball-like deodorisers; it is classified in the EU as 'suspected of causing cancer' (Carc. 2).
+t.grup.polikarboksilat.about	A polymer that prevents dirt from redepositing on fabric; it helps soften water.
+t.grup.renklendirici.about	It gives the product colour. Listing it on a detergent label is not mandatory; it is written with a code beginning with CI (Colour Index).
+t.grup.sabun.about	Fatty acid salts; a cleaning agent that breaks down easily in the environment.
+t.grup.zeolit.about	A water-softening mineral used instead of phosphate.
+t.ifade.EUH029.not	Contact with water releases a toxic gas.
+t.ifade.EUH031.not	Contact with an acidic product (e.g. hydrochloric acid, descaler) releases a toxic gas. This is common with bleach.
+t.ifade.EUH032.not	Contact with an acidic product releases a very toxic gas.
+t.ifade.EUH066.not	Repeated contact may cause skin dryness and cracking.
+t.ifade.EUH071.not	When inhaled it may cause corrosive damage to the respiratory tract.
+t.ifade.EUH206.not	A mandatory warning on products containing active chlorine (bleach, chlorine-based cleaners). If mixed with acidic products, chlorine gas is released.
+t.ifade.EUH208.not	The product contains a substance that may trigger a reaction in people with an allergy to it. The name of the substance is given within the statement.
+t.ifade.EUH210.not	A detailed safety data sheet for the product can be requested from the manufacturer.
+t.ifade.EUH380.not	The endocrine disruptor hazard class added by the EU in 2023 (category 1).
+t.ifade.EUH381.not	The endocrine disruptor hazard class added by the EU in 2023 (category 2).
+t.ifade.H222.not	The spray catches fire easily; it must be kept away from flames and hot surfaces.
+t.ifade.H223.not	The spray may catch fire.
+t.ifade.H224.not	The liquid and its vapour catch fire very easily.
+t.ifade.H225.not	The liquid and its vapour catch fire easily (e.g. alcohol-based cleaners).
+t.ifade.H226.not	The liquid and its vapour may catch fire.
+t.ifade.H229.not	Pressurised container; it may burst if heated.
+t.ifade.H271.not	A strong oxidiser; it may cause a fire if it comes into contact with combustible materials.
+t.ifade.H272.not	An oxidiser (e.g. oxygen bleach powders); it may intensify a fire.
+t.ifade.H290.not	It may corrode metal surfaces and packaging; this is not a human health hazard class.
+t.ifade.H300.not	It may be fatal if swallowed.
+t.ifade.H301.not	It may cause serious poisoning if swallowed.
+t.ifade.H302.not	It may cause symptoms of poisoning if swallowed; this is why keeping it out of the reach of children is important.
+t.ifade.H304.not	It may be fatal if it enters the lungs after swallowing (e.g. while vomiting). With products of this kind, vomiting should not be induced.
+t.ifade.H314.not	Corrosive: on contact with skin or eyes it may cause burns and permanent damage (e.g. drain openers, some descalers).
+t.ifade.H315.not	It may cause redness and irritation of the skin.
+t.ifade.H317.not	It may trigger a skin allergy (contact eczema) in some people.
+t.ifade.H318.not	It may cause permanent damage if it gets into the eyes (common in laundry and dishwashing detergents and capsules).
+t.ifade.H319.not	It causes irritation if it gets into the eyes; this is usually temporary.
+t.ifade.H332.not	Its vapour or spray is harmful if inhaled.
+t.ifade.H334.not	Respiratory sensitiser: when inhaled it may trigger allergy and asthma-like shortness of breath.
+t.ifade.H335.not	Its vapour or dust may irritate the nose and throat.
+t.ifade.H336.not	When its vapour is inhaled it may cause drowsiness and dizziness.
+t.ifade.H400.not	Classified as very toxic to aquatic life.
+t.ifade.H410.not	Very toxic to aquatic life with long-lasting effects.
+t.ifade.H411.not	Toxic to aquatic life with long-lasting effects.
+t.ifade.H412.not	Harmful to aquatic life with long-lasting effects.
+t.ifade.H413.not	It may cause long-lasting harmful effects to aquatic life.
+t.kapsul.metin	Liquid laundry detergent capsules are subject to special rules in the EU (CLP Annex II 3.3): the outer packaging must be opaque, have a lockable closure that is difficult for children to open, and carry the statement "Keep out of reach of children" (P102). The capsule film must contain a bitter substance that causes a child to spit it out within 6 seconds of putting it in the mouth, and the film must withstand water for 30 seconds and a pressure of 300 N. These rules were introduced because of swallowing and eye-contact accidents involving young children who mistake capsules for sweets.
+t.karistirma.metin	Chlorine-based products (bleach) release chlorine gas when mixed with acidic products (hydrochloric acid, descaler) and a toxic gas when mixed with ammonia. Türkiye's Ministry of Health recommends not mixing these products; the EUH206 warning is mandatory on the label of products containing active chlorine.
+t.madde.amonyak.metin	Ammonia. If mixed with bleach, a toxic gas is released.
+t.madde.bit.metin	A preservative from the isothiazolinone group (BIT). In the EU it is classified as a skin sensitiser. It is not on the list of cosmetic preservatives (Annex V); it is used in detergents and paints.
+t.madde.cmit.metin	A preservative from the isothiazolinone group (usually in a mixture with MIT). In the EU it is classified as a skin sensitiser (Skin Sens. 1A); in cosmetics it is permitted only in rinse-off products.
+t.madde.enzim.metin	Enzyme. As a raw material it is a respiratory sensitiser (H334); if the finished product carries this hazard, it is given on the label as a hazard statement.
+t.madde.hcl.metin	Hydrochloric acid (spirits of salt). If mixed with bleach, chlorine gas is released.
+t.madde.hipoklorit.metin	The active substance in bleach. According to Türkiye's Ministry of Health, chlorine gas forms when it is mixed with acidic products such as hydrochloric acid, and a toxic gas forms when it is mixed with ammonia.
+t.madde.mit.metin	A preservative from the isothiazolinone group. Its harmonised classification in the EU is skin sensitiser (Skin Sens. 1A); it may cause contact allergy even at low concentrations. It is banned in leave-on cosmetics in the EU, and it may be used in cleaning products.
+t.madde.oit.metin	A preservative from the isothiazolinone group (OIT). In the EU it is classified as a skin sensitiser.

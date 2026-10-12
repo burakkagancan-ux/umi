@@ -122,7 +122,12 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 ## Çok dil: eksikler (08.10.2026)
 Altyapı ve İngilizce arayüz tamam (CLAUDE.md "Çok dil"). Bilerek bırakılanlar:
 
-### Çevrilmemiş veri metinleri (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
+### Çevrilmemiş veri metinleri — KAPANDI (12.10.2026, PR #105)
+- Uzun veri metinlerinin hepsi (1.172: gerekçe, üretim yolu, açıklama, TR notu, bileşen notu, birlikte dikkat, kozmetik ve K3 notları, temizlik notları) `kaynak/ceviri_en_veri.tsv`'de; ansiklopedinin 4.043 metninin hepsi `kaynak/ansiklopedi_en.json`'da (her çeviri çevrildiği Türkçeyi `tr` olarak taşır; Türkçe değişirse çeviri bayat sayılır ve yazılmaz, metin Türkçe + "not yet translated" görünür). Çeviri i18n/sozluk.md terimleriyle yapıldı; sayı, Türkçe kalıntı ve "safe/harmless" denetimi geçti (geçen "safe" kelimelerinin hepsi Türkçede "güvenli" diye kurumdan aktarılan cümleler).
+- Kalan: ansiklopedi.html'in arayüz metinleri ve index.html hâlâ Türkçe. Çeviride görülen kaynak şüpheleri: E151 metninde "brilliant black PN" (resmi adı BN), E1517 üretim yolunda "sitrik asit ya da gliserol" (gliseril diasetat için gliserol + asetik asit olmalı); Türkçe kaynak metin kontrol edilmeli.
+- Yeni Türkçe metin eklenince İngilizcesi aynı PR'da eklenir (O-09).
+
+Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
 Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi hariç toplam 1.164 metin.
 
 | Metin | Sayı |

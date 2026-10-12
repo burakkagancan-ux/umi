@@ -244,9 +244,10 @@ async function scan(p,mode,text){
     await p.click('#sonuc .resbar button.pay:not(.kayitb)');await p.waitForFunction(()=>{const c=document.querySelector('#sheet canvas');return c&&c.width>0&&/I checked the ingredients/.test(c.getAttribute('aria-label')||'')},null,{timeout:10000});
     ok(true,'en '+m+': paylaşım kartı çizildi');await p.evaluate(()=>closeSheet());
   }
-  // Çevrilmemiş veri metni: Türkçe gösterilir, lang="tr" ve "not yet translated" işareti
+  // Veri metinleri İngilizcede çevrili (12.10.2026): örnek gıdanın kartında "not yet translated" işareti yok.
+  // Çevrilmemiş metne düşme (Türkçe + işaret) davranışı test/ceviri.js'te (veriMetin) denetlenir.
   await sample(p,'gida');await p.evaluate(()=>document.querySelector('#sonuc .res.tap').click());
-  ok(await p.$$eval('#sheet .cvm',e=>e.length&&e.every(x=>x.textContent==='not yet translated'&&x.parentElement.closest('[lang]').getAttribute('lang')==='tr')),'çevrilmemiş veri işareti ve lang="tr"');
+  ok(await p.$$eval('#sheet .cvm',e=>e.length===0),'gıda kartında çevrilmemiş veri işareti yok');
   ok(/Read in the encyclopedia/.test(await p.textContent('#sheet')),'alt sayfa İngilizce');await p.evaluate(()=>closeSheet());
   // Resmi İngilizce: E kodu adı (name_en), CLP tehlike ifadesi
   ok(/E110 Sunset Yellow FCF/i.test(await p.textContent('#sonuc')),'E kodu resmi İngilizce adı');
