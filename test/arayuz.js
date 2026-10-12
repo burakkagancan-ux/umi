@@ -327,7 +327,7 @@ async function scan(p,mode,text){
    ok(tg.length&&tg.every(x=>!/Tespit|Olması|Edilmemesi/.test(x))&&tg.includes('Poultry meat detected'),'Liste uygunsuzluk türleri İngilizce: '+tg.slice(0,4).join(', '));
    const dd=await p.$eval('#list .rec dd:nth-of-type(3)',e=>e.textContent);ok(dd==='Meat and meat products','Liste ayrıntıda ürün grubu İngilizce: '+dd);
    await p.selectOption('#grup','')}
-  // Alt menü (12.10.2026): Ansiklopedi solda, Etiket Oku ortada, Profilim sağda; Liste yalnızca Türkiye seçiliyken
+  // Alt menü (12.10.2026): Ansiklopedi solda, Etiket Oku ortada, Profilim sağda; Liste şimdilik gizli (sayfa çalışır)
   ok((await p.$$eval('.tabbar a',a=>a.map(x=>x.dataset.tab).join(',')))==='ansiklopedi,oku,liste,profil','alt menü sırası');
   ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="profil"]'),'ülke seçilmemişken Liste menüde görünmüyor');
   {const k=await anahtarVar();ok(!k,'Liste: çıplak anahtar: '+k)}
@@ -335,10 +335,8 @@ async function scan(p,mode,text){
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#dilsec');
   await Promise.all([p.waitForNavigation(),p.selectOption('#dilsec','tr')]);await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
   ok(await p.getAttribute('html','lang')==='tr'&&await p.evaluate(()=>localStorage.getItem('dil'))==='tr','dil seçici: Türkçe kaydedildi ve uygulandı');
-  ok(await p.isVisible('.tabbar a[data-tab="liste"]'),'Türkçede (ülke Türkiye) Liste menüde görünüyor');
-  await p.selectOption('#ulkesec','US');
-  ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&(await p.$$eval('#ulkesec option',o=>o.length))>20,'ülke ABD seçilince Liste gizlendi; İngilizce konuşulan ülkeler listede');
-  await p.selectOption('#ulkesec','TR');ok(await p.isVisible('.tabbar a[data-tab="liste"]'),'ülke Türkiye seçilince Liste geri geldi');
+  ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="oku"]'),'Liste şimdilik menüde yok (Türkiye seçiliyken de)');
+  ok((await p.$$eval('#ulkesec option',o=>o.length))>20,'İngilizce konuşulan ülkeler listede');
   ok(!errs.length,'İngilizce tur konsol hatası: '+errs.join(' | '));errs.length=0;
   await ctx.close();
 
