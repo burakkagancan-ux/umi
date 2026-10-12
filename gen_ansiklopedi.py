@@ -11,6 +11,7 @@ gen_e_kodlari.py ve gen_e_aciklama.py'den SONRA çalıştırılır. Elle incelen
 (review: "auto"); bunlarda kanıt düzeyi ve son inceleme tarihi boştur.
 """
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -281,6 +282,21 @@ def main():
             raise SystemExit(k + ": olası etkiler satırı yok (kaynak/ansiklopedi_etkiler.tsv)")
         if k not in ids:
             raise SystemExit(k + ": e_kodlari.json'da yok")
+    # Kaynak başlığı, yayımcı ve kurum adları da çeviri anahtarı (kaynak.<metnin özeti>): Türkçe yazılmış adlar başka dilde
+    # çevrilir; özgün dilinde (çoğu İngilizce) olanın çevirisi gerekmez, eksik anahtar Türkçe metne, yani özgün ada düşer.
+    def ad_key(s):
+        if not s:
+            return s
+        k = "kaynak." + hashlib.sha1(s.encode("utf-8")).hexdigest()[:10]
+        T[k] = s
+        return k
+    for r in recs:
+        for s in r["sources"]:
+            s["title"], s["publisher"] = ad_key(s["title"]), ad_key(s["publisher"])
+        for g in r["regulatory"]:
+            g["agency"] = ad_key(g["agency"])
+        for x in r.get("effects") or []:
+            x["source"]["label"], x["source"]["title"] = ad_key(x["source"]["label"]), ad_key(x["source"]["title"])
     today = datetime.date.today().isoformat()
     n_cur = sum(1 for r in recs if r["review"] == "curated")
     n_noff = sum(1 for r in recs if not any(s["official"] for s in r["sources"]))

@@ -4,6 +4,7 @@ var AREPO="https://github.com/burakkagancan-ux/tagsis/issues/new";
 function a$(i){return document.getElementById(i)}
 function h(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function at(k){return ansT(AT,k)}   // ansiklopedi veri metni (data/ansiklopedi_<dil>.json); arayüz metni için t() (js/ceviri.js) ayrı
+function atAd(k){return at(k)||k}   // kaynak başlığı, yayımcı, kurum adı: anahtar (kaynak.*); eski veride düz metin olabilir
 function svg(path,cls){var s=document.createElementNS("http://www.w3.org/2000/svg","svg");s.setAttribute("viewBox","0 0 24 24");s.setAttribute("aria-hidden","true");if(cls)s.setAttribute("class",cls);s.innerHTML=path;return s}
 /* Risk ikonları renkle birlikte şekille de ayrılır: yeşil onay, sarı üçgen, kırmızı ünlem */
 var RICON={
@@ -91,7 +92,7 @@ function panelGenel(r){
       li.appendChild(h("p",null,at(x.text)));
       if(x.who)li.appendChild(effRow(t("ans.kimde"),at(x.who)));
       if(x.amount)li.appendChild(effRow(t("ans.miktar"),at(x.amount)));
-      var k=h("div","mut"),a=h("a",null,s.label+(s.year?", "+s.year:""));a.href=s.url;a.target="_blank";a.rel="noopener";a.title=s.title;
+      var k=h("div","mut"),a=h("a",null,atAd(s.label)+(s.year?", "+s.year:""));a.href=s.url;a.target="_blank";a.rel="noopener";a.title=atAd(s.title);
       k.appendChild(document.createTextNode(t("ortak.kaynak")));k.appendChild(a);li.appendChild(k);
       el.appendChild(li);
     });
@@ -108,7 +109,7 @@ function panelOtorite(r){
   if(!r.regulatory.length){p.appendChild(h("p","mut",t("ans.kurum_yok")));return p}
   r.regulatory.forEach(function(g){
     var row=h("div","ag"),l=h("div");
-    l.appendChild(h("div","who",g.agency+" · "+(at("region."+g.region)||g.region)+(g.year?" · "+g.year:"")));
+    l.appendChild(h("div","who",atAd(g.agency)+" · "+(at("region."+g.region)||g.region)+(g.year?" · "+g.year:"")));
     l.appendChild(h("div","d",at(g.detail)));
     if(g.source_url){var a=h("a",null,t("ans.kaynagi_ac"));a.href=g.source_url;a.target="_blank";a.rel="noopener";a.style.fontSize="14px";l.appendChild(a)}
     row.appendChild(l);row.appendChild(h("span","st "+g.status,at("status."+g.status)));p.appendChild(row);
@@ -120,9 +121,9 @@ function panelKaynak(r){
   if(!r.sources.length){p.appendChild(h("p","mut",t("ans.kaynak_yok")));return p}
   r.sources.forEach(function(s){
     var d=h("div","src");
-    if(s.url){var a=h("a",null,s.title);a.href=s.url;a.target="_blank";a.rel="noopener";d.appendChild(a)}else d.appendChild(h("span","ttl",s.title));
+    if(s.url){var a=h("a",null,atAd(s.title));a.href=s.url;a.target="_blank";a.rel="noopener";d.appendChild(a)}else d.appendChild(h("span","ttl",atAd(s.title)));
     if(s.official)d.appendChild(h("span","tag",t("ans.resmi")));
-    d.appendChild(h("div","mut",s.publisher+(s.year?", "+s.year:"")+(s.todo?" · "+t("ans.baglanti_yok"):"")));
+    d.appendChild(h("div","mut",atAd(s.publisher)+(s.year?", "+s.year:"")+(s.todo?" · "+t("ans.baglanti_yok"):"")));
     p.appendChild(d);
   });
   return p;

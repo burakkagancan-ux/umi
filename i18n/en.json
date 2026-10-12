@@ -833,7 +833,7 @@
  "ulke.tr.etiket": "In Türkiye: ",
  "ulke.tr.izin_dogrulanmadi": "The authorisation status in Türkiye has not been verified yet.",
  "ulke.tr.koz_uyum": "In Türkiye, the Cosmetic Products Regulation is aligned with these annexes up to the end of 2023; the Türkiye status of later EU amendments is shown on the cards.",
- "ulke.tr.liste.alt": "Records of food imitation and adulteration published by the Turkish Ministry of Agriculture and Forestry. Ministry data is shown in Turkish, as published.",
+ "ulke.tr.liste.alt": "Records of food imitation and adulteration published by the Turkish Ministry of Agriculture and Forestry. Product, company and place names are shown in Turkish, as published; product groups and findings are translated.",
  "ulke.tr.liste.alt_not": "Source: guvenilirgida.tarimorman.gov.tr. Information is shown exactly as announced by the Ministry; this app adds no comment. Records removed from the Ministry's list continue to be shown with the label “Removed from list”. This is not an official app and has no connection with the Turkish Ministry of Agriculture and Forestry.",
  "ulke.tr.liste.ara": "Search",
  "ulke.tr.liste.ara_yer": "Search company, brand or product",

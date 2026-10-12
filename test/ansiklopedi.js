@@ -110,4 +110,10 @@ ok(pw('E102',{al:[],child:'true'})==='','profil değeri tam true olmalı');
 ok(pw('E220',{al:['allergen_sulphite']})==='allergen_sulphite','otomatik kayıt: sülfit');
 ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması');
 
+// 5. Kaynak başlığı, yayımcı ve kurum adı çeviri anahtarı (12.10.2026); İngilizcede Türkçe ad kalmaz (çevirisi yoksa özgün ad görünür)
+{const EN=Object.assign({},J('ansiklopedi_en.json').t);fs.readdirSync(__dirname+'/../data/ansiklopedi/en').forEach(f=>Object.assign(EN,J('ansiklopedi/en/'+f).t));
+ R.forEach(r=>{const ad=[...r.sources.flatMap(s=>[s.title,s.publisher]),...r.regulatory.map(g=>g.agency),...(r.effects||[]).flatMap(x=>[x.source.label,x.source.title])];
+  ad.forEach(k=>{ok(/^kaynak\.[0-9a-f]{10}$/.test(k)&&T[k],r.id+' kaynak adı anahtar değil: '+k);
+   const s=EN[k]||T[k]||'';ok(!/[çğıöşüÇĞİÖŞÜ]/.test(s.replace(/Türkiye/g,''))&&!/\b(ve|kopyası|özeti|Tüzük|Avrupa|metin)\b/.test(s),r.id+' İngilizcede Türkçe kaynak adı: '+s)})})}
+
 console.log(n+' ansiklopedi denetimi, '+fail+' hata');process.exit(fail?1:0);

@@ -1,0 +1,48 @@
+# Bakanlık taklit/tağşiş listesinin (index.html, Türkiye'ye özgü) ürün grubu ve uygunsuzluk türü adlarının İngilizcesi (12.10.2026).
+# Anahtar "liste:<Bakanlık verisindeki Türkçe ad>" (js/arayuz_liste.js grupAd). Firma, marka, ürün ve yer adları çevrilmez.
+# Bakanlık yeni bir ad eklerse çevirisi buraya yazılana kadar Türkçe görünür (test/ceviri.js listeler, hata saymaz).
+liste:Alkollü İçkiler	Alcoholic beverages
+liste:Alkolsüz İçecekler	Non-alcoholic beverages
+liste:Arıcılık Ürünleri	Bee products
+liste:Baharatlar, Çeşni Vericiler ve Soslar	Spices, condiments and sauces
+liste:Bitki, Çay ve Kahve Ürünleri	Herb, tea and coffee products
+liste:Bitkisel Macun vb. Ürünler	Herbal pastes and similar products
+liste:Bitkisel Yağlar	Vegetable oils
+liste:Et ve Et Ürünleri	Meat and meat products
+liste:Gıda Katkı Maddeleri	Food additives
+liste:Meyve ve Sebze İşleme	Processed fruit and vegetables
+liste:Pastacılık Ürünleri ve Tatlılar	Bakery products and desserts
+liste:Süt ve Süt Ürünleri	Milk and dairy products
+liste:Takviye Edici Gıda Niteliğindeki Ürünler	Food supplements
+liste:Çikolata ve Kakao Ürünleri	Chocolate and cocoa products
+liste:Şekerli Mamuller	Confectionery
+liste:% Protein Oranının Düşük Olması	Protein content too low
+liste:% Yağ Oranının Düşük Olması	Fat content too low
+liste:Ay Çekirdeği Tespiti	Sunflower seed detected
+liste:Beyan Edilen Etken Maddenin Tespit Edilmemesi	Declared active substance not detected
+liste:Bitkisel Yağ Tespiti	Vegetable oil detected
+liste:Daha Düşük Kaliteli Zeytinyağı Karıştırılması Tespiti	Lower-grade olive oil mixed in
+liste:Deri Dokusu Tespiti	Skin tissue detected
+liste:Eritme Tuzu Tespiti	Emulsifying salts detected
+liste:Gıda Boyası Tespiti	Food colouring detected
+liste:Gıdada Kullanımına İzin Verilmeyen Alkol Tespiti	Alcohol not permitted in food detected
+liste:Gıdada Kullanımına İzin Verilmeyen Boya Tespiti	Colouring not permitted in food detected
+liste:Jelatin Tespiti	Gelatine detected
+liste:Kanatlı Eti Tespiti	Poultry meat detected
+liste:Koyun Sütü Tespit Edilmemesi	Sheep's milk not detected
+liste:Mekanik Ayrılmış Kanatlı Eti Tespiti	Mechanically separated poultry meat detected
+liste:Natamisin Tespiti	Natamycin detected
+liste:Nişasta Tespiti	Starch detected
+liste:Sakatat (Baş Eti) Tespiti	Offal (head meat) detected
+liste:Sakatat (Dil) Tespiti	Offal (tongue) detected
+liste:Sakatat (Kalp) Tespiti	Offal (heart) detected
+liste:Sakatat (Taşlık) Tespiti	Offal (gizzard) detected
+liste:Soya Tespiti	Soy detected
+liste:Süt Yağı Harici Yağ Tespiti	Fat other than milk fat detected
+liste:Taklit veya Tağşiş Tespiti	Imitation or adulteration detected
+liste:Tek Tırnaklı Eti Tespiti	Horse or donkey (soliped) meat detected
+liste:Tohum Yağları Karıştırılması Tespiti	Seed oils mixed in
+liste:Yabancı Madde Tespiti	Foreign matter detected
+liste:İlaç Etken Maddesi Tespiti	Pharmaceutical active substance detected
+liste:İnek Sütü Tespiti	Cow's milk detected
+liste:Şeker İlavesi Tespiti	Added sugar detected

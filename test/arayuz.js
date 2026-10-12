@@ -319,6 +319,14 @@ async function scan(p,mode,text){
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
+  // Ürün grubu ve uygunsuzluk türü İngilizce görünür, süzgeç Bakanlık verisindeki Türkçe değerle çalışır (12.10.2026)
+  await p.waitForFunction(()=>[...document.querySelectorAll('#grup option')].some(o=>o.textContent==='Meat and meat products'),null,{timeout:10000});
+  {const g=await p.$eval('#grup option[value="Et ve Et Ürünleri"]',o=>o.textContent);ok(g==='Meat and meat products','Liste ürün grubu İngilizce: '+g);
+   await p.selectOption('#grup','Et ve Et Ürünleri');
+   const tg=await p.$$eval('#list .rec .tag',e=>e.map(x=>x.textContent));
+   ok(tg.length&&tg.every(x=>!/Tespit|Olması|Edilmemesi/.test(x))&&tg.includes('Poultry meat detected'),'Liste uygunsuzluk türleri İngilizce: '+tg.slice(0,4).join(', '));
+   const dd=await p.$eval('#list .rec dd:nth-of-type(3)',e=>e.textContent);ok(dd==='Meat and meat products','Liste ayrıntıda ürün grubu İngilizce: '+dd);
+   await p.selectOption('#grup','')}
   // Alt menü (12.10.2026): Ansiklopedi solda, Etiket Oku ortada, Profilim sağda; Liste yalnızca Türkiye seçiliyken
   ok((await p.$$eval('.tabbar a',a=>a.map(x=>x.dataset.tab).join(',')))==='ansiklopedi,oku,liste,profil','alt menü sırası');
   ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="profil"]'),'ülke seçilmemişken Liste menüde görünmüyor');
