@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-cevrilen>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Taklit/Tağşiş Listesi</title>
+<title data-i18n="ulke.tr.liste.baslik">Taklit/Tağşiş Listesi</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -47,24 +47,24 @@ body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
 </head>
 <body>
 <div class="wrap">
-<h1>Taklit/Tağşiş Listesi</h1>
-<p class="sub">Tarım ve Orman Bakanlığı'nın kamuoyuna duyurduğu taklit ve tağşiş kayıtları.</p>
+<h1 data-i18n="ulke.tr.liste.baslik">Taklit/Tağşiş Listesi</h1>
+<p class="sub" data-i18n="ulke.tr.liste.alt">Tarım ve Orman Bakanlığı'nın kamuoyuna duyurduğu taklit ve tağşiş kayıtları.</p>
 <div class="note" id="note"></div>
-<input id="q" type="search" placeholder="Firma, marka veya ürün ara" aria-label="Ara">
-<div class="chips" id="chips" role="group" aria-label="Liste"></div>
+<input id="q" type="search" placeholder="Firma, marka veya ürün ara" aria-label="Ara" data-i18n-attr="placeholder:ulke.tr.liste.ara_yer;aria-label:ulke.tr.liste.ara">
+<div class="chips" id="chips" role="group" aria-label="Liste" data-i18n-attr="aria-label:nav.liste"></div>
 <div class="row">
-<select id="il" aria-label="İl"><option value="">Tüm iller</option></select>
-<select id="ilce" aria-label="İlçe" disabled><option value="">Önce il seçin</option></select>
-<select id="srt" aria-label="Sıralama"><option value="firma">Kuruma göre (A-Z)</option><option value="tarih">Duyuru tarihine göre (yeni)</option></select>
-<select id="grup" aria-label="Ürün grubu"><option value="">Tüm ürün grupları</option></select>
-<select id="tur" aria-label="Uygunsuzluk türü"><option value="">Tüm uygunsuzluklar</option></select>
+<select id="il" aria-label="İl" data-i18n-attr="aria-label:ulke.tr.liste.il"><option value="" data-i18n="ulke.tr.liste.tum_iller">Tüm iller</option></select>
+<select id="ilce" aria-label="İlçe" data-i18n-attr="aria-label:ulke.tr.liste.ilce" disabled><option value="" data-i18n="ulke.tr.liste.il_once">Önce il seçin</option></select>
+<select id="srt" aria-label="Sıralama" data-i18n-attr="aria-label:ulke.tr.liste.siralama"><option value="firma" data-i18n="ulke.tr.liste.sira_firma">Kuruma göre (A-Z)</option><option value="tarih" data-i18n="ulke.tr.liste.sira_tarih">Duyuru tarihine göre (yeni)</option></select>
+<select id="grup" aria-label="Ürün grubu" data-i18n-attr="aria-label:ulke.tr.liste.det.grup"><option value="" data-i18n="ulke.tr.liste.tum_gruplar">Tüm ürün grupları</option></select>
+<select id="tur" aria-label="Uygunsuzluk türü" data-i18n-attr="aria-label:ulke.tr.liste.tur"><option value="" data-i18n="ulke.tr.liste.tum_turler">Tüm uygunsuzluklar</option></select>
 </div>
 <div class="count" id="count"></div>
 <div id="list"></div>
 
-<footer>Kaynak: guvenilirgida.tarimorman.gov.tr. Bilgiler bakanlığın duyurusuyla aynen gösterilir; bu uygulama yorum eklemez. Bakanlık listesinden çıkan kayıtlar “Listeden çıktı” etiketiyle gösterilmeye devam eder. Bu uygulama resmi bir uygulama değildir; Tarım ve Orman Bakanlığı ile bağlantısı yoktur.</footer>
+<footer data-i18n="ulke.tr.liste.alt_not">Kaynak: guvenilirgida.tarimorman.gov.tr. Bilgiler bakanlığın duyurusuyla aynen gösterilir; bu uygulama yorum eklemez. Bakanlık listesinden çıkan kayıtlar “Listeden çıktı” etiketiyle gösterilmeye devam eder. Bu uygulama resmi bir uygulama değildir; Tarım ve Orman Bakanlığı ile bağlantısı yoktur.</footer>
 </div>
-<nav class="tabbar" aria-label="Uygulama bölümleri"><a href="index.html" data-tab="liste" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Liste</a><a href="ocr.html" data-tab="oku"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 9h10M7 12h10M7 15h6"/></svg>Etiket Oku</a><a href="ansiklopedi.html" data-tab="ansiklopedi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Ansiklopedi</a><a href="ocr.html#profil" data-tab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profilim</a></nav>
+<nav class="tabbar" aria-label="Uygulama bölümleri" data-i18n-attr="aria-label:nav.aria"><a href="index.html" data-tab="liste" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span data-i18n="nav.liste">Liste</span></a><a href="ocr.html" data-tab="oku"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 9h10M7 12h10M7 15h6"/></svg><span data-i18n="sayfa.baslik">Etiket Oku</span></a><a href="ansiklopedi.html" data-tab="ansiklopedi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg><span data-i18n="nav.ansiklopedi">Ansiklopedi</span></a><a href="ocr.html#profil" data-tab="profil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span data-i18n="profil.baslik">Profilim</span></a></nav>
 <script>
 var RAW=[
 {"DuyuruTarihi":"/Date(1790788070540)/","FirmaAdi":"TASF.HAL.AYBEY SÜT ÜRÜNLERİ GIDA SANAYİ TİCARET LİMİTED ŞİRKETİ","Marka":"İLAYDA ÇİFTLİĞİ ","UrunAdi":"TAZE KAŞAR PEYNİRİ 2000G","Uygunsuzluk":"Bitkisel Yağ Tespiti</br></br>Eritme Tuzu Tespiti","PartiSeriNo":"180226","FirmaIl":"AYDIN","FirmaIlce":"EFELER","UrunGrupAdi":"Süt ve Süt Ürünleri"},
@@ -78,95 +78,9 @@ var RAW=[
 {"DuyuruTarihi":"/Date(1790786812413)/","FirmaAdi":"AFT SÜT ÜRÜNLERİ GIDA PAZARLAMA SANAYİ VE TİCARET LİMİTED ŞİRKETİ","Marka":"HALİL AĞA","UrunAdi":"HİNDİSTAN CEVİZLİ-YER FISTIKLI ÇEŞNİLİ TAM YAĞLI TAZE ERİTME PEYNİRİ","Uygunsuzluk":"Nişasta Tespiti","PartiSeriNo":"150225","FirmaIl":"KONYA","FirmaIlce":"KARATAY","UrunGrupAdi":"Süt ve Süt Ürünleri"},
 {"DuyuruTarihi":"/Date(1790786698020)/","FirmaAdi":"ÖZERLER SÜT ÜRÜNLERİ VE MARKETÇİLİK ANONİM ŞİRKETİ","Marka":"FORMİA (PİZZALIK PEYNİR)","UrunAdi":"TAM YAĞLI TAZE ERİTME PEYNİRİ","Uygunsuzluk":"Bitkisel Yağ Tespiti","PartiSeriNo":"P2104","FirmaIl":"SAKARYA","FirmaIlce":"HENDEK","UrunGrupAdi":"Süt ve Süt Ürünleri"}
 ];
-function clean(s){return String(s||"").replace(/\s+/g," ").trim()}
-function fold(s){return s.toLocaleLowerCase("tr").replace(/ı/g,"i").normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
-function dash(s){s=clean(s);return s==="-"?"":s}
-function build(raw){return raw.map(function(r){
-  var ms=parseInt(String(r.DuyuruTarihi).replace(/\D/g,""),10);
-  var tur=String(r.Uygunsuzluk||"").split(/<\/br>/i).map(function(x){return clean(x).replace(/[,\s]+$/,"")}).filter(function(x){return !/^[-–—\s]*$/.test(x)});
-  var o={tarih:new Date(ms),firma:clean(r.FirmaAdi),marka:dash(r.Marka),urun:clean(r.UrunAdi),tur:tur,parti:dash(r.PartiSeriNo),il:dash(r.FirmaIl),ilce:dash(r.FirmaIlce),grup:clean(r.UrunGrupAdi),liste:String(r._liste||"304"),cikti:r._cikti?new Date(r._cikti+"T12:00:00Z"):null};
-  o.hay=fold([o.firma,o.marka,o.urun].join(" "));return o;
-}).sort(function(a,b){return b.tarih-a.tarih})}
-var DATA=build(RAW),IMPORTED=false;
-try{localStorage.removeItem("tagsis_raw")}catch(e){}   // eski "Veriyi güncelle" ile kaydedilmiş veri artık kullanılmaz
-function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-function fill(sel,vals){Array.from(new Set(vals)).filter(Boolean).sort(function(a,b){return a.localeCompare(b,"tr")}).forEach(function(v){var o=el("option",null,v);o.value=v;sel.appendChild(o)})}
-var $q=document.getElementById("q"),$il=document.getElementById("il"),$tur=document.getElementById("tur"),$list=document.getElementById("list"),$count=document.getElementById("count");
-var SON="",KONTROL="";
-var LN={saglik:"Sağlığı tehlikeye düşürecek gıdalar","304":"Aynı değeri taşımayan madde eklenmesi","305":"Temel bileşen eksiltilmesi"};
-var LST="",$ilce=document.getElementById("ilce"),$srt=document.getElementById("srt"),$chips=document.getElementById("chips"),$grup=document.getElementById("grup"),$note=document.getElementById("note");
-function cmp(){return $srt.value==="tarih"?function(a,b){return b.tarih-a.tarih}:function(a,b){return a.firma.localeCompare(b.firma,"tr")||b.tarih-a.tarih}}
-function ilceOpts(){
-  $ilce.textContent="";var o=el("option",null,$il.value?"Tüm ilçeler":"Önce il seçin");o.value="";$ilce.appendChild(o);
-  $ilce.value="";$ilce.disabled=!$il.value;
-  if($il.value)fill($ilce,DATA.filter(function(d){return d.il===$il.value}).map(function(d){return d.ilce}).filter(Boolean));
-}
-function chips(){
-  $chips.textContent="";
-  var ks=[["","Tümü"],["saglik","Sağlığı tehlikeye düşürecek"],["304","Aynı değeri taşımayan madde"],["305","Temel bileşen eksiltilmesi"]];
-  if(DATA.some(function(d){return d.cikti}))ks.push(["cikti","Listeden çıkanlar"]);
-  ks.forEach(function(k){
-    var n=k[0]?DATA.filter(function(d){return inList(d,k[0])}).length:DATA.length;
-    var b=el("button","chip",k[1]+" ("+n+")");b.type="button";b.setAttribute("aria-pressed",String(LST===k[0]));
-    b.addEventListener("click",function(){LST=k[0];chips();render()});
-    $chips.appendChild(b);
-  });
-}
-function inList(d,ls){return ls==="cikti"?!!d.cikti:d.liste===ls}
-function opts(){
-  [[$il,"Tüm iller"],[$grup,"Tüm ürün grupları"],[$tur,"Tüm uygunsuzluklar"]].forEach(function(p){p[0].textContent="";var o=el("option",null,p[1]);o.value="";p[0].appendChild(o)});
-  fill($il,DATA.map(function(d){return d.il}));
-  fill($grup,DATA.map(function(d){return d.grup}));
-  fill($tur,[].concat.apply([],DATA.map(function(d){return d.tur})));
-  chips();ilceOpts();$note.style.display=IMPORTED?"none":"block";
-  $note.textContent="Önizleme: yalnızca "+DATA.length+" örnek kayıt gösteriliyor. Güncel liste yüklenemedi; internet bağlantısını kontrol edin.";
-}
-function dt(d){return d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"})}
-function render(){
-  var q=fold($q.value.trim()),il=$il.value,tur=$tur.value,gr=$grup.value,ls=LST,ic=$ilce.value;
-  var rows=DATA.filter(function(d){return (!q||d.hay.indexOf(q)>-1)&&(!il||d.il===il)&&(!gr||d.grup===gr)&&(!ls||inList(d,ls))&&(!ic||d.ilce===ic)&&(!tur||d.tur.indexOf(tur)>-1)});
-  rows.sort(cmp());$count.textContent="";
-  $count.appendChild(el("div","cnt",rows.length+" Firma/Ürün Listelendi."));
-  var nb=function(t){return t.replace(/ /g,"\u00a0")};   // tarih satır sonunda bölünmesin
-  var ds=[KONTROL&&("Son Kontrol: "+nb(KONTROL)),SON&&("Son Liste Güncelleme: "+nb(SON))].filter(Boolean).join(" · ");
-  if(ds)$count.appendChild(el("div",null,ds));
-  $list.textContent="";
-  if(!rows.length){$list.appendChild(el("div","empty","Sonuç yok. Aramayı kısaltın veya filtreleri temizleyin."));return}
-  rows.forEach(function(d){
-    var b=el("button","rec"+(d.cikti?" out":""));b.type="button";b.setAttribute("aria-expanded","false");if(d.liste==="saglik")b.style.borderLeftWidth="10px";
-    if(d.cikti)b.appendChild(el("span","outtag","Listeden çıktı · "+dt(d.cikti)));
-    b.appendChild(el("div","brand",d.marka||d.firma));
-    b.appendChild(el("div","prod",d.urun));
-    var t=el("div","tags");d.tur.forEach(function(x){t.appendChild(el("span","tag",x))});b.appendChild(t);
-    b.appendChild(el("div","meta",([d.ilce,d.il].filter(Boolean).join(", ")||"Yer belirtilmemiş")+" – duyuru: "+dt(d.tarih)));
-    var dl=el("dl","det");
-    [["Liste",LN[d.liste]||("Diğer liste ("+d.liste+")")],["Firma",d.firma],["Ürün grubu",d.grup],["Parti / seri no",d.parti||"Belirtilmemiş"]].concat(d.cikti?[["Durum","Bu kayıt Bakanlığın güncel listesinde artık yer almıyor. Listede görülmediği ilk gün: "+dt(d.cikti)+". Kaldırılma nedeni Bakanlıkça açıklanmaz."]]:[]).forEach(function(p){dl.appendChild(el("dt",null,p[0]));dl.appendChild(el("dd",null,p[1]))});
-    var s=el("div","src","Kaynak: Tarım ve Orman Bakanlığı, Gıda Kamuoyu Duyurusu. ");
-    var a=el("a",null,"Resmi sayfa");a.href="https://guvenilirgida.tarimorman.gov.tr/gkd";a.target="_blank";a.rel="noopener";
-    a.addEventListener("click",function(e){e.stopPropagation()});s.appendChild(a);dl.appendChild(s);b.appendChild(dl);
-    b.addEventListener("click",function(){b.setAttribute("aria-expanded",b.getAttribute("aria-expanded")==="true"?"false":"true")});
-    $list.appendChild(b);
-  });
-}
-$il.addEventListener("input",ilceOpts);[$q,$il,$grup,$tur,$ilce,$srt].forEach(function(e){e.addEventListener("input",render)});
-try{var QP=new URLSearchParams(location.search).get("q");if(QP)$q.value=QP}catch(e){}
-opts();render();
-try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}
-function getJ(p){return fetch(p,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()})}
-// Güncel liste + arşiv (listeden çıkan kayıtlar). Arşiv yoksa yalnızca güncel liste gösterilir.
-Promise.all([getJ("data/tagsis.json"),getJ("data/arsiv.json").catch(function(){return null})]).then(function(res){
-  var j=res[0],ar=res[1];
-  var arr=[];Object.keys(j.listeler).forEach(function(k){j.listeler[k].forEach(function(x){x._liste=k;arr.push(x)})});
-  if(!arr.length)return;
-  if(ar&&ar.kayitlar)ar.kayitlar.forEach(function(a){var x=Object.assign({},a.kayit);x._liste=a.liste;x._cikti=a.kaldirilma;arr.push(x)});
-  DATA=build(arr);IMPORTED=true;
-  if(j.guncelleme)SON=new Date(j.guncelleme).toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"});
-  opts();render();
-}).catch(function(){});
-// Son kontrol zamanı: liste değişmese de günlük güncelleme her çalıştığında yenilenir
-fetch("data/durum.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
-  if(d.son_kontrol){KONTROL=new Date(d.son_kontrol).toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"});render()}
-}).catch(function(){});
 </script>
+<script src="js/ceviri.js"></script>
+<script src="js/dil.js"></script>
+<script src="js/arayuz_liste.js"></script>
 </body>
 </html>

@@ -257,6 +257,9 @@ async function scan(p,mode,text){
   // Arama kutusu boşken bütün elle incelenmiş maddeler listelenir; arama sonucu gelince liste kısalır
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});
   {const f=await p.$$eval('#ana a.row .rc',e=>e.map(x=>x.textContent));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
+  // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
+  await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
+  ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');
   ok(!errs.length,'ansiklopedi konsol hatası: '+errs.join(' | '));errs.length=0;
   await ctx.close();
 
@@ -265,7 +268,7 @@ async function scan(p,mode,text){
   await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX,null,{timeout:15000});
   ok(await p.getAttribute('html','lang')==='en'&&(await p.textContent('h1'))==='Read Label','İngilizce açılış: lang ve başlık');
   ok((await p.textContent('#ornek'))==='Try sample text'&&(await p.getAttribute('#metin','placeholder')).startsWith('The text'),'İngilizce düğme ve placeholder');
-  const anahtarVar=()=>p.evaluate(()=>{const m=document.body.innerText.match(/\b(ortak|gida|koz|tem|kars|kayit|pay|profil|risk|sayfa|ulke|veri|kanser|eslesme|foto|ocr|nav|birim)\.[a-z0-9_]+(\.[a-z0-9_]+)*\b/);return m?m[0]:''});
+  const anahtarVar=()=>p.evaluate(()=>{const m=document.body.innerText.match(/\b(ortak|gida|koz|tem|kars|kayit|pay|profil|risk|sayfa|ulke|veri|kanser|eslesme|foto|ocr|nav|birim|ans)\.[a-z0-9_]+(\.[a-z0-9_]+)*\b/);return m?m[0]:''});
   for(const m of ['gida','koz','tem']){
     await sample(p,m);
     ok(await p.$$eval('#sonuc .res',e=>e.length)>2,'en '+m+': sonuç kartları');
@@ -296,6 +299,17 @@ async function scan(p,mode,text){
   // Sağdan sola dil: kart aynalanarak çizilir, hata vermez (Arapça çevirisi yok; yalnızca altyapı)
   ok(await p.evaluate(()=>{const s=DIL;try{dilKur('ar',{tr:DIL.sozluk.tr,en:DIL.sozluk.en,ar:{}},{ar:{ad:'العربية',yon:'rtl'}});const c=document.createElement('canvas'),L=PAYLAS_AYAR.yerlesim.hikaye;c.width=L.w;c.height=L.h;
     const out=payDraw(c.getContext('2d'),payModel(paySource(),{name:'X'},PAYLAS_AYAR,L),L,PAYLAS_AYAR,null);return out.length>5}finally{DIL=s}}),'sağdan sola kart çizimi');
+  // Ansiklopedi ve Liste arayüzü İngilizce (12.10.2026); Bakanlık verisi Türkçe kalır
+  await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');
+  ok(await p.getAttribute('html','lang')==='en'&&(await p.textContent('h1'))==='Encyclopedia','ansiklopedi İngilizce başlık');
+  ok(/What does it do\?/.test(await p.textContent('#ana .panel'))&&(await p.textContent('#tab-otorite'))==='Authorities','ansiklopedi sekmeleri İngilizce');
+  {const k=await anahtarVar();ok(!k,'ansiklopedi: çıplak anahtar: '+k)}
+  await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');
+  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name or E number')&&/My saved substances/.test(await p.textContent('#ana')),'ansiklopedi arama İngilizce');
+  await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
+  ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
+  ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
+  {const k=await anahtarVar();ok(!k,'Liste: çıplak anahtar: '+k)}
   // Dil seçimi: Hassasiyetlerim'den Türkçe → sayfa Türkçe yeniden yüklenir
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#dilsec');
   await Promise.all([p.waitForNavigation(),p.selectOption('#dilsec','tr')]);await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);

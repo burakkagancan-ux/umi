@@ -10,7 +10,7 @@ for(const f of ['ocr.html','index.html','ansiklopedi.html']){
 }
 const js=fs.readdirSync(__dirname+'/../js').filter(f=>f.endsWith('.js'));
 for(const f of js)check('js/'+f,fs.readFileSync(__dirname+'/../js/'+f,'utf8'));
-// Her js dosyası ocr.html ya da ansiklopedi.html'de yüklenir ve sw.js CORE listesinde bulunur
-const ocr=fs.readFileSync(__dirname+'/../ocr.html','utf8')+fs.readFileSync(__dirname+'/../ansiklopedi.html','utf8'),sw=fs.readFileSync(__dirname+'/../sw.js','utf8');
-for(const f of js){if(ocr.indexOf('"js/'+f+'"')<0){fail++;console.log('HATA','ocr.html/ansiklopedi.html js/'+f+' yüklemiyor')}if(sw.indexOf('"js/'+f+'"')<0){fail++;console.log('HATA','sw.js CORE listesinde js/'+f+' yok')}}
+// Her js dosyası ocr.html, ansiklopedi.html ya da index.html'de yüklenir ve sw.js CORE listesinde bulunur
+const ocr=fs.readFileSync(__dirname+'/../ocr.html','utf8')+fs.readFileSync(__dirname+'/../ansiklopedi.html','utf8')+fs.readFileSync(__dirname+'/../index.html','utf8'),sw=fs.readFileSync(__dirname+'/../sw.js','utf8');
+for(const f of js){if(ocr.indexOf('"js/'+f+'"')<0){fail++;console.log('HATA','ocr.html/ansiklopedi.html/index.html js/'+f+' yüklemiyor')}if(sw.indexOf('"js/'+f+'"')<0){fail++;console.log('HATA','sw.js CORE listesinde js/'+f+' yok')}}
 console.log(n+' script bloğu/dosyası, '+fail+' hata');process.exit(fail?1:0);

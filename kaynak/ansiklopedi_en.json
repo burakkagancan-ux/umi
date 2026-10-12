@@ -2006,8 +2006,8 @@
 "tr": "EFSA 2010'da parlak siyah BN için ADI'yi 5 mg/kg vücut ağırlığı olarak belirledi; uzun süreli kanser çalışmaları olumsuz çıktı. 10 yaş altı çocuklarda yüksek alım bu sınırı aşabiliyordu."
 },
 "E151.body": {
-"s": "In rats, 94–98% of orally administered brilliant black PN was excreted in faeces within 40 hours and less than 5% in urine; only trace amounts remained in tissues.",
-"tr": "Sıçanlarda ağızdan verilen brilliant black PN'nin %94–98'i 40 saat içinde dışkıyla, %5'ten azı idrarla atılmış; dokularda yalnızca iz miktarı kalmıştır."
+"s": "In rats, 94–98% of orally administered brilliant black BN was excreted in faeces within 40 hours and less than 5% in urine; only trace amounts remained in tissues.",
+"tr": "Sıçanlarda ağızdan verilen parlak siyah BN'nin %94–98'i 40 saat içinde dışkıyla, %5'ten azı idrarla atılmış; dokularda yalnızca iz miktarı kalmıştır."
 },
 "E151.eff.0.t": {
 "s": "The daily limit may be exceeded",
@@ -2066,8 +2066,8 @@
 "tr": "Gliseril diasetat"
 },
 "E1517.prod": {
-"s": "Produced by esterifying citric acid or glycerol through a chemical reaction.",
-"tr": "Sitrik asit ya da gliserolün kimyasal tepkimeyle esterleştirilmesiyle üretilir."
+"s": "Produced by esterifying glycerol with acetic acid through a chemical reaction.",
+"tr": "Gliserolün asetik asitle kimyasal tepkimeyle esterleştirilmesiyle üretilir."
 },
 "E1517.regx.0": {
 "s": "ADI 'not specified'.",

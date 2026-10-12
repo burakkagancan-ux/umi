@@ -124,7 +124,7 @@ Altyapı ve İngilizce arayüz tamam (CLAUDE.md "Çok dil"). Bilerek bırakılan
 
 ### Çevrilmemiş veri metinleri — KAPANDI (12.10.2026, PR #105)
 - Uzun veri metinlerinin hepsi (1.172: gerekçe, üretim yolu, açıklama, TR notu, bileşen notu, birlikte dikkat, kozmetik ve K3 notları, temizlik notları) `kaynak/ceviri_en_veri.tsv`'de; ansiklopedinin 4.043 metninin hepsi `kaynak/ansiklopedi_en.json`'da (her çeviri çevrildiği Türkçeyi `tr` olarak taşır; Türkçe değişirse çeviri bayat sayılır ve yazılmaz, metin Türkçe + "not yet translated" görünür). Çeviri i18n/sozluk.md terimleriyle yapıldı; sayı, Türkçe kalıntı ve "safe/harmless" denetimi geçti (geçen "safe" kelimelerinin hepsi Türkçede "güvenli" diye kurumdan aktarılan cümleler).
-- Kalan: ansiklopedi.html'in arayüz metinleri ve index.html hâlâ Türkçe. Çeviride görülen kaynak şüpheleri: E151 metninde "brilliant black PN" (resmi adı BN), E1517 üretim yolunda "sitrik asit ya da gliserol" (gliseril diasetat için gliserol + asetik asit olmalı); Türkçe kaynak metin kontrol edilmeli.
+- KAPANDI (12.10.2026): Çeviride görülen iki kaynak hatası düzeltildi: E151 "Vücutta" metni artık resmi adla (parlak siyah BN / brilliant black BN; "Black PN" eş adı ve JECFA monografı başlığı olarak kalır), E1517 üretim yolu "gliserolün asetik asitle esterleştirilmesi" (eski metin "sitrik asit ya da gliserol" diyordu; kayıt `dogrulandi=0` kaldı, yöntem kaynakla doğrulanmadı). Arayüz sayfaları aşağıda.
 - Yeni Türkçe metin eklenince İngilizcesi aynı PR'da eklenir (O-09).
 
 Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
@@ -147,8 +147,8 @@ Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi har
 
 Çevrilenler (i18n/veri/en.json, 380): alerjen adları (AB 1169/2011 Ek II), katkı işlev sınıfları (AB 1333/2008 Ek I), CosIng işlev adları (85, resmi), deterjan içerik grupları ve yüzde bantları (AB 648/2004 Ek VII), 115 bileşen adı, gıda ve kozmetik bayrak etiketleri, K3 liste adları ve çipleri, ADI ekleri, K3 dayanakları. Resmi metinden doğrudan: CLP H/EUH/P ifadeleri (veride `en`), E kodu adları (`name_en`; kaynağı FAIA envanteri, AB 1333/2008 Ek II metniyle tek tek karşılaştırılmadı), INCI adları. Kozmetik AB gerekçelerinin 2.009'u da kalıptan (koz.gerekce.*) İngilizce.
 
-### Çevrilmeyen sayfalar
-- ansiklopedi.html'in arayüz metinleri (js/arayuz_ansiklopedi.js) ve index.html (Liste: Tarım ve Orman Bakanlığı listesi; ülke katmanı) Türkçe. Alt menü yalnızca ocr.html'de çevrili.
+### Çevrilmeyen sayfalar — KAPANDI (12.10.2026)
+- ansiklopedi.html arayüzü (`ans.*` anahtarları) ve index.html (Liste; `ulke.tr.liste.*`, kod js/arayuz_liste.js'e taşındı) iki dilde; alt menü üç sayfada çevrili. Bakanlık verisi (firma, ürün, il, ürün grubu, uygunsuzluk türü) çevrilmez, İngilizcede başlık altında "Ministry data is shown in Turkish" notu var. test/ceviri.js üç sayfayı da denetler; tarayıcı testinde İngilizce ansiklopedi ve Liste turu. Ansiklopedide inceleme tarihi artık dile göre ("8 Ekim 2026" / "8 October 2026"; önce 08.10.2026).
 - KISMEN ÇÖZÜLDÜ (09.10.2026, PR #105): Ülke ayarı var (Hassasiyetlerim > Dil kutusu; `ulke()`, saf mantık `ulkeSec`). Türkiye'ye özgü bilgiler (TGK adı/notu, Bakanlık listesi kartı, kozmetik TR durumu, TR izin notu, UZEM) yalnızca Türkiye seçiliyse görünür. Kalan (B-05): ikinci ülkenin verisi (Birleşik Krallık FSA, ABD FDA) ve ülkeye göre öne çıkan kural.
 
 ### İngilizce etiket tanıma (B-08, 08.10.2026)

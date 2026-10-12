@@ -1,8 +1,8 @@
 // Çok dil denetimi. Çalıştır: node test/ceviri.js
 // 1) i18n/diller.json'daki her dilin dosyası var ve tr.json'daki her anahtarı içeriyor; yer tutucular ({n}, {ad}) her dilde aynı.
-// 2) Kodda (js/*.js, ocr.html) kullanılan her anahtar tanımlı; tr.json'da kullanılmayan anahtar yok.
+// 2) Kodda (js/*.js, sayfalar) kullanılan her anahtar tanımlı; tr.json'da kullanılmayan anahtar yok.
 // 3) Arayüz dosyalarında anahtara taşınmamış Türkçe metin kalmadı (ğüşıöç taraması; bilinçli istisnalar aşağıda, gerekçesiyle).
-// 4) ocr.html'deki data-i18n metinleri tr.json ile aynı (sayfa ilk açılışta Türkçe görünür, dil dosyası gelince aynı metin yazılır).
+// 4) Sayfalardaki (ocr.html, ansiklopedi.html, index.html) data-i18n metinleri tr.json ile aynı (sayfa ilk açılışta Türkçe görünür, dil dosyası gelince aynı metin yazılır).
 // 5) Hiçbir js dosyası t() işlevini yerel bir "t" değişkeniyle gölgelemiyor.
 // 6) t(), çoğul, sayı ve tarih biçimi (Türkçe çıktı eski görünümle aynı).
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..'),I=path.join(R,'i18n');
@@ -68,21 +68,24 @@ function parcala(src){
 }
 const JS=fs.readdirSync(path.join(R,'js')).filter(f=>f.endsWith('.js'));
 const kaynak={};JS.forEach(f=>kaynak['js/'+f]=fs.readFileSync(path.join(R,'js',f),'utf8'));
-const html=fs.readFileSync(path.join(R,'ocr.html'),'utf8');
+// Arayüzü çevrilen sayfalar (data-i18n). index.html'in satır içi betiği yalnızca Bakanlık önizleme verisini (RAW) taşır.
+const SAYFALAR=['ocr.html','ansiklopedi.html','index.html'];
+const sayfaHtml={};SAYFALAR.forEach(f=>sayfaHtml[f]=fs.readFileSync(path.join(R,f),'utf8'));
 
-// 2) Kullanılan anahtarlar: koddaki anahtar biçimli dizgeler + ocr.html data-i18n. Birleştirilerek kurulan anahtarlar ("kars.az_"+tür) DINAMIK listesinde.
+// 2) Kullanılan anahtarlar: koddaki anahtar biçimli dizgeler + sayfalardaki data-i18n. Birleştirilerek kurulan anahtarlar ("kars.az_"+tür) DINAMIK listesinde.
 const DINAMIK=['ulke.ad.','kars.az_','kars.yukleniyor_','kars.baslik_','kars.sev.','kars.noun.','kars.uyum.','kars.uyum.cmr_','kars.uyum.ed_','kars.uyum.yutma_','kars.uyum.kapsul_','gida.uretim.say_','kayit.yuklenemedi_','foto.kamera_','gida.adi.','gida.uretim.say_','pay.kart.ust_','pay.neden.','pay.nedenk.','pay.metin.','tem.prof.','ornek.','koz.yukleniyor','tem.yukleniyor','gida.yukleniyor'];
 const NS=new Set(Object.keys(tr).map(k=>k.split('.')[0]));
 const kullanilan=new Set(),dinamikKullanim=new Set();
 for(const [f,src] of Object.entries(kaynak)){
-  if(f==='js/arayuz_ansiklopedi.js'||f==='js/ansiklopedi.js')continue;   // ansiklopedi metinleri ayrı dosyada (data/ansiklopedi_<dil>.json)
   for(const {s} of parcala(src).str){
-    if(ANAHTAR.test(s)&&NS.has(s.split('.')[0])&&!DINAMIK.includes(s))kullanilan.add(s);
+    if(ANAHTAR.test(s)&&NS.has(s.split('.')[0])&&!DINAMIK.includes(s)&&!/\.html$/.test(s))kullanilan.add(s);   // "ocr.html" bağlantıdır, anahtar değil
     const m=/^([a-z]+\.[a-z0-9_.]*)$/.exec(s);if(m&&DINAMIK.some(p=>s===p||s.startsWith(p)))dinamikKullanim.add(s);
   }
 }
-for(const m of html.matchAll(/data-i18n="([^"]+)"/g))kullanilan.add(m[1]);
-for(const m of html.matchAll(/data-i18n-attr="([^"]+)"/g))m[1].split(';').forEach(p=>kullanilan.add(p.split(':')[1].trim()));
+for(const html of Object.values(sayfaHtml)){
+  for(const m of html.matchAll(/data-i18n="([^"]+)"/g))kullanilan.add(m[1]);
+  for(const m of html.matchAll(/data-i18n-attr="([^"]+)"/g))m[1].split(';').forEach(p=>kullanilan.add(p.split(':')[1].trim()));
+}
 for(const k of kullanilan)ok(k in tr,'kodda kullanılan anahtar tr.json\'da yok: '+k);
 for(const p of DINAMIK)ok(Object.keys(tr).some(k=>k.startsWith(p)),'dinamik önek için anahtar yok: '+p);
 const kullanilmayan=Object.keys(tr).filter(k=>!kullanilan.has(k)&&!DINAMIK.some(p=>k.startsWith(p)));
@@ -98,7 +101,7 @@ const ISTISNA={
   'js/dil.js':['Türkçe'],   // diller.json yüklenemezse yedek: dilin kendi adı
 };
 for(const [f,src] of Object.entries(kaynak)){
-  if(f==='js/arayuz_ansiklopedi.js'||f==='js/ansiklopedi.js')continue;   // ansiklopedi sayfası arayüzü bu işin kapsamı dışında (TEKNIK_BORC.md)
+  if(f==='js/ansiklopedi.js')continue;   // ansValidate: veri doğrulama hata iletileri (üreteç ve test için; kullanıcıya görünmez)
   const ist=ISTISNA[f]||[];
   for(const {s} of parcala(src).str){
     if(!TR.test(s)||s.length<=2)continue;   // tek harf eşlemeleri (ç->c) metin değil
@@ -107,17 +110,17 @@ for(const [f,src] of Object.entries(kaynak)){
     ok(false,f+': anahtara taşınmamış Türkçe metin: "'+s.slice(0,80)+'"');
   }
 }
-// ocr.html: görünen metin ve erişilebilirlik öznitelikleri data-i18n ile işaretli olmalı
-const govde=html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<style[\s\S]*?<\/style>/g,'').replace(/<!--[\s\S]*?-->/g,'');
-for(const m of govde.matchAll(/<([a-z0-9]+)([^>]*)>([^<]*)/g)){
-  const [_,tag,attr,txt]=m;
-  if(txt.trim()&&/[A-Za-zğüşıöçĞÜŞİÖÇ]{2}/.test(txt)&&!/data-i18n="/.test(attr))ok(false,'ocr.html: data-i18n yok: <'+tag+'> '+txt.trim().slice(0,60));
-  for(const a of ['placeholder','aria-label','alt','title']){const v=new RegExp('\\b'+a+'="([^"]*)"').exec(attr);if(v&&/[A-Za-z]{2}/.test(v[1]))ok(new RegExp('data-i18n-attr="[^"]*'+a+':').test(attr),'ocr.html: '+a+' çevrilmiyor: '+v[1])}
+// Sayfalar: görünen metin ve erişilebilirlik öznitelikleri data-i18n ile işaretli olmalı; 4) HTML'deki Türkçe metin tr.json ile aynı
+for(const [ad,html] of Object.entries(sayfaHtml)){
+  const govde=html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<style[\s\S]*?<\/style>/g,'').replace(/<!--[\s\S]*?-->/g,'');
+  for(const m of govde.matchAll(/<([a-z0-9]+)([^>]*)>([^<]*)/g)){
+    const [_,tag,attr,txt]=m;
+    if(txt.trim()&&/[A-Za-zğüşıöçĞÜŞİÖÇ]{2}/.test(txt)&&!/data-i18n="/.test(attr))ok(false,ad+': data-i18n yok: <'+tag+'> '+txt.trim().slice(0,60));
+    for(const a of ['placeholder','aria-label','alt','title']){const v=new RegExp('\\b'+a+'="([^"]*)"').exec(attr);if(v&&/[A-Za-z]{2}/.test(v[1]))ok(new RegExp('data-i18n-attr="[^"]*'+a+':').test(attr),ad+': '+a+' çevrilmiyor: '+v[1])}
+  }
+  for(const m of html.matchAll(/data-i18n="([^"]+)"[^>]*>([^<]*)</g))ok(tr[m[1]]===m[2],ad+' metni tr.json ile farklı: '+m[1]+' ("'+m[2].slice(0,40)+'" / "'+String(tr[m[1]]).slice(0,40)+'")');
+  for(const m of html.matchAll(/<[^>]*data-i18n-attr="([^"]+)"[^>]*>/g))m[1].split(';').forEach(p=>{const [a,k]=p.split(':').map(x=>x.trim()),v=new RegExp('\\b'+a+'="([^"]*)"').exec(m[0]);ok(v&&tr[k]===v[1],ad+' '+a+' tr.json ile farklı: '+k)});
 }
-// 4) HTML'deki Türkçe metin tr.json ile aynı
-for(const m of html.matchAll(/data-i18n="([^"]+)"[^>]*>([^<]*)</g))ok(tr[m[1]]===m[2],'ocr.html metni tr.json ile farklı: '+m[1]+' ("'+m[2].slice(0,40)+'" / "'+String(tr[m[1]]).slice(0,40)+'")');
-for(const m of html.matchAll(/<[^>]*data-i18n-attr="([^"]+)"[^>]*>/g))m[1].split(';').forEach(p=>{const [a,k]=p.split(':').map(x=>x.trim()),v=new RegExp('\\b'+a+'="([^"]*)"').exec(m[0]);ok(v&&tr[k]===v[1],'ocr.html '+a+' tr.json ile farklı: '+k)});
-
 // 5) t() gölgeleme: yerel "t" bildirimi ya da parametresi yok
 for(const [f,src] of Object.entries(kaynak)){
   if(f==='js/ceviri.js')continue;
