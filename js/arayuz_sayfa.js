@@ -1,4 +1,4 @@
-/* Arayüz: açılış modu, alt menü, fotoğraf kırpma ve OCR (Analiz Et). Sayfadaki son betik; açılış işlemleri burada başlar. */
+/* Arayüz: açılış modu, alt menü, fotoğraf kırpma ve OCR (fotoğraf seçilince ve çerçeve değişince kendiliğinden okunur). Sayfadaki son betik; açılış işlemleri burada başlar. */
 /* Açılış: veri yüklemesi ve mod, tüm betikler yüklendikten ve dil dosyası (js/dil.js, DIL_HAZIR) geldikten sonra başlar.
    Arayüz metinleri t() ile okunduğu için ekrana yazan hiçbir iş dil yüklenmeden çalışmaz. */
 getJson("data/e_aciklama.json").then(function(a){ABOUT=a.about||{}}).catch(function(){ABOUT={}});
@@ -27,7 +27,7 @@ try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").ca
 var CROP={x:0,y:0,w:1,h:1};   // görüntüye oranla (0-1)
 function drawCrop(){var c=$("crop");c.style.left=CROP.x*100+"%";c.style.top=CROP.y*100+"%";c.style.width=CROP.w*100+"%";c.style.height=CROP.h*100+"%"}
 function resetCrop(){CROP={x:0,y:0,w:1,h:1};drawCrop()}
-$("cropreset").onclick=resetCrop;
+$("cropreset").onclick=function(){resetCrop();okuIste(0)};
 (function(){
   var drag=null,MIN=0.08;
   function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -48,23 +48,25 @@ $("cropreset").onclick=resetCrop;
       if(h.indexOf("n")>-1)y1=clamp(c.y+dy,0,y2-MIN);
       if(h.indexOf("s")>-1)y2=clamp(c.y+c.h+dy,y1+MIN,1);
     }
-    CROP={x:x1,y:y1,w:x2-x1,h:y2-y1};drawCrop();
+    CROP={x:x1,y:y1,w:x2-x1,h:y2-y1};drawCrop();drag.m=true;
   }
-  function end(){drag=null}
+  function end(){if(drag&&drag.m)okuIste(800);drag=null}   // çerçeve bırakılınca seçilen alan yeniden okunur
   $("crop").addEventListener("pointermove",move);
   $("crop").addEventListener("pointerup",end);$("crop").addEventListener("pointercancel",end);
 })();
 // Kamera (capture) ya da galeri/dosya: ikisi de aynı kırpma ve okuma akışına girer
 function fotoSec(){
   var f=this.files[0];if(!f)return;var im=$("pre");im.src=URL.createObjectURL(f);
-  $("cropwrap").style.display="block";$("cropbar").style.display="flex";resetCrop();$("oku").disabled=false;
+  $("cropwrap").style.display="block";$("cropbar").style.display="flex";resetCrop();
+  OKU.n++;OKU.okundu=false;im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
   this.value="";   // aynı dosya yeniden seçilebilsin
 }
 $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;
 // Seçilen fotoğrafı ekrandan kaldırır: kayıttan sonra, sekme değişince, örnek/barkod/kayıtlı ürün açılınca eski görsel kalmasın
 function fotoTemizle(){
   var im=$("pre");if(im.src&&im.src.indexOf("blob:")===0)URL.revokeObjectURL(im.src);im.removeAttribute("src");
-  $("cropwrap").style.display="none";$("cropbar").style.display="none";resetCrop();$("oku").disabled=true;
+  $("cropwrap").style.display="none";$("cropbar").style.display="none";resetCrop();
+  OKU.n++;OKU.bekle=false;OKU.okundu=false;clearTimeout(OKU.zam);
 }
 function prep(img,on){
   // Yalnızca seçilen alan okunur; kırpılan alan küçükse daha yüksek çözünürlükte gönderilir
@@ -84,23 +86,37 @@ function prep(img,on){
   }
   return c;
 }
-$("oku").onclick=function(){
+/* Okuma: aynı anda tek okuma; sürerken yeni istek gelirse (çerçeve değişti, yeni fotoğraf) eski sonuç atılır ve yeniden okunur.
+   Aynı fotoğrafın ilk okuması yeni kayıt açar; çerçeve değişince yapılan yeniden okuma aynı kaydı günceller. */
+var OKU={n:0,mesgul:false,bekle:false,okundu:false,zam:null};
+function okuIste(ms){clearTimeout(OKU.zam);OKU.zam=setTimeout(fotoOku,ms)}
+function fotoOku(){
+  var im=$("pre");if(!im.getAttribute("src")||!im.naturalWidth)return;
   if(!OCR_URL&&!window.Tesseract){ST.textContent=t("ocr.bilesen_yok");return}
-  var btn=this,t0=Date.now();btn.disabled=true;ST.textContent=t("ocr.hazirlaniyor");
+  if(OKU.mesgul){OKU.bekle=true;return}
+  var n=OKU.n,t0=Date.now();OKU.mesgul=true;ST.textContent=t("ocr.hazirlaniyor");
+  function gecerli(){return n===OKU.n&&!OKU.bekle}
+  function yaz(tx,msj){
+    if(!gecerli())return;
+    $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
+    if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();
+  }
+  function hata(m){if(gecerli())ST.textContent=m}
+  function bitti(){OKU.mesgul=false;if(OKU.bekle){OKU.bekle=false;fotoOku()}}
   // Gri ton + kontrast germe yalnızca yedek OCR'da (Tesseract) yarar; Google Vision kendi ön işlemesini yapar
-  var cv=prep($("pre"),!OCR_URL);
+  var cv=prep(im,!OCR_URL);
   if(OCR_URL){
     ST.textContent=t("ocr.okunuyor");
     fetch(OCR_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:cv.toDataURL("image/jpeg",0.85).split(",")[1]})})
     .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||j.error){var er=new Error(j.error||("HTTP "+r.status));er.srv=true;throw er}return j})})
-    .then(function(j){$("metin").value=j.text||"";HSCAN=HOCR=true;if(typeof barkodFoto==="function")barkodFoto();ST.textContent=t("ocr.tamam_vision",{sn:dilSayi((Date.now()-t0)/1000,1,true)});run()})
-    .catch(function(e){ST.textContent=t(e.srv?"ocr.hata":"ocr.hata_internet",{m:e.message})}).then(function(){btn.disabled=false});
+    .then(function(j){yaz(j.text||"",t("ocr.tamam_vision",{sn:dilSayi((Date.now()-t0)/1000,1,true)}))})
+    .catch(function(e){hata(t(e.srv?"ocr.hata":"ocr.hata_internet",{m:e.message}))}).then(bitti);
     return;
   }
-  Tesseract.createWorker("tur+eng",1,{logger:function(m){if(m.status)ST.textContent=m.status+(m.progress?" %"+Math.round(m.progress*100):"")}}).then(function(w){
+  Tesseract.createWorker("tur+eng",1,{logger:function(m){if(m.status&&gecerli())ST.textContent=m.status+(m.progress?" %"+Math.round(m.progress*100):"")}}).then(function(w){
     return w.recognize(cv).then(function(r){
-      $("metin").value=r.data.text;HSCAN=HOCR=true;if(typeof barkodFoto==="function")barkodFoto();ST.textContent=t("ocr.tamam",{sn:dilSayi((Date.now()-t0)/1000,1,true)});
-      run();return w.terminate();
+      yaz(r.data.text,t("ocr.tamam",{sn:dilSayi((Date.now()-t0)/1000,1,true)}));
+      return w.terminate();
     });
-  }).catch(function(e){ST.textContent=t("ocr.hata",{m:e&&e.message?e.message:e})}).then(function(){btn.disabled=false});
-};
+  }).catch(function(e){hata(t("ocr.hata",{m:e&&e.message?e.message:e}))}).then(bitti);
+}
