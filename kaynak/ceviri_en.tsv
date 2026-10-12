@@ -63,6 +63,7 @@ k.bayrak.allergen_hairdye	Hair dye allergen
 k.bayrak.allergen_preservative	Known preservative allergen	
 k.bayrak.formaldehyde_releaser	Formaldehyde-releasing preservative	
 k.bayrak.cmr2	CMR category 2 in the EU (suspected carcinogen/mutagen/reproductive toxicant)	
+k.bayrak.cmr2_carc	Suspected carcinogen in the EU (CMR category 2)
 k.bayrak.cmr_ban	Banned because of CMR classification (carcinogenic, mutagenic, toxic for reproduction)	
 k.bayrak.nano	Nano form	
 k.bayrak.pfas	PFAS (fluorinated, persistent in the environment)	

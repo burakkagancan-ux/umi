@@ -1,6 +1,13 @@
 {
  "_aciklama": "Ansiklopedi (madde sözlüğü) için elle yazılan veri. gen_ansiklopedi.py bunu data/e_kodlari.json ve data/e_aciklama.json ile birleştirip data/ansiklopedi.json (kayıtlar, metinler yerine çeviri anahtarı) ve data/ansiklopedi_tr.json (Türkçe metinler) üretir. Ad, eş anlamlılar, kategori ve risk düzeyi e_kodlari.json'dan gelir, burada tekrar yazılmaz. 'kayitlar' altındaki maddeler elle incelenmiş tam kayıttır; diğer E kodları için sayfa otomatik oluşturulur. Kaynağı olmayan iddia yazılmaz; URL'si doğrulanamayan kaynakta url boş bırakılır ve todo yazılır.",
  "kaynaklar": {
+  "tgk2024k": {
+   "title": "Türk Gıda Kodeksi Gıda Katkı Maddeleri Yönetmeliği Kılavuzu, Ek 1: İzin Verilen Gıda Katkı Maddeleri (Ekim 2024)",
+   "publisher": "Tarım ve Orman Bakanlığı",
+   "year": 2024,
+   "url": "https://www.baib.gov.tr/files/downloads/PageFiles/711bec37-caa1-ef11-a946-000c29511bae/Files/ek-1.pdf",
+   "official": true
+  },
   "tgk2013": {
    "title": "Türk Gıda Kodeksi Gıda Katkı Maddeleri Yönetmeliği, Ek II (Resmî Gazete 30.06.2013, 28693 mükerrer)",
    "publisher": "Gıda, Tarım ve Hayvancılık Bakanlığı (FAOLEX kopyası)",

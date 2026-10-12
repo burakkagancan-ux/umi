@@ -100,7 +100,8 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 
 - ÇÖZÜLDÜ (08.10.2026): **Günlük sınır (ADI) doğrulaması** (`kaynak/e_adi.tsv`). Bilgiye dayalı 43 değerin hepsi kaynakla doğrulandı (102/102). Kaynaklar: EFSA görüş özetleri (DOAJ, Europe PMC, kurumsal arşiv kopyası: E127, E129), EFSA yem katkısı görüşlerinin tam metninde ANS Panel değerini aktaran cümle (E102, E110, E120, E124, E131, E132, E142), SCF 2000 (E952), JECFA veri tabanı (polioller). Düzeltmeler: E280–E283 `ns` (gerek görülmedi) değil `yok` (EFSA 2014: veri sınır belirlemeye yetmedi); E203 EFSA 2015'te sorbat grup sınırından çıkarıldı (ayrı satır, `yok`); E319 kurumu "JECFA 1998, EFSA 2004"; polioller SCF/EFSA yerine JECFA (aynı sonuç: belirlenmedi). Not: E102 için JECFA 2016'da sınırı 10 mg/kg'a çıkardı; uygulama AB değerini (7,5) gösteriyor.
 - KISMEN ÇÖZÜLDÜ (08.10.2026): **Gözden geçirilecek kayıtlar (needs_review)** 48 → 34. Kaynakla doğrulananlar (`kaynak/e_kodlari_ek.json` `dogrulama`): E470a, E470b, E471, E473, E474, E475, E570 (EFSA: hammadde arasında don yağı/domuz yağı ya da hayvansal yağ), E426, E479b (soya), E901 (JECFA), E904 (EFSA 2024), E1105 (AB 231/2012), E127 (FDA 2025, EFSA 2011), E203 (AB 2018/98, EFSA 2015). Kısmen: E120 (böcek kaynağı doğrulandı, helal cümlesi kurum kaynağına bağlanamaz), E322 (soya ve yumurta kaynağı doğrulandı, GDO cümlesi kaynaksız).
-  - Açık kalan 34: Türkiye izin durumu (E154, E160f, E161g, E558, E969; TGK 2023 ekleri Resmî Gazete'den okunamadı, FAOLEX kopyasında ekler yok); hayvansal yağ kaynağı EFSA metninde açıkça yazmayan emülgatörler (E422, E431–E436, E472a–f, E477, E481, E482, E491–E495; E491–E495 için EFSA yalnızca "çoğunlukla bitkisel" diyor); E630–E635 vegan kaynağı; E120 helal; E322 GDO.
+  - 09.10.2026 (PR #105): 34 → 29. Türkiye izin durumu kapandı: güncel liste Bakanlığın Ekim 2024 kılavuzundan (`kaynak/tgk_ek2_2024.tsv`; Resmî Gazete'deki 2023 ekleri taranmış görüntü). E161g, E969 Türkiye'de izinli; E154, E160f, E558 değil. Aynı karşılaştırmada E556 ve E559'un AB'de 31.01.2014'te listeden çıktığı (AB 380/2012) ama yeşil göründüğü bulundu, K1 ile kırmızı oldu. Kalan 29: hayvansal yağ kaynağı (24 emülgatör; EFSA tam metinleri E477, E491–E495 için 09.10.2026'da yeniden okundu, yalnızca 'yenilebilir yağ asitleri' diyor, kaynağı açıkça yazmıyor; 'bitkisel ya da hayvansal olabilir' işareti kaynakla uyumlu), E630–E635 vegan, E120 helal, E322 GDO.
+    Eski not: Açık kalan 34: Türkiye izin durumu (E154, E160f, E161g, E558, E969; TGK 2023 ekleri Resmî Gazete'den okunamadı, FAOLEX kopyasında ekler yok); hayvansal yağ kaynağı EFSA metninde açıkça yazmayan emülgatörler (E422, E431–E436, E472a–f, E477, E481, E482, E491–E495; E491–E495 için EFSA yalnızca "çoğunlukla bitkisel" diyor); E630–E635 vegan kaynağı; E120 helal; E322 GDO.
 
 ### Kozmetik
 - Ansiklopedi sayfası yok. Veride 2.009 AB kaydı (`kozmetik.json`) ve 35.081 INCI adı (`kozmetik_inci.json`) var; yalnızca durum/gerekçe cümlesi ve CosIng işlevi var, "ne işe yarar / nerelerde bulunur / vücutta" açıklaması yok.
@@ -113,14 +114,20 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 - H/EUH/P ifadelerinin Türkçesi: EUH ve 23 P ifadesi çeviri (needs_review), SEA Yönetmeliği resmi metni okunamadı.
 - Yapılacak: önce bu ~30 yaygın madde için kısa kayıt (ne işe yarar, nerede kullanılır, hangi H ifadesi), sonra ansiklopedi sayfası.
 
-## Kozmetik: PFAS işareti AB kaydının tüm INCI adlarına geçiyor (08.10.2026)
-- gen_kozmetik.py kayıt düzeyinde `pfas` bayrağını, kaydın INCI listesindeki herhangi bir ad PFAS_RE'ye uyarsa kaydın tüm adlarına veriyor. Bu yüzden florsuz DIBEHENYL METHYLAMINE ve AMP-ACRYLATES/DIACETONEACRYLAMIDE COPOLYMER sonuç ekranında ve paylaşım kartında "PFAS" görünüyor. Bayrak ad düzeyinde (yalnızca PFAS_RE'ye uyan ada) verilmeli; hangi kayıtların etkilendiği sayılmadı.
+## Kozmetik: PFAS işareti AB kaydının tüm INCI adlarına geçiyor (08.10.2026) — KAPANDI (09.10.2026)
+- KAPANDI (09.10.2026, PR #105): Bayrak artık ad düzeyinde (kayıtta `pfas_inci`; INCI listesindeki adlar kozmetik_inci.json'dan). Etkilenen florsuz ad sayısı 2 değil 282'ydi (III/61 etanolaminler, III/62 alkilaminler). test/kozmetik_cases.js denetler.
+  Eski not: gen_kozmetik.py kayıt düzeyinde `pfas` bayrağını, kaydın INCI listesindeki herhangi bir ad PFAS_RE'ye uyarsa kaydın tüm adlarına veriyor. Bu yüzden florsuz DIBEHENYL METHYLAMINE ve AMP-ACRYLATES/DIACETONEACRYLAMIDE COPOLYMER sonuç ekranında ve paylaşım kartında "PFAS" görünüyor. Bayrak ad düzeyinde (yalnızca PFAS_RE'ye uyan ada) verilmeli; hangi kayıtların etkilendiği sayılmadı.
 
 
 ## Çok dil: eksikler (08.10.2026)
 Altyapı ve İngilizce arayüz tamam (CLAUDE.md "Çok dil"). Bilerek bırakılanlar:
 
-### Çevrilmemiş veri metinleri (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
+### Çevrilmemiş veri metinleri — KAPANDI (12.10.2026, PR #105)
+- Uzun veri metinlerinin hepsi (1.172: gerekçe, üretim yolu, açıklama, TR notu, bileşen notu, birlikte dikkat, kozmetik ve K3 notları, temizlik notları) `kaynak/ceviri_en_veri.tsv`'de; ansiklopedinin 4.043 metninin hepsi `kaynak/ansiklopedi_en.json`'da (her çeviri çevrildiği Türkçeyi `tr` olarak taşır; Türkçe değişirse çeviri bayat sayılır ve yazılmaz, metin Türkçe + "not yet translated" görünür). Çeviri i18n/sozluk.md terimleriyle yapıldı; sayı, Türkçe kalıntı ve "safe/harmless" denetimi geçti (geçen "safe" kelimelerinin hepsi Türkçede "güvenli" diye kurumdan aktarılan cümleler).
+- Kalan: ansiklopedi.html'in arayüz metinleri ve index.html hâlâ Türkçe. Çeviride görülen kaynak şüpheleri: E151 metninde "brilliant black PN" (resmi adı BN), E1517 üretim yolunda "sitrik asit ya da gliserol" (gliseril diasetat için gliserol + asetik asit olmalı); Türkçe kaynak metin kontrol edilmeli.
+- Yeni Türkçe metin eklenince İngilizcesi aynı PR'da eklenir (O-09).
+
+Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
 Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi hariç toplam 1.164 metin.
 
 | Metin | Sayı |
@@ -142,7 +149,7 @@ Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi har
 
 ### Çevrilmeyen sayfalar
 - ansiklopedi.html'in arayüz metinleri (js/arayuz_ansiklopedi.js) ve index.html (Liste: Tarım ve Orman Bakanlığı listesi; ülke katmanı) Türkçe. Alt menü yalnızca ocr.html'de çevrili.
-- Ülke ayarı yok: Türkiye'ye özgü metinler (`ulke.tr.*`, UZEM, TGK adı, SEA atfı) her dilde "In Türkiye" diye görünür.
+- KISMEN ÇÖZÜLDÜ (09.10.2026, PR #105): Ülke ayarı var (Hassasiyetlerim > Dil kutusu; `ulke()`, saf mantık `ulkeSec`). Türkiye'ye özgü bilgiler (TGK adı/notu, Bakanlık listesi kartı, kozmetik TR durumu, TR izin notu, UZEM) yalnızca Türkiye seçiliyse görünür. Kalan (B-05): ikinci ülkenin verisi (Birleşik Krallık FSA, ABD FDA) ve ülkeye göre öne çıkan kural.
 
 ### İngilizce etiket tanıma (B-08, 08.10.2026)
 - Ölçüm: `node test/olcum_ingilizce.js` (30 etiket: 10 İngiltere/AB, 10 ABD, 10 zor durum; test/veri/ingilizce_etiketler.json). CI'da `node test/ingilizce.js` eşikleri denetler: içerik parçası ≥ %85, beklenen alerjen %100, yanlış uyarı 0.

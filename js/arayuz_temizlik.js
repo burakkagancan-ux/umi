@@ -1,6 +1,8 @@
 /* Arayüz: temizlik sonuç ekranı. */
 /* ---------- Temizlik modu ---------- */
 var TDB=null,TIDX=null,TLOAD=null;
+/* Zehir danışma hattı: Türkiye seçiliyse UZEM 114; ülke seçilmediyse genel acil durum notu (başka ülkenin numarası gösterilmez) */
+function zehirHatti(){return ulke()==="TR"&&TIDX.uzem?veriS(TIDX.uzem,"t.uzem"):t("ulke.yok.zehir")}
 function loadT(){
   if(TIDX&&KIDX)return Promise.resolve(TIDX);
   if(TLOAD)return TLOAD;
@@ -97,7 +99,7 @@ function tProfileCards(S,A){
     }
     if((PROF.baby||PROF.child)&&A.capsule)r2.push(["r",t("tem.prof.kapsul")]);
     var who=PROF.preg?"hamile":PROF.baby?"bebek":"cocuk";
-    out.push(lifeCard(t("tem.prof."+who),r2,t("tem.prof."+who+"_yok"),t("tem.prof.onay_sakla"),r2.length&&TIDX.uzem?veriS(TIDX.uzem,"t.uzem"):null));
+    out.push(lifeCard(t("tem.prof."+who),r2,t("tem.prof."+who+"_yok"),t("tem.prof.onay_sakla"),r2.length?zehirHatti():null));
   }
   return out;
 }
@@ -142,7 +144,7 @@ function renderT(A){
     var pb=secBox(box,t("tem.onlemler"),P.length),pu=el("ul","klist");
     P.forEach(function(x){var li=el("li");li.appendChild(el("b",null,x.code+" "));li.appendChild(document.createTextNode(veriS(x.p.tr,null,{en:x.p.en})));if(x.p.aid)li.appendChild(el("span","chip",t("tem.ilk_yardim")));if(x.how.indexOf("benzer")>-1&&x.how.indexOf("kod")<0)li.appendChild(el("span","fn"," · "+t("tem.how.benzer")));pu.appendChild(li)});
     pb.appendChild(pu);
-    if(P.some(function(x){return x.p.aid})&&TIDX.uzem)pb.appendChild(vEl("div","ln",TIDX.uzem,"t.uzem"));
+    if(P.some(function(x){return x.p.aid}))pb.appendChild(el("div","ln",zehirHatti()));
     if(P.some(function(x){return x.p.needs_review}))pb.appendChild(el("div","how",t("tem.onlem_ceviri")));
   }
   var G=A.groups.slice();

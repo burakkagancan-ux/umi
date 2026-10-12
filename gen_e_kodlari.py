@@ -43,6 +43,16 @@ TGK_TSV = os.path.join(HERE, "kaynak", "tgk_ek2_2013.tsv")
 EK = kaynak_json("e_kodlari_ek.json")
 TGK_NOTES = EK["tgk_notlari"]
 TGK_MISSING = "Türk Gıda Kodeksi izinli katkı listesinin 2013 metninde yok; Türkiye'deki güncel izin durumu doğrulanmadı."
+# Güncel izinli liste (Bakanlık kılavuzu, Ekim 2024; 2023 yönetmeliği). 2013 listesinde olmayanların TR durumu buna göre yazılır.
+TGK_2024 = {k: v for k, v in (l.split("\t") for l in open(os.path.join(HERE, "kaynak", "tgk_ek2_2024.tsv"), encoding="utf-8").read().splitlines()
+                              if l and not l.startswith("#"))}
+TGK_2024_ESDEGER = {"E960": "E960a"}   # 2023 yönetmeliği steviol glikozitlerini E960a olarak listeliyor
+TGK_YOK_2024 = "Türkiye'de izinli değil: Türk Gıda Kodeksi Gıda Katkı Maddeleri Yönetmeliği'nin (2023) izinli katkı listesinde yok (Bakanlık kılavuzu, Ekim 2024)."
+TGK_VAR_2024 = "2013 tarihli izinli listede yoktu; Türk Gıda Kodeksi'nin güncel izinli listesinde var (2023 yönetmeliği, Bakanlık kılavuzu Ekim 2024)."
+
+
+def tgk_2024_var(eid):
+    return eid in TGK_2024 or TGK_2024_ESDEGER.get(eid) in TGK_2024
 
 
 def load_tgk(path=TGK_TSV):
@@ -252,18 +262,20 @@ def build():
             for a in tgk_aliases(eid, tgk.get(eid, "")):
                 if a not in names:
                     names.append(a)
-            if eid not in tgk and not review and eid not in TGK_NOTES and risk == "green":
+            if eid not in tgk and not review and eid not in TGK_NOTES and risk == "green" and not TGK_2024:
                 review = True            # TR izin durumu belirsiz: doğrulanana kadar işaretli
         rec = {"id": eid, "ins": eid[1:], "primary_name": name, "name_en": en, "category": cat,
                "aliases": code_aliases(eid) + with_folds(names), "flags": list(flags),
                "risk_level": risk, "reason": reason if reason is not None else DEFAULT_REASON.replace("{K}", cat),
                "agencies": list(agencies), "eu_status": eu, "needs_review": review, "verification": verif}
-        tr_unknown = bool(tgk) and eid not in tgk and eid not in TGK_NOTES and rec["risk_level"] == "green"
+        tr_unknown = bool(tgk) and eid not in tgk and eid not in TGK_NOTES and rec["risk_level"] == "green" and not TGK_2024
         rec["needs_review"] = apply_verify(rec, review) or (review and eid not in VERIFY) or tr_unknown
         if eid in tgk:
             rec["tgk_name"] = tgk[eid]
         if eid in TGK_NOTES or (tgk and eid not in tgk):
-            rec["tgk_note"] = TGK_NOTES.get(eid, TGK_MISSING)
+            rec["tgk_note"] = TGK_NOTES.get(eid) or (TGK_VAR_2024 if tgk_2024_var(eid) else TGK_YOK_2024)
+        elif not tgk_2024_var(eid):
+            rec["tgk_note"] = TGK_YOK_2024   # 2013'te vardı, güncel listede yok
         if ctx:
             rec["context_aliases"] = CONTEXT[ctx]
         var = set(a.lower() for a in rec["aliases"])

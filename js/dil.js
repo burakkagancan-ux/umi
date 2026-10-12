@@ -5,6 +5,8 @@ function dilGetir(p){return fetch(p).then(function(r){if(!r.ok)throw new Error(p
    (İlk ziyarette sayfa henüz service worker'ın denetiminde değil; kendi isteği önbelleğe yazılmaz.) */
 function dilOnbellege(u){try{if(navigator.serviceWorker)navigator.serviceWorker.ready.then(function(r){if(r.active)r.active.postMessage({onbellek:u})})}catch(e){}}
 function dilKayitli(){try{return localStorage.getItem("dil")}catch(e){return null}}
+function ulkeKayitli(){try{return localStorage.getItem("ulke")}catch(e){return null}}
+function ulke(){return ulkeSec(ulkeKayitli(),DIL.kod)}   // "TR" ya da "" (seçilmedi)
 var DIL_HAZIR=dilGetir("i18n/diller.json").catch(function(){return {diller:{tr:{ad:"Türkçe",yon:"ltr"}}}}).then(function(b){
   var bilgi=b.diller||{},destek=Object.keys(bilgi);
   var kod=dilSec(dilKayitli(),navigator.languages||[navigator.language],destek);

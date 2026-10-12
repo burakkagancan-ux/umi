@@ -52,9 +52,9 @@ function payFromFood(text,idx){
   return {mode:"gida",items:payUniq(items),unverified:unv,allergens:al,facts:f,recog:{total:P.unknown.total,found:P.unknown.found}};
 }
 /* Kozmetik maddesinin kısa gerekçesi. K: kozmetik dizini (watchLists için; yoksa liste kimliği yazılmaz) */
-var PAY_NEDEN_K=["cmr2","formaldehyde_releaser","pfas","allergen_preservative","allergen_hairdye","allergen_fragrance"];   // sırayla; metin pay.nedenk.<bayrak>
+var PAY_NEDEN_K=["cmr2_carc","cmr2","formaldehyde_releaser","pfas","allergen_preservative","allergen_hairdye","allergen_fragrance"];   // sırayla; metin pay.nedenk.<bayrak>
 function payNedenK(r,K){
-  if(r.level==="red")return t("koz.seviye.red");
+  if(r.level==="red"&&(r.reg||[]).some(function(e){return e.annex==="II"}))return t("koz.seviye.red");
   var W=(K&&K.watchLists)||{},k3=(r.k3||[]).filter(function(w){return W[w.list]}).map(function(w){var L=W[w.list];return {level:L.level,chip:veriS(L.chip,"k.liste."+w.list+".cip")}});
   var o=k3.filter(function(L){return L.level==="orange"})[0];if(r.level==="orange"&&o)return o.chip;
   var fl=[];(r.reg||[]).forEach(function(e){fl=fl.concat(e.flags||[])});fl=fl.concat(r.iflags||[]);

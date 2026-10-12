@@ -20,7 +20,7 @@ const cases = [
   ['DIBUTYL PHTHALATE', 'red'],
   ['CYCLOTETRASILOXANE', 'red'],                     // D4
   ['COLLOIDAL SILVER (NANO)', 'red', 'nano'],
-  ['HYDROQUINONE', 'orange', 'cmr2'],
+  ['HYDROQUINONE', 'red', 'cmr2_carc'],
   ['RETINOL', 'yellow'],                             // 2024/996
   ['DMDM HYDANTOIN', 'yellow', 'formaldehyde_releaser'],
   ['METHYLISOTHIAZOLINONE', 'yellow', 'allergen_preservative'],

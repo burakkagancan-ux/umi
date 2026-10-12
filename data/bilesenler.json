@@ -1,7 +1,7 @@
 {
  "meta": {
   "version": "0.3.0",
-  "generated": "2026-10-08",
+  "generated": "2026-10-12",
   "description": "E kodu olmayan bileşenler: gizli şeker, palm yağı, 14 yasal alerjen, laktoz, hayvansal kaynak, ultra işlenmiş gıda (UPF) işaretleri.",
   "flags": {
    "sugar": "Şeker kaynağı",

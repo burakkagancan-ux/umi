@@ -41,6 +41,13 @@ const VD=path.join(I,'veri');if(fs.existsSync(VD))for(const f of fs.readdirSync(
     if(k.startsWith('metin:')){const m=k.slice(6),js=JSON.stringify(m).slice(1,-1);ok(tum.indexOf('"'+js+'"')>-1||tum.indexOf(js)>-1&&/^[a-zçğıöşü]/.test(m)||Object.keys(E.ingredients.reduce((o,x)=>(x.category&&(o[x.category]=1),o),{})).includes(m)||B.items.some(x=>x.upf_class&&x.upf_class[0].toLocaleUpperCase('tr')+x.upf_class.slice(1)===m),'i18n/veri/'+f+': veride olmayan metin: '+k);continue}
     if(k.startsWith('k.islev:')){ok(islev.has(k.slice(8)),'i18n/veri/'+f+': CosIng işlevi yok: '+k);continue}
     if(k==='t.uzem'||k.startsWith('t.karistirma.')||k.startsWith('t.kapsul.'))continue;
+    // Kimliği nokta içerebilen anahtarlar: kozmetik kayıt (II/12), K3 notu (liste.INCI), temizlik madde/ifade notu, eşleşme kuralı, Türkiye durumu
+    if(k.startsWith('k.izle.')){const r=k.slice(7),i=r.indexOf('.');ok(K.watch.some(w=>w.list===r.slice(0,i)&&(w.inci||[])[0]===r.slice(i+1)),'i18n/veri/'+f+': K3 kaydı yok: '+k);continue}
+    if(k.startsWith('k.tr_durum.')){ok(k.slice(11) in (K.meta.tr_text||{}),'i18n/veri/'+f+': TR durumu yok: '+k);continue}
+    if(/^k\.[IV]+\//.test(k)){const id=k.slice(2).replace(/\.(reason|not|degisiklik\.\d+)$/,'');ok(K.entries.some(e=>e.id===id),'i18n/veri/'+f+': kozmetik kaydı yok: '+k);continue}
+    if(k.startsWith('t.madde.')){ok(T.subs.some(x=>x.id===k.split('.')[2]),'i18n/veri/'+f+': temizlik maddesi yok: '+k);continue}
+    if(k.startsWith('t.ifade.')){ok(T.hazards.some(x=>x.code===k.split('.')[2]),'i18n/veri/'+f+': tehlike ifadesi yok: '+k);continue}
+    if(k.startsWith('eslesme.')){ok(D('eslesmeler.json').rules.some(x=>x.id===k.split('.')[1]),'i18n/veri/'+f+': eşleşme kuralı yok: '+k);continue}
     const p=k.split('.'),on=['e.bayrak','k.bayrak','k.bayrak_neden','k.liste','t.grup','t.bant','t.grup_etiket'].find(x=>k.startsWith(x+'.'))||p[0],id=k.slice(on.length+1).split('.')[0];
     ok(varMi[on]&&varMi[on].has(id),'i18n/veri/'+f+': kayıt yok: '+k);
   }
@@ -64,7 +71,7 @@ const kaynak={};JS.forEach(f=>kaynak['js/'+f]=fs.readFileSync(path.join(R,'js',f
 const html=fs.readFileSync(path.join(R,'ocr.html'),'utf8');
 
 // 2) Kullanılan anahtarlar: koddaki anahtar biçimli dizgeler + ocr.html data-i18n. Birleştirilerek kurulan anahtarlar ("kars.az_"+tür) DINAMIK listesinde.
-const DINAMIK=['kars.az_','kars.yukleniyor_','kars.baslik_','kars.sev.','kars.noun.','kars.uyum.','kars.uyum.cmr_','kars.uyum.ed_','kars.uyum.yutma_','kars.uyum.kapsul_','gida.uretim.say_','kayit.yuklenemedi_','foto.kamera_','gida.adi.','gida.uretim.say_','pay.kart.ust_','pay.neden.','pay.nedenk.','pay.metin.','tem.prof.','ornek.','koz.yukleniyor','tem.yukleniyor','gida.yukleniyor'];
+const DINAMIK=['ulke.ad.','kars.az_','kars.yukleniyor_','kars.baslik_','kars.sev.','kars.noun.','kars.uyum.','kars.uyum.cmr_','kars.uyum.ed_','kars.uyum.yutma_','kars.uyum.kapsul_','gida.uretim.say_','kayit.yuklenemedi_','foto.kamera_','gida.adi.','gida.uretim.say_','pay.kart.ust_','pay.neden.','pay.nedenk.','pay.metin.','tem.prof.','ornek.','koz.yukleniyor','tem.yukleniyor','gida.yukleniyor'];
 const NS=new Set(Object.keys(tr).map(k=>k.split('.')[0]));
 const kullanilan=new Set(),dinamikKullanim=new Set();
 for(const [f,src] of Object.entries(kaynak)){
@@ -120,7 +127,7 @@ for(const [f,src] of Object.entries(kaynak)){
 }
 
 // 6) Çalışma: Türkçe biçimler eski görünümle aynı
-eval(fs.readFileSync(path.join(R,'js','ceviri.js'),'utf8')+';global.C={dilKur,t,tVar,dilSayi,dilTarih,veriMetin,dilSec,DIL}');
+eval(fs.readFileSync(path.join(R,'js','ceviri.js'),'utf8')+';global.C={dilKur,t,tVar,dilSayi,dilTarih,veriMetin,dilSec,ulkeSec,DIL}');
 C.dilKur('tr',{tr:Object.assign({},tr,{'test.cogul':{one:'{n} madde',other:'{n} maddeler'}})},bilgi);
 ok(C.t('kars.sadece',{ad:'Süt'})==='Sadece Süt','yer tutucu: '+C.t('kars.sadece',{ad:'Süt'}));
 ok(C.t('yok.boyle.anahtar')==='yok.boyle.anahtar','tanımsız anahtar kendisini döndürür');
@@ -137,6 +144,7 @@ C.dilKur('ar',{tr:{},ar:{}},{ar:{ad:'العربية',yon:'rtl',yazi:{govde:'"Not
 ok(C.DIL.yon==='rtl'&&C.DIL.yazi&&/Noto/.test(C.DIL.yazi.govde),'sağdan sola dil ve yazı tipi bilgisi');
 const r=C.veriMetin('Türkçe not','x.y');ok(r.cevrilmedi&&r.s==='Türkçe not','veri çevirisi yoksa Türkçe + çevrilmedi işareti');
 ok(C.veriMetin('Türkçe','x.y',{ar:'رسمي'}).s==='رسمي','veride resmi metin (ör. CLP) varsa o');
+ok(C.ulkeSec(null,'tr')==='TR'&&C.ulkeSec(null,'en')===''&&C.ulkeSec('','tr')===''&&C.ulkeSec('TR','en')==='TR'&&C.ulkeSec('XX','tr')==='TR','ülke seçimi: kayıtlı > Türkçe → Türkiye > seçilmedi');
 ok(C.dilSec(null,['de-DE','tr-TR'],['tr','en'])==='tr'&&C.dilSec(null,['en-US'],['tr','en'])==='en'&&C.dilSec(null,['de'],['tr','en'])==='en'&&C.dilSec('tr',['en'],['tr','en'])==='tr','dil seçimi: kayıtlı > tarayıcı > İngilizce');
 // 7) Her dilde paylaşım kartı: sayı kutusu etiketleri kutuya, metinler karta sığar (test/paylas.js'teki sahte ölçüm: karakter başına 0,55 px)
 for(const kod of Object.keys(bilgi)){

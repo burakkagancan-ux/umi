@@ -115,7 +115,8 @@ function showCompare(ida,idb){
     var f=document.createDocumentFragment();f.appendChild(cmpIcon(P.maxRank));f.appendChild(document.createTextNode(P.top.map(function(x){return x.name}).join(", ")));return f});
   tr(t(mode==="tem"?"kars.satir.dikkat_tem":"kars.satir.dikkat"),function(P){return String(P.yellow)});
   if(mode==="koz"){
-    tr(t("koz.seviye.red"),function(P){return lst(P.S.red)});
+    tr(t("koz.seviye.red"),function(P){return lst(P.S.euBan)});
+    tr(t("koz.ozet.kanserojen"),function(P){return lst(P.S.carc)});
     tr(t("koz.ozet.baska_ulke"),function(P){return lst(P.S.ban)});
     tr(t("koz.ozet.koku"),function(P){return lst(P.S.fragrance)});
     tr(t("koz.ozet.parfum"),function(P){return P.S.parfum?t("ortak.var"):t("koz.ozet.yazmiyor")});

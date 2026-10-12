@@ -68,7 +68,7 @@ function kCard(r){
   top.appendChild(el("div","t",r.name));
   var b=el("button","info","i");b.type="button";b.setAttribute("aria-label",t("ortak.hakkinda",{ad:r.name}));b.setAttribute("aria-expanded","false");
   top.appendChild(b);d.appendChild(top);
-  d.appendChild(el("div","how",t(KLBL[r.level])+" · "+(r.how==="benzer"?t("ortak.benzer",{l:r.raw}):t("ortak.isimle"))+(r.may?t("ortak.icerebilir_bolum"):"")));
+  d.appendChild(el("div","how",t(r.level==="red"&&!r.reg.some(function(e){return e.annex==="II"})?"koz.seviye.kanserojen":KLBL[r.level])+" · "+(r.how==="benzer"?t("ortak.benzer",{l:r.raw}):t("ortak.isimle"))+(r.may?t("ortak.icerebilir_bolum"):"")));
   kChips(r).forEach(function(c){d.appendChild(el("span","chip",c))});
   r.notes.forEach(function(n){d.appendChild(el("div","ln",kNot(n)))});
   var pn=el("div","ipanel");pn.hidden=true;
@@ -86,7 +86,7 @@ function kCard(r){
     if(cond)pn.appendChild(el("div","how",t("koz.kart.ab_kosulu",{l:cond})));
     pn.appendChild(el("div","how",t("koz.kart.kaynak",{r:e.regulation||"(EC) 1223/2009"})+(e.applies_from?t("koz.kart.uygulama",{d:e.applies_from}):"")));
     var trs=[e.tr].concat((e.updates||[]).map(function(u){return u.tr})).filter(Boolean)[0];   // AB değişikliğinin Türkiye'deki durumu
-    if(trs&&KIDX.trText[trs])pn.appendChild(vEl("div","how",KIDX.trText[trs],"k.tr_durum."+trs));   // Türkiye'deki durum (ülke katmanı)
+    if(trs&&KIDX.trText[trs]&&ulke()==="TR")pn.appendChild(vEl("div","how",KIDX.trText[trs],"k.tr_durum."+trs));   // Türkiye'deki durum (ülke katmanı)
     if(e.needs_review)pn.appendChild(el("div","how",t("koz.kart.kayit_dogrulanmadi")));
   });
   r.iflags.forEach(function(f){line(t("koz.kart.degerlendirme"),veriMetin(KIDX.flagReasons[f],"k.bayrak_neden."+f))});
@@ -110,7 +110,8 @@ function kSummaryCard(S){
   function row(label,val,cls){var r=el("div","srow");r.appendChild(el("span","sl",label));r.appendChild(el("span","sv"+(cls?" "+cls:""),val));d.appendChild(r)}
   function lst(a){return a.length?t("ortak.say_liste",{n:a.length,l:a.join(", ")}):t("ortak.bulunamadi")}
   row(t("koz.ozet.bilesen"),t("koz.ozet.tanindi",{f:S.found,n:S.total})+(S.unknown.length?t("koz.ozet.taninmadi",{n:S.unknown.length}):""));
-  row(t("koz.seviye.red"),lst(S.red),S.red.length?"r":"");
+  row(t("koz.seviye.red"),lst(S.euBan),S.euBan.length?"r":"");
+  if(S.carc.length)row(t("koz.ozet.kanserojen"),lst(S.carc),"r");
   var w=S.orange.concat(S.yellow);
   row(t("koz.ozet.uyari_dikkat"),lst(w),S.orange.length?"o":S.yellow.length?"y":"");
   row(t("koz.ozet.koku"),lst(S.fragrance),"");
@@ -220,6 +221,6 @@ function renderK(res){
     tb.appendChild(dx);
   }
   if(S.parfum)box.appendChild(el("div","ln nt",t("koz.parfum_not")));
-  box.appendChild(el("div","how it",t("koz.alt_not",{tr:t("ulke.tr.koz_uyum")})));
+  box.appendChild(el("div","how it",t("koz.alt_not",{tr:ulke()==="TR"?t("ulke.tr.koz_uyum"):""})));
   payBar(box,{mode:"koz",res:res,S:S});
 }

@@ -22,6 +22,8 @@ const cases=[
  ["Aqua, Retinol, Salicylic Acid, Lanolin, Cera Alba, Hydrolyzed Collagen, Squalane",{ptype:"baby"},
   {"RETINOL":"yellow","SALICYLIC ACID":"orange","LANOLIN":"info"},s=>s.vitA.length===1&&s.kids.length===1&&s.nonVegan.length===2&&s.nonVeg.length===1&&s.veganUnsure.length===1],
  ["Cyclopentasiloxane, PTFE, Perfluorodecalin, Titanium Dioxide (nano)",{},{"PTFE":"orange","PERFLUORODECALIN":"orange"},s=>s.pfas.length===2],
+ // PFAS ad düzeyinde: aynı AB kaydındaki florsuz adlar PFAS sayılmaz (09.10.2026); INCI listesinde olmayan Ek II adı (PFOA) sayılır
+ ["Aqua, Ethanolamine, Dibehenyl Methylamine, AMP-Acrylates/Diacetoneacrylamide Copolymer, Perfluorooctanoic Acid",{},{"ETHANOLAMINE":"yellow","PERFLUOROOCTANOIC ACID":"red"},s=>s.pfas.length===1&&s.pfas[0]==="PERFLUOROOCTANOIC ACID"],
  ["Talc, Mica, Dimethicone [+/- CI 77491, CI 77492, CI 77499]",{},{"TALC":"yellow","CI 77491":"info"},null],
  ["Aqua, Lavandula Angustifolia Oil, Rose Flower Oil/Extract",{},{"LAVANDULA ANGUSTIFOLIA OIL":"info","ROSE FLOWER OIL/EXTRACT":"info"},s=>s.fragrance.length===2],
 ];

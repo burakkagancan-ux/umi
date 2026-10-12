@@ -59,6 +59,13 @@ function veriMetin(tr,anahtar,resmi){
 }
 /* Yalnızca metin (işaret konamayan yerler: listeler, birleşik cümleler) */
 function veriS(tr,anahtar,resmi){return veriMetin(tr,anahtar,resmi).s}
+/* Ülke katmanı (B-05 ilk adımı, 09.10.2026): ülkeye özgü bilgiler (yerel mevzuat adı, zehir danışma hattı, Bakanlık listesi)
+yalnızca seçilen ülkede gösterilir. Kayıtlı seçim ("" = seçilmedi) > dil Türkçeyse Türkiye > seçilmedi. Yeni ülke ULKELER'e eklenir. */
+var ULKELER=["TR"];
+function ulkeSec(kayitli,dil){
+  if(kayitli===""||ULKELER.indexOf(kayitli)>-1)return kayitli;
+  return dil==="tr"?"TR":"";
+}
 /* Dil seçimi: kayıtlı seçim > tarayıcı dilleri (ilk desteklenen; "en-US" → "en") > İngilizce */
 function dilSec(kayitli,tarayici,destek){
   if(kayitli&&destek.indexOf(kayitli)>-1)return kayitli;

@@ -22,4 +22,11 @@ ok(k("Aqua, Glycerin, Cetearyl Alcohol, Parfum")==='','sıradan liste kanserojen
 ok(/H351/.test(tm("DİKKAT. Kansere yol açma şüphesi var.")),'H351');
 ok(/H350/.test(tm("H350 Kansere yol açabilir.")),'H350');
 ok(tm("H360 Doğmamış çocukta hasara yol açabilir.")==='','H360 kanser sayıldı');
+// Renk kuralı (09.10.2026, kullanıcı kararı): IARC Grup 1/2A/2B olan madde (ya da üretim yan ürünü/ayrışma ürünü) kırmızı.
+// İstisna: kanserojenin yalnızca belirli koşullarda oluşabildiği maddeler (benzoat + C vitamini → benzen) sarı kalır.
+for(const e of JSON.parse(fs.readFileSync(__dirname+'/../data/e_kodlari.json')).ingredients){
+  if(!/Grup (1|2A|2B)\b/.test(e.reason||''))continue;
+  const kosullu=/benzen oluşturabilir/.test(e.reason);
+  ok(kosullu?e.risk_level==='yellow':e.risk_level==='red',e.id+' IARC rengi '+e.risk_level);
+}
 console.log(n+' durum, '+fail+' hata');process.exit(fail?1:0);

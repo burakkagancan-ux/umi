@@ -1,4 +1,4 @@
-{"meta":{"lang": "tr", "generated": "2026-10-09", "count": 4038},
+{"meta":{"lang": "tr", "generated": "2026-10-12", "count": 4043},
 "t":{
 "E100.name":"Kurkumin",
 "E101.name":"Riboflavin",
@@ -421,6 +421,7 @@
 "ptype.cosmetic":"Kozmetik",
 "ptype.food":"Gıda",
 "reg.tr_listed":"Türk Gıda Kodeksi'nin izinli katkı maddeleri listesinde.",
+"reg.tr_not_listed":"Türk Gıda Kodeksi'nin güncel (2023) izinli katkı maddeleri listesinde yok.",
 "region.EU":"AB",
 "region.INT":"Uluslararası",
 "region.TR":"Türkiye",

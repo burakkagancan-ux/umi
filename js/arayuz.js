@@ -53,6 +53,11 @@ function buildProfile(){
   Object.keys(DIL.bilgi).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=DIL.bilgi[k].ad;op.lang=k;if(k===DIL.kod)op.selected=true;ds.appendChild(op)});
   ds.onchange=function(){try{localStorage.setItem("dil",ds.value)}catch(e){}location.reload()};
   dl.appendChild(ds);bd.appendChild(dl);bd.appendChild(el("div","mut",t("profil.dil_not")));
+  // Ülke: seçim localStorage "ulke"de ("" = seçilmedi); ülkeye özgü kartlar ve notlar buna göre gösterilir
+  var ul=el("label","pn"),us=document.createElement("select");us.id="ulkesec";us.setAttribute("aria-label",t("profil.ulke"));
+  [""].concat(ULKELER).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
+  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}if(LAST.length||$("metin").value.trim())run()};
+  ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);bd.appendChild(ul);bd.appendChild(el("div","mut",t("profil.ulke_not")));
   var b0=pbox(t("profil.kisisel")),g0=el("div","pg pnum");
   var cl=el("label","pn");cl.appendChild(el("span",null,t("profil.cinsiyet")));var cs=document.createElement("select");
   [["","profil.secin"],["kadin","profil.kadin"],["erkek","profil.erkek"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=t(o[1]);if(PROF.cinsiyet===o[0])op.selected=true;cs.appendChild(op)});
@@ -257,14 +262,14 @@ function additiveCard(r){
   var nA=Object.keys(seenA).length,doneA={};
   items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(doneA[k])return;doneA[k]=1;d.appendChild(adiBlock(x.adi,nA>1||items.length>1&&items.some(function(y){return !y.adi})?x.id:""))});
   var pn=el("div","ipanel");pn.hidden=true;
-  var same=items.length>1&&items.every(function(x){return ABOUT[x.id]===ABOUT[items[0].id]&&!x.tgk_note});
+  var same=items.length>1&&items.every(function(x){return ABOUT[x.id]===ABOUT[items[0].id]&&!(x.tgk_note&&ulke()==="TR")});
   if(same){var r4=veriMetin(ABOUT[items[0].id]||"","e."+items[0].id+".about"),p4=el("div","ln");p4.appendChild(el("b",null,t("gida.kart.nedir")));p4.appendChild(document.createTextNode(r4.s));pn.appendChild(vIsaret(p4,r4))}
   else items.forEach(function(x){
     var ab=ABOUT[x.id];
     if(items.length>1)pn.appendChild(el("div","ih",x.id+" · "+itAd(x)));
     if(ab){var r1=veriMetin(ab,"e."+x.id+".about"),p1=el("div","ln");p1.appendChild(el("b",null,t("gida.kart.nedir")));p1.appendChild(document.createTextNode(r1.s));pn.appendChild(vIsaret(p1,r1))}
-    if(items.length===1&&x.tgk_name&&x.tgk_name.toLowerCase()!==x.primary_name.toLowerCase()){var p0=el("div","ln");p0.appendChild(el("b",null,t("ulke.tr.tgk_adi")));var tn=el("span",null,x.tgk_name);tn.lang="tr";p0.appendChild(tn);pn.appendChild(p0)}   // Türk Gıda Kodeksi'ndeki ad: çevrilmez
-    if(x.tgk_note){var r3=veriMetin(x.tgk_note,"e."+x.id+".tgk_not"),p3=el("div","ln");p3.appendChild(el("b",null,t("ulke.tr.etiket")));p3.appendChild(document.createTextNode(r3.s));pn.appendChild(vIsaret(p3,r3))}
+    if(ulke()==="TR"&&items.length===1&&x.tgk_name&&x.tgk_name.toLowerCase()!==x.primary_name.toLowerCase()){var p0=el("div","ln");p0.appendChild(el("b",null,t("ulke.tr.tgk_adi")));var tn=el("span",null,x.tgk_name);tn.lang="tr";p0.appendChild(tn);pn.appendChild(p0)}   // Türk Gıda Kodeksi'ndeki ad: çevrilmez
+    if(x.tgk_note&&ulke()==="TR"){var r3=veriMetin(x.tgk_note,"e."+x.id+".tgk_not"),p3=el("div","ln");p3.appendChild(el("b",null,t("ulke.tr.etiket")));p3.appendChild(document.createTextNode(r3.s));pn.appendChild(vIsaret(p3,r3))}
   });
   items.forEach(function(x){   // üretim yolu notu
     var u=x.uretim;if(!u)return;
@@ -283,7 +288,8 @@ function additiveCard(r){
     it.sources.forEach(function(u,i){var a=el("a",null,u.replace(/^https?:\/\/(www\.)?/,"").split("/")[0]);a.href=u;a.target="_blank";a.rel="noopener";if(i)ps.appendChild(document.createTextNode(" · "));ps.appendChild(a)});
     pn.appendChild(ps);
   }
-  if(it.needs_review)pn.appendChild(el("div","how",it.sources&&it.verification!=="partially_checked"?t("ulke.tr.izin_dogrulanmadi"):it.sources?t("gida.kart.kismen_dogrulanmadi"):t("gida.kart.dogrulanmadi")));
+  var dn=!it.needs_review?null:it.sources&&it.verification!=="partially_checked"?(ulke()==="TR"?"ulke.tr.izin_dogrulanmadi":null):it.sources?"gida.kart.kismen_dogrulanmadi":"gida.kart.dogrulanmadi";   // TR izin durumu notu yalnızca Türkiye seçiliyse
+  if(dn)pn.appendChild(el("div","how",t(dn)));
   // Ayrıntı alt sayfada açılır: (i) düğmesi ya da kartın kendisine dokunma; her madde için "Ansiklopedide oku"
   pn.hidden=false;pn.className="";
   items.forEach(function(x){var a=el("a","ans",(items.length>1?x.id+" · ":"")+t("gida.kart.ansiklopedi"));a.href="ansiklopedi.html?id="+encodeURIComponent(x.id);pn.appendChild(a)});
@@ -345,7 +351,7 @@ function render(res,br){
   }
   profileCards(S).forEach(function(c){box.appendChild(c)});
   box.appendChild(summaryCard(S,res));
-  if(LASTBR.length)box.appendChild(brandCard(LASTBR));
+  if(LASTBR.length&&ulke()==="TR")box.appendChild(brandCard(LASTBR));
   comboSection(box,findCombos(COMBO,"gida",comboItemsFood(res,IDX)));
   var E=res.filter(function(r){return !r.isB&&!r.neg});
   if(E.length){box.appendChild(el("h2",null,t("gida.katkilar")));E.forEach(function(r){box.appendChild(additiveCard(r))})}
