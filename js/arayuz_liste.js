@@ -1,5 +1,6 @@
 /* Liste sayfası (index.html): Tarım ve Orman Bakanlığı taklit/tağşiş listesi. Türkiye'ye özgü (metinler ulke.tr.liste.*).
-   Bakanlık verisi (firma, ürün, il, ürün grubu, uygunsuzluk) değiştirilmez ve çevrilmez; yalnızca arayüz metinleri dile göre.
+   Bakanlık verisi değiştirilmez. Firma, marka, ürün ve yer adları çevrilmez; ürün grubu ve uygunsuzluk türü adları ekranda
+   i18n/veri/<dil>.json "liste:<Türkçe ad>" ile çevrilir (kaynak/ceviri_en_liste.tsv), süzgeç değeri Türkçe kalır.
    RAW: sayfadaki küçük önizleme verisi (index.html); güncel liste data/tagsis.json + data/arsiv.json. Açılış DIL_HAZIR çözülünce. */
 function clean(s){return String(s||"").replace(/\s+/g," ").trim()}
 function fold(s){return s.toLocaleLowerCase("tr").replace(/ı/g,"i").normalize("NFD").replace(/[̀-ͯ]/g,"")}
@@ -13,8 +14,11 @@ function build(raw){return raw.map(function(r){
 var DATA=build(RAW),IMPORTED=false;
 try{localStorage.removeItem("tagsis_raw")}catch(e){}   // eski "Veriyi güncelle" ile kaydedilmiş veri artık kullanılmaz
 function el(tag,c,x){var e=document.createElement(tag);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-/* Bakanlık verisi Türkçe: sıralama Türkçe alfabeye göre */
-function fill(sel,vals){Array.from(new Set(vals)).filter(Boolean).sort(function(a,b){return a.localeCompare(b,"tr")}).forEach(function(v){var o=el("option",null,v);o.value=v;sel.appendChild(o)})}
+/* Ürün grubu ve uygunsuzluk türü: seçili dildeki ad; çevirisi yoksa Türkçe (lang="tr") */
+function grupAd(v){return veriMetin(v,"liste:"+v)}
+function adEl(tag,c,v){var r=grupAd(v),e=el(tag,c,r.s);if(r.kod!==DIL.kod)e.lang=r.kod;return e}
+/* Seçenek değeri Bakanlık verisindeki Türkçe ad; görünen ad çevrilmişse sıralama seçili dilde, değilse Türkçe alfabeye göre */
+function fill(sel,vals,cevir){Array.from(new Set(vals)).filter(Boolean).map(function(v){return [v,cevir?grupAd(v).s:v]}).sort(function(a,b){return cevir?dilKarsilastir(a[1],b[1]):a[1].localeCompare(b[1],"tr")}).forEach(function(v){var o=el("option",null,v[1]);o.value=v[0];sel.appendChild(o)})}
 var $q=document.getElementById("q"),$il=document.getElementById("il"),$tur=document.getElementById("tur"),$list=document.getElementById("list"),$count=document.getElementById("count");
 var SON=0,KONTROL=0;
 var LST="",$ilce=document.getElementById("ilce"),$srt=document.getElementById("srt"),$chips=document.getElementById("chips"),$grup=document.getElementById("grup"),$note=document.getElementById("note");
@@ -40,8 +44,8 @@ function inList(d,ls){return ls==="cikti"?!!d.cikti:d.liste===ls}
 function opts(){
   [[$il,t("ulke.tr.liste.tum_iller")],[$grup,t("ulke.tr.liste.tum_gruplar")],[$tur,t("ulke.tr.liste.tum_turler")]].forEach(function(p){p[0].textContent="";var o=el("option",null,p[1]);o.value="";p[0].appendChild(o)});
   fill($il,DATA.map(function(d){return d.il}));
-  fill($grup,DATA.map(function(d){return d.grup}));
-  fill($tur,[].concat.apply([],DATA.map(function(d){return d.tur})));
+  fill($grup,DATA.map(function(d){return d.grup}),true);
+  fill($tur,[].concat.apply([],DATA.map(function(d){return d.tur})),true);
   chips();ilceOpts();$note.style.display=IMPORTED?"none":"block";
   $note.textContent=t("ulke.tr.liste.onizleme",{n:DATA.length});
 }
@@ -61,10 +65,10 @@ function render(){
     if(d.cikti)b.appendChild(el("span","outtag",t("ulke.tr.liste.cikti",{l:dt(d.cikti)})));
     b.appendChild(el("div","brand",d.marka||d.firma));
     b.appendChild(el("div","prod",d.urun));
-    var tg=el("div","tags");d.tur.forEach(function(x){tg.appendChild(el("span","tag",x))});b.appendChild(tg);
+    var tg=el("div","tags");d.tur.forEach(function(x){tg.appendChild(adEl("span","tag",x))});b.appendChild(tg);
     b.appendChild(el("div","meta",t("ulke.tr.liste.meta",{yer:[d.ilce,d.il].filter(Boolean).join(", ")||t("ulke.tr.liste.yer_yok"),l:dt(d.tarih)})));
     var dl=el("dl","det");
-    [[t("ulke.tr.liste.det.liste"),listeAd(d.liste)],[t("ulke.tr.liste.det.firma"),d.firma],[t("ulke.tr.liste.det.grup"),d.grup],[t("ulke.tr.liste.det.parti"),d.parti||t("ulke.tr.liste.belirtilmemis")]].concat(d.cikti?[[t("ulke.tr.liste.det.durum"),t("ulke.tr.liste.durum_cikti",{l:dt(d.cikti)})]]:[]).forEach(function(p){dl.appendChild(el("dt",null,p[0]));dl.appendChild(el("dd",null,p[1]))});
+    [[t("ulke.tr.liste.det.liste"),listeAd(d.liste)],[t("ulke.tr.liste.det.firma"),d.firma],[t("ulke.tr.liste.det.grup"),d.grup,true],[t("ulke.tr.liste.det.parti"),d.parti||t("ulke.tr.liste.belirtilmemis")]].concat(d.cikti?[[t("ulke.tr.liste.det.durum"),t("ulke.tr.liste.durum_cikti",{l:dt(d.cikti)})]]:[]).forEach(function(p){dl.appendChild(el("dt",null,p[0]));dl.appendChild(p[2]?adEl("dd",null,p[1]):el("dd",null,p[1]))});
     var s=el("div","src",t("ulke.tr.liste.kaynak"));
     var a=el("a",null,t("ulke.tr.liste.resmi_sayfa"));a.href="https://guvenilirgida.tarimorman.gov.tr/gkd";a.target="_blank";a.rel="noopener";
     a.addEventListener("click",function(e){e.stopPropagation()});s.appendChild(a);dl.appendChild(s);b.appendChild(dl);

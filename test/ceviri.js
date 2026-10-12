@@ -36,10 +36,17 @@ const VD=path.join(I,'veri');if(fs.existsSync(VD))for(const f of fs.readdirSync(
   const varMi={alerjen:new Set(B.meta.allergens.map(a=>a[0])),'e.bayrak':new Set(Object.keys(E.meta.flags)),'k.bayrak':new Set(Object.keys(K.meta.flags)),'k.bayrak_neden':new Set(Object.keys(K.meta.inci_flag_reasons)),
     'k.liste':new Set(Object.keys(K.meta.watch_lists)),'t.grup':new Set(T.groups.map(g=>g.id)),'t.bant':new Set(Object.keys(T.meta.bands)),'t.grup_etiket':new Set(Object.keys(T.meta.group_labels)),b:new Set(B.items.map(x=>x.id)),e:new Set(E.ingredients.map(x=>x.id))};
   const islev=new Set(KI.functions);
+  // Bakanlık listesindeki ürün grubu ve uygunsuzluk türü adları (js/arayuz_liste.js build ile aynı ayıklama; arşivdekiler dahil)
+  var LADLAR=new Set();{const cl=s=>String(s||'').replace(/\s+/g,' ').trim(),L=D('tagsis.json').listeler,A=D('arsiv.json').kayitlar;
+    [].concat(...Object.values(L),A.map(a=>a.kayit)).forEach(r=>{LADLAR.add(cl(r.UrunGrupAdi));String(r.Uygunsuzluk||'').split(/<\/br>/i).forEach(x=>LADLAR.add(cl(x).replace(/[,\s]+$/,'')))});
+    LADLAR.forEach(x=>{if(/^[-–—\s]*$/.test(x))LADLAR.delete(x)})}
+  // Bakanlık yeni ad eklerse günlük güncelleme testi kırmasın: çevirisi olmayan ad yalnızca bildirilir (ekranda Türkçe görünür)
+  if(fs.existsSync(VD))for(const f of fs.readdirSync(VD)){const d=oku(path.join(VD,f)),yok=[...LADLAR].filter(x=>!('liste:'+x in d));if(yok.length)console.log('BİLGİ i18n/veri/'+f+': çevirisi olmayan Liste adı ('+yok.length+'): '+yok.join(' | '))}
   if(fs.existsSync(VD))for(const f of fs.readdirSync(VD))for(const k of Object.keys(oku(path.join(VD,f)))){
     if(k.startsWith('_'))continue;
     if(k.startsWith('metin:')){const m=k.slice(6),js=JSON.stringify(m).slice(1,-1);ok(tum.indexOf('"'+js+'"')>-1||tum.indexOf(js)>-1&&/^[a-zçğıöşü]/.test(m)||Object.keys(E.ingredients.reduce((o,x)=>(x.category&&(o[x.category]=1),o),{})).includes(m)||B.items.some(x=>x.upf_class&&x.upf_class[0].toLocaleUpperCase('tr')+x.upf_class.slice(1)===m),'i18n/veri/'+f+': veride olmayan metin: '+k);continue}
     if(k.startsWith('k.islev:')){ok(islev.has(k.slice(8)),'i18n/veri/'+f+': CosIng işlevi yok: '+k);continue}
+    if(k.startsWith('liste:')){ok(LADLAR.has(k.slice(6)),'i18n/veri/'+f+': Bakanlık listesinde böyle bir ürün grubu/uygunsuzluk yok: '+k);continue}
     if(k==='t.uzem'||k.startsWith('t.karistirma.')||k.startsWith('t.kapsul.'))continue;
     // Kimliği nokta içerebilen anahtarlar: kozmetik kayıt (II/12), K3 notu (liste.INCI), temizlik madde/ifade notu, eşleşme kuralı, Türkiye durumu
     if(k.startsWith('k.izle.')){const r=k.slice(7),i=r.indexOf('.');ok(K.watch.some(w=>w.list===r.slice(0,i)&&(w.inci||[])[0]===r.slice(i+1)),'i18n/veri/'+f+': K3 kaydı yok: '+k);continue}
