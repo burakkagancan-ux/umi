@@ -116,4 +116,12 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
   ad.forEach(k=>{ok(/^kaynak\.[0-9a-f]{10}$/.test(k)&&T[k],r.id+' kaynak adı anahtar değil: '+k);
    const s=EN[k]||T[k]||'';ok(!/[çğıöşüÇĞİÖŞÜ]/.test(s.replace(/Türkiye/g,''))&&!/\b(ve|kopyası|özeti|Tüzük|Avrupa|metin)\b/.test(s),r.id+' İngilizcede Türkçe kaynak adı: '+s)})})}
 
+// Vegan durumu (12.10.2026): "evet" yalnızca doğrulanmış üretim yolu hayvansal hammadde içermiyorsa; hayvansal yolu olabilenler bilinmiyor kalır
+{const v=R.filter(r=>r.diet_flags.vegan==='unknown').map(r=>r.id);
+ ok(v.length<=55,'vegan bilinmeyen kayıt arttı: '+v.length);
+ ['E471','E422','E322','E640','E920','E570'].forEach(id=>ok(by[id].diet_flags.vegan!=='yes',id+' hayvansal kaynaklı olabilir, vegan evet olmamalı'));
+ R.filter(r=>r.diet_flags.vegan==='yes').forEach(r=>{const i=E.ingredients.find(x=>x.id===r.id);
+  ok(!i.flags.some(f=>['non_vegan','vegan_suspect','insect_derived'].includes(f)),r.id+' vegan evet ama bayrağı hayvansal')});
+ ok(by.E966.diet_flags.vegan==='no'&&E.ingredients.find(x=>x.id==='E966').flags.includes('non_vegan'),'E966 laktitol laktozdan üretilir, vegan değil');}
+
 console.log(n+' ansiklopedi denetimi, '+fail+' hata');process.exit(fail?1:0);

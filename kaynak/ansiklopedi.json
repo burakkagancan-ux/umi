@@ -4396,8 +4396,8 @@
    "in_the_body": "Fazla tüketildiğinde bağırsakta gaz ve ishale yol açabilir.",
    "agency_note": "AB'de %10'dan fazla eklenmiş poliol içeren ürünlerde “aşırı tüketimi laksatif etki yapabilir” uyarısı zorunludur (1169/2011 Ek III).",
    "diet_flags": {
-    "vegan": "unknown",
-    "source": "unknown",
+    "vegan": "no",
+    "source": "animal",
     "gluten": "unknown"
    },
    "regulatory_extra": [
@@ -5746,7 +5746,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1410": {
    "evidence_level": "strong",
@@ -5772,7 +5777,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1412": {
    "evidence_level": "strong",
@@ -5798,7 +5808,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1413": {
    "evidence_level": "strong",
@@ -5824,7 +5839,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1414": {
    "evidence_level": "strong",
@@ -5850,7 +5870,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1420": {
    "evidence_level": "strong",
@@ -5876,7 +5901,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1422": {
    "evidence_level": "strong",
@@ -5902,7 +5932,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1440": {
    "evidence_level": "strong",
@@ -5928,7 +5963,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1442": {
    "evidence_level": "strong",
@@ -5954,7 +5994,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1450": {
    "evidence_level": "strong",
@@ -6005,7 +6050,12 @@
      "text": "EFSA, E 1450'nin bebek formüllerindeki güvenliğini mevcut verilerle tam değerlendiremediğini bildirdi. AB 2026'da bebek formüllerinde kullanılan E 1450'nin glutensiz olmasını şart koştu."
     }
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E1451": {
    "evidence_level": "strong",
@@ -6031,7 +6081,12 @@
    "sources": [
     "efsa_starch"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E460": {
    "evidence_level": "strong",
@@ -6056,7 +6111,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E461": {
    "evidence_level": "strong",
@@ -6081,7 +6141,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E462": {
    "evidence_level": "strong",
@@ -6104,7 +6169,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E463": {
    "evidence_level": "strong",
@@ -6128,7 +6198,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E464": {
    "evidence_level": "strong",
@@ -6153,7 +6228,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E465": {
    "evidence_level": "strong",
@@ -6176,7 +6256,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E466": {
    "evidence_level": "strong",
@@ -6202,7 +6287,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E468": {
    "evidence_level": "strong",
@@ -6225,7 +6315,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E469": {
    "evidence_level": "strong",
@@ -6249,7 +6344,12 @@
    "sources": [
     "efsa_cellulose"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E400": {
    "evidence_level": "strong",
@@ -6287,7 +6387,12 @@
    "sources": [
     "efsa_alginate"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E401": {
    "evidence_level": "strong",
@@ -6330,7 +6435,12 @@
    "sources": [
     "efsa_alginate"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E402": {
    "evidence_level": "strong",
@@ -6368,7 +6478,12 @@
    "sources": [
     "efsa_alginate"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E403": {
    "evidence_level": "strong",
@@ -6406,7 +6521,12 @@
    "sources": [
     "efsa_alginate"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E404": {
    "evidence_level": "strong",
@@ -6444,7 +6564,12 @@
    "sources": [
     "efsa_alginate"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E306": {
    "evidence_level": "moderate",
@@ -6470,7 +6595,12 @@
     "efsa_tocopherol",
     "jecfa_mono_tocopherol"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E307": {
    "evidence_level": "moderate",
@@ -6496,7 +6626,12 @@
     "efsa_tocopherol",
     "jecfa_mono_tocopherol"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E308": {
    "evidence_level": "moderate",
@@ -6522,7 +6657,12 @@
     "efsa_tocopherol",
     "jecfa_mono_tocopherol"
    ],
-   "last_reviewed": "2026-10-12"
+   "last_reviewed": "2026-10-12",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E309": {
    "evidence_level": "moderate",
@@ -6594,7 +6734,12 @@
      "text": "EFSA, bu maddenin bebek ve küçük çocuklara yönelik özel tıbbi amaçlı gıdalardaki güvenliğini mevcut verilerle tam değerlendiremediğini bildirdi."
     }
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E412": {
    "evidence_level": "strong",
@@ -6640,7 +6785,12 @@
      "text": "AB, guar zamkının bebek formüllerinde ve bebeklere yönelik özel tıbbi amaçlı gıdalardaki iznini 2026'da kaldırdı."
     }
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E414": {
    "evidence_level": "strong",
@@ -6674,7 +6824,12 @@
     "efsa_e414",
     "ab2026_196"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E415": {
    "evidence_level": "strong",
@@ -6708,7 +6863,12 @@
     "efsa_e415",
     "ab2026_196"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E440": {
    "evidence_level": "strong",
@@ -6742,7 +6902,12 @@
     "efsa_e440",
     "ab2026_196"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E471": {
    "evidence_level": "strong",
@@ -6819,7 +6984,12 @@
     "efsa_e100",
     "jecfa_mono_e100"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E131": {
    "evidence_level": "strong",
@@ -6843,7 +7013,12 @@
    "sources": [
     "efsa_e131"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E132": {
    "evidence_level": "strong",
@@ -6868,7 +7043,12 @@
    "sources": [
     "efsa_e132"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E133": {
    "evidence_level": "strong",
@@ -6894,7 +7074,12 @@
     "efsa_e133",
     "jecfa_mono_e133"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E140": {
    "evidence_level": "moderate",
@@ -6919,7 +7104,12 @@
    "sources": [
     "efsa_e140"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E141": {
    "evidence_level": "limited",
@@ -6944,7 +7134,12 @@
    "sources": [
     "efsa_e141"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E142": {
    "evidence_level": "strong",
@@ -6970,7 +7165,12 @@
     "efsa_e142",
     "jecfa_mono_e142"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E150a": {
    "evidence_level": "strong",
@@ -6996,7 +7196,12 @@
    "sources": [
     "efsa_e150"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E150b": {
    "evidence_level": "strong",
@@ -7020,7 +7225,12 @@
    "sources": [
     "efsa_e150"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E151": {
    "evidence_level": "strong",
@@ -7052,7 +7262,12 @@
      "severity": "low",
      "text": "EFSA'ya göre bu boyayı çok tüketen çocuklarda günlük alım sınırı aşılabilir."
     }
-   ]
+   ],
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E153": {
    "evidence_level": "moderate",
@@ -7076,7 +7291,12 @@
    "sources": [
     "efsa_e153"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E155": {
    "evidence_level": "strong",
@@ -7108,7 +7328,12 @@
      "severity": "low",
      "text": "EFSA'ya göre bu boyayı çok tüketen çocuklarda günlük alım sınırı aşılabilir."
     }
-   ]
+   ],
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E160a": {
    "evidence_level": "moderate",
@@ -7133,7 +7358,12 @@
    "sources": [
     "efsa_e160a"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E160b": {
    "evidence_level": "strong",
@@ -7159,7 +7389,12 @@
     "efsa_e160b",
     "jecfa_mono_e160b"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E160c": {
    "evidence_level": "strong",
@@ -7184,7 +7419,12 @@
    "sources": [
     "efsa_e160c"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E160e": {
    "evidence_level": "strong",
@@ -7209,7 +7449,12 @@
     "efsa_e160e",
     "jecfa_mono_e160e"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E161b": {
    "evidence_level": "moderate",
@@ -7242,7 +7487,12 @@
      "severity": "low",
      "text": "EFSA'ya göre bu boyayı çok tüketen çocuklarda günlük alım sınırı aşılabilir."
     }
-   ]
+   ],
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E163": {
    "evidence_level": "moderate",
@@ -7268,7 +7518,12 @@
     "efsa_e163",
     "jecfa_mono_e163"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E170": {
    "evidence_level": "strong",
@@ -7293,7 +7548,12 @@
    "sources": [
     "efsa_e170"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E174": {
    "evidence_level": "limited",
@@ -7317,7 +7577,12 @@
    "sources": [
     "efsa_e174"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E175": {
    "evidence_level": "moderate",
@@ -7342,7 +7607,12 @@
    "sources": [
     "efsa_e175"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-04",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E180": {
    "evidence_level": "limited",
@@ -7365,7 +7635,12 @@
    "sources": [
     "efsa_e180"
    ],
-   "last_reviewed": "2026-10-12"
+   "last_reviewed": "2026-10-12",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E300": {
    "evidence_level": "strong",
@@ -7828,7 +8103,12 @@
     "efsa_e235",
     "jecfa_mono_e235"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E280": {
    "evidence_level": "moderate",
@@ -7961,8 +8241,8 @@
    "in_the_body": "Sindirim sıvılarında parçalanarak fosfat açığa çıkarır. Sıçanlarda işaretli maddenin yaklaşık %79'u 24 saatte dışkıyla, %4'ü idrarla atılmış; emilen fosfat kemik ve kasta inorganik fosfat olarak bulunmuştur.",
    "agency_note": "EFSA 2016'da yeniden değerlendirmesinde mevcut 30 mg/kg vücut ağırlığı günlük alım sınırını (ADI) değiştirmeye gerek görmedi ve gıda katkı maddesi olarak kullanımında güvenlik endişesi bulmadı.",
    "diet_flags": {
-    "vegan": "unknown",
-    "source": "plant_or_animal",
+    "vegan": "yes",
+    "source": "plant",
     "gluten": "unknown"
    },
    "regulatory_extra": [
@@ -10947,7 +11227,7 @@
    "in_the_body": "Sitrik asit ve sitratlar birçok gıdada doğal olarak bulunur ve vücutta normal metabolizma ürünleridir; sitrik asit hücrelerin enerji döngüsünde (trikarboksilik asit döngüsü) yer alır.",
    "agency_note": "JECFA 1973'te sitrik asit ile kalsiyum, potasyum ve sodyum tuzları için ADI'yi 'sınırlandırılmamış' olarak belirledi ve bu maddelerin insan için önemli bir toksikolojik risk oluşturmadığını belirtti. JECFA, sitrik asidin sık ya da yüksek miktarda alınmasının düşük pH nedeniyle diş aşınmasına ve lokal tahrişe yol açabileceğini bildirmiştir.",
    "diet_flags": {
-    "vegan": "unknown",
+    "vegan": "yes",
     "source": "unknown",
     "gluten": "unknown"
    },
@@ -11133,8 +11413,8 @@
    "in_the_body": "L(+)-tartarik asidin insanda emilimi sıçana göre daha düşüktür.",
    "agency_note": "EFSA'ya göre yapılan hayvan çalışmalarında böbrek etkisi dahil toksik etki ve genotoksik potansiyel görülmemiştir. EFSA 2020'de E 334–337 ve E 354 için grup ADI'yi tartarik asit olarak 240 mg/kg vücut ağırlığı/gün olarak belirledi (SCF'nin 1990'daki 30 mg/kg ADI'sinin yerine) ve tahmini maruziyetin hiçbir yaş grubunda bu sınırı aşmadığını belirtti.",
    "diet_flags": {
-    "vegan": "unknown",
-    "source": "unknown",
+    "vegan": "yes",
+    "source": "plant",
     "gluten": "unknown"
    },
    "regulatory_extra": [
@@ -11366,8 +11646,8 @@
    "in_the_body": "Metatartarik asidin vücuda emilmeden önce tamamen L(+)-tartarik aside parçalandığı varsayılır.",
    "agency_note": "EFSA 2020'de, emilmeden önce tamamen tartarik aside parçalandığı varsayımıyla maddenin tartarik asit–tartaratlar için belirlenen 240 mg/kg vücut ağırlığı/gün grup ADI'sine dahil edilmesini önerdi ve bildirilen kullanım düzeylerinde güvenlik endişesi olmadığı sonucuna vardı.",
    "diet_flags": {
-    "vegan": "unknown",
-    "source": "unknown",
+    "vegan": "yes",
+    "source": "plant",
     "gluten": "unknown"
    },
    "regulatory_extra": [
@@ -11414,8 +11694,8 @@
    "in_the_body": "L(+)-tartarik asidin insanda emilimi sıçana göre daha düşüktür.",
    "agency_note": "EFSA'ya göre yapılan hayvan çalışmalarında böbrek etkisi dahil toksik etki ve genotoksik potansiyel görülmemiştir. EFSA 2020'de E 334–337 ve E 354 için grup ADI'yi tartarik asit olarak 240 mg/kg vücut ağırlığı/gün olarak belirledi (SCF'nin 1990'daki 30 mg/kg ADI'sinin yerine) ve tahmini maruziyetin hiçbir yaş grubunda bu sınırı aşmadığını belirtti.",
    "diet_flags": {
-    "vegan": "unknown",
-    "source": "unknown",
+    "vegan": "yes",
+    "source": "plant",
     "gluten": "unknown"
    },
    "regulatory_extra": [
@@ -14133,7 +14413,12 @@
     "eu_1333_annex2_e",
     "ab1333_annex2_e_g12"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E160d": {
    "evidence_level": "moderate",
@@ -14175,7 +14460,12 @@
     "ab1333_annex2_e_g7",
     "ab1333_annex2_e_g12"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E162": {
    "evidence_level": "limited",
@@ -14226,7 +14516,12 @@
     "eu_1333_annex2_e",
     "jecfa_mono_e162"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E172": {
    "evidence_level": "limited",
@@ -14264,7 +14559,12 @@
     "ab1333_annex2_e_g3",
     "eu_1333_annex2_e"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E385": {
    "evidence_level": "limited",
@@ -14304,7 +14604,12 @@
     "ab1333_annex2_e_g10",
     "jecfa_mono_e385"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E431": {
    "evidence_level": "limited",
@@ -14369,7 +14674,12 @@
     "efsa_e535",
     "ab1333_annex2_e_g9"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E536": {
    "evidence_level": "strong",
@@ -14401,7 +14711,12 @@
     "efsa_e535",
     "ab1333_annex2_e_g9"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E538": {
    "evidence_level": "strong",
@@ -14433,7 +14748,12 @@
     "efsa_e535",
     "ab1333_annex2_e_g9"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E551": {
    "evidence_level": "moderate",
@@ -14475,7 +14795,12 @@
     "ab1333_annex3_p2",
     "ab1333_annex3_p5"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E552": {
    "evidence_level": "limited",
@@ -14515,7 +14840,12 @@
     "ab1333_annex3_p2",
     "ab1333_annex3_p5"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E553a": {
    "evidence_level": "limited",
@@ -14554,7 +14884,12 @@
     "ab1333_annex3_p1",
     "ab1333_annex3_p2"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E553b": {
    "evidence_level": "limited",
@@ -14608,7 +14943,12 @@
     "ab1333_annex2_e_g7",
     "eu_1333_annex2_e"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E558": {
    "evidence_level": "limited",
@@ -14641,7 +14981,12 @@
     "jecfa_e558",
     "ab1333_annex2_b"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E901": {
    "evidence_level": "moderate",
@@ -14705,7 +15050,12 @@
     "ab1333_annex2_e_g13",
     "ab1333_annex2_e_g14"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E903": {
    "evidence_level": "moderate",
@@ -14737,7 +15087,12 @@
     "ab1333_annex2_e_g13",
     "ab1333_annex2_e_g14"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "plant",
+    "gluten": "unknown"
+   }
   },
   "E904": {
    "evidence_level": "moderate",
@@ -14796,7 +15151,12 @@
     "ab1333_annex2_e_g5",
     "jecfa_mono_e905"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E907": {
    "evidence_level": "moderate",
@@ -14822,7 +15182,12 @@
     "ab1333_annex2_e_g3",
     "ab1333_annex2_e_g5"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E912": {
    "evidence_level": "limited",
@@ -14854,7 +15219,12 @@
     "eu_957_2014",
     "efsa_e912"
    ],
-   "last_reviewed": "2026-10-12"
+   "last_reviewed": "2026-10-12",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "mineral",
+    "gluten": "unknown"
+   }
   },
   "E914": {
    "evidence_level": "moderate",
@@ -14878,7 +15248,12 @@
     "efsa_e914",
     "ab1333_annex2_e_g2"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E920": {
    "evidence_level": "limited",
@@ -14949,7 +15324,12 @@
     "ab1333_annex2_e_g5",
     "jecfa_mono_e927b"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E1103": {
    "evidence_level": "limited",
@@ -14973,7 +15353,12 @@
     "jecfa_e1103",
     "ab1333_annex3_p5"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E1200": {
    "evidence_level": "strong",
@@ -15003,7 +15388,12 @@
     "ab1333_annex3_p3",
     "ab1333_annex3_p5"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E1205": {
    "evidence_level": "moderate",
@@ -15027,7 +15417,12 @@
     "efsa_e1205",
     "ab1333_annex2_e_g14"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-07",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E1505": {
    "evidence_level": "limited",
@@ -15056,7 +15451,12 @@
     "ab1333_annex3_p4",
     "jecfa_mono_e1505"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "unknown",
+    "gluten": "unknown"
+   }
   },
   "E1517": {
    "evidence_level": "limited",
@@ -15135,7 +15535,12 @@
     "efsa_e1519",
     "ab1333_annex3_p4"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E1521": {
    "evidence_level": "moderate",
@@ -15173,7 +15578,12 @@
     "ab1333_annex3_p1",
     "jecfa_mono_e1521"
    ],
-   "last_reviewed": "2026-10-12"
+   "last_reviewed": "2026-10-12",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   },
   "E1203": {
    "evidence_level": "limited",
@@ -15207,7 +15617,12 @@
     "jecfa_e1203_spec",
     "jecfa_mono_e1203"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-08",
+   "diet_flags": {
+    "vegan": "yes",
+    "source": "synthetic",
+    "gluten": "unknown"
+   }
   }
  }
 }

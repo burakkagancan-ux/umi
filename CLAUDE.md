@@ -1,7 +1,7 @@
 # Proje notları (Claude için)
 
 Bu dosya her yeni Claude oturumunda okunur. Güncel durum, kararlar ve çalışma kuralları burada.
-Son güncelleme: 12.10.2026 (kaynak bağlantı denetimi O-07; EUH ve P ifadelerinin Türkçesi SEA resmi metninden).
+Son güncelleme: 12.10.2026 (ansiklopedide vegan durumu bilinmeyen 144 → 55; E966 vegan değil).
 
 ## Roller ve dil
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.
