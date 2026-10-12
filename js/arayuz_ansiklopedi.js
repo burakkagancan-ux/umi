@@ -176,7 +176,8 @@ function showSearch(){
 function aGet(p){return fetch(p).then(function(r){if(!r.ok)throw new Error(p);return r.json()})}
 /* Metinler dile göre: seçili dil → İngilizce → Türkçe (anahtar bazında; dosya yoksa Türkçe). Dil js/dil.js'ten (DIL_HAZIR).
    Açılışta dizin metni (data/ansiklopedi_<dil>.json), madde açılınca o sayfanın metni (data/ansiklopedi/<dil>/<kimlik>.json). */
-function ansKodlar(){return [DIL_KAYNAK,DIL_YEDEK,DIL.kod].filter(function(x,i,a){return a.indexOf(x)===i})}
+/* Sıra önemli: sonraki dosya öncekinin üstüne yazar, seçili dil en sonda. Kaynak dil eksiksiz; Türkçede yedek inmez (js/dil.js gibi). */
+function ansKodlar(){return DIL.kod===DIL_KAYNAK?[DIL_KAYNAK]:[DIL_KAYNAK,DIL_YEDEK,DIL.kod].filter(function(x,i,a){return a.indexOf(x)===i})}
 function ansMetinGetir(yol){
   var u=ansKodlar().map(function(k){return yol(k)});
   return Promise.all(u.map(function(p,i){var g=aGet(p);return i?g.catch(function(){return {t:{}}}):g})).then(function(v){
