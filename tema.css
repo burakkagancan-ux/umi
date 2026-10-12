@@ -14,4 +14,4 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .tabbar a{flex:1;max-width:240px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px 7px;font-size:12px;font-weight:600;color:var(--mute);text-decoration:none}
 .tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tabbar a[aria-current="page"]{color:var(--ok)}
-html:not([data-ulke="TR"]) .tabbar a[data-tab="liste"]{display:none}   /* Bakanlık listesi yalnızca Türkiye'de (js/dil.js) */
+.tabbar a[data-tab="liste"]{display:none}   /* Liste şimdilik menüde yok (12.10.2026, kullanıcı kararı); sayfa ve veri güncellemesi çalışmaya devam eder. Geri açınca: html[data-ulke="TR"] ... {display:flex} (js/dil.js) */
