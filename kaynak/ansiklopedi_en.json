@@ -918,8 +918,8 @@
 "tr": "Gıdaya pembe-kırmızı renk verir."
 },
 "E128.agn": {
-"s": "In 2007 the European Commission suspended the use of this colour in food as an emergency measure (Regulation 884/2007). For this reason it is not found in foods produced in the EU.",
-"tr": "Avrupa Komisyonu 2007'de bu renklendiricinin gıdada kullanımını acil önlemle askıya aldı (Tüzük 884/2007). Bu nedenle AB'de üretilen gıdalarda bulunmaz."
+"s": "In 2007 the European Commission suspended the use of this colour in food as an emergency measure (Regulation 884/2007). For this reason it is not found in foods produced in the EU. In 2007 EFSA withdrew the acceptable daily intake (ADI) and regarded Red 2G as a safety concern, noting that it is extensively converted to aniline in the body and that aniline has shown genotoxic and carcinogenic effects in rodents.",
+"tr": "Avrupa Komisyonu 2007'de bu renklendiricinin gıdada kullanımını acil önlemle askıya aldı (Tüzük 884/2007). Bu nedenle AB'de üretilen gıdalarda bulunmaz. EFSA 2007'de Red 2G'nin vücutta büyük ölçüde aniline dönüştüğünü, anilinin kemirgenlerde genotoksik ve kanserojen etkileri görüldüğünü belirterek günlük kabul edilebilir alımı (ADI) geri çekti ve Red 2G'yi güvenlik endişesi taşıyan madde olarak değerlendirdi."
 },
 "E128.body": {
 "s": "In rats and rabbits, orally ingested Red 2G is not found unchanged in urine; the dye is split at the azo bond and excreted in urine mainly as p-aminophenol (mostly conjugated with glucuronic acid), and in smaller amounts as o-aminophenol and aniline.",
@@ -2298,8 +2298,8 @@
 "tr": "Kahverengi FK"
 },
 "E154.prod": {
-"s": "An azo dye produced by chemical synthesis.",
-"tr": "Kimyasal sentezle üretilen azo boyadır."
+"s": "An azo dye produced by chemical synthesis, by coupling diazotised sulfanilic acid with a mixture of m-phenylenediamine and tolylene-2,4-diamine.",
+"tr": "Diazolanmış sülfanilik asidin m-fenilendiamin ve tolilen-2,4-diamin karışımıyla eşleştirilmesiyle kimyasal sentezle üretilen azo boyadır."
 },
 "E154.regx.0": {
 "s": "Re-evaluated; no conclusion on safety could be reached because of gaps in the toxicity data.",

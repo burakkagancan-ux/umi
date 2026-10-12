@@ -2730,6 +2730,13 @@
    "year": 2025,
    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12555060",
    "official": true
+  },
+  "efsa_e128_2007": {
+   "title": "Opinion of the AFC Panel on the food colour Red 2G (E128) related to the re-evaluation of all permitted food additives",
+   "publisher": "EFSA (EFSA Journal 5(7):515)",
+   "year": 2007,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13129613/",
+   "official": true
   }
  },
  "resmi_alan_adlari": [
@@ -3582,7 +3589,7 @@
     "AB'de 2007'den beri gıdada kullanılmıyor"
    ],
    "in_the_body": "Sıçan ve tavşanlarda ağızdan alınan Red 2G idrarda değişmeden bulunmaz; boya azo bağından parçalanır ve idrarla başlıca p-aminofenol (çoğu glukuronik asitle bağlı), daha az miktarda o-aminofenol ve anilin olarak atılır.",
-   "agency_note": "Avrupa Komisyonu 2007'de bu renklendiricinin gıdada kullanımını acil önlemle askıya aldı (Tüzük 884/2007). Bu nedenle AB'de üretilen gıdalarda bulunmaz.",
+   "agency_note": "Avrupa Komisyonu 2007'de bu renklendiricinin gıdada kullanımını acil önlemle askıya aldı (Tüzük 884/2007). Bu nedenle AB'de üretilen gıdalarda bulunmaz. EFSA 2007'de Red 2G'nin vücutta büyük ölçüde aniline dönüştüğünü, anilinin kemirgenlerde genotoksik ve kanserojen etkileri görüldüğünü belirterek günlük kabul edilebilir alımı (ADI) geri çekti ve Red 2G'yi güvenlik endişesi taşıyan madde olarak değerlendirdi.",
    "diet_flags": {
     "vegan": "yes",
     "source": "synthetic",
@@ -3590,9 +3597,10 @@
    },
    "sources": [
     "ab884_2007",
-    "jecfa_mono_e128"
+    "jecfa_mono_e128",
+    "efsa_e128_2007"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-12"
   },
   "E150c": {
    "evidence_level": "moderate",
