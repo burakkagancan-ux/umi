@@ -38,4 +38,9 @@ g=K.kayitGeriYukle(L,y);ok(g.ok&&g.eklenen===0&&g.list.length===3,'var olanlar y
 ok(!K.kayitGeriYukle(L,'bozuk').ok&&!K.kayitGeriYukle(L,'{"tur":"baska"}').ok,'geçersiz dosya reddedilir');
 g=K.kayitGeriYukle([],JSON.stringify({tur:'kayitli',kayitlar:[{mode:'gida',text:'a',name:'x'.repeat(200)},{mode:'zehir',text:'b'},{mode:'koz'},null]}));
 ok(g.ok&&g.eklenen===1&&g.list[0].name.length===60,'bozuk kayıtlar atlanır, ad kısaltılır');
+// Yedekte katkıcı kimliği (O-22)
+const kim='0123456789abcdef0123456789abcdef';
+ok(!('katkici' in JSON.parse(K.kayitYedek(L,5))),'katkı yapılmamışsa yedekte kimlik yok');
+g=K.kayitGeriYukle([],K.kayitYedek([],5,kim));ok(g.ok&&g.katkici===kim&&g.eklenen===0,'yalnızca kimlik içeren yedek de geri yüklenir');
+ok(K.kayitGeriYukle([],y).katkici==='','kimliksiz yedekte boş');
 console.log(n+' kayıt denetimi, '+fail+' hata');process.exit(fail?1:0);

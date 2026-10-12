@@ -107,9 +107,9 @@ function kayitAc(){
   var yd=el("div","kyedek");yd.appendChild(el("h3",null,t("kayit.yedek.baslik")));
   yd.appendChild(el("div","how",t("kayit.yedek.not")));
   var r2=el("div","row");
-  var ex=el("button","alt",t("kayit.yedek.indir"));ex.type="button";ex.disabled=!all.length;
+  var ex=el("button","alt",t("kayit.yedek.indir"));ex.type="button";ex.disabled=!all.length&&!katkiciAl();
   ex.onclick=function(){
-    var blob=new Blob([kayitYedek(kayitLoad())],{type:"application/json"}),a=document.createElement("a"),d=new Date();
+    var blob=new Blob([kayitYedek(kayitLoad(),0,katkiciGecerli(katkiciAl())?katkiciAl():"")],{type:"application/json"}),a=document.createElement("a"),d=new Date();
     a.href=URL.createObjectURL(blob);a.download="tagsis-kayitlar-"+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+".json";document.body.appendChild(a);a.click();
     setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000);
   };
@@ -122,6 +122,8 @@ function kayitAc(){
     var rd=new FileReader();rd.onload=function(){
       var r=kayitGeriYukle(kayitLoad(),String(rd.result),KAYIT_AYAR.enFazla);
       if(!r.ok){ym.textContent=r.hata;return}
+      // Katkıcı kimliği yalnızca bu cihazda henüz yoksa alınır (bu cihazdaki katkılar başka kimliğe geçmesin)
+      if(r.katkici&&!katkiciGecerli(katkiciAl()))katkiciYaz(r.katkici);
       kayitStore(r.list);kayitProfil();kayitAc();
       $("kayit").querySelector(".kyedek .how:last-child").textContent=t("kayit.yedek.eklendi",{n:r.eklenen})+(r.fazla?" "+t("kayit.yedek.fazla",{n:r.fazla,s:KAYIT_AYAR.enFazla}):"");
     };rd.readAsText(f);

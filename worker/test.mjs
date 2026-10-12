@@ -47,12 +47,15 @@ const breq = (yol, o = {}) => new Request("https://x.workers.dev" + yol, { metho
 let offCalls = [];
 const offYanit = (urunler) => (url) => { offCalls.push(url); const m = /https:\/\/([^/]+)\/api\/v2\/product\/(\d+)/.exec(url); const p = m && urunler[m[1] + "/" + m[2]];
   return p ? { status: 200, body: { status: 1, product: p } } : { status: 200, body: { status: 0 } }; };
-const d1 = () => { const rows = []; let ddl = 0;
+const d1 = (eskiTablo) => { const rows = [], sqls = []; let ddl = 0;
   const st = (sql) => ({ sql, args: [], bind(...a) { this.args = a; return this; },
-    async all() { return { results: rows.filter((r) => r.kod === this.args[0]).sort((a, b) => b.t - a.t).map(({ tur, dil, metin, t }) => ({ tur, dil, metin, t })) }; },
+    async all() { return { results: rows.filter((r) => r.kod === this.args[0]).sort((a, b) => b.t - a.t).map(({ tur, dil, metin, t, kim }) => ({ tur, dil, metin, t, kim })) }; },
     async first() { return { n: rows.filter((r) => r.kod === this.args[0]).length }; },
-    async run() { const [kod, tur, dil, metin, t] = this.args; rows.push({ kod, tur, dil, metin, t }); return {}; } });
-  return { rows, get ddl() { return ddl; }, prepare: st, batch: async (l) => { ddl += l.length; return []; } }; };
+    async run() { sqls.push(sql);
+      if (/^ALTER/.test(sql)) { if (!eskiTablo) throw new Error("duplicate column name: kim"); return {}; }
+      if (!/^INSERT/.test(sql)) return {};
+      const [kod, tur, dil, metin, t, kim] = this.args; rows.push({ kod, tur, dil, metin, t, kim }); return {}; } });
+  return { rows, sqls, get ddl() { return ddl; }, prepare: st, batch: async (l) => { ddl += l.length; return []; } }; };
 const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz, emülgatör (soya lesitini), kabartıcı (sodyum bikarbonat).";
 { visionReply = offYanit({ "world.openfoodfacts.org/8690504025207": { code: "8690504025207", product_name_tr: "Bitter Çikolata", brands: "Ülker,X", lang: "tr", ingredients_text_tr: "Kakao kitlesi, şeker", ingredients_text: "Kakao kitlesi, şeker", last_modified_t: 1700000000 },
     "world.openbeautyfacts.org/4005900036650": { code: "4005900036650", product_name: "Krem", brands: "N", lang: "de", ingredients_text: "Aqua, Glycerin" } });
@@ -76,9 +79,17 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   await t("urun: kısa metin", post({ kod: "8690504025207", tur: "gida", dil: "tr", metin: "su" }), e, 400);
   await t("urun: katkı kaydedildi", post({ kod: "8690504025207", tur: "gida", dil: "tr", metin: metinA }), e, 201);
   const r = e.URUNLER.rows[0];
-  if (!r || Object.keys(r).sort().join() !== "dil,kod,metin,t,tur") { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman olmalı (IP yok)", r); }
+  if (!r || Object.keys(r).sort().join() !== "dil,kim,kod,metin,t,tur" || r.kim !== null) { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman, katkıcı olmalı (IP yok); kimliksiz katkıda kim boş", r); }
   await t("urun: tek katkı doğrulanmamış", breq("/urun/8690504025207"), e, 200, (j) => j.bulundu && !j.dogrulandi && j.sayi === 1 && j.tur === "gida");
-  if (e.URUNLER.ddl !== 2) { fail++; console.log("HATA urun: tablo ve indeks otomatik oluşmalı (CREATE IF NOT EXISTS)"); } }
+  if (e.URUNLER.ddl !== 2 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
+  // Katkıcı kimliği (O-22)
+  const kim = "0123456789abcdef0123456789abcdef";
+  await t("urun: geçersiz katkıcı kimliği", post({ kod: "4006381333931", tur: "gida", dil: "tr", metin: metinA, kim: "ali@ornek.com" }), e, 400);
+  await t("urun: kimlikli katkı", post({ kod: "4006381333931", tur: "gida", dil: "tr", metin: metinA, kim }), e, 201, () => e.URUNLER.rows.at(-1).kim === kim);
+  await t("urun: GET yanıtında kimlik yok", breq("/urun/4006381333931"), e, 200, (j) => j.bulundu && !("kim" in j) && !JSON.stringify(j).includes(kim)); }
+{ const e = env(); e.URUNLER = d1(true); const w2 = (await import("./src/index.js?eski-tablo")).default;   // tablo hazırlığı modül başına bir kez: yeni kopya
+  const res = await w2.fetch(breq("/urun/8690504025207"), e);
+  if (res.status !== 200 || !e.URUNLER.sqls.includes("ALTER TABLE katki ADD COLUMN kim TEXT")) { fail++; console.log("HATA urun: eski tabloya kim sütunu eklenmeli", res.status, e.URUNLER.sqls); } else console.log("ok   urun: eski tabloya kim sütunu eklenir"); }
 // Doğrulama kuralı (saf): farklı zamanlarda iki benzer katkı doğrulanmış; aynı anda gelen iki katkı doğrulanmamış; farklı içerik ayrı grup
 { const T0 = 1_700_000_000_000, b = metinA.replace("tuz", "tuz,");
   const s1 = urunSec([{ tur: "gida", dil: "tr", metin: metinA, t: T0 }, { tur: "gida", dil: "tr", metin: b, t: T0 + KATKI_ARALIK_MS }]);
@@ -86,6 +97,11 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const s3 = urunSec([{ tur: "gida", dil: "tr", metin: "Su, şeker, karbondioksit, aroma vericiler, asitlik düzenleyici (sitrik asit)", t: T0 + 5 }, { tur: "gida", dil: "tr", metin: metinA, t: T0 }, { tur: "gida", dil: "tr", metin: b, t: T0 + KATKI_ARALIK_MS }]);
   const ok = s1.dogrulandi && s1.sayi === 2 && !s2.dogrulandi && s3.dogrulandi && s3.metin === b && !urunSec([]).bulundu;
   if (!ok) { fail++; console.log("HATA urunSec doğrulama kuralı", s1, s2, s3); } else console.log("ok   urunSec doğrulama kuralı");
+  // Aynı katkıcı kendi katkısını doğrulayamaz; farklı katkıcı ya da kimliksiz eski katkı doğrular
+  const A = "a".repeat(32), B = "b".repeat(32), k = (kim, t) => ({ tur: "gida", dil: "tr", metin: metinA, t, kim });
+  const ayni = urunSec([k(A, T0), k(A, T0 + KATKI_ARALIK_MS)]), farkli = urunSec([k(A, T0), k(B, T0 + KATKI_ARALIK_MS)]);
+  const eski = urunSec([k(null, T0), k(A, T0 + KATKI_ARALIK_MS)]), uc = urunSec([k(A, T0), k(A, T0 + KATKI_ARALIK_MS), k(B, T0 + 1000)]);
+  if (ayni.dogrulandi || !farkli.dogrulandi || !eski.dogrulandi || uc.dogrulandi || "kim" in farkli) { fail++; console.log("HATA urunSec katkıcı kuralı", ayni, farkli, eski, uc); } else console.log("ok   urunSec: aynı katkıcı kendini doğrulamaz");
   if (!barkodGecerli("8690504025207") || barkodGecerli("8690504025208") || !barkodGecerli("012345678905") || !barkodGecerli("01234565")) { fail++; console.log("HATA barkodGecerli"); } }
 console.log(fail ? fail + " hata" : "tüm testler geçti");
 process.exit(fail ? 1 : 0);

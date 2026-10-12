@@ -34,8 +34,12 @@ function kayitFark(eski,yeni){
   var s=function(o){return t("kayit.fark_say",{u:o.u,d:o.d})};
   return {once:s(eski),simdi:s(yeni),kotu:yeni.u>eski.u||(yeni.u===eski.u&&yeni.d>eski.d)};
 }
-/* Yedek dosyası: {uygulama:"tagsis", tur:"kayitli", surum:1, kayitlar:[...]}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir. */
-function kayitYedek(list,now){return JSON.stringify({uygulama:"tagsis",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]})}
+/* Yedek dosyası: {uygulama:"tagsis", tur:"kayitli", surum:1, kayitlar:[...], katkici?}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir.
+   katkici: barkod katkıcı kimliği (O-22); cihaz ya da adres değişince katkılar aynı kişiye yazılmaya devam etsin diye. Doğrulaması arayüzde (katkiciGecerli). */
+function kayitYedek(list,now,katkici){
+  var d={uygulama:"tagsis",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]};if(katkici)d.katkici=katkici;
+  return JSON.stringify(d);
+}
 function kayitGeriYukle(list,json,max){
   var d;try{d=JSON.parse(json)}catch(e){return {ok:false,hata:t("kayit.yedek.okunamadi")}}
   if(!d||d.tur!=="kayitli"||!Array.isArray(d.kayitlar))return {ok:false,hata:t("kayit.yedek.degil")};
@@ -48,5 +52,5 @@ function kayitGeriYukle(list,json,max){
     eklenen++;
   });
   out.sort(function(a,b){return (b.u||b.t)-(a.u||a.t)});
-  return {ok:true,list:out.slice(0,max||KAYIT_AYAR.enFazla),eklenen:eklenen,fazla:Math.max(0,out.length-(max||KAYIT_AYAR.enFazla))};
+  return {ok:true,list:out.slice(0,max||KAYIT_AYAR.enFazla),eklenen:eklenen,fazla:Math.max(0,out.length-(max||KAYIT_AYAR.enFazla)),katkici:typeof d.katkici==="string"?d.katkici:""};
 }

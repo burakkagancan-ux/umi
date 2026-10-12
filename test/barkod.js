@@ -1,7 +1,7 @@
 // Barkod: kontrol hanesi, biçim dönüşümü, içerik dili, kaynak sırası, katkı kuralı; Worker ile aynı benzerlik hesabı; data/barkod_off.json yapısı.
 // Çalıştır: node test/barkod.js
 const fs=require('fs'),path=require('path');
-eval(require('./yukle.js')+';global.B={barkodTemiz,barkodKontrol,barkodUpcE,barkodGecerli,barkodNorm,barkodAdaylar,barkodTur,barkodMetin,barkodOffBul,barkodSec,barkodKatkiUygun,barkodBenzer,BARKOD_AYAR}');
+eval(require('./yukle.js')+';global.B={barkodTemiz,barkodKontrol,barkodUpcE,barkodGecerli,barkodNorm,barkodAdaylar,barkodTur,barkodMetin,barkodOffBul,barkodSec,barkodKatkiUygun,barkodBenzer,katkiciGecerli,katkiciUret,BARKOD_AYAR}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 (async()=>{
 // 1) Kontrol hanesi ve biçimler (örnekler: GS1 / Wikipedia)
@@ -53,6 +53,11 @@ const ciftler=[[a,b],[a,'Su, şeker, karbondioksit'],['Aqua, Glycerin, Parfum','
 ok(ciftler.every(([x,y])=>W.benzerlik(x,y)===B.barkodBenzer(x,y)),'Worker ve uygulama benzerliği aynı');
 ok(W.BENZERLIK===B.BARKOD_AYAR.benzerlik,'eşik aynı');
 ok(['8690504025207','96385074','036000291452','01234565','8690504025208','123'].every(k=>W.barkodGecerli(k)===B.barkodGecerli(k)),'Worker ve uygulama kontrol hanesi aynı');
+// 6b) Katkıcı kimliği (O-22): 16 rastgele bayttan 32 onaltılık hane; başka biçim geçmez
+const kb=Array.from({length:16},(_,i)=>i*17);
+ok(B.katkiciUret(kb)==='00112233445566778899aabbccddeeff'&&B.katkiciGecerli(B.katkiciUret(kb)),'kimlik üretimi: '+B.katkiciUret(kb));
+ok(B.katkiciUret(new Uint8Array(16)).length===32&&B.katkiciUret([255,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]).startsWith('ff0001'),'tek haneli baytlar sıfırla tamamlanır');
+ok(!B.katkiciGecerli('')&&!B.katkiciGecerli(null)&&!B.katkiciGecerli('ali@ornek.com')&&!B.katkiciGecerli('0'.repeat(31))&&!B.katkiciGecerli('G'.repeat(32))&&!B.katkiciGecerli('A'.repeat(32)),'geçersiz kimlik reddedilir');
 // 7) data/barkod_off.json: yapı ve atıf
 const F=path.join(__dirname,'..','data','barkod_off.json');
 if(fs.existsSync(F)){

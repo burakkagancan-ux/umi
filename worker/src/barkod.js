@@ -33,7 +33,8 @@ export function benzerlik(a, b) {
 }
 
 // Katkılar benzerliğe göre gruplanır; grubun içinde en az KATKI_ARALIK_MS arayla gelmiş iki katkı varsa doğrulanmış.
-// En iyi grup: doğrulanmış > kalabalık > yeni. Gösterilen metin grubun en yeni katkısı.
+// Aynı katkıcı kimliğinden (kim) gelen iki katkı birbirini doğrulamaz; kimliği olmayan (O-22 öncesi) katkılar ayrı kişi sayılır.
+// En iyi grup: doğrulanmış > kalabalık > yeni. Gösterilen metin grubun en yeni katkısı; kim yanıta girmez.
 export function urunSec(satirlar) {
   const gruplar = [];
   for (const s of satirlar) {
@@ -41,8 +42,7 @@ export function urunSec(satirlar) {
     if (g) g.s.push(s); else gruplar.push({ tur: s.tur, ilk: s, s: [s] });
   }
   for (const g of gruplar) {
-    const ts = g.s.map((x) => x.t).sort((a, b) => a - b);
-    g.dogrulandi = ts.length > 1 && ts[ts.length - 1] - ts[0] >= KATKI_ARALIK_MS;
+    g.dogrulandi = g.s.some((a, i) => g.s.some((b, j) => j > i && Math.abs(a.t - b.t) >= KATKI_ARALIK_MS && !(a.kim && a.kim === b.kim)));
     g.son = g.s.reduce((a, b) => (b.t > a.t ? b : a));
   }
   gruplar.sort((a, b) => (b.dogrulandi - a.dogrulandi) || (b.s.length - a.s.length) || (b.son.t - a.son.t));

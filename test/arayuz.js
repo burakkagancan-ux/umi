@@ -125,7 +125,9 @@ async function scan(p,mode,text){
     await p.click('#sonuc .bkaynak .row button:not(.alt)');
     await p.waitForFunction(()=>/Teşekkürler/.test(document.getElementById('sonuc').textContent),null,{timeout:5000});
     for(let i=0;i<20&&!gonderilen;i++)await p.waitForTimeout(100);
-    ok(gonderilen&&Object.keys(gonderilen).sort().join()==='dil,kod,metin,tur'&&gonderilen.kod===yok&&gonderilen.tur==='gida'&&gonderilen.dil==='tr','katkı: yalnızca kod, tür, dil, metin: '+JSON.stringify(gonderilen&&Object.keys(gonderilen)));
+    ok(gonderilen&&Object.keys(gonderilen).sort().join()==='dil,kim,kod,metin,tur'&&gonderilen.kod===yok&&gonderilen.tur==='gida'&&gonderilen.dil==='tr','katkı: yalnızca kod, tür, dil, metin, katkıcı: '+JSON.stringify(gonderilen&&Object.keys(gonderilen)));
+    ok(/^[0-9a-f]{32}$/.test(gonderilen&&gonderilen.kim)&&await p.evaluate(k=>localStorage.getItem('katkici')===k&&katkiciKimlik()===k,gonderilen&&gonderilen.kim),'katkıcı kimliği rastgele, bu cihazda saklanır ve sonraki katkıda aynı');
+    ok(await p.evaluate(k=>JSON.parse(kayitYedek([],0,katkiciAl())).katkici===k,gonderilen&&gonderilen.kim),'katkıcı kimliği yedek dosyasına girer');
     ok(await p.evaluate(()=>localStorage.getItem('barkod_katki')===null),'"hatırla" seçilmedikçe tercih kaydedilmez');
     await p.unroute(/workers\.dev\/urun$/);
     await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
