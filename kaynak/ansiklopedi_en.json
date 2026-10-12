@@ -16172,6 +16172,66 @@
 "status.withdrawn": {
 "s": "Authorisation withdrawn",
 "tr": "İzni kaldırıldı"
+},
+"E102.body": {
+"s": "In humans and laboratory animals, typically less than 5% of orally ingested tartrazine is absorbed; the absorbed part is mainly excreted unchanged in the urine. The unabsorbed part is broken down by reduction by gut bacteria; small amounts of the resulting products, such as sulphanilic acid, are absorbed and excreted in the urine.",
+"tr": "İnsanda ve deney hayvanlarında ağızdan alınan tartrazinin genellikle %5'ten azı emilir; emilen kısım çoğunlukla değişmeden idrarla atılır. Emilmeyen kısım bağırsak bakterilerince indirgenerek parçalanır; oluşan sülfanilik asit gibi ürünlerin küçük bir kısmı emilip idrarla atılır."
+},
+"E150c.body": {
+"s": "In an old study in rats (1951), about one third of the colour-giving components appeared to be absorbed; no conclusion could be drawn on the absorption of the colourless components.",
+"tr": "Sıçanlarda yapılan eski bir çalışmada (1951) renk veren bileşenlerin yaklaşık üçte biri emilmiş görünüyordu; renksiz bileşenlerin emilimi hakkında sonuca varılamadı."
+},
+"E150d.body": {
+"s": "In rats given a single oral dose, most of the high-molecular-weight colour components of caramel IV were not absorbed; within 96 hours almost all of the dose was excreted in the faeces and only 1–2% in the urine.",
+"tr": "Sıçanlara ağızdan tek doz verilen karamel IV'ün yüksek molekül ağırlıklı renk bileşenlerinin çoğu emilmedi; 96 saat içinde neredeyse tamamı dışkıyla, yalnızca %1–2'si idrarla atıldı."
+},
+"E161b.body": {
+"s": "It is absorbed in the small intestine together with fats and bile salts and enters the bloodstream in free form. Its molecule is not cleaved, so it is not converted into vitamin A; oxidation of its hydroxyl groups gives products that are readily excreted. In humans, about 45% of a single oral dose of labelled lutein was excreted in the faeces and 10% in the urine within the first 48 hours.",
+"tr": "İnce bağırsakta yağlar ve safra tuzlarıyla birlikte emilir ve kana serbest hâlde geçer. Molekülü parçalanmadığı için A vitaminine dönüşmez; hidroksil gruplarının oksitlenmesiyle kolay atılan ürünlere dönüşür. İnsanda ağızdan tek doz verilen işaretli luteinin ilk 48 saatte yaklaşık %45'i dışkıyla, %10'u idrarla atıldı."
+},
+"E242.body": {
+"s": "It breaks down almost immediately in the drink into methanol and carbon dioxide, so it is mainly these breakdown products that reach the body. A person with normal eating habits metabolises 1,000–2,000 mg of methanol a day.",
+"tr": "İçecekte neredeyse hemen metanol ve karbondioksite ayrışır; bu yüzden vücuda başlıca bu ayrışma ürünleri ulaşır. Normal beslenen bir insan günde 1.000–2.000 mg metanolü metabolize eder."
+},
+"E290.body": {
+"s": "Carbon dioxide is a normal end product of the breakdown of nutrients in the body; it is carried in the blood as carbonate or by red blood cells and is removed by breathing out and in the urine.",
+"tr": "Karbondioksit vücutta besinlerin yıkımıyla oluşan normal bir son üründür; kanda karbonat olarak ya da alyuvarlarla taşınır, solunumla ve idrarla atılır."
+},
+"E380.body": {
+"s": "Citrate is a normal intermediate of the tricarboxylic acid (Krebs) cycle, which produces energy in the body. Ammonium enters the body's nitrogen metabolism; it is used to make substances such as glutamine, and the end product of this metabolism is urea.",
+"tr": "Sitrat vücutta enerji üretimindeki trikarboksilik asit (Krebs) döngüsünün normal bir ara ürünüdür. Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir."
+},
+"E392.body": {
+"s": "An important route for excreting the hydroxylated or oxygenated products formed in the body from the constituents of rosemary extract is their combination with glucuronic acid (glucuronidation).",
+"tr": "Biberiye özütündeki maddelerin vücutta oluşan hidroksilli ya da oksitlenmiş ürünlerinin atılmasında önemli bir yol, glukuronik asitle birleştirilmeleridir (glukuronidasyon)."
+},
+"E500.body": {
+"s": "Its sodium, like sodium from food, is almost completely absorbed in the gut (about 98%); the amount in the body is regulated mainly by the kidneys, which excrete the excess in the urine.",
+"tr": "İçerdiği sodyum, besinlerdeki sodyum gibi bağırsakta neredeyse tamamen (yaklaşık %98) emilir; vücuttaki miktarını başlıca böbrekler düzenler ve fazlası idrarla atılır."
+},
+"E524.body": {
+"s": "Its sodium, like sodium from food, is almost completely absorbed in the gut (about 98%); the amount in the body is regulated mainly by the kidneys, which excrete the excess in the urine.",
+"tr": "İçerdiği sodyum, besinlerdeki sodyum gibi bağırsakta neredeyse tamamen (yaklaşık %98) emilir; vücuttaki miktarını başlıca böbrekler düzenler ve fazlası idrarla atılır."
+},
+"E503.body": {
+"s": "Ammonium enters the body's nitrogen metabolism; it is used to make substances such as glutamine, and the end product of this metabolism is urea.",
+"tr": "Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir."
+},
+"E527.body": {
+"s": "Ammonium enters the body's nitrogen metabolism; it is used to make substances such as glutamine, and the end product of this metabolism is urea.",
+"tr": "Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir."
+},
+"E920.body": {
+"s": "It is absorbed during digestion and built into the body's proteins; any excess is metabolised and excreted.",
+"tr": "Sindirimle emilir ve vücut proteinlerinin yapısına katılır; fazlası metabolize edilip atılır."
+},
+"E948.body": {
+"s": "Oxygen is essential for life. Inhaled oxygen passes from the lungs into the blood; about 98.5% of the oxygen in blood is bound to haemoglobin in red blood cells and about 1.5% is dissolved in the plasma. In cells it is used by the mitochondria to produce energy.",
+"tr": "Oksijen yaşam için gereklidir. Solunan oksijen akciğerlerden kana geçer; kandaki oksijenin yaklaşık %98,5'i alyuvarlardaki hemoglobine bağlı, yaklaşık %1,5'i plazmada çözünmüş hâldedir. Hücrelerde mitokondrilerin enerji üretiminde kullanılır."
+},
+"E949.body": {
+"s": "Hydrogen is also formed in the body: bacteria in the large intestine produce about 70–140 mL of hydrogen a day, and this amount increases with dietary fibre and sugars.",
+"tr": "Hidrojen vücutta da oluşur: kalın bağırsaktaki bakteriler günde yaklaşık 70–140 mL hidrojen üretir; lifli ve şekerli besinler bu miktarı artırır."
 }
 }
 }

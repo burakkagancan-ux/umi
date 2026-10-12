@@ -2674,6 +2674,62 @@
    "year": 2021,
    "url": "https://www.efsa.europa.eu/en/efsajournal/pub/6585",
    "official": true
+  },
+  "efsa_feedap_e102_2024": {
+   "title": "Safety and efficacy of a feed additive consisting of tartrazine for its use in baits for freshwater fish (GIFAP)",
+   "publisher": "EFSA FEEDAP Panel (EFSA Journal 22(10):9021)",
+   "year": 2024,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11523144",
+   "official": true
+  },
+  "jecfa_caramel_fas20": {
+   "title": "Caramel colours, Classes I, II, III and IV (WHO Food Additives Series 20)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1985,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v20je11.htm",
+   "official": true
+  },
+  "efsa_feedap_lutein_2019": {
+   "title": "Safety and efficacy of lutein and lutein/zeaxanthin extracts from Tagetes erecta for poultry for fattening and laying (except turkeys)",
+   "publisher": "EFSA FEEDAP Panel (EFSA Journal 17(5):5698)",
+   "year": 2019,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7009272",
+   "official": true
+  },
+  "efsa_co2_2021": {
+   "title": "Peer review of the pesticide risk assessment of the active substance carbon dioxide",
+   "publisher": "EFSA (EFSA Journal 19(6):6605)",
+   "year": 2021,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8167733",
+   "official": true
+  },
+  "jecfa_ammonium_fas17": {
+   "title": "Ammonium carbonate and ammonium hydrogen carbonate (WHO Food Additives Series 17)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1982,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v17je02.htm",
+   "official": true
+  },
+  "efsa_feedap_rosemary_2022": {
+   "title": "Safety and efficacy of two solvent extracts of rosemary (Rosmarinus officinalis L.) when used as feed additive for cats and dogs",
+   "publisher": "EFSA FEEDAP Panel (EFSA Journal 20(1):6978)",
+   "year": 2022,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8756386",
+   "official": true
+  },
+  "efsa_nda_sodium_2019": {
+   "title": "Dietary reference values for sodium",
+   "publisher": "EFSA NDA Panel (EFSA Journal 17(9):5778)",
+   "year": 2019,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7009309",
+   "official": true
+  },
+  "efsa_feedap_cysteine_2025": {
+   "title": "Safety and efficacy of the feed additives l-cysteine and l-cysteine hydrochloride (monohydrate and anhydrous) for all animal species",
+   "publisher": "EFSA FEEDAP Panel (EFSA Journal 23(10):9689)",
+   "year": 2025,
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12555060",
+   "official": true
   }
  },
  "resmi_alan_adlari": [
@@ -3212,7 +3268,7 @@
     "Renkli içecekler",
     "Tatlı ve pasta süslemeleri"
    ],
-   "in_the_body": "",
+   "in_the_body": "İnsanda ve deney hayvanlarında ağızdan alınan tartrazinin genellikle %5'ten azı emilir; emilen kısım çoğunlukla değişmeden idrarla atılır. Emilmeyen kısım bağırsak bakterilerince indirgenerek parçalanır; oluşan sülfanilik asit gibi ürünlerin küçük bir kısmı emilip idrarla atılır.",
    "agency_note": "EFSA 2009'daki yeniden değerlendirmesinde günlük kabul edilebilir alımı (ADI) 7,5 mg/kg vücut ağırlığı olarak korudu. Az sayıda kişide, bu sınırın altındaki miktarlarda bile duyarlılık (intolerans) tepkileri görülebileceğini belirtti. AB'de bu renklendiriciyi içeren ürünlerin etiketinde, çocukların aktivitesi ve dikkati üzerinde olumsuz etkisi olabileceği uyarısı zorunludur.",
    "diet_flags": {
     "vegan": "yes",
@@ -3268,9 +3324,10 @@
     "efsa_e102",
     "ab1333",
     "cms_colours",
-    "tgk2013"
+    "tgk2013",
+    "efsa_feedap_e102_2024"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-12"
   },
   "E211": {
    "evidence_level": "strong",
@@ -3544,7 +3601,7 @@
     "Kola ve diğer koyu renkli içecekler",
     "Koyu renkli soslar"
    ],
-   "in_the_body": "",
+   "in_the_body": "Sıçanlarda yapılan eski bir çalışmada (1951) renk veren bileşenlerin yaklaşık üçte biri emilmiş görünüyordu; renksiz bileşenlerin emilimi hakkında sonuca varılamadı.",
    "agency_note": "IARC, 4-MEI'yi hayvan çalışmalarına dayanarak Grup 2B'de (insanlarda kanserojen olabilir) sınıflandırır. Hong Kong Gıda Güvenliği Merkezi, olağan kola tüketiminin 4-MEI nedeniyle sağlık sorununa yol açmasının beklenmediğini belirtir.",
    "diet_flags": {
     "vegan": "yes",
@@ -3552,9 +3609,10 @@
     "gluten": "unknown"
    },
    "sources": [
-    "cfs_caramel"
+    "cfs_caramel",
+    "jecfa_caramel_fas20"
    ],
-   "last_reviewed": "2026-10-04",
+   "last_reviewed": "2026-10-12",
    "uretim_ek": "Amonyak bileşikleri kullanıldığı için (sınıf III) üretim sırasında 4-metilimidazol (4-MEI) adlı bir yan ürün oluşabilir."
   },
   "E150d": {
@@ -3564,7 +3622,7 @@
     "Kola ve diğer koyu renkli içecekler",
     "Koyu renkli soslar"
    ],
-   "in_the_body": "",
+   "in_the_body": "Sıçanlara ağızdan tek doz verilen karamel IV'ün yüksek molekül ağırlıklı renk bileşenlerinin çoğu emilmedi; 96 saat içinde neredeyse tamamı dışkıyla, yalnızca %1–2'si idrarla atıldı.",
    "agency_note": "IARC, 4-MEI'yi hayvan çalışmalarına dayanarak Grup 2B'de (insanlarda kanserojen olabilir) sınıflandırır. Hong Kong Gıda Güvenliği Merkezi, olağan kola tüketiminin 4-MEI nedeniyle sağlık sorununa yol açmasının beklenmediğini belirtir.",
    "diet_flags": {
     "vegan": "yes",
@@ -3572,9 +3630,10 @@
     "gluten": "unknown"
    },
    "sources": [
-    "cfs_caramel"
+    "cfs_caramel",
+    "jecfa_caramel_fas20"
    ],
-   "last_reviewed": "2026-10-04",
+   "last_reviewed": "2026-10-12",
    "uretim_ek": "Amonyak bileşikleri kullanıldığı için (sınıf IV) üretim sırasında 4-metilimidazol (4-MEI) adlı bir yan ürün oluşabilir."
   },
   "E171": {
@@ -7131,7 +7190,7 @@
     "İçecekler",
     "Sütlü tatlılar"
    ],
-   "in_the_body": "",
+   "in_the_body": "İnce bağırsakta yağlar ve safra tuzlarıyla birlikte emilir ve kana serbest hâlde geçer. Molekülü parçalanmadığı için A vitaminine dönüşmez; hidroksil gruplarının oksitlenmesiyle kolay atılan ürünlere dönüşür. İnsanda ağızdan tek doz verilen işaretli luteinin ilk 48 saatte yaklaşık %45'i dışkıyla, %10'u idrarla atıldı.",
    "agency_note": "EFSA ADI'yi 1 mg/kg vücut ağırlığı olarak belirledi; 2012'de bazı ülkelerde çok tüketen çocuklarda besinler ve katkı birlikte bu sınırın aşılabildiğini, yetişkinlerde aşılmadığını bildirdi.",
    "regulatory_extra": [
     {
@@ -7144,9 +7203,10 @@
     }
    ],
    "sources": [
-    "efsa_e161b"
+    "efsa_e161b",
+    "efsa_feedap_lutein_2019"
    ],
-   "last_reviewed": "2026-10-04",
+   "last_reviewed": "2026-10-12",
    "profile_warnings": [
     {
      "profile": "child",
@@ -7634,7 +7694,7 @@
     "Et ürünleri",
     "Soslar ve atıştırmalıklar"
    ],
-   "in_the_body": "",
+   "in_the_body": "Biberiye özütündeki maddelerin vücutta oluşan hidroksilli ya da oksitlenmiş ürünlerinin atılmasında önemli bir yol, glukuronik asitle birleştirilmeleridir (glukuronidasyon).",
    "agency_note": "EFSA 2018'de maruziyeti yeniden hesapladı ve JECFA'nın geçici günlük alım sınırına (0,3 mg/kg vücut ağırlığı, karnosik asit + karnosol olarak) göre çocuklarda 100–2.000, yetişkinlerde 200–3.000 kat güvenlik payı hesapladı; tahminlerin gerçek maruziyeti büyük olasılıkla abarttığını belirtti.",
    "diet_flags": {
     "vegan": "yes",
@@ -7652,9 +7712,10 @@
     }
    ],
    "sources": [
-    "efsa_e392"
+    "efsa_e392",
+    "efsa_feedap_rosemary_2022"
    ],
-   "last_reviewed": "2026-10-05"
+   "last_reviewed": "2026-10-12"
   },
   "E586": {
    "evidence_level": "moderate",
@@ -9084,7 +9145,7 @@
     "Alkolsüz içecekler",
     "%15'in altında alkol içeren karışım alkollü içecekler"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçecekte neredeyse hemen metanol ve karbondioksite ayrışır; bu yüzden vücuda başlıca bu ayrışma ürünleri ulaşır. Normal beslenen bir insan günde 1.000–2.000 mg metanolü metabolize eder.",
    "agency_note": "İçeceğe eklendikten hemen sonra ayrışır; JECFA'ya göre başlıca ayrışma ürünleri metanol ve karbondioksittir. JECFA 1990'da iyi üretim uygulamalarına uygun olarak içeceklerde litrede 250 mg'a kadar soğuk sterilizasyon amacıyla kullanımını kabul edilebilir buldu. AB Komisyonu 2012 düzenlemesinde, son olarak 2001'de Gıda Bilimsel Komitesi'nce (SCF) değerlendirildiğini ve kalıntılarının zararsız kabul edildiğini belirtti.",
    "diet_flags": {
     "vegan": "yes",
@@ -9115,7 +9176,7 @@
     "eu_2012_1166",
     "tgk2013"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E243": {
    "evidence_level": "moderate",
@@ -11554,7 +11615,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "Sitrat vücutta enerji üretimindeki trikarboksilik asit (Krebs) döngüsünün normal bir ara ürünüdür. Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir.",
    "agency_note": "JECFA 1979'da triamonyum sitratı, sitrik asit ve tuzları için belirlenen 'sınırlandırılmamış' (not limited) ADI kapsamında değerlendirdi. Bu madde için ayrı bir toksikoloji monografı hazırlanmadı.",
    "diet_flags": {
     "vegan": "yes",
@@ -11583,9 +11644,11 @@
     "jecfa_e380",
     "ab1129_2011",
     "ab1333_annex2_c",
-    "tgk2013"
+    "tgk2013",
+    "jecfa_citric_fas5",
+    "jecfa_ammonium_fas17"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E500": {
    "evidence_level": "limited",
@@ -11594,7 +11657,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Ekşi kremadan yapılan tereyağı"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği sodyum, besinlerdeki sodyum gibi bağırsakta neredeyse tamamen (yaklaşık %98) emilir; vücuttaki miktarını başlıca böbrekler düzenler ve fazlası idrarla atılır.",
    "agency_note": "JECFA 1965'te sodyum karbonat ve sodyum hidrojen karbonat (bikarbonat) için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi. AB'de Grup I katkı maddesi olarak gerektiği kadar kullanılabilir.",
    "diet_flags": {
     "vegan": "yes",
@@ -11631,9 +11694,10 @@
     "jecfa_e500ii",
     "ab1129_2011",
     "ab1333_annex2_c",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_sodium_2019"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E501": {
    "evidence_level": "limited",
@@ -11680,7 +11744,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir.",
    "agency_note": "JECFA amonyum hidrojen karbonat için 1965'te 'sınırlandırılmamış' ADI belirlemiş, 1982'deki son değerlendirmesinde sayısal bir ADI gerekmediğine ('belirtilmemiş') karar vermiştir. AB'de Grup I katkı maddesi olarak gerektiği kadar kullanılabilir.",
    "diet_flags": {
     "vegan": "yes",
@@ -11709,9 +11773,10 @@
     "jecfa_e503ii",
     "ab1129_2011",
     "ab1333_annex2_c",
-    "tgk2013"
+    "tgk2013",
+    "jecfa_ammonium_fas17"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E504": {
    "evidence_level": "limited",
@@ -12170,7 +12235,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği sodyum, besinlerdeki sodyum gibi bağırsakta neredeyse tamamen (yaklaşık %98) emilir; vücuttaki miktarını başlıca böbrekler düzenler ve fazlası idrarla atılır.",
    "agency_note": "JECFA 1965'te sodyum hidroksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi. AB'de Grup I katkısıdır; EFSA'nın 2016'da yayımladığı yeniden değerlendirme veri çağrısına dahil edilmiştir.",
    "diet_flags": {
     "vegan": "yes",
@@ -12207,9 +12272,10 @@
     "jecfa_e524",
     "ab1333_annex2_c",
     "ab1129_2011",
-    "efsa_call_batch5"
+    "efsa_call_batch5",
+    "efsa_nda_sodium_2019"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E1201": {
    "evidence_level": "strong",
@@ -12319,7 +12385,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "Karbondioksit vücutta besinlerin yıkımıyla oluşan normal bir son üründür; kanda karbonat olarak ya da alyuvarlarla taşınır, solunumla ve idrarla atılır.",
    "agency_note": "JECFA 1985'te karbondioksit için günlük alım sınırını (ADI) 'belirtilmemiş' (not specified) olarak değerlendirdi; JECFA'nın listelediği işlevler arasında gazlandırıcı, itici gaz, koruyucu, dondurucu ve ekstraksiyon çözücüsü yer alır. EFSA, karbondioksidi de kapsayan gaz halindeki katkıların yeniden değerlendirmesi için 2023'te veri çağrısı yayımlamıştır.",
    "diet_flags": {
     "vegan": "yes",
@@ -12356,9 +12422,10 @@
     "jecfa_e290",
     "efsa_gases_call",
     "ab1129_2011",
-    "ab1333_annex2_c"
+    "ab1333_annex2_c",
+    "efsa_co2_2021"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E405": {
    "evidence_level": "strong",
@@ -13037,7 +13104,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "Amonyum vücudun azot metabolizmasına katılır; glutamin gibi maddelerin yapımında kullanılır ve bu metabolizmanın son ürünü üredir.",
    "agency_note": "JECFA 1965'te amonyak çözeltisi (amonyum hidroksit) için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen amonyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13076,9 +13143,10 @@
     "ab1129_2011",
     "ab1333_annex2_c",
     "efsa_call_batch5",
-    "tgk2013"
+    "tgk2013",
+    "jecfa_ammonium_fas17"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E528": {
    "evidence_level": "limited",
@@ -13877,7 +13945,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Ambalajlı gıdalarda ambalaj gazı olarak"
    ],
-   "in_the_body": "",
+   "in_the_body": "Oksijen yaşam için gereklidir. Solunan oksijen akciğerlerden kana geçer; kandaki oksijenin yaklaşık %98,5'i alyuvarlardaki hemoglobine bağlı, yaklaşık %1,5'i plazmada çözünmüş hâldedir. Hücrelerde mitokondrilerin enerji üretiminde kullanılır.",
    "agency_note": "EFSA 2025'te oksijen ve hidrojeni birlikte yeniden değerlendirdi; iki gazın gıda katkısı olarak düşük toksikolojik endişe taşıdığını ve besinle maruziyetin çok düşük olduğunu belirterek kullanımlarının güvenlik endişesi doğurmadığı sonucuna vardı. AB'de bebek ve küçük çocuk gıdaları dahil tüm gıda kategorilerinde gerektiği kadar (quantum satis) izinlidir; EFSA AB spesifikasyonlarında bazı değişiklikler önerdi.",
    "diet_flags": {
     "vegan": "yes",
@@ -13907,7 +13975,7 @@
     "ab1129_2011",
     "ab1333_annex2_c"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E949": {
    "evidence_level": "moderate",
@@ -13916,7 +13984,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Ambalajlı gıdalarda ambalaj gazı olarak"
    ],
-   "in_the_body": "",
+   "in_the_body": "Hidrojen vücutta da oluşur: kalın bağırsaktaki bakteriler günde yaklaşık 70–140 mL hidrojen üretir; lifli ve şekerli besinler bu miktarı artırır.",
    "agency_note": "EFSA 2025'te oksijen ve hidrojeni birlikte yeniden değerlendirdi; iki gazın gıda katkısı olarak düşük toksikolojik endişe taşıdığını ve besinle maruziyetin çok düşük olduğunu belirterek kullanımlarının güvenlik endişesi doğurmadığı sonucuna vardı. AB'de bebek ve küçük çocuk gıdaları dahil tüm gıda kategorilerinde gerektiği kadar (quantum satis) izinlidir; EFSA AB spesifikasyonlarında bazı değişiklikler önerdi.",
    "diet_flags": {
     "vegan": "yes",
@@ -13946,7 +14014,7 @@
     "ab1129_2011",
     "ab1333_annex2_c"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E999": {
    "evidence_level": "moderate",
@@ -14784,7 +14852,7 @@
     "Bebek ve küçük çocuk bisküvileri (en çok 1.000 mg/kg)",
     "Gıda enzimi preparatları"
    ],
-   "in_the_body": "",
+   "in_the_body": "Sindirimle emilir ve vücut proteinlerinin yapısına katılır; fazlası metabolize edilip atılır.",
    "agency_note": "JECFA 2004'te aroma maddesi olarak değerlendirdiğinde besinlerle alınan miktarın aroma kullanımından beklenenden kat kat fazla olduğunu belirterek mevcut alım düzeylerinde güvenlik endişesi görmedi.",
    "regulatory_extra": [
     {
@@ -14809,9 +14877,10 @@
     "eu_231_2012",
     "ab1333_annex2_e_g6",
     "ab1333_annex2_e_g10",
-    "ab1333_annex3_p3"
+    "ab1333_annex3_p3",
+    "efsa_feedap_cysteine_2025"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-12"
   },
   "E927b": {
    "evidence_level": "limited",
