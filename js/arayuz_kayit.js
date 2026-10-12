@@ -53,7 +53,7 @@ function kayitForm(mode,text,ret){
     list=kayitAdd(list,{id:"k"+Date.now(),t:Date.now(),mode:mode,name:name,note:nt.value,text:text,oz:kayitSimdi(mode,text)},KAYIT_AYAR.enFazla);
     if(!kayitStore(list)){msg.textContent=t("kayit.form.yer_yok");return}
     if(h&&h.name!==name)histRename(h.id,name);   // karşılaştırma ve paylaşım kartı da bu adı kullanır
-    closeSheet();setSt(mode,t("kayit.form.kaydedildi",{ad:name}));kayitBarYenile();kayitProfil();
+    closeSheet();setSt(mode,t("kayit.form.kaydedildi",{ad:name}));kayitBarYenile();kayitProfil();fotoTemizle();
   };
   body.appendChild(go);body.appendChild(msg);
   if(k){var del=el("button","alt",t("kayit.form.sil"));del.type="button";
@@ -167,7 +167,7 @@ function kayitSonuc(k,duzenle){
   kayitKapat();
   if(location.hash==="#profil"){history.replaceState(null,"",location.pathname+location.search);$("pd").open=false;tabSync()}
   if(CMP_IDS)closeCompare();
-  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";
+  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";fotoTemizle();
   if(MODE!==k.mode)setMode(k.mode,true);else run();
   if(duzenle){var w=setInterval(function(){var b=document.querySelector("#sonuc .resbar .kayitb");if(b){clearInterval(w);b.click()}},100);setTimeout(function(){clearInterval(w)},8000)}
   var s=$("sonuc");if(s)s.scrollIntoView({block:"start"});

@@ -15,6 +15,7 @@ function loadK(){
 }
 function setMode(m,save,tasi){
   if(m!==MODE&&$("metin").value.trim()&&typeof HMOD!=="undefined")HMOD=tasi?"tasi":"gor";   // yeniden analiz geçmişi bozmasın
+  if(m!==MODE&&!tasi&&typeof fotoTemizle==="function")fotoTemizle();   // öneri kartıyla taşınan tarama aynı ürün, fotoğrafı kalır
   MODE=m;
   ["gida","koz","tem"].forEach(function(x){$("m-"+x).setAttribute("aria-checked",String(m===x))});
   $("ptype").hidden=m!=="koz";

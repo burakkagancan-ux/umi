@@ -61,6 +61,20 @@ async function scan(p,mode,text){
   await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
   await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block'&&!document.getElementById('oku').disabled,null,{timeout:5000});
   ok(await p.evaluate(()=>/^blob:/.test(document.getElementById('pre').src)),'dosyadan yüklenen fotoğraf kırpma ekranında');
+  // Sekme değişince ve örnek metinde eski fotoğraf ekranda kalmaz
+  const fotoYok=()=>p.evaluate(()=>getComputedStyle(document.getElementById('cropwrap')).display==='none'&&!document.getElementById('pre').hasAttribute('src')&&document.getElementById('oku').disabled);
+  await p.click('#m-koz');ok(await fotoYok(),'sekme değişince fotoğraf temizlenir');await p.click('#m-gida');
+  await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
+  await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block',null,{timeout:5000});
+  await p.click('#ornek');ok(await fotoYok(),'örnek metinde fotoğraf temizlenir');
+  await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
+  await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block',null,{timeout:5000});
+  await p.waitForSelector('#sonuc .resbar .kayitb');await p.click('#sonuc .resbar .kayitb');
+  await p.waitForSelector('#sheet:not([hidden]) .kname input');await p.fill('#sheet .kname input','Foto deneme');
+  await p.evaluate(()=>[...document.querySelectorAll('#sheet button')].find(b=>b.textContent===t('kayit.kaydet')).click());
+  await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='none',null,{timeout:5000}).catch(()=>{});
+  ok(await fotoYok(),'kaydedince fotoğraf temizlenir');
+  await p.evaluate(()=>{localStorage.removeItem('kayitli');kayitProfil()});
 
   // 1c) Barkod: elle giriş (kamera testte yok) → uygulamadaki Open Food Facts verisinden içerik + kaynak kartı; geçersiz ve bulunamayan barkod
   {

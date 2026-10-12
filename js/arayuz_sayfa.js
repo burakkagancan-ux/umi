@@ -61,6 +61,11 @@ function fotoSec(){
   this.value="";   // aynı dosya yeniden seçilebilsin
 }
 $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;
+// Seçilen fotoğrafı ekrandan kaldırır: kayıttan sonra, sekme değişince, örnek/barkod/kayıtlı ürün açılınca eski görsel kalmasın
+function fotoTemizle(){
+  var im=$("pre");if(im.src&&im.src.indexOf("blob:")===0)URL.revokeObjectURL(im.src);im.removeAttribute("src");
+  $("cropwrap").style.display="none";$("cropbar").style.display="none";resetCrop();$("oku").disabled=true;
+}
 function prep(img,on){
   // Yalnızca seçilen alan okunur; kırpılan alan küçükse daha yüksek çözünürlükte gönderilir
   var W=img.naturalWidth,H=img.naturalHeight,sx=Math.round(CROP.x*W),sy=Math.round(CROP.y*H),sw=Math.max(1,Math.round(CROP.w*W)),sh=Math.max(1,Math.round(CROP.h*H));

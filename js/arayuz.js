@@ -389,4 +389,4 @@ function runIc(){
 // Metin elle düzeltildiğinde sonuç kendiliğinden güncellenir (yazmayı bitirmesi beklenir)
 var RUN_T=null;$("metin").addEventListener("input",function(){HMOD=null;clearTimeout(RUN_T);RUN_T=setTimeout(run,600)});
 /* "Örnek metin dene": etiket metni örnekleri dil dosyasında (ornek.gida/koz/tem); her dil kendi pazarındaki gibi bir etiket yazabilir */
-$("ornek").onclick=function(){HSCAN=HOCR=true;$("metin").value=t("ornek."+(MODE==="koz"?"koz":MODE==="tem"?"tem":"gida"));run()};
+$("ornek").onclick=function(){HSCAN=HOCR=true;fotoTemizle();$("metin").value=t("ornek."+(MODE==="koz"?"koz":MODE==="tem"?"tem":"gida"));run()};
