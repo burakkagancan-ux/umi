@@ -2218,8 +2218,8 @@
 "tr": "Polietilen glikol"
 },
 "E1521.prod": {
-"s": "A polymer produced by chemical synthesis.",
-"tr": "Kimyasal sentezle üretilen polimerdir."
+"s": "A polymer produced by chemical synthesis, through addition polymerisation of ethylene oxide with water.",
+"tr": "Etilen oksidin suyla katılma polimerleşmesiyle kimyasal sentezle üretilen polimerdir."
 },
 "E1521.regx.0": {
 "s": "Exposure re-evaluated; the highest estimate within the SCF and JECFA ADI range.",
@@ -3402,8 +3402,8 @@
 "tr": "Potasyum benzoat"
 },
 "E212.prod": {
-"s": "Produced by chemical synthesis; benzoic acid also occurs naturally in some fruits.",
-"tr": "Kimyasal sentezle üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur."
+"s": "Produced chemically by reacting benzoic acid, obtained by oxidising toluene, with potassium hydroxide; benzoic acid also occurs naturally in some fruits.",
+"tr": "Toluenin oksitlenmesiyle elde edilen benzoik asidin potasyum hidroksitle tepkimeye sokulmasıyla kimyasal yolla üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur."
 },
 "E212.pw.0": {
 "s": "According to EFSA, the daily limit may be exceeded in young children who consume a lot of the same brand.",
@@ -5702,8 +5702,8 @@
 "tr": "Gama-tokoferol"
 },
 "E308.prod": {
-"s": "It is a tocopherol (a form of vitamin E) produced by chemical synthesis.",
-"tr": "Kimyasal sentezle üretilen tokoferoldür (E vitamini türü)."
+"s": "A tocopherol (a form of vitamin E) produced by chemical synthesis (dl-γ-tocopherol).",
+"tr": "Kimyasal sentezle üretilen tokoferoldür (E vitamini türü; dl-γ-tokoferol)."
 },
 "E308.regx.0": {
 "s": "Re-evaluated; no safety concern at the use levels, no ADI could be set (insufficient data).",
@@ -14226,8 +14226,8 @@
 "tr": "Montan asit esterleri"
 },
 "E912.prod": {
-"s": "Produced by chemically modifying lignite wax.",
-"tr": "Linyit mumunun kimyasal işlemle değiştirilmesiyle üretilir."
+"s": "Produced by oxidising montan wax, extracted from lignite (brown coal) with solvents, with chromosulfuric acid and esterifying the resulting montan acids with diols and triols.",
+"tr": "Linyitten (kahverengi kömür) çözücüyle çıkarılan montan mumunun kromosülfürik asitle oksitlenmesi ve oluşan montan asitlerinin diol ve triollerle esterleştirilmesiyle üretilir."
 },
 "E912.regx.0": {
 "s": "Removed from the list of authorised additives (Regulation 957/2014).",
@@ -16236,6 +16236,34 @@
 "E180.body": {
 "s": "According to the only available data, in rats litholrubine BK is not absorbed and is excreted in the faeces, not the urine.",
 "tr": "Sıçanlardaki tek veriye göre litolrubin BK emilmez; idrarla değil dışkıyla atılır."
+},
+"E501.body": {
+"s": "Like potassium in food, the potassium it contains is largely absorbed (about 90%) in the small intestine; about 98% of the body's potassium is inside cells. The kidneys are the main route of excretion: 77–92% of the potassium taken in is excreted in urine.",
+"tr": "İçerdiği potasyum, besinlerdeki potasyum gibi büyük ölçüde (yaklaşık %90) ince bağırsakta emilir; vücuttaki potasyumun yaklaşık %98'i hücrelerin içindedir. Başlıca atılım yolu böbreklerdir: alınan potasyumun %77–92'si idrarla atılır."
+},
+"E525.body": {
+"s": "Like potassium in food, the potassium it contains is largely absorbed (about 90%) in the small intestine; about 98% of the body's potassium is inside cells. The kidneys are the main route of excretion: 77–92% of the potassium taken in is excreted in urine.",
+"tr": "İçerdiği potasyum, besinlerdeki potasyum gibi büyük ölçüde (yaklaşık %90) ince bağırsakta emilir; vücuttaki potasyumun yaklaşık %98'i hücrelerin içindedir. Başlıca atılım yolu böbreklerdir: alınan potasyumun %77–92'si idrarla atılır."
+},
+"E504.body": {
+"s": "Like magnesium in food, the magnesium it contains is absorbed in the last part of the small intestine; at usual intakes generally 40–50% is absorbed, and the proportion falls as intake rises. The kidneys mainly regulate the amount in the body; unabsorbed magnesium is excreted in the faeces.",
+"tr": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır."
+},
+"E528.body": {
+"s": "Like magnesium in food, the magnesium it contains is absorbed in the last part of the small intestine; at usual intakes generally 40–50% is absorbed, and the proportion falls as intake rises. The kidneys mainly regulate the amount in the body; unabsorbed magnesium is excreted in the faeces.",
+"tr": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır."
+},
+"E530.body": {
+"s": "Like magnesium in food, the magnesium it contains is absorbed in the last part of the small intestine; at usual intakes generally 40–50% is absorbed, and the proportion falls as intake rises. The kidneys mainly regulate the amount in the body; unabsorbed magnesium is excreted in the faeces.",
+"tr": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır."
+},
+"E526.body": {
+"s": "Like calcium in food, the calcium it contains is absorbed in the intestine; in adults about 25% is absorbed, and absorption is regulated by vitamin D. Unabsorbed calcium is excreted in the faeces; the kidneys reabsorb about 98% of the filtered calcium.",
+"tr": "İçerdiği kalsiyum, besinlerdeki kalsiyum gibi bağırsakta emilir; yetişkinlerde emilen oran yaklaşık %25'tir ve emilimi D vitamini düzenler. Emilmeyen kalsiyum dışkıyla atılır; böbrekler süzülen kalsiyumun yaklaşık %98'ini geri emer."
+},
+"E529.body": {
+"s": "Like calcium in food, the calcium it contains is absorbed in the intestine; in adults about 25% is absorbed, and absorption is regulated by vitamin D. Unabsorbed calcium is excreted in the faeces; the kidneys reabsorb about 98% of the filtered calcium.",
+"tr": "İçerdiği kalsiyum, besinlerdeki kalsiyum gibi bağırsakta emilir; yetişkinlerde emilen oran yaklaşık %25'tir ve emilimi D vitamini düzenler. Emilmeyen kalsiyum dışkıyla atılır; böbrekler süzülen kalsiyumun yaklaşık %98'ini geri emer."
 }
 }
 }

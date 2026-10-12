@@ -53,7 +53,8 @@ E200,E202	sentetik	Sorbik asit ve tuzları kimyasal sentezle üretilir; sorbik a
 E203	sentetik	Sorbik asit ve tuzları kimyasal sentezle üretilir; sorbik asit üvez meyvesinde de doğal olarak bulunur.		0
 E210	sentetik	Ftalik anhidrit, benzotriklorür ya da toluenden kimyasal yolla üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur.	https://www.ecfr.gov/current/title-21/section-184.1021	1
 E211	sentetik	Kimyasal yolla üretilen benzoik asidin sodyum karbonat, sodyum bikarbonat ya da sodyum hidroksitle nötrleştirilmesiyle elde edilir.	https://www.ecfr.gov/current/title-21/section-184.1733	1
-E212,E213	sentetik	Kimyasal sentezle üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur.		0
+E213	sentetik	Kimyasal sentezle üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur.		0
+E212	sentetik	Toluenin oksitlenmesiyle elde edilen benzoik asidin potasyum hidroksitle tepkimeye sokulmasıyla kimyasal yolla üretilir; benzoik asit bazı meyvelerde doğal olarak da bulunur.	https://doi.org/10.2903/j.efsa.2016.4433	1
 E215,E217,E219	sentetik	Kimyasal sentezle üretilen paraben türüdür.		0
 E216	sentetik	p-Hidroksibenzoik asidin n-propanolle esterleştirilmesiyle kimyasal yolla üretilen paraben türüdür.	https://www.ecfr.gov/current/title-21/section-184.1670	1
 E218	sentetik	p-Hidroksibenzoik asidin metanolle esterleştirilmesiyle kimyasal yolla üretilen paraben türüdür.	https://www.ecfr.gov/current/title-21/section-184.1490	1
@@ -78,7 +79,8 @@ E300	islenmis	Glikozdan fermentasyon ve kimyasal adımlarla üretilir; doğadaki
 E304	islenmis	Askorbik asidin palmitik asitle (kimyasal ya da enzimatik yolla) esterleştirilmesiyle elde edilir.	https://www.ams.usda.gov/sites/default/files/media/Ascorbyl%20Palmitate%20TR.pdf	1
 E306	dogal	Bitkisel yağların vakumla buhar damıtılmasıyla elde edilir.	https://eur-lex.europa.eu/eli/dir/2008/84/oj	1
 E307	sentetik	Kimyasal sentezle üretilen tokoferoldür (E vitamini türü).	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32008L0084	1
-E308,E309	sentetik	Kimyasal sentezle üretilen tokoferoldür (E vitamini türü).		0
+E309	sentetik	Kimyasal sentezle üretilen tokoferoldür (E vitamini türü).		0
+E308	sentetik	Kimyasal sentezle üretilen tokoferoldür (E vitamini türü; dl-γ-tokoferol).	https://doi.org/10.2903/j.efsa.2015.4247	1
 E310	sentetik	Gallik asidin alkollerle kimyasal tepkimesiyle üretilir.	https://www.ecfr.gov/current/title-21/section-184.1660	1
 E311,E312	sentetik	Gallik asidin alkollerle kimyasal tepkimesiyle üretilir.	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32008L0084	1
 E321	sentetik	p-Krezolün izobütilenle tepkimesiyle kimyasal sentezle üretilir; hammaddeleri petrol ve kömür katranından elde edilir.	https://www.ams.usda.gov/sites/default/files/media/Butylated%20Hydroxytoluene%20TR.pdf	1
@@ -196,7 +198,7 @@ E904	dogal	Lak böceğinin salgısından elde edilir.	https://www.fao.org/filead
 E905	islenmis	Petrol ya da doğal gazdan rafinasyonla elde edilir.	https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-281-rev.pdf	1
 E943a,E943b	dogal	Doğal gazdan fiziksel ayırmayla (fraksiyonlama) elde edilir.	https://www.ecfr.gov/current/title-21/section-184.1165	1
 E944	belirsiz	Doğal gazdan fiziksel ayırmayla ya da petrol rafinasyonunun yan ürünü olarak elde edilir.	https://www.ams.usda.gov/sites/default/files/media/Propane%200%20report%202011.pdf	1
-E912	islenmis	Linyit mumunun kimyasal işlemle değiştirilmesiyle üretilir.		0
+E912	islenmis	Linyitten (kahverengi kömür) çözücüyle çıkarılan montan mumunun kromosülfürik asitle oksitlenmesi ve oluşan montan asitlerinin diol ve triollerle esterleştirilmesiyle üretilir.	https://doi.org/10.2903/j.efsa.2013.3236	1
 E927b	sentetik	Karbondioksit ve amonyaktan ya da siyanamidin hidroliziyle kimyasal yolla üretilir.	https://www.ecfr.gov/current/title-21/section-184.1923	1
 E942	sentetik	Amonyum nitratın kontrollü ısıtılarak ayrıştırılmasıyla kimyasal yolla üretilir.	https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/monograph11/additive-297-m11.pdf	1
 E939	dogal	Doğal gazın sıvılaştırılıp saflaştırılmasıyla elde edilen gazdır.	https://www.ecfr.gov/current/title-21/section-184.1355	1
@@ -213,7 +215,7 @@ E999	dogal	Kilaya ağacının kabuğundan ekstraksiyonla elde edilir.	https://ww
 E1103	fermente	Mayadan elde edilen enzimdir.	https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-237.pdf	1
 E1105	dogal	Tavuk yumurtası akından elde edilen enzimdir.	https://www.legislation.gov.uk/eur/2012/231/annex/division/345/adopted?view=plain	1
 E1200	islenmis	Glikozun az miktarda sorbitol ve sitrik asitle yoğunlaştırılarak polimerleştirilmesiyle üretilir.	https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/Additive-314.pdf	1
-E1521	sentetik	Kimyasal sentezle üretilen polimerdir.		0
+E1521	sentetik	Etilen oksidin suyla katılma polimerleşmesiyle kimyasal sentezle üretilen polimerdir.	https://doi.org/10.2903/j.efsa.2018.5293	1
 E1202	sentetik	N-vinil-2-pirolidonun polimerleştirilmesiyle üretilen polimerdir.	https://www.legislation.gov.uk/eur/2012/231/annex/division/348/adopted?view=plain	1
 E1205	sentetik	Metil metakrilat, bütil metakrilat ve dimetilaminoetil metakrilatın kontrollü polimerleştirilmesiyle üretilen polimerdir.	https://www.legislation.gov.uk/eur/2012/231/annex/division/351/adopted?view=plain	1
 E1203	sentetik	Kimyasal sentezle üretilen polimerdir.	https://www.fao.org/fileadmin/user_upload/jecfa_additives/docs/monograph4/additive-327-m4.pdf	1

@@ -148,7 +148,7 @@ e.E1519.uretim	Produced chemically by reacting benzyl chloride, obtained by chlo
 e.E1520.about	Propylene glycol. It is a carrier and solvent in flavourings and food colours.
 e.E1520.uretim	May be produced by chemical synthesis from propylene or by heating glycerol with sodium hydroxide.
 e.E1521.about	A synthetic polymer. It is used as a coating and carrier in supplement tablets.
-e.E1521.uretim	A polymer produced by chemical synthesis.
+e.E1521.uretim	A polymer produced by chemical synthesis, through addition polymerisation of ethylene oxide with water.
 e.E153.about	Black carbon obtained by burning plant material. Used in black confectionery and cheese rinds.
 e.E153.uretim	Obtained by carbonisation of plant material such as wood.
 e.E154.about	A synthetic brown azo dye. It was formerly used to colour smoked herring (kippers).
@@ -214,7 +214,7 @@ e.E211.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbi
 e.E211.uretim	Obtained by neutralising chemically produced benzoic acid with sodium carbonate, sodium bicarbonate or sodium hydroxide.
 e.E212.about	The potassium salt of benzoic acid. Used as a preservative in acidic drinks and sauces.
 e.E212.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
-e.E212.uretim	Produced by chemical synthesis; benzoic acid also occurs naturally in some fruits.
+e.E212.uretim	Produced chemically by reacting benzoic acid, obtained by oxidising toluene, with potassium hydroxide; benzoic acid also occurs naturally in some fruits.
 e.E213.about	The calcium salt of benzoic acid. Used as a preservative in acidic foods.
 e.E213.reason	Benzoates may form benzene in drinks containing vitamin C (ascorbic acid) (benzene is IARC Group 1); the industry has therefore adjusted its formulations. Sodium benzoate was also present in the mixtures of the Southampton study, but the EU does not require a separate warning label for this substance.
 e.E213.uretim	Produced by chemical synthesis; benzoic acid also occurs naturally in some fruits.
@@ -338,7 +338,7 @@ e.E306.uretim	Obtained by vacuum steam distillation of vegetable oils.
 e.E307.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
 e.E307.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
 e.E308.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
-e.E308.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
+e.E308.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis (dl-γ-tocopherol).
 e.E309.about	An antioxidant from the vitamin E family. It is obtained from vegetable oils or synthesised, and it delays the spoilage of fats.
 e.E309.uretim	A tocopherol (a form of vitamin E) produced by chemical synthesis.
 e.E310.about	A synthetic antioxidant obtained from gallic acid. It delays fats from going rancid and is used in fats, oils and fatty products.
@@ -774,7 +774,7 @@ e.E907.uretim	A polymer produced by chemical synthesis.
 e.E912.about	Esters of wax obtained from lignite coal. They are used to coat citrus peel.
 e.E912.reason	No longer permitted as a food additive in the EU: it was removed from the permitted list by Regulation (EU) No 957/2014 (in 2013 EFSA could not assess it because of insufficient data).
 e.E912.tgk_not	Not permitted in Türkiye: it is not on the list of permitted additives in the Turkish Food Codex Regulation on Food Additives (2023) (Ministry guidance, October 2024).
-e.E912.uretim	Produced by modifying lignite wax through chemical processing.
+e.E912.uretim	Produced by oxidising montan wax, extracted from lignite (brown coal) with solvents, with chromosulfuric acid and esterifying the resulting montan acids with diols and triols.
 e.E914.about	A synthetic wax. It is used to coat the peel of citrus and some other fruits.
 e.E914.uretim	A polymer obtained by mild oxidation of polyethylene with air.
 e.E920.about	An amino acid. It is a flour treatment agent that softens dough; in the EU it may not be produced from human hair.
