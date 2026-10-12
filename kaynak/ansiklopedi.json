@@ -2737,6 +2737,27 @@
    "year": 2007,
    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13129613/",
    "official": true
+  },
+  "efsa_nda_potassium_2016": {
+   "title": "Dietary reference values for potassium",
+   "publisher": "EFSA NDA Panel (EFSA Journal 14(10):4592)",
+   "year": 2016,
+   "url": "https://doi.org/10.2903/j.efsa.2016.4592",
+   "official": true
+  },
+  "efsa_nda_magnesium_2015": {
+   "title": "Scientific Opinion on Dietary Reference Values for magnesium",
+   "publisher": "EFSA NDA Panel (EFSA Journal 13(7):4186)",
+   "year": 2015,
+   "url": "https://doi.org/10.2903/j.efsa.2015.4186",
+   "official": true
+  },
+  "efsa_nda_calcium_2015": {
+   "title": "Scientific Opinion on Dietary Reference Values for calcium",
+   "publisher": "EFSA NDA Panel (EFSA Journal 13(5):4101)",
+   "year": 2015,
+   "url": "https://doi.org/10.2903/j.efsa.2015.4101",
+   "official": true
   }
  },
  "resmi_alan_adlari": [
@@ -3759,7 +3780,7 @@
     "efsa_e211",
     "fda_benzene"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-12"
   },
   "E213": {
    "evidence_level": "strong",
@@ -6501,7 +6522,7 @@
     "efsa_tocopherol",
     "jecfa_mono_tocopherol"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-12"
   },
   "E309": {
    "evidence_level": "moderate",
@@ -11713,7 +11734,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği potasyum, besinlerdeki potasyum gibi büyük ölçüde (yaklaşık %90) ince bağırsakta emilir; vücuttaki potasyumun yaklaşık %98'i hücrelerin içindedir. Başlıca atılım yolu böbreklerdir: alınan potasyumun %77–92'si idrarla atılır.",
    "agency_note": "JECFA 1965'te potasyum hidrojen karbonat için ADI'yi, hidrojen karbonatların grup ADI'si kapsamında 'sınırlandırılmamış' (not limited) olarak belirledi. AB'de Grup I katkı maddesi olarak gerektiği kadar kullanılabilir.",
    "diet_flags": {
     "vegan": "yes",
@@ -11742,9 +11763,10 @@
     "jecfa_e501ii",
     "ab1129_2011",
     "ab1333_annex2_c",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_potassium_2016"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E503": {
    "evidence_level": "limited",
@@ -11793,7 +11815,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Olgunlaştırılmış peynirler"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır.",
    "agency_note": "JECFA 1965'te magnezyum karbonat için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; magnezyum hidroksit karbonat için 1979'da sayısal ADI gerekmediğine ('belirtilmemiş') karar verdi. AB'de Grup I katkı maddesi olarak gerektiği kadar kullanılabilir.",
    "diet_flags": {
     "vegan": "yes",
@@ -11831,9 +11853,10 @@
     "jecfa_e504ii",
     "ab1129_2011",
     "ab1333_annex2_c",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_magnesium_2015"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E507": {
    "evidence_level": "strong",
@@ -12995,7 +13018,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Tahıl bazlı bebek mamaları ve bebek ek gıdaları (AB'de yalnızca pH ayarı için)"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği potasyum, besinlerdeki potasyum gibi büyük ölçüde (yaklaşık %90) ince bağırsakta emilir; vücuttaki potasyumun yaklaşık %98'i hücrelerin içindedir. Başlıca atılım yolu böbreklerdir: alınan potasyumun %77–92'si idrarla atılır.",
    "agency_note": "JECFA 1965'te potasyum hidroksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen potasyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13043,9 +13066,10 @@
     "ab1333_annex2_c",
     "efsa_call_batch5",
     "ab1333_annex2_e_g10",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_potassium_2016"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E526": {
    "evidence_level": "limited",
@@ -13054,7 +13078,7 @@
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir",
     "Tahıl bazlı bebek mamaları ve bebek ek gıdaları (AB'de yalnızca pH ayarı için)"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği kalsiyum, besinlerdeki kalsiyum gibi bağırsakta emilir; yetişkinlerde emilen oran yaklaşık %25'tir ve emilimi D vitamini düzenler. Emilmeyen kalsiyum dışkıyla atılır; böbrekler süzülen kalsiyumun yaklaşık %98'ini geri emer.",
    "agency_note": "JECFA 1965'te kalsiyum hidroksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen kalsiyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13102,9 +13126,10 @@
     "ab1333_annex2_c",
     "efsa_call_batch5",
     "ab1333_annex2_e_g10",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_calcium_2015"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E527": {
    "evidence_level": "limited",
@@ -13162,7 +13187,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır.",
    "agency_note": "JECFA 1965'te magnezyum hidroksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen magnezyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13201,9 +13226,10 @@
     "ab1129_2011",
     "ab1333_annex2_c",
     "efsa_call_batch5",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_magnesium_2015"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E529": {
    "evidence_level": "limited",
@@ -13211,7 +13237,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği kalsiyum, besinlerdeki kalsiyum gibi bağırsakta emilir; yetişkinlerde emilen oran yaklaşık %25'tir ve emilimi D vitamini düzenler. Emilmeyen kalsiyum dışkıyla atılır; böbrekler süzülen kalsiyumun yaklaşık %98'ini geri emer.",
    "agency_note": "JECFA 1965'te kalsiyum oksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen kalsiyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13250,9 +13276,10 @@
     "ab1129_2011",
     "ab1333_annex2_c",
     "efsa_call_batch5",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_calcium_2015"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E530": {
    "evidence_level": "limited",
@@ -13260,7 +13287,7 @@
    "found_in": [
     "AB'de birçok gıdada gerektiği kadar (quantum satis) kullanılabilir"
    ],
-   "in_the_body": "",
+   "in_the_body": "İçerdiği magnezyum, besinlerdeki magnezyum gibi ince bağırsağın son kısmında emilir; olağan alımda emilen oran genellikle %40–50'dir ve alım arttıkça azalır. Vücuttaki miktarını başlıca böbrekler düzenler; emilmeyen magnezyum dışkıyla atılır.",
    "agency_note": "JECFA 1965'te magnezyum oksit için ADI'yi 'sınırlandırılmamış' (not limited) olarak belirledi; değerlendirmede iyi üretim uygulamasına uygun kullanımın sınırlanması için toksikolojik bir gerekçe görülmediği, ancak bu katkılardan gelen magnezyum toplam alımının beslenme açısından göz önünde tutulması gerektiği belirtildi. AB'de Grup I katkısıdır; EFSA'nın yeniden değerlendirmesi henüz yayımlanmamıştır (2016'da veri çağrısına dahil edildi).",
    "diet_flags": {
     "vegan": "yes",
@@ -13299,9 +13326,10 @@
     "ab1129_2011",
     "ab1333_annex2_c",
     "efsa_call_batch5",
-    "tgk2013"
+    "tgk2013",
+    "efsa_nda_magnesium_2015"
    ],
-   "last_reviewed": "2026-10-06"
+   "last_reviewed": "2026-10-12"
   },
   "E574": {
    "evidence_level": "limited",
@@ -14826,7 +14854,7 @@
     "eu_957_2014",
     "efsa_e912"
    ],
-   "last_reviewed": "2026-10-07"
+   "last_reviewed": "2026-10-12"
   },
   "E914": {
    "evidence_level": "moderate",
@@ -15145,7 +15173,7 @@
     "ab1333_annex3_p1",
     "jecfa_mono_e1521"
    ],
-   "last_reviewed": "2026-10-08"
+   "last_reviewed": "2026-10-12"
   },
   "E1203": {
    "evidence_level": "limited",
