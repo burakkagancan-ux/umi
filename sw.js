@@ -1,4 +1,4 @@
-const CACHE = "tagsis-v35";
+const CACHE = "tagsis-v36";
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar
 const CORE = [
   "./", "index.html", "ocr.html", "ansiklopedi.html", "manifest.webmanifest",

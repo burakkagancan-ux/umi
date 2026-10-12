@@ -49,6 +49,7 @@ function barkodAd(r){return r&&r.ad?((r.marka&&r.ad.toLocaleLowerCase(DIL.yerel)
 function barkodGoster(kod,r){
   var m=barkodMetin(r.metin,barkodSira());
   BARKOD={kod:kod,r:r,metin:m.s,dil:m.dil,t:Date.now(),foto:false,katki:false,ad:false};
+  fotoTemizle();
   $("metin").value="";HMOD=null;
   if(r.tur!==MODE)setMode(r.tur,true);
   $("metin").value=m.s;HSCAN=HOCR=true;
@@ -57,6 +58,7 @@ function barkodGoster(kod,r){
 }
 function barkodYok(kod,r){
   BARKOD={kod:kod,r:null,ad:r?barkodAd(r):"",metin:null,t:Date.now(),foto:false,katki:false};
+  fotoTemizle();
   if(r&&r.tur&&r.tur!==MODE){$("metin").value="";setMode(r.tur,true)}
   $("metin").value="";
   var box=$("sonuc");box.textContent="";
