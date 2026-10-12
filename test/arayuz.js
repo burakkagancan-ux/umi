@@ -59,10 +59,10 @@ async function scan(p,mode,text){
   // 1b) Fotoğraf: kameranın yanında galeriden/dosyadan yükleme (capture olmayan ikinci girdi) kırpma ekranını açar
   ok(await p.isVisible('label.dosya')&&await p.getAttribute('#dosya','capture')===null&&await p.getAttribute('#foto','capture')==='environment','kamera ve dosya yükleme düğmeleri');
   await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
-  await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block'&&!document.getElementById('oku').disabled,null,{timeout:5000});
+  await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block',null,{timeout:5000});
   ok(await p.evaluate(()=>/^blob:/.test(document.getElementById('pre').src)),'dosyadan yüklenen fotoğraf kırpma ekranında');
   // Sekme değişince ve örnek metinde eski fotoğraf ekranda kalmaz
-  const fotoYok=()=>p.evaluate(()=>getComputedStyle(document.getElementById('cropwrap')).display==='none'&&!document.getElementById('pre').hasAttribute('src')&&document.getElementById('oku').disabled);
+  const fotoYok=()=>p.evaluate(()=>getComputedStyle(document.getElementById('cropwrap')).display==='none'&&!document.getElementById('pre').hasAttribute('src'));
   await p.click('#m-koz');ok(await fotoYok(),'sekme değişince fotoğraf temizlenir');await p.click('#m-gida');
   await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
   await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='block',null,{timeout:5000});
@@ -75,6 +75,23 @@ async function scan(p,mode,text){
   await p.waitForFunction(()=>getComputedStyle(document.getElementById('cropwrap')).display==='none',null,{timeout:5000}).catch(()=>{});
   ok(await fotoYok(),'kaydedince fotoğraf temizlenir');
   await p.evaluate(()=>{localStorage.removeItem('kayitli');kayitProfil()});
+  // 1b2) Ayrı okuma düğmesi yok: fotoğraf seçilince kendiliğinden okunur; çerçeve değişince yeniden okunur ve aynı kayıt güncellenir
+  {
+  let istek=0;
+  const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
+  await p.route(ocrYol,r=>{istek++;r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:istek===1?'Şeker, E330, E621':'Şeker, E330'})})});
+  ok(!(await p.$('#oku')),'Analiz Et düğmesi yok');
+  await p.click('#m-gida');const n0=await p.evaluate(()=>histLoad().length);
+  await p.setInputFiles('#dosya',require('path').join(__dirname,'..','icon-192.png'));
+  await p.waitForFunction(()=>document.getElementById('metin').value==='Şeker, E330, E621'&&document.querySelectorAll('#sonuc .res').length>0,null,{timeout:8000}).catch(()=>{});
+  ok(istek===1&&await p.inputValue('#metin')==='Şeker, E330, E621','fotoğraf seçilince kendiliğinden okunur ve analiz edilir');
+  await p.click('#cropreset');
+  await p.waitForFunction(()=>document.getElementById('metin').value==='Şeker, E330',null,{timeout:8000}).catch(()=>{});
+  ok(istek===2&&await p.inputValue('#metin')==='Şeker, E330','çerçeve değişince yeniden okunur');
+  ok(await p.evaluate(()=>histLoad().length)===n0+1,'yeniden okuma yeni kayıt açmaz');
+  await p.unroute(ocrYol);
+  await p.click('#ornek');
+  }
 
   // 1c) Barkod: elle giriş (kamera testte yok) → uygulamadaki Open Food Facts verisinden içerik + kaynak kartı; geçersiz ve bulunamayan barkod
   {
@@ -247,7 +264,7 @@ async function scan(p,mode,text){
   ctx=await br.newContext(Object.assign({},opt,{locale:'en-US'}));p=await newPage(ctx);watch(p,errs);
   await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX,null,{timeout:15000});
   ok(await p.getAttribute('html','lang')==='en'&&(await p.textContent('h1'))==='Read Label','İngilizce açılış: lang ve başlık');
-  ok((await p.textContent('#oku'))==='Analyse'&&(await p.getAttribute('#metin','placeholder')).startsWith('The text'),'İngilizce düğme ve placeholder');
+  ok((await p.textContent('#ornek'))==='Try sample text'&&(await p.getAttribute('#metin','placeholder')).startsWith('The text'),'İngilizce düğme ve placeholder');
   const anahtarVar=()=>p.evaluate(()=>{const m=document.body.innerText.match(/\b(ortak|gida|koz|tem|kars|kayit|pay|profil|risk|sayfa|ulke|veri|kanser|eslesme|foto|ocr|nav|birim)\.[a-z0-9_]+(\.[a-z0-9_]+)*\b/);return m?m[0]:''});
   for(const m of ['gida','koz','tem']){
     await sample(p,m);

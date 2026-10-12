@@ -37,7 +37,7 @@ function karsProduct(e){
   if(e.mode==="tem")return cmpProductT(e.text,TIDX,KIDX,PROF,e.name);
   return cmpProduct(e.text,IDX,PROF,e.name);
 }
-/* Analiz Et'in yanındaki düğme: ekrandaki türün son taramalarından iki ürün seçtirir */
+/* Fotoğraf düğmelerinin altındaki düğme: ekrandaki türün son taramalarından iki ürün seçtirir */
 function karsOpen(pre,ret){
   if(!KARS_AYAR.acik)return;
   var mode=MODE||"gida",list=histLoad().filter(function(x){return (x.mode||"gida")===mode});
