@@ -312,11 +312,18 @@ async function scan(p,mode,text){
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
+  // Alt menü (12.10.2026): Ansiklopedi solda, Etiket Oku ortada, Profilim sağda; Liste yalnızca Türkiye seçiliyken
+  ok((await p.$$eval('.tabbar a',a=>a.map(x=>x.dataset.tab).join(',')))==='ansiklopedi,oku,liste,profil','alt menü sırası');
+  ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="profil"]'),'ülke seçilmemişken Liste menüde görünmüyor');
   {const k=await anahtarVar();ok(!k,'Liste: çıplak anahtar: '+k)}
   // Dil seçimi: Hassasiyetlerim'den Türkçe → sayfa Türkçe yeniden yüklenir
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#dilsec');
   await Promise.all([p.waitForNavigation(),p.selectOption('#dilsec','tr')]);await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
   ok(await p.getAttribute('html','lang')==='tr'&&await p.evaluate(()=>localStorage.getItem('dil'))==='tr','dil seçici: Türkçe kaydedildi ve uygulandı');
+  ok(await p.isVisible('.tabbar a[data-tab="liste"]'),'Türkçede (ülke Türkiye) Liste menüde görünüyor');
+  await p.selectOption('#ulkesec','US');
+  ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&(await p.$$eval('#ulkesec option',o=>o.length))>20,'ülke ABD seçilince Liste gizlendi; İngilizce konuşulan ülkeler listede');
+  await p.selectOption('#ulkesec','TR');ok(await p.isVisible('.tabbar a[data-tab="liste"]'),'ülke Türkiye seçilince Liste geri geldi');
   ok(!errs.length,'İngilizce tur konsol hatası: '+errs.join(' | '));errs.length=0;
   await ctx.close();
 
