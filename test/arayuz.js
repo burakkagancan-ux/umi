@@ -253,6 +253,9 @@ async function scan(p,mode,text){
     const c=await p.getAttribute('#ana .risk','class');
     ok(c.split(' ').slice(2).join(' ')===cls,id+' risk kartı sınıfı "'+c+'", beklenen '+cls);
   }
+  // Türkçede veri metni Türkçe (12.10.2026: yedek dil İngilizce seçili dilin üstüne yazıyordu)
+  await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');
+  {const s=await p.textContent('#ana');ok(/Lesitinler/.test(s)&&!/Lecithins/.test(s),'ansiklopedi Türkçe metin: '+s.slice(0,80))}
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');
   // Arama kutusu boşken bütün elle incelenmiş maddeler listelenir; arama sonucu gelince liste kısalır
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});
