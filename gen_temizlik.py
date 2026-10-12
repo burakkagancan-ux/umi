@@ -31,18 +31,22 @@ def kaynak_tsv(ad):
 
 OUT = os.path.join(HERE, "data", "temizlik.json")
 VERSION = "0.1.0"
-LAST_UPDATED = "2026-10-04"
+LAST_UPDATED = "2026-10-12"
 
 CLP = "https://eur-lex.europa.eu/eli/reg/2008/1272/oj"
 H_TR = "https://www.crad.com.tr/UPLOAD/URUN/FILES/Hcode-17140911685.pdf"
-EUH_LIST = "https://www.comunidad.madrid/sites/default/files/doc/sanidad/samb/frases_euh_2024.pdf"
+# SEA Yönetmeliği'nin Resmî Gazete'deki asıl metni; Ek-3 (H, EUH) ve Ek-4 (P) taranmış PDF'te (20131211M1-1.pdf, s. 152–190)
+SEA = "https://www.resmigazete.gov.tr/eskiler/2013/12/20131211M1-1.htm"
+# SEA'nın 2013 metninde olmayan EUH ifadeleri (EUH211, EUH212; 2023'te eklenen EUH380–EUH451) AB metninden çevrildi
+EUH_AB = "https://eur-lex.europa.eu/eli/reg_del/2023/707/oj"
 DET = "https://www.legislation.gov.uk/eur/2004/648/annex/VII"
 DET_TR = "https://www.lexpera.com.tr/mevzuat/yonetmelikler/deterjanlar-hakkinda-yonetmelik-1"
 SB_REHBER = "https://hsgm.saglik.gov.tr/depo/birimler/kronik-hastaliklar-ve-yasli-sagligi-db/Dokumanlar/Kitaplar/Saglikli_Temizlik_Rehberi_18.04.2022.pdf"
 
 # ---------------------------------------------------------------------------
 # Zararlılık ifadeleri (H ve EUH): kaynak/temizlik_ifadeler.tsv [kod, seviye, grup, TR metin, EN metin, sade açıklama]
-# TR metinleri: H için SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-3'e dayalı liste (CRAD); EUH için Claude çevirisi (needs_review).
+# TR metinleri: H için SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-3'e dayalı liste (CRAD); EUH için SEA Ek-3'ün resmi metni,
+# SEA'da olmayan EUH'lar için çeviri (needs_review). 7. sütun: etikette görülebilecek diğer Türkçe yazımlar (" | " ile).
 # ---------------------------------------------------------------------------
 H, EUH = [], []
 for _r in kaynak_tsv("temizlik_ifadeler.tsv"):
@@ -50,19 +54,23 @@ for _r in kaynak_tsv("temizlik_ifadeler.tsv"):
 # Birleşik ifadeler (etikette tek cümle olarak yazılır): kaynak/temizlik_birlesik.tsv [kodlar, TR, EN]
 HCOMB = [[r[0].split(";"), r[1], r[2]] for r in kaynak_tsv("temizlik_birlesik.tsv")]
 
-# Türkçe metni güvenlik bilgi formlarında (Bosch, EDQM SDS TR) ya da SEA'ya dayalı etiketleme kılavuzunda (CRAD) görülerek doğrulanan EUH ifadeleri
-EUH_VERIFIED = {"EUH208", "EUH210", "EUH066", "EUH206"}
-SDS_TR = ["https://www.bosch-pt.com/msds/_res/media/tr/1605430014_TR-tr_00635-0052_1,0.pdf",
-          "https://sds.edqm.eu/pdf/SDS/EDQM_202300230_1.0_SDS_TR.pdf",
-          "https://www.crad.com.tr/UPLOAD/URUN/FILES/ZararliKimyasallarinMevzuataUygunEtiketlenmesi-221724484.pdf"]
-# Eski ya da farklı firma çevirileri: aynı ifadeye bağlanır
+# Türkçe metni SEA Ek-3'teki resmi metinle karşılaştırılan EUH ifadeleri (12.10.2026)
+EUH_SEA = {"EUH014", "EUH018", "EUH019", "EUH044", "EUH029", "EUH031", "EUH032", "EUH066", "EUH070", "EUH071", "EUH201",
+           "EUH201A", "EUH202", "EUH203", "EUH204", "EUH205", "EUH206", "EUH207", "EUH208", "EUH209", "EUH209A", "EUH210",
+           "EUH401"}
+# Eski ya da farklı firma çevirileri (TSV'nin 7. sütununa ek): aynı ifadeye bağlanır
 TR_ALT = {"EUH210": ["Talep halinde güvenlik bilgi formu temin edilebilir."],
           "H361fd": ["Doğurganlığı muhtemelen kısıtlayabilir. Çocuğa anne karnında muhtemelen zarar verebilir."]}
 
-# Önlem ifadeleri (P): kaynak/temizlik_onlemler.tsv [kod, TR, EN, ilk_yardim 1/0]
-# TR: EDQM SDS TR'de görülenler birebir; diğerleri çeviri (needs_review).
-P_SEEN = {"P201", "P202", "P260", "P263", "P264", "P270", "P271", "P280", "P301+P312", "P304+P340", "P308+P313", "P312", "P330", "P403+P233", "P405", "P501"}
-PREC = [[r[0], r[1], r[2], int(r[3])] for r in kaynak_tsv("temizlik_onlemler.tsv")]
+
+def alt(r, i):
+    """i. sütundaki " | " ile ayrılmış diğer yazımlar"""
+    return [x.strip() for x in r[i].split(" | ") if x.strip()] if len(r) > i else []
+
+
+# Önlem ifadeleri (P): kaynak/temizlik_onlemler.tsv [kod, TR, EN, ilk_yardim 1/0, diğer yazımlar]
+# TR: SEA Ek-4'ün resmi metni (12.10.2026'da hepsi karşılaştırıldı).
+PREC = [[r[0], r[1], r[2], int(r[3]), alt(r, 4)] for r in kaynak_tsv("temizlik_onlemler.tsv")]
 
 # Sıvı çamaşır deterjanı kapsülleri: CLP Ek II 3.3 (AB 1297/2014 ile eklendi)
 CAPSULE = {
@@ -132,25 +140,26 @@ def main():
             assert a in known, a
     hz, seen = [], set()
     for row in H + EUH:
-        code, lvl, grp, tr, en, note = row
+        code, lvl, grp, tr, en, note = row[:6]
         assert code not in seen, code
         seen.add(code)
         assert grp in GROUP_LABEL, grp
         e = {"code": code, "level": lvl, "group": grp, "tr": tr, "en": en}
         if note:
             e["note"] = note
-        if code.startswith("EUH") and code not in EUH_VERIFIED:
-            e["needs_review"] = True   # Türkçe metin SEA Ek-2 ile birebir karşılaştırılmadı
-        if code in TR_ALT:
-            e["alt"] = TR_ALT[code]
+        if code.startswith("EUH") and code not in EUH_SEA:
+            e["needs_review"] = True   # SEA'nın 2013 metninde yok; Türkçe metin çeviri
+        a = alt(row, 6) + TR_ALT.get(code, [])
+        if a:
+            e["alt"] = a
         hz.append(e)
     prec = []
-    for code, tr, en, aid in PREC:
+    for code, tr, en, aid, a in PREC:
         e = {"code": code, "tr": tr, "en": en}
         if aid:
             e["aid"] = True
-        if code not in P_SEEN:
-            e["needs_review"] = True
+        if a:
+            e["alt"] = a
         prec.append(e)
     for c in HCOMB:
         for x in c[0]:
@@ -159,8 +168,8 @@ def main():
         "version": VERSION, "last_updated": LAST_UPDATED,
         "meta": {
             "description": "Temizlik ürünü etiketi: zararlılık ifadeleri (CLP/SEA), deterjan içerik grupları (AB 648/2004 Ek VII, TR Deterjanlar Hakkında Yönetmelik Ek-7) ve ayrıca not gerektiren maddeler.",
-            "sources": {"clp": CLP, "h_tr": H_TR, "euh": EUH_LIST, "det": DET, "det_tr": DET_TR, "sb": SB_REHBER},
-            "hazard_source": "SEA Yönetmeliği (RG 11.12.2013, 28848) / AB CLP (EC) 1272/2008 Ek III. H ifadelerinin Türkçe metni SEA'ya dayalı listeden; EUH ifadelerinin Türkçesi çeviri, resmi metinle birebir karşılaştırılmadı.",
+            "sources": {"clp": CLP, "h_tr": H_TR, "sea": SEA, "euh": EUH_AB, "det": DET, "det_tr": DET_TR, "sb": SB_REHBER},
+            "hazard_source": "SEA Yönetmeliği (RG 11.12.2013, 28848) / AB CLP (EC) 1272/2008 Ek III. H ifadelerinin Türkçe metni SEA'ya dayalı listeden; EUH ve P ifadelerinin Türkçesi SEA'nın Resmî Gazete'deki metninden (Ek-3, Ek-4); SEA'da olmayan EUH ifadeleri çeviri.",
             "group_source": "AB 648/2004 Ek VII A ve TR Deterjanlar Hakkında Yönetmelik (RG 27.01.2018, 30314) Ek-7: %0,2'yi aşan gruplar bant halinde; enzim, dezenfektan, optik parlatıcı, parfüm her oranda; koruyucular INCI adıyla; %0,01'i aşan koku alerjenleri adıyla yazılır. AB 2026/405 sayılı yeni tüzük 2029'da uygulanmaya başlar.",
             "levels": {"red": "Ürünün resmi tehlike sınıfı ciddi: yanık, ciddi göz hasarı, zehirlilik, kanser/genetik/üreme (CMR), solunum hassaslaşması.",
                        "yellow": "Uyarı düzeyinde tehlike, alerji, karıştırma ya da çevre uyarısı.",
@@ -171,7 +180,7 @@ def main():
         "hazards": hz,
         "combos": [{"codes": c[0], "tr": c[1], "en": c[2]} for c in HCOMB],
         "groups": GROUPS, "subs": SUBS, "aliases": aliases,
-        "precautions": prec, "capsule": CAPSULE, "uzem": UZEM, "sds_tr": SDS_TR, "mix_rule": MIX_RULE,
+        "precautions": prec, "capsule": CAPSULE, "uzem": UZEM, "mix_rule": MIX_RULE,
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)

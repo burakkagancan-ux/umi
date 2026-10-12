@@ -46,8 +46,8 @@ function hzCard(x){
     if(h.code==="EUH208"&&x.names&&x.names.length)d.appendChild(el("div","ln",t("tem.hz.adi_gecen",{l:x.names.join("; ")})));
     pn.appendChild(el("div","ln",t("tem.hz.zorunlu")));
     var eu=h.code.indexOf("EUH")===0;
-    pn.appendChild(el("div","how",t("tem.hz.mevzuat")+t(!eu?"tem.hz.metin_h":h.needs_review?"tem.hz.metin_euh_ceviri":"tem.hz.metin_euh_sds")));
-    pn.appendChild(srcLinks([M.sources.clp,!eu?M.sources.h_tr:h.needs_review?M.sources.euh:(TIDX.sds_tr||[])[0]||M.sources.euh]));
+    pn.appendChild(el("div","how",t("tem.hz.mevzuat")+t(!eu?"tem.hz.metin_h":h.needs_review?"tem.hz.metin_euh_ceviri":"tem.hz.metin_euh_sea")));
+    pn.appendChild(srcLinks([M.sources.clp,!eu?M.sources.h_tr:h.needs_review?M.sources.euh:M.sources.sea]));
   });
 }
 function tSummaryCard(S,A){

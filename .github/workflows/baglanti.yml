@@ -1,0 +1,39 @@
+name: Kaynak bağlantı denetimi
+# Ayda bir uygulamanın gösterdiği kaynak bağlantılarını (data/) açıp denetler (O-07). Kırık bağlantı varsa
+# "Kırık kaynak bağlantıları" başlıklı sorunu açar ya da açık olana yeni raporu yorum olarak ekler; veriyi değiştirmez.
+on:
+  schedule:
+    - cron: "0 6 15 * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: baglanti-denetimi
+  cancel-in-progress: false
+jobs:
+  baglanti:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Denetle
+        id: denetim
+        run: |
+          python baglanti_denetle.py --rapor rapor.md && echo "kirik=0" >> "$GITHUB_OUTPUT" || echo "kirik=1" >> "$GITHUB_OUTPUT"
+          cat rapor.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Sorun aç ya da güncelle
+        if: steps.denetim.outputs.kirik == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          baslik="Kırık kaynak bağlantıları"
+          no=$(gh issue list --state open --search "in:title \"$baslik\"" --json number --jq '.[0].number')
+          if [ -n "$no" ]; then
+            gh issue comment "$no" --body-file rapor.md
+          else
+            gh issue create --title "$baslik" --body-file rapor.md
+          fi

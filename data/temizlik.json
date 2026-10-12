@@ -1,17 +1,18 @@
 {
  "version": "0.1.0",
- "last_updated": "2026-10-04",
+ "last_updated": "2026-10-12",
  "meta": {
   "description": "Temizlik ürünü etiketi: zararlılık ifadeleri (CLP/SEA), deterjan içerik grupları (AB 648/2004 Ek VII, TR Deterjanlar Hakkında Yönetmelik Ek-7) ve ayrıca not gerektiren maddeler.",
   "sources": {
    "clp": "https://eur-lex.europa.eu/eli/reg/2008/1272/oj",
    "h_tr": "https://www.crad.com.tr/UPLOAD/URUN/FILES/Hcode-17140911685.pdf",
-   "euh": "https://www.comunidad.madrid/sites/default/files/doc/sanidad/samb/frases_euh_2024.pdf",
+   "sea": "https://www.resmigazete.gov.tr/eskiler/2013/12/20131211M1-1.htm",
+   "euh": "https://eur-lex.europa.eu/eli/reg_del/2023/707/oj",
    "det": "https://www.legislation.gov.uk/eur/2004/648/annex/VII",
    "det_tr": "https://www.lexpera.com.tr/mevzuat/yonetmelikler/deterjanlar-hakkinda-yonetmelik-1",
    "sb": "https://hsgm.saglik.gov.tr/depo/birimler/kronik-hastaliklar-ve-yasli-sagligi-db/Dokumanlar/Kitaplar/Saglikli_Temizlik_Rehberi_18.04.2022.pdf"
   },
-  "hazard_source": "SEA Yönetmeliği (RG 11.12.2013, 28848) / AB CLP (EC) 1272/2008 Ek III. H ifadelerinin Türkçe metni SEA'ya dayalı listeden; EUH ifadelerinin Türkçesi çeviri, resmi metinle birebir karşılaştırılmadı.",
+  "hazard_source": "SEA Yönetmeliği (RG 11.12.2013, 28848) / AB CLP (EC) 1272/2008 Ek III. H ifadelerinin Türkçe metni SEA'ya dayalı listeden; EUH ve P ifadelerinin Türkçesi SEA'nın Resmî Gazete'deki metninden (Ek-3, Ek-4); SEA'da olmayan EUH ifadeleri çeviri.",
   "group_source": "AB 648/2004 Ek VII A ve TR Deterjanlar Hakkında Yönetmelik (RG 27.01.2018, 30314) Ek-7: %0,2'yi aşan gruplar bant halinde; enzim, dezenfektan, optik parlatıcı, parfüm her oranda; koruyucular INCI adıyla; %0,01'i aşan koku alerjenleri adıyla yazılır. AB 2026/405 sayılı yeni tüzük 2029'da uygulanmaya başlar.",
   "levels": {
    "red": "Ürünün resmi tehlike sınıfı ciddi: yanık, ciddi göz hasarı, zehirlilik, kanser/genetik/üreme (CMR), solunum hassaslaşması.",
@@ -600,60 +601,71 @@
    "code": "EUH014",
    "level": "yellow",
    "group": "fiziksel",
-   "tr": "Su ile şiddetli reaksiyona girer.",
+   "tr": "Su ile şiddetli tepkime verir.",
    "en": "Reacts violently with water.",
-   "needs_review": true
+   "alt": [
+    "Su ile şiddetli reaksiyona girer."
+   ]
   },
   {
    "code": "EUH018",
    "level": "yellow",
    "group": "fiziksel",
-   "tr": "Kullanım sırasında alevlenir/patlayıcı buhar-hava karışımı oluşturabilir.",
+   "tr": "Kullanım sırasında alevlenen/patlayan buhar-hava karışımı oluşturabilir.",
    "en": "In use may form flammable/explosive vapour-air mixture.",
-   "needs_review": true
+   "alt": [
+    "Kullanım sırasında alevlenir/patlayıcı buhar-hava karışımı oluşturabilir."
+   ]
   },
   {
    "code": "EUH019",
    "level": "yellow",
    "group": "fiziksel",
    "tr": "Patlayıcı peroksitler oluşturabilir.",
-   "en": "May form explosive peroxides.",
-   "needs_review": true
+   "en": "May form explosive peroxides."
   },
   {
    "code": "EUH044",
    "level": "yellow",
    "group": "fiziksel",
-   "tr": "Kapalı ortamda ısıtılırsa patlama riski vardır.",
+   "tr": "Kapalı ortamda ısıtıldığında patlama riski var.",
    "en": "Risk of explosion if heated under confinement.",
-   "needs_review": true
+   "alt": [
+    "Kapalı ortamda ısıtılırsa patlama riski vardır."
+   ]
   },
   {
    "code": "EUH029",
    "level": "yellow",
    "group": "karistirma",
-   "tr": "Su ile temas ettiğinde toksik gaz açığa çıkarır.",
+   "tr": "Su ile temasında toksik gaz çıkarır.",
    "en": "Contact with water liberates toxic gas.",
    "note": "Su ile temas ederse zehirli gaz açığa çıkar.",
-   "needs_review": true
+   "alt": [
+    "Su ile temas ettiğinde toksik gaz açığa çıkarır."
+   ]
   },
   {
    "code": "EUH031",
    "level": "yellow",
    "group": "karistirma",
-   "tr": "Asitlerle temas ettiğinde toksik gaz açığa çıkarır.",
+   "tr": "Asitlerle temasında toksik gaz çıkarır.",
    "en": "Contact with acids liberates toxic gas.",
    "note": "Asitli bir ürünle (ör. tuz ruhu, kireç çözücü) temas ederse zehirli gaz açığa çıkar. Çamaşır suyunda sık görülür.",
-   "needs_review": true
+   "alt": [
+    "Asitlerle temas ettiğinde toksik gaz açığa çıkarır."
+   ]
   },
   {
    "code": "EUH032",
    "level": "yellow",
    "group": "karistirma",
-   "tr": "Asitlerle temas ettiğinde çok toksik gaz açığa çıkarır.",
+   "tr": "Asitlerle temasında çok toksik gaz çıkarır.",
    "en": "Contact with acids liberates very toxic gas.",
    "note": "Asitli bir ürünle temas ederse çok zehirli gaz açığa çıkar.",
-   "needs_review": true
+   "alt": [
+    "Asitlerle temas ettiğinde çok toksik gaz açığa çıkarır."
+   ]
   },
   {
    "code": "EUH066",
@@ -667,66 +679,82 @@
    "code": "EUH070",
    "level": "red",
    "group": "cilt_goz",
-   "tr": "Gözle temas ettiğinde toksiktir.",
+   "tr": "Gözle teması halinde toksiktir.",
    "en": "Toxic by eye contact.",
-   "needs_review": true
+   "alt": [
+    "Gözle temas ettiğinde toksiktir."
+   ]
   },
   {
    "code": "EUH071",
    "level": "red",
    "group": "solunum",
-   "tr": "Solunum yolu için aşındırıcıdır.",
+   "tr": "Solunum yolunda aşınmaya yol açar.",
    "en": "Corrosive to the respiratory tract.",
    "note": "Solunduğunda solunum yolunda aşındırıcı hasar yapabilir.",
-   "needs_review": true
+   "alt": [
+    "Solunum yolu için aşındırıcıdır."
+   ]
   },
   {
    "code": "EUH201",
    "level": "yellow",
    "group": "diger",
-   "tr": "Kurşun içerir. Çocukların çiğneyebileceği veya emebileceği yüzeylerde kullanılmamalıdır.",
+   "tr": "Kurşun içerir. Çocuklar tarafından çiğnenebilecek veya emilebilecek yüzeyler üzerinde kullanılmamalıdır.",
    "en": "Contains lead. Should not be used on surfaces liable to be chewed or sucked by children.",
-   "needs_review": true
+   "alt": [
+    "Kurşun içerir. Çocukların çiğneyebileceği veya emebileceği yüzeylerde kullanılmamalıdır."
+   ]
   },
   {
    "code": "EUH201A",
    "level": "yellow",
    "group": "diger",
-   "tr": "Uyarı! Kurşun içerir.",
+   "tr": "Dikkat! Kurşun içerir.",
    "en": "Warning! Contains lead.",
-   "needs_review": true
+   "alt": [
+    "Uyarı! Kurşun içerir."
+   ]
   },
   {
    "code": "EUH202",
    "level": "yellow",
    "group": "diger",
-   "tr": "Siyanoakrilat. Tehlike. Saniyeler içinde cildi ve gözleri yapıştırır. Çocukların erişemeyeceği yerde saklayın.",
+   "tr": "Siyanoakrilat. Tehlikelidir. Cildi ve gözleri saniyeler içinde yapıştırır. Çocukların erişiminden uzak tutun.",
    "en": "Cyanoacrylate. Danger. Bonds skin and eyes in seconds. Keep out of the reach of children.",
-   "needs_review": true
+   "alt": [
+    "Siyanoakrilat. Tehlike. Saniyeler içinde cildi ve gözleri yapıştırır. Çocukların erişemeyeceği yerde saklayın."
+   ]
   },
   {
    "code": "EUH203",
    "level": "yellow",
    "group": "diger",
-   "tr": "Krom (VI) içerir. Alerjik reaksiyona yol açabilir.",
+   "tr": "Krom (VI) içerir. Alerjik reaksiyonlara neden olabilir.",
    "en": "Contains chromium (VI). May produce an allergic reaction.",
-   "needs_review": true
+   "alt": [
+    "Krom (VI) içerir. Alerjik reaksiyona yol açabilir."
+   ]
   },
   {
    "code": "EUH204",
    "level": "yellow",
    "group": "diger",
-   "tr": "İzosiyanatlar içerir. Alerjik reaksiyona yol açabilir.",
+   "tr": "İzosiyanat içerir. Alerjik reaksiyonlara yol açabilir.",
    "en": "Contains isocyanates. May produce an allergic reaction.",
-   "needs_review": true
+   "alt": [
+    "İzosiyanatlar içerir. Alerjik reaksiyona yol açabilir."
+   ]
   },
   {
    "code": "EUH205",
    "level": "yellow",
    "group": "diger",
-   "tr": "Epoksi bileşenler içerir. Alerjik reaksiyona yol açabilir.",
+   "tr": "Epoksi bileşenleri içerir. Alerjik reaksiyonlara yol açabilir.",
    "en": "Contains epoxy constituents. May produce an allergic reaction.",
-   "needs_review": true
+   "alt": [
+    "Epoksi bileşenler içerir. Alerjik reaksiyona yol açabilir."
+   ]
   },
   {
    "code": "EUH206",
@@ -734,15 +762,20 @@
    "group": "karistirma",
    "tr": "Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klor).",
    "en": "Warning! Do not use together with other products. May release dangerous gases (chlorine).",
-   "note": "Aktif klor içeren ürünlerde (çamaşır suyu, klorlu temizleyiciler) zorunlu uyarı. Asitli ürünlerle karışırsa klor gazı çıkar."
+   "note": "Aktif klor içeren ürünlerde (çamaşır suyu, klorlu temizleyiciler) zorunlu uyarı. Asitli ürünlerle karışırsa klor gazı çıkar.",
+   "alt": [
+    "Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klorür)."
+   ]
   },
   {
    "code": "EUH207",
    "level": "yellow",
    "group": "diger",
-   "tr": "Uyarı! Kadmiyum içerir. Kullanım sırasında tehlikeli dumanlar oluşur.",
+   "tr": "Dikkat! Kadmiyum içerir. Kullanım esnasında tehlikeli dumanlar ortaya çıkar. İmalatçı tarafından sağlanan bilgilere başvurun. Güvenlik talimatlarına uyun.",
    "en": "Warning! Contains cadmium. Dangerous fumes are formed during use.",
-   "needs_review": true
+   "alt": [
+    "Uyarı! Kadmiyum içerir. Kullanım sırasında tehlikeli dumanlar oluşur."
+   ]
   },
   {
    "code": "EUH208",
@@ -756,17 +789,21 @@
    "code": "EUH209",
    "level": "info",
    "group": "diger",
-   "tr": "Kullanım sırasında kolay alevlenir hale gelebilir.",
+   "tr": "Kullanım esnasında çok alevlenir hale gelebilir.",
    "en": "Can become highly flammable in use.",
-   "needs_review": true
+   "alt": [
+    "Kullanım sırasında kolay alevlenir hale gelebilir."
+   ]
   },
   {
    "code": "EUH209A",
    "level": "info",
    "group": "diger",
-   "tr": "Kullanım sırasında alevlenir hale gelebilir.",
+   "tr": "Kullanım esnasında alevlenir hale gelebilir.",
    "en": "Can become flammable in use.",
-   "needs_review": true
+   "alt": [
+    "Kullanım sırasında alevlenir hale gelebilir."
+   ]
   },
   {
    "code": "EUH210",
@@ -865,9 +902,11 @@
    "code": "EUH401",
    "level": "info",
    "group": "diger",
-   "tr": "İnsan sağlığı ve çevre için risklerden kaçınmak için kullanım talimatlarına uyun.",
+   "tr": "İnsan sağlığına ve çevreye yönelik riskleri önlemek için, kullanma talimatlarına uyun.",
    "en": "To avoid risks to human health and the environment, comply with the instructions for use.",
-   "needs_review": true
+   "alt": [
+    "İnsan sağlığı ve çevre için risklerden kaçınmak için kullanım talimatlarına uyun."
+   ]
   }
  ],
  "combos": [
@@ -2052,22 +2091,22 @@
  "precautions": [
   {
    "code": "P101",
-   "tr": "Tıbbi tavsiye gerekirse ürün kabını veya etiketini yanınızda bulundurun.",
+   "tr": "Tıbbi tavsiye gerekiyorsa, ambalajı veya etiketi saklayın.",
    "en": "If medical advice is needed, have product container or label at hand.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Tıbbi tavsiye gerekirse ürün kabını veya etiketini yanınızda bulundurun."
+   ]
   },
   {
    "code": "P102",
    "tr": "Çocukların erişemeyeceği yerde saklayın.",
-   "en": "Keep out of reach of children.",
-   "needs_review": true
+   "en": "Keep out of reach of children."
   },
   {
    "code": "P103",
    "tr": "Kullanmadan önce etiketi okuyun.",
-   "en": "Read label before use.",
-   "needs_review": true
+   "en": "Read label before use."
   },
   {
    "code": "P201",
@@ -2081,21 +2120,27 @@
   },
   {
    "code": "P210",
-   "tr": "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez.",
+   "tr": "Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez.",
    "en": "Keep away from heat, hot surfaces, sparks, open flames and other ignition sources. No smoking.",
-   "needs_review": true
+   "alt": [
+    "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez."
+   ]
   },
   {
    "code": "P211",
-   "tr": "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin.",
+   "tr": "Aleve veya diğer ateş kaynaklarına doğru püskürtmeyin.",
    "en": "Do not spray on an open flame or other ignition source.",
-   "needs_review": true
+   "alt": [
+    "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin."
+   ]
   },
   {
    "code": "P251",
-   "tr": "Delmeyin veya yakmayın, kullandıktan sonra bile.",
+   "tr": "Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.",
    "en": "Do not pierce or burn, even after use.",
-   "needs_review": true
+   "alt": [
+    "Delmeyin veya yakmayın, kullandıktan sonra bile."
+   ]
   },
   {
    "code": "P260",
@@ -2105,24 +2150,31 @@
   {
    "code": "P261",
    "tr": "Tozunu/dumanını/gazını/sisini/buharını/spreyini solumaktan kaçının.",
-   "en": "Avoid breathing dust/fume/gas/mist/vapours/spray.",
-   "needs_review": true
+   "en": "Avoid breathing dust/fume/gas/mist/vapours/spray."
   },
   {
    "code": "P262",
-   "tr": "Gözlerle, ciltle veya giysilerle temasından kaçının.",
+   "tr": "Gözle, ciltle veya kıyafetle temas ettirmeyin.",
    "en": "Do not get in eyes, on skin, or on clothing.",
-   "needs_review": true
+   "alt": [
+    "Gözlerle, ciltle veya giysilerle temasından kaçının."
+   ]
   },
   {
    "code": "P263",
-   "tr": "Gebelik sırasında ve emzirirken temastan kaçının.",
-   "en": "Avoid contact during pregnancy and while nursing."
+   "tr": "Hamilelikte/anne sütü verirken temastan kaçının.",
+   "en": "Avoid contact during pregnancy and while nursing.",
+   "alt": [
+    "Gebelik sırasında ve emzirirken temastan kaçının."
+   ]
   },
   {
    "code": "P264",
-   "tr": "Elleçlemeden sonra elleri, kolları ve yüzü iyice yıkayın.",
-   "en": "Wash hands thoroughly after handling."
+   "tr": "Elleçlemeden sonra elleri iyice yıkayın.",
+   "en": "Wash hands thoroughly after handling.",
+   "alt": [
+    "Elleçlemeden sonra elleri, kolları ve yüzü iyice yıkayın."
+   ]
   },
   {
    "code": "P270",
@@ -2137,8 +2189,7 @@
   {
    "code": "P273",
    "tr": "Çevreye verilmesinden kaçının.",
-   "en": "Avoid release to the environment.",
-   "needs_review": true
+   "en": "Avoid release to the environment."
   },
   {
    "code": "P280",
@@ -2147,76 +2198,102 @@
   },
   {
    "code": "P301+P310",
-   "tr": "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.",
+   "tr": "YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.",
    "en": "IF SWALLOWED: Immediately call a POISON CENTER/doctor.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın."
+   ]
   },
   {
    "code": "P301+P312",
-   "tr": "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+   "tr": "YUTULDUĞUNDA: kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.",
    "en": "IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.",
-   "aid": true
+   "aid": true,
+   "alt": [
+    "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+   ]
   },
   {
    "code": "P301+P330+P331",
-   "tr": "YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN.",
+   "tr": "YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
    "en": "IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN."
+   ]
   },
   {
    "code": "P302+P352",
-   "tr": "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın.",
+   "tr": "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
    "en": "IF ON SKIN: Wash with plenty of water.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın."
+   ]
   },
   {
    "code": "P303+P361+P353",
-   "tr": "CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın.",
+   "tr": "DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.",
    "en": "IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın."
+   ]
   },
   {
    "code": "P304+P340",
-   "tr": "SOLUNMASI HALİNDE: Kişiyi temiz havaya çıkarın ve rahat nefes alabileceği bir pozisyonda tutun.",
+   "tr": "SOLUNDUĞUNDA: Zarar gören kişiyi temiz havaya çıkartın ve kolay biçimde nefes alması için rahat bir pozisyonda tutun.",
    "en": "IF INHALED: Remove person to fresh air and keep comfortable for breathing.",
-   "aid": true
+   "aid": true,
+   "alt": [
+    "SOLUNMASI HALİNDE: Kişiyi temiz havaya çıkarın ve rahat nefes alabileceği bir pozisyonda tutun."
+   ]
   },
   {
    "code": "P305+P351+P338",
-   "tr": "GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin.",
+   "tr": "GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.",
    "en": "IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin."
+   ]
   },
   {
    "code": "P308+P313",
-   "tr": "Maruz kalma veya etkilenme halinde: Tıbbi yardım/bakım alın.",
+   "tr": "Maruz kalınma veya etkileşme halinde İSE: Tıbbi yardım/bakım alın.",
    "en": "IF exposed or concerned: Get medical advice/attention.",
-   "aid": true
+   "aid": true,
+   "alt": [
+    "Maruz kalma veya etkilenme halinde: Tıbbi yardım/bakım alın."
+   ]
   },
   {
    "code": "P310",
-   "tr": "Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.",
+   "tr": "Hemen ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.",
    "en": "Immediately call a POISON CENTER/doctor.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın."
+   ]
   },
   {
    "code": "P312",
-   "tr": "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+   "tr": "Kendinizi iyi hissetmezseniz, ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.",
    "en": "Call a POISON CENTER/doctor if you feel unwell.",
-   "aid": true
+   "aid": true,
+   "alt": [
+    "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+   ]
   },
   {
    "code": "P313",
-   "tr": "Tıbbi yardım/bakım alın.",
+   "tr": "Tıbbi tavsiye alın/doktorunuza başvurun.",
    "en": "Get medical advice/attention.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Tıbbi yardım/bakım alın."
+   ]
   },
   {
    "code": "P330",
@@ -2226,42 +2303,55 @@
   },
   {
    "code": "P331",
-   "tr": "KUSTURMAYIN.",
+   "tr": "Kusturmayın.",
    "en": "Do NOT induce vomiting.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "KUSTURMAYIN."
+   ]
   },
   {
    "code": "P332+P313",
-   "tr": "Ciltte tahriş oluşursa: Tıbbi yardım/bakım alın.",
+   "tr": "Ciltte tahriş söz konusu ise: Tıbbi yardım/müdahale alın.",
    "en": "If skin irritation occurs: Get medical advice/attention.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Ciltte tahriş oluşursa: Tıbbi yardım/bakım alın."
+   ]
   },
   {
    "code": "P333+P313",
-   "tr": "Ciltte tahriş veya kızarıklık oluşursa: Tıbbi yardım/bakım alın.",
+   "tr": "Ciltte tahriş veya kaşıntı söz konusu ise: Tıbbi yardım/müdahale alın.",
    "en": "If skin irritation or rash occurs: Get medical advice/attention.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Ciltte tahriş veya kızarıklık oluşursa: Tıbbi yardım/bakım alın."
+   ]
   },
   {
    "code": "P337+P313",
-   "tr": "Göz tahrişi devam ederse: Tıbbi yardım/bakım alın.",
+   "tr": "Göz tahrişi kalıcı ise: Tıbbi yardım/bakım alın.",
    "en": "If eye irritation persists: Get medical advice/attention.",
    "aid": true,
-   "needs_review": true
+   "alt": [
+    "Göz tahrişi devam ederse: Tıbbi yardım/bakım alın."
+   ]
   },
   {
    "code": "P391",
-   "tr": "Döküntüyü toplayın.",
+   "tr": "Döküntüleri toplayın.",
    "en": "Collect spillage.",
-   "needs_review": true
+   "alt": [
+    "Döküntüyü toplayın."
+   ]
   },
   {
    "code": "P403+P233",
-   "tr": "İyi havalandırılmış bir alanda depolayın. Kabı sıkıca kapalı tutun.",
-   "en": "Store in a well-ventilated place. Keep container tightly closed."
+   "tr": "İyi havalandırılmış bir alanda depolayınız. Kabı sıkıca kapalı tutun.",
+   "en": "Store in a well-ventilated place. Keep container tightly closed.",
+   "alt": [
+    "İyi havalandırılmış bir alanda depolayın. Kabı sıkıca kapalı tutun."
+   ]
   },
   {
    "code": "P405",
@@ -2271,19 +2361,23 @@
   {
    "code": "P410",
    "tr": "Güneş ışığından koruyun.",
-   "en": "Protect from sunlight.",
-   "needs_review": true
+   "en": "Protect from sunlight."
   },
   {
    "code": "P410+P412",
-   "tr": "Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın.",
+   "tr": "Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.",
    "en": "Protect from sunlight. Do not expose to temperatures exceeding 50 °C/122 °F.",
-   "needs_review": true
+   "alt": [
+    "Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın."
+   ]
   },
   {
    "code": "P501",
-   "tr": "İçeriği/kabı yerel, bölgesel, ulusal ve/veya uluslararası düzenlemelere uygun olarak bertaraf edin.",
-   "en": "Dispose of contents/container in accordance with local/regional/national/international regulations."
+   "tr": "İçeriği/kabı yerel/bölgesel/ulusal/uluslararası tüzüğe uygun olarak bertaraf edin.",
+   "en": "Dispose of contents/container in accordance with local/regional/national/international regulations.",
+   "alt": [
+    "İçeriği/kabı yerel, bölgesel, ulusal ve/veya uluslararası düzenlemelere uygun olarak bertaraf edin."
+   ]
   }
  ],
  "capsule": {
@@ -2302,11 +2396,6 @@
   ]
  },
  "uzem": "Türkiye'de Ulusal Zehir Danışma Merkezi (UZEM): 114.",
- "sds_tr": [
-  "https://www.bosch-pt.com/msds/_res/media/tr/1605430014_TR-tr_00635-0052_1,0.pdf",
-  "https://sds.edqm.eu/pdf/SDS/EDQM_202300230_1.0_SDS_TR.pdf",
-  "https://www.crad.com.tr/UPLOAD/URUN/FILES/ZararliKimyasallarinMevzuataUygunEtiketlenmesi-221724484.pdf"
- ],
  "mix_rule": {
   "title": "Başka ürünlerle karıştırmayın",
   "text": "Klorlu ürünler (çamaşır suyu) asitli ürünlerle (tuz ruhu, kireç çözücü) karışınca klor gazı, amonyakla karışınca zehirli gaz açığa çıkarır. Sağlık Bakanlığı bu ürünlerin karıştırılmamasını öneriyor; aktif klor içeren ürünlerin etiketinde EUH206 uyarısı zorunludur.",

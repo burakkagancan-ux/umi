@@ -1,7 +1,9 @@
 # Zararlılık ifadeleri (H ve EUH) -> data/temizlik.json (gen_temizlik.py).
-# Sütunlar: kod<TAB>seviye (red/yellow/info)<TAB>grup<TAB>TR metin<TAB>EN metin<TAB>sade açıklama (boş olabilir)
+# Sütunlar: kod<TAB>seviye (red/yellow/info)<TAB>grup<TAB>TR metin<TAB>EN metin<TAB>sade açıklama (boş olabilir)<TAB>diğer TR yazımlar (" | " ile; etikette tanınsın diye, isteğe bağlı)
 # Gruplar: cilt_goz, solunum, yutma, zehir, cmr, organ, cevre, fiziksel, karistirma, alerji, endokrin, diger
-# TR metinleri: H için SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-3'e dayalı liste (CRAD); EUH için çeviri (needs_review).
+# TR metinleri: H için SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-3'e dayalı liste (CRAD). EUH014–EUH210 ve EUH401: SEA Ek-3 İkinci ve
+# Üçüncü Bölüm'ün resmi metni (Resmî Gazete PDF'i, taranmış; 12.10.2026'da okundu). Tek sapma EUH206: resmi metindeki "(klorür)"
+# yerine klor (AB: chlorine). EUH211, EUH212, EUH380–EUH451 SEA'nın 2013 metninde yok; çeviri (needs_review).
 H200	yellow	fiziksel	Kararsız patlayıcı.	Unstable explosive.	
 H201	yellow	fiziksel	Patlayıcı; kütlesel patlama zararı.	Explosive; mass explosion hazard.	
 H202	yellow	fiziksel	Patlayıcı; ciddi yansıtım zararı.	Explosive; severe projection hazard.	
@@ -78,27 +80,27 @@ H412	yellow	cevre	Sucul ortamda uzun süre kalıcı, zararlı etki.	Harmful to a
 H413	yellow	cevre	Sucul ortamda uzun süre kalıcı, zararlı etki yapabilir.	May cause long lasting harmful effects to aquatic life.	Suda yaşayan canlılarda uzun süreli zararlı etki yapabilir.
 H420	yellow	cevre	Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir.	Harms public health and the environment by destroying ozone in the upper atmosphere.	
 # EK zararlılık ifadeleri (EUH)
-EUH014	yellow	fiziksel	Su ile şiddetli reaksiyona girer.	Reacts violently with water.	
-EUH018	yellow	fiziksel	Kullanım sırasında alevlenir/patlayıcı buhar-hava karışımı oluşturabilir.	In use may form flammable/explosive vapour-air mixture.	
+EUH014	yellow	fiziksel	Su ile şiddetli tepkime verir.	Reacts violently with water.		Su ile şiddetli reaksiyona girer.
+EUH018	yellow	fiziksel	Kullanım sırasında alevlenen/patlayan buhar-hava karışımı oluşturabilir.	In use may form flammable/explosive vapour-air mixture.		Kullanım sırasında alevlenir/patlayıcı buhar-hava karışımı oluşturabilir.
 EUH019	yellow	fiziksel	Patlayıcı peroksitler oluşturabilir.	May form explosive peroxides.	
-EUH044	yellow	fiziksel	Kapalı ortamda ısıtılırsa patlama riski vardır.	Risk of explosion if heated under confinement.	
-EUH029	yellow	karistirma	Su ile temas ettiğinde toksik gaz açığa çıkarır.	Contact with water liberates toxic gas.	Su ile temas ederse zehirli gaz açığa çıkar.
-EUH031	yellow	karistirma	Asitlerle temas ettiğinde toksik gaz açığa çıkarır.	Contact with acids liberates toxic gas.	Asitli bir ürünle (ör. tuz ruhu, kireç çözücü) temas ederse zehirli gaz açığa çıkar. Çamaşır suyunda sık görülür.
-EUH032	yellow	karistirma	Asitlerle temas ettiğinde çok toksik gaz açığa çıkarır.	Contact with acids liberates very toxic gas.	Asitli bir ürünle temas ederse çok zehirli gaz açığa çıkar.
+EUH044	yellow	fiziksel	Kapalı ortamda ısıtıldığında patlama riski var.	Risk of explosion if heated under confinement.		Kapalı ortamda ısıtılırsa patlama riski vardır.
+EUH029	yellow	karistirma	Su ile temasında toksik gaz çıkarır.	Contact with water liberates toxic gas.	Su ile temas ederse zehirli gaz açığa çıkar.	Su ile temas ettiğinde toksik gaz açığa çıkarır.
+EUH031	yellow	karistirma	Asitlerle temasında toksik gaz çıkarır.	Contact with acids liberates toxic gas.	Asitli bir ürünle (ör. tuz ruhu, kireç çözücü) temas ederse zehirli gaz açığa çıkar. Çamaşır suyunda sık görülür.	Asitlerle temas ettiğinde toksik gaz açığa çıkarır.
+EUH032	yellow	karistirma	Asitlerle temasında çok toksik gaz çıkarır.	Contact with acids liberates very toxic gas.	Asitli bir ürünle temas ederse çok zehirli gaz açığa çıkar.	Asitlerle temas ettiğinde çok toksik gaz açığa çıkarır.
 EUH066	yellow	cilt_goz	Tekrarlı maruz kalmalarda ciltte kuruluğa ve çatlaklara neden olabilir.	Repeated exposure may cause skin dryness or cracking.	Sık temasta cildi kurutup çatlatabilir.
-EUH070	red	cilt_goz	Gözle temas ettiğinde toksiktir.	Toxic by eye contact.	
-EUH071	red	solunum	Solunum yolu için aşındırıcıdır.	Corrosive to the respiratory tract.	Solunduğunda solunum yolunda aşındırıcı hasar yapabilir.
-EUH201	yellow	diger	Kurşun içerir. Çocukların çiğneyebileceği veya emebileceği yüzeylerde kullanılmamalıdır.	Contains lead. Should not be used on surfaces liable to be chewed or sucked by children.	
-EUH201A	yellow	diger	Uyarı! Kurşun içerir.	Warning! Contains lead.	
-EUH202	yellow	diger	Siyanoakrilat. Tehlike. Saniyeler içinde cildi ve gözleri yapıştırır. Çocukların erişemeyeceği yerde saklayın.	Cyanoacrylate. Danger. Bonds skin and eyes in seconds. Keep out of the reach of children.	
-EUH203	yellow	diger	Krom (VI) içerir. Alerjik reaksiyona yol açabilir.	Contains chromium (VI). May produce an allergic reaction.	
-EUH204	yellow	diger	İzosiyanatlar içerir. Alerjik reaksiyona yol açabilir.	Contains isocyanates. May produce an allergic reaction.	
-EUH205	yellow	diger	Epoksi bileşenler içerir. Alerjik reaksiyona yol açabilir.	Contains epoxy constituents. May produce an allergic reaction.	
-EUH206	yellow	karistirma	Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klor).	Warning! Do not use together with other products. May release dangerous gases (chlorine).	Aktif klor içeren ürünlerde (çamaşır suyu, klorlu temizleyiciler) zorunlu uyarı. Asitli ürünlerle karışırsa klor gazı çıkar.
-EUH207	yellow	diger	Uyarı! Kadmiyum içerir. Kullanım sırasında tehlikeli dumanlar oluşur.	Warning! Contains cadmium. Dangerous fumes are formed during use.	
+EUH070	red	cilt_goz	Gözle teması halinde toksiktir.	Toxic by eye contact.		Gözle temas ettiğinde toksiktir.
+EUH071	red	solunum	Solunum yolunda aşınmaya yol açar.	Corrosive to the respiratory tract.	Solunduğunda solunum yolunda aşındırıcı hasar yapabilir.	Solunum yolu için aşındırıcıdır.
+EUH201	yellow	diger	Kurşun içerir. Çocuklar tarafından çiğnenebilecek veya emilebilecek yüzeyler üzerinde kullanılmamalıdır.	Contains lead. Should not be used on surfaces liable to be chewed or sucked by children.		Kurşun içerir. Çocukların çiğneyebileceği veya emebileceği yüzeylerde kullanılmamalıdır.
+EUH201A	yellow	diger	Dikkat! Kurşun içerir.	Warning! Contains lead.		Uyarı! Kurşun içerir.
+EUH202	yellow	diger	Siyanoakrilat. Tehlikelidir. Cildi ve gözleri saniyeler içinde yapıştırır. Çocukların erişiminden uzak tutun.	Cyanoacrylate. Danger. Bonds skin and eyes in seconds. Keep out of the reach of children.		Siyanoakrilat. Tehlike. Saniyeler içinde cildi ve gözleri yapıştırır. Çocukların erişemeyeceği yerde saklayın.
+EUH203	yellow	diger	Krom (VI) içerir. Alerjik reaksiyonlara neden olabilir.	Contains chromium (VI). May produce an allergic reaction.		Krom (VI) içerir. Alerjik reaksiyona yol açabilir.
+EUH204	yellow	diger	İzosiyanat içerir. Alerjik reaksiyonlara yol açabilir.	Contains isocyanates. May produce an allergic reaction.		İzosiyanatlar içerir. Alerjik reaksiyona yol açabilir.
+EUH205	yellow	diger	Epoksi bileşenleri içerir. Alerjik reaksiyonlara yol açabilir.	Contains epoxy constituents. May produce an allergic reaction.		Epoksi bileşenler içerir. Alerjik reaksiyona yol açabilir.
+EUH206	yellow	karistirma	Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klor).	Warning! Do not use together with other products. May release dangerous gases (chlorine).	Aktif klor içeren ürünlerde (çamaşır suyu, klorlu temizleyiciler) zorunlu uyarı. Asitli ürünlerle karışırsa klor gazı çıkar.	Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klorür).
+EUH207	yellow	diger	Dikkat! Kadmiyum içerir. Kullanım esnasında tehlikeli dumanlar ortaya çıkar. İmalatçı tarafından sağlanan bilgilere başvurun. Güvenlik talimatlarına uyun.	Warning! Contains cadmium. Dangerous fumes are formed during use.		Uyarı! Kadmiyum içerir. Kullanım sırasında tehlikeli dumanlar oluşur.
 EUH208	yellow	alerji	içerir. Alerjik reaksiyona yol açabilir.	May produce an allergic reaction.	Ürün, alerjisi olan kişilerde reaksiyon başlatabilecek bir madde içeriyor. Maddenin adı ifadenin içinde yazılır.
-EUH209	info	diger	Kullanım sırasında kolay alevlenir hale gelebilir.	Can become highly flammable in use.	
-EUH209A	info	diger	Kullanım sırasında alevlenir hale gelebilir.	Can become flammable in use.	
+EUH209	info	diger	Kullanım esnasında çok alevlenir hale gelebilir.	Can become highly flammable in use.		Kullanım sırasında kolay alevlenir hale gelebilir.
+EUH209A	info	diger	Kullanım esnasında alevlenir hale gelebilir.	Can become flammable in use.		Kullanım sırasında alevlenir hale gelebilir.
 EUH210	info	diger	Talep halinde güvenlik bilgi formu sağlanabilir.	Safety data sheet available on request.	Ürünün ayrıntılı güvenlik bilgi formu üreticiden istenebilir.
 EUH211	yellow	solunum	Uyarı! Püskürtüldüğünde tehlikeli solunabilir damlacıklar oluşabilir. Spreyi veya buharı solumayın.	Warning! Hazardous respirable droplets may be formed when sprayed. Do not breathe spray or mist.	
 EUH212	yellow	solunum	Uyarı! Kullanıldığında tehlikeli solunabilir toz oluşabilir. Tozu solumayın.	Warning! Hazardous respirable dust may be formed when used. Do not breathe dust.	
@@ -110,4 +112,4 @@ EUH440	yellow	cevre	Çevrede birikir; canlı organizmalarda, insanlar dahil, bir
 EUH441	yellow	cevre	Çevrede ve canlı organizmalarda, insanlar dahil, güçlü biçimde birikir.	Strongly accumulates in the environment and living organisms including in humans.	
 EUH450	yellow	cevre	Su kaynaklarında uzun süreli ve yaygın kirlenmeye yol açabilir.	Can cause long-lasting and diffuse contamination of water resources.	
 EUH451	yellow	cevre	Su kaynaklarında çok uzun süreli ve yaygın kirlenmeye yol açabilir.	Can cause very long-lasting and diffuse contamination of water resources.	
-EUH401	info	diger	İnsan sağlığı ve çevre için risklerden kaçınmak için kullanım talimatlarına uyun.	To avoid risks to human health and the environment, comply with the instructions for use.	
+EUH401	info	diger	İnsan sağlığına ve çevreye yönelik riskleri önlemek için, kullanma talimatlarına uyun.	To avoid risks to human health and the environment, comply with the instructions for use.		İnsan sağlığı ve çevre için risklerden kaçınmak için kullanım talimatlarına uyun.

@@ -9,13 +9,13 @@ function buildTIndex(tdb){
   function addPh(list,txt,codes){tVariants(norm(txt)).forEach(function(p,i){if(p.length>=8&&!(i&&prim[p]))list.push({p:p,tk:p.split(" "),codes:codes})})}
   tdb.hazards.forEach(function(h){byCode[h.code]=h;addPh(phrases,h.tr,[h.code]);addPh(phrases,h.en,[h.code]);(h.alt||[]).forEach(function(a){addPh(phrases,a,[h.code])})});
   (tdb.combos||[]).forEach(function(c){addPh(phrases,c.tr,c.codes);addPh(phrases,c.en,c.codes)});
-  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code])});
+  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code]);(q.alt||[]).forEach(function(a){addPh(pphrases,a,[q.code])})});
   function rx(a){return a.map(function(s){return new RegExp(s,"g")})}
   var groups=tdb.groups.map(function(g){return {g:g,rx:rx(g.pat)}});
   var subs=tdb.subs.map(function(s){return {s:s,rx:rx(s.pat||[])}});
   var subByInci={};tdb.subs.forEach(function(s){s.inci.forEach(function(a){subByInci[a]=s})});
   var cap=tdb.capsule?{rx:rx(tdb.capsule.pat),d:tdb.capsule}:null;
-  return {sds_tr:tdb.sds_tr||[],byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],am:null};
+  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],am:null};
 }
 /* Temizlik eş anlamlıları (kaynak/temizlik_esanlamlilar.tsv) kozmetik dizinindeki INCI kayıtlarına bağlanır; ilk kullanımda kurulur */
 function tAliasMap(T,K){
