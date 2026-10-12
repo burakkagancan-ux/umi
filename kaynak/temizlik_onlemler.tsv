@@ -1,41 +1,45 @@
 # Önlem ifadeleri (P), tüketici ürünlerinde sık görülenler.
-# Sütunlar: kod<TAB>TR<TAB>EN<TAB>ilk yardım (1/0)
-P101	Tıbbi tavsiye gerekirse ürün kabını veya etiketini yanınızda bulundurun.	If medical advice is needed, have product container or label at hand.	1
+# Sütunlar: kod<TAB>TR<TAB>EN<TAB>ilk yardım (1/0)<TAB>diğer TR yazımlar (" | " ile; etikette tanınsın diye, isteğe bağlı)
+# TR: SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-4'ün resmi metni (Resmî Gazete PDF'i, taranmış; 12.10.2026'da okundu). Üreticinin
+# dolduracağı "..." yerleri tabloda gösterilen seçenekle dolduruldu (P264 elleri, P501 "yerel/bölgesel/ulusal/uluslararası tüzüğe uygun
+# olarak"); iki yazım hatası düzeltildi (P270 "içmeyiniz", P403+P233 "depolayanız"). EN metinleri CLP Ek IV'ün güncel metni; P101,
+# P210, P211, P251 gibi ifadelerin AB'deki sonraki değişiklikleri SEA'nın 2013 metnine işlenmemiş, Türkçe bu yüzden farklı okunabilir.
+P101	Tıbbi tavsiye gerekiyorsa, ambalajı veya etiketi saklayın.	If medical advice is needed, have product container or label at hand.	1	Tıbbi tavsiye gerekirse ürün kabını veya etiketini yanınızda bulundurun.
 P102	Çocukların erişemeyeceği yerde saklayın.	Keep out of reach of children.	0
 P103	Kullanmadan önce etiketi okuyun.	Read label before use.	0
 P201	Kullanmadan önce özel talimatları okuyun.	Obtain special instructions before use.	0
 P202	Bütün önlem ifadeleri okunup anlaşılmadan elleçlemeyin.	Do not handle until all safety precautions have been read and understood.	0
-P210	Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez.	Keep away from heat, hot surfaces, sparks, open flames and other ignition sources. No smoking.	0
-P211	Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin.	Do not spray on an open flame or other ignition source.	0
-P251	Delmeyin veya yakmayın, kullandıktan sonra bile.	Do not pierce or burn, even after use.	0
+P210	Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez.	Keep away from heat, hot surfaces, sparks, open flames and other ignition sources. No smoking.	0	Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez.
+P211	Aleve veya diğer ateş kaynaklarına doğru püskürtmeyin.	Do not spray on an open flame or other ignition source.	0	Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin.
+P251	Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.	Do not pierce or burn, even after use.	0	Delmeyin veya yakmayın, kullandıktan sonra bile.
 P260	Tozunu/dumanını/gazını/sisini/buharını/spreyini solumayın.	Do not breathe dust/fume/gas/mist/vapours/spray.	0
 P261	Tozunu/dumanını/gazını/sisini/buharını/spreyini solumaktan kaçının.	Avoid breathing dust/fume/gas/mist/vapours/spray.	0
-P262	Gözlerle, ciltle veya giysilerle temasından kaçının.	Do not get in eyes, on skin, or on clothing.	0
-P263	Gebelik sırasında ve emzirirken temastan kaçının.	Avoid contact during pregnancy and while nursing.	0
-P264	Elleçlemeden sonra elleri, kolları ve yüzü iyice yıkayın.	Wash hands thoroughly after handling.	0
+P262	Gözle, ciltle veya kıyafetle temas ettirmeyin.	Do not get in eyes, on skin, or on clothing.	0	Gözlerle, ciltle veya giysilerle temasından kaçının.
+P263	Hamilelikte/anne sütü verirken temastan kaçının.	Avoid contact during pregnancy and while nursing.	0	Gebelik sırasında ve emzirirken temastan kaçının.
+P264	Elleçlemeden sonra elleri iyice yıkayın.	Wash hands thoroughly after handling.	0	Elleçlemeden sonra elleri, kolları ve yüzü iyice yıkayın.
 P270	Bu ürünü kullanırken hiçbir şey yemeyin, içmeyin veya sigara içmeyin.	Do not eat, drink or smoke when using this product.	0
 P271	Sadece dışarıda veya iyi havalandırılan bir alanda kullanın.	Use only outdoors or in a well-ventilated area.	0
 P273	Çevreye verilmesinden kaçının.	Avoid release to the environment.	0
 P280	Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın.	Wear protective gloves/protective clothing/eye protection/face protection.	0
-P301+P310	YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.	IF SWALLOWED: Immediately call a POISON CENTER/doctor.	1
-P301+P312	YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.	IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.	1
-P301+P330+P331	YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN.	IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.	1
-P302+P352	CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın.	IF ON SKIN: Wash with plenty of water.	1
-P303+P361+P353	CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın.	IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.	1
-P304+P340	SOLUNMASI HALİNDE: Kişiyi temiz havaya çıkarın ve rahat nefes alabileceği bir pozisyonda tutun.	IF INHALED: Remove person to fresh air and keep comfortable for breathing.	1
-P305+P351+P338	GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin.	IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.	1
-P308+P313	Maruz kalma veya etkilenme halinde: Tıbbi yardım/bakım alın.	IF exposed or concerned: Get medical advice/attention.	1
-P310	Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.	Immediately call a POISON CENTER/doctor.	1
-P312	Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.	Call a POISON CENTER/doctor if you feel unwell.	1
-P313	Tıbbi yardım/bakım alın.	Get medical advice/attention.	1
+P301+P310	YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	IF SWALLOWED: Immediately call a POISON CENTER/doctor.	1	YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.
+P301+P312	YUTULDUĞUNDA: kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.	1	YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.
+P301+P330+P331	YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.	IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.	1	YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN.
+P302+P352	DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.	IF ON SKIN: Wash with plenty of water.	1	CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın.
+P303+P361+P353	DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.	IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.	1	CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın.
+P304+P340	SOLUNDUĞUNDA: Zarar gören kişiyi temiz havaya çıkartın ve kolay biçimde nefes alması için rahat bir pozisyonda tutun.	IF INHALED: Remove person to fresh air and keep comfortable for breathing.	1	SOLUNMASI HALİNDE: Kişiyi temiz havaya çıkarın ve rahat nefes alabileceği bir pozisyonda tutun.
+P305+P351+P338	GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.	IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.	1	GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin.
+P308+P313	Maruz kalınma veya etkileşme halinde İSE: Tıbbi yardım/bakım alın.	IF exposed or concerned: Get medical advice/attention.	1	Maruz kalma veya etkilenme halinde: Tıbbi yardım/bakım alın.
+P310	Hemen ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	Immediately call a POISON CENTER/doctor.	1	Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.
+P312	Kendinizi iyi hissetmezseniz, ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	Call a POISON CENTER/doctor if you feel unwell.	1	Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.
+P313	Tıbbi tavsiye alın/doktorunuza başvurun.	Get medical advice/attention.	1	Tıbbi yardım/bakım alın.
 P330	Ağzınızı çalkalayın.	Rinse mouth.	1
-P331	KUSTURMAYIN.	Do NOT induce vomiting.	1
-P332+P313	Ciltte tahriş oluşursa: Tıbbi yardım/bakım alın.	If skin irritation occurs: Get medical advice/attention.	1
-P333+P313	Ciltte tahriş veya kızarıklık oluşursa: Tıbbi yardım/bakım alın.	If skin irritation or rash occurs: Get medical advice/attention.	1
-P337+P313	Göz tahrişi devam ederse: Tıbbi yardım/bakım alın.	If eye irritation persists: Get medical advice/attention.	1
-P391	Döküntüyü toplayın.	Collect spillage.	0
-P403+P233	İyi havalandırılmış bir alanda depolayın. Kabı sıkıca kapalı tutun.	Store in a well-ventilated place. Keep container tightly closed.	0
+P331	Kusturmayın.	Do NOT induce vomiting.	1	KUSTURMAYIN.
+P332+P313	Ciltte tahriş söz konusu ise: Tıbbi yardım/müdahale alın.	If skin irritation occurs: Get medical advice/attention.	1	Ciltte tahriş oluşursa: Tıbbi yardım/bakım alın.
+P333+P313	Ciltte tahriş veya kaşıntı söz konusu ise: Tıbbi yardım/müdahale alın.	If skin irritation or rash occurs: Get medical advice/attention.	1	Ciltte tahriş veya kızarıklık oluşursa: Tıbbi yardım/bakım alın.
+P337+P313	Göz tahrişi kalıcı ise: Tıbbi yardım/bakım alın.	If eye irritation persists: Get medical advice/attention.	1	Göz tahrişi devam ederse: Tıbbi yardım/bakım alın.
+P391	Döküntüleri toplayın.	Collect spillage.	0	Döküntüyü toplayın.
+P403+P233	İyi havalandırılmış bir alanda depolayınız. Kabı sıkıca kapalı tutun.	Store in a well-ventilated place. Keep container tightly closed.	0	İyi havalandırılmış bir alanda depolayın. Kabı sıkıca kapalı tutun.
 P405	Kilit altında saklayın.	Store locked up.	0
 P410	Güneş ışığından koruyun.	Protect from sunlight.	0
-P410+P412	Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın.	Protect from sunlight. Do not expose to temperatures exceeding 50 °C/122 °F.	0
-P501	İçeriği/kabı yerel, bölgesel, ulusal ve/veya uluslararası düzenlemelere uygun olarak bertaraf edin.	Dispose of contents/container in accordance with local/regional/national/international regulations.	0
+P410+P412	Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.	Protect from sunlight. Do not expose to temperatures exceeding 50 °C/122 °F.	0	Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın.
+P501	İçeriği/kabı yerel/bölgesel/ulusal/uluslararası tüzüğe uygun olarak bertaraf edin.	Dispose of contents/container in accordance with local/regional/national/international regulations.	0	İçeriği/kabı yerel, bölgesel, ulusal ve/veya uluslararası düzenlemelere uygun olarak bertaraf edin.

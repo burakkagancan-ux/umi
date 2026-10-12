@@ -95,7 +95,13 @@ AL.forEach(([t,yes,no,chk],i)=>{
  ok(same(TL.analyzeT("Alerjik cilt reaksiyonlarına yol açar.",T,K).hazards.map(x=>x.code),['H317']),'H317 yol açar');
  ok(same(TL.analyzeT("EUH208: Contains Linalool, Limonene. May produce an allergic reaction.",T,K).euh208,['Linalool, Limonene']),'EUH208 İngilizce');
  ok(tdb.precautions.length>=35&&tdb.precautions.every(p=>p.tr&&p.en),'önlem verisi');
- ok(!T.byCode.EUH208.needs_review&&!T.byCode.EUH210.needs_review&&T.byCode.EUH071.needs_review,'EUH doğrulama bayrakları');
+ ok(!T.byCode.EUH208.needs_review&&!T.byCode.EUH071.needs_review&&T.byCode.EUH211.needs_review&&T.byCode.EUH380.needs_review,'EUH doğrulama bayrakları (SEA Ek-3)');
+ok(tdb.precautions.every(p=>!p.needs_review),'önlem ifadeleri SEA Ek-4 ile karşılaştırıldı');
+for(const [t,p,h] of [['Su ile şiddetli reaksiyona girer. Gebelik sırasında ve emzirirken temastan kaçının.','P263','EUH014'],
+  ['Su ile şiddetli tepkime verir. Hamilelikte/anne sütü verirken temastan kaçının.','P263','EUH014']]){
+ const A=TL.analyzeT(t,T,K);
+ ok(A.prec.some(x=>x.code===p)&&A.hazards.some(x=>x.code===h),'SEA metni ve eski yazım tanınır: '+t);
+}
 }
 
 // Yanlış eşleşme olmamalı: gıda ve kozmetik etiketleri

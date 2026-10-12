@@ -117,7 +117,7 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 
 ### Temizlik
 - Ansiklopedi sayfası yok. `temizlik.json`: 8 madde notu (`subs`: MIT/CMIT/BIT/OIT, sodyum hipoklorit, asit, amonyak, enzimler), 22 içerik grubu, 98 temizliğe özgü eş anlamlı. Notu olmayan yaygın maddeler (LAS, SLES, STPP, perkarbonat, kostik soda, butil glikol, DDAC, zeolit, EDTA, sitrik asit…) yalnızca "tanınan madde" olarak CosIng işleviyle listeleniyor; açıklama yok.
-- H/EUH/P ifadelerinin Türkçesi: EUH ve 23 P ifadesi çeviri (needs_review), SEA Yönetmeliği resmi metni okunamadı.
+- H/EUH/P ifadelerinin Türkçesi — KAPANDI (12.10.2026): SEA Yönetmeliği'nin Resmî Gazete'deki asıl metni (RG 11.12.2013, 28848 Mük., 20131211M1-1.pdf, 1.668 sayfa taranmış görüntü) indirildi; Ek-3 İkinci/Üçüncü Bölüm (EUH, s. 158–159) ve Ek-4 (P, s. 160–190) okundu. 23 EUH ve 39 P ifadesinin Türkçesi resmi metin oldu; eski çeviri "diğer yazım" olarak tanınmaya devam ediyor. EUH206'da resmi metnin "(klorür)" yazımı yerine klor bırakıldı (AB: chlorine). Açık: EUH211, EUH212 ve 2023'te eklenen EUH380–EUH451 SEA'nın 2013 metninde yok (çeviri, needs_review); SEA'nın 2013 sonrası değişiklikleri okunmadı, P101/P210/P211/P251 gibi ifadelerde AB'nin sonraki değişiklikleri Türkçe metne işlenmemiş.
 - Yapılacak: önce bu ~30 yaygın madde için kısa kayıt (ne işe yarar, nerede kullanılır, hangi H ifadesi), sonra ansiklopedi sayfası.
 
 ## Kozmetik: PFAS işareti AB kaydının tüm INCI adlarına geçiyor (08.10.2026) — KAPANDI (09.10.2026)
