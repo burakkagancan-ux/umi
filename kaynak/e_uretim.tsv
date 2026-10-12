@@ -23,7 +23,8 @@ E102,E110,E123,E124,E129	sentetik	Kimyasal sentezle üretilen azo boyadır.	http
 E104	sentetik	Kimyasal sentezle üretilen boyadır.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E127	sentetik	Floresein iyotlanarak kimyasal sentezle üretilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E122,E151,E155	sentetik	Kimyasal sentezle üretilen azo boyadır.	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32012R0231	1
-E128,E154,E180	sentetik	Kimyasal sentezle üretilen azo boyadır.		0
+E128,E180	sentetik	Kimyasal sentezle üretilen azo boyadır.		0
+E154	sentetik	Diazolanmış sülfanilik asidin m-fenilendiamin ve tolilen-2,4-diamin karışımıyla eşleştirilmesiyle kimyasal sentezle üretilen azo boyadır.	https://inchem.org/documents/jecfa/jecmono/v20je10.htm	1
 E131,E133,E142	sentetik	Kimyasal sentezle üretilen boyadır.	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32012R0231	1
 E132	sentetik	İndigonun sülfonlanmasıyla kimyasal yolla üretilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E120	dogal	Koşnil böceğinden su ya da alkolle ekstraksiyonla elde edilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
@@ -38,7 +39,8 @@ E160a	belirsiz	Beta-karoten kimyasal sentezle, bitkilerden ekstraksiyonla, manta
 E160b	dogal	Annatto ağacının tohum kabuğundan çözücü, alkali ya da yağla ekstraksiyonla elde edilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E160c	dogal	Kırmızı biberden çözücüyle ekstraksiyonla elde edilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E160d	belirsiz	Likopen kimyasal sentezle, domatesten ekstraksiyonla ya da mantar biyokütlesinden elde edilebilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
-E160e,E160f	sentetik	Kimyasal sentezle üretilen karotenoittir.		0
+E160e	sentetik	Kimyasal sentezle üretilen karotenoittir.	https://pmc.ncbi.nlm.nih.gov/articles/PMC13151837/	1
+E160f	sentetik	Kimyasal sentezle üretilen karotenoittir.		0
 E161b	dogal	Kadife çiçeği gibi bitkilerden çözücüyle ekstraksiyonla elde edilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E161g	sentetik	Kimyasal sentezle üretilir; doğada da bulunan bir karotenoittir.	https://fao.org/fileadmin/user_upload/jecfa_additives/docs/Monograph1/additive-101-m1.pdf	1
 E162	dogal	Kırmızı pancarın sıkılması ya da suyla ekstraksiyonuyla elde edilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
