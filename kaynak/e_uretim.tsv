@@ -23,7 +23,8 @@ E102,E110,E123,E124,E129	sentetik	Kimyasal sentezle üretilen azo boyadır.	http
 E104	sentetik	Kimyasal sentezle üretilen boyadır.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E127	sentetik	Floresein iyotlanarak kimyasal sentezle üretilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1
 E122,E151,E155	sentetik	Kimyasal sentezle üretilen azo boyadır.	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32012R0231	1
-E128,E180	sentetik	Kimyasal sentezle üretilen azo boyadır.		0
+E128	sentetik	Kimyasal sentezle üretilen azo boyadır.		0
+E180	sentetik	2-amino-5-metilbenzensülfonik asidin diazolanması, alkali ortamda 3-hidroksi-2-naftoik asitle eşleştirilmesi ve kalsiyum klorürle kalsiyum tuzuna dönüştürülmesiyle kimyasal sentezle üretilen azo boyadır.	https://doi.org/10.2903/j.efsa.2010.1586	1
 E154	sentetik	Diazolanmış sülfanilik asidin m-fenilendiamin ve tolilen-2,4-diamin karışımıyla eşleştirilmesiyle kimyasal sentezle üretilen azo boyadır.	https://inchem.org/documents/jecfa/jecmono/v20je10.htm	1
 E131,E133,E142	sentetik	Kimyasal sentezle üretilen boyadır.	https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32012R0231	1
 E132	sentetik	İndigonun sülfonlanmasıyla kimyasal yolla üretilir.	https://eur-lex.europa.eu/eli/reg/2012/231/oj	1

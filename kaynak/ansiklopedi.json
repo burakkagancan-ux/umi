@@ -870,11 +870,11 @@
    "official": true
   },
   "ca_ab418": {
-   "title": "California AB 418 (2023-2024), California Food Safety Act, Chapter 328, Statutes of 2023 (chaptered text)",
-   "publisher": "California Legislature (LegiScan kopyası)",
+   "title": "California AB 418 (2023-2024), California Food Safety Act (enrolled text, 14.09.2023; Chapter 328, Statutes of 2023)",
+   "publisher": "California Legislature",
    "year": 2023,
-   "url": "https://legiscan.com/CA/text/AB418/2023",
-   "official": false
+   "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202320240AB418",
+   "official": true
   },
   "efsa_parabens": {
    "title": "Opinion of the Scientific Panel on food additives, flavourings, processing aids and materials in contact with food (AFC) related to para hydroxybenzoates (E 214-219) — EFSA advises on the safety of paraben usage in food",
@@ -7329,7 +7329,7 @@
    "found_in": [
     "Peynir kabukları"
    ],
-   "in_the_body": "",
+   "in_the_body": "Sıçanlardaki tek veriye göre litolrubin BK emilmez; idrarla değil dışkıyla atılır.",
    "agency_note": "Yalnızca peynir kabuğunda kullanılmasına izin verilir. EFSA 2010'da veri ADI belirlemeye yetmediği için mevcut ADI'nin geri çekilmesini önerdi; alımın etkisiz düzeyden yaklaşık 1700 kat düşük olması nedeniyle izinli kullanımda güvenlik endişesi görmedi.",
    "regulatory_extra": [
     {
@@ -7344,7 +7344,7 @@
    "sources": [
     "efsa_e180"
    ],
-   "last_reviewed": "2026-10-04"
+   "last_reviewed": "2026-10-12"
   },
   "E300": {
    "evidence_level": "strong",

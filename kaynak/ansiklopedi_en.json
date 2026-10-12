@@ -3110,8 +3110,8 @@
 "tr": "Litolrubin BK"
 },
 "E180.prod": {
-"s": "An azo dye produced by chemical synthesis.",
-"tr": "Kimyasal sentezle üretilen azo boyadır."
+"s": "An azo dye produced by chemical synthesis: 2-amino-5-methylbenzenesulfonic acid is diazotised, coupled in an alkaline medium with 3-hydroxy-2-naphthoic acid, and converted to the calcium salt with calcium chloride.",
+"tr": "2-amino-5-metilbenzensülfonik asidin diazolanması, alkali ortamda 3-hidroksi-2-naftoik asitle eşleştirilmesi ve kalsiyum klorürle kalsiyum tuzuna dönüştürülmesiyle kimyasal sentezle üretilen azo boyadır."
 },
 "E180.regx.0": {
 "s": "Withdrawal of the ADI recommended; no safety concern at the authorised use.",
@@ -16232,6 +16232,10 @@
 "E949.body": {
 "s": "Hydrogen is also formed in the body: bacteria in the large intestine produce about 70–140 mL of hydrogen a day, and this amount increases with dietary fibre and sugars.",
 "tr": "Hidrojen vücutta da oluşur: kalın bağırsaktaki bakteriler günde yaklaşık 70–140 mL hidrojen üretir; lifli ve şekerli besinler bu miktarı artırır."
+},
+"E180.body": {
+"s": "According to the only available data, in rats litholrubine BK is not absorbed and is excreted in the faeces, not the urine.",
+"tr": "Sıçanlardaki tek veriye göre litolrubin BK emilmez; idrarla değil dışkıyla atılır."
 }
 }
 }
