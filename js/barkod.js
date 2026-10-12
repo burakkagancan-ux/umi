@@ -95,6 +95,12 @@ function barkodKatkiUygun(mode,toplam,taninan){
   if(mode==="tem")return taninan>=1;
   return toplam>=BARKOD_AYAR.katkiEnAzParca&&taninan/toplam>=BARKOD_AYAR.katkiEnAzOran;
 }
+/* Katkıcı kimliği (O-22): cihazda bir kez üretilen rastgele 32 onaltılık hane; kişisel bilgiden türetilmez.
+   Katkıyla birlikte gider; ileride rozet ve "Katkılarım" için katkıyı sahibine yazar. Worker aynı biçimi denetler. */
+function katkiciGecerli(s){return /^[0-9a-f]{32}$/.test(String(s==null?"":s))}
+function katkiciUret(bayt){   // bayt: 16 rastgele bayt (crypto.getRandomValues)
+  var o="";for(var i=0;i<16;i++)o+=(256+(bayt[i]&255)).toString(16).slice(1);return o;
+}
 /* İki içerik metni aynı ürünün içeriği mi: sözcük kümelerinin benzerliği (Jaccard). Büyük/küçük harf, noktalama ve Türkçe harfler duyarsız.
    Worker (worker/src/index.js) aynı hesabı kullanır; değiştirilirse ikisi birlikte değişir (test/barkod.js denetler). */
 function barkodSozcukler(s){

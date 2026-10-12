@@ -129,9 +129,17 @@ function barkodUygun(tx){
 }
 function barkodIzin(){try{return localStorage.getItem("barkod_katki")||""}catch(e){return ""}}
 function barkodIzinYaz(v){try{if(v)localStorage.setItem("barkod_katki",v);else localStorage.removeItem("barkod_katki")}catch(e){}}
+/* Katkıcı kimliği yalnızca ilk katkıda üretilir (katkı yapmayanın cihazında hiç yoktur); yedek dosyasına girer */
+function katkiciAl(){try{return localStorage.getItem("katkici")||""}catch(e){return ""}}
+function katkiciYaz(k){try{if(katkiciGecerli(k))localStorage.setItem("katkici",k)}catch(e){}}
+function katkiciKimlik(){
+  var k=katkiciAl();if(katkiciGecerli(k))return k;
+  try{var b=new Uint8Array(16);crypto.getRandomValues(b);k=katkiciUret(b)}catch(e){return ""}
+  katkiciYaz(k);return katkiciAl()===k?k:"";   // saklanamıyorsa (gizli sekme) kimliksiz gönderilir
+}
 function barkodDil(tx){return /[ğışĞİŞ]|içindekiler/i.test(tx)?"tr":/\b(ingredients|contains)\b/i.test(tx)?"en":""}
 function barkodGonder(tx){
-  return barkodWorker("/urun",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:BARKOD.kod,tur:MODE,dil:barkodDil(tx),metin:tx})});
+  return barkodWorker("/urun",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:BARKOD.kod,tur:MODE,dil:barkodDil(tx),metin:tx,kim:katkiciKimlik()||undefined})});
 }
 function barkodKatki(tx){
   BARKOD.katki=true;

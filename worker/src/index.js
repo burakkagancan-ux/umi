@@ -22,7 +22,9 @@
 //                       yanıt 1 gün önbellekte). 200 {bulundu, db, ad, marka, t, metin:{dil: metin}}
 //   GET  /urun/:barkod  kendi veritabanımız: aynı barkoda gelen katkılar benzerliğe göre gruplanır; farklı zamanlarda gelen iki
 //                       benzer katkı "doğrulanmış" sayılır. 200 {bulundu, tur, dil, metin, t, dogrulandi, sayi}
-//   POST /urun          {kod, tur, dil, metin} katkı (yalnızca kullanıcının açık izniyle gönderilir). IP, cihaz ya da kişisel bilgi saklanmaz.
+//   POST /urun          {kod, tur, dil, metin, kim?} katkı (yalnızca kullanıcının açık izniyle gönderilir). IP, cihaz ya da kişisel bilgi saklanmaz.
+//                       kim: cihazda bir kez rastgele üretilen takma katkıcı kimliği (32 onaltılık hane; kişisel bilgiden türetilmez, O-22).
+//                       Katkıları ileride rozet ve "Katkılarım" için sahibine yazmaya yarar; GET yanıtında hiç görünmez.
 //   OFF verisi D1'e yazılmaz (ODbL ayrımı).
 //
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
@@ -89,6 +91,7 @@ const OFF_UA = "Tagsis/1.0 (https://github.com/burakkagancan-ux/tagsis; barkod s
 const OFF_DB = [["food", "world.openfoodfacts.org"], ["beauty", "world.openbeautyfacts.org"], ["products", "world.openproductsfacts.org"]];
 const OFF_DIL = ["tr", "en", "de", "fr", "nl", "ar", "ru", "es", "it"];
 const KATKI_BARKOD_EN_COK = 30;        // bir barkoda en çok bu kadar katkı (kötüye kullanım sınırı)
+const KATKICI_RE = /^[0-9a-f]{32}$/;   // js/barkod.js katkiciGecerli ile aynı
 
 async function offAra(kod) {
   const f = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text," + OFF_DIL.map((d) => "ingredients_text_" + d).join(",");
@@ -128,9 +131,12 @@ let D1_HAZIR = false;
 async function d1(env) {
   if (!D1_HAZIR) {
     await env.URUNLER.batch([
-      env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS katki (id INTEGER PRIMARY KEY AUTOINCREMENT, kod TEXT NOT NULL, tur TEXT NOT NULL, dil TEXT, metin TEXT NOT NULL, t INTEGER NOT NULL)"),
+      env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS katki (id INTEGER PRIMARY KEY AUTOINCREMENT, kod TEXT NOT NULL, tur TEXT NOT NULL, dil TEXT, metin TEXT NOT NULL, t INTEGER NOT NULL, kim TEXT)"),
       env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS katki_kod ON katki (kod)"),
     ]);
+    // O-22 öncesi oluşmuş tabloya kim sütunu (eski satırlarda boş kalır). Sütun zaten varsa SQLite hata verir; yok sayılır.
+    try { await env.URUNLER.prepare("ALTER TABLE katki ADD COLUMN kim TEXT").run(); } catch {}
+    await env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS katki_kim ON katki (kim)").run();
     D1_HAZIR = true;
   }
   return env.URUNLER;
@@ -140,7 +146,7 @@ async function urun(request, env, kod, R) {
   if (request.method === "GET") {
     if (!env.URUNLER) return R(200, { bulundu: false, devreDisi: true });
     const db = await d1(env);
-    const { results } = await db.prepare("SELECT tur, dil, metin, t FROM katki WHERE kod = ? ORDER BY t DESC LIMIT 50").bind(kod).all();
+    const { results } = await db.prepare("SELECT tur, dil, metin, t, kim FROM katki WHERE kod = ? ORDER BY t DESC LIMIT 50").bind(kod).all();
     return R(200, urunSec(results || []));
   }
   // POST: katkı
@@ -148,15 +154,17 @@ async function urun(request, env, kod, R) {
   try { const raw = await request.text(); if (raw.length > 20_000) return R(413, { error: "Metin çok uzun." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
   const k = String((j && j.kod) || "").replace(/[^0-9]/g, ""), tur = j && j.tur, dil = String((j && j.dil) || "");
   const metin = String((j && j.metin) || "").replace(/\s+/g, " ").trim();
+  const kim = j && j.kim != null && j.kim !== "" ? String(j.kim) : null;   // eski uygulama sürümleri kimlik göndermez
   if (!barkodGecerli(k)) return R(400, { error: "Geçersiz barkod." });
   if (!["gida", "koz", "tem"].includes(tur)) return R(400, { error: "Geçersiz tür." });
   if (dil && !/^[a-z]{2}$/.test(dil)) return R(400, { error: "Geçersiz dil." });
+  if (kim && !KATKICI_RE.test(kim)) return R(400, { error: "Geçersiz katkıcı kimliği." });
   if (metin.length < 20 || metin.length > 4000 || sozcukler(metin).length < 3) return R(400, { error: "İçerik metni uygun değil." });
   if (!env.URUNLER) return new Response(null, { status: 204 });
   const db = await d1(env);
   const say = await db.prepare("SELECT COUNT(*) AS n FROM katki WHERE kod = ?").bind(k).first();
   if (say && say.n >= KATKI_BARKOD_EN_COK) return R(429, { error: "Bu ürün için yeterli katkı var." });
-  await db.prepare("INSERT INTO katki (kod, tur, dil, metin, t) VALUES (?, ?, ?, ?, ?)").bind(k, tur, dil, metin, Date.now()).run();
+  await db.prepare("INSERT INTO katki (kod, tur, dil, metin, t, kim) VALUES (?, ?, ?, ?, ?, ?)").bind(k, tur, dil, metin, Date.now(), kim).run();
   return R(201, { tamam: true });
 }
 
