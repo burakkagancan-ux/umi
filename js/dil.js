@@ -6,7 +6,11 @@ function dilGetir(p){return fetch(p).then(function(r){if(!r.ok)throw new Error(p
 function dilOnbellege(u){try{if(navigator.serviceWorker)navigator.serviceWorker.ready.then(function(r){if(r.active)r.active.postMessage({onbellek:u})})}catch(e){}}
 function dilKayitli(){try{return localStorage.getItem("dil")}catch(e){return null}}
 function ulkeKayitli(){try{return localStorage.getItem("ulke")}catch(e){return null}}
-function ulke(){return ulkeSec(ulkeKayitli(),DIL.kod)}   // "TR" ya da "" (seçilmedi)
+function ulke(){return ulkeSec(ulkeKayitli(),DIL.kod)}   // ULKELER'den biri ya da "" (seçilmedi)
+/* <html data-ulke>: alt menüdeki Liste (Bakanlık listesi) yalnızca Türkiye seçiliyken görünür (tema.css). Dil dosyası inmeden önce tahminle
+   konur ki Türkiye'de menü açılışta kaymasın; dil kurulunca ve ülke değişince kesinleşir. */
+function ulkeIsaretle(u){document.documentElement.setAttribute("data-ulke",u)}
+ulkeIsaretle(ulkeSec(ulkeKayitli(),dilSec(dilKayitli(),navigator.languages||[navigator.language],["tr","en"])));
 var DIL_HAZIR=dilGetir("i18n/diller.json").catch(function(){return {diller:{tr:{ad:"Türkçe",yon:"ltr"}}}}).then(function(b){
   var bilgi=b.diller||{},destek=Object.keys(bilgi);
   var kod=dilSec(dilKayitli(),navigator.languages||[navigator.language],destek);
@@ -16,7 +20,7 @@ var DIL_HAZIR=dilGetir("i18n/diller.json").catch(function(){return {diller:{tr:{
   return Promise.all(u.map(function(p){return dilGetir(p).catch(function(){return {}})}).concat([veri])).then(function(v){
     var s={};gerek.forEach(function(k,i){s[k]=v[i]});
     var vd={};if(v[gerek.length])vd[kod]=v[gerek.length];
-    dilKur(kod,s,bilgi,vd);dilUygula(document);
+    dilKur(kod,s,bilgi,vd);dilUygula(document);ulkeIsaretle(ulke());
     dilOnbellege(u.concat(v[gerek.length]?[vu]:[],DIL.yazi&&DIL.yazi.css?[DIL.yazi.css]:[]));
   });
 });

@@ -60,8 +60,9 @@ function veriMetin(tr,anahtar,resmi){
 /* Yalnızca metin (işaret konamayan yerler: listeler, birleşik cümleler) */
 function veriS(tr,anahtar,resmi){return veriMetin(tr,anahtar,resmi).s}
 /* Ülke katmanı (B-05 ilk adımı, 09.10.2026): ülkeye özgü bilgiler (yerel mevzuat adı, zehir danışma hattı, Bakanlık listesi)
-yalnızca seçilen ülkede gösterilir. Kayıtlı seçim ("" = seçilmedi) > dil Türkçeyse Türkiye > seçilmedi. Yeni ülke ULKELER'e eklenir. */
-var ULKELER=["TR"];
+yalnızca seçilen ülkede gösterilir. Kayıtlı seçim ("" = seçilmedi) > dil Türkçeyse Türkiye > seçilmedi. Yeni ülke ULKELER'e eklenir
+(ad: ulke.ad.<kod>). Türkiye dışındakiler (12.10.2026): ana dili İngilizce ya da İngilizcenin çok yaygın konuşulduğu ülkeler; henüz ülkeye özgü bilgileri yok. */
+var ULKELER=["TR","US","GB","IE","CA","AU","NZ","ZA","IN","PK","SG","PH","MY","NG","KE","GH","UG","JM","MT","NL","SE","DK","NO","FI"];
 function ulkeSec(kayitli,dil){
   if(kayitli===""||ULKELER.indexOf(kayitli)>-1)return kayitli;
   return dil==="tr"?"TR":"";

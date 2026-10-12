@@ -147,7 +147,7 @@ C.dilKur('ar',{tr:{},ar:{}},{ar:{ad:'العربية',yon:'rtl',yazi:{govde:'"Not
 ok(C.DIL.yon==='rtl'&&C.DIL.yazi&&/Noto/.test(C.DIL.yazi.govde),'sağdan sola dil ve yazı tipi bilgisi');
 const r=C.veriMetin('Türkçe not','x.y');ok(r.cevrilmedi&&r.s==='Türkçe not','veri çevirisi yoksa Türkçe + çevrilmedi işareti');
 ok(C.veriMetin('Türkçe','x.y',{ar:'رسمي'}).s==='رسمي','veride resmi metin (ör. CLP) varsa o');
-ok(C.ulkeSec(null,'tr')==='TR'&&C.ulkeSec(null,'en')===''&&C.ulkeSec('','tr')===''&&C.ulkeSec('TR','en')==='TR'&&C.ulkeSec('XX','tr')==='TR','ülke seçimi: kayıtlı > Türkçe → Türkiye > seçilmedi');
+ok(C.ulkeSec(null,'tr')==='TR'&&C.ulkeSec(null,'en')===''&&C.ulkeSec('','tr')===''&&C.ulkeSec('TR','en')==='TR'&&C.ulkeSec('XX','tr')==='TR'&&C.ulkeSec('US','tr')==='US','ülke seçimi: kayıtlı > Türkçe → Türkiye > seçilmedi');
 ok(C.dilSec(null,['de-DE','tr-TR'],['tr','en'])==='tr'&&C.dilSec(null,['en-US'],['tr','en'])==='en'&&C.dilSec(null,['de'],['tr','en'])==='en'&&C.dilSec('tr',['en'],['tr','en'])==='tr','dil seçimi: kayıtlı > tarayıcı > İngilizce');
 // 7) Her dilde paylaşım kartı: sayı kutusu etiketleri kutuya, metinler karta sığar (test/paylas.js'teki sahte ölçüm: karakter başına 0,55 px)
 for(const kod of Object.keys(bilgi)){

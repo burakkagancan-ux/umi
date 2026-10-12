@@ -55,8 +55,8 @@ function buildProfile(){
   dl.appendChild(ds);bd.appendChild(dl);bd.appendChild(el("div","mut",t("profil.dil_not")));
   // Ülke: seçim localStorage "ulke"de ("" = seçilmedi); ülkeye özgü kartlar ve notlar buna göre gösterilir
   var ul=el("label","pn"),us=document.createElement("select");us.id="ulkesec";us.setAttribute("aria-label",t("profil.ulke"));
-  [""].concat(ULKELER).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
-  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}if(LAST.length||$("metin").value.trim())run()};
+  [""].concat(ULKELER.slice().sort(function(a,b){return t("ulke.ad."+a.toLowerCase()).localeCompare(t("ulke.ad."+b.toLowerCase()),DIL.kod)})).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
+  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
   ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);bd.appendChild(ul);bd.appendChild(el("div","mut",t("profil.ulke_not")));
   var b0=pbox(t("profil.kisisel")),g0=el("div","pg pnum");
   var cl=el("label","pn");cl.appendChild(el("span",null,t("profil.cinsiyet")));var cs=document.createElement("select");
