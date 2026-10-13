@@ -2,7 +2,7 @@
 // etiket metninden tablo ayrıştırma (satır satır, hücre hücre, sütun sütun okunmuş OCR; porsiyon/%RI sütunu; diller; içerik listesiyle aynı metin).
 // Çalıştır: node test/besin.js
 const fs=require('fs'),path=require('path'),{execFileSync}=require('child_process');
-eval(require('./yukle.js')+';global.B={besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN}');
+eval(require('./yukle.js')+';global.B={besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const veri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8'));
 const S=B.besinSozluk(veri);
@@ -166,11 +166,52 @@ a=ay(`İçindekiler: şeker, bitkisel yağ (palm, %25), kakao, süt tozu, tuz. B
 ok(a&&a.durum==='tamam'&&a.b.yag===25.1&&a.b.tuz===0.1&&a.birim==='g','içerik listesi + tablo '+j(a));
 a=ay(`İçindekiler: şeker, bitkisel yağ, tuz\nBesin değerleri 100 g\nEnerji 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g`);
 ok(a&&a.durum==='tamam'&&a.b.tuz===0.1&&a.birim==='g','içerik listesi satırı + tablo (satır sonuyla) '+j(a));
+// E kodu sayı değildir: içerik listesinde satır adının ardından gelen E kodu değer sanılmaz
+a=ay('Şeker, E330\nBesin değerleri 100 g\nEnerji 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g');
+ok(a&&a.b.seker===30.5&&!a.sorun.includes('cok_satir')&&a.durum==='tamam','"Şeker, E330" şekerler 330 g olmaz '+j(a));
+ok(ay('Şeker, E 150c, tuz, E1422')===null,'yalnızca E kodlu içerik listesi tablo değil');
 // Gerçek OFF kaydındaki tutarsızlık metinden de yakalanır
 a=ay('100 ml: Enerji 132 kcal, Yağ 0 g, Doymuş yağ 0 g, Karbonhidrat 8,1 g, Şekerler 8,1 g, Protein 0 g, Tuz 0 g');
 ok(a&&a.sorun.includes('kj_kcal'),'kJ yerine kcal (metin) '+j(a&&a.sorun));
 // Hız: uzun metin
 const uzun=(T1+'\n').repeat(40);const t0=Date.now();for(let i=0;i<20;i++)ay(uzun);
 ok(Date.now()-t0<2000,'hız: 20 uzun metin '+(Date.now()-t0)+' ms');
+// 4) Renkli gösterim (3. adım): eşikler (Birleşik Krallık FoP 2016, Ek 3), sınırlar, "<" değer, birim ve şüphede renk yok
+const dz=B.besinDuzey;
+ok(dz('yag',3,false,'g')==='dusuk'&&dz('yag',3.01,false,'g')==='orta'&&dz('yag',17.5,false,'g')==='orta'&&dz('yag',17.51,false,'g')==='yuksek','yağ sınırları (≤3 düşük, >17,5 yüksek)');
+ok(dz('doymus',1.5,false,'g')==='dusuk'&&dz('doymus',5.1,false,'g')==='yuksek'&&dz('seker',22.5,false,'g')==='orta'&&dz('seker',22.6,false,'g')==='yuksek','doymuş yağ ve şeker sınırları');
+ok(dz('tuz',0.3,false,'g')==='dusuk'&&dz('tuz',1.5,false,'g')==='orta'&&dz('tuz',1.51,false,'g')==='yuksek','tuz sınırları (gıda)');
+ok(dz('seker',4,false,'ml')==='orta'&&dz('seker',4,false,'g')==='dusuk'&&dz('tuz',0.8,false,'ml')==='yuksek'&&dz('yag',1.5,false,'ml')==='dusuk','içecek eşikleri ayrı (100 ml)');
+ok(dz('tuz',0.5,true,'g')===null&&dz('tuz',0.25,true,'g')==='dusuk','"<" değer: eşiğin altında kalıyorsa düşük, değilse bilinmiyor');
+ok(dz('yag',10,false,'')===null&&dz('kcal',500,false,'g')===null&&dz('karb',50,false,'g')===null,'birim yoksa ya da renklenmeyen satırda düzey yok');
+const cik={kcal:505,yag:25.1,doymus:16,karb:68.75,seker:30.5,protein:3.2,tuz:0.1};
+let g=B.besinGorunum({b:cik,birim:'g',sorun:[]});
+ok(g.renk&&j(g.satir.map(s=>s.duzey))===j(['yuksek','yuksek','yuksek','dusuk'])&&g.enerji===505,'tutarlı çikolata renkli '+j(g));
+g=B.besinGorunum({b:cik,birim:'',sorun:[]});
+ok(!g.renk&&g.neden==='birim'&&g.satir.every(s=>s.duzey===null),'birim bilinmiyorsa renk yok, sorulur');
+g=B.besinGorunum({b:cik,birim:'g',sorun:['yuz_yok']});
+ok(!g.renk&&g.neden==='suphe'&&g.satir.every(s=>s.duzey===null)&&g.sorun.includes('yuz_yok'),'ayrıştırma şüphesinde renk yok');
+g=B.besinGorunum({b:cik,birim:'g',sorun:['yuz_yok'],onay:true});
+ok(g.renk,'kullanıcı onaylayınca ayrıştırma şüphesi kalkar');
+const bira={kcal:43,yag:0,doymus:0,karb:3.6,seker:0.2,protein:0.4,tuz:0};
+ok(!B.besinGorunum({b:bira,birim:'ml'}).renk&&B.besinGorunum({b:bira,birim:'ml',onay:true}).renk,'alkollü içecek: enerji tutmaz, onayla renk');
+const ters={kcal:300,yag:5,doymus:8,karb:50,seker:10,protein:10,tuz:1};
+ok(!B.besinGorunum({b:ters,birim:'g',onay:true}).renk,'çelişkili değer (doymuş > yağ) onayla da renklenmez');
+ok(B.besinGorunum(null)===null&&B.besinGorunum({b:{}})===null,'değer yok');
+g=B.besinGorunum({b:{kcal:40,karb:10,seker:4},birim:'g'});
+ok(g.renk&&g.satir.filter(s=>s.v==null).length===3&&g.satir[2].duzey==='dusuk','eksik satır boş, olan renkli');
+// Metinden uçtan uca: tablo + renk
+g=B.besinGorunum(ay(T1));
+ok(g&&g.renk&&g.satir[0].duzey==='yuksek','etiket metninden renk '+j(g&&g.satir));
+// Eşikler kaynakla aynı (kılavuz Tablo 2 ve 3)
+ok(j(B.BESIN_ESIK.g)===j({yag:[3,17.5],doymus:[1.5,5],seker:[5,22.5],tuz:[0.3,1.5]})&&j(B.BESIN_ESIK.ml)===j({yag:[1.5,8.75],doymus:[0.75,2.5],seker:[2.5,11.25],tuz:[0.3,0.75]}),'eşik değerleri');
+// Elle düzeltme kaydı: metne bağlı, en yeni önde, sınırlı
+const k1=B.besinMetinAnahtar('gida','Şeker, tuz'),k2=B.besinMetinAnahtar('gida',' Şeker, tuz \n');
+ok(k1===k2&&k1!==B.besinMetinAnahtar('gida','Şeker, tuzu')&&k1!==B.besinMetinAnahtar('koz','Şeker, tuz'),'anahtar metne ve türe bağlı (kenar boşluğu sayılmaz)');
+let L=B.besinElleEkle([],k1,{b:cik,birim:'g',t:1});L=B.besinElleEkle(L,'x',{b:bira,birim:'ml',t:2});L=B.besinElleEkle(L,k1,{b:bira,birim:'ml',t:3});
+ok(L.length===2&&L[0].k===k1&&L[0].t===3&&B.besinElleBul(L,k1).birim==='ml'&&B.besinElleBul(L,'yok')===null,'aynı metin tek kayıt, en yeni önde');
+for(let i=0;i<150;i++)L=B.besinElleEkle(L,'k'+i,{b:cik,birim:'g'});
+ok(L.length===100&&L[0].k==='k149','en çok 100 kayıt');
+ok(B.besinElleBul('bozuk',k1)===null&&B.besinElleEkle(null,k1,{b:cik}).length===1,'bozuk depo');
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

@@ -1,0 +1,57 @@
+{
+ "id": "./",
+ "name": "Tağşiş",
+ "short_name": "Tağşiş",
+ "description": "Scan the ingredients list, barcode or nutrition table on a pack: additives, allergens and their sources.",
+ "lang": "en",
+ "dir": "ltr",
+ "start_url": "../../ocr.html",
+ "scope": "../../",
+ "display": "standalone",
+ "background_color": "#eef1ee",
+ "theme_color": "#1d4d3a",
+ "icons": [
+  {
+   "src": "../../icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "../../icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "../../icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Read Label",
+   "short_name": "Read Label",
+   "url": "../../ocr.html",
+   "icons": [
+    {
+     "src": "../../icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  },
+  {
+   "name": "Encyclopedia",
+   "short_name": "Encyclopedia",
+   "url": "../../ansiklopedi.html",
+   "icons": [
+    {
+     "src": "../../icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
+  }
+ ]
+}

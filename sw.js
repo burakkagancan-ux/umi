@@ -1,9 +1,9 @@
-const CACHE = "tagsis-v46";
+const CACHE = "tagsis-v47";
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar
 const CORE = [
   "./", "index.html", "ocr.html", "ansiklopedi.html", "manifest.webmanifest",
   "js/veri_surum.js", "js/ceviri.js", "js/dil.js", "i18n/diller.json", "i18n/tr.json",   // yalnızca kaynak dil; seçili dilin dosyaları sayfa açılınca iner (DINAMIK)
-  "js/ortak.js", "js/gida.js", "js/kozmetik.js", "js/eslesme.js", "js/temizlik.js", "js/karsilastir_ayar.js", "js/karsilastir.js", "js/paylas_ayar.js", "js/paylas.js", "js/kayit.js", "js/arayuz_kayit.js", "js/arayuz_liste.js", "js/besin.js", "js/barkod.js", "js/arayuz_barkod.js",
+  "js/ortak.js", "js/gida.js", "js/kozmetik.js", "js/eslesme.js", "js/temizlik.js", "js/karsilastir_ayar.js", "js/karsilastir.js", "js/paylas_ayar.js", "js/paylas.js", "js/kayit.js", "js/arayuz_kayit.js", "js/arayuz_liste.js", "js/besin.js", "js/barkod.js", "js/arayuz_barkod.js", "js/arayuz_besin.js", "data/besin.json",
   "js/arayuz.js", "js/arayuz_kozmetik.js", "js/arayuz_temizlik.js", "js/arayuz_karsilastir.js", "js/arayuz_paylas.js", "js/arayuz_sayfa.js",
   "js/ansiklopedi.js", "js/arayuz_ansiklopedi.js", "data/ansiklopedi.json", "data/ansiklopedi_tr.json",   // ansiklopedi dizini; madde sayfaları açılınca iner
   "icon-192.png", "icon-512.png", "apple-touch-icon.png",
@@ -14,8 +14,8 @@ const CORE = [
   "fonts/figtree-latin-400-normal.woff2", "fonts/figtree-latin-ext-400-normal.woff2", "fonts/figtree-latin-600-normal.woff2", "fonts/figtree-latin-ext-600-normal.woff2",
 ];
 // Kurulumda inmeyen, dile ve sayfaya bağlı dosyalar: i18n/<dil>.json, i18n/veri/<dil>.json, data/ansiklopedi_<dil>.json, data/ansiklopedi/…,
-// dile özel yazı tipi. Kullanıcı yalnızca kendi dilini ve açtığı sayfaları indirir (YOL_HARITASI.md O-10). Boyut bütçesi: test/onbellek.js
-const DINAMIK = /^(i18n\/|data\/ansiklopedi[_/]|fonts\/)[\w./-]+\.(json|css|woff2)$/;
+// dile özel yazı tipi, i18n/manifest/<dil>.webmanifest. Kullanıcı yalnızca kendi dilini ve açtığı sayfaları indirir (YOL_HARITASI.md O-10). Boyut bütçesi: test/onbellek.js
+const DINAMIK = /^(i18n\/|data\/ansiklopedi[_/]|fonts\/)[\w./-]+\.(json|css|woff2|webmanifest)$/;
 const yol = (u) => new URL(u, self.registration.scope).pathname.slice(new URL(self.registration.scope).pathname.length);
 self.addEventListener("install", (e) => {
   e.waitUntil(

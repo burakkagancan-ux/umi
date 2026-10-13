@@ -54,6 +54,11 @@ textarea{width:100%;min-height:140px;font:14px/1.4 ui-monospace,monospace;paddin
 details#okunan{margin:20px 0 8px}details#okunan summary{font-size:18px;font-weight:700;cursor:pointer}details.sec{margin:20px 0 8px}details.sec>summary{font-size:18px;font-weight:700;cursor:pointer}details#okunan textarea{margin-top:8px}
 .sumbox{border-inline-start-color:var(--ok)}.srow{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}.srow:first-of-type{border-top:0}
 .sl{flex:0 0 38%;color:var(--mute)}.sv{flex:1;min-width:0}.sv.r{color:var(--hi);font-weight:600}.sv.y{color:var(--yel);font-weight:600}
+/* Besin değeri tablosu (js/arayuz_besin.js): renk yalnızca düzey etiketiyle birlikte (yalnız renge dayanmaz) */
+.btab{margin:6px 0}.brow{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}.brow:first-child{border-top:0}
+.bad{flex:1;min-width:0}.bdeg{font-variant-numeric:tabular-nums;font-weight:600}.bdz{flex:none;min-width:64px;text-align:center;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
+.bdz.dusuk{background:var(--okbg);color:var(--ok)}.bdz.orta{background:var(--ambbg);color:var(--amb)}.bdz.yuksek{background:var(--redbg);color:var(--red)}
+.bsuphe{font-weight:600}.besin>button.alt{margin-top:8px}.brad button.on{background:var(--ok);color:var(--bg)}
 details#pd{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin:10px 0}
 details#pd summary{font-family:var(--hf);font-weight:700;cursor:pointer;display:flex;align-items:center;min-height:44px}.pt{font-weight:600;font-size:14px;margin:10px 0 4px}
 .pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 10px}.pc{font-size:14px;display:flex;gap:8px;align-items:center;min-height:44px}.pc input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--ok)}
@@ -206,6 +211,7 @@ button.kkayit{flex-direction:column;align-items:flex-start;gap:4px;width:100%;te
 <script src="js/arayuz_paylas.js"></script>
 <script src="js/arayuz_kayit.js"></script>
 <script src="js/arayuz_barkod.js"></script>
+<script src="js/arayuz_besin.js"></script>
 <script src="js/arayuz_sayfa.js"></script>
 </body>
 </html>

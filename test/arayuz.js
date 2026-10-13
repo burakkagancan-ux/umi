@@ -138,6 +138,74 @@ async function scan(p,mode,text){
     await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
   }
 
+  // 1d) Besin değeri tablosu (A-02): tablolu metinde dört satır renkli; tablosuzda "tablonun fotoğrafını ekle"; şüphede renk yok,
+  // düzeltince renk; tablo fotoğrafı metnin sonuna eklenir ve aynı tarama güncellenir; elle düzeltme metne bağlı saklanır
+  {
+    const TABLO='İçindekiler: şeker, bitkisel yağ (palm), kakao, tuz.\nBesin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
+    const kart=()=>p.evaluate(()=>{const d=document.querySelector('#sonuc .besin');return d?{t:d.querySelector('.t').textContent,dz:[...d.querySelectorAll('.bdz')].map(x=>x.className.split(' ')[1]),deg:[...d.querySelectorAll('.bdeg')].map(x=>x.textContent),metin:d.textContent,btn:[...d.querySelectorAll('button')].map(b=>b.textContent)}:null});
+    await p.evaluate(()=>localStorage.removeItem('besin_elle'));
+    await scan(p,'gida',TABLO);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
+    let k=await kart();
+    ok(k&&k.t==='Besin değerleri (100 g başına)'&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg.slice(0,4).join('|')==='25,1 g|16 g|30,5 g|0,1 g'&&k.deg[4]==='505 kcal','besin kartı: dört satır, düzey etiketleri, enerji renksiz: '+JSON.stringify(k));
+    ok(k&&/okunan etiket metnindeki tablo/.test(k.metin),'kaynak satırı');
+    ok(await p.evaluate(()=>{const s=document.querySelector('#sonuc .sumbox');return s&&s.nextElementSibling&&s.nextElementSibling.classList.contains('besin')}),'kart özetin hemen altında');
+    await p.click('#sonuc .besin .info');
+    ok(/Birleşik Krallık Sağlık Bakanlığı/.test(await p.textContent('#sonuc .besin .ipanel'))&&/17,5 g/.test(await p.textContent('#sonuc .besin .ipanel'))&&await p.isVisible('#sonuc .besin .ipanel a'),'(i): eşikler ve kaynak bağlantısı');
+    // Tablo yok
+    await scan(p,'gida','Şeker, kakao yağı, süt tozu, E322');
+    await p.waitForFunction(()=>document.querySelector('#sonuc .besin .t'),null,{timeout:8000}).catch(()=>{});
+    k=await kart();
+    ok(k&&!k.dz.length&&/besin değeri tablosu yok/.test(k.metin)&&k.btn.includes('Tablonun fotoğrafını çek'),'tablosuz metin: renk yok, fotoğraf ekle düğmesi: '+JSON.stringify(k&&k.btn));
+    // Tablo fotoğrafı: okunan metin sona eklenir, yeni tarama açılmaz
+    {
+      const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
+      await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:'Besin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g'})}));
+      const n0=await p.evaluate(()=>histLoad().length);
+      const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_ekle')).click())]);
+      await fc.setFiles(path.join(R,'icon-192.png'));
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
+      const m=await p.inputValue('#metin');
+      ok(m.startsWith('Şeker, kakao yağı, süt tozu, E322\n\nBesin değerleri 100 g')&&(await kart()).dz.length===4,'tablo fotoğrafı metnin sonuna eklendi, kart renkli');
+      ok(await p.evaluate(()=>histLoad().length)===n0&&await p.evaluate(m=>histLoad()[0].text===m.trim(),m),'aynı tarama güncellendi (yeni kayıt yok)');
+      ok(await p.evaluate(()=>/E322/.test(document.getElementById('sonuc').textContent)),'içerik analizi sürüyor (E322)');
+      await p.unroute(ocrYol);
+      await p.evaluate(()=>fotoTemizle());
+    }
+    // Şüpheli: 100 g başlığı yok → renk yok; düzeltince renk ve "siz girdiniz"; aynı metin yeniden açılınca düzeltme geri gelir
+    const SUPHE='Enerji 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
+    await p.evaluate(t=>{HSCAN=true;document.getElementById('metin').value=t;run()},SUPHE);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
+    k=await kart();
+    ok(k&&/eşleşme|bulunamadı/i.test(await p.textContent('#sonuc')),'yalnızca tablo okunmuşsa: içerik bulunamadı notu + besin kartı');
+    ok(k&&!k.dz.length&&/tutarlı görünmüyor/.test(k.metin)&&/100 g sütunu bulunamadı/.test(k.metin),'şüpheli tabloda renk yok, nedeni yazılı: '+JSON.stringify(k&&k.metin));
+    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+    await p.waitForSelector('#sheet:not([hidden]) .bform');
+    ok(await p.inputValue('#sheet input[data-alan="yag"]')==='25,1'&&await p.inputValue('#sheet input[data-alan="kcal"]')==='505','form okunan değerlerle dolu');
+    await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+    ok(/100 g ya da 100 ml/.test(await p.textContent('#sheet .bform')),'birim seçilmeden kaydedilmez');
+    await p.evaluate(()=>[...document.querySelectorAll('#sheet .brad button')].find(b=>b.textContent==='100 g').click());
+    await p.fill('#sheet input[data-alan="tuz"]','abc');
+    await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+    ok(/Geçersiz değer: Tuz/.test(await p.textContent('#sheet .bform')),'geçersiz değer reddedilir');
+    await p.fill('#sheet input[data-alan="tuz"]','<0,1');
+    await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+    await p.waitForFunction(()=>document.getElementById('sheet').hidden,null,{timeout:3000}).catch(()=>{});
+    k=await kart();
+    ok(k&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg[3]==='< 0,1 g'&&/siz girdiniz/.test(k.metin),'düzeltince renk, "<" değer: '+JSON.stringify(k));
+    await scan(p,'gida','Su, tuz');await p.evaluate(t=>{HSCAN=true;document.getElementById('metin').value=t;run()},SUPHE);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
+    ok((await kart()).dz.length===4,'aynı metin yeniden açılınca düzeltme geri gelir');
+    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+    await p.waitForSelector('#sheet:not([hidden]) .bform');
+    await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.geri')).click());
+    k=await kart();
+    ok(k&&!k.dz.length&&await p.evaluate(()=>JSON.parse(localStorage.getItem('besin_elle')).length===0),'"okunan değerlere dön" düzeltmeyi siler');
+    // Kozmetikte kart yok
+    await sample(p,'koz');ok(!await p.$('#sonuc .besin'),'kozmetikte besin kartı yok');
+    await p.click('#m-gida');
+  }
+
   // 2) Üç modda örnek analiz
   for(const m of ['gida','koz','tem']){
     await sample(p,m);
@@ -277,8 +345,16 @@ async function scan(p,mode,text){
   ctx=await br.newContext(Object.assign({},opt,{locale:'en-US'}));p=await newPage(ctx);watch(p,errs);
   await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX,null,{timeout:15000});
   ok(await p.getAttribute('html','lang')==='en'&&(await p.textContent('h1'))==='Read Label','İngilizce açılış: lang ve başlık');
+  {
+    // Ana ekrana eklenen uygulama: manifest İngilizce, kimlik ve başlangıç sayfası Türkçeyle aynı
+    const mf=await p.getAttribute('link[rel="manifest"]','href');
+    const m=await p.evaluate(async h=>{const r=await fetch(h);const j=await r.json();const u=x=>new URL(x,new URL(h,location.href)).pathname;return {ad:j.name,ac:j.description,k:j.shortcuts.map(s=>[s.name,u(s.url)]),bas:u(j.start_url),id:new URL(j.id,new URL(j.start_url,new URL(h,location.href))).pathname,ikon:u(j.icons[0].src)}},mf);
+    const tr=await p.evaluate(async()=>{const j=await (await fetch('manifest.webmanifest')).json();const b=new URL('manifest.webmanifest',location.href);return {bas:new URL(j.start_url,b).pathname,id:new URL(j.id,new URL(j.start_url,b)).pathname}});
+    ok(mf==='i18n/manifest/en.webmanifest'&&/^Scan/.test(m.ac)&&m.k.map(x=>x[0]).join()==='Read Label,Encyclopedia'&&m.k[0][1]==='/ocr.html'&&m.ikon==='/icon-192.png','İngilizce manifest: açıklama, kısayollar, yollar: '+JSON.stringify(m));
+    ok(m.bas==='/ocr.html'&&tr.bas==='/ocr.html'&&m.id==='/'&&tr.id==='/','manifest kimliği ve başlangıç sayfası iki dilde aynı: '+JSON.stringify([m,tr]));
+  }
   ok((await p.textContent('#ornek'))==='Try sample text'&&(await p.getAttribute('#metin','placeholder')).startsWith('The text'),'İngilizce düğme ve placeholder');
-  const anahtarVar=()=>p.evaluate(()=>{const m=document.body.innerText.match(/\b(ortak|gida|koz|tem|kars|kayit|pay|profil|risk|sayfa|ulke|veri|kanser|eslesme|foto|ocr|nav|birim|ans)\.[a-z0-9_]+(\.[a-z0-9_]+)*\b/);return m?m[0]:''});
+  const anahtarVar=()=>p.evaluate(()=>{const m=document.body.innerText.match(/\b(ortak|gida|koz|tem|kars|kayit|pay|profil|risk|sayfa|ulke|veri|kanser|eslesme|foto|ocr|nav|birim|ans|besin)\.[a-z0-9_]+(\.[a-z0-9_]+)*\b/);return m?m[0]:''});
   for(const m of ['gida','koz','tem']){
     await sample(p,m);
     ok(await p.$$eval('#sonuc .res',e=>e.length)>2,'en '+m+': sonuç kartları');
@@ -335,6 +411,7 @@ async function scan(p,mode,text){
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#dilsec');
   await Promise.all([p.waitForNavigation(),p.selectOption('#dilsec','tr')]);await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
   ok(await p.getAttribute('html','lang')==='tr'&&await p.evaluate(()=>localStorage.getItem('dil'))==='tr','dil seçici: Türkçe kaydedildi ve uygulandı');
+  ok(await p.getAttribute('link[rel="manifest"]','href')==='manifest.webmanifest','Türkçede manifest değişmez');
   ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="oku"]'),'Liste şimdilik menüde yok (Türkiye seçiliyken de)');
   ok((await p.$$eval('#ulkesec option',o=>o.length))>20,'İngilizce konuşulan ülkeler listede');
   ok(!errs.length,'İngilizce tur konsol hatası: '+errs.join(' | '));errs.length=0;
@@ -385,4 +462,4 @@ async function scan(p,mode,text){
 
   await br.close();
   console.log(n+' arayüz denetimi, '+fail+' hata');process.exit(fail?1:0);
-})().catch(e=>{console.log('HATA',e.message);process.exit(1)});
+})().catch(e=>{console.log('HATA',e.message,e.stack.split('\n').filter(l=>l.includes('arayuz.js')).join(' | '));process.exit(1)});

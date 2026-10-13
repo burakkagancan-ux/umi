@@ -136,6 +136,9 @@ Altyapı ve İngilizce arayüz tamam (CLAUDE.md "Çok dil"). Bilerek bırakılan
 - KAPANDI (12.10.2026): Çeviride görülen iki kaynak hatası düzeltildi: E151 "Vücutta" metni artık resmi adla (parlak siyah BN / brilliant black BN; "Black PN" eş adı ve JECFA monografı başlığı olarak kalır), E1517 üretim yolu "gliserolün asetik asitle esterleştirilmesi" (eski metin "sitrik asit ya da gliserol" diyordu; kayıt `dogrulandi=0` kaldı, yöntem kaynakla doğrulanmadı). Arayüz sayfaları aşağıda.
 - Yeni Türkçe metin eklenince İngilizcesi aynı PR'da eklenir (O-09).
 
+### Ana ekrana eklenen uygulama (manifest) — KAPANDI (13.10.2026)
+- Uygulama adı, açıklaması ve kısayolları dile göre: `python3 gen_manifest.py` i18n/<dil>.json'daki manifest.* (ve sayfa.baslik, nav.ansiklopedi) anahtarlarından manifest.webmanifest (Türkçe) ve i18n/manifest/<dil>.webmanifest üretir; js/dil.js bağlantıyı seçili dile çevirir. Liste menüden kalktığı için başlangıç sayfası ocr.html, ikinci kısayol Ansiklopedi; kimlik (id) değişmedi. Ad "Tağşiş" kaldı: küresel ad O-02 kararını bekliyor (kararla tek satır: manifest.ad). Paylaşım kartındaki ad da O-02 ile.
+
 Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
 Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi hariç toplam 1.164 metin.
 

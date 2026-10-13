@@ -337,7 +337,12 @@ function comboSection(box,list){
 function render(res,br){
   var box=$("sonuc");box.textContent="";LAST=res;LASTBR=br||[];
   var S=summarize(res,IDX);LASTSUM=S;
-  if(!res.length&&!LASTBR.length){box.textContent=t("gida.eslesme_yok");return}
+  if(!res.length&&!LASTBR.length){
+    box.textContent=t("gida.eslesme_yok");
+    // Yalnızca besin değeri tablosu okunmuşsa (içerik listesi yok) tablo yine gösterilir
+    var tx=$("metin").value;if(BESIN_SOZ&&besinKaynak(tx)){box.textContent="";box.appendChild(el("div","how",t("gida.eslesme_yok")));box.appendChild(besinKart(tx))}
+    return;
+  }
   if(S.cancer.length){
     var canc={yes:[],may:[]};S.cancer.forEach(function(c){(c.may?canc.may:canc.yes).push(typeof c==="string"?c:c.name)});
     var cd=el("div","res prof r"),hd=el("div","hd"),b=el("button","info sm","i");b.type="button";b.setAttribute("aria-label",t("kanser.hakkinda"));
@@ -351,6 +356,7 @@ function render(res,br){
   }
   profileCards(S).forEach(function(c){box.appendChild(c)});
   box.appendChild(summaryCard(S,res));
+  box.appendChild(besinKart($("metin").value));   // besin değeri tablosu (js/arayuz_besin.js)
   if(LASTBR.length&&ulke()==="TR")box.appendChild(brandCard(LASTBR));
   comboSection(box,findCombos(COMBO,"gida",comboItemsFood(res,IDX)));
   var E=res.filter(function(r){return !r.isB&&!r.neg});
