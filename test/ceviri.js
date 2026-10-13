@@ -1,5 +1,5 @@
 // Çok dil denetimi. Çalıştır: node test/ceviri.js
-// 1) i18n/diller.json'daki her dilin dosyası var ve tr.json'daki her anahtarı içeriyor; yer tutucular ({n}, {ad}) her dilde aynı.
+// 1) i18n/diller.json'daki her dilin dosyası var; tr ve en tr.json'daki her anahtarı içeriyor (diğer diller kapsama raporu); yer tutucular ({n}, {ad}) her dilde aynı.
 // 2) Kodda (js/*.js, sayfalar) kullanılan her anahtar tanımlı; tr.json'da kullanılmayan anahtar yok.
 // 3) Arayüz dosyalarında anahtara taşınmamış Türkçe metin kalmadı (ğüşıöç taraması; bilinçli istisnalar aşağıda, gerekçesiyle).
 // 4) Sayfalardaki (ocr.html, ansiklopedi.html, index.html) data-i18n metinleri tr.json ile aynı (sayfa ilk açılışta Türkçe görünür, dil dosyası gelince aynı metin yazılır).
@@ -12,6 +12,9 @@ const tr=oku(path.join(I,'tr.json')),bilgi=oku(path.join(I,'diller.json')).dille
 // Yer tutucular: düz metinde ya da çoğul nesnesinin bütün biçimlerinde
 const yt=v=>[...new Set((typeof v==='string'?[v]:Object.values(v)).join(' ').match(/\{\w+\}/g)||[])].sort().join(',');
 const ANAHTAR=/^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$/;
+// Eksiksiz olması zorunlu diller: kaynak (tr) ve ilk yedek (en). Diğer dillerde eksik ya da artık anahtar hata değil, kapsama raporu
+// (YOL_HARITASI.md O-24): yeni özellik 60 dilin çevirisini beklemeden birleşir, eksik metin İngilizce görünür (dilBul sırası).
+const ZORUNLU=['tr','en'];
 
 // 1) Dil dosyaları
 ok(bilgi.tr,'diller.json: tr kaydı yok');
@@ -22,8 +25,10 @@ for(const [kod,b] of Object.entries(bilgi)){
   if(b.yazi&&b.yazi.css)ok(fs.existsSync(path.join(R,b.yazi.css)),'diller.json '+kod+': yazı tipi dosyası yok '+b.yazi.css);
   const p=path.join(I,kod+'.json');ok(fs.existsSync(p),'dil dosyası yok: i18n/'+kod+'.json');if(!fs.existsSync(p))continue;
   const d=oku(p),eksik=Object.keys(tr).filter(k=>!(k in d)),fazla=Object.keys(d).filter(k=>!(k in tr));
-  ok(!eksik.length,kod+'.json eksik anahtar ('+eksik.length+'): '+eksik.slice(0,10).join(', '));
-  ok(!fazla.length,kod+'.json tr.json\'da olmayan anahtar: '+fazla.slice(0,10).join(', '));
+  if(ZORUNLU.includes(kod)){
+    ok(!eksik.length,kod+'.json eksik anahtar ('+eksik.length+'): '+eksik.slice(0,10).join(', '));
+    ok(!fazla.length,kod+'.json tr.json\'da olmayan anahtar: '+fazla.slice(0,10).join(', '));
+  }else if(eksik.length||fazla.length)console.log('BİLGİ '+kod+'.json kapsama %'+Math.floor(100*(Object.keys(tr).length-eksik.length)/Object.keys(tr).length)+' (eksik '+eksik.length+(fazla.length?', artık '+fazla.length:'')+'; eksikler İngilizce görünür)');
   for(const k of Object.keys(tr))if(k in d){ok(yt(tr[k])===yt(d[k]),kod+'.json yer tutucu farklı: '+k+' ('+yt(tr[k])+' / '+yt(d[k])+')');ok(typeof d[k]==='string'||(d[k]&&d[k].other),kod+'.json değer: '+k)}
 }
 // Veri çevirileri (i18n/veri/<kod>.json): yalnızca desteklenen dillerde
@@ -166,6 +171,6 @@ for(const kod of Object.keys(bilgi)){
   const M=P.payModel({mode:'gida',items:[{name:'A',lvl:0},{name:'B',lvl:1,why:'x'},{name:'C',lvl:2,why:'y'}],facts:[],allergens:''},{name:'Ürün'},P.PAYLAS_AYAR,L);
   P.payDraw(c,M,L,P.PAYLAS_AYAR,null);
   const CW=L.w-2*L.pad,bw=(CW-40)/3;
-  ['pay.kart.kutu_yok','pay.kart.kutu_dikkat','pay.kart.kutu_uyari'].forEach((k,i)=>{const s=(sozluk[kod][k]||tr[k]),sag=L.pad+i*(bw+20)+bw-12,e=c.texts.filter(x=>s.indexOf(x.s.replace(/…$/,''))===0&&x.x>=L.pad+i*(bw+20)&&x.x<sag);ok(e.length&&e.every(x=>x.x+x.w<=sag),kod+': sayı kutusu etiketi taşıyor: '+s)});
+  ['pay.kart.kutu_yok','pay.kart.kutu_dikkat','pay.kart.kutu_uyari'].forEach((k,i)=>{const s=(sozluk[kod][k]||(sozluk.en||{})[k]||tr[k]),sag=L.pad+i*(bw+20)+bw-12,e=c.texts.filter(x=>s.indexOf(x.s.replace(/…$/,''))===0&&x.x>=L.pad+i*(bw+20)&&x.x<sag);ok(e.length&&e.every(x=>x.x+x.w<=sag),kod+': sayı kutusu etiketi taşıyor: '+s)});
 }
 console.log(n+' çeviri denetimi ('+Object.keys(tr).length+' anahtar, '+Object.keys(bilgi).length+' dil), '+fail+' hata');process.exit(fail?1:0);
