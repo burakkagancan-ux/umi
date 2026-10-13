@@ -45,6 +45,13 @@ jobs:
           git add kaynak/cosing data/
           git commit -m "CosIng verisi güncellendi ($(cut -d' ' -f3 kaynak/cosing/surum.txt) tarihine kadarki yayınlar)"
           git push -f origin "$dal"
+          # Bu PR'ı bot açtığı için Testler kendiliğinden çalışmaz; renk değişikliği denetiminin sonucu açıklamaya yazılır
+          renk=$(python3 degisiklik_kaydi.py 2>&1 || true)
           gh pr create --base main --head "$dal" --title "CosIng güncellemesi $(date +%Y-%m)" \
-            --body "CosIng'den aylık indirme. Yeni bir AB değişikliği varsa kaynak/kozmetik_guncellemeler.tsv'ye Türkçe not ve Türkiye durumu eklenmeli (bkz. TEKNIK_BORC.md). Testler bu iş içinde çalıştı." \
+            --body "CosIng'den aylık indirme. Yeni bir AB değişikliği varsa kaynak/kozmetik_guncellemeler.tsv'ye Türkçe not ve Türkiye durumu eklenmeli (bkz. TEKNIK_BORC.md). Testler bu iş içinde çalıştı.
+
+          Renk değişiklikleri (O-05; KAYIT YOK satırı varsa birleştirmeden önce kaynak/degisiklik_kaydi.tsv'ye yazılıp python3 degisiklik_kaydi.py --guncelle çalıştırılmalı):
+          \`\`\`
+          $renk
+          \`\`\`" \
             || echo "Bu ay için PR zaten açık"

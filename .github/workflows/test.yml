@@ -69,6 +69,8 @@ jobs:
           git diff --stat --exit-code -I '"generated":' -- data/ i18n/veri/
           # Üretecin yazdığı ama depoya eklenmemiş dosya (ör. yeni ansiklopedi sayfası data/ansiklopedi/<kimlik>.json)
           yeni=$(git ls-files --others --exclude-standard -- data/ i18n/veri/); if [ -n "$yeni" ]; then echo "Depoda olmayan üretilmiş dosya:"; echo "$yeni"; exit 1; fi
+      - name: Değerlendirme değişiklik kaydı (renk değişti mi, kaydı var mı)
+        run: python3 degisiklik_kaydi.py
 
   # Arayüz: sayfalar gerçek tarayıcıda (Chromium) açılıp tıklanır; üç modda analiz, karşılaştırma, ansiklopedi, çevrimdışı açılış.
   arayuz:
