@@ -149,8 +149,8 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 
 | Kimlik | İş | Durum |
 |---|---|---|
-| U-01 | Kozmetik ansiklopedisi (en yaygın ~300 madde; önce İngilizce, B-03) | ⬜ |
-| U-02 | Temizlik ansiklopedisi (~30 madde) | ⬜ |
+| U-01 | Kozmetik ansiklopedisi (en yaygın ~300 madde; önce İngilizce, B-03). Ansiklopedinin tür süzgecinde yeri hazır, şimdilik "Çok yakında" (13.10.2026); sayfalar gelince turSecici()'de açılır | ⬜ |
+| U-02 | Temizlik ansiklopedisi (~30 madde). Tür süzgecinde "Çok yakında" (13.10.2026) | ⬜ |
 | U-03 | Temizlik: AB 2026/405 dijital ürün pasaportu hazırlığı (QR'dan içerik listesi okuma; 23.09.2029'dan itibaren zorunlu) | ⬜ |
 | U-04 | Gıda ansiklopedisi açıkları: AB konsolide metin karşılaştırması, TGK 2023 (TEKNIK_BORC.md) | ⏸ |
 | U-05 | Kozmetik PFAS bayrağının ad düzeyine indirilmesi (TEKNIK_BORC.md) | ⬜ |

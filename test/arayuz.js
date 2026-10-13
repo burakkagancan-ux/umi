@@ -335,6 +335,10 @@ async function scan(p,mode,text){
   // Arama kutusu boşken bütün elle incelenmiş maddeler listelenir; arama sonucu gelince liste kısalır
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});
   {const f=await p.$$eval('#ana a.row .rc',e=>e.map(x=>x.textContent));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
+  // Tür süzgeci (13.10.2026): Gıda seçili; Kozmetik ve Temizlik seçilemez, altında "Çok yakında"
+  {const s=await p.$$eval('#ana .seg button',e=>e.map(x=>[x.textContent,x.getAttribute('aria-checked'),x.getAttribute('aria-disabled')].join('|')));
+   ok(s.join(',')==='Gıda|true|,KozmetikÇok yakında|false|true,TemizlikÇok yakında|false|true','ansiklopedi tür süzgeci: '+s.join(','))}
+  await p.click('#tur-koz',{force:true});ok(await p.getAttribute('#tur-gida','aria-checked')==='true','ansiklopedi: Kozmetik seçilemiyor');
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
   await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');
@@ -392,6 +396,7 @@ async function scan(p,mode,text){
   {const k=await anahtarVar();ok(!k,'ansiklopedi: çıplak anahtar: '+k)}
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');
   ok((await p.getAttribute('#ara','placeholder')).startsWith('Name or E number')&&/My saved substances/.test(await p.textContent('#ana')),'ansiklopedi arama İngilizce');
+  ok(/^CosmeticsComing soon$/.test(await p.textContent('#tur-koz')),'ansiklopedi tür süzgeci İngilizce');
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
