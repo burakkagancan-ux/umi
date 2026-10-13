@@ -30,7 +30,7 @@
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
 //   Ürün, metin, IP ya da kişisel bilgi saklanmaz; anahtar yalnızca "g:YYYY-AA-GG:t". GET /sayac son 60 günün toplamlarını döndürür.
 
-import { barkodGecerli, sozcukler, urunSec } from "./barkod.js";
+import { barkodGecerli, besinOff, sozcukler, urunSec } from "./barkod.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -94,7 +94,7 @@ const KATKI_BARKOD_EN_COK = 30;        // bir barkoda en çok bu kadar katkı (k
 const KATKICI_RE = /^[0-9a-f]{32}$/;   // js/barkod.js katkiciGecerli ile aynı
 
 async function offAra(kod) {
-  const f = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text," + OFF_DIL.map((d) => "ingredients_text_" + d).join(",");
+  const f = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity," + OFF_DIL.map((d) => "ingredients_text_" + d).join(",");
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), OFF_TIMEOUT_MS);
   try {
@@ -114,7 +114,8 @@ async function offAra(kod) {
     if (genel && /^[a-z]{2}$/.test(lang) && !metin[lang]) metin[lang] = genel.slice(0, 4000);
     let marka = p.brands || ""; if (Array.isArray(marka)) marka = marka.join(",");
     return { bulundu: true, db, ad: String(p.product_name_tr || p.product_name || p.product_name_en || "").slice(0, 200),
-      marka: String(marka).split(",")[0].trim().slice(0, 100), t: Number(p.last_modified_t || 0) * 1000, metin };
+      marka: String(marka).split(",")[0].trim().slice(0, 100), t: Number(p.last_modified_t || 0) * 1000, metin,
+      besin: db === "food" ? besinOff(p.nutriments, p.quantity) : null };
   } finally { clearTimeout(timer); }
 }
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Open Food Facts ailesinden (gıda, kozmetik, temizlik) Türkiye'de satılan ürünlerin barkod, ad, marka ve
-içerik metnini depoya (kaynak/off/) alır. Barkodla ürün bulmada ilk bakılan yer budur (internetsiz çalışır).
+Open Food Facts ailesinden (gıda, kozmetik, temizlik) Türkiye'de satılan ürünlerin barkod, ad, marka,
+içerik metnini ve (gıdada) besin değerlerini depoya (kaynak/off/) alır. Barkodla ürün bulmada ilk bakılan yer budur (internetsiz çalışır).
 
 Kaynaklar (lisans: Open Database License (ODbL) 1.0, içerik: Database Contents License; atıf zorunlu):
   gıda      Open Food Facts      search.openfoodfacts.org (ürün listesi) + world.openfoodfacts.org/api/v2/product
@@ -19,9 +19,11 @@ Bir veritabanı hiç alınamazsa betik çökmez: o veritabanı için önceki uru
 yazılır ve sayımda "hata" alanı görünür; çıkış kodu 1 olur (aylık iş PR açmaz, elde edilen veri yerelde kalır).
 Ad, marka ve içerik metni klasik arama sonuçlarından gelir (sayfa başına 100 ürün). Gıdada klasik arama 503 verirse yedek yol:
 yeni arama servisi (search-a-licious; daha az ürün dizinli) + içerik listesi olan ürünler için tek tek ürün sorgusu (yavaş).
+Besin değerleri (A-02, 13.10.2026): OFF'un 100 g / 100 ml'ye çevrilmiş alanları (nutriments.*_100g). Enerji kcal yoksa kJ / 4,184;
+tuz yoksa sodyum x 2,5 (AB 1169/2011 Ek I, 11). Tutarlılık burada denetlenmez: uygulama aynı denetimi (js/besin.js) her kaynağa uygular.
 Bu veri bizim kullanıcı katkısı veritabanımızla (Worker D1) KARIŞTIRILMAZ (ODbL "aynı lisansla paylaş" kuralı).
 """
-import datetime, json, os, sys, time, urllib.parse, urllib.request
+import datetime, json, os, re, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "kaynak", "off")
@@ -33,7 +35,7 @@ DBS = [   # (kısa ad, alan adı)
     ("beauty", "world.openbeautyfacts.org"),
     ("products", "world.openproductsfacts.org"),
 ]
-ALAN = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text"
+ALAN = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity"
 DILLER = ["tr", "en", "de", "fr", "nl", "ar", "ru", "es", "it"]   # içerik metni alınan diller (ürünün kendi dili ayrıca)
 
 
@@ -76,7 +78,7 @@ def ara_food():
     out, sayfa = [], 1
     while True:
         q = urllib.parse.urlencode({"q": 'countries_tags:"en:turkey"', "page_size": 100, "page": sayfa,
-                                    "fields": "code,product_name,brands,lang,last_modified_t,ingredients_n"})
+                                    "fields": "code,product_name,brands,lang,last_modified_t,ingredients_n,nutriments,quantity"})
         j = get("https://search.openfoodfacts.org/search?" + q)
         out += j.get("hits", [])
         if sayfa >= j.get("page_count", 0):
@@ -107,6 +109,52 @@ def urun(alan, kod):
     return cevir(j["product"], kod)
 
 
+# OFF alanı -> bizim besin kimliğimiz (js/besin.js BESIN_ALAN ile aynı adlar)
+BESIN_OFF = [("yag", "fat"), ("doymus", "saturated-fat"), ("karb", "carbohydrates"), ("seker", "sugars"),
+             ("lif", "fiber"), ("protein", "proteins"), ("tuz", "salt")]
+
+
+def sayi_f(v):
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return None
+    return f if f == f and f >= 0 else None   # NaN ve eksi değer yok sayılır
+
+
+def birim(miktar):
+    """Ambalaj miktarından (\"1,5 L\", \"45cl\", \"250 g\") 100 g mı 100 ml mi: "ml" | "g" | "" (bilinmiyor)."""
+    m = re.search(r"\d\s*(ml|cl|dl|l|lt|litre|liter|litres|liters)\b", str(miktar or "").lower())
+    if m:
+        return "ml"
+    return "g" if re.search(r"\d\s*(g|gr|kg|gram|grams)\b", str(miktar or "").lower()) else ""
+
+
+def besin_al(p):
+    """OFF nutriments -> {kcal, yag, doymus, karb, seker, lif, protein, tuz, birim}; değer yoksa None (hiç değer yoksa None döner)."""
+    n = p.get("nutriments") or {}
+    if not isinstance(n, dict):
+        return None
+    b = {}
+    kcal = sayi_f(n.get("energy-kcal_100g"))
+    if kcal is None:
+        kj = sayi_f(n.get("energy-kj_100g"))
+        if kj is None:
+            kj = sayi_f(n.get("energy_100g"))   # OFF'ta "energy" kJ'dir
+        kcal = kj / 4.184 if kj is not None else None
+    b["kcal"] = kcal
+    for k, o in BESIN_OFF:
+        b[k] = sayi_f(n.get(o + "_100g"))
+    if b["tuz"] is None:
+        na = sayi_f(n.get("sodium_100g"))
+        b["tuz"] = na * 2.5 if na is not None else None
+    if all(v is None for v in b.values()):
+        return None
+    b = {k: (round(v, 3) if v is not None else None) for k, v in b.items()}
+    b["birim"] = birim(p.get("quantity"))
+    return b
+
+
 def cevir(p, kod=""):
     metin = {}
     for d in DILLER:
@@ -131,6 +179,7 @@ def cevir(p, kod=""):
         "dil": lang,
         "metin": metin,
         "t": sayi(p.get("last_modified_t")),
+        "besin": besin_al(p),
     }
 
 
@@ -158,7 +207,8 @@ def indir(db, alan):
             if not u:
                 m = h.get("brands") or ""
                 u = cevir({"code": h["code"], "product_name": h.get("product_name") or "", "brands": m if isinstance(m, str) else ",".join(m),
-                           "lang": h.get("lang") or "", "last_modified_t": sayi(h.get("last_modified_t"))}, h["code"])
+                           "lang": h.get("lang") or "", "last_modified_t": sayi(h.get("last_modified_t")),
+                           "nutriments": h.get("nutriments"), "quantity": h.get("quantity")}, h["code"])
             liste.append(u)
             if i % 200 == 0:
                 print("  ", db, i, "/", len(hits), file=sys.stderr)
@@ -172,7 +222,7 @@ def main():
     sayim = {}
     hatali = []
     for db, alan in DBS:
-        bulunan = icerikli = 0
+        bulunan = icerikli = besinli = 0
         try:
             liste = indir(db, alan)
             hata = None
@@ -182,13 +232,14 @@ def main():
             hatali.append(db)
             print(db, "alınamadı:", hata, "- önceki indirmeden", len(liste), "kayıt korunuyor", file=sys.stderr)
         for u in liste:
-            if not u or not (u["ad"] or u["metin"]):
+            if not u or not (u["ad"] or u["metin"] or u.get("besin")):
                 continue
             bulunan += 1
             icerikli += bool(u["metin"])
+            besinli += bool(u.get("besin"))
             u["db"] = db
             urunler.setdefault(u["kod"], u)   # aynı barkod iki veritabanında: önce gelen (gıda) kalır
-        sayim[db] = {"urun": bulunan, "icerikli": icerikli}
+        sayim[db] = {"urun": bulunan, "icerikli": icerikli, "besinli": besinli}
         if hata:
             sayim[db]["hata"] = hata
     veri = {

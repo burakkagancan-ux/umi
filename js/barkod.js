@@ -65,10 +65,10 @@ function barkodMetin(metin,sira){
   for(var i=0;i<(sira||[]).length;i++)if(ks.indexOf(sira[i])>-1)return {s:String(metin[sira[i]]).trim(),dil:sira[i]};
   return {s:String(metin[ks[0]]).trim(),dil:ks[0]};
 }
-/* data/barkod_off.json kaydı → ortak ürün biçimi. Kayıt: [db, ad, marka, t(sn), {dil: metin}] */
+/* data/barkod_off.json kaydı → ortak ürün biçimi. Kayıt: [db, ad, marka, t(sn), {dil: metin}, besin?] (besin: js/besin.js besinDiziden) */
 function barkodOffKayit(kod,r){
   if(!r)return null;
-  return {kod:kod,kaynak:"off",db:r[0],tur:barkodTur(r[0]),ad:r[1]||"",marka:r[2]||"",t:(r[3]||0)*1000,metin:r[4]||{},dogrulandi:null};
+  return {kod:kod,kaynak:"off",db:r[0],tur:barkodTur(r[0]),ad:r[1]||"",marka:r[2]||"",t:(r[3]||0)*1000,metin:r[4]||{},dogrulandi:null,besin:besinDiziden(r[5])};
 }
 function barkodOffBul(veri,kod){
   var u=veri&&veri.u;if(!u)return null;
@@ -85,9 +85,18 @@ function barkodIcerikli(r,sira){return !!(r&&barkodMetin(r.metin,sira))}
 function barkodSec(s,sira){
   var u=s.urun,d=u&&u.dogrulandi?u:null,dd=u&&!u.dogrulandi?u:null;
   var aday=[d,s.off,s.offCanli,dd].filter(Boolean);
-  for(var i=0;i<aday.length;i++)if(barkodIcerikli(aday[i],sira))return aday[i];
-  for(i=0;i<aday.length;i++)if(aday[i].ad){var o={};for(var k in aday[i])o[k]=aday[i][k];o.icerikYok=true;return o}
+  for(var i=0;i<aday.length;i++)if(barkodIcerikli(aday[i],sira))return barkodBesinEkle(aday[i],s);
+  for(i=0;i<aday.length;i++)if(aday[i].ad){var o=barkodBesinEkle(aday[i],s);if(o===aday[i]){o={};for(var k in aday[i])o[k]=aday[i][k]}o.icerikYok=true;return o}
   return null;
+}
+/* Besin değerleri (A-02) yalnızca Open Food Facts'ten gelir: seçilen kaynakta yoksa (ör. kendi veritabanımızdaki içerik) aynı barkodun
+   OFF kaydından eklenir (uygulamadaki veri → canlı sorgu). besinKaynak: "off". Seçilen kayıt değiştirilmez, kopyası döner. */
+function barkodBesinEkle(r,s){
+  if(!r||r.besin)return r;
+  var b=[s.off,s.offCanli].filter(function(x){return x&&x.besin})[0];
+  if(!b)return r;
+  var o={};for(var k in r)o[k]=r[k];
+  o.besin=b.besin;o.besinT=b.t;return o;
 }
 /* Fotoğrafla okunan metnin katkı olarak önerilmesi: içerik listesi gibi görünmeli (gıda, kozmetik: parçaların çoğu tanınmış;
    temizlik: en az bir tehlike ifadesi ya da madde tanınmış). Yanlış okunmuş metin veritabanına girmesin. */

@@ -1,0 +1,195 @@
+# Besin değeri tablosu satır adları ve sütun başlıkları (A-02, 13.10.2026). gen_besin.py okur → data/besin.json; js/besin.js besinAyristir kullanır.
+# Yalnızca tanıma içindir (ekranda gösterilmez). Eşleşme harf/aksan duyarsız (besinNorm), en uzun ad önce: "doymuş yağ" "yağ"dan önce bulunur.
+# Sütunlar: alan<TAB>dil<TAB>ad<TAB>kaynak
+#   alan   : enerji, yag, doymus, karb, seker, lif, protein, tuz, sodyum (tuz yoksa tuz = sodyum x 2,5)
+#            _atla     : tabloda olan ama kullanılmayan satır (trans yağ, doymamış yağlar, nişasta, polioller…); daha kısa adın yanlış eşleşmesini önler
+#            _porsiyon : porsiyon sütunu başlığı;  _ri : referans alım yüzdesi sütunu başlığı ("100 g" / "100 ml" başlığı sayıdan bulunur)
+#   kaynak : off   = Open Food Facts besin taksonomisi (openfoodfacts-server taxonomies/nutrients.txt; ODbL), adın kendisi orada geçiyor
+#            ab1169 = AB 1169/2011 Ek XV ifade biçimi (EUR-Lex bu ortamdan okunamadı; OFF'ta ya da başka etikette görüldüğü için eklendi)
+#            etiket = etiketlerde görülen yazım (başlık ve kısaltmalar); yeni satır eklenirken nerede görüldüğü yorum satırına yazılır
+# Dil eklemek: o dilin adları buraya yazılır, python3 gen_besin.py. Kod değişmez. Latin dışı alfabe de çalışır (besinNorm \p{L}).
+
+# --- Türkçe
+enerji	tr	Enerji	off
+enerji	tr	Enerji değeri	etiket
+yag	tr	Yağ	off
+yag	tr	Toplam yağ	etiket
+doymus	tr	Doymuş yağ	ab1169
+doymus	tr	Doymuş yağ asitleri	etiket
+karb	tr	Karbonhidrat	ab1169
+karb	tr	Karbonhidratlar	etiket
+seker	tr	Şekerler	ab1169
+seker	tr	Şeker	etiket
+lif	tr	Lif	ab1169
+lif	tr	Diyet lifi	etiket
+lif	tr	Posa	etiket
+protein	tr	Protein	off
+tuz	tr	Tuz	ab1169
+sodyum	tr	Sodyum	off
+_atla	tr	Trans yağ	etiket
+_atla	tr	Trans yağ asitleri	etiket
+_atla	tr	Tekli doymamış yağ	ab1169
+_atla	tr	Çoklu doymamış yağ	ab1169
+_atla	tr	Doymamış yağ	etiket
+_atla	tr	Tekli doymamış yağ asitleri	etiket
+_atla	tr	Çoklu doymamış yağ asitleri	etiket
+_atla	tr	Polioller	ab1169
+_atla	tr	Nişasta	ab1169
+_atla	tr	Kolesterol	etiket
+_atla	tr	Eklenmiş şeker	etiket
+_porsiyon	tr	Porsiyon	etiket
+_porsiyon	tr	Porsiyonda	etiket
+_porsiyon	tr	Porsiyon başına	etiket
+_ri	tr	BRD	etiket
+_ri	tr	RAM	etiket
+_ri	tr	GBM	etiket
+
+# --- İngilizce
+enerji	en	Energy	off
+yag	en	Fat	off
+yag	en	Total fat	off
+yag	en	Fats	off
+doymus	en	Saturates	ab1169
+doymus	en	Saturated fat	off
+doymus	en	Saturated fatty acids	off
+doymus	en	Saturated	off
+karb	en	Carbohydrate	ab1169
+karb	en	Carbohydrates	off
+karb	en	Total carbohydrate	etiket
+seker	en	Sugars	off
+seker	en	Sugar	etiket
+lif	en	Fibre	ab1169
+lif	en	Fiber	off
+lif	en	Dietary fibre	etiket
+lif	en	Dietary fiber	etiket
+protein	en	Protein	off
+protein	en	Proteins	off
+tuz	en	Salt	off
+sodyum	en	Sodium	off
+_atla	en	Mono-unsaturates	ab1169
+_atla	en	Polyunsaturates	ab1169
+_atla	en	Monounsaturated fat	off
+_atla	en	Polyunsaturated fat	off
+_atla	en	Monounsaturated	off
+_atla	en	Polyunsaturated	off
+_atla	en	Trans fat	off
+_atla	en	Polyols	ab1169
+_atla	en	Starch	ab1169
+_atla	en	Cholesterol	etiket
+_atla	en	Added sugars	etiket
+_porsiyon	en	Serving	etiket
+_porsiyon	en	Per serving	etiket
+_porsiyon	en	Portion	etiket
+_porsiyon	en	Per portion	etiket
+_ri	en	RI	etiket
+_ri	en	GDA	etiket
+_ri	en	NRV	etiket
+_ri	en	Reference intake	etiket
+
+# --- Almanca
+enerji	de	Energie	off
+enerji	de	Brennwert	ab1169
+yag	de	Fett	off
+doymus	de	gesättigte Fettsäuren	off
+karb	de	Kohlenhydrate	ab1169
+seker	de	Zucker	ab1169
+lif	de	Ballaststoffe	off
+protein	de	Eiweiß	off
+protein	de	Protein	off
+tuz	de	Salz	off
+sodyum	de	Natrium	off
+_atla	de	einfach ungesättigte Fettsäuren	off
+_atla	de	mehrfach ungesättigte Fettsäuren	off
+_atla	de	ungesättigte Fettsäuren	etiket
+_atla	de	Trans-Fettsäuren	off
+_atla	de	mehrwertige Alkohole	ab1169
+_atla	de	Stärke	ab1169
+_porsiyon	de	Portion	etiket
+_porsiyon	de	pro Portion	etiket
+
+# --- Fransızca
+enerji	fr	Énergie	off
+enerji	fr	Valeur énergétique	off
+yag	fr	Matières grasses	off
+yag	fr	Lipides	off
+doymus	fr	Acides gras saturés	off
+doymus	fr	dont acides gras saturés	ab1169
+karb	fr	Glucides	ab1169
+seker	fr	Sucres	ab1169
+lif	fr	Fibres alimentaires	off
+lif	fr	Fibres	off
+protein	fr	Protéines	off
+tuz	fr	Sel	off
+sodyum	fr	Sodium	off
+_atla	fr	Acides gras monoinsaturés	off
+_atla	fr	Acides gras mono-insaturés	off
+_atla	fr	Acides gras polyinsaturés	off
+_atla	fr	Acides gras poly-insaturés	off
+_atla	fr	Acides gras trans	off
+_atla	fr	Polyols	ab1169
+_atla	fr	Amidon	ab1169
+_porsiyon	fr	Portion	etiket
+_porsiyon	fr	par portion	etiket
+_ri	fr	AR	etiket
+
+# --- İtalyanca
+enerji	it	Energia	off
+enerji	it	Valore energetico	ab1169
+yag	it	Grassi	off
+doymus	it	Acidi grassi saturi	off
+karb	it	Carboidrati	ab1169
+seker	it	Zuccheri	ab1169
+lif	it	Fibre	ab1169
+lif	it	Fibra alimentare	off
+protein	it	Proteine	off
+tuz	it	Sale	off
+sodyum	it	Sodio	off
+_atla	it	Acidi grassi monoinsaturi	off
+_atla	it	Acidi grassi polinsaturi	off
+_atla	it	Acidi grassi trans	off
+_atla	it	Amido	ab1169
+_atla	it	Polioli	ab1169
+_porsiyon	it	Porzione	etiket
+_porsiyon	it	per porzione	etiket
+
+# --- İspanyolca
+enerji	es	Energía	off
+enerji	es	Valor energético	off
+yag	es	Grasas	off
+doymus	es	Grasas saturadas	off
+doymus	es	Ácidos grasos saturados	off
+karb	es	Hidratos de carbono	ab1169
+karb	es	Carbohidratos	etiket
+seker	es	Azúcares	ab1169
+lif	es	Fibra alimentaria	off
+lif	es	Fibra	off
+protein	es	Proteínas	off
+tuz	es	Sal	off
+sodyum	es	Sodio	off
+_atla	es	Grasas monoinsaturadas	off
+_atla	es	Grasas poliinsaturadas	off
+_atla	es	Grasas trans	off
+_atla	es	Almidón	ab1169
+_atla	es	Polialcoholes	ab1169
+_porsiyon	es	Porción	etiket
+_porsiyon	es	por porción	etiket
+
+# --- Felemenkçe
+enerji	nl	Energie	off
+yag	nl	Vetten	off
+yag	nl	Vet	off
+doymus	nl	Verzadigde vetzuren	off
+karb	nl	Koolhydraten	ab1169
+seker	nl	Suikers	ab1169
+lif	nl	Vezels	off
+protein	nl	Eiwitten	off
+protein	nl	Eiwit	off
+tuz	nl	Zout	off
+sodyum	nl	Natrium	off
+_atla	nl	Enkelvoudig onverzadigde vetzuren	off
+_atla	nl	Meervoudig onverzadigde vetzuren	off
+_atla	nl	onverzadigde vetzuren	etiket
+_atla	nl	Zetmeel	ab1169
+_atla	nl	Polyolen	ab1169
+_porsiyon	nl	Portie	etiket
+_porsiyon	nl	per portie	etiket

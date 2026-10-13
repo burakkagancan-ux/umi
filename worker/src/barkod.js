@@ -51,3 +51,25 @@ export function urunSec(satirlar) {
   return { bulundu: true, tur: g.son.tur, dil: g.son.dil || "", metin: g.son.metin, t: g.son.t, dogrulandi: g.dogrulandi, sayi: g.s.length };
 }
 
+
+// Besin değerleri (A-02): Open Food Facts nutriments (*_100g) → {kcal, yag, doymus, karb, seker, lif, protein, tuz, birim}; değer yoksa null.
+// js/besin.js besinOff ve off_al.py besin_al ile aynı hesap (test/besin.js karşılaştırır). Tutarlılık uygulamada denetlenir.
+const BESIN_OFF = { yag: "fat", doymus: "saturated-fat", karb: "carbohydrates", seker: "sugars", lif: "fiber", protein: "proteins", tuz: "salt" };
+export function besinBirim(miktar) {
+  const s = String(miktar == null ? "" : miktar).toLowerCase();
+  if (/\d\s*(ml|cl|dl|l|lt|litre|liter|litres|liters)\b/.test(s)) return "ml";
+  return /\d\s*(g|gr|kg|gram|grams)\b/.test(s) ? "g" : "";
+}
+export function besinOff(n, miktar) {
+  if (!n || typeof n !== "object") return null;
+  const f = (k) => { let v = n[k]; if (v === "" || v == null) return null; v = Number(v); return Number.isFinite(v) && v >= 0 ? v : null; };
+  const b = { kcal: f("energy-kcal_100g") };
+  if (b.kcal == null) { let kj = f("energy-kj_100g"); if (kj == null) kj = f("energy_100g"); b.kcal = kj == null ? null : kj / 4.184; }
+  for (const k in BESIN_OFF) b[k] = f(BESIN_OFF[k] + "_100g");
+  if (b.tuz == null) { const na = f("sodium_100g"); b.tuz = na == null ? null : na * 2.5; }
+  const alan = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"];
+  if (alan.every((a) => b[a] == null)) return null;
+  for (const a of alan) b[a] = b[a] == null ? null : Math.round(b[a] * 1000) / 1000;
+  b.birim = besinBirim(miktar);
+  return b;
+}

@@ -57,10 +57,12 @@ const d1 = (eskiTablo) => { const rows = [], sqls = []; let ddl = 0;
       const [kod, tur, dil, metin, t, kim] = this.args; rows.push({ kod, tur, dil, metin, t, kim }); return {}; } });
   return { rows, sqls, get ddl() { return ddl; }, prepare: st, batch: async (l) => { ddl += l.length; return []; } }; };
 const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz, emülgatör (soya lesitini), kabartıcı (sodyum bikarbonat).";
-{ visionReply = offYanit({ "world.openfoodfacts.org/8690504025207": { code: "8690504025207", product_name_tr: "Bitter Çikolata", brands: "Ülker,X", lang: "tr", ingredients_text_tr: "Kakao kitlesi, şeker", ingredients_text: "Kakao kitlesi, şeker", last_modified_t: 1700000000 },
+{ visionReply = offYanit({ "world.openfoodfacts.org/8690504025207": { code: "8690504025207", product_name_tr: "Bitter Çikolata", brands: "Ülker,X", lang: "tr", ingredients_text_tr: "Kakao kitlesi, şeker", ingredients_text: "Kakao kitlesi, şeker", last_modified_t: 1700000000,
+    nutriments: { "energy-kcal_100g": 505, fat_100g: 25.1, "saturated-fat_100g": 16, sugars_100g: 30.5, sodium_100g: 0.04 }, quantity: "100 g" },
     "world.openbeautyfacts.org/4005900036650": { code: "4005900036650", product_name: "Krem", brands: "N", lang: "de", ingredients_text: "Aqua, Glycerin" } });
   offCalls = [];
-  await t("off: gıda bulundu", breq("/off/8690504025207"), env(), 200, (j) => j.bulundu && j.db === "food" && j.ad === "Bitter Çikolata" && j.marka === "Ülker" && j.metin.tr === "Kakao kitlesi, şeker" && j.t === 1700000000000);
+  await t("off: gıda bulundu", breq("/off/8690504025207"), env(), 200, (j) => j.bulundu && j.db === "food" && j.ad === "Bitter Çikolata" && j.marka === "Ülker" && j.metin.tr === "Kakao kitlesi, şeker" && j.t === 1700000000000
+    && j.besin && j.besin.kcal === 505 && j.besin.yag === 25.1 && j.besin.tuz === 0.1 && j.besin.karb === null && j.besin.birim === "g");
   if (offCalls.some((u) => !/^https:\/\/world\.open(food|beauty|products)facts\.org\/api\/v2\/product\/8690504025207\?/.test(u))) { fail++; console.log("HATA off: beklenmeyen adres", offCalls); }
   await t("off: kozmetik (dil = etiket dili)", breq("/off/4005900036650"), env(), 200, (j) => j.bulundu && j.db === "beauty" && j.metin.de === "Aqua, Glycerin");
   await t("off: bulunamadı", breq("/off/4006381333931"), env(), 200, (j) => j.bulundu === false);
