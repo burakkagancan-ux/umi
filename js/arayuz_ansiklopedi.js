@@ -146,9 +146,21 @@ function rowFor(r){
   var a=h("a","row");a.href=link(r);a.appendChild(svg(rico(r)));a.appendChild(h("span","rc",r.id));
   var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",at("cat."+r.category)+" · "+at("risk."+r.risk_level)));a.appendChild(n);return a;
 }
+/* Tür süzgeci: şimdilik yalnızca gıda maddeleri var; kozmetik ve temizlik ansiklopedisi gelene kadar seçilemez, altında "Çok yakında" */
+function turSecici(){
+  var s=h("div","seg");s.setAttribute("role","radiogroup");s.setAttribute("aria-label",t("sayfa.urun_turu"));
+  [["gida",true],["koz",false],["tem",false]].forEach(function(x){
+    var b=h("button");b.type="button";b.id="tur-"+x[0];b.setAttribute("role","radio");b.setAttribute("aria-checked",x[1]?"true":"false");
+    b.appendChild(h("span",null,t("kayit.tur."+x[0])));
+    if(!x[1]){b.setAttribute("aria-disabled","true");b.appendChild(h("small",null,t("ans.cok_yakinda")))}
+    s.appendChild(b);
+  });
+  return s;
+}
 function showSearch(){
   ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
+  box.appendChild(turSecici());
   var lb=h("label","vh",t("ans.ara"));lb.htmlFor="ara";box.appendChild(lb);
   var inp=h("input");inp.type="search";inp.id="ara";inp.placeholder=t("ans.ara_yer");inp.autocomplete="off";inp.setAttribute("enterkeyhint","search");box.appendChild(inp);
   var out=h("div","list");out.setAttribute("aria-live","polite");box.appendChild(out);
