@@ -21,6 +21,9 @@ and this notice does not restrict any right those terms grant. Currently:
 - Open Food Facts ingredient taxonomy (rows marked "OFF" in
   kaynak/ingilizce_esanlamlilar.tsv): Open Database License (ODbL) 1.0,
   (c) Open Food Facts contributors, https://world.openfoodfacts.org.
+- Open Food Facts nutrient taxonomy (rows marked "off" in
+  kaynak/besin_adlari.tsv): Open Database License (ODbL) 1.0,
+  (c) Open Food Facts contributors, https://world.openfoodfacts.org.
 - Open Food Facts, Open Beauty Facts and Open Products Facts product data
   (kaynak/off/urunler.json, data/barkod_off.json): Open Database License
   (ODbL) 1.0, contents Database Contents License (DbCL) 1.0,

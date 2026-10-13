@@ -27,7 +27,7 @@ function barkodUrun(kod){
 function barkodOffCanli(kod){
   return barkodWorker("/off/"+kod).then(function(j){
     if(!j||!j.bulundu)return null;
-    return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null};
+    return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null,besin:j.besin||null};
   });
 }
 /* Barkod bulundu: sırayla ara, sonucu göster */

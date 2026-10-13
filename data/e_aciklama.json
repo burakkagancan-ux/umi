@@ -1,7 +1,7 @@
 {
  "meta": {
   "version": "0.1.1",
-  "generated": "2026-10-12",
+  "generated": "2026-10-13",
   "description": "Katkı maddelerinin ne olduğu ve nerede kullanıldığı. Sağlık/mevzuat değerlendirmesi içermez.",
   "verification": "general_knowledge: model bilgisine dayanır; kimyasal tanım ve tipik kullanım alanıdır.",
   "count": 333
