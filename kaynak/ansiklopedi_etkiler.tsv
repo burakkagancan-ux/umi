@@ -115,3 +115,10 @@ E552 E553a E553b	belirsiz	Güvenilir uzun süreli toksisite, kanserojenlik ve ü
 E553b	resmi	IARC 2025'te talkı Grup 2A'da (insanlarda muhtemelen kanserojen) sınıflandırdı	Genel nüfus	-	iarc_talc
 E912	belirsiz	Toksikokinetik, üreme ve gelişim verisi olmadığı için EFSA değerlendiremedi; AB 2014'te izinli listeden çıkardı	-	-	efsa_e912
 E1203	belirsiz	EFSA 2006 görüşünün sonucu okunamadı; bu çalışmada bilinen bir yan etki bulunamadı	-	-	-
+E210 E211 E212 E213	bildirildi	Kurdeşen, kaşıntı, burun akıntısı ve tıkanıklığı gibi duyarlılık tepkileri bildirilmiştir; bu kişilerde astım ve egzama belirtilerini tetikleyebilir. Tek bir olguda anafilaksi bildirilmiştir	Atopik dermatit, kronik kurdeşen, kaşıntı ya da kalıcı burun iltihabı (rinit) olan bazı kişiler	Günlük sınırın altındaki düşük miktarlarda bile	efsa_e211
+E220 E221 E222 E223 E224 E226 E227 E228	bildirildi	Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir	Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi	Tepkiyi başlatan en düşük miktar bilinmiyor	efsa_sulfite_2016
+E420	bildirildi	İshal bildirilmiştir	Yetişkinler	Günde 50 g'ın üzerinde; iki seferde alınan günde 25 g'da görülmedi	jecfa_mono_e420
+E421	bildirildi	Laksatif etki ve ishal bildirilmiştir	Yetişkinler	Laksatif etki tek seferde 10–20 g'dan itibaren; 40 g ve üzerinde çoğu zaman ishal	jecfa_mono_e421
+E953	bildirildi	Gaz ve ishal bildirilmiştir; gaz düzenli alımda birkaç gün içinde azalabilir	Yetişkin ve çocuklar	Tek seferde 20 g genellikle ishalsiz; 40 g'da çocukların yaklaşık %10'unda hafif ishal	jecfa_mono_e953
+E966	bildirildi	İshal bildirilmiştir	Yetişkinler	Tek seferde 50 g'da görüldü, 24 g'da görülmedi	jecfa_mono_e966
+E967	bildirildi	Gaz, ara sıra karın ağrısı ve geçici ishal bildirilmiştir	7–16 yaş arası çocuklar	Gaz günde 45 g'dan itibaren; geçici ishal günde 65–80 g'da	jecfa_mono_e967

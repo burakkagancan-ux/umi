@@ -16500,6 +16500,210 @@
 "kaynak.fe156acc12": {
 "s": "Re-evaluation of thaumatin (E 957) as food additive (full-text copy)",
 "tr": "Re-evaluation of thaumatin (E 957) as food additive (tam metin kopyası)"
+},
+"E210.eff.1.a": {
+"s": "Even at low amounts below the daily limit",
+"tr": "Günlük sınırın altındaki düşük miktarlarda bile"
+},
+"E210.eff.1.t": {
+"s": "Sensitivity reactions such as hives, itching, runny and blocked nose have been reported; in these people it may trigger asthma and eczema symptoms. Anaphylaxis has been reported in a single case",
+"tr": "Kurdeşen, kaşıntı, burun akıntısı ve tıkanıklığı gibi duyarlılık tepkileri bildirilmiştir; bu kişilerde astım ve egzama belirtilerini tetikleyebilir. Tek bir olguda anafilaksi bildirilmiştir"
+},
+"E210.eff.1.w": {
+"s": "Some people with atopic dermatitis, chronic hives, itching or persistent rhinitis",
+"tr": "Atopik dermatit, kronik kurdeşen, kaşıntı ya da kalıcı burun iltihabı (rinit) olan bazı kişiler"
+},
+"E211.eff.1.a": {
+"s": "Even at low amounts below the daily limit",
+"tr": "Günlük sınırın altındaki düşük miktarlarda bile"
+},
+"E211.eff.1.t": {
+"s": "Sensitivity reactions such as hives, itching, runny and blocked nose have been reported; in these people it may trigger asthma and eczema symptoms. Anaphylaxis has been reported in a single case",
+"tr": "Kurdeşen, kaşıntı, burun akıntısı ve tıkanıklığı gibi duyarlılık tepkileri bildirilmiştir; bu kişilerde astım ve egzama belirtilerini tetikleyebilir. Tek bir olguda anafilaksi bildirilmiştir"
+},
+"E211.eff.1.w": {
+"s": "Some people with atopic dermatitis, chronic hives, itching or persistent rhinitis",
+"tr": "Atopik dermatit, kronik kurdeşen, kaşıntı ya da kalıcı burun iltihabı (rinit) olan bazı kişiler"
+},
+"E212.eff.1.a": {
+"s": "Even at low amounts below the daily limit",
+"tr": "Günlük sınırın altındaki düşük miktarlarda bile"
+},
+"E212.eff.1.t": {
+"s": "Sensitivity reactions such as hives, itching, runny and blocked nose have been reported; in these people it may trigger asthma and eczema symptoms. Anaphylaxis has been reported in a single case",
+"tr": "Kurdeşen, kaşıntı, burun akıntısı ve tıkanıklığı gibi duyarlılık tepkileri bildirilmiştir; bu kişilerde astım ve egzama belirtilerini tetikleyebilir. Tek bir olguda anafilaksi bildirilmiştir"
+},
+"E212.eff.1.w": {
+"s": "Some people with atopic dermatitis, chronic hives, itching or persistent rhinitis",
+"tr": "Atopik dermatit, kronik kurdeşen, kaşıntı ya da kalıcı burun iltihabı (rinit) olan bazı kişiler"
+},
+"E213.eff.1.a": {
+"s": "Even at low amounts below the daily limit",
+"tr": "Günlük sınırın altındaki düşük miktarlarda bile"
+},
+"E213.eff.1.t": {
+"s": "Sensitivity reactions such as hives, itching, runny and blocked nose have been reported; in these people it may trigger asthma and eczema symptoms. Anaphylaxis has been reported in a single case",
+"tr": "Kurdeşen, kaşıntı, burun akıntısı ve tıkanıklığı gibi duyarlılık tepkileri bildirilmiştir; bu kişilerde astım ve egzama belirtilerini tetikleyebilir. Tek bir olguda anafilaksi bildirilmiştir"
+},
+"E213.eff.1.w": {
+"s": "Some people with atopic dermatitis, chronic hives, itching or persistent rhinitis",
+"tr": "Atopik dermatit, kronik kurdeşen, kaşıntı ya da kalıcı burun iltihabı (rinit) olan bazı kişiler"
+},
+"E220.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E220.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E220.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E221.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E221.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E221.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E222.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E222.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E222.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E223.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E223.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E223.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E224.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E224.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E224.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E226.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E226.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E226.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E227.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E227.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E227.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E228.eff.2.a": {
+"s": "The lowest amount that triggers a reaction is unknown",
+"tr": "Tepkiyi başlatan en düşük miktar bilinmiyor"
+},
+"E228.eff.2.t": {
+"s": "Asthma attacks, hives and angioedema (swelling of the lips, face or throat) have been reported after ingestion; most of these reactions are not true allergies",
+"tr": "Ağızdan alındıktan sonra astım krizi, kurdeşen ve anjiyoödem (dudak, yüz ya da boğazda şişlik) bildirilmiştir; bu tepkilerin çoğu gerçek alerji değildir"
+},
+"E228.eff.2.w": {
+"s": "About 3–10% of people with asthma and a small number of people without asthma",
+"tr": "Astımlıların yaklaşık %3–10'u ve az sayıda astımı olmayan kişi"
+},
+"E420.eff.1.a": {
+"s": "Above 50 g a day; not seen at 25 g a day taken in two doses",
+"tr": "Günde 50 g'ın üzerinde; iki seferde alınan günde 25 g'da görülmedi"
+},
+"E420.eff.1.t": {
+"s": "Diarrhoea has been reported",
+"tr": "İshal bildirilmiştir"
+},
+"E420.eff.1.w": {
+"s": "Adults",
+"tr": "Yetişkinler"
+},
+"E421.eff.1.a": {
+"s": "Laxative effect from 10–20 g in a single dose; diarrhoea is common at 40 g or more",
+"tr": "Laksatif etki tek seferde 10–20 g'dan itibaren; 40 g ve üzerinde çoğu zaman ishal"
+},
+"E421.eff.1.t": {
+"s": "A laxative effect and diarrhoea have been reported",
+"tr": "Laksatif etki ve ishal bildirilmiştir"
+},
+"E421.eff.1.w": {
+"s": "Adults",
+"tr": "Yetişkinler"
+},
+"E953.eff.1.a": {
+"s": "20 g in a single dose usually without diarrhoea; mild diarrhoea in about 10% of children at 40 g",
+"tr": "Tek seferde 20 g genellikle ishalsiz; 40 g'da çocukların yaklaşık %10'unda hafif ishal"
+},
+"E953.eff.1.t": {
+"s": "Gas and diarrhoea have been reported; gas may lessen within a few days of regular intake",
+"tr": "Gaz ve ishal bildirilmiştir; gaz düzenli alımda birkaç gün içinde azalabilir"
+},
+"E953.eff.1.w": {
+"s": "Adults and children",
+"tr": "Yetişkin ve çocuklar"
+},
+"E966.eff.1.a": {
+"s": "Seen at 50 g in a single dose, not at 24 g",
+"tr": "Tek seferde 50 g'da görüldü, 24 g'da görülmedi"
+},
+"E966.eff.1.t": {
+"s": "Diarrhoea has been reported",
+"tr": "İshal bildirilmiştir"
+},
+"E966.eff.1.w": {
+"s": "Adults",
+"tr": "Yetişkinler"
+},
+"E967.eff.1.a": {
+"s": "Gas from 45 g a day; transient diarrhoea at 65–80 g a day",
+"tr": "Gaz günde 45 g'dan itibaren; geçici ishal günde 65–80 g'da"
+},
+"E967.eff.1.t": {
+"s": "Gas, occasional abdominal pain and transient diarrhoea have been reported",
+"tr": "Gaz, ara sıra karın ağrısı ve geçici ishal bildirilmiştir"
+},
+"E967.eff.1.w": {
+"s": "Children aged 7–16",
+"tr": "7–16 yaş arası çocuklar"
 }
 }
 }

@@ -2758,6 +2758,48 @@
    "year": 2015,
    "url": "https://doi.org/10.2903/j.efsa.2015.4101",
    "official": true
+  },
+  "efsa_sulfite_2016": {
+   "title": "Scientific Opinion on the re-evaluation of sulfur dioxide (E 220), sodium sulfite (E 221), sodium bisulfite (E 222), sodium metabisulfite (E 223), potassium metabisulfite (E 224), calcium sulfite (E 226), calcium bisulfite (E 227) and potassium bisulfite (E 228) as food additives",
+   "publisher": "EFSA",
+   "year": 2016,
+   "url": "https://www.efsa.europa.eu/en/efsajournal/pub/4438",
+   "official": true
+  },
+  "jecfa_mono_e420": {
+   "title": "Sorbitol (WHO Food Additives Series 5)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1974,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v05je91.htm",
+   "official": true
+  },
+  "jecfa_mono_e421": {
+   "title": "Mannitol (WHO Food Additives Series 21)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1987,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v21je10.htm",
+   "official": true
+  },
+  "jecfa_mono_e953": {
+   "title": "Isomalt (WHO Food Additives Series 20)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1985,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v20je14.htm",
+   "official": true
+  },
+  "jecfa_mono_e966": {
+   "title": "Lactitol (WHO Food Additives Series 18)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1983,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v18je10.htm",
+   "official": true
+  },
+  "jecfa_mono_e967": {
+   "title": "Xylitol (WHO Food Additives Series 18)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1983,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v18je16.htm",
+   "official": true
   }
  },
  "resmi_alan_adlari": [
