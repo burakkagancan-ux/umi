@@ -21,9 +21,17 @@ var DIL_HAZIR=dilGetir("i18n/diller.json").catch(function(){return {diller:{tr:{
     var s={};gerek.forEach(function(k,i){s[k]=v[i]});
     var vd={};if(v[gerek.length])vd[kod]=v[gerek.length];
     dilKur(kod,s,bilgi,vd);dilUygula(document);ulkeIsaretle(ulke());
-    dilOnbellege(u.concat(v[gerek.length]?[vu]:[],DIL.yazi&&DIL.yazi.css?[DIL.yazi.css]:[]));
+    var mf=dilManifest(document);
+    dilOnbellege(u.concat(v[gerek.length]?[vu]:[],DIL.yazi&&DIL.yazi.css?[DIL.yazi.css]:[],mf?[mf]:[]));
   });
 });
+/* Ana ekrana eklenen uygulamanın adı ve kısayolları seçili dilde: kaynak dilde manifest.webmanifest, öteki dillerde
+   i18n/manifest/<dil>.webmanifest (gen_manifest.py). Bağlantı değişince tarayıcı yeni manifesti okur. Döner: değişen dosya ya da null */
+function dilManifest(doc){
+  var ad=doc.querySelector('meta[name="apple-mobile-web-app-title"]');if(ad)ad.setAttribute("content",t("manifest.kisa_ad"));
+  var l=doc.querySelector('link[rel="manifest"]');if(!l||DIL.kod===DIL_KAYNAK)return null;
+  var p="i18n/manifest/"+DIL.kod+".webmanifest";l.setAttribute("href",p);return p;
+}
 /* <html lang dir>, yazı tipi (dil dosyasında tanımlıysa) ve data-i18n / data-i18n-attr ("aria-label:anahtar;placeholder:anahtar").
    lang/dir yalnızca arayüzü çevrilen sayfada değişir (<html data-cevrilen>: ocr.html, ansiklopedi.html, index.html). */
 function dilUygula(doc){

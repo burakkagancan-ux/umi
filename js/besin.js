@@ -96,7 +96,8 @@ var BESIN_BIRIM={kcal:"kcal",kj:"kj",g:"g",gr:"g",mg:"mg","µg":"ug",mcg:"ug",ug
 /* Metni parçalara ayırır: sayı (ondalık virgül/nokta, "<" ve bitişik birim), birim, sözcük, satır sonu */
 function besinParcala(metin){
   var re=/([<≤]\s*)?(\d+(?:[.,]\d+)?)\s*(kcal|kj|mg|µg|mcg|ug|gr|g|ml|%)?(?![\p{L}\p{N}])|%|[\p{L}][\p{L}\p{M}'’-]*|\n|\.(?!\d)/giu,m,out=[];
-  var s=String(metin==null?"":metin).replace(/\r/g,"");
+  // E kodu ("E330", "E 150c") sayı değildir: içerik listesinde satır adının ardından gelirse değer sanılırdı ("Şeker, E330" → şekerler 330 g)
+  var s=String(metin==null?"":metin).replace(/\r/g,"").replace(/(^|[^\p{L}\p{N}])[Ee][ -]?\d{3,4}[a-j]?(?![\p{L}\p{N}])/gu,"$1ekodu");
   while((m=re.exec(s))){
     if(m[0]==="\n"||m[0]==="."){out.push({t:"nl"});continue}   // cümle sonu da satır sonu gibi: "…, tuz. Besin değerleri" 
     if(m[2]!=null){
@@ -218,3 +219,56 @@ function besinAyristir(metin,S){
   var d=besinDenetle(b),hepsi=sorun.concat(d.sorun);
   return {b:b,lt:lt,birim:birim,sutun:sutun,yontem:yontem,durum:hepsi.length?"suphe":d.durum,sorun:hepsi,eksik:d.eksik,hesap:d.hesap};
 }
+
+/* ---------- Renkli gösterim (3. adım) ----------
+   Eşikler: Birleşik Krallık Sağlık Bakanlığı, ön yüz besin etiketi kılavuzu (2016), Ek 3, Tablo 2 (gıda, 100 g) ve Tablo 3 (içecek, 100 ml).
+   Düşük (yeşil) üst sınırı AB 1924/2006 "düşük" beslenme beyanı eşiği. Düşük ≤ alt; alt < Orta ≤ üst; Yüksek > üst.
+   Porsiyon ölçütü (porsiyon > 100 g ya da 150 ml ise %30 RI) uygulanmaz: porsiyon büyüklüğü bilinmiyor; ekranda yazılır.
+   Enerji renklendirilmez (kılavuz). Yeni ülkenin eşikleri ayrı kayıt olarak eklenir (ülke katmanı B-05). */
+var BESIN_ESIK={
+  kaynak:"uk_fop_2016",
+  url:"https://www.gov.uk/government/publications/front-of-pack-nutrition-labelling-guidance",
+  g:{yag:[3,17.5],doymus:[1.5,5],seker:[5,22.5],tuz:[0.3,1.5]},
+  ml:{yag:[1.5,8.75],doymus:[0.75,2.5],seker:[2.5,11.25],tuz:[0.3,0.75]}
+};
+/* Kullanıcı onayından sonra da renk göstermeyen sorunlar (değerler birbiriyle çelişiyor). Enerji ve ayrıştırma sorunları onayla kalkar
+   (alkollü içecek, okunamayan başlık): renklenen dört satır enerjiye bağlı değil. */
+var BESIN_KESIN=["eksi","yuz_asti","doymus_yag","seker_karb","toplam"];
+/* v: değer (g / 100 g ya da 100 ml), lt: "<" ile yazılmış, birim: "g" | "ml". Döner: "dusuk" | "orta" | "yuksek" | null (bilinmiyor) */
+function besinDuzey(alan,v,lt,birim){
+  var e=BESIN_ESIK[birim]&&BESIN_ESIK[birim][alan];v=besinSayi(v);
+  if(!e||v==null)return null;
+  if(lt)return v<=e[0]?"dusuk":null;   // "< 0,5 g": eşiğin altında kalıyorsa düşük; yoksa gerçek değer bilinmiyor
+  return v<=e[0]?"dusuk":v<=e[1]?"orta":"yuksek";
+}
+/* Ekrandaki model. k: {b, lt, birim, sorun (ayrıştırma + denetim), onay (kullanıcı değerleri doğruladı ya da düzeltti)}.
+   Döner: {renk: bool, neden: "suphe"|"birim"|"" , birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik} ya da null (değer yok).
+   Renk yalnızca: birim biliniyor ve (sorun yok ya da kullanıcı onayladı ve kesin çelişki yok). */
+function besinGorunum(k){
+  if(!k||!k.b)return null;
+  var d=besinDenetle(k.b);if(d.durum==="yok")return null;
+  var sorun=(k.sorun||[]).slice();d.sorun.forEach(function(s){if(sorun.indexOf(s)<0)sorun.push(s)});
+  var kesin=sorun.some(function(s){return BESIN_KESIN.indexOf(s)>=0});
+  var birim=k.birim==="ml"||k.birim==="g"?k.birim:"";
+  var neden=kesin||(sorun.length&&!k.onay)?"suphe":!birim?"birim":"";
+  var lt=k.lt||{};
+  return {
+    renk:!neden,neden:neden,birim:birim,sorun:sorun,eksik:d.eksik,onay:!!k.onay,
+    enerji:besinSayi(k.b.kcal),
+    satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden?null:besinDuzey(a,v,lt[a],birim)}})
+  };
+}
+/* Kullanıcının elle düzelttiği tablo, metne bağlı saklanır (localStorage "besin_elle"): aynı metin yeniden açılınca düzeltme geri gelir.
+   Anahtar metnin özeti (djb2); en çok BESIN_ELLE_EN kayıt, en eskisi düşer. */
+var BESIN_ELLE_EN=100;
+function besinMetinAnahtar(mode,metin){
+  var s=(mode||"gida")+"\n"+String(metin==null?"":metin).trim(),h=5381;
+  for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;
+  return (h>>>0).toString(36)+"_"+s.length.toString(36);
+}
+function besinElleEkle(liste,anahtar,kayit){
+  var a=(Array.isArray(liste)?liste:[]).filter(function(x){return x&&x.k!==anahtar});
+  a.unshift({k:anahtar,b:kayit.b,birim:kayit.birim||"",t:kayit.t||0});
+  return a.slice(0,BESIN_ELLE_EN);
+}
+function besinElleBul(liste,anahtar){return (Array.isArray(liste)?liste:[]).filter(function(x){return x&&x.k===anahtar&&x.b})[0]||null}

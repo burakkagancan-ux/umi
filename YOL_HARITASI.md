@@ -1,7 +1,7 @@
 # Yol haritası: küresel Tağşiş
 
 Bu dosya projenin ana iş planıdır. Her oturumun başında okunur. Bir iş başlayınca, bitince ya da plan değişince aynı PR içinde güncellenir (durum, tarih, PR numarası).
-İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 13.10.2026 (O-05 değerlendirme değişiklik kaydı).
+İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 13.10.2026 (A-02 3. adım: besin tablosu ekranı; dile göre manifest).
 
 Durum işaretleri: ⬜ başlamadı · 🔄 sürüyor · ✅ bitti · ⏸ bekletiliyor · 👤 kullanıcının işi
 
@@ -63,7 +63,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
 |---|---|---|---|---|---|
 | A-01 | Telefon testleri ve sonuçlara göre ayar | 👤 + Claude | — | Kullanıcının bulduğu her sorun PR'la kapanır | 🔄 👤 |
-| A-02 | Besin değeri tablosu (şeker, yağ, doymuş yağ, tuz; 100 g başına; NHS/AB eşikleri; puansız renkli gösterim). Adımlar: (1) barkod → Open Food Facts besin değerleri ✅ 13.10.2026; (2) etiket metninden tablo ayrıştırıcı + tutarlılık denetimi ✅ 13.10.2026 (js/besin.js, test/besin.js; denetimi geçmeyen değer "şüpheli", renk gösterilmez, kullanıcıya sorulur); (3) ekran: dört satır renkli, eşik kaynağı, düzeltilebilir değerler, "tabloyu da ekle" düğmesi; (4) 20–30 gerçek etiket fotoğrafıyla ölçüm (👤 fotoğraflar) | Claude + 👤 | — | Etiketteki tablo okunur, eşik kaynakları görünür, testli; gerçek etiket setinde hiç yanlış renk güvenle gösterilmez | 🔄 |
+| A-02 | Besin değeri tablosu (şeker, yağ, doymuş yağ, tuz; 100 g başına; NHS/AB eşikleri; puansız renkli gösterim). Adımlar: (1) barkod → Open Food Facts besin değerleri ✅ 13.10.2026; (2) etiket metninden tablo ayrıştırıcı + tutarlılık denetimi ✅ 13.10.2026 (js/besin.js, test/besin.js; denetimi geçmeyen değer "şüpheli", renk gösterilmez, kullanıcıya sorulur); (3) ekran: dört satır renkli, eşik kaynağı, düzeltilebilir değerler, "tabloyu da ekle" düğmesi ✅ 13.10.2026 (eşikler Birleşik Krallık FoP 2016 Ek 3; js/arayuz_besin.js); (4) 20–30 gerçek etiket fotoğrafıyla ölçüm (👤 fotoğraflar) | Claude + 👤 | — | Etiketteki tablo okunur, eşik kaynakları görünür, testli; gerçek etiket setinde hiç yanlış renk güvenle gösterilmez | 🔄 |
 | A-03 | Gizlilik dostu ölçüm: günlük tarama, mod, paylaşım, 7 gün sonra geri dönüş (kişisel veri ve metin yok; Worker KV) | Claude | — | Kişisel veri gönderilmez, KVKK notu güncellenir | ⬜ |
 | A-04 | Fotoğraf okuma kalitesi: iki sütunlu etiket, kavisli ambalaj, otomatik kırpma önerisi (galeriden yükleme eklendi, #90) | Claude | — | Gerçek etiket setinde ölçülen iyileşme | 🔄 |
 | A-05 | Helal katmanı ("kaynağı belirsiz, sertifikaya bakın"; hüküm vermez) | Claude | — | Kaynaklı, yalnızca bilgi; MENA pazarının ön koşulu | ⬜ |
@@ -198,6 +198,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 - 👤 Hukuki görüş, tetik gelince (E-05)
 - 👤 Barkod kararı, C-05 ölçümünden sonra (CLAUDE.md'deki "barkod en sona, belki hiç" kararı bu ölçümle yeniden değerlendirilecek)
 - 👤 Çeviri kontrolcüleri (B-06)
+- 👤 A-02 4. adım: 20–30 farklı ürünün besin tablosu fotoğrafı (dikey/yatay, 100 g + porsiyon sütunlu, içecek, içerik listesiyle aynı yüzde olan/olmayan)
 - 👤 Ver-al ödülünün türü ve oranı (G-03; öneri: tarama hakkı değil Premium günü), rozet listesinin onayı (G-01)
 - 👤 **Önleyici kararlar (§9.1, ucuzken):** alan adı (O-01), küresel marka adı (O-02), depo ve veri lisansı (O-03), hesaplarda iki aşamalı doğrulama ve organizasyon (O-04), bulut bütçe uyarıları (O-08)
 

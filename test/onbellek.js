@@ -17,6 +17,7 @@ fs.readdirSync(path.join(R,'js')).filter(f=>f.endsWith('.js')).forEach(f=>{
 const DIN=eval(/const DINAMIK = (\/.*\/);/.exec(sw)[1]),dinamik=[];
 const ls=d=>fs.existsSync(path.join(R,d))?fs.readdirSync(path.join(R,d),{withFileTypes:true}):[];
 ls('i18n').forEach(e=>{if(e.isFile()&&e.name.endsWith('.json')&&e.name!=='diller.json'&&e.name!=='tr.json')dinamik.push('i18n/'+e.name)});
+ls('i18n/manifest').forEach(e=>{if(e.name.endsWith('.webmanifest'))dinamik.push('i18n/manifest/'+e.name)});
 ls('i18n/veri').forEach(e=>{if(e.name.endsWith('.json'))dinamik.push('i18n/veri/'+e.name)});
 ls('data').forEach(e=>{if(/^ansiklopedi_[a-z-]+\.json$/.test(e.name)&&e.name!=='ansiklopedi_tr.json')dinamik.push('data/'+e.name)});
 (function gez(d){ls(d).forEach(e=>e.isDirectory()?gez(d+'/'+e.name):dinamik.push(d+'/'+e.name))})('data/ansiklopedi');

@@ -1,0 +1,140 @@
+/* Arayüz: besin değeri tablosu (A-02, 3. adım). Saf mantık js/besin.js. Gıda sonucunda özetin altında kart: yağ, doymuş yağ, şekerler, tuz
+   100 g (içecekte 100 ml) başına; renk yalnızca değerler tutarlıysa ve birim biliniyorsa (emin olunmayan renk gösterilmez).
+   Değerin kaynağı sırayla: kullanıcının düzelttiği değerler (localStorage "besin_elle", metne bağlı) → okunan metindeki tablo
+   → barkoddan gelen Open Food Facts değerleri. "Tablonun fotoğrafını ekle": okunan tablo metni içerik metninin sonuna eklenir,
+   aynı tarama güncellenir (kayıt ve geçmişle birlikte saklanır). */
+var BESIN_SOZ=null;    // besinSozluk(data/besin.json)
+var BESIN_EKLE=null;   // {taban: fotoğraftan önceki metin, n: fotoğrafın OKU.n'i (seçilince), t}
+var BESIN_EKLE_SURE=5*60000;
+function besinYukle(){
+  if(BESIN_SOZ)return Promise.resolve(BESIN_SOZ);
+  return getJson("data/besin.json").then(function(j){BESIN_SOZ=besinSozluk(j);return BESIN_SOZ}).catch(function(){return null});
+}
+function besinElleListe(){try{var a=JSON.parse(localStorage.getItem("besin_elle")||"[]");return Array.isArray(a)?a:[]}catch(e){return []}}
+function besinElleYaz(a){try{localStorage.setItem("besin_elle",JSON.stringify(a));return true}catch(e){return false}}
+/* Ekrandaki metnin tablosu: {k: besinGorunum girdisi, kaynak: "elle"|"etiket"|"off", t, okunan: metinden ayrıştırılan (düzeltme formu için)} ya da null */
+function besinKaynak(tx){
+  var okunan=BESIN_SOZ?besinAyristir(tx,BESIN_SOZ):null;
+  var e=besinElleBul(besinElleListe(),besinMetinAnahtar("gida",tx));
+  if(e)return {k:{b:e.b,lt:e.lt||{},birim:e.birim,sorun:[],onay:true},kaynak:"elle",t:e.t,okunan:okunan};
+  if(okunan)return {k:okunan,kaynak:"etiket",okunan:okunan};
+  var r=BARKOD&&BARKOD.r;
+  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:{},birim:r.besin.birim,sorun:[]},kaynak:"off",t:r.besinT||r.t};
+  return null;
+}
+function besinDeger(v,lt){var s=t("birim.g_l",{n:sayi(v)});return lt?t("besin.kucuktur",{d:s}):s}
+function besinKart(tx){
+  var d=el("div","res u besin");
+  if(!BESIN_SOZ){besinYukle().then(function(){if(d.isConnected)d.replaceWith(besinKart(tx))});return d}
+  var K=besinKaynak(tx),G=K?besinGorunum(K.k):null,hd=el("div","hd");
+  d.appendChild(hd);
+  if(!G){
+    hd.appendChild(el("div","t",t("besin.baslik")));
+    d.appendChild(el("div","ln",t("besin.yok")));
+    d.appendChild(besinFotoDugmeler(tx));
+    return d;
+  }
+  hd.appendChild(el("div","t",t(G.birim?"besin.baslik_"+G.birim:"besin.baslik")));
+  var ib=el("button","info sm","i");ib.type="button";ib.setAttribute("aria-label",t("besin.esik_aria"));ib.setAttribute("aria-expanded","false");hd.appendChild(ib);
+  var tb=el("div","btab");
+  G.satir.forEach(function(s){
+    var r=el("div","brow");r.appendChild(el("span","bad",t("besin.alan."+s.alan)));
+    r.appendChild(el("span","bdeg",s.v==null?"—":besinDeger(s.v,s.lt)));
+    if(s.duzey)r.appendChild(el("span","bdz "+s.duzey,t("besin.duzey."+s.duzey)));
+    tb.appendChild(r);
+  });
+  if(G.enerji!=null){var r=el("div","brow");r.appendChild(el("span","bad",t("besin.alan.kcal")));r.appendChild(el("span","bdeg",t("besin.kcal",{n:sayi(Math.round(G.enerji))})));tb.appendChild(r)}
+  d.appendChild(tb);
+  if(G.neden==="suphe"){
+    var w=el("div","ln bsuphe",t("besin.suphe"));d.appendChild(w);
+    d.appendChild(el("div","how",t("besin.sorunlar",{l:G.sorun.map(function(s){return t("besin.sorun."+s)}).join("; ")})));
+  }else if(G.neden==="birim"){
+    d.appendChild(el("div","ln",t("besin.birim_sor")));
+    var row=el("div","row");
+    ["g","ml"].forEach(function(b){var x=el("button","alt",t("besin.birim_"+b));x.type="button";x.onclick=function(){besinElleKaydet(tx,{b:K.k.b,lt:K.k.lt,birim:b});d.replaceWith(besinKart(tx))};row.appendChild(x)});
+    d.appendChild(row);
+  }
+  var eksik=G.satir.filter(function(s){return s.v==null}).map(function(s){return t("besin.alan."+s.alan)});
+  if(eksik.length)d.appendChild(el("div","how",t("besin.eksik",{l:eksik.join(", ")})));
+  d.appendChild(el("div","how",K.kaynak==="elle"?t("besin.kaynak_elle",{tarih:dilTarih(K.t,"gun")}):K.kaynak==="off"?(K.t?t("besin.kaynak_off",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_off_tarihsiz")):t("besin.kaynak_etiket")));
+  var pn=el("div","ipanel");pn.hidden=true;besinEsikPanel(pn);d.appendChild(pn);
+  ib.onclick=function(){pn.hidden=!pn.hidden;ib.setAttribute("aria-expanded",pn.hidden?"false":"true");ib.classList.toggle("on",!pn.hidden)};
+  var db=el("button","alt",t("besin.duzelt"));db.type="button";db.onclick=function(){besinForm(tx,K,db,d)};
+  d.appendChild(db);
+  if(K.kaynak==="off")d.appendChild(besinFotoDugmeler(tx));
+  return d;
+}
+/* Eşiklerin kaynağı ve değerleri (BESIN_ESIK'ten; sayılar dilin biçiminde) */
+function besinEsikPanel(pn){
+  ["g","ml"].forEach(function(b){
+    var h=el("div","ln");h.appendChild(el("b",null,t("besin.esik_"+b)));pn.appendChild(h);
+    BESIN_AYAR.anaSatir.forEach(function(a){var e=BESIN_ESIK[b][a];pn.appendChild(el("div","how",t("besin.esik_satir",{ad:t("besin.alan."+a),a:sayi(e[0]),b:sayi(e[1])})))});
+  });
+  pn.appendChild(el("div","how",t("besin.hukum_not")));
+  pn.appendChild(el("div","how",t("besin.porsiyon_not")));
+  pn.appendChild(el("div","how",t("besin.enerji_not")));
+  var s=el("div","how");s.appendChild(document.createTextNode(t("ortak.kaynak")));
+  var l=el("a",null,t("besin.esik_kaynak"));l.href=BESIN_ESIK.url;l.target="_blank";l.rel="noopener";s.appendChild(l);pn.appendChild(s);
+}
+/* "Tablonun fotoğrafını ekle": kamera ya da galeri; okunan metin içerik metninin sonuna eklenir (js/arayuz_sayfa.js besinEkMetin) */
+function besinFotoDugmeler(tx){
+  var row=el("div","row");
+  var b=el("button",null,t("besin.foto_ekle"));b.type="button";b.onclick=function(){besinFotoIste(tx,"foto")};
+  var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){besinFotoIste(tx,"dosya")};
+  row.appendChild(b);row.appendChild(g);return row;
+}
+function besinFotoIste(tx,inp){BESIN_EKLE={taban:tx,n:null,t:Date.now()};$(inp).click()}
+/* Fotoğraf seçildi (fotoSec, OKU.n arttıktan sonra): bekleyen istek bu fotoğrafa bağlanır; başka bir fotoğraf istek biter */
+function besinFotoSecildi(){
+  if(!BESIN_EKLE)return;
+  if(BESIN_EKLE.n==null&&Date.now()-BESIN_EKLE.t<BESIN_EKLE_SURE)BESIN_EKLE.n=OKU.n;else BESIN_EKLE=null;
+}
+/* Okunan metin tablo fotoğrafına aitse eklenmiş metin, değilse null. n: okunan fotoğrafın OKU.n'i */
+function besinEkMetin(n,tx){
+  if(!BESIN_EKLE||BESIN_EKLE.n!==n)return null;
+  var taban=BESIN_EKLE.taban.trim();return (taban?taban+"\n\n":"")+String(tx||"").trim();
+}
+function besinEkMesaj(metin,msj){return BESIN_SOZ&&!besinAyristir(metin,BESIN_SOZ)?t("besin.foto_okunamadi"):msj}
+function besinElleKaydet(tx,k){
+  var a=besinElleEkle(besinElleListe(),besinMetinAnahtar("gida",tx),{b:k.b,birim:k.birim,t:Date.now()});
+  if(k.lt&&Object.keys(k.lt).length)a[0].lt=k.lt;
+  return besinElleYaz(a);
+}
+/* Düzeltme formu: sekiz satır (boş = okunmadı; "<0,5" yazılabilir) ve birim. Kaydedilen değerler kullanıcı onayı sayılır. */
+function besinForm(tx,K,ret,kart){
+  var body=el("div","kform bform"),b=K.k.b,lt=K.k.lt||{},inp={};
+  body.appendChild(el("div","how",t("besin.form.not")));
+  var bs=el("div","row brad"),birim=K.k.birim==="ml"?"ml":K.k.birim==="g"?"g":"";
+  var bb={};["g","ml"].forEach(function(x){var q=el("button","alt"+(birim===x?" on":""),t("besin.birim_"+x));q.type="button";q.setAttribute("aria-pressed",birim===x?"true":"false");
+    q.onclick=function(){birim=x;Object.keys(bb).forEach(function(y){bb[y].classList.toggle("on",y===x);bb[y].setAttribute("aria-pressed",y===x?"true":"false")})};bb[x]=q;bs.appendChild(q)});
+  var bl=el("div","ln",t("besin.form.birim"));body.appendChild(bl);body.appendChild(bs);
+  BESIN_ALAN.forEach(function(a){
+    var l=el("label","kname");l.appendChild(el("span",null,t("besin.alan."+a)+" ("+(a==="kcal"?"kcal":"g")+")"));
+    var i=document.createElement("input");i.type="text";i.inputMode="decimal";i.autocomplete="off";i.setAttribute("data-alan",a);
+    i.value=b[a]==null?"":(lt[a]?"<":"")+dilSayi(a==="kcal"?Math.round(b[a]):Math.round(b[a]*100)/100);
+    l.appendChild(i);body.appendChild(l);inp[a]=i;
+  });
+  var msg=el("div","how");
+  var go=el("button",null,t("besin.form.kaydet"));go.type="button";
+  go.onclick=function(){
+    var nb={},nlt={},hata=null;
+    BESIN_ALAN.forEach(function(a){
+      var s=inp[a].value.trim().replace(/\s+/g,"");if(!s){nb[a]=null;return}
+      var m=/^([<≤])?(\d+(?:[.,]\d+)?)$/.exec(s);
+      if(!m){if(!hata)hata=a;return}
+      nb[a]=Number(m[2].replace(",","."));if(m[1])nlt[a]=true;
+    });
+    if(hata){msg.textContent=t("besin.form.gecersiz",{ad:t("besin.alan."+hata)});inp[hata].focus();return}
+    if(!birim){msg.textContent=t("besin.form.birim_sec");return}
+    if(BESIN_ALAN.every(function(a){return nb[a]==null})){msg.textContent=t("besin.form.bos");return}
+    if(!besinElleKaydet(tx,{b:nb,lt:nlt,birim:birim})){msg.textContent=t("kayit.form.yer_yok");return}
+    closeSheet();kart.replaceWith(besinKart(tx));
+  };
+  body.appendChild(go);body.appendChild(msg);
+  if(K.kaynak==="elle"){
+    var geri=el("button","alt",t("besin.form.geri"));geri.type="button";
+    geri.onclick=function(){var k=besinMetinAnahtar("gida",tx);besinElleYaz(besinElleListe().filter(function(x){return x&&x.k!==k}));closeSheet();kart.replaceWith(besinKart(tx))};
+    body.appendChild(geri);
+  }
+  openSheet(t("besin.form.baslik"),null,body,ret);
+}

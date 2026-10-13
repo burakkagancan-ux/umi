@@ -4,6 +4,7 @@
 getJson("data/e_aciklama.json").then(function(a){ABOUT=a.about||{}}).catch(function(){ABOUT={}});
 getJson("data/tagsis.json").then(function(b){BRANDS=buildBrands(b)}).catch(function(){BRANDS=null});
 DIL_HAZIR.then(function(){
+  besinYukle();
   loadDb(0);
   setMode(MODE,false);
   window.addEventListener("hashchange",tabSync);tabSync();
@@ -58,7 +59,7 @@ $("cropreset").onclick=function(){resetCrop();okuIste(0)};
 function fotoSec(){
   var f=this.files[0];if(!f)return;var im=$("pre");im.src=URL.createObjectURL(f);
   $("cropwrap").style.display="block";$("cropbar").style.display="flex";resetCrop();
-  OKU.n++;OKU.okundu=false;im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
+  OKU.n++;OKU.okundu=false;besinFotoSecildi();im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
   this.value="";   // aynı dosya yeniden seçilebilsin
 }
 $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;
@@ -66,7 +67,7 @@ $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;
 function fotoTemizle(){
   var im=$("pre");if(im.src&&im.src.indexOf("blob:")===0)URL.revokeObjectURL(im.src);im.removeAttribute("src");
   $("cropwrap").style.display="none";$("cropbar").style.display="none";resetCrop();
-  OKU.n++;OKU.bekle=false;OKU.okundu=false;clearTimeout(OKU.zam);
+  OKU.n++;OKU.bekle=false;OKU.okundu=false;clearTimeout(OKU.zam);BESIN_EKLE=null;
 }
 function prep(img,on){
   // Yalnızca seçilen alan okunur; kırpılan alan küçükse daha yüksek çözünürlükte gönderilir
@@ -98,6 +99,9 @@ function fotoOku(){
   function gecerli(){return n===OKU.n&&!OKU.bekle}
   function yaz(tx,msj){
     if(!gecerli())return;
+    // Besin tablosunun fotoğrafı: okunan metin içerik metninin sonuna eklenir, aynı tarama güncellenir (js/arayuz_besin.js)
+    var ek=besinEkMetin(n,tx);
+    if(ek!=null){$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
     if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();
   }

@@ -12,6 +12,7 @@ var VERI_ANAHTAR={
   yerimleri:"dizi",    // ansiklopedide kaydedilen maddeler (js/arayuz_ansiklopedi.js)
   profil:"nesne",      // hassasiyetler (js/arayuz.js)
   kayit_suz:"nesne",   // kayıt listesinin süzgeci ve sırası
+  besin_elle:"dizi",   // elle düzeltilen besin değeri tabloları, metne bağlı (js/arayuz_besin.js)
   dil:"yazi",ulke:"yazi",tur:"yazi",ktip:"yazi",pay_boyut:"yazi",
   barkod_katki:"yazi",katkici:"yazi"   // barkod katkı izni ve katkıcı kimliği (O-22)
 };

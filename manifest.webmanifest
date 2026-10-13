@@ -1,9 +1,11 @@
 {
- "name": "Tağşiş Listesi",
+ "id": "./",
+ "name": "Tağşiş",
  "short_name": "Tağşiş",
- "description": "Tarım ve Orman Bakanlığı'nın duyurduğu taklit ve tağşiş kayıtlarını arayın; ambalajdaki içindekiler yazısını okutun.",
+ "description": "Ambalajdaki içindekiler yazısını, barkodu ya da besin tablosunu okutun: katkı maddeleri, alerjenler ve kaynakları.",
  "lang": "tr",
- "start_url": "./",
+ "dir": "ltr",
+ "start_url": "ocr.html",
  "scope": "./",
  "display": "standalone",
  "background_color": "#eef1ee",
@@ -28,8 +30,8 @@
  ],
  "shortcuts": [
   {
-   "name": "Etiket oku",
-   "short_name": "Etiket oku",
+   "name": "Etiket Oku",
+   "short_name": "Etiket Oku",
    "url": "ocr.html",
    "icons": [
     {
@@ -40,9 +42,9 @@
    ]
   },
   {
-   "name": "Tağşiş listesi",
-   "short_name": "Liste",
-   "url": "index.html",
+   "name": "Ansiklopedi",
+   "short_name": "Ansiklopedi",
+   "url": "ansiklopedi.html",
    "icons": [
     {
      "src": "icon-192.png",
