@@ -160,24 +160,28 @@ function kayitIslem(k,ret){
   if(k.oz&&k.oz.top.length)body.appendChild(el("div","ln",t("kayit.islem.en_riskli",{l:k.oz.top.join(", ")})));
   function btn(txt,cls,fn){var b=el("button",cls,txt);b.type="button";b.onclick=fn;body.appendChild(b);return b}
   btn(t("kayit.islem.ac"),null,function(){closeSheet();kayitSonuc(k)});
+  // Paylaş (14.10.2026, kullanıcı isteği): kayıt sonuç ekranında açılır, ardından paylaşım kartı (aynı payOpen)
+  if(typeof PAYLAS_AYAR!=="undefined"&&PAYLAS_AYAR.acik)btn(t("pay.dugme"),"alt",function(){closeSheet();kayitSonuc(k,"paylas")});
   var ayni=kayitLoad().filter(function(x){return x.mode===k.mode&&x.id!==k.id});
   var kb=btn(t("kayit.islem.kars"),"alt",function(){closeSheet();kayitKarsSec(k,ret)});
   if(!ayni.length){kb.disabled=true;body.appendChild(el("div","how",t("kayit.islem.kars_az")))}
-  btn(t("kayit.islem.duzenle"),"alt",function(){closeSheet();kayitSonuc(k,true)});
+  btn(t("kayit.islem.duzenle"),"alt",function(){closeSheet();kayitSonuc(k,"duzenle")});
   btn(t("kayit.islem.sil"),"alt kclr",function(){
     if(!confirm(t("kayit.islem.sil_onay",{ad:k.name})))return;
     kayitStore(kayitLoad().filter(function(x){return x.id!==k.id}));closeSheet();kayitProfil();kayitAc();
   });
   openSheet(k.name,t(KAYIT_TUR[k.mode])+" · "+kayitTarih(k.u||k.t),body,ret);
 }
-/* Kaydı sonuç ekranında açar: tür seçilir, metin kutuya konur, analiz edilir (tarama geçmişine yazılmaz) */
-function kayitSonuc(k,duzenle){
+/* Kaydı sonuç ekranında açar: tür seçilir, metin kutuya konur, analiz edilir (tarama geçmişine yazılmaz).
+   sonra: "duzenle" (Kaydet düğmesi açılır) ya da "paylas" (paylaşım kartı açılır); sonuç bu kayıtla çizilince (PAY_SRC bu türde) basılır */
+function kayitSonuc(k,sonra){
   kayitKapat();
   if(location.hash==="#profil"){history.replaceState(null,"",location.pathname+location.search);$("pd").open=false;tabSync()}
   if(CMP_IDS)closeCompare();
-  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";fotoTemizle();
+  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";fotoTemizle();if(sonra)PAY_SRC=null;
   if(MODE!==k.mode)setMode(k.mode,true);else run();
-  if(duzenle){var w=setInterval(function(){var b=document.querySelector("#sonuc .resbar .kayitb");if(b){clearInterval(w);b.click()}},100);setTimeout(function(){clearInterval(w)},8000)}
+  if(sonra){var sec=sonra==="paylas"?"#sonuc .resbar .pay:not(.kayitb)":"#sonuc .resbar .kayitb";
+    var w=setInterval(function(){var b=PAY_SRC&&PAY_SRC.mode===k.mode&&document.querySelector(sec);if(b){clearInterval(w);b.click()}},100);setTimeout(function(){clearInterval(w)},8000)}
   var s=$("sonuc");if(s)s.scrollIntoView({block:"start"});
 }
 /* İki kayıtlı ürünü karşılaştırma: kayıtlar karşılaştırma ekranına geçmiş kaydı gibi verilir */

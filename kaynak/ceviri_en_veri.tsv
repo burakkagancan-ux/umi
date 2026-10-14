@@ -853,73 +853,73 @@ e.E969.tgk_not	It was not on the 2013 list of permitted additives; it is on the 
 e.E969.uretim	A sweetener produced by chemical synthesis.	Kimyasal sentezle üretilen tatlandırıcıdır.
 e.E999.about	An extract obtained from the bark of the quillaia tree. It creates foam in drinks.	Kilay ağacının kabuğundan elde edilen bir ekstre. İçeceklerde köpük oluşturur.
 e.E999.uretim	Obtained from the bark of the quillaia tree by extraction.	Kilaya ağacının kabuğundan ekstraksiyonla elde edilir.
-eslesme.a_vitamini.baslik	Caution in combination: more than one vitamin A derivative	Birlikte dikkat: birden fazla A vitamini türevi
+eslesme.a_vitamini.baslik	Caution in Combination: More than one vitamin A derivative	Birlikte Dikkat: Birden fazla A vitamini türevi
 eslesme.a_vitamini.grup.0	Retinol and its esters	Retinol ve esterleri
 eslesme.a_vitamini.metin	EU 2024/996 introduced a total limit for retinol, retinyl acetate and retinyl palmitate: 0.05% retinol equivalent in body lotions and 0.3% in other products. The limit applies to the total of the three, on the grounds that part of the daily vitamin A intake may come from cosmetics.	AB 2024/996 ile retinol, retinil asetat ve retinil palmitat için toplam sınır getirildi: vücut losyonlarında %0,05, diğer ürünlerde %0,3 retinol eşdeğeri. Sınır üçünün toplamına uygulanır; günlük A vitamini alımının bir kısmının kozmetikten gelebileceği gerekçesiyle.
-eslesme.aluminyum.baslik	Caution in combination: more than one aluminium-containing additive	Birlikte dikkat: birden fazla alüminyumlu katkı
+eslesme.aluminyum.baslik	Caution in Combination: More than one aluminium-containing additive	Birlikte Dikkat: Birden fazla alüminyumlu katkı
 eslesme.aluminyum.grup.0	Aluminium-containing additive	Alüminyumlu katkı
 eslesme.aluminyum.metin	In 2008 EFSA set the tolerable weekly intake for aluminium at 1 mg/kg body weight and reported that this limit may be exceeded in high consumers. The limit applies to the total from all sources.	EFSA 2008'de alüminyum için haftalık alım sınırını 1 mg/kg vücut ağırlığı olarak belirledi ve çok tüketen kişilerde bu sınırın aşılabileceğini bildirdi. Sınır tüm kaynakların toplamı içindir.
-eslesme.benzen.baslik	Caution in combination: benzoate + vitamin C	Birlikte dikkat: benzoat + C vitamini
+eslesme.benzen.baslik	Caution in Combination: Benzoate + vitamin C	Birlikte Dikkat: Benzoat + C vitamini
 eslesme.benzen.grup.0	Benzoate	Benzoat
 eslesme.benzen.grup.1	Vitamin C	C vitamini
 eslesme.benzen.metin	When a benzoate preservative and vitamin C (ascorbic acid) are present together, trace amounts of benzene may form under the influence of heat, light and metal ions. Benzene is a carcinogenic substance. In Canada's 2007 survey, levels in most of the 139 drinks were below the drinking water limit (5 µg/L); manufacturers adjusted their formulas accordingly. Storing the product in a cool, dark place reduces its formation.	Benzoatlı koruyucu ile C vitamini (askorbik asit) birlikte bulunduğunda ısı, ışık ve metal iyonlarının etkisiyle eser miktarda benzen oluşabilir. Benzen kanserojen bir maddedir. Kanada'nın 2007 taramasında 139 içeceğin çoğunda miktar içme suyu sınırının (5 µg/L) altında kaldı; üreticiler formüllerini buna göre düzenledi. Ürünü serin ve karanlık yerde saklamak oluşumu azaltır.
-eslesme.benzoat_koz.baslik	Caution in combination: benzoic acid and sodium benzoate	Birlikte dikkat: benzoik asit ve sodyum benzoat
+eslesme.benzoat_koz.baslik	Caution in Combination: Benzoic acid and sodium benzoate	Birlikte Dikkat: Benzoik asit ve sodyum benzoat
 eslesme.benzoat_koz.grup.0	Benzoic acid / benzoate	Benzoik asit / benzoat
 eslesme.benzoat_koz.metin	The EU limit for benzoic acid and sodium benzoate as preservatives is calculated as the acid; both count together towards this limit.	Koruyucu olarak benzoik asit ve sodyum benzoatın AB sınırı asit cinsinden hesaplanır; ikisi birlikte bu sınıra sayılır.
-eslesme.florurler.baslik	Caution in combination: more than one fluoride	Birlikte dikkat: birden fazla florür
+eslesme.florurler.baslik	Caution in Combination: More than one fluoride	Birlikte Dikkat: Birden fazla florür
 eslesme.florurler.grup.0	Fluoride	Florür
 eslesme.florurler.metin	In the EU, if fluoride compounds are used together in oral care products, total fluorine may not exceed 0.15%. Toothpaste for children under 6 years of age carries special warnings; for children, also check the label.	AB'de ağız bakım ürünlerinde florür bileşikleri birlikte kullanılırsa toplam flor %0,15'i geçemez. 6 yaş altı çocuklar için diş macununda özel uyarılar vardır; çocuklar için ayrıca etikete bakın.
-eslesme.formaldehit.baslik	Caution in combination: more than one formaldehyde releaser	Birlikte dikkat: birden fazla formaldehit salıcı
+eslesme.formaldehit.baslik	Caution in Combination: More than one formaldehyde releaser	Birlikte Dikkat: Birden fazla formaldehit salıcı
 eslesme.formaldehit.grup.0	Formaldehyde releaser	Formaldehit salıcı
 eslesme.formaldehit.metin	In the EU, the label warning ("releases formaldehyde") depends not on a single preservative but on the total formaldehyde that may be released in the product: if the total exceeds 0.001%, the warning is mandatory. More than one releaser increases this total.	AB'de etiket uyarısı (“releases formaldehyde”) tek bir koruyucuya değil, üründe salınabilecek toplam formaldehite bakar: toplam %0,001'i aşarsa uyarı zorunludur. Birden fazla salıcı bu toplamı artırır.
-eslesme.fosfatlar.baslik	Caution in combination: more than one phosphate additive	Birlikte dikkat: birden fazla fosfat katkısı
+eslesme.fosfatlar.baslik	Caution in Combination: More than one phosphate additive	Birlikte Dikkat: Birden fazla fosfat katkısı
 eslesme.fosfatlar.grup.0	Phosphate	Fosfat
 eslesme.fosfatlar.metin	In 2019 EFSA set a group daily intake limit for phosphate additives, expressed as phosphorus (40 mg/kg body weight), and reported that this limit may be exceeded in infants, children and adolescents who consume a lot of foods containing phosphates. The limit applies to the total of all phosphate additives.	EFSA 2019'da fosfat katkıları için fosfor cinsinden ortak bir günlük alım sınırı (40 mg/kg vücut ağırlığı) belirledi ve bebek, çocuk ve fosfatlı gıdaları çok tüketen gençlerde bu sınırın aşılabileceğini bildirdi. Sınır tüm fosfat katkılarının toplamı içindir.
-eslesme.gallat_tbhq_bha.baslik	Caution in combination: more than one synthetic antioxidant	Birlikte dikkat: birden fazla sentetik antioksidan
+eslesme.gallat_tbhq_bha.baslik	Caution in Combination: More than one synthetic antioxidant	Birlikte Dikkat: Birden fazla sentetik antioksidan
 eslesme.gallat_tbhq_bha.grup.0	Propyl gallate, TBHQ, BHA	Propil gallat, TBHQ, BHA
 eslesme.gallat_tbhq_bha.metin	Under the EU additives regulation, if propyl gallate, TBHQ and BHA are used together, the amount of each must be reduced proportionally; the maximum level applies to the total.	AB katkı tüzüğüne göre propil gallat, TBHQ ve BHA birlikte kullanılırsa her birinin miktarı orantılı olarak azaltılmalıdır; üst sınır toplama uygulanır.
-eslesme.glutamatlar.baslik	Caution in combination: more than one glutamate	Birlikte dikkat: birden fazla glutamat
+eslesme.glutamatlar.baslik	Caution in Combination: More than one glutamate	Birlikte Dikkat: Birden fazla glutamat
 eslesme.glutamatlar.grup.0	Glutamate	Glutamat
 eslesme.glutamatlar.metin	In 2017 EFSA set a group daily intake limit for all six of glutamic acid and its salts (E 620–625): 30 mg/kg body weight. It reported that some groups, especially young children, may exceed this limit. The limit applies to the total of all glutamate additives.	EFSA 2017'de glutamik asit ve tuzları (E 620–625) için altısına ortak bir günlük alım sınırı belirledi: 30 mg/kg vücut ağırlığı. Bazı grupların, özellikle küçük çocukların, bu sınırı aşabileceğini bildirdi. Sınır tüm glutamat katkılarının toplamı içindir.
-eslesme.kozmetik_sulfit.baslik	Caution in combination: more than one sulphite	Birlikte dikkat: birden fazla sülfit
+eslesme.kozmetik_sulfit.baslik	Caution in Combination: More than one sulphite	Birlikte Dikkat: Birden fazla sülfit
 eslesme.kozmetik_sulfit.grup.0	Sulphite	Sülfit
 eslesme.kozmetik_sulfit.metin	In cosmetics, the EU limit for inorganic sulphites and bisulphites is calculated as free sulphur dioxide; all sulphites in the same product count together towards this limit. This is also important for people with sulphite sensitivity.	Kozmetikte inorganik sülfit ve bisülfitlerin AB sınırı serbest kükürt dioksit cinsinden hesaplanır; aynı üründeki tüm sülfitler bu sınıra birlikte sayılır. Sülfit hassasiyeti olanlar için ayrıca önemlidir.
-eslesme.kuaterner.baslik	Caution in combination: more than one quaternary ammonium conditioning agent	Birlikte dikkat: birden fazla kuaterner amonyum yumuşatıcı
+eslesme.kuaterner.baslik	Caution in Combination: More than one quaternary ammonium conditioning agent	Birlikte Dikkat: Birden fazla kuaterner amonyum yumuşatıcı
 eslesme.kuaterner.grup.0	Cetrimonium / steartrimonium / behentrimonium chloride	Setrimonyum / steartrimonyum / behentrimonyum klorür
 eslesme.kuaterner.metin	In products such as hair conditioners, the EU limit for these substances is set not individually but on their total when used together (a total of 2.5% in rinse-off hair products, or 5% with behentrimonium).	Saç kremi gibi ürünlerde bu maddelerin AB sınırı tek tek değil, birlikte kullanıldığında toplamları üzerinden belirlenir (durulanan saç ürünlerinde toplam %2,5 ya da behentrimonyum ile %5).
-eslesme.nitrit_nitrat.baslik	Caution in combination: nitrite + nitrate	Birlikte dikkat: nitrit + nitrat
+eslesme.nitrit_nitrat.baslik	Caution in Combination: Nitrite + nitrate	Birlikte Dikkat: Nitrit + nitrat
 eslesme.nitrit_nitrat.grup.0	Nitrite	Nitrit
 eslesme.nitrit_nitrat.grup.1	Nitrate	Nitrat
 eslesme.nitrit_nitrat.metin	Nitrate is partly converted to nitrite in the body. In 2017 EFSA reported that intake from additives alone remained within safe limits, but that when all sources, such as vegetables and water, are counted together the limit may be exceeded in every age group. It assessed the contribution of nitrite used at authorised levels to nitrosamine formation as being of low concern.	Nitrat vücutta kısmen nitrite dönüşür. EFSA 2017'de yalnızca katkılardan gelen alımın güvenli sınırlar içinde kaldığını, ama sebze ve su gibi tüm kaynaklar birlikte hesaplandığında sınırın her yaş grubunda aşılabileceğini bildirdi. Onaylı miktarlarda kullanılan nitritin nitrozamin oluşumuna katkısını düşük endişe olarak değerlendirdi.
-eslesme.nitrozamin.baslik	Caution in combination: a pair that may form nitrosamines	Birlikte dikkat: nitrozamin oluşturabilecek ikili
+eslesme.nitrozamin.baslik	Caution in Combination: A pair that may form nitrosamines	Birlikte Dikkat: Nitrozamin oluşturabilecek ikili
 eslesme.nitrozamin.grup.0	Substance that must not be used with nitrosating substances	Nitrozamin oluşturan maddelerle birlikte kullanılmaması gereken madde
 eslesme.nitrozamin.grup.1	Substance that may form nitrosamines	Nitrozamin oluşturabilen madde
 eslesme.nitrozamin.metin	Some amines may form nitrosamines together with substances such as nitrite or bronopol; some nitrosamines are carcinogenic. For this reason, the EU Cosmetics Regulation requires that these amines are "not to be used with nitrosating systems". Both groups appear together in this product.	Bazı aminler, nitrit ya da bronopol gibi maddelerle birlikte nitrozamin oluşturabilir; nitrozaminlerin bir kısmı kanserojendir. AB kozmetik yönetmeliği bu yüzden bu aminlerin “nitrozamin oluşturan sistemlerle birlikte kullanılmamasını” şart koşar. Bu üründe iki grup birlikte görünüyor.
-eslesme.parabenler.baslik	Caution in combination: more than one paraben	Birlikte dikkat: birden fazla paraben
+eslesme.parabenler.baslik	Caution in Combination: More than one paraben	Birlikte Dikkat: Birden fazla paraben
 eslesme.parabenler.grup.0	Paraben	Paraben
 eslesme.parabenler.metin	In the EU, parabens have a total limit in addition to their individual limits: the total of propyl and butyl paraben may not exceed 0.14%, and the total of all parabens may not exceed 0.8%.	AB'de parabenlerin tek tek sınırının yanında toplam sınırı da vardır: propil ve bütil paraben toplamı %0,14'ü, tüm parabenlerin toplamı %0,8'i geçemez.
-eslesme.peroksit.baslik	Caution in combination: more than one source of hydrogen peroxide	Birlikte dikkat: birden fazla hidrojen peroksit kaynağı
+eslesme.peroksit.baslik	Caution in Combination: More than one source of hydrogen peroxide	Birlikte Dikkat: Birden fazla hidrojen peroksit kaynağı
 eslesme.peroksit.grup.0	Hydrogen peroxide or a substance releasing it	Hidrojen peroksit ya da salan madde
 eslesme.peroksit.metin	In the EU, the hydrogen peroxide limit applies to the total amount "present or released" in the product (e.g. a maximum of 0.1% in tooth whiteners sold to consumers). Releasing substances such as carbamide peroxide also count towards this total.	AB'de hidrojen peroksit sınırı ürünün “içerdiği ya da saldığı” toplam miktara uygulanır (ör. diş beyazlatıcıda tüketiciye satılanlarda en fazla %0,1). Karbamid peroksit gibi salan maddeler de bu toplama girer.
-eslesme.polioller.baslik	Caution in combination: more than one polyol (sugar alcohol)	Birlikte dikkat: birden fazla poliol (şeker alkolü)
+eslesme.polioller.baslik	Caution in Combination: More than one polyol (sugar alcohol)	Birlikte Dikkat: Birden fazla poliol (şeker alkolü)
 eslesme.polioller.grup.0	Polyol	Poliol
 eslesme.polioller.metin	The laxative effect of polyols depends on the total amount. Under EU rules, if the total of added polyols exceeds 10%, the label must carry the warning "excessive consumption may produce laxative effects".	Poliollerin laksatif (ishal yapıcı) etkisi toplam miktara bağlıdır. AB kuralına göre eklenen poliollerin toplamı %10'u aşarsa etikette “aşırı tüketimi laksatif etki yapabilir” uyarısı zorunludur.
-eslesme.polisorbatlar.baslik	Caution in combination: more than one polysorbate	Birlikte dikkat: birden fazla polisorbat
+eslesme.polisorbatlar.baslik	Caution in Combination: More than one polysorbate	Birlikte Dikkat: Birden fazla polisorbat
 eslesme.polisorbatlar.grup.0	Polysorbate	Polisorbat
 eslesme.polisorbatlar.metin	In 2015 EFSA set a group daily intake limit for polysorbates (E 432–436): 25 mg/kg body weight. The limit applies to the total of all polysorbates.	EFSA 2015'te polisorbatlar (E 432–436) için ortak bir günlük alım sınırı belirledi: 25 mg/kg vücut ağırlığı. Sınır tüm polisorbatların toplamı içindir.
-eslesme.salisilat.baslik	Caution in combination: salicylic acid and its salts	Birlikte dikkat: salisilik asit ve tuzları
+eslesme.salisilat.baslik	Caution in Combination: Salicylic acid and its salts	Birlikte Dikkat: Salisilik asit ve tuzları
 eslesme.salisilat.grup.0	Salicylic acid / salicylate	Salisilik asit / salisilat
 eslesme.salisilat.metin	The EU limit for salicylic acid and its salts is calculated as the acid and assessed together. They are not used in products intended for children under 3 years of age (except shampoos).	Salisilik asit ve tuzlarının AB sınırı asit cinsinden hesaplanır ve birlikte değerlendirilir. 3 yaş altı çocuklara yönelik ürünlerde (şampuan hariç) kullanılmaz.
-eslesme.sorbat_koz.baslik	Caution in combination: sorbic acid and sorbates	Birlikte dikkat: sorbik asit ve sorbatlar
+eslesme.sorbat_koz.baslik	Caution in Combination: Sorbic acid and sorbates	Birlikte Dikkat: Sorbik asit ve sorbatlar
 eslesme.sorbat_koz.grup.0	Sorbic acid / sorbate	Sorbik asit / sorbat
 eslesme.sorbat_koz.metin	The EU limit for sorbic acid and its salts as preservatives is 0.6%, calculated as the acid; those present in the same product count together towards this limit.	Koruyucu olarak sorbik asit ve tuzlarının AB sınırı asit cinsinden %0,6'dır; aynı üründekiler bu sınıra birlikte sayılır.
-eslesme.southampton.baslik	Caution in combination: Southampton colours + sodium benzoate	Birlikte dikkat: Southampton renklendiricileri + sodyum benzoat
+eslesme.southampton.baslik	Caution in Combination: Southampton colours + sodium benzoate	Birlikte Dikkat: Southampton renklendiricileri + sodyum benzoat
 eslesme.southampton.grup.1	Sodium benzoate	Sodyum benzoat
 eslesme.southampton.metin	In the 2007 Southampton study, children were given these colours together with sodium benzoate as a mixture, and a possible effect on behaviour was observed. This product contains the same pair. It could not be determined which substance the effect came from; the German BfR stated that there is no clear evidence of cause and effect. The EU made a warning label mandatory for the colours.	2007'deki Southampton çalışmasında çocuklara bu renklendiriciler sodyum benzoatla birlikte karışım olarak verildi ve davranış üzerinde olası bir etki görüldü. Bu üründe aynı ikili var. Etkinin hangi maddeden geldiği ayırt edilemedi; Alman BfR açık bir neden-sonuç kanıtı olmadığını belirtti. AB, renklendiriciler için uyarı etiketini zorunlu tuttu.
-eslesme.sulfitler.baslik	Caution in combination: more than one sulphite	Birlikte dikkat: birden fazla sülfit
+eslesme.sulfitler.baslik	Caution in Combination: More than one sulphite	Birlikte Dikkat: Birden fazla sülfit
 eslesme.sulfitler.grup.0	Sulphite	Sülfit
 eslesme.sulfitler.metin	The threshold for the sulphite allergen applies to the total, not to individual substances: if total sulphur dioxide exceeds 10 mg/kg (or 10 mg/L), it must be declared on the label as an allergen.	Sülfit alerjeni için eşik tek tek maddelere değil toplama bakar: toplam kükürt dioksit 10 mg/kg (ya da 10 mg/L) üzerindeyse alerjen olarak etikette belirtilmesi zorunludur.
-eslesme.tiyoglikolat.baslik	Caution in combination: more than one thioglycolate	Birlikte dikkat: birden fazla tiyoglikolat
+eslesme.tiyoglikolat.baslik	Caution in Combination: More than one thioglycolate	Birlikte Dikkat: Birden fazla tiyoglikolat
 eslesme.tiyoglikolat.grup.0	Thioglycolate	Tiyoglikolat
 eslesme.tiyoglikolat.metin	The EU limit for thioglycolates used in perms, hair straighteners and depilatories is calculated as thioglycolic acid; all thioglycolates in the same product count together towards this limit.	Perma, düzleştirici ve tüy dökücülerde kullanılan tiyoglikolatların AB sınırı tiyoglikolik asit cinsinden hesaplanır; aynı üründeki tüm tiyoglikolatlar bu sınıra birlikte sayılır.
 k.II/1397.degisiklik.0	The sodium perborate types (former entries 1398 and 1399) were merged into this entry; trimethyl borate was added. All are banned.	Sodyum perborat türleri (eski 1398 ve 1399) bu kayıtta birleştirildi; trimetil borat eklendi. Hepsi yasak.
