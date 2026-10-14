@@ -25,7 +25,7 @@ function payPersonal(cards){
 }
 function paySource(){
   var s=PAY_SRC,o;if(!s)return null;
-  if(s.mode==="gida"){o=payFromFood(s.text,IDX);o.personal=cmpMisfit(summarize(analyze(s.text,IDX),IDX),PROF,IDX).map(function(s){return {t:s,lvl:2}})}   // karşılaştırmadaki "profilinize uymuyor" satırları
+  if(s.mode==="gida"){o=payFromFood(s.text,IDX);o.personal=cmpMisfit(summarize(analyze(s.text,IDX),IDX),PROF,IDX).concat(cmpMisfitOzel(s.text,PROF)).map(function(s){return {t:s,lvl:2}})}   // karşılaştırmadaki "profilinize uymuyor" satırları
   else if(s.mode==="koz"){o=payFromK(s.res,s.S,KIDX);o.personal=payPersonal(kProfileCards(s.S,s.res))}
   else{o=payFromT(s.A,s.S);o.personal=payPersonal(tProfileCards(s.S,s.A))}
   return o;

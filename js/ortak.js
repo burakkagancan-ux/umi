@@ -27,3 +27,26 @@ function lev(a,b,max){   // bantlı Levenshtein: yalnızca |i-j|<=max hücreleri
   }
   return prev[m]>max?INF:prev[m];
 }
+/* Kullanıcının kendi yazdığı alerjen (Profilim › Alerjenler): etiket metninde sözcük olarak aranır. Saf mantık (DOM yok).
+   Çok sözcüklü ad sırayla aranır; son sözcük 4+ harfse önek gibi eşleşir (kivi → kivili) ve Türkçe ünsüz yumuşaması tutulur
+   (fıstık → fıstığı, kebap → kebabı); kısa adlar (et, su) yalnızca tam sözcük. "İçerebilir / may contain / eser miktar"
+   geçen cümledeki eşleşme may'e gider. Sonuç: {yes:[...], may:[...]} etikette yazıldığı biçimiyle, tekrarsız. */
+var OZEL_YUM={k:"[kg]",p:"[pb]",t:"[td]"};
+var OZEL_MAY=/ (icerebilir|iz miktar|eser miktar|may contain|traces?) /;
+function ozelAra(metin,ad){
+  var o={yes:[],may:[]},w=norm(ad).split(" ").filter(Boolean);if(!w.length||w.join("").length<2)return o;
+  var s=w[w.length-1],son=s.length>=4?new RegExp("^"+s.slice(0,-1)+(OZEL_YUM[s.slice(-1)]||s.slice(-1))):null;
+  String(metin||"").split(/[.!?\n]+/).forEach(function(cu){
+    var tk=(cu.match(/[0-9A-Za-zÀ-ɏ]+/g)||[]).map(function(x){return {r:x,n:norm(x)}}).filter(function(x){return x.n}),
+        kind=OZEL_MAY.test(" "+norm(cu)+" ")?"may":"yes";
+    for(var i=0;i+w.length<=tk.length;i++){
+      var j=0;while(j<w.length-1&&tk[i+j].n===w[j])j++;
+      if(j<w.length-1)continue;
+      var z=tk[i+j].n;if(!(z===s||son&&son.test(z)))continue;
+      var r=tk.slice(i,i+w.length).map(function(x){return x.r}).join(" ");
+      if(o[kind].indexOf(r)<0)o[kind].push(r);
+    }
+  });
+  o.may=o.may.filter(function(x){return o.yes.indexOf(x)<0});
+  return o;
+}

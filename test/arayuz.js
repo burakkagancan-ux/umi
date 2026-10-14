@@ -394,6 +394,29 @@ async function scan(p,mode,text){
       ok(!istek&&(await p.textContent('#eklebar'))==='','kimlik yoksa istek yok ve Eklediklerim düğmesi yok');
       await p.unroute(/workers\.dev\/katki$/);
     }
+    // Profilim › Alerjenler: listede olmayan alerjeni yazarak ekleme, liste, yineleme engeli, silme; gıda ve kozmetik sonucunda kart
+    {
+      await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.setItem('tur','gida')});
+      await p.goto(B+'ocr.html#profil');await p.reload();await p.waitForSelector('#profil .pozel input',{state:'attached'});
+      await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
+      for(const ad of ['Kivi','kakao','KİVİ'])await p.fill('#profil .pozel input',ad),await p.press('#profil .pozel input','Enter');
+      const o1=await p.evaluate(()=>({chip:[...document.querySelectorAll('#profil .pozc')].map(c=>c.firstChild.textContent),uy:document.querySelector('#profil .pozel p.mut').textContent,
+        kayit:JSON.parse(localStorage.getItem('profil')).alOzel,say:document.querySelector('#profil .pdrop .pcnt').textContent}));
+      ok(o1.chip.join()==='Kivi,kakao'&&o1.kayit.join()==='Kivi,kakao'&&/zaten ekli/.test(o1.uy)&&o1.say==='2 seçili','elle alerjen: eklenir, cihazda saklanır, aynısı eklenmez: '+JSON.stringify(o1));
+      await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
+      await p.click('#m-gida');await p.evaluate(()=>{document.getElementById('metin').value='Şeker, kivili jöle, su. Eser miktarda kakao içerebilir.';run()});
+      const g=await p.evaluate(()=>[...document.querySelectorAll('#sonuc .res.prof')].map(c=>c.className+' '+c.textContent).find(x=>/alerjen/.test(x))||'');
+      ok(/\br\b/.test(g)&&/Kivi: kivili/.test(g)&&/kakao: kakao/.test(g),'gıda: eklenen alerjen kırmızı kartta, içerebilir ayrı: '+g.slice(0,200));
+      await p.click('#m-koz');await p.evaluate(()=>{document.getElementById('metin').value='Aqua, Glycerin, Actinidia Chinensis (Kiwi) Fruit Extract';run()});
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .res').length>0);
+      const k=await p.evaluate(()=>[...document.querySelectorAll('#sonuc .res.prof')].map(c=>c.className+' '+c.textContent).find(x=>/alerjen/.test(x))||'');
+      ok(/\bg\b/.test(k)&&/bulunamadı/.test(k),'kozmetik: "kiwi" yazılmış, "kivi" eklenmiş: bulunamadı kartı ve başka ad notu: '+k.slice(0,200));
+      await p.goto(B+'ocr.html#profil');await p.waitForSelector('#profil .pozsil',{state:'attached'});
+      await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
+      await p.click('#profil .pozsil[aria-label="Kivi silinsin"]');
+      ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('profil')).alOzel.join()==='kakao'&&document.querySelectorAll('#profil .pozc').length===1),'elle alerjen silinir');
+      await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.removeItem('tur')});
+    }
     // G-04: Topluluk ekranı (ortak hedef + eksik ürünler, GET /topluluk) ve içerik bulunamayan barkodun bir kez bildirilmesi (POST /aranan)
     {
       const D=JSON.parse(fs.readFileSync(path.join(R,'data','barkod_off.json'),'utf8')).u;

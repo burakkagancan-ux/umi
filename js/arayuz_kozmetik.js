@@ -127,8 +127,9 @@ function kSummaryCard(S){
   if(S.fuzzy.length)d.appendChild(el("div","how",t("koz.ozet.benzer")));
   return d;
 }
-function kProfileCards(S,res){
-  var out=[],j=function(a){return a.join(", ")};
+function kProfileCards(S,res,metin){
+  var out=[],j=function(a){return a.join(", ")},oz=ozelKart(metin==null?$("metin").value:metin);
+  if(oz)out.push(oz);
   if(PROF.koku){
     if(S.fragrance.length)out.push(card("r",t("koz.prof.koku_var"),[j(S.fragrance)].concat(S.parfum?[t("koz.prof.koku_parfum")]:[])));
     else if(S.parfum)out.push(card("y",t("koz.prof.parfum"),[t("koz.prof.parfum_not")]));

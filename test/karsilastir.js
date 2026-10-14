@@ -1,6 +1,6 @@
 // İki ürünü karşılaştırma: karar mantığı, madde farkları, tanınmayan oran, geçmiş. Çalıştır: node test/karsilastir.js
 const src=require('./yukle.js');
-eval(src+';global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,histAdd,histName,KARS_AYAR,buildTIndex}');
+eval(src+';global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,cmpMisfitOzel,ozelAra,histAdd,histName,KARS_AYAR,buildTIndex}');
 const {idx}=require('./run.js');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const cfg=K.KARS_AYAR;
@@ -107,4 +107,20 @@ ok(h.length===20&&h[0].t===99&&h.filter(x=>x.text.trim()==='metin 10').length===
 ok(K.histAdd(h,{mode:'gida',text:'  '},20).length===20,'boş metin eklenmez');
 ok(K.histName([])==='Tarama 1','ilk ad');
 ok(K.histName([{name:'Tarama 2'},{name:'Süt'},{name:'Tarama 7'}])==='Tarama 8','sıra numarası');
+// Profilim'de elle eklenen alerjen (ozelAra, cmpMisfitOzel): sözcük başında, ek ve ünsüz yumuşamasıyla; "içerebilir" cümlesi may
+const OA=(m,a)=>JSON.stringify(K.ozelAra(m,a));
+ok(OA('Şeker, kivi püresi, FISTIĞI ezmesi.','kivi')==='{"yes":["kivi"],"may":[]}','kivi bulunur');
+ok(OA('Kivili yoğurt','kivi')==='{"yes":["Kivili"],"may":[]}','ek alan sözcük');
+ok(OA('Şeker, FISTIĞI ezmesi, fistik','fıstık')==='{"yes":["FISTIĞI","fistik"],"may":[]}','ünsüz yumuşaması ve büyük harf');
+ok(OA('Kebabı','kebap')==='{"yes":["Kebabı"],"may":[]}','p → b');
+ok(OA('Yer fıstığı yağı, fıstık','yer fıstığı')==='{"yes":["Yer fıstığı"],"may":[]}','iki sözcüklü ad sırayla');
+ok(OA('Un. Eser miktarda susam içerebilir.','susam')==='{"yes":[],"may":["susam"]}','içerebilir cümlesi may');
+ok(OA('Susam. Susam içerebilir.','susam')==='{"yes":["Susam"],"may":[]}','hem var hem içerebilir: yalnızca var');
+ok(OA('susamlı, su','su')==='{"yes":["su"],"may":[]}','kısa ad yalnızca tam sözcük');
+ok(OA('Mısır nişastası','kakao')==='{"yes":[],"may":[]}','olmayan ad');
+ok(OA('kakao',' ')==='{"yes":[],"may":[]}'&&OA('a b','a')==='{"yes":[],"may":[]}','boş ya da tek harf aranmaz');
+ok(OA('May contain traces of kiwi.','kiwi')==='{"yes":[],"may":["kiwi"]}','İngilizce may contain');
+const MO=K.cmpMisfitOzel('Kivi, şeker. Susam içerebilir.',{alOzel:['kivi','susam','kakao']});
+ok(MO.length===1&&/kivi/.test(MO[0]),'karşılaştırmada yalnızca kesin içerilen eklenen alerjen: '+JSON.stringify(MO));
+ok(K.cmpMisfitOzel('kivi',{al:[]}).length===0&&K.cmpMisfitOzel('kivi',null).length===0,'alOzel yok (eski profil)');
 console.log(n+' karşılaştırma denetimi, '+fail+' hata');process.exit(fail?1:0);
