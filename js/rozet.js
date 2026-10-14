@@ -130,7 +130,7 @@ function rozetSekil(sekil,cx,cy,r,oz){
   if(sekil==="altigen"){for(i=0;i<6;i++){var a=Math.PI/6+i*Math.PI/3;p.push(f(cx+r*Math.cos(a))+","+f(cy+r*Math.sin(a)))}return '<polygon points="'+p.join(" ")+'" stroke-linejoin="round" '+oz+'/>'}
   if(sekil==="muhur"){for(i=0;i<48;i++){var b=i*Math.PI/24,rr=r*(0.94+0.06*Math.cos(12*b));p.push(f(cx+rr*Math.cos(b))+","+f(cy+rr*Math.sin(b)))}return '<polygon points="'+p.join(" ")+'" '+oz+'/>'}
   if(sekil==="kare"){var k=r*0.86;return '<rect x="'+f(cx-k)+'" y="'+f(cy-k)+'" width="'+f(2*k)+'" height="'+f(2*k)+'" rx="'+f(k*0.42)+'" '+oz+'/>'}
-  if(sekil==="kalkan"){var w=r*0.9,t=cy-r*0.88;return '<path d="M'+f(cx-w)+' '+f(t+r*0.14)+'Q'+f(cx-w)+' '+f(t)+' '+f(cx-w+r*0.14)+' '+f(t)+'H'+f(cx+w-r*0.14)+'Q'+f(cx+w)+' '+f(t)+' '+f(cx+w)+' '+f(t+r*0.14)+'V'+f(cy+r*0.12)+'Q'+f(cx+w)+' '+f(cy+r*0.72)+' '+f(cx)+' '+f(cy+r*1.06)+'Q'+f(cx-w)+' '+f(cy+r*0.72)+' '+f(cx-w)+' '+f(cy+r*0.12)+'Z" '+oz+'/>'}
+  if(sekil==="kalkan"){var w=r*0.9,ust=cy-r*0.88;return '<path d="M'+f(cx-w)+' '+f(ust+r*0.14)+'Q'+f(cx-w)+' '+f(ust)+' '+f(cx-w+r*0.14)+' '+f(ust)+'H'+f(cx+w-r*0.14)+'Q'+f(cx+w)+' '+f(ust)+' '+f(cx+w)+' '+f(ust+r*0.14)+'V'+f(cy+r*0.12)+'Q'+f(cx+w)+' '+f(cy+r*0.72)+' '+f(cx)+' '+f(cy+r*1.06)+'Q'+f(cx-w)+' '+f(cy+r*0.72)+' '+f(cx-w)+' '+f(cy+r*0.12)+'Z" '+oz+'/>'}
   return '<circle cx="'+cx+'" cy="'+cy+'" r="'+f(r)+'" '+oz+'/>';
 }
 /* Defne dalları: alttan iki yana kıvrılan yapraklar */
