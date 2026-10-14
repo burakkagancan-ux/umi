@@ -91,12 +91,12 @@ function buildProfile(){
     bmiRow.textContent="";
     var lab=el("span",null,t("profil.bki.etiket"));bmiRow.appendChild(lab);
     if(PROF.boy&&PROF.kilo){
-      var v=PROF.kilo/Math.pow(PROF.boy/100,2),c=v<18.5?["#3B7DD8",t("profil.bki.zayif")]:v<25?["#2E8B57",t("profil.bki.normal")]:v<30?["#D98E04",t("profil.bki.fazla")]:["#C2410C",t("profil.bki.obez")];
+      var v=PROF.kilo/Math.pow(PROF.boy/100,2),d=bkiDilim(v),c=[d.renk,t("profil.bki."+d.k)];
       var dot=el("span","bmidot");dot.style.background=c[0];bmiRow.appendChild(dot);
       var val=el("b",null,sayi(Math.round(v*10)/10)+" · "+c[1]);val.style.color=c[0];bmiRow.appendChild(val);
     }else bmiRow.appendChild(el("span","mut",t("profil.bki.girin")));
     var bb=el("button","info sm","i");bb.type="button";bb.setAttribute("aria-label",t("profil.bki.nedir"));
-    bb.onclick=function(){alert(t("profil.bki.aciklama"))};
+    bb.onclick=function(){bkiSayfa(bb)};
     bmiRow.appendChild(bb);
   }
   updBmi();
@@ -119,6 +119,25 @@ function buildProfile(){
   var gz=$("gizlilik");if(gz){var gk=gz.cloneNode(true);gk.removeAttribute("id");gk.className="pdrop gzp";gk.open=false;gk.querySelector("summary").className="pt";hk.appendChild(gk)}
   box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
+}
+/* BKİ dilimleri (WHO): üst sınır (dahil değil) ve renk; Profilim satırı ve bilgi sayfası aynı listeyi kullanır */
+var BKI=[{k:"zayif",ust:18.5,renk:"#3B7DD8"},{k:"normal",ust:25,renk:"#2E8B57"},{k:"fazla",ust:30,renk:"#D98E04"},{k:"obez",ust:Infinity,renk:"#C2410C"}];
+function bkiDilim(v){for(var i=0;i<BKI.length;i++)if(v<BKI[i].ust)return BKI[i];return BKI[BKI.length-1]}
+/* BKİ bilgi sayfası (14.10.2026, kullanıcı isteği: düz uyarı kutusu karışık görünüyordu): formül kutusu, girilmişse kişinin değeri,
+   renkli dilim satırları (kişinin dilimi vurgulu), not ve kaynak */
+function bkiSayfa(ret){
+  var b=el("div","bkis"),v=PROF.boy&&PROF.kilo?PROF.kilo/Math.pow(PROF.boy/100,2):null,dv=v!=null?bkiDilim(v):null;
+  b.appendChild(el("div","bkif",t("profil.bki.formul")));
+  if(dv){var sz=el("div","bkiv");sz.style.setProperty("--c",dv.renk);sz.appendChild(el("span",null,t("profil.bki.siz")));
+    sz.appendChild(el("b",null,sayi(Math.round(v*10)/10)+" · "+t("profil.bki."+dv.k)));b.appendChild(sz)}
+  var ls=el("div","bkil");
+  BKI.forEach(function(d){var r=el("div","bkir"+(d===dv?" on":""));r.style.setProperty("--c",d.renk);
+    r.appendChild(el("span","bkid"));r.appendChild(el("b",null,t("profil.bki."+d.k)));r.appendChild(el("span","bkia",t("profil.bki.aralik."+d.k)));
+    if(d===dv)r.appendChild(el("span","bkit",t("profil.bki.siz_kisa")));ls.appendChild(r)});
+  b.appendChild(ls);
+  b.appendChild(el("p","bkin",t("profil.bki.not")));
+  b.appendChild(el("p","mut",t("profil.bki.kaynak")));
+  openSheet(t("profil.bki.baslik"),null,b,ret);
 }
 /* Listede olmayan alerjen: kullanıcı adını yazar, eklediklerini görür ve siler (PROF.alOzel; etiket metninde ozelAraHepsi ile aranır).
    Etikette yazılan ad seçili dilde gösterilir (ozelGoster); sözlükte olmayan adlar yazıldığı gibi kalır ve altta ayrıca belirtilir. */

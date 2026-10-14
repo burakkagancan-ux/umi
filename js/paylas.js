@@ -88,7 +88,7 @@ function payModel(src,opt,cfg,L){
   items.forEach(function(it){c[it.lvl]++});
   var risky=items.filter(function(it){return it.lvl>0}).map(function(it,i){return {name:it.name,lvl:it.lvl,why:it.why||"",i:i}});
   risky.sort(function(a,b){return b.lvl-a.lvl||a.i-b.i});   // en riskliden başlayarak, eşitlikte okunduğu sıra
-  var n=(L&&L.enFazlaMadde)||cfg.enFazlaMadde,top=risky.slice(0,n).map(function(x){return {name:x.name,lvl:x.lvl,why:x.why}});
+  var n=L&&L.hepsi?risky.length:(L&&L.enFazlaMadde)||cfg.enFazlaMadde,top=risky.slice(0,n).map(function(x){return {name:x.name,lvl:x.lvl,why:x.why}});
   var pers=opt.kisisel?(src.personal||[]).slice(0,cfg.enFazlaKisisel):[];
   return {mode:src.mode,name:opt.name||t("pay.tarama"),counts:{ok:c[0],dikkat:c[1],uyari:c[2]},unverified:src.unverified||0,
     total:items.length,top:top,more:Math.max(0,risky.length-n),allergens:src.allergens||"",personal:pers,
@@ -155,7 +155,8 @@ function payChips(x,list,maxW,maxRows){
   }
   return out;
 }
-/* Kartı çizer. L: yerleşim (PAYLAS_AYAR.yerlesim[boyut]); logo: yüklenmiş görüntü ya da null. Çizilen metinler sırayla döner (test için).
+/* Kartı çizer. L: yerleşim (PAYLAS_AYAR.yerlesim[boyut]); logo: yüklenmiş görüntü ya da null. Çizilen metinler sırayla döner (test için; .h kartın yüksekliği).
+   L.oto: önce ölçülür, kart içeriğe göre L.h'den L.enBoy'a kadar uzar (canvas yüksekliği burada ayarlanır).
    Bölümler yukarıdan aşağı akar; sığmazsa önce madde satırı sayısı azalır ("+N madde daha"), sonra bilgi etiketleri, sonra besin değerleri düşer. Not ve alt bant sabit. */
 function payDraw(x,M,L,cfg,logo){
   cfg=cfg||PAYLAS_AYAR;
@@ -288,9 +289,12 @@ function payDraw(x,M,L,cfg,logo){
     return y;
   }
   draw=false;
+  if(L.oto){H=Math.max(L.h,Math.min(L.enBoy||L.h,Math.ceil(flow()+bottomH+24+L.bant)));foot=H-L.bant;maxY=foot-bottomH-24;
+    if(x.canvas&&x.canvas.height!==H)x.canvas.height=H}   // boyut değişince bağlam sıfırlanır; çizim aşağıda baştan kurulur
+  out.h=H;
   while(flow()>maxY){if(n>2)n--;else if(keepFacts&&M.facts.length)keepFacts=false;else if(keepBesin&&M.besin)keepBesin=false;else if(n>1)n--;else break}
   draw=true;
-  x.fillStyle=R.bg;x.fillRect(0,0,W,H);
+  x.textBaseline="alphabetic";x.fillStyle=R.bg;x.fillRect(0,0,W,H);
   var y=head(P);
   if(risky){y=counts(y);y=rows(y,n)}
   else{

@@ -173,7 +173,7 @@ var ROZET_METAL={bronz:["#D9A06B","#A0703F","#6E4622"],gumus:["#F2F4F6","#B4BBC1
 function rozetSvg(simge,sira,kazanildi){
   var s=Math.max(1,Math.min(8,sira|0)),R=ROZET_RENK,st=ROZET_STIL[simge]||ROZET_STIL.kitap,k=!!kazanildi,o=[];
   var tur=s>=5?"altin":s>=3?"gumus":"bronz",id="rz"+simge+s+(k?"k":"g");
-  var kurdele=s>=2,cx=24,cy=s>=8?24:kurdele?21.5:24;
+  var kurdele=s>=2,cx=24,cy=s>=8?24:kurdele?(s%2?21.5:23):24;   // yıldızlı kademede (2, 4, 6) madalya biraz aşağıda: yıldızlara yer
   var rDis=s>=7?15.8:s>=5?16.2:kurdele?16.6:18.5,rIc=rDis-(s>=8?3.2:s>=5?3:s>=2?2.6:2.2);
   var M=ROZET_METAL[tur],metal=!k?R.griAcik:s===1?M[1]:"url(#"+id+"m)",ana=k?st.renk:R.gri,yil=k?(s>=5?R.altin:M[1]):R.gri,isik=k?R.altin:R.griAcik;
   o.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true">');
@@ -194,7 +194,9 @@ function rozetSvg(simge,sira,kazanildi){
   o.push('<g transform="translate('+(cx-12*ik).toFixed(2)+' '+(cy-12*ik).toFixed(2)+') scale('+ik.toFixed(3)+')">'+(ROZET_ISARET[simge]||"")+'</g>');
   var y=[[],[24],[],[19,29],[],[16,24,32],[],[13,18.5,24,29.5,35]][s-1],ust=cy-rDis-0.2;
   if(s===8)y=[13,18.5,29.5,35];   // ortadaki yerde taç
-  y.forEach(function(x){o.push(rozetYildiz(x,Math.max(3.2,ust+Math.abs(x-24)*0.3),s>=6?2.7:3.1,yil))});
+  // Yıldızlar madalyanın kenarının üstünde durur, içine girmez (14.10.2026, kullanıcı isteği: "simgeyle iç içe geçmiş gibi")
+  var yr=s>=6?2.7:3.1;
+  y.forEach(function(x){o.push(rozetYildiz(x,Math.max(yr,ust-yr*0.6+Math.abs(x-24)*0.12),yr,yil))});
   if(s===8){o.push(rozetTac(cx,ust+1.2,k?R.altin:R.gri));if(k){o.push(rozetIsilti(5,9,2.6,"#FBE29A"));o.push(rozetIsilti(43,12,2,"#FBE29A"));o.push(rozetIsilti(42.5,40,1.8,"#FBE29A"))}}
   o.push('</svg>');return o.join("");
 }

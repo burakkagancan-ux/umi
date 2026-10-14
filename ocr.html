@@ -120,7 +120,7 @@ body.mode-kars .w>:not(#kars){display:none!important}#kars[hidden]{display:none}
 .resbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:4px 0 10px;padding:6px 0 8px;border-bottom:1px solid var(--line)}
 .resbar .pay{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px}
 .resbar .pay svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-.paypre{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:4px auto 12px}.paypre.uzun{width:auto;max-width:100%;max-height:62vh}.payseg{margin:0 0 10px}
+.paypre{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:4px auto 12px}.paypre.uzun{width:auto;max-width:100%;max-height:62vh}.paywrap{max-height:62vh;overflow-y:auto;border-radius:12px;margin:0 0 12px}.paywrap .paypre{margin:0 auto}.paypre.cokuzun{width:100%;height:auto}.payseg{margin:0 0 10px}
 .paysheet>button{width:100%;margin-top:10px}.paychk{display:flex;align-items:center;gap:8px;font-weight:600}
 .kcols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kcol,.kgrp{min-width:0}
 .kcol>input.kn{width:100%;min-height:44px;font:700 15px/1.2 var(--hf);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px 10px}
@@ -231,6 +231,18 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .pb-uy .pdrop .pc:has(input:checked){background:var(--c-uy);border-color:var(--c-uy)}.pb-uy .pdrop .pc input:checked::after{border-color:var(--c-uy)}
 .pkart .pnum .pn{background:var(--b-ki)}.pkart .pnum .pn>span:first-child{color:var(--c-ki)}
 .pkart .bmi{background:var(--b-ki)}
+/* BKİ bilgi sayfası (bkiSayfa): formül kutusu, kişinin değeri, renkli dilimler; --c dilimin rengi */
+.bkis{display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.45}
+.bkif{font-family:var(--hf);font-weight:700;font-size:18px;text-align:center;padding:14px 12px;border-radius:14px;background:#E6EDF8;color:#234A7A}
+.bkiv{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 10%,#fff)}
+.bkiv b{color:var(--c);font-size:18px}
+.bkil{display:flex;flex-direction:column;gap:6px}
+.bkir{display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 14px;border-radius:12px;border-inline-start:6px solid var(--c);background:color-mix(in srgb,var(--c) 7%,#fff)}
+.bkir b{color:var(--c)}.bkir .bkia{margin-inline-start:auto;font-variant-numeric:tabular-nums;color:var(--ink)}
+.bkid{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none}
+.bkir.on{background:color-mix(in srgb,var(--c) 18%,#fff);box-shadow:0 0 0 2px var(--c) inset}
+.bkit{font-size:12px;font-weight:600;color:#fff;background:var(--c);border-radius:999px;padding:2px 8px}
+.bkin{margin:0;font-style:italic;color:var(--mute)}.bkis p.mut{margin:0;font-size:14px}
 .pset>.pn select{color:var(--c-ay);font-weight:600}
 .pcihaz{text-align:center;margin:18px 0 0}
 #profil.mut{color:var(--ink);font-size:16px}#profil p.mut,#profil .how{color:var(--mute);font-size:14px}
