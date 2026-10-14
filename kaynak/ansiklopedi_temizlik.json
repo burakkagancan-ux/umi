@@ -1,0 +1,1534 @@
+{
+ "_aciklama": "Temizlik ansiklopedisi (14.10.2026): yaygın 30 temizlik maddesi. Kimlik CAS numarası. Tehlike sınıfları ECHA CHEM'den (CLP Ek VI uyumlaştırılmış sınıflandırma; yoksa REACH kayıt yaptıranlarının ortak bildirimi, clp.tur='firma'), 15.10.2026'da API'den alındı ve elle değiştirilmez. Renk gen_ansiklopedi.py'de H/EUH kodlarının temizlik verisindeki düzeyinden hesaplanır (sonuç ekranıyla aynı kural). Kullanım bilgisi (ne işe yarar, nerede bulunur) PubChem'deki HSDB/Haz-Map kullanım satırlarından. Metinlerde korku dili yok; sınıfın saf madde için olduğu her kayıtta belirtilir.",
+ "kategoriler": {
+  "tem_yuzey": [
+   "Yüzey Aktif Madde",
+   "Kiri ve yağı yüzeyden ayırıp suda tutan asıl temizleyici madde."
+  ],
+  "tem_alkali": [
+   "Alkali (Baz)",
+   "Yağı ve kiri çözer, ürünün pH'ını yükseltir."
+  ],
+  "tem_asit": [
+   "Asit / Kireç Çözücü",
+   "Kireci, pası ve mineral birikintilerini çözer."
+  ],
+  "tem_agartici": [
+   "Ağartıcı",
+   "Lekeyi oksitleyerek ağartır; çoğu aynı zamanda mikrop öldürür."
+  ],
+  "tem_su": [
+   "Su Yumuşatıcı / Metal Bağlayıcı",
+   "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır."
+  ],
+  "tem_cozucu": [
+   "Çözücü",
+   "Yağı ve kiri çözer; çoğu çabuk buharlaşır."
+  ],
+  "tem_dezenfektan": [
+   "Dezenfektan",
+   "Bakteri, mantar ve virüsleri öldürür."
+  ],
+  "tem_koruyucu": [
+   "Koruyucu",
+   "Su bazlı ürünün mikropla bozulmasını önler."
+  ],
+  "tem_enzim": [
+   "Enzim",
+   "Protein, nişasta ya da yağ lekelerini parçalar."
+  ],
+  "tem_koku": [
+   "Koku Maddesi",
+   "Ürüne koku verir; bazıları koku alerjenidir."
+  ]
+ },
+ "kaynaklar": {
+  "clp": {
+   "title": "Regulation (EC) No 1272/2008 on classification, labelling and packaging of substances and mixtures (CLP)",
+   "publisher": "European Parliament and Council",
+   "year": 2008,
+   "url": "https://eur-lex.europa.eu/eli/reg/2008/1272/oj",
+   "official": true
+  },
+  "det648": {
+   "title": "Regulation (EC) No 648/2004 on detergents, Annex VII (labelling of contents)",
+   "publisher": "European Parliament and Council",
+   "year": 2004,
+   "url": "https://www.legislation.gov.uk/eur/2004/648/annex/VII",
+   "official": true
+  },
+  "fosfor259": {
+   "title": "Regulation (EU) No 259/2012 on phosphates in consumer laundry and automatic dishwasher detergents",
+   "publisher": "European Parliament and Council",
+   "year": 2012,
+   "url": "https://eur-lex.europa.eu/eli/reg/2012/259/oj",
+   "official": true
+  },
+  "hsgm_temizlik": {
+   "title": "Sağlıklı Temizlik Rehberi",
+   "publisher": "T.C. Sağlık Bakanlığı Halk Sağlığı Genel Müdürlüğü",
+   "year": 2022,
+   "url": "https://hsgm.saglik.gov.tr/depo/birimler/kronik-hastaliklar-ve-yasli-sagligi-db/Dokumanlar/Kitaplar/Saglikli_Temizlik_Rehberi_18.04.2022.pdf",
+   "official": true
+  }
+ },
+ "kayitlar": [
+  {
+   "id": "7681-52-9",
+   "ec": "231-668-3",
+   "ad": "Sodyum Hipoklorit",
+   "adlar": [
+    "sodyum hipoklorit",
+    "sodium hypochlorite",
+    "çamaşır suyu",
+    "hipoklorit",
+    "SODIUM HYPOCHLORITE",
+    "naocl"
+   ],
+   "kategori": "tem_agartici",
+   "ozet": "Çamaşır suyunun etken maddesi; klorlu ağartıcı ve dezenfektan.",
+   "ne": "Lekeleri oksitleyerek ağartır ve mikropları öldürür.",
+   "nerede": [
+    "Çamaşır suyu",
+    "Klorlu yüzey ve banyo temizleyicileri",
+    "Havuz ve su dezenfeksiyonu"
+   ],
+   "not": "Etikette asitlerle temasında toksik gaz çıkardığı (EUH031) yazılır. Sağlık Bakanlığı tuz ruhu gibi asitli ürünlerle ya da amonyakla karıştırılmamasını öneriyor; karışımda klor gazı ve kloramin gibi gazlar oluşur.",
+   "ek_kaynak": [
+    "hsgm_temizlik"
+   ],
+   "profil": [
+    {
+     "profile": "astim",
+     "severity": "medium",
+     "text": "Solunum yolunu tahriş eden gazlar açığa çıkabilir; kapalı ortamda kullanmayın, havalandırın."
+    }
+   ],
+   "ilgili": [],
+   "echa": "100.028.790",
+   "pubchem": 23665760,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "017-011-00-1",
+    "atp": "ATP13",
+    "celex": "32018R1480",
+    "tarih": "01-05-2020",
+    "siniflar": [
+     "Skin Corr. 1B",
+     "Eye Dam. 1",
+     "Aquatic Acute 1",
+     "Aquatic Chronic 1"
+    ],
+    "h": [
+     "H314",
+     "H318",
+     "H400",
+     "H410"
+    ],
+    "euh": [
+     "EUH031"
+    ]
+   }
+  },
+  {
+   "id": "1310-73-2",
+   "ec": "215-185-5",
+   "ad": "Sodyum Hidroksit",
+   "adlar": [
+    "sodyum hidroksit",
+    "sodium hydroxide",
+    "kostik soda",
+    "kostik",
+    "naoh",
+    "SODIUM HYDROXIDE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Kostik soda; güçlü bir baz (alkali).",
+   "ne": "Yağı sabunlaştırarak çözer, organik tıkanıklıkları parçalar ve ürünün pH'ını yükseltir.",
+   "nerede": [
+    "Lavabo ve gider açıcılar",
+    "Fırın ve ızgara temizleyicileri",
+    "Metal temizleme ürünleri",
+    "Sabun üretimi"
+   ],
+   "not": "Saf maddenin sınıfı en yüksek aşındırıcılık kategorisidir (Skin Corr. 1A). Gider açıcılar gibi derişik ürünlerde etikette aynı ifade yer alır; seyreltik üründe sınıf orana göre düşer.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "E524"
+   ],
+   "echa": "100.013.805",
+   "pubchem": 14798,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "011-002-00-6",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Skin Corr. 1A"
+    ],
+    "h": [
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "1310-58-3",
+   "ec": "215-181-3",
+   "ad": "Potasyum Hidroksit",
+   "adlar": [
+    "potasyum hidroksit",
+    "potassium hydroxide",
+    "kostik potas",
+    "koh",
+    "POTASSIUM HYDROXIDE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Kostik potas; güçlü bir baz (alkali).",
+   "ne": "Yağı çözer, ürünün pH'ını yükseltir; sıvı sabun yapımında kullanılır.",
+   "nerede": [
+    "Gider açıcılar",
+    "Boya ve vernik sökücüler",
+    "Sıvı sabunlar"
+   ],
+   "not": "Saf maddenin sınıfı en yüksek aşındırıcılık kategorisidir (Skin Corr. 1A); etiketteki ifade üründeki orana göre değişir.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "E525"
+   ],
+   "echa": "100.013.802",
+   "pubchem": 14797,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "019-002-00-8",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Acute Tox. 4 (Oral)*",
+     "Skin Corr. 1A"
+    ],
+    "h": [
+     "H302",
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "7647-01-0",
+   "ec": "231-595-7",
+   "ad": "Hidroklorik Asit (Tuz Ruhu)",
+   "adlar": [
+    "hidroklorik asit",
+    "hydrochloric acid",
+    "tuz ruhu",
+    "hcl",
+    "hidrojen klorür",
+    "muriatic acid",
+    "HYDROCHLORIC ACID"
+   ],
+   "kategori": "tem_asit",
+   "ozet": "Suda çözünmüş hidrojen klorür; halk arasında tuz ruhu.",
+   "ne": "Kireç, pas ve mineral birikintilerini çözer.",
+   "nerede": [
+    "Tuz ruhu",
+    "Tuvalet ve kireç çözücüler",
+    "Metal temizleme ve pas giderme"
+   ],
+   "not": "Burada çözeltinin (dizin no 017-002-01-X) sınıfı verilmiştir; gaz hâlindeki hidrojen klorürün sınıfı ayrıdır. Sağlık Bakanlığı çamaşır suyuyla karıştırılmamasını öneriyor; karışımda klor gazı açığa çıkar.",
+   "ek_kaynak": [
+    "hsgm_temizlik"
+   ],
+   "profil": [
+    {
+     "profile": "astim",
+     "severity": "medium",
+     "text": "Buharı solunum yolunu tahriş eder (H335); kapalı ortamda kullanmayın."
+    }
+   ],
+   "ilgili": [
+    "E507"
+   ],
+   "echa": "100.028.723",
+   "pubchem": 313,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "017-002-01-X",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "STOT SE 3",
+     "Skin Corr. 1B"
+    ],
+    "h": [
+     "H335",
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "77-92-9",
+   "ec": "201-069-1",
+   "ad": "Sitrik Asit",
+   "adlar": [
+    "sitrik asit",
+    "citric acid",
+    "limon tuzu",
+    "CITRIC ACID"
+   ],
+   "kategori": "tem_asit",
+   "ozet": "Turunçgillerde doğal olarak bulunan zayıf bir asit; endüstride mayalandırmayla üretilir.",
+   "ne": "Kireci çözer, metal iyonlarını bağlar ve ürünün pH'ını ayarlar.",
+   "nerede": [
+    "Kireç çözücüler",
+    "Bulaşık makinesi ürünleri",
+    "Banyo temizleyicileri"
+   ],
+   "not": "Gıdada da kullanılan madde (E330). Toz ve derişik hâlinde göz tahrişi yapabilir; AB sınıfı bu yüzdendir.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "E330"
+   ],
+   "echa": "100.000.973",
+   "pubchem": 311,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "607-750-00-3",
+    "atp": "ATP17",
+    "celex": "32021R0849",
+    "tarih": "17-12-2022",
+    "siniflar": [
+     "STOT SE 3",
+     "Eye Irrit. 2"
+    ],
+    "h": [
+     "H335",
+     "H319"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "5329-14-6",
+   "ec": "226-218-8",
+   "ad": "Sülfamik Asit",
+   "adlar": [
+    "sülfamik asit",
+    "sulfamic acid",
+    "sulphamic acid",
+    "amidosülfonik asit",
+    "SULFAMIC ACID"
+   ],
+   "kategori": "tem_asit",
+   "ozet": "Katı (toz) hâlde satılan güçlü bir asit.",
+   "ne": "Kireç ve pası çözer.",
+   "nerede": [
+    "Kireç çözücüler",
+    "Kahve makinesi ve su ısıtıcısı kireç çözücüleri",
+    "Metal temizleme"
+   ],
+   "not": "Uyumlaştırılmış sınıfı tahriş edicidir (aşındırıcı değil); sucul ortamda uzun süreli zararlı etkisi vardır.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [],
+   "echa": "100.023.835",
+   "pubchem": 5987,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "016-026-00-0",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Skin Irrit. 2",
+     "Eye Irrit. 2",
+     "Aquatic Chronic 3"
+    ],
+    "h": [
+     "H315",
+     "H319",
+     "H412"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "7664-38-2",
+   "ec": "231-633-2",
+   "ad": "Fosforik Asit",
+   "adlar": [
+    "fosforik asit",
+    "ortofosforik asit",
+    "phosphoric acid",
+    "orthophosphoric acid",
+    "PHOSPHORIC ACID"
+   ],
+   "kategori": "tem_asit",
+   "ozet": "Fosforun asidi; gıdada asitlik düzenleyici olarak da kullanılır.",
+   "ne": "Kireç ve pası çözer.",
+   "nerede": [
+    "Kireç ve pas çözücüler",
+    "Metal yüzey temizleme",
+    "Deterjan üretimi"
+   ],
+   "not": "Sınıf derişik çözelti içindir (Skin Corr. 1B); seyreltik üründe etiketteki ifade orana göre değişir. Gıdada E338 olarak bulunur.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "E338"
+   ],
+   "echa": "100.028.758",
+   "pubchem": 1004,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "015-011-00-6",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Skin Corr. 1B"
+    ],
+    "h": [
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "1336-21-6",
+   "ec": "215-647-6",
+   "ad": "Amonyak Çözeltisi",
+   "adlar": [
+    "amonyak",
+    "amonyak çözeltisi",
+    "amonyum hidroksit",
+    "ammonia",
+    "ammonium hydroxide",
+    "AMMONIA",
+    "AMMONIUM HYDROXIDE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Suda çözünmüş amonyak; bir baz (alkali).",
+   "ne": "Yağı ve kiri çözer, iz bırakmadan buharlaşır.",
+   "nerede": [
+    "Cam ve yüzey temizleyicileri",
+    "Ev temizlik ürünleri",
+    "Leke çıkarıcılar"
+   ],
+   "not": "Sağlık Bakanlığı çamaşır suyuyla karıştırılmamasını öneriyor; karışımda solunum yolunu tahriş eden kloramin gazları oluşur.",
+   "ek_kaynak": [
+    "hsgm_temizlik"
+   ],
+   "profil": [
+    {
+     "profile": "astim",
+     "severity": "medium",
+     "text": "Kokusu ve buharı solunum yolunu tahriş edebilir; havalandırarak kullanın."
+    }
+   ],
+   "ilgili": [],
+   "echa": "100.014.225",
+   "pubchem": 14923,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "007-001-01-2",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Skin Corr. 1B",
+     "Aquatic Acute 1"
+    ],
+    "h": [
+     "H314",
+     "H400"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "7722-84-1",
+   "ec": "231-765-0",
+   "ad": "Hidrojen Peroksit",
+   "adlar": [
+    "hidrojen peroksit",
+    "oksijenli su",
+    "hydrogen peroxide",
+    "h2o2",
+    "HYDROGEN PEROXIDE"
+   ],
+   "kategori": "tem_agartici",
+   "ozet": "Oksijen bazlı ağartıcı ve dezenfektan; parçalanınca su ve oksijene dönüşür.",
+   "ne": "Lekeleri oksitleyerek ağartır ve mikropları öldürür.",
+   "nerede": [
+    "Oksijenli leke çıkarıcılar ve ağartıcılar",
+    "Dezenfektanlar",
+    "Sıvı çamaşır ağartıcıları"
+   ],
+   "not": "Sınıf derişik çözelti içindir (dizinde 'hydrogen peroxide solution … %'); ev ürünlerindeki seyreltik çözeltilerde etiketteki ifade orana göre değişir. Güçlü oksitleyicidir (H271).",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [],
+   "echa": "100.028.878",
+   "pubchem": 784,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "008-003-00-9",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Ox. Liq. 1",
+     "Acute Tox. 4 (Inhalation)*",
+     "Acute Tox. 4 (Oral)*",
+     "Skin Corr. 1A"
+    ],
+    "h": [
+     "H271",
+     "H332",
+     "H302",
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "15630-89-4",
+   "ec": "239-707-6",
+   "ad": "Sodyum Perkarbonat",
+   "adlar": [
+    "sodyum perkarbonat",
+    "sodium percarbonate",
+    "sodium carbonate peroxide",
+    "perkarbonat",
+    "SODIUM CARBONATE PEROXIDE"
+   ],
+   "kategori": "tem_agartici",
+   "ozet": "Suda sodyum karbonat ve hidrojen peroksite ayrışan toz ağartıcı.",
+   "ne": "Lekeyi oksijenle ağartır; klorlu ağartıcıdan farklıdır.",
+   "nerede": [
+    "Toz çamaşır deterjanları",
+    "Oksijenli leke çıkarıcılar",
+    "Bulaşık makinesi deterjanları"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildirimi oksitleyici katı, yutulursa zararlı ve ciddi göz hasarı sınıflarındadır.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "7722-84-1",
+    "497-19-8"
+   ],
+   "echa": "100.036.082",
+   "pubchem": 159762,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 41.63,
+    "siniflar": [
+     "Ox. Sol. 2",
+     "Acute Tox. 4 (Oral)",
+     "Eye Dam. 1"
+    ],
+    "h": [
+     "H272",
+     "H302",
+     "H318"
+    ]
+   }
+  },
+  {
+   "id": "497-19-8",
+   "ec": "207-838-8",
+   "ad": "Sodyum Karbonat",
+   "adlar": [
+    "sodyum karbonat",
+    "soda külü",
+    "çamaşır sodası",
+    "sodium carbonate",
+    "soda ash",
+    "SODIUM CARBONATE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Çamaşır sodası; orta güçte bir baz.",
+   "ne": "Suyu yumuşatır, yağlı kiri çözer ve yıkama suyunun pH'ını yükseltir.",
+   "nerede": [
+    "Toz çamaşır deterjanları",
+    "Bulaşık makinesi deterjanları",
+    "Genel amaçlı temizleyiciler"
+   ],
+   "not": "Uyumlaştırılmış sınıfı yalnızca göz tahrişidir. Gıdada E500 olarak bulunur.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "E500"
+   ],
+   "echa": "100.007.127",
+   "pubchem": 10340,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "011-005-00-2",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Eye Irrit. 2"
+    ],
+    "h": [
+     "H319"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "144-55-8",
+   "ec": "205-633-8",
+   "ad": "Sodyum Bikarbonat",
+   "adlar": [
+    "sodyum bikarbonat",
+    "karbonat",
+    "yemek sodası",
+    "sodium bicarbonate",
+    "sodium hydrogen carbonate",
+    "baking soda",
+    "SODIUM BICARBONATE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Yemek sodası; zayıf bir baz.",
+   "ne": "Hafif aşındırıcı olarak kiri ovar, kokuyu azaltır ve pH'ı dengeler.",
+   "nerede": [
+    "Ovma tozları ve kremleri",
+    "Koku gidericiler",
+    "Temizlik amaçlı karbonat"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez. Sağlık Bakanlığı rehberi yüzey temizliği için karbonatı daha güvenli bir seçenek olarak anar. Gıdada E500 grubundadır.",
+   "ek_kaynak": [
+    "hsgm_temizlik"
+   ],
+   "profil": [],
+   "ilgili": [
+    "E500"
+   ],
+   "echa": "100.005.122",
+   "pubchem": 516892,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 98.99,
+    "siniflar": [],
+    "h": []
+   }
+  },
+  {
+   "id": "6834-92-0",
+   "ec": "229-912-9",
+   "ad": "Sodyum Metasilikat",
+   "adlar": [
+    "sodyum metasilikat",
+    "disodyum metasilikat",
+    "sodium metasilicate",
+    "sodyum silikat",
+    "SODIUM METASILICATE"
+   ],
+   "kategori": "tem_alkali",
+   "ozet": "Güçlü bazik bir silikat tuzu.",
+   "ne": "Yağlı kiri çözer, suyu yumuşatır ve makine parçalarını aşınmaya karşı korur.",
+   "nerede": [
+    "Bulaşık makinesi deterjanları",
+    "Endüstriyel ve zemin temizleyicileri",
+    "Toz çamaşır deterjanları"
+   ],
+   "not": "Saf madde aşındırıcıdır (Skin Corr. 1B); bulaşık makinesi tabletlerinde etiketteki ifade orana göre belirlenir.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [],
+   "echa": "100.027.193",
+   "pubchem": 23266,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "014-010-00-8",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "STOT SE 3",
+     "Skin Corr. 1B"
+    ],
+    "h": [
+     "H335",
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "7758-29-4",
+   "ec": "231-838-7",
+   "ad": "Sodyum Tripolifosfat (STPP)",
+   "adlar": [
+    "sodyum tripolifosfat",
+    "pentasodyum trifosfat",
+    "stpp",
+    "sodium tripolyphosphate",
+    "pentasodium triphosphate",
+    "PENTASODIUM TRIPHOSPHATE",
+    "SODIUM TRIPOLYPHOSPHATE"
+   ],
+   "kategori": "tem_su",
+   "ozet": "Fosfat grubundan su yumuşatıcı (yapıcı madde).",
+   "ne": "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır, kirin yeniden çökmesini önler.",
+   "nerede": [
+    "Bulaşık makinesi deterjanları",
+    "Toz çamaşır deterjanları",
+    "Endüstriyel temizleyiciler"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez. Asıl konu çevre: fosfat göl ve denizlerde aşırı yosunlanmaya katkı yapar; AB, ev tipi çamaşır ve bulaşık makinesi deterjanlarında fosfor miktarını sınırladı.",
+   "ek_kaynak": [
+    "hsgm_temizlik"
+   ],
+   "profil": [],
+   "ilgili": [
+    "1318-02-1",
+    "164462-16-2",
+    "E451"
+   ],
+   "echa": "100.028.944",
+   "pubchem": 24455,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 37.3,
+    "siniflar": [],
+    "h": []
+   }
+  },
+  {
+   "id": "1318-02-1",
+   "ec": "930-915-9",
+   "ad": "Zeolit",
+   "adlar": [
+    "zeolit",
+    "zeolite",
+    "zeolit a",
+    "sodyum alüminyum silikat",
+    "sodium aluminosilicate",
+    "ZEOLITE"
+   ],
+   "kategori": "tem_su",
+   "ozet": "Kristal yapılı sodyum alüminyum silikat minerali.",
+   "ne": "Sudaki kalsiyumu iyon değişimiyle tutarak suyu yumuşatır; fosfat yerine kullanılır.",
+   "nerede": [
+    "Toz çamaşır deterjanları",
+    "Bulaşık makinesi deterjanları"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "7758-29-4"
+   ],
+   "echa": "100.110.564",
+   "pubchem": 146019320,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 100.0,
+    "siniflar": [],
+    "h": []
+   }
+  },
+  {
+   "id": "64-02-8",
+   "ec": "200-573-9",
+   "ad": "Tetrasodyum EDTA",
+   "adlar": [
+    "tetrasodyum edta",
+    "edta",
+    "tetrasodium edta",
+    "tetrasodyum etilendiamin tetraasetat",
+    "TETRASODIUM EDTA"
+   ],
+   "kategori": "tem_su",
+   "ozet": "Metal bağlayıcı (şelatlayıcı) madde.",
+   "ne": "Metal iyonlarını bağlayarak suyun sertliğini etkisizleştirir ve ürünün bozulmasını yavaşlatır.",
+   "nerede": [
+    "Sıvı deterjanlar",
+    "Banyo ve mutfak temizleyicileri",
+    "Kozmetik ürünler"
+   ],
+   "not": "Uyumlaştırılmış sınıfı yutulursa zararlı ve ciddi göz hasarıdır. Doğada yavaş parçalanır; bu yüzden bazı ürünlerde MGDA gibi kolay parçalanan bağlayıcılara geçilmiştir.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "164462-16-2"
+   ],
+   "echa": "100.000.522",
+   "pubchem": 6144,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "607-428-00-2",
+    "atp": "ATP01",
+    "celex": "32009R0790",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Acute Tox. 4 (Oral)*",
+     "Eye Dam. 1"
+    ],
+    "h": [
+     "H302",
+     "H318"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "164462-16-2",
+   "ec": "605-362-9",
+   "ad": "Trisodyum MGDA",
+   "adlar": [
+    "mgda",
+    "trisodyum metilglisin diasetat",
+    "trisodium methylglycinediacetate",
+    "trisodium dicarboxymethyl alaninate",
+    "TRISODIUM DICARBOXYMETHYL ALANINATE"
+   ],
+   "kategori": "tem_su",
+   "ozet": "Metal bağlayıcı (şelatlayıcı) madde; fosfat ve EDTA'nın yerine kullanılır.",
+   "ne": "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır.",
+   "nerede": [
+    "Fosfatsız bulaşık makinesi deterjanları",
+    "Sıvı deterjanlar"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; ECHA'ya yapılan bildirimlerin çoğunda tehlike sınıfına girmez.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "64-02-8"
+   ],
+   "echa": "100.120.943",
+   "pubchem": null,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 66.1,
+    "siniflar": [],
+    "h": []
+   }
+  },
+  {
+   "id": "68411-30-3",
+   "ec": "270-115-0",
+   "ad": "Sodyum Alkilbenzen Sülfonat (LAS)",
+   "adlar": [
+    "las",
+    "doğrusal alkilbenzen sülfonat",
+    "lineer alkilbenzen sülfonat",
+    "sodyum dodesilbenzen sülfonat",
+    "sodium dodecylbenzenesulfonate",
+    "linear alkylbenzene sulfonate",
+    "SODIUM DODECYLBENZENESULFONATE"
+   ],
+   "kategori": "tem_yuzey",
+   "ozet": "En yaygın anyonik yüzey aktif maddelerden biri.",
+   "ne": "Kiri ve yağı sudan ayırıp suda tutar; köpük yapar.",
+   "nerede": [
+    "Toz ve sıvı çamaşır deterjanları",
+    "Elde bulaşık deterjanları",
+    "Genel temizleyiciler"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde ciddi göz hasarı, cilt tahrişi ve yutulursa zararlı sınıflarındadır. Bu sınıflar saf madde içindir; etikette %5–15 gibi bantla yazılır.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "68891-38-3",
+    "151-21-3"
+   ],
+   "echa": "100.063.721",
+   "pubchem": 23662403,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 51.74,
+    "siniflar": [
+     "Acute Tox. 4 (Oral)",
+     "Skin Irrit. 2",
+     "Eye Dam. 1",
+     "Aquatic Chronic 3"
+    ],
+    "h": [
+     "H302",
+     "H315",
+     "H318",
+     "H412"
+    ]
+   }
+  },
+  {
+   "id": "68891-38-3",
+   "ec": "500-234-8",
+   "ad": "Sodyum Lauril Eter Sülfat (SLES)",
+   "adlar": [
+    "sles",
+    "sodyum lauril eter sülfat",
+    "sodyum laureth sülfat",
+    "sodium laureth sulfate",
+    "SODIUM LAURETH SULFATE"
+   ],
+   "kategori": "tem_yuzey",
+   "ozet": "Anyonik yüzey aktif madde; deterjan ve şampuanlarda yaygındır.",
+   "ne": "Kiri ve yağı çözer, bol köpük yapar.",
+   "nerede": [
+    "Elde bulaşık deterjanları",
+    "Sıvı çamaşır deterjanları",
+    "Şampuan ve duş jelleri"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde cilt tahrişi ve ciddi göz hasarı sınıflarındadır (saf madde için).",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "151-21-3",
+    "68411-30-3"
+   ],
+   "echa": "100.105.723",
+   "pubchem": 23665884,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 50.68,
+    "siniflar": [
+     "Skin Irrit. 2",
+     "Eye Dam. 1"
+    ],
+    "h": [
+     "H315",
+     "H318"
+    ]
+   }
+  },
+  {
+   "id": "151-21-3",
+   "ec": "205-788-1",
+   "ad": "Sodyum Lauril Sülfat (SLS)",
+   "adlar": [
+    "sls",
+    "sodyum lauril sülfat",
+    "sodyum dodesil sülfat",
+    "sodium lauryl sulfate",
+    "sodium dodecyl sulfate",
+    "SODIUM LAURYL SULFATE"
+   ],
+   "kategori": "tem_yuzey",
+   "ozet": "Anyonik yüzey aktif madde.",
+   "ne": "Kiri ve yağlı kalıntıyı çözer, köpük yapar.",
+   "nerede": [
+    "Zemin ve genel temizleyiciler",
+    "Elde bulaşık deterjanları",
+    "Diş macunu ve şampuanlar"
+   ],
+   "not": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde ciddi göz hasarı, cilt tahrişi ve yutulursa zararlı sınıflarındadır (saf madde için).",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "68891-38-3",
+    "68411-30-3"
+   ],
+   "echa": "100.005.263",
+   "pubchem": 3423265,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "firma",
+    "yuzde": 29.04,
+    "siniflar": [
+     "Acute Tox. 4 (Oral)",
+     "Skin Irrit. 2",
+     "Eye Dam. 1",
+     "Aquatic Chronic 3"
+    ],
+    "h": [
+     "H302",
+     "H315",
+     "H318",
+     "H412"
+    ]
+   }
+  },
+  {
+   "id": "111-76-2",
+   "ec": "203-905-0",
+   "ad": "2-Bütoksietanol",
+   "adlar": [
+    "2-bütoksietanol",
+    "bütil glikol",
+    "butil glikol",
+    "etilen glikol monobütil eter",
+    "2-butoxyethanol",
+    "butyl glycol",
+    "BUTOXYETHANOL"
+   ],
+   "kategori": "tem_cozucu",
+   "ozet": "Glikol eteri grubundan çözücü.",
+   "ne": "Yağı ve kiri çözer, yüzeyde iz bırakmadan buharlaşmaya yardım eder.",
+   "nerede": [
+    "Cam ve yüzey temizleyicileri",
+    "Yağ çözücüler",
+    "Boya ve mürekkepler"
+   ],
+   "not": "Uyumlaştırılmış sınıfı 2022'de (ATP18) güncellendi: solunursa toksik, yutulursa zararlı, cilt ve göz tahrişi. Sınıf saf madde içindir; spreylerde havalandırarak kullanın.",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "astim",
+     "severity": "medium",
+     "text": "Buharı solunduğunda zararlıdır; sprey ürünleri havalandırılan ortamda kullanın."
+    }
+   ],
+   "ilgili": [
+    "67-63-0"
+   ],
+   "echa": "100.003.550",
+   "pubchem": 8133,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "603-014-00-0",
+    "atp": "ATP18",
+    "celex": "32022R0692",
+    "tarih": "23-11-2023",
+    "siniflar": [
+     "Acute Tox. 3 (Inhalation)",
+     "Acute Tox. 4 (Oral)",
+     "Skin Irrit. 2",
+     "Eye Irrit. 2"
+    ],
+    "h": [
+     "H331",
+     "H302",
+     "H315",
+     "H319"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "67-63-0",
+   "ec": "200-661-7",
+   "ad": "İzopropil Alkol",
+   "adlar": [
+    "izopropil alkol",
+    "izopropanol",
+    "propan-2-ol",
+    "isopropyl alcohol",
+    "isopropanol",
+    "ISOPROPYL ALCOHOL"
+   ],
+   "kategori": "tem_cozucu",
+   "ozet": "Çözücü ve dezenfektan olarak kullanılan bir alkol.",
+   "ne": "Yağı ve kiri çözer, hızla buharlaşır; yüksek oranda mikropları öldürür.",
+   "nerede": [
+    "Cam ve ekran temizleyicileri",
+    "Dezenfektan mendil ve spreyler",
+    "Leke çıkarıcılar"
+   ],
+   "not": "Kolay alevlenir; buharı baş dönmesi yapabilir. Ateşe ve ısı kaynaklarına yakın kullanmayın.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "64-17-5",
+    "111-76-2"
+   ],
+   "echa": "100.000.601",
+   "pubchem": 3776,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "603-117-00-0",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Flam. Liq. 2",
+     "STOT SE 3",
+     "Eye Irrit. 2"
+    ],
+    "h": [
+     "H225",
+     "H336",
+     "H319"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "64-17-5",
+   "ec": "200-578-6",
+   "ad": "Etil Alkol",
+   "adlar": [
+    "etil alkol",
+    "etanol",
+    "alkol",
+    "ethanol",
+    "ethyl alcohol",
+    "ALCOHOL",
+    "ALCOHOL DENAT."
+   ],
+   "kategori": "tem_cozucu",
+   "ozet": "Mayalanmayla ya da petrokimyasal yolla üretilen alkol.",
+   "ne": "Çözücü olarak kiri çözer; yüksek oranda mikropları öldürür.",
+   "nerede": [
+    "El ve yüzey dezenfektanları",
+    "Cam temizleyicileri",
+    "Parfümlü ürünler"
+   ],
+   "not": "Uyumlaştırılmış sınıfı yalnızca kolay alevlenir sıvıdır (H225).",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "67-63-0"
+   ],
+   "echa": "100.000.526",
+   "pubchem": 702,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "603-002-00-5",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Flam. Liq. 2"
+    ],
+    "h": [
+     "H225"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "7173-51-5",
+   "ec": "230-525-2",
+   "ad": "Didesildimetilamonyum Klorür (DDAC)",
+   "adlar": [
+    "ddac",
+    "didesildimetilamonyum klorür",
+    "didecyldimethylammonium chloride",
+    "didecyldimonium chloride",
+    "DIDECYLDIMONIUM CHLORIDE",
+    "kuaterner amonyum"
+   ],
+   "kategori": "tem_dezenfektan",
+   "ozet": "Kuaterner amonyum grubundan katyonik dezenfektan.",
+   "ne": "Bakteri, mantar ve bazı virüsleri öldürür.",
+   "nerede": [
+    "Yüzey dezenfektanları",
+    "Mutfak ve banyo dezenfektanlı temizleyiciler",
+    "Ahşap koruyucular"
+   ],
+   "not": "Saf madde aşındırıcıdır (Skin Corr. 1B). AB'de dezenfektan etken maddesi olarak biyosidal ürünler mevzuatıyla izne bağlıdır.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "63449-41-2"
+   ],
+   "echa": "100.027.751",
+   "pubchem": 23558,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "612-131-00-6",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Acute Tox. 4 (Oral)*",
+     "Skin Corr. 1B"
+    ],
+    "h": [
+     "H302",
+     "H314"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "63449-41-2",
+   "ec": "264-151-6",
+   "ad": "Benzalkonyum Klorür",
+   "adlar": [
+    "benzalkonyum klorür",
+    "benzalkonium chloride",
+    "alkil dimetil benzil amonyum klorür",
+    "BENZALKONIUM CHLORIDE",
+    "kuaterner amonyum"
+   ],
+   "kategori": "tem_dezenfektan",
+   "ozet": "Kuaterner amonyum grubundan katyonik dezenfektan ve koruyucu.",
+   "ne": "Bakteri ve mantarları öldürür; yüzeyde ince bir tabaka bırakır.",
+   "nerede": [
+    "Yüzey dezenfektanları",
+    "Dezenfektanlı mendiller",
+    "Kozmetik ve ilaçlarda koruyucu"
+   ],
+   "not": "Uyumlaştırılmış sınıf C8-18 alkil karışımı (dizin no 612-140-00-5) içindir; ticari ürünlerde sık geçen C12-16 karışımı (CAS 68424-85-1) aynı madde grubundandır. Saf madde aşındırıcıdır.",
+   "ek_kaynak": [],
+   "profil": [],
+   "ilgili": [
+    "7173-51-5"
+   ],
+   "echa": "100.058.301",
+   "pubchem": 3014024,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "612-140-00-5",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "Acute Tox. 4 (Dermal)*",
+     "Acute Tox. 4 (Oral)*",
+     "Skin Corr. 1B",
+     "Aquatic Acute 1"
+    ],
+    "h": [
+     "H312",
+     "H302",
+     "H314",
+     "H400"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "2682-20-4",
+   "ec": "220-239-6",
+   "ad": "Metilizotiyazolinon (MIT)",
+   "adlar": [
+    "metilizotiyazolinon",
+    "methylisothiazolinone",
+    "mit",
+    "mi",
+    "METHYLISOTHIAZOLINONE"
+   ],
+   "kategori": "tem_koruyucu",
+   "ozet": "İzotiyazolinon grubundan koruyucu (biyosit).",
+   "ne": "Su bazlı üründe bakteri ve mantar üremesini önleyerek bozulmayı engeller.",
+   "nerede": [
+    "Sıvı deterjanlar ve yumuşatıcılar",
+    "Yüzey temizleyicileri",
+    "Su bazlı boyalar"
+   ],
+   "not": "Üründe çok düşük oranlarda bulunur; saf maddenin sınıfları (akut toksisite, aşındırıcılık) bu oranlarda etikete yansımaz. Önemli olan cilt hassaslaştırıcılığıdır (Skin Sens. 1A): düşük oranlarda bile temas alerjisi yapabilir. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur.",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "koku",
+     "severity": "medium",
+     "text": "Temas alerjisine sık yol açan bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+    }
+   ],
+   "ilgili": [
+    "55965-84-9",
+    "2634-33-5"
+   ],
+   "echa": "100.018.399",
+   "pubchem": 39800,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "613-326-00-9",
+    "atp": "ATP13",
+    "celex": "32018R1480",
+    "tarih": "01-05-2020",
+    "siniflar": [
+     "Acute Tox. 2 (Inhalation)",
+     "Acute Tox. 3 (Dermal)",
+     "Acute Tox. 3 (Oral)",
+     "Skin Corr. 1B",
+     "Eye Dam. 1",
+     "Skin Sens. 1A",
+     "Aquatic Acute 1",
+     "Aquatic Chronic 1"
+    ],
+    "h": [
+     "H330",
+     "H311",
+     "H301",
+     "H314",
+     "H318",
+     "H317",
+     "H400",
+     "H410"
+    ],
+    "euh": [
+     "EUH071"
+    ]
+   }
+  },
+  {
+   "id": "55965-84-9",
+   "ec": "611-341-5",
+   "ad": "Metilkloroizotiyazolinon ve Metilizotiyazolinon (CMIT/MIT)",
+   "adlar": [
+    "cmit/mit",
+    "cmit",
+    "mci/mi",
+    "kathon",
+    "metilkloroizotiyazolinon",
+    "methylchloroisothiazolinone",
+    "METHYLCHLOROISOTHIAZOLINONE",
+    "METHYLCHLOROISOTHIAZOLINONE AND METHYLISOTHIAZOLINONE"
+   ],
+   "kategori": "tem_koruyucu",
+   "ozet": "İki izotiyazolinonun 3:1 karışımı; koruyucu (biyosit).",
+   "ne": "Su bazlı üründe bakteri ve mantar üremesini önler.",
+   "nerede": [
+    "Sıvı deterjanlar",
+    "Yüzey temizleyicileri",
+    "Durulanan kozmetik ürünler"
+   ],
+   "not": "Üründe çok düşük oranlarda bulunur; saf karışımın akut toksisite ve aşındırıcılık sınıfları bu oranlarda etikete yansımaz. Cilt hassaslaştırıcıdır (Skin Sens. 1A) ve temas alerjisine sık yol açar. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur.",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "koku",
+     "severity": "medium",
+     "text": "Temas alerjisine sık yol açan bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+    }
+   ],
+   "ilgili": [
+    "2682-20-4",
+    "2634-33-5"
+   ],
+   "echa": "100.108.036",
+   "pubchem": 33344,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "613-167-00-5",
+    "atp": "ATP13",
+    "celex": "32018R1480",
+    "tarih": "01-05-2020",
+    "siniflar": [
+     "Acute Tox. 2 (Inhalation)",
+     "Acute Tox. 2 (Dermal)",
+     "Acute Tox. 3 (Oral)",
+     "Skin Corr. 1C",
+     "Eye Dam. 1",
+     "Skin Sens. 1A",
+     "Aquatic Acute 1",
+     "Aquatic Chronic 1"
+    ],
+    "h": [
+     "H330",
+     "H310",
+     "H301",
+     "H314",
+     "H318",
+     "H317",
+     "H400",
+     "H410"
+    ],
+    "euh": [
+     "EUH071"
+    ]
+   }
+  },
+  {
+   "id": "2634-33-5",
+   "ec": "220-120-9",
+   "ad": "Benzizotiyazolinon (BIT)",
+   "adlar": [
+    "benzizotiyazolinon",
+    "benzisothiazolinone",
+    "bit",
+    "1,2-benzizotiyazol-3(2h)-on",
+    "BENZISOTHIAZOLINONE"
+   ],
+   "kategori": "tem_koruyucu",
+   "ozet": "İzotiyazolinon grubundan koruyucu (biyosit).",
+   "ne": "Su bazlı üründe bakteri ve mantar üremesini önler.",
+   "nerede": [
+    "Sıvı deterjanlar",
+    "Bulaşık deterjanları",
+    "Su bazlı boya ve yapıştırıcılar"
+   ],
+   "not": "Uyumlaştırılmış sınıfı 2024'te (ATP21) güncellendi; cilt hassaslaştırıcıdır (Skin Sens. 1A). Üründeki düşük oranlarda saf maddenin akut toksisite sınıfı etikete yansımaz. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur.",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "koku",
+     "severity": "medium",
+     "text": "Temas alerjisi yapabilen bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+    }
+   ],
+   "ilgili": [
+    "2682-20-4",
+    "55965-84-9"
+   ],
+   "echa": "100.018.292",
+   "pubchem": 17520,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "613-088-00-6",
+    "atp": "ATP21",
+    "celex": "32024R0197",
+    "tarih": "01-09-2025",
+    "siniflar": [
+     "Acute Tox. 2 (Inhalation)",
+     "Acute Tox. 4 (Oral)",
+     "Skin Irrit. 2",
+     "Eye Dam. 1",
+     "Skin Sens. 1A",
+     "Aquatic Acute 1",
+     "Aquatic Chronic 1"
+    ],
+    "h": [
+     "H330",
+     "H302",
+     "H315",
+     "H318",
+     "H317",
+     "H400",
+     "H410"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "9014-01-1",
+   "ec": "232-752-2",
+   "ad": "Subtilisin (Proteaz Enzimi)",
+   "adlar": [
+    "subtilisin",
+    "proteaz",
+    "protease",
+    "enzim",
+    "enzyme",
+    "SUBTILISIN"
+   ],
+   "kategori": "tem_enzim",
+   "ozet": "Bakterilerden elde edilen, proteinleri parçalayan enzim.",
+   "ne": "Kan, yumurta, süt gibi protein lekelerini düşük sıcaklıkta parçalar.",
+   "nerede": [
+    "Toz ve sıvı çamaşır deterjanları",
+    "Bulaşık makinesi deterjanları",
+    "Leke çıkarıcılar"
+   ],
+   "not": "Ham madde (toz enzim) solunduğunda solunum yolu hassaslaştırıcıdır (H334); bu yüzden deterjanlarda kapsüllenmiş ya da sıvı içinde kullanılır. Bitmiş üründe bu tehlike varsa etikette yazılır. Deterjan etiketinde enzim olarak belirtilmesi zorunludur.",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "astim",
+     "severity": "high",
+     "text": "Solunduğunda astım benzeri belirtilere yol açabilen bir enzimdir (H334); toz deterjanın tozunu solumayın."
+    }
+   ],
+   "ilgili": [
+    "15630-89-4",
+    "68411-30-3"
+   ],
+   "echa": "100.029.762",
+   "pubchem": 57078918,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "647-012-00-8",
+    "atp": "CLP00",
+    "celex": "32008R1272",
+    "tarih": "01-12-2010",
+    "siniflar": [
+     "STOT SE 3",
+     "Skin Irrit. 2",
+     "Eye Dam. 1",
+     "Resp. Sens. 1"
+    ],
+    "h": [
+     "H335",
+     "H315",
+     "H318",
+     "H334"
+    ],
+    "euh": []
+   }
+  },
+  {
+   "id": "5989-27-5",
+   "ec": "227-813-5",
+   "ad": "Limonen",
+   "adlar": [
+    "limonen",
+    "d-limonen",
+    "limonene",
+    "d-limonene",
+    "LIMONENE"
+   ],
+   "kategori": "tem_koku",
+   "ozet": "Portakal ve limon kabuğu yağında bulunan koku maddesi ve çözücü.",
+   "ne": "Ürüne turunçgil kokusu verir ve yağı çözer.",
+   "nerede": [
+    "Parfümlü temizlik ürünleri",
+    "Yağ çözücüler",
+    "Kozmetik ürünler"
+   ],
+   "not": "Koku alerjenidir: deterjanda %0,01'i aşarsa etikette adıyla yazılır. Havayla temas edince oksitlenir ve alerji yapma olasılığı artar. Saf hâlde yutulup akciğere kaçarsa ciddi hasar yapabilir (H304).",
+   "ek_kaynak": [],
+   "profil": [
+    {
+     "profile": "koku",
+     "severity": "high",
+     "text": "Koku alerjenidir; koku alerjiniz varsa etiketteki adına bakın."
+    }
+   ],
+   "ilgili": [
+    "67-63-0",
+    "111-76-2"
+   ],
+   "echa": "100.025.284",
+   "pubchem": 440917,
+   "inceleme": "2026-10-15",
+   "clp": {
+    "tur": "harmonize",
+    "index": "601-096-00-2",
+    "atp": "ATP17",
+    "celex": "32021R0849",
+    "tarih": "17-12-2022",
+    "siniflar": [
+     "Flam. Liq. 3",
+     "Asp. Tox. 1",
+     "Skin Irrit. 2",
+     "Skin Sens. 1B",
+     "Aquatic Acute 1",
+     "Aquatic Chronic 3"
+    ],
+    "h": [
+     "H226",
+     "H304",
+     "H315",
+     "H317",
+     "H400",
+     "H412"
+    ],
+    "euh": []
+   }
+  }
+ ]
+}

@@ -475,6 +475,20 @@ async function scan(p,mode,text){
     const t1=await p.evaluate(()=>({okd:document.querySelectorAll('#ana a.row .okd').length,satir:document.querySelectorAll('#ana a.row').length,bas:document.querySelector('#ana .okfil').getAttribute('aria-pressed')}));
     ok(t1.bas==='true'&&t1.satir===t0.satir-10&&t1.okd===0,'"Okumadıklarım": okunanlar listeden çıkar: '+JSON.stringify(t1));
     await p.click('#ana .okfil');
+    // Temizlik ansiklopedisi (15.10.2026): tür seçici, liste yalnızca seçili tür, madde sayfasında gıda kartları yok, seçim hatırlanır
+    {
+      await p.click('#tur-tem');await p.waitForFunction(()=>/Yüzey Aktif Madde/.test(document.getElementById('ana').textContent),null,{timeout:5000}).catch(()=>{});
+      const t2=await p.evaluate(()=>({sec:document.querySelector('#tur-tem').getAttribute('aria-checked'),toplam:[...document.querySelectorAll('#ana p.mut')].map(x=>x.textContent).join('|'),
+        gida:/Renklendirici/.test(document.getElementById('ana').textContent),sakli:localStorage.getItem('ans_tur')}));
+      ok(t2.sec==='true'&&/30 maddenin/.test(t2.toplam)&&!t2.gida&&t2.sakli==='tem','temizlik türü seçilir, yalnızca temizlik grupları: '+JSON.stringify(t2));
+      await p.goto(B+'ansiklopedi.html?id=7681-52-9');await p.waitForSelector('#ana .risk');
+      const t3=await p.evaluate(()=>({ad:document.querySelector('#ana h2.name').textContent,risk:document.querySelector('#ana .risk').className,quick:!!document.querySelector('#ana .quick'),
+        metin:document.getElementById('ana').textContent}));
+      ok(t3.ad==='Sodyum Hipoklorit'&&/red/.test(t3.risk)&&!t3.quick&&/H314/.test(t3.metin)&&/EUH031/.test(t3.metin),'çamaşır suyu sayfası: kırmızı, H ifadeleri, vegan/glüten kartı yok: '+JSON.stringify(t3).slice(0,300));
+      await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#tur-tem');
+      ok(await p.getAttribute('#tur-tem','aria-checked')==='true','seçili tür hatırlanır');
+      await p.click('#tur-gida');await p.waitForSelector('#ana .okfil');
+    }
     // Kaydettiklerim açılır liste (14.10.2026): kapalı başlar, sayı başlıkta, süzgeç değişince açık kalır
     await p.evaluate(()=>localStorage.setItem('yerimleri',JSON.stringify(['E322','E330'])));await p.reload();await p.waitForSelector('#ana details.kdrop');
     const kd0=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,bas:d.querySelector('summary').textContent,satir:d.querySelectorAll('a.row').length}});
@@ -494,7 +508,8 @@ async function scan(p,mode,text){
     await p.click('#rozet .seg button[data-tur="koz"]');
     ok(/Çok yakında/.test(await p.textContent('#rozet .rzaile[data-aile="okur"]'))&&/Henüz rozet yok/.test(await p.textContent('#rozet .rzaile[data-aile="dedektif"]')),'kozmetik: Okur yakında, Dedektif henüz yok');
     await p.click('#rozet .kback');await p.waitForFunction(()=>location.hash==='#profil'&&!document.body.classList.contains('mode-rozet'));
-    ok(/3 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 3 rozet": '+await p.textContent('#rozetbar'));
+    // 3 gıda rozeti + yukarıda açılan temizlik sayfasının Okur rozeti (temizlik ansiklopedisi 15.10.2026)
+    ok(/4 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 4 rozet": '+await p.textContent('#rozetbar'));
     ok(await p.evaluate(()=>JSON.parse(kayitYedek([],0,'',rozetLoad())).rozetler.okur.gida.length===10),'rozetler yedek dosyasına girer');
     // G-02: ürün rozetleri ve Eklediklerim sunucudan (POST /katki {kim}); kimlik gövdede, yanıt sayıları ve listeyi verir
     {
@@ -605,9 +620,9 @@ async function scan(p,mode,text){
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});
   {const f=await p.$$eval('#ana a.row .rk',e=>e.map(x=>x.textContent.split(' · ')[0]));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
   await p.fill('#ara','');await p.waitForSelector('#ana .rfil');
-  // Tür süzgeci (14.10.2026, kullanıcı kararı): kozmetik ve temizlik ansiklopedisi gelene kadar görünmez; renk süzgeci ve işlev başlıkları var
+  // Tür süzgeci (14.10.2026, kullanıcı kararı): ikinci tür gelince görünür (temizlik 15.10.2026); renk süzgeci ve işlev başlıkları var
   {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana details.gdrop').length,acik:document.querySelectorAll('#ana details.gdrop[open]').length}));
-   ok(s.seg===0&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5&&s.acik===0,'ansiklopedi: tür süzgeci yok, renk süzgeci ve kapalı açılır gruplar: '+JSON.stringify(s));
+   ok(s.seg===1&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5&&s.acik===0,'ansiklopedi: tür süzgeci (Gıda seçili), renk süzgeci ve kapalı açılır gruplar: '+JSON.stringify(s));
    await p.click('#ana .rfil.red');const r=await p.evaluate(()=>{document.querySelectorAll('#ana details.gdrop').forEach(d=>d.open=true);return [...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent)});
    ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');await p.click('#ana .rfil.tum')}
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
@@ -666,7 +681,7 @@ async function scan(p,mode,text){
   ok(/What does it do\?/.test(await p.textContent('#ana .panel'))&&(await p.textContent('#tab-otorite'))==='Authorities','ansiklopedi sekmeleri İngilizce');
   {const k=await anahtarVar();ok(!k,'ansiklopedi: çıplak anahtar: '+k)}
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');
-  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name or E number')&&/^All 333$/.test(await p.textContent('#ana .rfil.tum')),'ansiklopedi arama ve süzgeç İngilizce');
+  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name, E number or CAS')&&/^All 333$/.test(await p.textContent('#ana .rfil.tum')),'ansiklopedi arama ve süzgeç İngilizce');
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');

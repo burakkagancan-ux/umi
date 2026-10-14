@@ -22,8 +22,9 @@ D.records.forEach((x,i)=>{const r=R[i];
 // 1. Veri bütünlüğü: her kayıt geçerli, slug ve id tekil, tarama verisindeki her E kodunun sayfası var
 R.forEach(r=>{const e=ansValidate(r,T,by);ok(!e.length,r.id+': '+e.join('; '))});
 ok(new Set(R.map(r=>r.slug)).size===R.length,'slug tekil değil');
-ok(R.length===E.ingredients.length&&E.ingredients.every(i=>by[i.id]),'her E kodunun ansiklopedi kaydı olmalı');
-R.forEach(r=>ok(r.slug===ansSlug(r.id+' '+T[r.names.primary]),r.id+' slug JS ile aynı üretilmeli: '+r.slug));
+const RG=R.filter(r=>r.product_types[0]==='food'),RT=R.filter(r=>r.product_types[0]==='cleaning');
+ok(RG.length===E.ingredients.length&&E.ingredients.every(i=>by[i.id])&&RG.length+RT.length===R.length,'her E kodunun ansiklopedi kaydı olmalı');
+RG.forEach(r=>ok(r.slug===ansSlug(r.id+' '+T[r.names.primary]),r.id+' slug JS ile aynı üretilmeli: '+r.slug));
 const cur=R.filter(r=>r.review==='curated');
 ok(cur.length>=5&&by.E322.review==='curated','en az 5 elle incelenmiş kayıt, E322 dahil');
 cur.forEach(r=>{ok(r.sources.some(s=>s.official&&/^https:\/\//.test(s.url)),r.id+' resmi kaynak');ok(r.regulatory.length&&r.related_ids.length&&r.content.found_in.length&&r.effects.length,r.id+' tüm alanlar dolu')});
@@ -117,11 +118,32 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
    const s=EN[k]||T[k]||'';ok(!/[çğıöşüÇĞİÖŞÜ]/.test(s.replace(/Türkiye/g,''))&&!/\b(ve|kopyası|özeti|Tüzük|Avrupa|metin)\b/.test(s),r.id+' İngilizcede Türkçe kaynak adı: '+s)})})}
 
 // Vegan durumu (12.10.2026): "evet" yalnızca doğrulanmış üretim yolu hayvansal hammadde içermiyorsa; hayvansal yolu olabilenler bilinmiyor kalır
-{const v=R.filter(r=>r.diet_flags.vegan==='unknown').map(r=>r.id);
+{const v=RG.filter(r=>r.diet_flags.vegan==='unknown').map(r=>r.id);
  ok(v.length<=55,'vegan bilinmeyen kayıt arttı: '+v.length);
  ['E471','E422','E322','E640','E920','E570'].forEach(id=>ok(by[id].diet_flags.vegan!=='yes',id+' hayvansal kaynaklı olabilir, vegan evet olmamalı'));
  R.filter(r=>r.diet_flags.vegan==='yes').forEach(r=>{const i=E.ingredients.find(x=>x.id===r.id);
   ok(!i.flags.some(f=>['non_vegan','vegan_suspect','insect_derived'].includes(f)),r.id+' vegan evet ama bayrağı hayvansal')});
  ok(by.E966.diet_flags.vegan==='no'&&E.ingredients.find(x=>x.id==='E966').flags.includes('non_vegan'),'E966 laktitol laktozdan üretilir, vegan değil');}
 
+// 6. Temizlik ansiklopedisi (15.10.2026): kimlik CAS, renk temizlik verisindeki H/EUH düzeyinden (sonuç ekranıyla aynı kural)
+{const TDB=J('temizlik.json'),HZ={};TDB.hazards.forEach(h=>HZ[h.code]=h);const RK={red:2,yellow:1,info:0},RM2={2:'red',1:'amber',0:'green'};
+ const K=JSON.parse(fs.readFileSync(__dirname+'/../kaynak/ansiklopedi_temizlik.json','utf8')).kayitlar;
+ ok(RT.length===30&&K.length===30,'30 temizlik maddesi: '+RT.length);
+ K.forEach(k=>{const r=by[k.id];if(!r){ok(false,k.id+' kaydı yok');return}
+  ok(/^\d{2,7}-\d\d-\d$/.test(k.id),k.id+' CAS biçimi');
+  // CAS kontrol hanesi
+  const d=k.id.replace(/-/g,''),g=d.slice(0,-1).split('').reverse().reduce((a,c,i)=>a+(+c)*(i+1),0);ok(g%10===+d.slice(-1),k.id+' CAS kontrol hanesi');
+  const kod=k.clp.h.concat(k.clp.euh||[]),en=Math.max(0,...kod.map(c=>RK[HZ[c].level]));
+  ok(r.risk_level===RM2[en],k.id+' renk H kodlarıyla uyuşmuyor: '+r.risk_level);
+  ok(r.effects.length===Math.max(1,kod.length)&&r.effects.every(x=>x.level===(kod.length?'resmi':'yok')),k.id+' her H kodu bir etki satırı');
+  ok(r.sources.some(s=>s.official&&/^https:\/\/chem\.echa\.europa\.eu\/100\.\d{3}\.\d{3}\/overview$/.test(s.url)),k.id+' ECHA CHEM kaynağı');
+  if(k.clp.tur==='harmonize')ok(r.regulatory.some(g=>g.status==='classified'&&/CELEX:3\d{4}R\d{4}$/.test(g.source_url))&&r.evidence_level==='strong',k.id+' uyumlaştırılmış sınıf EUR-Lex bağlantısıyla');
+  else ok(/uyumlaştırılmış sınıflandırması yok/.test(T[r.regulatory[0].detail])&&r.evidence_level==='moderate',k.id+' firma sınıflandırması olduğu yazılı');
+  ok(r.related_ids.length>0&&r.agency_note,k.id+' benzer maddeler ve not');
+ });
+ ok(by['7681-52-9'].risk_level==='red'&&by['144-55-8'].risk_level==='green'&&by['77-92-9'].risk_level==='amber','çamaşır suyu kırmızı, karbonat yeşil, sitrik asit sarı');
+ ok(first('çamaşır suyu')==='7681-52-9'&&ansSearch(IX,'kostik soda',2).some(r=>r.id==='1310-73-2')&&first('SLES')==='68891-38-3'&&first('7681-52-9')==='7681-52-9'&&ansSearch(IX,'tuz ruhu',2).some(r=>r.id==='7647-01-0'),'temizlik araması (ad, halk adı, kısaltma, CAS)');
+ ok(pw('9014-01-1',{al:[],astim:true})==='astim'&&pw('5989-27-5',{al:[],koku:true})==='koku'&&pw('5989-27-5',{al:[]})==='','temizlik profil uyarıları (astım, koku)');
+ RT.forEach(r=>ok(!r.production&&r.diet_flags.vegan==='unknown',r.id+' gıda alanı yok'));
+}
 console.log(n+' ansiklopedi denetimi, '+fail+' hata');process.exit(fail?1:0);

@@ -94,6 +94,101 @@ def read_effects(path):
     return out
 
 
+TEM_DUZEY = {"red": "red", "yellow": "amber", "info": "green"}
+
+
+def temizlik_kayitlari(T, official):
+    """Temizlik ansiklopedisi (kaynak/ansiklopedi_temizlik.json, kimlik CAS). Tehlike sınıfları ECHA CHEM'den alınmış CLP verisi;
+    renk sınıfın H/EUH kodlarının temizlik verisindeki (data/temizlik.json) en yüksek düzeyi: sonuç ekranıyla aynı kural.
+    Sınıflandırması olmayan madde yeşildir. Her H kodu "olası etkiler"de resmi satır olur (metin temizlik verisindeki Türkçesi)."""
+    K = json.load(open(os.path.join(HERE, "kaynak", "ansiklopedi_temizlik.json"), encoding="utf-8"))
+    tdb = json.load(open(os.path.join(HERE, "data", "temizlik.json"), encoding="utf-8"))
+    HZ = {h["code"]: h for h in tdb["hazards"]}
+    SRC = K["kaynaklar"]
+    for code, (ad, ne) in K["kategoriler"].items():
+        T["cat." + code], T["cat." + code + ".what"] = ad, ne
+    T["profile.koku"], T["profile.astim"] = "Koku alerjisi", "Astım / solunum hassasiyeti"
+    T["tem.eff.miktar"] = "Sınıf saf ya da derişik madde içindir; üründeki etki orana göre değişir ve etiketteki tehlike ifadelerinde yazılır."
+    T["tem.eff.yok"] = "AB'de bir tehlike sınıfına girmiyor (kayıt yaptıranların ortak bildirimi)."
+    T["tem.eval"] = "Renk, maddenin AB tehlike sınıflarının en ciddisine göre verilir (temizlik sonuç ekranıyla aynı kural). Sınıf saf madde içindir; ürünün kendi tehlike ifadeleri etiketinde yazılır."
+    recs, ids = [], set(x["id"] for x in K["kayitlar"])
+    for k in K["kayitlar"]:
+        rid, c = k["id"], k["clp"]
+        kodlar = list(c["h"]) + list(c.get("euh", []))
+        eksik = [x for x in kodlar if x not in HZ]
+        if eksik:
+            raise SystemExit(rid + ": temizlik verisinde olmayan tehlike kodu: " + ", ".join(eksik))
+        duzey = max((HZ[x]["level"] for x in kodlar), key=lambda l: {"info": 0, "yellow": 1, "red": 2}[l], default="info")
+        echa = "https://chem.echa.europa.eu/%s/overview" % k["echa"]
+        T[rid + ".name"] = k["ad"]
+        T[rid + ".summary"], T[rid + ".what"], T[rid + ".agn"] = k["ozet"], k["ne"], k["not"]
+        for n, x in enumerate(k["nerede"]):
+            T["%s.found.%d" % (rid, n)] = x
+        ad_echa = "ECHA CHEM: %s (EC %s)" % (next((a for a in k["adlar"] if a.isupper()), "CAS " + rid), k["ec"])
+        kaynak_echa = {"title": ad_echa, "publisher": "European Chemicals Agency (ECHA)", "year": 2026, "url": echa, "official": True}
+        if c["tur"] == "harmonize":
+            yil = int(c["tarih"][-4:])
+            eurlex = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:" + c["celex"]
+            T[rid + ".reg.clp"] = "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no %s (%s): %s.%s" % (
+                c["index"], c["atp"], ", ".join(c["siniflar"]), (" Ek etiket ifadesi: " + ", ".join(c["euh"]) + ".") if c.get("euh") else "")
+            regs = [{"agency": "European Commission", "region": "EU", "status": "classified", "detail": rid + ".reg.clp", "year": yil, "source_url": eurlex}]
+            srcs = [kaynak_echa, {"title": "CLP Annex VI entry %s (%s, CELEX %s)" % (c["index"], c["atp"], c["celex"]), "publisher": "European Commission",
+                                  "year": yil, "url": eurlex, "official": True}]
+            ef_src = {"label": "ECHA", "year": yil, "url": echa, "title": ad_echa}
+        else:
+            yuzde = ("%.1f" % c["yuzde"]).replace(".", ",")
+            T[rid + ".reg.clp"] = ("AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %%%s'i): %s." % (
+                yuzde, ", ".join(c["siniflar"]) if c["siniflar"] else "sınıflandırılmamış"))
+            regs = [{"agency": "ECHA", "region": "EU", "status": "classified" if c["siniflar"] else "reviewed", "detail": rid + ".reg.clp", "year": 2026, "source_url": echa}]
+            srcs = [kaynak_echa]
+            ef_src = {"label": "ECHA", "year": 2026, "url": echa, "title": ad_echa}
+        effs = [{"level": "resmi", "text": "tem.h." + x, "who": None, "amount": "tem.eff.miktar", "source": dict(ef_src)} for x in kodlar]
+        for x in kodlar:
+            T["tem.h." + x] = "%s %s" % (x, HZ[x]["tr"])
+        if not effs:
+            effs = [{"level": "yok", "text": "tem.eff.yok", "who": None, "amount": None, "source": dict(ef_src)}]
+        # Deterjan etiketinde adıyla yazılma ve fosfor sınırı (AB 648/2004 Ek VII, 259/2012)
+        if k["kategori"] in ("tem_koruyucu", "tem_enzim", "tem_dezenfektan", "tem_koku"):
+            T[rid + ".reg.det"] = {"tem_koruyucu": "Deterjan etiketinde oranı ne olursa olsun koruyucu olarak adıyla (INCI) yazılır.",
+                                   "tem_enzim": "Deterjan etiketinde oranı ne olursa olsun enzim olarak yazılır.",
+                                   "tem_dezenfektan": "Deterjan etiketinde oranı ne olursa olsun dezenfektan olarak yazılır.",
+                                   "tem_koku": "Koku alerjeni: deterjanda %0,01'i aşarsa etikette adıyla yazılır."}[k["kategori"]]
+            regs.append({"agency": "European Parliament and Council", "region": "EU", "status": "label_required", "detail": rid + ".reg.det",
+                         "year": 2004, "source_url": SRC["det648"]["url"]})
+            k["ek_kaynak"] = k["ek_kaynak"] + ["det648"]
+        if rid == "7758-29-4":
+            T[rid + ".reg.p"] = "Ev tipi çamaşır deterjanında standart doz başına toplam fosfor en çok 0,5 g (2013'ten beri), ev tipi bulaşık makinesi deterjanında 0,3 g (2017'den beri)."
+            regs.append({"agency": "European Parliament and Council", "region": "EU", "status": "restricted", "detail": rid + ".reg.p",
+                         "year": 2012, "source_url": SRC["fosfor259"]["url"]})
+            k["ek_kaynak"] = k["ek_kaynak"] + ["fosfor259"]
+        for s in k["ek_kaynak"]:
+            srcs.append(dict(SRC[s]))
+        if k.get("pubchem"):
+            srcs.append({"title": "PubChem: Use and Manufacturing (HSDB, Haz-Map)", "publisher": "U.S. National Library of Medicine",
+                         "year": 2026, "url": "https://pubchem.ncbi.nlm.nih.gov/compound/%d#section=Use-and-Manufacturing" % k["pubchem"], "official": False})
+        pws = []
+        for n, w in enumerate(k["profil"]):
+            T["%s.pw.%d" % (rid, n)] = w["text"]
+            pws.append({"profile": w["profile"], "severity": w["severity"], "text": "%s.pw.%d" % (rid, n)})
+        ayni = [x["id"] for x in K["kayitlar"] if x["kategori"] == k["kategori"] and x["id"] != rid]
+        ilgili = [x for x in k["ilgili"] if x in ids or re.fullmatch(r"E\d{3,4}[a-z]?", x)]
+        ilgili = (ilgili + [x for x in ayni if x not in ilgili])[:4]   # elle verilenler önce, sonra aynı kategoridekiler
+        aliases = []
+        for a in [rid, k["ec"], fold(k["ad"])] + k["adlar"]:
+            a = a.lower()
+            if a and a not in aliases:
+                aliases.append(a)
+        recs.append({
+            "id": rid, "slug": slugify(k["ad"]), "names": {"primary": rid + ".name", "aliases": aliases},
+            "category": k["kategori"], "product_types": ["cleaning"], "risk_level": TEM_DUZEY[duzey], "review": "curated",
+            "evidence_level": "strong" if c["tur"] == "harmonize" else "moderate", "summary": rid + ".summary", "evaluation": "tem.eval",
+            "content": {"what_it_does": rid + ".what", "found_in": ["%s.found.%d" % (rid, n) for n in range(len(k["nerede"]))], "in_the_body": None},
+            "effects": effs, "agency_note": rid + ".agn",
+            "diet_flags": {"vegan": "unknown", "source": "unknown", "gluten": "unknown"},
+            "regulatory": regs, "profile_warnings": pws, "related_ids": ilgili, "sources": srcs, "last_reviewed": k["inceleme"]})
+    return recs
+
+
 def main():
     K = json.load(open(os.path.join(HERE, "kaynak", "ansiklopedi.json"), encoding="utf-8"))
     edb = json.load(open(os.path.join(HERE, "data", "e_kodlari.json"), encoding="utf-8"))
@@ -269,7 +364,8 @@ def main():
             r["sources"] = mine + [x for x in r["sources"] if x["url"] not in have]
         recs.append(r)
 
-    ids = set(by)
+    recs += temizlik_kayitlari(T, official)
+    ids = set(by) | set(r["id"] for r in recs)
     for r in recs:
         missing = [x for x in r["related_ids"] if x not in ids]
         if missing:
