@@ -1,0 +1,288 @@
+// Katkı denetimi (O-21, TEKNIK_BORC "D1'deki katkıları denetleyecek yönetim aracı yok"; O-26 çelişen besin tabloları).
+// Sayfa Worker'ın kendisinden sunulur (GET /yonetim; uygulamaya ve service worker'a girmez). Veri uç noktaları /yonetim/api/* yalnızca
+// panelde tanımlanan gizli YONETIM_ANAHTARI ile ("Authorization: Bearer <anahtar>") açılır; anahtar tanımlı değilse ya da kısaysa
+// yönetim kapalıdır (404). Yanıtlarda CORS başlığı yok: başka bir siteden okunamaz. Kayıt (log) yok, IP saklanmaz.
+//
+//   GET  /yonetim                       sayfa (anahtar sayfada girilir, yalnızca o sekmede tutulur)
+//   GET  /yonetim/api/liste?gor=son|celiski|aranan&sayfa=N
+//        son: en son katkı alan barkodlar; celiski: içerik ya da besin tablosu birbirine uymayan (birden çok grup) barkodlar;
+//        aranan: "aranıyor" listesi (G-04; kötüye kullanılan barkod çıkarılabilir)
+//   GET  /yonetim/api/urun/:barkod      bir barkodun bütün içerik katkıları ve besin tabloları, grup ve gösterilen grup bilgisiyle
+//   GET  /yonetim/api/kim/:kimlik       bir katkıcı kimliğinin bütün katkıları (kötü niyetli katkıcıyı bulmak için)
+//   POST /yonetim/api/sil               {tablo: "katki"|"besin", id} tek satır · {kim} o kimliğin bütün katkıları ve tabloları ·
+//                                       {tablo: "aranan", kod} aranan listesinden çıkar. İçerik silinince topluluk sayaçları
+//                                       (toplam) silinir, ilk GET /topluluk'ta baştan sayılır.
+import { barkodGecerli, besinGrupla, grupla } from "./barkod.js";
+
+export const YONETIM_ANAHTAR_EN_AZ = 32;   // daha kısa anahtar kabul edilmez (yönetim kapalı kalır)
+const SAYFA_BOY = 50;
+const CELISKI_TARA = 1000;                 // çelişen barkodlar en son katkı alan bu kadar barkod içinde aranır
+const KATKICI_RE = /^[0-9a-f]{32}$/;
+
+// Sabit süreli karşılaştırma: iki değerin SHA-256 özeti karşılaştırılır (uzunluk ve ilk farklı harf zamanlamadan anlaşılmaz)
+async function ozet(s) { return new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(String(s)))); }
+export async function yonetimYetki(env, request) {
+  const anahtar = env.YONETIM_ANAHTARI;
+  if (!anahtar || String(anahtar).length < YONETIM_ANAHTAR_EN_AZ) return "kapali";
+  const m = /^Bearer (.+)$/.exec(request.headers.get("Authorization") || "");
+  if (!m) return "yok";
+  const [a, b] = await Promise.all([ozet(m[1]), ozet(anahtar)]);
+  let fark = 0;
+  for (let i = 0; i < a.length; i++) fark |= a[i] ^ b[i];
+  return fark === 0 ? "tamam" : "yok";
+}
+
+// Bir barkodun özeti. katki: {id, tur, dil, metin, t, kim}; besin: {id, besin, t, kim} (yeniden eskiye).
+// celiski: içerikte ya da besin tablosunda birden çok grup (birbirine benzemeyen katkılar).
+function kGrupla(katki) {
+  const g = grupla(katki);
+  g.sort((a, b) => (b.dogrulandi - a.dogrulandi) || (b.s.length - a.s.length) || (b.son.t - a.son.t));   // urunSec ile aynı sıra
+  return g;
+}
+export function yonetimOzet(kod, katki, besin) {
+  const kg = kGrupla(katki), bg = besinGrupla(besin);
+  const son = Math.max(0, ...katki.map((s) => s.t), ...besin.map((s) => s.t));
+  return {
+    kod, son, tur: kg[0] ? kg[0].son.tur : besin.length ? "gida" : "",
+    katki: katki.length, katkiGrup: kg.length, dogrulandi: !!(kg[0] && kg[0].dogrulandi), ozet: kg[0] ? String(kg[0].son.metin).slice(0, 90) : "",
+    besin: besin.length, besinGrup: bg.length, besinDogrulandi: !!(bg[0] && bg[0].dogrulandi),
+    celiski: kg.length > 1 || bg.length > 1,
+  };
+}
+// Barkodun ayrıntısı: her satıra grup numarası (0 = uygulamada gösterilen grup) ve grubun doğrulanma durumu
+export function yonetimUrun(kod, katki, besin, aranan) {
+  const kg = kGrupla(katki), bg = besinGrupla(besin);
+  const kSat = [], bSat = [];
+  kg.forEach((g, i) => g.s.forEach((s) => kSat.push({ id: s.id, tur: s.tur, dil: s.dil || "", metin: s.metin, t: s.t, kim: s.kim || "", grup: i, dogrulandi: g.dogrulandi })));
+  bg.forEach((g, i) => g.s.forEach((s) => bSat.push({ id: s.id, besin: s.v, t: s.t, kim: s.kim || "", grup: i, dogrulandi: g.dogrulandi })));
+  const t = (a, b) => (a.grup - b.grup) || (b.t - a.t);
+  return { kod, ozet: yonetimOzet(kod, katki, besin), katki: kSat.sort(t), besin: bSat.sort(t), aranan: aranan || null };
+}
+function kodlaraGore(satirlar) {
+  const m = new Map();
+  for (const s of satirlar || []) { if (!m.has(s.kod)) m.set(s.kod, []); m.get(s.kod).push(s); }
+  return m;
+}
+function ozetler(katki, besin) {
+  const k = kodlaraGore(katki), b = kodlaraGore(besin), kodlar = new Set([...k.keys(), ...b.keys()]);
+  return [...kodlar].map((kod) => yonetimOzet(kod, k.get(kod) || [], b.get(kod) || [])).sort((a, b) => b.son - a.son);
+}
+
+const SON_KODLAR = "SELECT kod FROM (SELECT kod, t FROM katki UNION ALL SELECT kod, t FROM besin) GROUP BY kod ORDER BY MAX(t) DESC LIMIT ? OFFSET ?";
+async function satirlar(db, kosul, ...args) {
+  const [{ results: k }, { results: b }] = await Promise.all([
+    db.prepare("SELECT id, kod, tur, dil, metin, t, kim FROM katki WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
+    db.prepare("SELECT id, kod, besin, t, kim FROM besin WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
+  ]);
+  return [k || [], b || []];
+}
+
+export async function yonetimApi(request, env, db, yol, R) {
+  const p = yol.split("/").filter(Boolean).slice(2);   // ["yonetim", "api", ...]
+  const url = new URL(request.url);
+  if (request.method === "GET" && p[0] === "liste" && p.length === 1) {
+    const gor = url.searchParams.get("gor") || "son";
+    const sayfa = Math.max(0, Math.min(1000, parseInt(url.searchParams.get("sayfa") || "0", 10) || 0));
+    if (gor === "aranan") {
+      const { results } = await db.prepare("SELECT kod, tur, n, ilk, son FROM aranan ORDER BY n DESC, son DESC LIMIT ? OFFSET ?").bind(SAYFA_BOY, sayfa * SAYFA_BOY).all();
+      return R(200, { gor, sayfa, aranan: results || [], devam: (results || []).length === SAYFA_BOY });
+    }
+    if (gor === "celiski") {
+      const [k, b] = await satirlar(db, "kod IN (" + SON_KODLAR + ")", CELISKI_TARA, 0);
+      const hepsi = ozetler(k, b).filter((o) => o.celiski);
+      return R(200, { gor, sayfa, urunler: hepsi.slice(sayfa * SAYFA_BOY, (sayfa + 1) * SAYFA_BOY), devam: hepsi.length > (sayfa + 1) * SAYFA_BOY, tarama: CELISKI_TARA });
+    }
+    if (gor !== "son") return R(400, { error: "Geçersiz liste." });
+    const [k, b] = await satirlar(db, "kod IN (" + SON_KODLAR + ")", SAYFA_BOY, sayfa * SAYFA_BOY);
+    const urunler = ozetler(k, b);
+    return R(200, { gor, sayfa, urunler, devam: urunler.length === SAYFA_BOY });
+  }
+  if (request.method === "GET" && p[0] === "urun" && p.length === 2) {
+    if (!/^\d{8,14}$/.test(p[1])) return R(400, { error: "Geçersiz barkod." });
+    const [k, b] = await satirlar(db, "kod = ?", p[1]);
+    const ar = await db.prepare("SELECT kod, tur, n, ilk, son FROM aranan WHERE kod = ?").bind(p[1]).first();
+    return R(200, yonetimUrun(p[1], k, b, ar));
+  }
+  if (request.method === "GET" && p[0] === "kim" && p.length === 2) {
+    if (!KATKICI_RE.test(p[1])) return R(400, { error: "Geçersiz katkıcı kimliği." });
+    const [k, b] = await satirlar(db, "kod IN (SELECT kod FROM katki WHERE kim = ?1 UNION SELECT kod FROM besin WHERE kim = ?1)", p[1]);
+    return R(200, { kim: p[1], katki: k.filter((s) => s.kim === p[1]).length, besin: b.filter((s) => s.kim === p[1]).length, urunler: ozetler(k, b) });
+  }
+  if (request.method === "POST" && p[0] === "sil" && p.length === 1) {
+    let j;
+    try { const raw = await request.text(); if (raw.length > 500) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
+    let n = 0, icerik = false;
+    if (j && (j.tablo === "katki" || j.tablo === "besin") && Number.isInteger(j.id) && j.id > 0) {
+      const r = await db.prepare("DELETE FROM " + j.tablo + " WHERE id = ?").bind(j.id).run();
+      n = (r.meta && r.meta.changes) || 0; icerik = j.tablo === "katki";
+    } else if (j && j.tablo === "aranan" && barkodGecerli(String(j.kod || ""))) {
+      const r = await db.prepare("DELETE FROM aranan WHERE kod = ?").bind(String(j.kod)).run();
+      n = (r.meta && r.meta.changes) || 0;
+    } else if (j && !j.tablo && KATKICI_RE.test(String(j.kim || ""))) {
+      const a = await db.prepare("DELETE FROM katki WHERE kim = ?").bind(j.kim).run();
+      const b = await db.prepare("DELETE FROM besin WHERE kim = ?").bind(j.kim).run();
+      n = ((a.meta && a.meta.changes) || 0) + ((b.meta && b.meta.changes) || 0); icerik = true;
+    } else return R(400, { error: "Geçersiz silme isteği." });
+    // Ürün ve doğrulanan sayıları değişmiş olabilir: sayaçlar baştan sayılsın (topluluk.js toplulukKur "kurulum" satırı yoksa sayar)
+    if (icerik && n) await db.prepare("DELETE FROM toplam").run();
+    return R(200, { silindi: n });
+  }
+  return R(404, { error: "Bulunamadı." });
+}
+
+// ---------- Sayfa (Türkçe; yalnızca yönetici kullanır, uygulama arayüzü değildir) ----------
+export const YONETIM_CSP = "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+export const YONETIM_HTML = `<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+<title>Katkı Denetimi</title><link rel="stylesheet" href="/yonetim/sayfa.css"></head>
+<body>
+<header><h1>Katkı Denetimi</h1><button id="cikis" class="alt" hidden>Çıkış</button></header>
+<main>
+<section id="giris">
+  <p>Yönetim anahtarını girin. Anahtar yalnızca bu sekmede tutulur; sekme kapanınca silinir.</p>
+  <input id="anahtar" type="password" autocomplete="off" placeholder="Yönetim anahtarı">
+  <button id="gir">Giriş</button>
+  <p id="giris_msj" class="msj"></p>
+</section>
+<section id="ana" hidden>
+  <nav id="sekmeler">
+    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button>
+  </nav>
+  <div class="ara"><input id="ara" placeholder="Barkod ya da katkıcı kimliği" autocomplete="off"><button id="ara_b">Aç</button></div>
+  <p id="msj" class="msj"></p>
+  <div id="icerik"></div>
+</section>
+</main>
+<script src="/yonetim/sayfa.js"></script>
+</body></html>`;
+export const YONETIM_CSS = `:root{--ana:#1F4D3A;--cizgi:#E3E5E3;--sunk:#F1F2F1;--yazi:#1B1F1C;--soluk:#5D655F;--amb:#9A6700;--hi:#B4470F}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--yazi);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--cizgi)}
+h1{font-size:20px;margin:0;color:var(--ana)}h2{font-size:17px;margin:18px 0 8px;color:var(--ana)}
+main{max-width:980px;margin:0 auto;padding:12px 16px 40px}
+button{font:inherit;border:1px solid var(--ana);background:var(--ana);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer}
+button.alt{background:#fff;color:var(--ana)}button.sil{background:#fff;color:var(--hi);border-color:var(--hi)}
+input{font:inherit;padding:7px 10px;border:1px solid var(--cizgi);border-radius:8px;min-width:0}
+#giris input{width:min(420px,100%);margin-right:8px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}nav button{background:#fff;color:var(--ana)}nav button.on{background:var(--ana);color:#fff}
+.ara{display:flex;gap:6px;margin-bottom:8px}.ara input{flex:1}
+.msj{color:var(--soluk);min-height:1.2em}.msj.hata{color:var(--hi)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--cizgi);vertical-align:top}
+th{font-weight:600;color:var(--soluk);font-size:13px}tr.tik{cursor:pointer}tr.tik:hover{background:var(--sunk)}
+.kod{font-family:ui-monospace,Menlo,monospace}.kucuk{font-size:13px;color:var(--soluk)}
+.rozet{display:inline-block;font-size:12px;border-radius:10px;padding:1px 8px;margin-left:4px;background:var(--sunk)}
+.rozet.ok{background:#E3F1E8;color:var(--ana)}.rozet.uyari{background:#FBEBDD;color:var(--hi)}
+.kart{border:1px solid var(--cizgi);border-radius:10px;padding:10px 12px;margin:8px 0}
+.kart.g0{border-left:4px solid var(--ana)}.metin{white-space:pre-wrap;word-break:break-word;margin:6px 0}
+.dugmeler{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tablo{overflow-x:auto}
+@media (max-width:640px){.gizle{display:none}}`;
+export const YONETIM_JS = `(function(){
+"use strict";
+var A=null;try{A=sessionStorage.getItem("yonetim_anahtar")}catch(e){}
+var GOR="son",SAYFA=0;
+function $(i){return document.getElementById(i)}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=String(txt);return e}
+function tarih(t){return t?new Date(t).toLocaleString("tr-TR",{dateStyle:"medium",timeStyle:"short"}):"—"}
+function kimKisa(k){return k?k.slice(0,8)+"…":"(kimliksiz)"}
+var TUR={gida:"Gıda",koz:"Kozmetik",tem:"Temizlik"};
+var ALAN=[["kcal","Enerji (kcal)"],["yag","Yağ"],["doymus","Doymuş Yağ"],["karb","Karbonhidrat"],["seker","Şekerler"],["lif","Lif"],["protein","Protein"],["tuz","Tuz"]];
+function msj(s,hata){var m=$("msj");m.textContent=s||"";m.className="msj"+(hata?" hata":"")}
+function api(yol,govde){
+  return fetch("/yonetim/api"+yol,{method:govde?"POST":"GET",headers:Object.assign({"Authorization":"Bearer "+A},govde?{"Content-Type":"application/json"}:{}),body:govde?JSON.stringify(govde):undefined})
+  .then(function(r){return r.json().catch(function(){return {}}).then(function(j){
+    if(r.status===401){cikis("Anahtar geçersiz.");throw new Error("Anahtar geçersiz.")}
+    if(r.status===404&&j&&j.kapali){cikis("Yönetim kapalı: Cloudflare panelinde YONETIM_ANAHTARI tanımlı değil.");throw new Error("Yönetim kapalı.")}
+    if(!r.ok)throw new Error(j.error||("Hata "+r.status));return j})});
+}
+function goster(){var g=!!A;$("giris").hidden=g;$("ana").hidden=!g;$("cikis").hidden=!g;if(g)liste(GOR,0)}
+function cikis(neden){A=null;try{sessionStorage.removeItem("yonetim_anahtar")}catch(e){}$("giris_msj").textContent=neden||"";goster()}
+$("gir").onclick=function(){var v=$("anahtar").value.trim();if(!v)return;A=v;try{sessionStorage.setItem("yonetim_anahtar",v)}catch(e){}$("anahtar").value="";goster()};
+$("anahtar").onkeydown=function(e){if(e.key==="Enter")$("gir").click()};
+$("cikis").onclick=function(){cikis("")};
+[].forEach.call(document.querySelectorAll("#sekmeler button"),function(b){b.onclick=function(){liste(b.getAttribute("data-gor"),0)}});
+$("ara_b").onclick=function(){var v=$("ara").value.trim().toLowerCase();if(/^\\d{8,14}$/.test(v))urun(v);else if(/^[0-9a-f]{32}$/.test(v))kim(v);else msj("Barkod (8–14 hane) ya da 32 haneli katkıcı kimliği yazın.",true)};
+$("ara").onkeydown=function(e){if(e.key==="Enter")$("ara_b").click()};
+function sekme(g){[].forEach.call(document.querySelectorAll("#sekmeler button"),function(b){b.classList.toggle("on",b.getAttribute("data-gor")===g)})}
+function hata(e){msj(e.message||String(e),true)}
+function urunTablo(l){
+  var w=el("div","tablo"),tb=el("table"),h=el("tr");
+  ["Barkod","Tür","İçerik","Besin Tablosu","Son Katkı"].forEach(function(x,i){h.appendChild(el("th",i===1||i===4?"gizle":null,x))});tb.appendChild(h);
+  l.forEach(function(o){
+    var r=el("tr","tik");r.onclick=function(){urun(o.kod)};
+    var c=el("td");c.appendChild(el("span","kod",o.kod));if(o.celiski)c.appendChild(el("span","rozet uyari","çelişki"));r.appendChild(c);
+    r.appendChild(el("td","gizle",TUR[o.tur]||o.tur||"—"));
+    c=el("td");if(o.katki){c.appendChild(document.createTextNode(o.katki+" katkı, "+o.katkiGrup+" grup"));c.appendChild(el("span","rozet"+(o.dogrulandi?" ok":""),o.dogrulandi?"doğrulandı":"bekliyor"));c.appendChild(el("div","kucuk",o.ozet))}else c.textContent="—";r.appendChild(c);
+    c=el("td");if(o.besin){c.appendChild(document.createTextNode(o.besin+" tablo, "+o.besinGrup+" grup"));c.appendChild(el("span","rozet"+(o.besinDogrulandi?" ok":""),o.besinDogrulandi?"doğrulandı":"bekliyor"))}else c.textContent="—";r.appendChild(c);
+    r.appendChild(el("td","gizle kucuk",tarih(o.son)));
+    tb.appendChild(r);
+  });
+  w.appendChild(tb);return w;
+}
+function sayfaDugme(j,f){var d=el("div","dugmeler");if(j.sayfa>0){var g=el("button","alt","← Önceki");g.onclick=function(){f(j.sayfa-1)};d.appendChild(g)}if(j.devam){var s=el("button","alt","Sonraki →");s.onclick=function(){f(j.sayfa+1)};d.appendChild(s)}return d}
+function liste(g,s){
+  GOR=g;SAYFA=s;sekme(g);msj("Yükleniyor…");
+  return api("/liste?gor="+g+"&sayfa="+s).then(function(j){
+    var d=$("icerik");d.textContent="";msj("");
+    if(g==="aranan"){
+      if(!j.aranan.length){d.appendChild(el("p",null,"Aranan listesi boş."));return}
+      var tb=el("table"),h=el("tr");["Barkod","Tür","Arama","Son Arama",""].forEach(function(x){h.appendChild(el("th",null,x))});tb.appendChild(h);
+      j.aranan.forEach(function(o){var r=el("tr");r.appendChild(el("td","kod",o.kod));r.appendChild(el("td",null,TUR[o.tur]||o.tur));r.appendChild(el("td",null,o.n));r.appendChild(el("td","kucuk",tarih(o.son)));
+        var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı? (Kötüye kullanılan barkod için.)"))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("aranan",SAYFA)}).catch(hata)};c.appendChild(b);r.appendChild(c);tb.appendChild(r)});
+      var w=el("div","tablo");w.appendChild(tb);d.appendChild(w);d.appendChild(sayfaDugme(j,function(n){liste("aranan",n)}));return;
+    }
+    if(g==="celiski")d.appendChild(el("p","kucuk","Son "+j.tarama+" barkod içinde birbirine uymayan içerik ya da besin tablosu olanlar. Uygulama en kalabalık ve doğrulanmış grubu gösterir; yanlış grubu silin."));
+    if(!j.urunler.length){d.appendChild(el("p",null,g==="celiski"?"Çelişen katkı yok.":"Henüz katkı yok."));return}
+    d.appendChild(urunTablo(j.urunler));d.appendChild(sayfaDugme(j,function(n){liste(g,n)}));
+  }).catch(hata);
+}
+function sil(soru,govde,sonra){if(!confirm(soru))return;api("/sil",govde).then(function(j){return Promise.resolve(sonra()).then(function(){msj(j.silindi+" satır silindi.")})}).catch(hata)}
+function besinTablo(b){
+  var tb=el("table");ALAN.forEach(function(a){var v=b.b[a[0]];if(v==null)return;var r=el("tr");r.appendChild(el("td",null,a[1]));r.appendChild(el("td",null,(b.lt&&b.lt[a[0]]?"< ":"")+String(Math.round(v*100)/100).replace(".",",")+(a[0]==="kcal"?"":" g")));tb.appendChild(r)});
+  return tb;
+}
+function urun(kod){
+  sekme("");msj("Yükleniyor…");
+  return api("/urun/"+kod).then(function(j){
+    var d=$("icerik");d.textContent="";msj("");
+    var geri=el("button","alt","← Listeye Dön");geri.onclick=function(){liste(GOR,SAYFA)};d.appendChild(geri);
+    var h=el("h2");h.appendChild(el("span","kod",kod));if(j.ozet.celiski)h.appendChild(el("span","rozet uyari","çelişki"));d.appendChild(h);
+    if(j.aranan){var p=el("p","kucuk","Aranan listesinde: "+j.aranan.n+" arama, son "+tarih(j.aranan.son)+" ");var ab=el("button","sil","Listeden Çıkar");ab.onclick=function(){sil(kod+" aranan listesinden çıkarılsın mı?",{tablo:"aranan",kod:kod},function(){return urun(kod)})};p.appendChild(ab);d.appendChild(p)}
+    d.appendChild(el("h2",null,"İçerik Katkıları ("+j.katki.length+")"));
+    if(!j.katki.length)d.appendChild(el("p","kucuk","İçerik katkısı yok."));
+    j.katki.forEach(function(s){
+      var k=el("div","kart g"+s.grup),m=el("div","kucuk");
+      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · "+(TUR[s.tur]||s.tur)+(s.dil?" · "+s.dil:"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim);
+      k.appendChild(m);k.appendChild(el("div","metin",s.metin));
+      var dg=el("div","dugmeler"),b=el("button","sil","Bu Katkıyı Sil");b.onclick=function(){sil("Bu içerik katkısı silinsin mi? Geri alınamaz.",{tablo:"katki",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
+      if(s.kim){var kb=el("button","alt","Katkıcının Bütün Katkıları");kb.onclick=function(){kim(s.kim)};dg.appendChild(kb)}
+      k.appendChild(dg);d.appendChild(k);
+    });
+    d.appendChild(el("h2",null,"Besin Tabloları ("+j.besin.length+")"));
+    if(!j.besin.length)d.appendChild(el("p","kucuk","Besin tablosu yok."));
+    j.besin.forEach(function(s){
+      var k=el("div","kart g"+s.grup),m=el("div","kucuk");
+      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · 100 "+(s.besin.birim||"?")+" başına"+(s.besin.por?" · porsiyondan çevrildi ("+s.besin.por.m+" "+s.besin.por.u+")":"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim);
+      k.appendChild(m);k.appendChild(besinTablo(s.besin));
+      var dg=el("div","dugmeler"),b=el("button","sil","Bu Tabloyu Sil");b.onclick=function(){sil("Bu besin tablosu silinsin mi? Geri alınamaz.",{tablo:"besin",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
+      if(s.kim){var kb=el("button","alt","Katkıcının Bütün Katkıları");kb.onclick=function(){kim(s.kim)};dg.appendChild(kb)}
+      k.appendChild(dg);d.appendChild(k);
+    });
+  }).catch(hata);
+}
+function kim(k){
+  sekme("");msj("Yükleniyor…");
+  return api("/kim/"+k).then(function(j){
+    var d=$("icerik");d.textContent="";msj("");
+    var geri=el("button","alt","← Listeye Dön");geri.onclick=function(){liste(GOR,SAYFA)};d.appendChild(geri);
+    d.appendChild(el("h2",null,"Katkıcı "+kimKisa(k)));
+    d.appendChild(el("p",null,j.katki+" içerik katkısı, "+j.besin+" besin tablosu. Aşağıda katkı yaptığı barkodlar (başkalarının katkılarıyla birlikte)."));
+    var b=el("button","sil","Bu Katkıcının Bütün Katkılarını Sil");
+    b.onclick=function(){sil("Bu katkıcının "+(j.katki+j.besin)+" katkısı ve tablosu silinsin mi? Geri alınamaz. Yalnızca kötü niyetli katkıcı için.",{kim:k},function(){return kim(k)})};
+    d.appendChild(b);
+    if(j.urunler.length)d.appendChild(urunTablo(j.urunler));
+  }).catch(hata);
+}
+goster();
+})();`;

@@ -70,6 +70,8 @@ jobs:
         run: node worker/test.mjs
       - name: Topluluk (Worker, gerçek SQLite)
         run: node worker/test_topluluk.mjs
+      - name: Katkı denetimi ve besin tablosu doğrulaması (Worker, gerçek SQLite)
+        run: node worker/test_yonetim.mjs
       - name: Veri üreteçleri (data/ ile kaynak/ uyumlu mu)
         # Üreteçleri depodaki kaynak dosyalarıyla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
         run: |

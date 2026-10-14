@@ -150,12 +150,45 @@ export function besinPorNorm(x) {
   }
   return { m: x.m, u: x.u, ara };
 }
-// Gösterilecek tablo: en yeni katkı. satirlar: {besin (JSON metni), t} yeniden eskiye. Döner {besin, besinT} ya da null.
-export function besinSec(satirlar) {
-  for (const s of satirlar || []) {
-    let v = null;
-    try { v = besinKatki(JSON.parse(s.besin)); } catch {}
-    if (v) return { besin: v, besinT: s.t };
+// O-26: topluluk tabloları içerik katkısı gibi doğrulanır. İki tablo uyumlu: birim aynı, ikisinde de okunmuş en az BESIN_UYUM.enAz satır
+// var ve bu satırların her birinde fark en çok max(pay[satır], oran x büyük değer). Aynı etiketin iki okuması genelde birebir aynıdır;
+// pay yuvarlama ve tarif değişikliği içindir (tuzda küçük: eşik 0,3 g). Bir tabloda okunmamış satır uyumu bozmaz
+// (OCR o satırı kaçırmış olabilir). Uyumlu tablolar gruplanır (grubun ilk tablosuna göre); grupta en az KATKI_ARALIK_MS arayla gelmiş,
+// farklı katkıcıdan iki tablo varsa grup doğrulanmış (dogrulayanCift, içerikle aynı kural).
+export const BESIN_UYUM = { oran: 0.05, pay: { kcal: 10, tuz: 0.05, diger: 0.2 }, enAz: 3 };
+export function besinUyumlu(a, b) {
+  if (!a || !b || a.birim !== b.birim) return false;
+  let n = 0;
+  for (const k of BESIN_ALAN) {
+    const x = a.b[k], y = b.b[k];
+    if (x == null || y == null) continue;
+    n++;
+    const pay = Math.max(BESIN_UYUM.pay[k] ?? BESIN_UYUM.pay.diger, BESIN_UYUM.oran * Math.max(x, y));
+    if (Math.abs(x - y) > pay + 1e-9) return false;
   }
-  return null;
+  return n >= BESIN_UYUM.enAz;
+}
+// satirlar: {besin (JSON metni), t, kim, id?} yeniden eskiye; geçersiz satır atlanır. Döner [{ilk, s: [{v, t, kim, id}], dogrulandi, son}].
+export function besinGrupla(satirlar) {
+  const gruplar = [];
+  for (const r of satirlar || []) {
+    let v = null;
+    try { v = besinKatki(JSON.parse(r.besin)); } catch {}
+    if (!v) continue;
+    const s = { v, t: r.t, kim: r.kim || null, id: r.id };
+    const g = gruplar.find((x) => besinUyumlu(x.ilk.v, v));
+    if (g) g.s.push(s); else gruplar.push({ ilk: s, s: [s] });
+  }
+  for (const g of gruplar) {
+    g.dogrulandi = g.s.some((a, i) => g.s.some((b, j) => j > i && dogrulayanCift(a, b)));
+    g.son = g.s.reduce((a, b) => (b.t > a.t ? b : a));
+  }
+  gruplar.sort((a, b) => (b.dogrulandi - a.dogrulandi) || (b.s.length - a.s.length) || (b.son.t - a.son.t));
+  return gruplar;
+}
+// Gösterilecek tablo: doğrulanmış grup > kalabalık grup > yeni; grubun en yeni tablosu. Döner {besin, besinT, besinDogrulandi} ya da null.
+// Kimlik yanıta girmez.
+export function besinSec(satirlar) {
+  const g = besinGrupla(satirlar)[0];
+  return g ? { besin: g.son.v, besinT: g.son.t, besinDogrulandi: g.dogrulandi } : null;
 }

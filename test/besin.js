@@ -69,6 +69,7 @@ ok(!B.barkodSec({urun},['tr']).besin,'OFF yoksa besin yok');
   const top={kod:'8690504025207',kaynak:'urun',tur:'gida',metin:{},besin:{yag:14.5,birim:'g'},besinLt:{},besinPor:{m:55,u:'g',ara:{yag:[13.6,15.5]}},besinKaynak:'topluluk',besinT:9};
   const s2=B.barkodSec({off:{...r,besin:null},urun:top},['tr']);
   ok(s2&&s2.besinKaynak==='topluluk'&&s2.besinPor&&s2.besinPor.m===55,'topluluk tablosunun porsiyon bilgisi taşınır '+j(s2&&s2.besinPor));
+  ok(s2.besinDogrulandi===false&&B.barkodSec({off:{...r,besin:null},urun:{...top,besinDogrulandi:true}},['tr']).besinDogrulandi===true,'topluluk tablosunun doğrulanma durumu taşınır (O-26)');
 }
 const offVeri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8'));
 const bes=Object.values(offVeri.u).filter(x=>x.length>5);

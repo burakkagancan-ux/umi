@@ -38,13 +38,18 @@
 //                       kişisel veri yok; 10 dakika önbellekte. eksik: çok aranan ama içeriği olmayan barkodlar (en çok 50).
 //   POST /besin         {kod, besin: {b, lt, birim}, kim?} besin tablosu katkısı (A-02; yalnızca kullanıcının açık izniyle). İçerik katkısından
 //                       ayrı tabloda: içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Aynı katkıcı kimliği aynı barkodda
-//                       tek satırdır (düzeltince yenilenir). GET /urun yanıtında en yeni tablo: {besin, besinT} (içerik bulunmasa da).
+//                       tek satırdır (düzeltince yenilenir). GET /urun yanıtında seçilen tablo: {besin, besinT, besinDogrulandi} (içerik
+//                       bulunmasa da). O-26: farklı katkıcıların uyuşan iki tablosu "doğrulanmış" sayılır ve önce gösterilir (barkod.js besinSec).
 //   OFF verisi D1'e yazılmaz (ODbL ayrımı).
+//
+// Katkı denetimi (O-21/O-26, 14.10.2026): GET /yonetim sayfası ve /yonetim/api/* (ayrıntı src/yonetim.js). Veri uç noktaları gizli
+//   YONETIM_ANAHTARI (en az 32 karakter; panelde Secret) ile açılır; tanımlı değilse yönetim kapalı (404). CORS başlığı yok.
 //
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
 //   Ürün, metin, IP ya da kişisel bilgi saklanmaz; anahtar yalnızca "g:YYYY-AA-GG:t". GET /sayac son 60 günün toplamlarını döndürür.
 
 import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, sozcukler, toplulukSay, urunSec } from "./barkod.js";
+import { YONETIM_CSP, YONETIM_CSS, YONETIM_HTML, YONETIM_JS, yonetimApi, yonetimYetki } from "./yonetim.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -170,7 +175,7 @@ async function urun(request, env, kod, R) {
     if (!env.URUNLER) return R(200, { bulundu: false, devreDisi: true });
     const db = await d1(env);
     const { results } = await db.prepare("SELECT tur, dil, metin, t, kim FROM katki WHERE kod = ? ORDER BY t DESC LIMIT 50").bind(kod).all();
-    const { results: bs } = await db.prepare("SELECT besin, t FROM besin WHERE kod = ? ORDER BY t DESC LIMIT 5").bind(kod).all();
+    const { results: bs } = await db.prepare("SELECT besin, t, kim FROM besin WHERE kod = ? ORDER BY t DESC LIMIT " + BESIN_BARKOD_EN_COK).bind(kod).all();
     return R(200, { ...urunSec(results || []), ...(besinSec(bs) || {}) });
   }
   // POST: katkı
@@ -293,6 +298,27 @@ async function katki(request, env, R) {
   return R(200, katkiOzet(results || [], kim));   // reply zaten no-store
 }
 
+// Katkı denetimi: sayfa, betik ve stil Worker'dan; veri anahtarla. Yanıtlar CORS'suz (yalnızca bu adresten okunur), önbelleğe girmez.
+const YONETIM_BASLIK = { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow", "Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff", "X-Frame-Options": "DENY" };
+async function yonetim(request, env, yol) {
+  const dosya = { "/yonetim": [YONETIM_HTML, "text/html"], "/yonetim/sayfa.js": [YONETIM_JS, "text/javascript"], "/yonetim/sayfa.css": [YONETIM_CSS, "text/css"] }[yol];
+  if (dosya) {
+    if (request.method !== "GET") return new Response(null, { status: 405, headers: YONETIM_BASLIK });
+    return new Response(dosya[0], { headers: { ...YONETIM_BASLIK, "Content-Type": dosya[1] + "; charset=utf-8", "Content-Security-Policy": YONETIM_CSP } });
+  }
+  const R = (status, obj) => new Response(JSON.stringify(obj), { status, headers: { ...YONETIM_BASLIK, "Content-Type": "application/json; charset=utf-8" } });
+  if (!yol.startsWith("/yonetim/api/")) return R(404, { error: "Bulunamadı." });
+  if (env.BARKOD_LIMIT) {   // anahtar denemesi de sınırlı (IP saklanmaz)
+    const { success } = await env.BARKOD_LIMIT.limit({ key: "yonetim:" + (request.headers.get("CF-Connecting-IP") || "bilinmiyor") });
+    if (!success) return R(429, { error: "Çok sık istek. Biraz sonra tekrar deneyin." });
+  }
+  const yetki = await yonetimYetki(env, request);
+  if (yetki === "kapali") return R(404, { error: "Yönetim kapalı.", kapali: true });
+  if (yetki !== "tamam") return R(401, { error: "Anahtar geçersiz." });
+  if (!env.URUNLER) return R(503, { error: "Veritabanı bağlı değil." });
+  return yonetimApi(request, env, await d1(env), yol, R);
+}
+
 async function barkod(request, env, allowed, R, yol) {
   if (request.method === "OPTIONS") return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, request.headers.get("Origin") || "") });
   if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
@@ -321,6 +347,7 @@ export default {
     const yol = new URL(request.url).pathname;
     if (yol === "/sayac") return sayac(request, env, allowed, R);
     if (/^\/(off|urun|besin|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
+    if (yol === "/yonetim" || yol.startsWith("/yonetim/")) return yonetim(request, env, yol);
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, origin) });

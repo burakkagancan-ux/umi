@@ -32,6 +32,10 @@ namespace_id = "1002"
 # VISION_KEY gizli değişkeni panelde zaten tanımlı; dağıtım onu silmez. Yeniden tanımlamak gerekirse:
 #   Settings > Variables and Secrets > Add > Type: Secret, Name: VISION_KEY
 
+# Katkı denetimi sayfası (/yonetim, O-21): Settings > Variables and Secrets > Add > Type: Secret, Name: YONETIM_ANAHTARI,
+# değer en az 32 karakterlik rastgele bir metin (ör. parola yöneticisinin ürettiği). Tanımlı değilse yönetim kapalıdır.
+# Burada yazılmaz (depo herkese açık).
+
 # Paylaşım sayacı için IP başına dakikada en fazla 10 istek
 [[ratelimits]]
 name = "SAYAC_LIMIT"
