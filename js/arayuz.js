@@ -49,15 +49,20 @@ function buildProfile(){
   function degisti(){saveProf();updProfSum();[b1,b2,b3].forEach(function(b){if(b)b._upd()});if(LAST.length||$("metin").value.trim())run()}
   function cb(label,checked,on){var l=el("label","pc");var i=document.createElement("input");i.type="checkbox";i.checked=checked;i.onchange=function(){on(i.checked);degisti()};l.appendChild(i);l.appendChild(document.createTextNode(" "+label));return l}
   // Bölüm: başlık, isteğe bağlı kısa açıklama ve içerik kutusu (liste ya da kart)
-  function bolum(ad,not,cls){var sc=el("section","pbol");sc.appendChild(el("h2",null,ad));if(not)sc.appendChild(el("p","mut",not));var k=el("div",cls);sc.appendChild(k);box.appendChild(sc);return k}
+  // Her bölümün kendi renkli simgesi (14.10.2026, kullanıcı isteği: profil daha renkli); renkler risk renklerinden ayrı
+  var PBIC={uy:'<path d="M12 3l7 3v5c0 4.5-3 8.3-7 9.5C8 19.3 5 15.5 5 11V6z"/><path d="M9 12l2 2 4-4"/>',
+    ki:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+    ay:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+    hk:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/>'};
+  function bolum(ad,not,cls,ik){var sc=el("section","pbol pb-"+ik),h=el("h2");h.innerHTML='<span class="pbic"><svg viewBox="0 0 24 24" aria-hidden="true">'+PBIC[ik]+'</svg></span>';h.appendChild(document.createTextNode(ad));sc.appendChild(h);if(not)sc.appendChild(el("p","mut",not));var k=el("div",cls);sc.appendChild(k);box.appendChild(sc);return k}
   // Açılır satır (kapalı başlar); başlıkta seçili sayısı görünür. n(): o satırdaki seçim sayısı
   function pdrop(ust,ad,n){var d=document.createElement("details");d.className="pdrop";var sm=el("summary","pt",ad),c=el("span","pcnt");sm.appendChild(c);d.appendChild(sm);ust.appendChild(d);
     d._upd=function(){var k=n();c.textContent=k?t("profil.secili",{n:k}):""};d._upd();return d}
   function abc(a){return a.map(function(x){return [x[0],t(x[1])]}).sort(function(x,y){return dilKarsilastir(x[1],y[1])})}
-  var uy=bolum(t("profil.uyarilar"),t("profil.uyarilar_not"),"plist"),
-      kb=bolum(t("profil.kisisel"),t("profil.kilo_notu"),"pkart"),
-      ay=bolum(t("profil.ayarlar"),null,"plist pset"),
-      hk=bolum(t("profil.hakkinda"),null,"plist");
+  var uy=bolum(t("profil.uyarilar"),t("profil.uyarilar_not"),"plist","uy"),
+      kb=bolum(t("profil.kisisel"),t("profil.kilo_notu"),"pkart","ki"),
+      ay=bolum(t("profil.ayarlar"),null,"plist pset","ay"),
+      hk=bolum(t("profil.hakkinda"),null,"plist","hk");
   // Sizin için uyarılar: Alerjenler, Yaşam Evresi, Diğer (seçimler düğme gibi görünen onay kutuları)
   var b1=null,b2=null,b3=null;
   b1=pdrop(uy,t("profil.alerjenler"),function(){return PROF.al.length+PROF.alOzel.length});var g=el("div","pg");

@@ -316,6 +316,12 @@ async function scan(p,mode,text){
       await p.waitForSelector('#kars:not([hidden]) .ktab');
       const kr=await p.evaluate(()=>{const c=[...document.querySelectorAll('#kars .ktab > div')].map(x=>x.textContent);const i=c.indexOf(t('besin.baslik'));return {bas:c.slice(i,i+3),yag:c.slice(c.indexOf(t('besin.alan.yag')),c.indexOf(t('besin.alan.yag'))+3),dz:document.querySelectorAll('#kars .ktab .bdz').length}});
       ok(kr.bas.join('|')==='Besin değerleri|100 g|Tablo yok'&&kr.yag.join('|')==='Yağ|8,9 g Orta|—'&&kr.dz===4,'karşılaştırmada besin satırları: '+JSON.stringify(kr));
+      // Yukarı çık düğmesi: uzun sayfada aşağı inince görünür, dokununca başa döner
+      const yk=await p.evaluate(async()=>{const b=document.querySelector('button.yukari');if(!b)return {yok:1};document.body.style.minHeight='6000px';
+        const once=b.hidden;window.scrollTo(0,4000);await new Promise(r=>setTimeout(r,100));const sonra=b.hidden;
+        window.matchMedia=()=>({matches:true});b.click();await new Promise(r=>setTimeout(r,100));const y=window.scrollY;document.body.style.minHeight='';
+        return {once,sonra,y,ad:b.getAttribute('aria-label')}});
+      ok(yk.once===true&&yk.sonra===false&&yk.y===0&&yk.ad==='Yukarı çık','yukarı çık düğmesi: '+JSON.stringify(yk));
       await p.evaluate(()=>closeCompare());
       await p.evaluate(()=>localStorage.removeItem('kayitli'));
     }
