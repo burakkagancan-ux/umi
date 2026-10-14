@@ -59,3 +59,5 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 | Okur · Etiket Dedektifi · Öncü · Doğrulayıcı | Reader · Label Detective · Pioneer · Verifier | Rozet aileleri; kademe adları i18n rozet.<aile>.k1–k8. |
 | Yeni rozet | New badge | Kutlama kartı ve paylaşım kartı başlığı. |
 | Okumadıklarım | Not read yet | Ansiklopedi süzgeci. |
+| Eklediklerim | Products I added | Barkodla eklenen ürünler ekranı (G-02). |
+| Doğrulandı / Doğrulanmayı bekliyor | Verified / Awaiting verification | Eklenen ürünün durumu. |

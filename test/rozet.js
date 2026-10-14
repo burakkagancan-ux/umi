@@ -2,7 +2,7 @@
 // tanım dosyası ve metinler. Çalıştır: node test/rozet.js
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
 const src=require('./yukle.js');
-eval(src+';'+fs.readFileSync(path.join(R,'js/rozet.js'),'utf8')+';global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,kayitYedek,kayitGeriYukle,t}');
+eval(src+';'+fs.readFileSync(path.join(R,'js/rozet.js'),'utf8')+';global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,kayitYedek,kayitGeriYukle,t}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const def=JSON.parse(fs.readFileSync(path.join(R,'data/rozetler.json'),'utf8'));
 const ans=JSON.parse(fs.readFileSync(path.join(R,'data/ansiklopedi.json'),'utf8'));
@@ -13,7 +13,7 @@ ok(JSON.stringify(def.kademeler)==='[1,10,25,50,100,250,500,1000]','kademeler: '
 ok(def.aileler.map(a=>a.id).join()==='okur,dedektif,avci,oncu,dogrulayici','beş aile');
 def.aileler.forEach(a=>ok(Z.ROZET_ISARET[a.simge],'simge yok: '+a.id));
 ok(def.aileler[0].toplam.gida===gidaSayfa,'gıda Okuru üst sınırı ansiklopedi sayfa sayısı: '+def.aileler[0].toplam.gida+' / '+gidaSayfa);
-ok(def.aileler.filter(a=>a.hazir).map(a=>a.id).join()==='okur,dedektif','ürün ekleme aileleri G-02 gelene kadar hazır değil');
+ok(def.aileler.every(a=>a.hazir)&&def.aileler.filter(a=>a.sunucu).map(a=>a.id).join()==='avci,oncu,dogrulayici','ürün ekleme ailelerinin sayımı sunucudan (G-02)');
 
 // Eşikler: üst sınırlı ailede büyük kademeler düşer, son kademe toplam ("hepsi")
 const e=Z.rozetEsikler(def,'okur','gida');
@@ -39,7 +39,16 @@ const once=JSON.stringify(d);Z.rozetEkle(d,'okur','gida','E999');ok(JSON.stringi
 let r=Z.rozetDurumu(def,d,'okur','gida');
 ok(r.kademe===2&&r.ad==='rozet.okur.k2'&&r.sonraki===25&&r.sonrakiAd==='rozet.okur.k3'&&Math.abs(r.ilerleme-2/15)<1e-9,'12 sayfa: 2. kademe, sonraki 25: '+JSON.stringify(r));
 ok(Z.rozetDurumu(def,Z.rozetBos(),'okur','gida').kademe===0&&!Z.rozetBaglam(def,Z.rozetBos(),'okur','gida'),'hiç rozet yoksa bağlam simgesi yok');
-ok(Z.rozetDurumu(def,d,'avci','gida').yakinda&&!Z.rozetDurumu(def,d,'avci','gida').hazir,'ürün ailesi "yakında"');
+ok(Z.rozetDurumu(def,d,'avci','gida').hazir&&Z.rozetDurumu(def,d,'avci','gida').n===0,'ürün ailesi hazır, sunucu yanıtı yoksa 0');
+ok(!Z.rozetEkle(d,'oncu','gida','1').eklendi,'ürün ailesi cihazda sayılmaz');
+{let s1=Z.rozetSunucuYaz(d,{eklenen:{gida:5},avci:{gida:12,koz:1},oncu:{gida:3},dogrulayici:{gida:'x',KOZ:4,tem:-1}},1000);
+ ok(Z.rozetDurumu(def,s1,'avci','gida').n===12&&Z.rozetDurumu(def,s1,'avci','gida').ad==='rozet.avci.k2'&&Z.rozetDurumu(def,s1,'oncu','gida').kademe===1,'sunucu sayıları: Ürün Avcısı 12 → İzci, Öncü 3');
+ ok(JSON.stringify(s1.sunucu.dogrulayici)==='{}'&&!('eklenen' in s1.sunucu),'sunucu yanıtındaki geçersiz sayılar atılır');
+ ok(Z.rozetYeni(def,s1,'avci','gida').kademe===2,'sunucudan gelen kademe kutlanır');
+ ok(JSON.stringify(Z.rozetNorm(JSON.parse(JSON.stringify(s1))).sunucu)===JSON.stringify(s1.sunucu),'saklanan sunucu sayıları korunur');
+ const yeni=Z.rozetSunucuYaz(Z.rozetBos(),{avci:{gida:20}},2000),eski=Z.rozetSunucuYaz(Z.rozetBos(),{avci:{gida:1}},500);
+ ok(Z.rozetBirlestir(eski,yeni).sunucu.avci.gida===20&&Z.rozetBirlestir(yeni,eski).sunucu.avci.gida===20,'birleştirmede daha yeni sunucu sayısı');
+ ok(Z.rozetToplam(def,s1)>=Z.rozetToplam(def,d)+3,'toplam rozete sunucu aileleri de girer')}
 ok(Z.rozetDurumu(def,d,'okur','koz').yakinda,'kozmetik ansiklopedisi yok: yakında');
 let tam=Z.rozetBos();for(let i=0;i<gidaSayfa;i++)tam=Z.rozetEkle(tam,'okur','gida','E'+i).d;
 r=Z.rozetDurumu(def,tam,'okur','gida');ok(r.hepsi&&r.sonraki==null&&r.ilerleme===1&&r.ad==='rozet.okur.k8','bütün sayfalar: hepsi');

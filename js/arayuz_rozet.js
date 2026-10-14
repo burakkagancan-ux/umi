@@ -118,6 +118,14 @@ function rozetAc(){
     def.aileler.forEach(function(a){box.appendChild(rozetAileKart(def,d,a.id,ROZET_SUZ))});
     box.appendChild(rzEl("p","how",t("rozet.not")));
     document.body.classList.add("mode-rozet");box.hidden=false;window.scrollTo(0,0);bk.focus();
+    // Ürün rozetleri sunucudan (G-02; yalnızca ocr.html): sayılar değiştiyse ekran yeniden çizilir, yeni kademe kutlanır
+    if(typeof ekleSunucu==="function"&&!rozetAc.yenilendi){
+      var once=JSON.stringify(d.sunucu||null),kut=[];
+      ekleSunucu(EKLE_AYAR.ekranTazeSn,function(c){kut.push(c)}).then(function(){
+        if(!document.body.classList.contains("mode-rozet"))return;
+        if(JSON.stringify(rozetLoad().sunucu||null)!==once||kut.length){rozetAc.yenilendi=true;rozetAc();rozetAc.yenilendi=false;kut.forEach(function(c){box.insertBefore(c,box.querySelector(".seg"))})}
+      });
+    }
   },function(){});
 }
 /* Aile kartı: simge (en yüksek kademe; yoksa gri), ad, kademe adı, ilerleme çubuğu, bütün kademeler (kazanılmamışlar soluk) */
@@ -130,6 +138,11 @@ function rozetAileKart(def,d,aile,tur){
   g.appendChild(rzEl("div","rza",r.kademe?t(r.ad):r.yakinda?t("ans.cok_yakinda"):t("rozet.henuz_yok")));
   hd.appendChild(g);c.appendChild(hd);
   c.appendChild(rzEl("p","how",t("rozet."+aile+".ne")));
+  var adf=rozetAile(def,aile);
+  if(adf&&adf.sunucu){   // sayım sunucudan: ne zaman alındığı ya da neden henüz olmadığı
+    var su=d.sunucu,kimVar=typeof katkiciAl==="function"&&katkiciGecerli(katkiciAl());
+    c.appendChild(rzEl("p","how rzsun",su?t("rozet.sunucu_t",{t:dilTarih(su.t,"gunsaat")}):t(kimVar?"rozet.sunucu_yok":"rozet.sunucu_kimlik_yok")));
+  }
   if(r.yakinda){c.appendChild(rzEl("p","mut",t(rozetAile(def,aile).hazir?"rozet.yakinda_ans":"rozet.yakinda_urun")));return c}
   var bar=rzEl("div","rzbar");bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax","100");bar.setAttribute("aria-valuenow",String(Math.round(r.ilerleme*100)));
   var ic=rzEl("span");ic.style.width=Math.round(r.ilerleme*100)+"%";bar.appendChild(ic);c.appendChild(bar);

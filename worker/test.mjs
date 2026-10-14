@@ -1,6 +1,6 @@
 // Worker'ın yerel testi: node worker/test.mjs  (Vision ve rate limit taklit edilir)
 import w from "./src/index.js";
-import { urunSec, barkodGecerli, KATKI_ARALIK_MS } from "./src/barkod.js";
+import { urunSec, barkodGecerli, katkiOzet, KATKI_ARALIK_MS } from "./src/barkod.js";
 const ORIGIN = "https://burakkagancan-ux.github.io";
 let calls = 0, visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: { text: "Aqua, Glycerin" } }] } });
 globalThis.fetch = async (url, opt) => { calls++; const v = visionReply(url, opt); return new Response(JSON.stringify(v.body), { status: v.status }); };
@@ -49,7 +49,10 @@ const offYanit = (urunler) => (url) => { offCalls.push(url); const m = /https:\/
   return p ? { status: 200, body: { status: 1, product: p } } : { status: 200, body: { status: 0 } }; };
 const d1 = (eskiTablo) => { const rows = [], sqls = []; let ddl = 0;
   const st = (sql) => ({ sql, args: [], bind(...a) { this.args = a; return this; },
-    async all() { return { results: rows.filter((r) => r.kod === this.args[0]).sort((a, b) => b.t - a.t).map(({ tur, dil, metin, t, kim }) => ({ tur, dil, metin, t, kim })) }; },
+    async all() {
+      if (/WHERE kim = \?/.test(sql)) { const kodlar = new Set(rows.filter((r) => r.kim === this.args[0]).map((r) => r.kod));
+        return { results: rows.filter((r) => kodlar.has(r.kod)).sort((a, b) => b.t - a.t).map(({ kod, tur, metin, t, kim }) => ({ kod, tur, metin, t, kim })) }; }
+      return { results: rows.filter((r) => r.kod === this.args[0]).sort((a, b) => b.t - a.t).map(({ tur, dil, metin, t, kim }) => ({ tur, dil, metin, t, kim })) }; },
     async first() { return { n: rows.filter((r) => r.kod === this.args[0]).length }; },
     async run() { sqls.push(sql);
       if (/^ALTER/.test(sql)) { if (!eskiTablo) throw new Error("duplicate column name: kim"); return {}; }
@@ -105,5 +108,30 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const eski = urunSec([k(null, T0), k(A, T0 + KATKI_ARALIK_MS)]), uc = urunSec([k(A, T0), k(A, T0 + KATKI_ARALIK_MS), k(B, T0 + 1000)]);
   if (ayni.dogrulandi || !farkli.dogrulandi || !eski.dogrulandi || uc.dogrulandi || "kim" in farkli) { fail++; console.log("HATA urunSec katkıcı kuralı", ayni, farkli, eski, uc); } else console.log("ok   urunSec: aynı katkıcı kendini doğrulamaz");
   if (!barkodGecerli("8690504025207") || barkodGecerli("8690504025208") || !barkodGecerli("012345678905") || !barkodGecerli("01234565")) { fail++; console.log("HATA barkodGecerli"); } }
+// Eklediklerim ve ürün rozetleri (G-02): POST /katki {kim}
+{ const e = env(); e.URUNLER = d1(); const A = "a".repeat(32), B = "b".repeat(32), C = "c".repeat(32), T0 = 1_700_000_000_000, M = KATKI_ARALIK_MS;
+  const satir = (kod, kim, t, metin = metinA, tur = "gida") => e.URUNLER.rows.push({ kod, tur, dil: "tr", metin, t, kim });
+  satir("8690504025207", A, T0); satir("8690504025207", B, T0 + M);                 // A öncü ve avcı; B doğrulayıcı ve avcı
+  satir("4006381333931", B, T0); satir("4006381333931", A, T0 + 1000);              // aynı anda: doğrulanmamış
+  satir("5000112637922", A, T0); satir("5000112637922", A, T0 + M);                 // A kendini doğrulayamaz
+  satir("3017620422003", null, T0); satir("3017620422003", A, T0 + M, metinA, "gida"); // kimliksiz eski katkıyı A doğrular
+  satir("12345670", C, T0, "Aqua, Glycerin, Parfum, Linalool, Limonene", "koz");    // A'nın olmayan barkod
+  const kreq = (b, o = {}) => breq("/katki", { method: o.method || "POST", origin: o.origin, body: b == null ? undefined : JSON.stringify(b) });
+  await t("katki: geçersiz kimlik", kreq({ kim: "x" }), e, 400);
+  await t("katki: GET reddi", breq("/katki"), e, 405);
+  await t("katki: yabancı köken", kreq({ kim: A }, { origin: "https://evil.example" }), e, 403);
+  await t("katki: A'nın sayıları", kreq({ kim: A }), e, 200, (j, r) => j.eklenen.gida === 4 && j.avci.gida === 2 && j.oncu.gida === 1 && j.dogrulayici.gida === 1 && j.urunler.length === 4 && r.headers.get("Cache-Control") === "no-store");
+  await t("katki: liste durumları", kreq({ kim: A }), e, 200, (j) => { const u = Object.fromEntries(j.urunler.map((x) => [x.kod, x]));
+    return u["8690504025207"].dogrulandi && u["8690504025207"].oncu && !u["8690504025207"].dogrulayici && !u["4006381333931"].dogrulandi && !u["5000112637922"].dogrulandi
+      && u["3017620422003"].dogrulandi && u["3017620422003"].dogrulayici && !u["3017620422003"].oncu && !u["12345670"]; });
+  await t("katki: başkalarının kimliği ve metni yok", kreq({ kim: A }), e, 200, (j) => !JSON.stringify(j).includes(B) && !JSON.stringify(j).includes("Linalool") && j.urunler.every((u) => Object.keys(u).sort().join() === "dogrulandi,dogrulayici,kod,oncu,ozet,t,tur"));
+  await t("katki: B doğrulayıcı", kreq({ kim: B }), e, 200, (j) => j.avci.gida === 1 && j.dogrulayici.gida === 1 && !j.oncu.gida && j.eklenen.gida === 2);
+  await t("katki: hiç eklemeyen kimlik", kreq({ kim: "d".repeat(32) }), e, 200, (j) => !j.urunler.length && !Object.keys(j.avci).length);
+  const e2 = env(); await t("katki: D1 yok", kreq({ kim: A }), e2, 200, (j) => j.devreDisi && !j.urunler.length); }
+// katkiOzet: farklı içerik ayrı grup; doğrulanmış ama benim olmayan grup sayılmaz
+{ const A = "a".repeat(32), B = "b".repeat(32), C = "c".repeat(32), T0 = 1e12, M = KATKI_ARALIK_MS;
+  const o = katkiOzet([{ kod: "1", tur: "gida", metin: "Su, şeker, karbondioksit, aroma vericiler, asitlik düzenleyici", t: T0 + 2 * M, kim: A },
+    { kod: "1", tur: "gida", metin: metinA, t: T0 + M, kim: C }, { kod: "1", tur: "gida", metin: metinA, t: T0, kim: B }], A);
+  if (o.avci.gida || o.oncu.gida || o.dogrulayici.gida || o.eklenen.gida !== 1 || o.urunler[0].dogrulandi) { fail++; console.log("HATA katkiOzet: başka içerikteki doğrulama sayılmamalı", o); } else console.log("ok   katkiOzet: farklı içerik ayrı"); }
 console.log(fail ? fail + " hata" : "tüm testler geçti");
 process.exit(fail ? 1 : 0);
