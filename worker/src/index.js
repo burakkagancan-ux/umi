@@ -36,12 +36,15 @@
 //                       200 {n} (bu barkod kaç kez arandı) | {n: 0, icerikVar: true}
 //   GET  /topluluk?tur= Ortak hedef ve eksik ürünler: {sayilar: {urun, dogrulanan: {tür: n}}, eksik: [{kod, tur, n, son}], t}. Herkese açık,
 //                       kişisel veri yok; 10 dakika önbellekte. eksik: çok aranan ama içeriği olmayan barkodlar (en çok 50).
+//   POST /besin         {kod, besin: {b, lt, birim}, kim?} besin tablosu katkısı (A-02; yalnızca kullanıcının açık izniyle). İçerik katkısından
+//                       ayrı tabloda: içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Aynı katkıcı kimliği aynı barkodda
+//                       tek satırdır (düzeltince yenilenir). GET /urun yanıtında en yeni tablo: {besin, besinT} (içerik bulunmasa da).
 //   OFF verisi D1'e yazılmaz (ODbL ayrımı).
 //
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
 //   Ürün, metin, IP ya da kişisel bilgi saklanmaz; anahtar yalnızca "g:YYYY-AA-GG:t". GET /sayac son 60 günün toplamlarını döndürür.
 
-import { barkodGecerli, besinOff, katkiOzet, sozcukler, toplulukSay, urunSec } from "./barkod.js";
+import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, sozcukler, toplulukSay, urunSec } from "./barkod.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -150,6 +153,9 @@ async function d1(env) {
       env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS aranan_sira ON aranan (tur, n DESC, son DESC)"),
       env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS aranan_son ON aranan (son)"),
       env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS toplam (ad TEXT PRIMARY KEY, n INTEGER NOT NULL)"),
+      // A-02: barkoda bağlı besin tablosu (besin: JSON {b, lt, birim}); kişisel veri yok, kim yalnızca aynı kişinin satırını yenilemek için
+      env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS besin (id INTEGER PRIMARY KEY AUTOINCREMENT, kod TEXT NOT NULL, besin TEXT NOT NULL, t INTEGER NOT NULL, kim TEXT)"),
+      env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS besin_kod ON besin (kod, t DESC)"),
     ]);
     // O-22 öncesi oluşmuş tabloya kim sütunu (eski satırlarda boş kalır). Sütun zaten varsa SQLite hata verir; yok sayılır.
     try { await env.URUNLER.prepare("ALTER TABLE katki ADD COLUMN kim TEXT").run(); } catch {}
@@ -164,7 +170,8 @@ async function urun(request, env, kod, R) {
     if (!env.URUNLER) return R(200, { bulundu: false, devreDisi: true });
     const db = await d1(env);
     const { results } = await db.prepare("SELECT tur, dil, metin, t, kim FROM katki WHERE kod = ? ORDER BY t DESC LIMIT 50").bind(kod).all();
-    return R(200, urunSec(results || []));
+    const { results: bs } = await db.prepare("SELECT besin, t FROM besin WHERE kod = ? ORDER BY t DESC LIMIT 5").bind(kod).all();
+    return R(200, { ...urunSec(results || []), ...(besinSec(bs) || {}) });
   }
   // POST: katkı
   let j;
@@ -192,6 +199,26 @@ async function urun(request, env, kod, R) {
   }
   const sonra = urunSec([yeni, ...once]);
   if (sonra.dogrulandi && !(once.length && urunSec(once).dogrulandi)) await toplamArtir(db, "dogrulanan:" + sonra.tur);
+  return R(201, { tamam: true });
+}
+
+// POST /besin: barkoda besin tablosu (A-02). Kimlikli katkı aynı barkodda önceki satırını değiştirir; kimliksiz her gönderim yeni satır.
+const BESIN_BARKOD_EN_COK = 20;
+async function besinEkle(request, env, R) {
+  let j;
+  try { const raw = await request.text(); if (raw.length > 2000) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
+  const kod = String((j && j.kod) || "").replace(/[^0-9]/g, "");
+  const kim = j && j.kim != null && j.kim !== "" ? String(j.kim) : null;
+  if (!barkodGecerli(kod)) return R(400, { error: "Geçersiz barkod." });
+  if (kim && !KATKICI_RE.test(kim)) return R(400, { error: "Geçersiz katkıcı kimliği." });
+  const b = besinKatki(j && j.besin);
+  if (!b) return R(400, { error: "Besin tablosu uygun değil." });
+  if (!env.URUNLER) return new Response(null, { status: 204 });
+  const db = await d1(env);
+  if (kim) await db.prepare("DELETE FROM besin WHERE kod = ? AND kim = ?").bind(kod, kim).run();
+  const n = await db.prepare("SELECT COUNT(*) AS n FROM besin WHERE kod = ?").bind(kod).first();
+  if (n && n.n >= BESIN_BARKOD_EN_COK) return R(429, { error: "Bu ürün için yeterli katkı var." });
+  await db.prepare("INSERT INTO besin (kod, besin, t, kim) VALUES (?, ?, ?, ?)").bind(kod, JSON.stringify(b), Date.now(), kim).run();
   return R(201, { tamam: true });
 }
 
@@ -274,8 +301,9 @@ async function barkod(request, env, allowed, R, yol) {
     const { success } = await env.BARKOD_LIMIT.limit({ key: "barkod:" + ip });
     if (!success) return R(429, { error: "Çok sık sorgu yapıldı. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" });
   }
-  const p = yol.split("/").filter(Boolean);   // ["off", kod] | ["urun", kod] | ["urun"] | ["katki"] | ["aranan"] | ["topluluk"]
+  const p = yol.split("/").filter(Boolean);   // ["off", kod] | ["urun", kod] | ["urun"] | ["besin"] | ["katki"] | ["aranan"] | ["topluluk"]
   if (p[0] === "urun" && request.method === "POST" && p.length === 1) return urun(request, env, null, R);
+  if (p[0] === "besin") return request.method === "POST" && p.length === 1 ? besinEkle(request, env, R) : R(405, { error: "Geçersiz istek." });
   if (p[0] === "katki") return request.method === "POST" && p.length === 1 ? katki(request, env, R) : R(405, { error: "Geçersiz istek." });
   if (p[0] === "aranan") return request.method === "POST" && p.length === 1 ? aranan(request, env, R) : R(405, { error: "Geçersiz istek." });
   if (p[0] === "topluluk") return request.method === "GET" && p.length === 1 ? topluluk(request, env, R) : R(405, { error: "Geçersiz istek." });
@@ -292,7 +320,7 @@ export default {
     const R = (status, obj, extra) => reply(env, origin, status, obj, extra);
     const yol = new URL(request.url).pathname;
     if (yol === "/sayac") return sayac(request, env, allowed, R);
-    if (/^\/(off|urun|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
+    if (/^\/(off|urun|besin|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, origin) });

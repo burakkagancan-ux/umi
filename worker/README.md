@@ -20,7 +20,7 @@ Adres: https://inapp-ocr-3a8f.burakkagancan.workers.dev
 
 ## Test
 `node worker/test.mjs` — Vision ve istek sınırı taklit edilerek 13 durum denenir.
-`node worker/test_topluluk.mjs` — topluluk uç noktaları (/aranan, /topluluk) ve sayaçlar, D1 yerine gerçek SQLite ile (Node 22.13+).
+`node worker/test_topluluk.mjs` — topluluk uç noktaları (/aranan, /topluluk), barkoda bağlı besin tablosu (/besin) ve sayaçlar, D1 yerine gerçek SQLite ile (Node 22.13+).
 
 ## Ek güvence (kod dışı)
 Google Cloud Console → APIs & Services → Cloud Vision API → Quotas → "Requests per minute" değerini düşürmek, Worker atlatılsa bile harcamaya üst sınır koyar.

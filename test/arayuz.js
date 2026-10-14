@@ -140,6 +140,40 @@ async function scan(p,mode,text){
     ok(/^[0-9a-f]{32}$/.test(gonderilen&&gonderilen.kim)&&await p.evaluate(k=>localStorage.getItem('katkici')===k&&katkiciKimlik()===k,gonderilen&&gonderilen.kim),'katkıcı kimliği rastgele, bu cihazda saklanır ve sonraki katkıda aynı');
     ok(await p.evaluate(k=>JSON.parse(kayitYedek([],0,katkiciAl())).katkici===k,gonderilen&&gonderilen.kim),'katkıcı kimliği yedek dosyasına girer');
     ok(await p.evaluate(()=>localStorage.getItem('barkod_katki')===null),'"hatırla" seçilmedikçe tercih kaydedilmez');
+    ok(/tablonun fotoğrafını da ekleyin/.test(await p.textContent('#sonuc')),'teşekkürden sonra tablo eklenebileceği söylenir');
+    // Besin tablosu (A-02, isteğe bağlı): içerik kaydedildikten sonra tablonun fotoğrafı eklenince tablo da barkoda gider (POST /besin)
+    const ICERIK='İçindekiler: şeker, buğday unu, bitkisel yağ (palm), kakao, yağsız süt tozu, emülgatör (soya lesitini), tuz, aroma verici.';
+    await p.evaluate(([k,m])=>{barkodYok(k,null);document.getElementById('metin').value=m;HSCAN=HOCR=true;barkodFoto();run()},[yok,ICERIK]);
+    await p.waitForFunction(()=>/başka kullanıcılar için kaydedelim/.test(document.getElementById('sonuc').textContent),null,{timeout:10000});
+    gonderilen=null;await p.click('#sonuc .bkaynak .row button:not(.alt)');
+    for(let i=0;i<20&&!gonderilen;i++)await p.waitForTimeout(100);
+    const TAB='Besin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
+    const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&!/\/(urun|besin|aranan)/.test(u.href);
+    let besinG=[],urunN=1;
+    await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:TAB})}));
+    await p.route(/workers\.dev\/besin$/,r=>{besinG.push(r.request().postDataJSON());r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
+    await p.unroute(/workers\.dev\/urun$/);await p.route(/workers\.dev\/urun$/,r=>{urunN++;r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
+    const tabloEkle=async()=>{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_ekle')).click())]);
+      await fc.setFiles(path.join(R,'icon-192.png'));await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{})};
+    await tabloEkle();
+    for(let i=0;i<20&&!besinG.length;i++)await p.waitForTimeout(100);
+    const bg=besinG[0]||{};
+    ok(besinG.length===1&&Object.keys(bg).sort().join()==='besin,kim,kod'&&bg.kod===yok&&bg.kim===gonderilen.kim&&bg.besin.birim==='g'&&bg.besin.b.yag===25.1&&bg.besin.b.tuz===0.1,'içerik kaydedilmişse tablo sormadan barkoda gider: '+JSON.stringify(besinG));
+    ok(/Besin tablosu barkodla/.test(await p.textContent('#sonuc'))&&urunN===1,'tablo gitti notu; içerik yeniden gönderilmez');
+    await p.evaluate(()=>run());await p.waitForTimeout(300);
+    ok(besinG.length===1,'aynı tablo yeniden gönderilmez');
+    // İçerik sorusu yanıtlanmadan tablo eklenirse soru yerinde kalır; "Kaydet" ikisini birden gönderir
+    besinG=[];
+    await p.evaluate(([k,m])=>{barkodYok(k,null);document.getElementById('metin').value=m;HSCAN=HOCR=true;barkodFoto();run()},[yok,ICERIK]);
+    await p.waitForFunction(()=>/başka kullanıcılar için kaydedelim/.test(document.getElementById('sonuc').textContent),null,{timeout:10000});
+    ok(/Besin tablosunun fotoğrafını da eklerseniz/.test(await p.textContent('#sonuc')),'içerik sorusu tablonun da gidebileceğini söyler');
+    await tabloEkle();
+    ok(/başka kullanıcılar için kaydedelim/.test(await p.textContent('#sonuc'))&&!besinG.length&&urunN===1,'tablo eklenince soru yerinde, izinsiz gönderim yok');
+    await p.click('#sonuc .bkaynak .row button:not(.alt)');
+    for(let i=0;i<20&&(!besinG.length||urunN<2);i++)await p.waitForTimeout(100);
+    ok(urunN===2&&besinG.length===1&&/içerik ve besin tablosu/.test(await p.textContent('#sonuc')),'"Kaydet": içerik ve tablo birlikte gider');
+    await p.unroute(ocrYol);await p.unroute(/workers\.dev\/besin$/);
+    await p.evaluate(()=>fotoTemizle());
     await p.unroute(/workers\.dev\/urun$/);
     await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
   }
@@ -168,11 +202,15 @@ async function scan(p,mode,text){
       const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
       await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:'Besin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g'})}));
       const n0=await p.evaluate(()=>histLoad().length);
+      // Kaydedilmiş ürüne tablo eklenince kayıt yeni metne taşınır (ikinci kayıt açılmaz)
+      await p.evaluate(()=>{localStorage.removeItem('kayitli');kayitStore(kayitAdd([],{id:'k1',t:Date.now(),mode:'gida',name:'Deneme',text:document.getElementById('metin').value,oz:null}))});
       const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_ekle')).click())]);
       await fc.setFiles(path.join(R,'icon-192.png'));
       await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
       const m=await p.inputValue('#metin');
       ok(m.startsWith('Şeker, kakao yağı, süt tozu, E322\n\nBesin değerleri 100 g')&&(await kart()).dz.length===4,'tablo fotoğrafı metnin sonuna eklendi, kart renkli');
+      ok(await p.evaluate(m=>{const a=kayitLoad();return a.length===1&&a[0].text===m.trim()&&a[0].besin&&a[0].besin.kaynak==='etiket'&&a[0].besin.b.yag===25.1&&!!a[0].oz},m)&&await p.evaluate(()=>/Kaydedildi/.test(document.querySelector('#sonuc .kayitb').textContent)),'kayıtlı ürün tabloyla güncellendi, "Kaydedildi" kalır');
+      await p.evaluate(()=>localStorage.removeItem('kayitli'));
       ok(await p.evaluate(()=>histLoad().length)===n0&&await p.evaluate(m=>histLoad()[0].text===m.trim(),m),'aynı tarama güncellendi (yeni kayıt yok)');
       ok(await p.evaluate(()=>/E322/.test(document.getElementById('sonuc').textContent)),'içerik analizi sürüyor (E322)');
       await p.unroute(ocrYol);

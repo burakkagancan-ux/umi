@@ -113,7 +113,7 @@ function fotoOku(){
     if(!gecerli())return;
     // Besin tablosunun fotoğrafı: okunan metin içerik metninin sonuna eklenir, aynı tarama güncellenir (js/arayuz_besin.js)
     var ek=besinEkMetin(n,tx);
-    if(ek!=null){$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
+    if(ek!=null){besinEkUygula(ek);$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
     if(HSCAN&&tx.trim())rozetSay("dedektif",MODE,"f:"+rozetIz(tx),rozetGoster);   // aynı fotoğrafın yeniden okunması (çerçeve) sayılmaz
     if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();

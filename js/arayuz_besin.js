@@ -23,7 +23,7 @@ function besinKaynak(tx,kayitsiz){
   if(kb&&kb.kaynak==="elle")return besinKayittan(kb,okunan);
   if(okunan)return {k:okunan,kaynak:"etiket",okunan:okunan};
   var r=BARKOD&&BARKOD.r;
-  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:{},birim:r.besin.birim,sorun:[]},kaynak:"off",t:r.besinT||r.t};
+  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:r.besinLt||{},birim:r.besin.birim,sorun:[]},kaynak:r.besinKaynak==="topluluk"?"topluluk":"off",t:r.besinT||r.t};
   return kb?besinKayittan(kb,okunan):null;
 }
 function besinKayitli(tx){
@@ -73,12 +73,13 @@ function besinKart(tx){
   }
   var eksik=G.satir.filter(function(s){return s.v==null}).map(function(s){return t("besin.alan."+s.alan)});
   if(eksik.length)d.appendChild(el("div","how",t("besin.eksik",{l:eksik.join(", ")})));
-  d.appendChild(el("div","how",K.kaynak==="elle"?t("besin.kaynak_elle",{tarih:dilTarih(K.t,"gun")}):K.kaynak==="off"?(K.t?t("besin.kaynak_off",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_off_tarihsiz")):t("besin.kaynak_etiket")));
+  d.appendChild(el("div","how",K.kaynak==="elle"?t("besin.kaynak_elle",{tarih:dilTarih(K.t,"gun")}):K.kaynak==="off"?(K.t?t("besin.kaynak_off",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_off_tarihsiz")):
+    K.kaynak==="topluluk"?t("besin.kaynak_topluluk",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_etiket")));
   var pn=el("div","ipanel");pn.hidden=true;besinEsikPanel(pn);d.appendChild(pn);
   ib.onclick=function(){pn.hidden=!pn.hidden;ib.setAttribute("aria-expanded",pn.hidden?"false":"true");ib.classList.toggle("on",!pn.hidden)};
   var db=el("button","alt",t("besin.duzelt"));db.type="button";db.onclick=function(){besinForm(tx,K,db,d)};
   d.appendChild(db);
-  if(K.kaynak==="off")d.appendChild(besinFotoDugmeler(tx));
+  if(K.kaynak==="off"||K.kaynak==="topluluk")d.appendChild(besinFotoDugmeler(tx));
   return d;
 }
 /* Eşiklerin kaynağı ve değerleri (BESIN_ESIK'ten; sayılar dilin biçiminde) */
@@ -100,7 +101,7 @@ function besinFotoDugmeler(tx){
   var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){besinFotoIste(tx,"dosya")};
   row.appendChild(b);row.appendChild(g);return row;
 }
-function besinFotoIste(tx,inp){BESIN_EKLE={taban:tx,n:null,t:Date.now()};$(inp).click()}
+function besinFotoIste(tx,inp){BESIN_EKLE={taban:tx,n:null,t:Date.now(),son:null};$(inp).click()}
 /* Fotoğraf seçildi (fotoSec, OKU.n arttıktan sonra): bekleyen istek bu fotoğrafa bağlanır; başka bir fotoğraf istek biter */
 function besinFotoSecildi(){
   if(!BESIN_EKLE)return;
@@ -111,12 +112,30 @@ function besinEkMetin(n,tx){
   if(!BESIN_EKLE||BESIN_EKLE.n!==n)return null;
   var taban=BESIN_EKLE.taban.trim();return (taban?taban+"\n\n":"")+String(tx||"").trim();
 }
+/* Tablo metne eklendi (fotoOku yaz, kutu değişmeden önce): ekrandaki metin kayıtlı bir üründeyse kayıt yeni metne taşınır, tablosu
+   ve özeti yenilenir (kayıt metne bağlıdır; yoksa "Kaydet" ikinci bir kayıt açardı). Çerçeve değişip tablo yeniden okununca son metinle
+   bulunur. Barkodun ekranındaysa tablo barkoda da bağlanabilir (js/arayuz_barkod.js barkodBesinEk). */
+function besinEkUygula(ek){
+  if(!BESIN_EKLE)return;
+  var eski=[BESIN_EKLE.taban,BESIN_EKLE.son].filter(function(x){return x!=null});BESIN_EKLE.son=ek;
+  if(typeof barkodBesinEk==="function")barkodBesinEk(eski,ek);
+  if(typeof kayitLoad!=="function"||MODE!=="gida")return;
+  var a=kayitLoad(),k=null;
+  eski.forEach(function(x){k=k||kayitFind(a,"gida",x)});
+  if(!k||kayitFind(a,"gida",ek))return;
+  k.text=ek.trim();k.u=Date.now();
+  var bs=besinKayitKopya(besinKaynak(ek,true));if(bs)k.besin=bs;
+  var oz=kayitSimdi("gida",ek);if(oz)k.oz=oz;
+  kayitStore(a);
+}
 function besinEkMesaj(metin,msj){return BESIN_SOZ&&!besinAyristir(metin,BESIN_SOZ)?t("besin.foto_okunamadi"):msj}
 function besinElleKaydet(tx,k){
   var a=besinElleEkle(besinElleListe(),besinMetinAnahtar("gida",tx),{b:k.b,birim:k.birim,t:Date.now()});
   if(k.lt&&Object.keys(k.lt).length)a[0].lt=k.lt;
   if(!besinElleYaz(a))return false;
-  besinKayitYenile(tx);return true;
+  besinKayitYenile(tx);
+  if(typeof barkodBesinKatki==="function"&&barkodEkranda(tx))barkodBesinKatki();   // düzeltilen tablo barkoda bağlanabilir
+  return true;
 }
 /* Düzeltme formu: sekiz satır (boş = okunmadı; "<0,5" yazılabilir) ve birim. Kaydedilen değerler kullanıcı onayı sayılır. */
 function besinForm(tx,K,ret,kart){

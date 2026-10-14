@@ -86,7 +86,7 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const r = e.URUNLER.rows[0];
   if (!r || Object.keys(r).sort().join() !== "dil,kim,kod,metin,t,tur" || r.kim !== null) { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman, katkıcı olmalı (IP yok); kimliksiz katkıda kim boş", r); }
   await t("urun: tek katkı doğrulanmamış", breq("/urun/8690504025207"), e, 200, (j) => j.bulundu && !j.dogrulandi && j.sayi === 1 && j.tur === "gida");
-  if (e.URUNLER.ddl !== 6 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
+  if (e.URUNLER.ddl !== 8 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
   // Katkıcı kimliği (O-22)
   const kim = "0123456789abcdef0123456789abcdef";
   await t("urun: geçersiz katkıcı kimliği", post({ kod: "4006381333931", tur: "gida", dil: "tr", metin: metinA, kim: "ali@ornek.com" }), e, 400);
