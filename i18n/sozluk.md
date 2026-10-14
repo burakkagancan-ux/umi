@@ -10,6 +10,7 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 - Skor, puan, not, yıldız yok.
 - Kaynak her zaman görünür (kurum, yıl, yönetmelik numarası çevrilmez: EFSA 2017, (EC) No 1272/2008).
 - Türkiye'ye özgü bilgi (Bakanlık listesi, TGK, SEA Yönetmeliği, UZEM) açıkça "Türkiye'de / In Türkiye" diye işaretlenir (anahtarlar `ulke.tr.*`); ülke ayarı ayrı iş.
+- Başlıklar (14.10.2026, kullanıcı kararı): bölüm, kart, açılır kutu ve kategori başlığı olan isim öbeklerinde her sözcüğün baş harfi büyük ("Kişisel Bilgiler", "Asitlik Düzenleyici / Mineral Tuz", "Diğer (Taşıyıcı, Nem Tutucu vb.)"; EN "Personal Details"). İki noktadan sonraki ilk harf de büyük ("Gizlilik: Fotoğrafınıza ne oluyor?"). Soru ya da cümle biçimli başlıklar ("Ne işe yarar?", "Bu ürün henüz veritabanında yok"), düğme ve eylem metinleri ("Barkod okut"), "ve, ile, vb." gibi bağlaç/kısaltmalar ve parantez içi birimler ("100 g başına") olduğu gibi kalır.
 - Resmi karşılığı olan metin çeviriden önce gelir: CLP H/EUH/P ifadeleri (Ek III/IV), E kodu adları (`name_en`), INCI adları (çevrilmez), CosIng işlev adları, AB 1169/2011 Ek II alerjen adları, AB 1333/2008 Ek I işlev sınıfları, AB 648/2004 Ek VII deterjan içerik grupları ve yüzde bantları.
 
 ## Terimler

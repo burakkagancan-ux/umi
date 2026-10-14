@@ -187,7 +187,7 @@ async function scan(p,mode,text){
     await scan(p,'gida',TABLO);
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
     let k=await kart();
-    ok(k&&k.t==='Besin değerleri (100 g başına)'&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg.slice(0,4).join('|')==='25,1 g|16 g|30,5 g|0,1 g'&&k.deg[4]==='505 kcal','besin kartı: dört satır, düzey etiketleri, enerji renksiz: '+JSON.stringify(k));
+    ok(k&&k.t==='Besin Değerleri (100 g başına)'&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg.slice(0,4).join('|')==='25,1 g|16 g|30,5 g|0,1 g'&&k.deg[4]==='505 kcal','besin kartı: dört satır, düzey etiketleri, enerji renksiz: '+JSON.stringify(k));
     ok(k&&/okunan etiket metnindeki tablo/.test(k.metin),'kaynak satırı');
     ok(await p.evaluate(()=>{const s=document.querySelector('#sonuc .sumbox');return s&&s.nextElementSibling&&s.nextElementSibling.classList.contains('besin')}),'kart özetin hemen altında');
     await p.click('#sonuc .besin .info');
@@ -315,7 +315,7 @@ async function scan(p,mode,text){
       await p.evaluate(()=>showCompare(kayitLoad()[1].id,'k2'));
       await p.waitForSelector('#kars:not([hidden]) .ktab');
       const kr=await p.evaluate(()=>{const c=[...document.querySelectorAll('#kars .ktab > div')].map(x=>x.textContent);const i=c.indexOf(t('besin.baslik'));return {bas:c.slice(i,i+3),yag:c.slice(c.indexOf(t('besin.alan.yag')),c.indexOf(t('besin.alan.yag'))+3),dz:document.querySelectorAll('#kars .ktab .bdz').length}});
-      ok(kr.bas.join('|')==='Besin değerleri|100 g|Tablo yok'&&kr.yag.join('|')==='Yağ|8,9 g Orta|—'&&kr.dz===4,'karşılaştırmada besin satırları: '+JSON.stringify(kr));
+      ok(kr.bas.join('|')==='Besin Değerleri|100 g|Tablo yok'&&kr.yag.join('|')==='Yağ|8,9 g Orta|—'&&kr.dz===4,'karşılaştırmada besin satırları: '+JSON.stringify(kr));
       // Yukarı çık düğmesi: uzun sayfada aşağı inince görünür, dokununca başa döner
       const yk=await p.evaluate(async()=>{const b=document.querySelector('button.yukari');if(!b)return {yok:1};document.body.style.minHeight='6000px';
         const once=b.hidden;window.scrollTo(0,4000);await new Promise(r=>setTimeout(r,100));const sonra=b.hidden;
@@ -573,7 +573,7 @@ async function scan(p,mode,text){
       const s1=await p.evaluate(()=>({hd:document.querySelector('#topluluk .tphedef').textContent,bar:document.querySelector('#topluluk .rzbar').getAttribute('aria-valuenow'),
         l:[...document.querySelectorAll('#topluluk .tpitem')].map(x=>x.textContent),mod:document.body.classList.contains('mode-topluluk'),h:location.hash,tab:document.querySelector('.tabbar a[aria-current]').getAttribute('data-tab')}));
       ok(s1.mod&&s1.h==='#topluluk'&&s1.tab==='profil','#topluluk ekranı Profilim sekmesinde: '+JSON.stringify([s1.h,s1.tab]));
-      ok(/Ortak hedef/.test(s1.hd)&&/Birlikte 100 doğrulanmış ürüne ulaşalım/.test(s1.hd)&&/37 \/ 100 doğrulanmış ürün/.test(s1.hd)&&s1.bar==='37','ortak hedef: 37 / 100: '+s1.hd.slice(0,200));
+      ok(/Ortak Hedef/.test(s1.hd)&&/Birlikte 100 doğrulanmış ürüne ulaşalım/.test(s1.hd)&&/37 \/ 100 doğrulanmış ürün/.test(s1.hd)&&s1.bar==='37','ortak hedef: 37 / 100: '+s1.hd.slice(0,200));
       ok(/Gıda: 40 ürün eklendi, 30 tanesi doğrulandı/.test(s1.hd)&&/Temizlik: 0 ürün eklendi/.test(s1.hd)&&/kişisel sıralama yoktur/.test(s1.hd),'türlere göre sayılar, sıralama yok');
       ok(s1.l.length===2&&s1.l[0].includes(yok)&&/4 kez arandı/.test(s1.l[0])&&s1.l[1].includes(adli[0])&&s1.l[1].includes(D[adli[0]][1])&&!s1.l.join().includes(icerikli),'eksik ürünler: uygulamada içeriği olan çıkar, adı bilinen adıyla: '+JSON.stringify(s1.l));
       ok(istekler.length===1&&/\/topluluk\?tur=gida$/.test(istekler[0]),'istek: GET /topluluk?tur=gida (kimlik yok): '+istekler.join());
