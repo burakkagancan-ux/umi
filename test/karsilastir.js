@@ -1,6 +1,6 @@
 // İki ürünü karşılaştırma: karar mantığı, madde farkları, tanınmayan oran, geçmiş. Çalıştır: node test/karsilastir.js
 const src=require('./yukle.js');
-eval(src+';global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,cmpMisfitOzel,ozelAra,histAdd,histName,KARS_AYAR,buildTIndex}');
+eval(src+';global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,cmpMisfitOzel,ozelAra,ozelAraHepsi,ozelSozlukKur,ozelKayit,ozelGoster,ozelAyni,histAdd,histName,KARS_AYAR,buildTIndex}');
 const {idx}=require('./run.js');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const cfg=K.KARS_AYAR;
@@ -123,4 +123,19 @@ ok(OA('May contain traces of kiwi.','kiwi')==='{"yes":[],"may":["kiwi"]}','İngi
 const MO=K.cmpMisfitOzel('Kivi, şeker. Susam içerebilir.',{alOzel:['kivi','susam','kakao']});
 ok(MO.length===1&&/kivi/.test(MO[0]),'karşılaştırmada yalnızca kesin içerilen eklenen alerjen: '+JSON.stringify(MO));
 ok(K.cmpMisfitOzel('kivi',{al:[]}).length===0&&K.cmpMisfitOzel('kivi',null).length===0,'alOzel yok (eski profil)');
+// Sözlük (data/alerjen_sozluk.json): yazılan ad herhangi bir dildeki biçimle eşleşirse bütün dillerdeki biçimleri aranır, ad seçili dilde görünür
+const SZ=JSON.parse(require('fs').readFileSync(__dirname+'/../data/alerjen_sozluk.json'));
+{const gor={};SZ.k.forEach(k=>{ok(/^[a-z_]+$/.test(k.id)&&k.ad.tr&&k.ad.tr.length&&k.ad.en&&k.ad.en.length,'sözlük kaydı: '+k.id);
+  Object.keys(k.ad).forEach(d=>k.ad[d].forEach(f=>{const x=f.toLocaleLowerCase('tr');ok(!gor[x]||gor[x]===k.id,'sözlükte iki kayıtta aynı biçim: '+f);gor[x]=k.id}))});
+ ok(!gor.date&&!gor.turkey&&!gor.pepper,'sözlükte etiketin başka anlamıyla karışan İngilizce sözcük')}
+K.ozelSozlukKur(SZ);
+const OH=(m,a)=>JSON.stringify(K.ozelAraHepsi(m,a));
+ok(OH('Glycerin, Actinidia Chinensis (Kiwi) Fruit Extract','KİVİ')==='{"yes":["Kiwi"],"may":[]}','Türkçe eklenen ad İngilizce etikette bulunur');
+ok(OH('Şeker, kivili jöle. May contain strawberries.','kiwi')==='{"yes":["kivili"],"may":[]}'&&OH('May contain strawberries.','çilek')==='{"yes":[],"may":["strawberries"]}','İngilizce eklenen ad Türkçe etikette; içerebilir ayrı');
+ok(OH('Lateks eldiven','lateks')==='{"yes":["Lateks"],"may":[]}'&&!K.ozelKayit('lateks'),'sözlükte olmayan ad yazıldığı gibi aranır');
+ok(K.ozelGoster('Kivi','en')==='kiwi'&&K.ozelGoster('kiwi','tr')==='kivi'&&K.ozelGoster('kiwi','de')==='kiwi'&&K.ozelGoster('lateks','en')==='lateks','ad seçili dilde, karşılığı yoksa yazıldığı gibi');
+ok(K.ozelAyni('Kivi','KIWI')&&!K.ozelAyni('kivi','çilek')&&K.ozelAyni('Lateks','lateks')&&!K.ozelAyni('kivi','kivilik'),'aynı alerjen iki dilde iki kez eklenmez');
+ok(OH('Keten tohumu, keten lifi','keten')==='{"yes":["Keten tohumu","keten"],"may":[]}'&&OH('Sığır eti, sığır yağı. Beef fat','beef')==='{"yes":["Sığır eti","sığır","Beef"],"may":[]}','aynı sözcükler iki biçimle iki kez sayılmaz, ayrı yerler sayılır');
+const MO2=K.cmpMisfitOzel('Aqua, Kiwi Fruit Extract',{alOzel:['kivi']});
+ok(MO2.length===1&&/kivi içerir \(Kiwi\)/.test(MO2[0]),'karşılaştırmada İngilizce etiketteki karşılık: '+JSON.stringify(MO2));
 console.log(n+' karşılaştırma denetimi, '+fail+' hata');process.exit(fail?1:0);

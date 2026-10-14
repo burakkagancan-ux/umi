@@ -1,4 +1,4 @@
-const CACHE = "tagsis-v54";
+const CACHE = "tagsis-v55";
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar
 const CORE = [
   "./", "index.html", "ocr.html", "ansiklopedi.html", "manifest.webmanifest",
@@ -7,7 +7,7 @@ const CORE = [
   "js/arayuz.js", "js/arayuz_kozmetik.js", "js/arayuz_temizlik.js", "js/arayuz_karsilastir.js", "js/arayuz_paylas.js", "js/arayuz_sayfa.js",
   "js/ansiklopedi.js", "js/arayuz_ansiklopedi.js", "data/ansiklopedi.json", "data/ansiklopedi_tr.json",   // ansiklopedi dizini; madde sayfaları açılınca iner
   "icon-192.png", "icon-512.png", "apple-touch-icon.png",
-  "data/tagsis.json", "data/durum.json", "data/arsiv.json", "data/e_kodlari.json", "data/bilesenler.json", "data/e_aciklama.json",
+  "data/tagsis.json", "data/durum.json", "data/arsiv.json", "data/e_kodlari.json", "data/bilesenler.json", "data/alerjen_sozluk.json", "data/e_aciklama.json",
   "data/eslesmeler.json", "data/kozmetik.json", "data/kozmetik_inci.json", "data/temizlik.json",   // kozmetik ve temizlik modu internetsiz de açılsın (~2,8 MB)
   "tema.css",
   "fonts/ansiklopedi.css", "fonts/bricolage-grotesque-latin-700-normal.woff2", "fonts/bricolage-grotesque-latin-ext-700-normal.woff2",

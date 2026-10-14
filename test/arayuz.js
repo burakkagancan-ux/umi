@@ -402,18 +402,27 @@ async function scan(p,mode,text){
       for(const ad of ['Kivi','kakao','KİVİ'])await p.fill('#profil .pozel input',ad),await p.press('#profil .pozel input','Enter');
       const o1=await p.evaluate(()=>({chip:[...document.querySelectorAll('#profil .pozc')].map(c=>c.firstChild.textContent),uy:document.querySelector('#profil .pozel p.mut').textContent,
         kayit:JSON.parse(localStorage.getItem('profil')).alOzel,say:document.querySelector('#profil .pdrop .pcnt').textContent}));
-      ok(o1.chip.join()==='Kivi,kakao'&&o1.kayit.join()==='Kivi,kakao'&&/zaten ekli/.test(o1.uy)&&o1.say==='2 seçili','elle alerjen: eklenir, cihazda saklanır, aynısı eklenmez: '+JSON.stringify(o1));
+      ok(o1.chip.join()==='kivi,kakao'&&o1.kayit.join()==='Kivi,kakao'&&/zaten ekli/.test(o1.uy)&&o1.say==='2 seçili','elle alerjen: eklenir, cihazda saklanır, aynısı eklenmez: '+JSON.stringify(o1));
+      // Dil değişince: sözlükteki ad seçili dilde görünür, İngilizcesi (kiwi) aynı alerjen sayılır; sözlükte olmayan yazıldığı gibi kalır ve belirtilir
+      for(const ad of ['lateks'])await p.fill('#profil .pozel input',ad),await p.press('#profil .pozel input','Enter');
+      await p.evaluate(()=>localStorage.setItem('dil','en'));await p.reload();await p.waitForSelector('#profil .pozc',{state:'attached'});
+      await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
+      await p.fill('#profil .pozel input','Kiwi');await p.press('#profil .pozel input','Enter');
+      const o2=await p.evaluate(()=>({chip:[...document.querySelectorAll('#profil .pozc')].map(c=>c.firstChild.textContent),uy:document.querySelector('#profil .pozel p.mut').textContent,
+        sz:document.querySelector('#profil .pozsz').textContent,sil:[...document.querySelectorAll('#profil .pozsil')].map(x=>x.getAttribute('aria-label'))}));
+      ok(o2.chip.join()==='kiwi,cocoa,lateks'&&/kiwi is already added/.test(o2.uy)&&/lateks/.test(o2.sz)&&!/kiwi|cocoa/.test(o2.sz)&&o2.sil[0]==='Remove kiwi','İngilizcede elle alerjen adı İngilizce, kiwi yinelenmez, sözlükte olmayan belirtilir: '+JSON.stringify(o2));
+      await p.evaluate(()=>{const pr=JSON.parse(localStorage.getItem('profil'));pr.alOzel=pr.alOzel.filter(x=>x!=='lateks');localStorage.setItem('profil',JSON.stringify(pr));localStorage.removeItem('dil')});
       await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
       await p.click('#m-gida');await p.evaluate(()=>{document.getElementById('metin').value='Şeker, kivili jöle, su. Eser miktarda kakao içerebilir.';run()});
       const g=await p.evaluate(()=>[...document.querySelectorAll('#sonuc .res.prof')].map(c=>c.className+' '+c.textContent).find(x=>/alerjen/.test(x))||'');
-      ok(/\br\b/.test(g)&&/Kivi: kivili/.test(g)&&/kakao: kakao/.test(g),'gıda: eklenen alerjen kırmızı kartta, içerebilir ayrı: '+g.slice(0,200));
+      ok(/\br\b/.test(g)&&/kivi: kivili/.test(g)&&/kakao: kakao/.test(g),'gıda: eklenen alerjen kırmızı kartta, içerebilir ayrı: '+g.slice(0,200));
       await p.click('#m-koz');await p.evaluate(()=>{document.getElementById('metin').value='Aqua, Glycerin, Actinidia Chinensis (Kiwi) Fruit Extract';run()});
       await p.waitForFunction(()=>document.querySelectorAll('#sonuc .res').length>0);
       const k=await p.evaluate(()=>[...document.querySelectorAll('#sonuc .res.prof')].map(c=>c.className+' '+c.textContent).find(x=>/alerjen/.test(x))||'');
-      ok(/\bg\b/.test(k)&&/bulunamadı/.test(k),'kozmetik: "kiwi" yazılmış, "kivi" eklenmiş: bulunamadı kartı ve başka ad notu: '+k.slice(0,200));
+      ok(/\br\b/.test(k)&&/kivi: Kiwi/.test(k),'kozmetik: etikette "Kiwi" yazılmış, "Kivi" eklenmiş: sözlük karşılığıyla bulunur: '+k.slice(0,200));
       await p.goto(B+'ocr.html#profil');await p.waitForSelector('#profil .pozsil',{state:'attached'});
       await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
-      await p.click('#profil .pozsil[aria-label="Kivi silinsin"]');
+      await p.click('#profil .pozsil[aria-label="kivi silinsin"]');
       ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('profil')).alOzel.join()==='kakao'&&document.querySelectorAll('#profil .pozc').length===1),'elle alerjen silinir');
       await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.removeItem('tur')});
     }

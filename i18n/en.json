@@ -694,10 +694,11 @@
  "profil.ozel.yer": "E.g. kiwi, cocoa, latex",
  "profil.ozel.ekle": "Add",
  "profil.ozel.sil": "Remove {ad}",
- "profil.ozel.not": "The name you type is searched for in the label text (kiwi → kiwis). If it has other names, add them too.",
+ "profil.ozel.not": "The name you type is searched for in the label text (kiwi → kiwis). For common foods (kiwi, strawberry, tomato…) its name in other languages is searched too. If it has other names, add them too.",
  "profil.ozel.cok": "You can add up to {n} allergens.",
  "profil.ozel.kisa": "Type at least 2 letters.",
  "profil.ozel.var": "{ad} is already added.",
+ "profil.ozel.sozluksuz": "Searched for only as you typed it, also after you change the language: {l}.",
  "profil.ozel.yok_not": "The names you added were only searched for as written; they may appear under other names.",
  "profil.ozet_secim": {
   "one": "My profile · {n} choice",

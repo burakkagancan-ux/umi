@@ -25,7 +25,8 @@ function loadDb(i){
   if(i>=PATHS.length){var msg=t("gida.liste_yok");setSt("gida",msg);$("sonuc").textContent=msg;return}
   getJson(PATHS[i]).then(function(j){
     DB=j;FLAGS=(j.meta&&j.meta.flags)||{};
-    return getJson("data/bilesenler.json").then(function(b){BDB=b},function(){BDB=null});
+    return Promise.all([getJson("data/bilesenler.json").then(function(b){BDB=b},function(){BDB=null}),
+      getJson("data/alerjen_sozluk.json").then(ozelSozlukKur,function(){})]);   // sözlük yoksa elle eklenen ad yalnızca yazıldığı gibi aranır
   }).then(function(){
     IDX=buildIndex(DB,BDB);
     setSt("gida",BDB?t("gida.yuklendi",{n:DB.ingredients.length,b:BDB.items.length}):t("gida.yuklendi_bilesensiz",{n:DB.ingredients.length}),true);
@@ -114,25 +115,27 @@ function buildProfile(){
   box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
 }
-/* Listede olmayan alerjen: kullanıcı adını yazar, eklediklerini görür ve siler (PROF.alOzel; etiket metninde ozelAra ile aranır) */
+/* Listede olmayan alerjen: kullanıcı adını yazar, eklediklerini görür ve siler (PROF.alOzel; etiket metninde ozelAraHepsi ile aranır).
+   Etikette yazılan ad seçili dilde gösterilir (ozelGoster); sözlükte olmayan adlar yazıldığı gibi kalır ve altta ayrıca belirtilir. */
 var OZEL_EN_COK=30;
 function ozelAlerjenKutusu(degisti){
   var k=el("div","pozel");k.appendChild(el("div","pt",t("profil.ozel.baslik")));
-  var f=document.createElement("form"),i=document.createElement("input"),b=el("button",null,t("profil.ozel.ekle")),ls=el("div","pozl"),uy=el("p","mut");
+  var f=document.createElement("form"),i=document.createElement("input"),b=el("button",null,t("profil.ozel.ekle")),ls=el("div","pozl"),uy=el("p","mut"),sz=el("p","mut pozsz");
   i.type="text";i.maxLength=40;i.autocomplete="off";i.placeholder=t("profil.ozel.yer");i.setAttribute("aria-label",t("profil.ozel.baslik"));b.type="submit";
-  f.appendChild(i);f.appendChild(b);k.appendChild(f);k.appendChild(uy);k.appendChild(ls);k.appendChild(el("p","mut",t("profil.ozel.not")));
+  f.appendChild(i);f.appendChild(b);k.appendChild(f);k.appendChild(uy);k.appendChild(ls);k.appendChild(sz);k.appendChild(el("p","mut",t("profil.ozel.not")));
   function ciz(){
     ls.textContent="";
     PROF.alOzel.forEach(function(ad){
-      var c=el("span","chip pozc",ad),x=el("button","pozsil","×");x.type="button";x.setAttribute("aria-label",t("profil.ozel.sil",{ad:ad}));
+      var g=ozelGoster(ad,DIL.kod),c=el("span","chip pozc",g),x=el("button","pozsil","×");x.type="button";x.setAttribute("aria-label",t("profil.ozel.sil",{ad:g}));
       x.onclick=function(){PROF.alOzel=PROF.alOzel.filter(function(y){return y!==ad});ciz();degisti()};
       c.appendChild(x);ls.appendChild(c)});
+    var yok=PROF.alOzel.filter(function(ad){return !ozelKayit(ad)});sz.textContent=yok.length?t("profil.ozel.sozluksuz",{l:yok.join(", ")}):"";
     var dolu=PROF.alOzel.length>=OZEL_EN_COK;i.disabled=b.disabled=dolu;uy.textContent=dolu?t("profil.ozel.cok",{n:OZEL_EN_COK}):"";
   }
   f.onsubmit=function(e){
     e.preventDefault();var ad=i.value.replace(/\s+/g," ").trim();i.value="";if(!ad)return;
     if(norm(ad).replace(/ /g,"").length<2){uy.textContent=t("profil.ozel.kisa");return}
-    if(PROF.alOzel.some(function(y){return norm(y)===norm(ad)})){uy.textContent=t("profil.ozel.var",{ad:ad});return}
+    if(PROF.alOzel.some(function(y){return ozelAyni(y,ad)})){uy.textContent=t("profil.ozel.var",{ad:ozelGoster(ad,DIL.kod)});return}
     if(PROF.alOzel.length>=OZEL_EN_COK)return;
     PROF.alOzel.push(ad);ciz();degisti();i.focus();
   };
@@ -141,7 +144,7 @@ function ozelAlerjenKutusu(degisti){
 /* Eklenen alerjenlerin metindeki karşılıkları, seçilen alerjen satırlarıyla aynı biçimde ("kivi: kivi püresi") */
 function ozelSatir(metin){
   var o={yes:[],may:[]};
-  PROF.alOzel.forEach(function(ad){var r=ozelAra(metin,ad);if(r.yes.length)o.yes.push(ad+": "+r.yes.join(", "));if(r.may.length)o.may.push(ad+": "+r.may.join(", "))});
+  PROF.alOzel.forEach(function(ad){var r=ozelAraHepsi(metin,ad),g=ozelGoster(ad,DIL.kod);if(r.yes.length)o.yes.push(g+": "+r.yes.join(", "));if(r.may.length)o.may.push(g+": "+r.may.join(", "))});
   return o;
 }
 /* Kozmetik ve temizlikte yalnızca eklenen alerjenlerin kartı (gıdada seçilen alerjenlerle tek kart) */

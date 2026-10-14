@@ -30,23 +30,40 @@ function lev(a,b,max){   // bantlı Levenshtein: yalnızca |i-j|<=max hücreleri
 /* Kullanıcının kendi yazdığı alerjen (Profilim › Alerjenler): etiket metninde sözcük olarak aranır. Saf mantık (DOM yok).
    Çok sözcüklü ad sırayla aranır; son sözcük 4+ harfse önek gibi eşleşir (kivi → kivili) ve Türkçe ünsüz yumuşaması tutulur
    (fıstık → fıstığı, kebap → kebabı); kısa adlar (et, su) yalnızca tam sözcük. "İçerebilir / may contain / eser miktar"
-   geçen cümledeki eşleşme may'e gider. Sonuç: {yes:[...], may:[...]} etikette yazıldığı biçimiyle, tekrarsız. */
+   geçen cümledeki eşleşme may'e gider. ad bir biçim ya da biçim dizisi olabilir (sözlük karşılıkları); çok sözcüklü biçim önce
+   denenir ve tuttuğu sözcükler bir daha sayılmaz ("kiwi fruit" ile "kiwi" aynı yerde iki kez çıkmaz).
+   Sonuç: {yes:[...], may:[...]} etikette yazıldığı biçimiyle, tekrarsız. */
 var OZEL_YUM={k:"[kg]",p:"[pb]",t:"[td]"};
 var OZEL_MAY=/ (icerebilir|iz miktar|eser miktar|may contain|traces?) /;
 function ozelAra(metin,ad){
-  var o={yes:[],may:[]},w=norm(ad).split(" ").filter(Boolean);if(!w.length||w.join("").length<2)return o;
-  var s=w[w.length-1],son=s.length>=4?new RegExp("^"+s.slice(0,-1)+(OZEL_YUM[s.slice(-1)]||s.slice(-1))):null;
+  var o={yes:[],may:[]};
+  var bs=[].concat(ad).map(function(a){return norm(a).split(" ").filter(Boolean)}).filter(function(w){return w.length&&w.join("").length>=2})
+    .sort(function(a,b){return b.length-a.length}).map(function(w){var s=w[w.length-1];
+      return {w:w,s:s,son:s.length>=4?new RegExp("^"+s.slice(0,-1)+(OZEL_YUM[s.slice(-1)]||s.slice(-1))):null}});
+  if(!bs.length)return o;
   String(metin||"").split(/[.!?\n]+/).forEach(function(cu){
     var tk=(cu.match(/[0-9A-Za-zÀ-ɏ]+/g)||[]).map(function(x){return {r:x,n:norm(x)}}).filter(function(x){return x.n}),
-        kind=OZEL_MAY.test(" "+norm(cu)+" ")?"may":"yes";
-    for(var i=0;i+w.length<=tk.length;i++){
-      var j=0;while(j<w.length-1&&tk[i+j].n===w[j])j++;
-      if(j<w.length-1)continue;
-      var z=tk[i+j].n;if(!(z===s||son&&son.test(z)))continue;
-      var r=tk.slice(i,i+w.length).map(function(x){return x.r}).join(" ");
-      if(o[kind].indexOf(r)<0)o[kind].push(r);
-    }
+        kind=OZEL_MAY.test(" "+norm(cu)+" ")?"may":"yes",tut={};
+    bs.forEach(function(b){var w=b.w;
+      for(var i=0;i+w.length<=tk.length;i++){
+        var j=0;while(j<w.length-1&&!tut[i+j]&&tk[i+j].n===w[j])j++;
+        if(j<w.length-1||tut[i+j])continue;
+        var z=tk[i+j].n;if(!(z===b.s||b.son&&b.son.test(z)))continue;
+        var r=tk.slice(i,i+w.length).map(function(x){return x.r}).join(" ");
+        for(j=0;j<w.length;j++)tut[i+j]=1;
+        if(o[kind].indexOf(r)<0)o[kind].push(r);
+      }
+    });
   });
   o.may=o.may.filter(function(x){return o.yes.indexOf(x)<0});
   return o;
 }
+/* Elle eklenen alerjenin dil karşılıkları (data/alerjen_sozluk.json; yüklenince ozelSozlukKur). Yazılan ad sözlükte herhangi bir dildeki
+   biçimle aynıysa (harf duyarsız) o kaydın bütün dillerdeki biçimleri aranır (etiketin dili arayüzün dilinden farklı olabilir) ve ad
+   seçili dilde gösterilir; sözlükte yoksa yazıldığı gibi. Kayıt yine kullanıcının yazdığı addır, göç gerekmez. */
+var OZEL_SOZLUK={};
+function ozelSozlukKur(j){OZEL_SOZLUK={};((j&&j.k)||[]).forEach(function(k){Object.keys(k.ad).forEach(function(d){k.ad[d].forEach(function(f){OZEL_SOZLUK[norm(f)]=k})})})}
+function ozelKayit(ad){return OZEL_SOZLUK[norm(ad)]||null}
+function ozelGoster(ad,dil){var k=ozelKayit(ad);return k&&k.ad[dil]?k.ad[dil][0]:ad}
+function ozelAyni(a,b){var x=ozelKayit(a),y=ozelKayit(b);return x||y?x===y:norm(a)===norm(b)}
+function ozelAraHepsi(metin,ad){var k=ozelKayit(ad);return ozelAra(metin,k?[].concat.apply([],Object.keys(k.ad).map(function(d){return k.ad[d]})):ad)}
