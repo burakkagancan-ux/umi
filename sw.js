@@ -1,4 +1,4 @@
-const CACHE = "tagsis-v61";
+const CACHE = "tagsis-v62";
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar
 const CORE = [
   "./", "index.html", "ocr.html", "ansiklopedi.html", "manifest.webmanifest",
@@ -32,13 +32,15 @@ self.addEventListener("activate", (e) => {
       .then(() => self.clients.claim())
   );
 });
-// Önce ağ (güncel veri), ağ yoksa son kaydedilen kopya (çevrimdışı açılış)
+// Önce ağ (güncel veri), ağ yoksa son kaydedilen kopya (çevrimdışı açılış).
+// cache: "no-cache": tarayıcının HTTP önbelleği (GitHub Pages max-age=600) atlanır, her dosya sunucuya sorulur (değişmediyse 304, ucuz).
+// Yoksa yayından sonraki 10 dakikada yeni tr.json ile eski arayuz.js karışıp ekranda çeviri anahtarı görünebiliyordu (14.10.2026, profil.bki.aciklama).
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
   const nav = req.mode === "navigate";
   e.respondWith(
-    fetch(req)
+    fetch(req, { cache: "no-cache" })
       .then((res) => {
         if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
         return res;
