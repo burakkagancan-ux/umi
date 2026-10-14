@@ -99,5 +99,36 @@ const K1 = "8690504025207", K2 = "4006381333931", K3 = "5449000000996", KK = "36
   const s = toplulukSay([{ kod: "1", tur: "gida", metin: metinA, t: T, kim: A }, { kod: "1", tur: "gida", metin: metinA, t: T + 1000, kim: B }, { kod: "2", tur: "tem", metin: "x y z", t: T, kim: A }]);
   ok(JSON.stringify(s) === JSON.stringify({ urun: { gida: 1, tem: 1 }, dogrulanan: {} }), "toplulukSay: 10 dakikadan kısa arayla gelen iki katkı doğrulamaz", s); }
 
+// A-02: barkoda bağlı besin tablosu (POST /besin, GET /urun yanıtında besin)
+{ const w = (await import("./src/index.js?besin")).default;
+  const env = { ALLOWED_ORIGIN: ORIGIN, URUNLER: d1() };
+  const tablo = { b: { kcal: 520, yag: 28, doymus: 12, karb: 58, seker: 45, lif: 3, protein: 6, tuz: 0.2 }, lt: { tuz: true, yag: "x" }, birim: "g" };
+  const post = (body) => cagir(w, env, "/besin", { method: "POST", body });
+  ok((await post({ kod: "8690504025208", besin: tablo })).s === 400, "besin: geçersiz barkod 400");
+  ok((await post({ kod: K1, besin: { b: { yag: 5 } } })).s === 400, "besin: tek değer yetmez 400");
+  ok((await post({ kod: K1, besin: { b: { yag: 150, tuz: 1 } } })).s === 400, "besin: 100 g üstü 400");
+  ok((await post({ kod: K1, besin: { b: { yag: "5", tuz: 1 } } })).s === 400, "besin: sayı olmayan değer 400");
+  ok((await post({ kod: K1, besin: tablo, kim: "kisa" })).s === 400, "besin: geçersiz kimlik 400");
+  ok((await cagir(w, env, "/besin")).s === 405, "besin: GET 405");
+  ok((await cagir(w, env, "/besin", { method: "POST", body: { kod: K1, besin: tablo }, origin: "https://evil.example" })).s === 403, "besin: yabancı köken 403");
+  ok((await cagir(w, { ALLOWED_ORIGIN: ORIGIN }, "/besin", { method: "POST", body: { kod: K1, besin: tablo } })).s === 204, "besin: D1 yok 204");
+  ok((await post({ kod: K1, besin: tablo, kim: A })).s === 201, "besin: kaydedildi 201");
+  // İçerik katkısı olmayan barkodda da tablo döner; içerik yine bulunamadı sayılır
+  let r = await cagir(w, env, "/urun/" + K1);
+  ok(r.j.bulundu === false && r.j.besin && r.j.besin.b.yag === 28 && r.j.besin.lt.tuz === true && r.j.besin.lt.yag === undefined && r.j.besin.birim === "g" && r.j.besinT === SIMDI, "urun: içeriksiz barkodda besin tablosu", r.j);
+  ok(!/aaaa/.test(r.txt), "urun: besin yanıtında kimlik yok");
+  // Aynı kimlik düzeltince tek satır kalır; başka kimlik ayrı satır, en yenisi gösterilir
+  SIMDI += 1000; await post({ kod: K1, besin: { ...tablo, b: { ...tablo.b, yag: 27 } }, kim: A });
+  ok(env.URUNLER.db.prepare("SELECT COUNT(*) AS n FROM besin WHERE kod = ?").get(K1).n === 1, "besin: aynı kimlik tek satır");
+  SIMDI += 1000; await post({ kod: K1, besin: { ...tablo, b: { ...tablo.b, yag: 26 } }, kim: B });
+  r = await cagir(w, env, "/urun/" + K1);
+  ok(r.j.besin.b.yag === 26 && env.URUNLER.db.prepare("SELECT COUNT(*) AS n FROM besin").get().n === 2, "besin: en yeni tablo gösterilir", r.j);
+  // İçerik katkısıyla birlikte: içerik sayılarını değiştirmez
+  await cagir(w, env, "/urun", { method: "POST", body: { kod: K1, tur: "gida", dil: "tr", metin: metinA, kim: A } });
+  r = await cagir(w, env, "/urun/" + K1);
+  ok(r.j.bulundu && r.j.sayi === 1 && r.j.besin.b.yag === 26, "urun: içerik ve besin birlikte; besin katkısı sayıyı artırmaz", r.j);
+  const sut = env.URUNLER.db.prepare("PRAGMA table_info(besin)").all().map((c) => c.name).join();
+  ok(sut === "id,kod,besin,t,kim", "besin tablosunda yalnızca barkod, tablo, zaman, katkıcı", sut); }
+
 console.log(fail ? fail + " hata" : "tüm testler geçti");
 process.exit(fail ? 1 : 0);

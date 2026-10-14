@@ -274,8 +274,8 @@ function besinElleEkle(liste,anahtar,kayit){
 function besinElleBul(liste,anahtar){return (Array.isArray(liste)?liste:[]).filter(function(x){return x&&x.k===anahtar&&x.b})[0]||null}
 /* Kayıtlı ürünle saklanan tablo (A-02 sonrası): kaydederken ekranda gösterilen değerlerin kopyası, kaynağıyla.
    Kayıt açıldığında barkod bilgisi ya da elle düzeltme (başka cihaz, yedekten geri yükleme) olmasa da tablo geri gelir.
-   {b, lt, birim, sorun, onay, kaynak: "elle"|"etiket"|"off", t}. Geçersizse null (yedek dosyası dışarıdan gelebilir). */
-var BESIN_KAYNAK=["elle","etiket","off"];
+   {b, lt, birim, sorun, onay, kaynak: "elle"|"etiket"|"off"|"topluluk", t}. Geçersizse null (yedek dosyası dışarıdan gelebilir). */
+var BESIN_KAYNAK=["elle","etiket","off","topluluk"];
 function besinKayitNorm(x){
   if(!x||typeof x!=="object"||!x.b||typeof x.b!=="object")return null;
   var b={},lt={},dolu=false;

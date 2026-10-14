@@ -118,3 +118,32 @@ export function besinOff(n, miktar) {
   b.birim = besinBirim(miktar);
   return b;
 }
+
+// Topluluk besin tablosu (A-02): kullanıcı etiketteki tabloyu okutup (açık izniyle) barkoda bağlar. İçerik katkısından ayrı saklanır:
+// tablo içerik metnine bağlı değildir, içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Gelen değer burada yalnızca
+// biçim ve sınırlarla süzülür ({b: {alan: sayı|null}, lt: {alan: true}, birim: "g"|"ml"|""}); tutarlılık uygulamada denetlenir (besinDenetle).
+export const BESIN_ALAN = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"];   // js/besin.js BESIN_ALAN ile aynı
+export function besinKatki(x) {
+  if (!x || typeof x !== "object" || !x.b || typeof x.b !== "object") return null;
+  const b = {}, lt = {};
+  let n = 0;
+  for (const a of BESIN_ALAN) {
+    const v = x.b[a];
+    if (v == null) { b[a] = null; continue; }
+    if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > (a === "kcal" ? 1000 : 100)) return null;
+    b[a] = Math.round(v * 1000) / 1000; n++;
+    if (x.lt && x.lt[a] === true) lt[a] = true;
+  }
+  if (n < 2) return null;
+  const birim = x.birim === "g" || x.birim === "ml" ? x.birim : "";
+  return { b, lt, birim };
+}
+// Gösterilecek tablo: en yeni katkı. satirlar: {besin (JSON metni), t} yeniden eskiye. Döner {besin, besinT} ya da null.
+export function besinSec(satirlar) {
+  for (const s of satirlar || []) {
+    let v = null;
+    try { v = besinKatki(JSON.parse(s.besin)); } catch {}
+    if (v) return { besin: v, besinT: s.t };
+  }
+  return null;
+}

@@ -89,14 +89,15 @@ function barkodSec(s,sira){
   for(i=0;i<aday.length;i++)if(aday[i].ad){var o=barkodBesinEkle(aday[i],s);if(o===aday[i]){o={};for(var k in aday[i])o[k]=aday[i][k]}o.icerikYok=true;return o}
   return null;
 }
-/* Besin değerleri (A-02) yalnızca Open Food Facts'ten gelir: seçilen kaynakta yoksa (ör. kendi veritabanımızdaki içerik) aynı barkodun
-   OFF kaydından eklenir (uygulamadaki veri → canlı sorgu). besinKaynak: "off". Seçilen kayıt değiştirilmez, kopyası döner. */
+/* Besin değerleri (A-02) Open Food Facts'ten ya da kullanıcıların barkoda bağladığı etiket tablosundan (Worker /urun yanıtında besin,
+   besinKaynak "topluluk") gelir. Seçilen kaynakta yoksa sırayla: OFF (uygulamadaki veri → canlı sorgu) → topluluk.
+   Seçilen kayıt değiştirilmez, kopyası döner. */
 function barkodBesinEkle(r,s){
   if(!r||r.besin)return r;
-  var b=[s.off,s.offCanli].filter(function(x){return x&&x.besin})[0];
+  var b=[s.off,s.offCanli,s.urun].filter(function(x){return x&&x.besin})[0];
   if(!b)return r;
   var o={};for(var k in r)o[k]=r[k];
-  o.besin=b.besin;o.besinT=b.t;return o;
+  o.besin=b.besin;o.besinT=b.besinT||b.t;o.besinLt=b.besinLt;o.besinKaynak=b.besinKaynak;return o;
 }
 /* Fotoğrafla okunan metnin katkı olarak önerilmesi: içerik listesi gibi görünmeli (gıda, kozmetik: parçaların çoğu tanınmış;
    temizlik: en az bir tehlike ifadesi ya da madde tanınmış). Yanlış okunmuş metin veritabanına girmesin. */
