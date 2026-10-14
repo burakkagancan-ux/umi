@@ -56,7 +56,7 @@ function payOpen(ret){
       seg.appendChild(b)});
     body.appendChild(seg);
   }
-  body.appendChild(cv);
+  var cw=el("div","paywrap");cw.appendChild(cv);body.appendChild(cw);   // çok uzun kart önizlemede kaydırılır
   var chk=null;
   if(src.personal.length){
     var lb=el("label","pc paychk");chk=document.createElement("input");chk.type="checkbox";chk.checked=false;
@@ -68,7 +68,7 @@ function payOpen(ret){
   var st=el("div","how");body.appendChild(st);
   function draw(){
     M=payModel(src,opt,PAYLAS_AYAR,L);go.disabled=true;blob=null;cv.width=L.w;cv.height=L.h;cv.classList.toggle("uzun",L.h/L.w>1.5);
-    payDraw(cv.getContext("2d"),M,L,PAYLAS_AYAR,PAY_LOGO);
+    payDraw(cv.getContext("2d"),M,L,PAYLAS_AYAR,PAY_LOGO);var oran=cv.height/cv.width;cv.classList.toggle("uzun",oran>1.5&&oran<=2.2);cv.classList.toggle("cokuzun",oran>2.2);   // L.oto: yükseklik içeriğe göre
     cv.setAttribute("aria-label",payText(M));
     // Görsel önceden hazırlanır: Safari paylaşım menüsünü yalnızca dokunuşun içinde açar
     cv.toBlob(function(b){blob=b;go.disabled=!b},"image/png");

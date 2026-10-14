@@ -11,7 +11,7 @@
    "mode": "gida",
    "type": "cift",
    "level": "yellow",
-   "title": "Birlikte dikkat: benzoat + C vitamini",
+   "title": "Birlikte Dikkat: Benzoat + C vitamini",
    "groups": [
     {
      "label": "Benzoat",
@@ -42,7 +42,7 @@
    "mode": "gida",
    "type": "cift",
    "level": "yellow",
-   "title": "Birlikte dikkat: Southampton renklendiricileri + sodyum benzoat",
+   "title": "Birlikte Dikkat: Southampton renklendiricileri + sodyum benzoat",
    "groups": [
     {
      "label": "Renklendirici",
@@ -73,7 +73,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla poliol (şeker alkolü)",
+   "title": "Birlikte Dikkat: Birden fazla poliol (şeker alkolü)",
    "groups": [
     {
      "label": "Poliol",
@@ -100,7 +100,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla fosfat katkısı",
+   "title": "Birlikte Dikkat: Birden fazla fosfat katkısı",
    "groups": [
     {
      "label": "Fosfat",
@@ -127,7 +127,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla alüminyumlu katkı",
+   "title": "Birlikte Dikkat: Birden fazla alüminyumlu katkı",
    "groups": [
     {
      "label": "Alüminyumlu katkı",
@@ -157,7 +157,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla sülfit",
+   "title": "Birlikte Dikkat: Birden fazla sülfit",
    "groups": [
     {
      "label": "Sülfit",
@@ -184,7 +184,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla glutamat",
+   "title": "Birlikte Dikkat: Birden fazla glutamat",
    "groups": [
     {
      "label": "Glutamat",
@@ -208,7 +208,7 @@
    "mode": "gida",
    "type": "cift",
    "level": "yellow",
-   "title": "Birlikte dikkat: nitrit + nitrat",
+   "title": "Birlikte Dikkat: Nitrit + nitrat",
    "groups": [
     {
      "label": "Nitrit",
@@ -237,7 +237,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla polisorbat",
+   "title": "Birlikte Dikkat: Birden fazla polisorbat",
    "groups": [
     {
      "label": "Polisorbat",
@@ -261,7 +261,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla sentetik antioksidan",
+   "title": "Birlikte Dikkat: Birden fazla sentetik antioksidan",
    "groups": [
     {
      "label": "Propil gallat, TBHQ, BHA",
@@ -283,7 +283,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla tiyoglikolat",
+   "title": "Birlikte Dikkat: Birden fazla tiyoglikolat",
    "groups": [
     {
      "label": "Tiyoglikolat",
@@ -318,7 +318,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla hidrojen peroksit kaynağı",
+   "title": "Birlikte Dikkat: Birden fazla hidrojen peroksit kaynağı",
    "groups": [
     {
      "label": "Hidrojen peroksit ya da salan madde",
@@ -346,7 +346,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla sülfit",
+   "title": "Birlikte Dikkat: Birden fazla sülfit",
    "groups": [
     {
      "label": "Sülfit",
@@ -373,7 +373,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: salisilik asit ve tuzları",
+   "title": "Birlikte Dikkat: Salisilik asit ve tuzları",
    "groups": [
     {
      "label": "Salisilik asit / salisilat",
@@ -401,7 +401,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: benzoik asit ve sodyum benzoat",
+   "title": "Birlikte Dikkat: Benzoik asit ve sodyum benzoat",
    "groups": [
     {
      "label": "Benzoik asit / benzoat",
@@ -422,7 +422,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: sorbik asit ve sorbatlar",
+   "title": "Birlikte Dikkat: Sorbik asit ve sorbatlar",
    "groups": [
     {
      "label": "Sorbik asit / sorbat",
@@ -446,7 +446,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla kuaterner amonyum yumuşatıcı",
+   "title": "Birlikte Dikkat: Birden fazla kuaterner amonyum yumuşatıcı",
    "groups": [
     {
      "label": "Setrimonyum / steartrimonyum / behentrimonyum klorür",
@@ -468,7 +468,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla A vitamini türevi",
+   "title": "Birlikte Dikkat: Birden fazla A vitamini türevi",
    "groups": [
     {
      "label": "Retinol ve esterleri",
@@ -490,7 +490,7 @@
    "mode": "koz",
    "type": "cift",
    "level": "yellow",
-   "title": "Birlikte dikkat: nitrozamin oluşturabilecek ikili",
+   "title": "Birlikte Dikkat: Nitrozamin oluşturabilecek ikili",
    "groups": [
     {
      "label": "Nitrozamin oluşturan maddelerle birlikte kullanılmaması gereken madde",
@@ -857,7 +857,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla formaldehit salıcı",
+   "title": "Birlikte Dikkat: Birden fazla formaldehit salıcı",
    "groups": [
     {
      "label": "Formaldehit salıcı",
@@ -884,7 +884,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla paraben",
+   "title": "Birlikte Dikkat: Birden fazla paraben",
    "groups": [
     {
      "label": "Paraben",
@@ -918,7 +918,7 @@
    "type": "toplam",
    "level": "yellow",
    "min": 2,
-   "title": "Birlikte dikkat: birden fazla florür",
+   "title": "Birlikte Dikkat: Birden fazla florür",
    "groups": [
     {
      "label": "Florür",

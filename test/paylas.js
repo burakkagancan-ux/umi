@@ -148,16 +148,23 @@ const kal=Object.assign({},src5,{items:src5.items.concat([1,2,3,4,5].map(i=>({na
   facts:['Vegan değil','Palm yağı içerir','Eklenmiş şeker (3 tür)','Tatlandırıcı içerir','Kafein içerir','Alkol içerir'],recog:{total:20,found:15},
   allergens:'İçerir: Gluten içeren tahıllar, Süt, Yumurta, Soya · İçerebilir: Fındık, Yer fıstığı, Susam, Hardal, Kereviz'});
 Object.keys(cfg.yerlesim).forEach(b=>{
-  const Lb=cfg.yerlesim[b],m=P.payModel(kal,{name:uzun,kisisel:true},cfg,Lb),c=fakeCtx();P.payDraw(c,m,Lb,cfg,null);
+  const Lb=cfg.yerlesim[b],m=P.payModel(kal,{name:uzun,kisisel:true},cfg,Lb),c=fakeCtx(),Hb=P.payDraw(c,m,Lb,cfg,null).h;
   const not=c.texts.find(x=>x.s.indexOf(cfg.not)===0),tan=c.texts.find(x=>/bileşenden/.test(x.s)),ust=Math.min(not.y,tan?tan.y:1e9)-30;
-  const ni=c.texts.indexOf(not),body=c.texts.slice(0,ni).filter(x=>x.y<Lb.h-Lb.bant&&x!==tan&&x.y>ust);   // not ve sonrası alt bölüm
+  const ni=c.texts.indexOf(not),body=c.texts.slice(0,ni).filter(x=>x.y<Hb-Lb.bant&&x!==tan&&x.y>ust);   // not ve sonrası alt bölüm
   ok(!body.length,b+': not alanına binen metin yok: '+JSON.stringify(body.map(x=>x.s)));
   ok(c.texts.some(x=>/Hamilelik/.test(x.s)),b+': kişisel uyarı sığdı');
-  ok(m.top.length<=Lb.enFazlaMadde,b+': madde sınırı '+m.top.length);
+  // Bütün uyarı ve dikkat maddeleri kartta; kart içeriğe göre uzar (14.10.2026, kullanıcı isteği)
+  ok(m.top.length===10&&!m.more,b+': bütün riskli maddeler kartta '+m.top.length);
+  ok(m.top.every(it=>c.texts.some(x=>x.s.indexOf(it.name.slice(0,12))===0)),b+': her madde çizildi');
+  ok(Hb>Lb.h&&Hb<=Lb.enBoy&&!c.texts.some(x=>/madde daha/.test(x.s)),b+': kart uzadı, "+N madde daha" yok: '+Hb);
   const out=c.texts.filter(x=>x.al==='right'?x.x-x.w<0:x.al==='center'?x.x-x.w/2<0||x.x+x.w/2>Lb.w:x.x+x.w>Lb.w);
   ok(!out.length,b+': genişlik taşması yok: '+JSON.stringify(out.map(x=>x.s)));
 });
 ok(cfg.yerlesim[cfg.boyut].h===1920,'varsayılan hikâye (1080x1920)');
+// Az maddeli kart 1920'de kalır; aşırı uzun listede kart enBoy'da durur ve "+N madde daha" yazılır
+{const c=fakeCtx(),h=P.payDraw(c,P.payModel(src5,{name:'Kraker'},cfg,L),L,cfg,null).h;ok(h===1920,'az maddede 1920: '+h);
+ const cok={mode:'gida',items:Array.from({length:120},(_,i)=>({name:'E'+(100+i)+' Madde',lvl:i%2+1}))},c2=fakeCtx(),h2=P.payDraw(c2,P.payModel(cok,{name:'Çok'},cfg,L),L,cfg,null).h;
+ ok(h2===L.enBoy&&c2.texts.some(x=>/madde daha/.test(x.s)),'120 maddede kart '+L.enBoy+' ve "+N madde daha": '+h2)}
 
 // 13) Olumlu kartta okunan maddeler listelenir
 M=P.payModel({mode:'gida',items:[{name:'Pirinç unu',lvl:0},{name:'Tuz',lvl:0}]},{name:'Patlak'},cfg,L);T=draw(M);
@@ -172,9 +179,9 @@ ok(/Okunan maddeler/.test(joined(T))&&T.some(x=>x.s==='Pirinç unu'),'okunan mad
   M=P.payModel({mode:'gida',items:[{name:'Pirinç unu',lvl:0}],besin:bes},{name:'Patlak'},cfg,L);
   ok(/Besin Değerleri/.test(joined(draw(M))),'olumlu kartta da besin bölümü');
   // En kalabalık kartta (12. bölümdeki) besin bölümü notun üstüne binmez; yer yoksa düşer, kişisel uyarı kalır
-  const c=fakeCtx(),m=P.payModel(Object.assign({},kal,{besin:bes}),{name:uzun,kisisel:true},cfg,L);P.payDraw(c,m,L,cfg,null);
+  const c=fakeCtx(),m=P.payModel(Object.assign({},kal,{besin:bes}),{name:uzun,kisisel:true},cfg,L),Hc=P.payDraw(c,m,L,cfg,null).h;
   const not=c.texts.find(x=>x.s.indexOf(cfg.not)===0),tan=c.texts.find(x=>/bileşenden/.test(x.s)),ust=Math.min(not.y,tan?tan.y:1e9)-30;
-  const body=c.texts.slice(0,c.texts.indexOf(not)).filter(x=>x.y<L.h-L.bant&&x!==tan&&x.y>ust);
+  const body=c.texts.slice(0,c.texts.indexOf(not)).filter(x=>x.y<Hc-L.bant&&x!==tan&&x.y>ust);
   ok(!body.length&&c.texts.some(x=>/Hamilelik/.test(x.s)),'besinli kalabalık kartta not alanına binen metin yok: '+JSON.stringify(body.map(x=>x.s)));
 }
 
