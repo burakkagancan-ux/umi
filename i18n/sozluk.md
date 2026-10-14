@@ -54,3 +54,4 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 | Henüz çevrilmedi | Not yet translated | Veri metninin yanındaki işaret. |
 | Etiket Oku | Read Label | Sayfa adı. |
 | Analiz Et | Analyse | |
+| Ürün Avcısı | Product Hunter | Ürün ekleyen kullanıcının rozeti. Kullanıcının ürün eklemesi için "katkı / katkıcı" denmez: uygulamada "katkı" katkı maddesi (uyarı) çağrıştırır (kullanıcı kararı 14.10.2026). Arayüzde "ürün ekle / eklediklerim". |
