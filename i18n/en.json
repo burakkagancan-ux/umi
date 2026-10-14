@@ -321,6 +321,8 @@
  "kars.satir.taninan_icerik": "Recognised ingredients",
  "kars.satir.tehlike_buyuk": "DANGER",
  "kars.satir.uretim_yok": "No synthetic or processed additive found",
+ "kars.besin.yok": "No table",
+ "kars.besin.renksiz": "Values not confirmed",
  "kars.say.dikkat": "{n} caution",
  "kars.say.dogrulanmadi": "{n} not verified",
  "kars.say.uyari": {
@@ -587,6 +589,7 @@
  "pay.hazirlaniyor": "Preparing card…",
  "pay.indirildi": "Image downloaded.",
  "pay.kart.alerjenler": "Allergens: ",
+ "pay.kart.besin_satir": "{ad} {d} · {duzey}",
  "pay.kart.arti_daha": "+{n} more",
  "pay.kart.daha": {
   "one": "+{n} more substance",

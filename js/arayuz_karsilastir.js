@@ -142,6 +142,7 @@ function showCompare(ida,idb){
   tr(t("gida.ozet.palm"),function(P){return P.palm.length?t("ortak.var"):t("ortak.bulunamadi")});
   tr(t("kars.satir.seker"),function(P){return P.sugar.length?t("ortak.say_liste",{n:P.sugar.length,l:P.sugar.join(", ")}):t("ortak.bulunamadi")});
   tr(t("gida.ozet.uretim"),function(P){return uretimMetin(P.uretim)||t("kars.satir.uretim_yok")});
+  karsBesin(A,B,tr);
   tr(t("kars.satir.taninan_icerik"),function(P){return P.unknown.total?P.unknown.found+"/"+P.unknown.total:"—"});
   }
   box.appendChild(tb);
@@ -163,6 +164,21 @@ function showCompare(ida,idb){
   var ch=el("button","alt",t("kars.baska"));ch.type="button";
   ch.onclick=function(){karsOpen(ida,ch)};box.appendChild(el("div","row")).appendChild(ch);
   document.body.classList.add("mode-kars");box.hidden=false;window.scrollTo(0,0);bk.focus();
+}
+/* Besin değerleri (A-02): iki üründen birinde tablo varsa birim satırı + dört satır (değer ve düzey). Renk gösterilemeyen tablo (şüpheli,
+   birim bilinmiyor) değersiz yazılır; karar (cmpDecide) besin değerlerini kullanmaz: madde seviyelerine ve profile dayanır. */
+function karsBesin(A,B,tr){
+  if(typeof besinKaynak!=="function")return;
+  [A,B].forEach(function(P){var K=besinKaynak(P.text);P.besinVar=!!K;P.besin=K?besinOzet(K.k):null});
+  if(!A.besinVar&&!B.besinVar)return;
+  tr(t("besin.baslik"),function(P){return P.besin?t("besin.birim_"+P.besin.birim):t(P.besinVar?"kars.besin.renksiz":"kars.besin.yok")});
+  BESIN_AYAR.anaSatir.forEach(function(a){
+    tr(t("besin.alan."+a),function(P){
+      var s=P.besin&&P.besin.satir.filter(function(x){return x.alan===a})[0];if(!s)return "—";
+      var f=document.createDocumentFragment();f.appendChild(document.createTextNode(besinDeger(s.v,s.lt)+" "));
+      if(s.duzey)f.appendChild(el("span","bdz "+s.duzey,t("besin.duzey."+s.duzey)));return f;
+    });
+  });
 }
 function diffList(title,items,P){
   var d=document.createElement("details");d.className="kgrp";d.appendChild(el("summary",null,t("ortak.baslik_sayi",{ad:title,n:items.length})));

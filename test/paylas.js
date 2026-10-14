@@ -162,5 +162,20 @@ ok(cfg.yerlesim[cfg.boyut].h===1920,'varsayılan hikâye (1080x1920)');
 // 13) Olumlu kartta okunan maddeler listelenir
 M=P.payModel({mode:'gida',items:[{name:'Pirinç unu',lvl:0},{name:'Tuz',lvl:0}]},{name:'Patlak'},cfg,L);T=draw(M);
 ok(/Okunan maddeler/.test(joined(T))&&T.some(x=>x.s==='Pirinç unu'),'okunan maddeler: '+joined(T));
+// 14) Besin değerleri: yalnızca düzeyi olan satırlar, birimle başlık; tablo yoksa bölüm yok; sığmazsa olgulardan sonra düşer
+{
+  const bes={birim:'g',satir:[{alan:'yag',v:12,lt:false,duzey:'orta'},{alan:'doymus',v:6,lt:false,duzey:'yuksek'},{alan:'seker',v:3.25,lt:false,duzey:'dusuk'},{alan:'tuz',v:0.5,lt:true,duzey:null}]};
+  M=P.payModel(Object.assign({},src5,{besin:bes}),{name:'Kraker'},cfg,L);T=draw(M);
+  ok(/Besin değerleri \(100 g başına\)/.test(joined(T))&&T.some(x=>x.s==='Yağ 12 g · Orta')&&T.some(x=>x.s==='Doymuş yağ 6 g · Yüksek')&&T.some(x=>x.s==='Şekerler 3,25 g · Düşük'),'besin satırları: '+joined(T));
+  ok(!/Tuz/.test(joined(T)),'düzeyi bilinmeyen satır kartta yok');
+  ok(!/Besin değerleri/.test(joined(draw(P.payModel(src5,{name:'Kraker'},cfg,L)))),'tablo yoksa bölüm yok');
+  M=P.payModel({mode:'gida',items:[{name:'Pirinç unu',lvl:0}],besin:bes},{name:'Patlak'},cfg,L);
+  ok(/Besin değerleri/.test(joined(draw(M))),'olumlu kartta da besin bölümü');
+  // En kalabalık kartta (12. bölümdeki) besin bölümü notun üstüne binmez; yer yoksa düşer, kişisel uyarı kalır
+  const c=fakeCtx(),m=P.payModel(Object.assign({},kal,{besin:bes}),{name:uzun,kisisel:true},cfg,L);P.payDraw(c,m,L,cfg,null);
+  const not=c.texts.find(x=>x.s.indexOf(cfg.not)===0),tan=c.texts.find(x=>/bileşenden/.test(x.s)),ust=Math.min(not.y,tan?tan.y:1e9)-30;
+  const body=c.texts.slice(0,c.texts.indexOf(not)).filter(x=>x.y<L.h-L.bant&&x!==tan&&x.y>ust);
+  ok(!body.length&&c.texts.some(x=>/Hamilelik/.test(x.s)),'besinli kalabalık kartta not alanına binen metin yok: '+JSON.stringify(body.map(x=>x.s)));
+}
 
 console.log(n+' durum, '+fail+' hata');process.exit(fail?1:0);

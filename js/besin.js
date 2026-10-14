@@ -272,3 +272,24 @@ function besinElleEkle(liste,anahtar,kayit){
   return a.slice(0,BESIN_ELLE_EN);
 }
 function besinElleBul(liste,anahtar){return (Array.isArray(liste)?liste:[]).filter(function(x){return x&&x.k===anahtar&&x.b})[0]||null}
+/* Kayıtlı ürünle saklanan tablo (A-02 sonrası): kaydederken ekranda gösterilen değerlerin kopyası, kaynağıyla.
+   Kayıt açıldığında barkod bilgisi ya da elle düzeltme (başka cihaz, yedekten geri yükleme) olmasa da tablo geri gelir.
+   {b, lt, birim, sorun, onay, kaynak: "elle"|"etiket"|"off", t}. Geçersizse null (yedek dosyası dışarıdan gelebilir). */
+var BESIN_KAYNAK=["elle","etiket","off"];
+function besinKayitNorm(x){
+  if(!x||typeof x!=="object"||!x.b||typeof x.b!=="object")return null;
+  var b={},lt={},dolu=false;
+  BESIN_ALAN.forEach(function(a){var v=besinSayi(x.b[a]);b[a]=v==null||Math.abs(v)>10000?null:v;if(b[a]!=null)dolu=true;if(x.lt&&x.lt[a]===true&&b[a]!=null)lt[a]=true});
+  if(!dolu)return null;
+  var o={b:b,lt:lt,birim:x.birim==="g"||x.birim==="ml"?x.birim:"",sorun:(Array.isArray(x.sorun)?x.sorun:[]).filter(function(s){return typeof s==="string"&&/^[a-z_]{1,20}$/.test(s)}).slice(0,12),
+    onay:x.onay===true,kaynak:BESIN_KAYNAK.indexOf(x.kaynak)>=0?x.kaynak:"etiket"};
+  if(typeof x.t==="number"&&isFinite(x.t)&&x.t>0)o.t=x.t;
+  return o;
+}
+/* Ekrandaki kaynaktan (besinKaynak: {k, kaynak, t}) saklanacak kopya */
+function besinKayitKopya(K){return K?besinKayitNorm({b:K.k.b,lt:K.k.lt,birim:K.k.birim,sorun:K.k.sorun,onay:K.k.onay,kaynak:K.kaynak,t:K.t}):null}
+/* Karşılaştırma ve paylaşım kartı için dört satırın kısa özeti; renk gösterilemiyorsa (şüpheli, birim bilinmiyor) null */
+function besinOzet(k){
+  var G=besinGorunum(k);if(!G||!G.renk)return null;
+  return {birim:G.birim,satir:G.satir.filter(function(s){return s.v!=null})};
+}

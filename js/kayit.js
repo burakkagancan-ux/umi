@@ -1,5 +1,7 @@
 /* Kaydedilen ürünler: saf mantık (DOM yok); testler de yükler. Kayıtlar yalnızca bu cihazda (localStorage "kayitli").
-   Kayıt: {id, t (kayıt zamanı), u (son güncelleme), mode: gida|koz|tem, name, note, text, oz: özet}
+   Kayıt: {id, t (kayıt zamanı), u (son güncelleme), mode: gida|koz|tem, name, note, text, oz: özet, besin?: gıdada besin değeri tablosu}
+   besin (js/besin.js besinKayitNorm): kaydederken ekranda gösterilen tablonun kaynağıyla kopyası (barkoddan, okunan etiketten ya da elle);
+   kayıt açılınca, karşılaştırmada ve yedekten geri yüklenince tablo bununla geri gelir.
    Özet (oz): kaydederken ve her açılışta hesaplanır; listede veri yüklemeden göstermek ve değerlendirme değişince haber vermek için.
    {u: uyarı sayısı, d: dikkat sayısı, top: en riskli en çok 3 ad} — karşılaştırmadaki ürün özetinden (rank 3 uyarı, rank 2 dikkat). */
 var KAYIT_AYAR={enFazla:100};
@@ -12,6 +14,7 @@ function kayitAdd(list,e,max){
   var tx=(e.text||"").trim();if(!tx||!KAYIT_TUR[e.mode])return (list||[]).slice();
   var old=(list||[]).filter(function(x){return x.mode===e.mode&&(x.text||"").trim()===tx})[0];
   var n={id:old?old.id:e.id,t:old?old.t:e.t,u:e.t,mode:e.mode,name:(e.name||"").trim()||(old&&old.name)||t("kayit.adsiz"),note:(e.note||"").trim(),text:tx,oz:e.oz||(old&&old.oz)||null};
+  var bs=e.besin!==undefined?e.besin:old&&old.besin;if(bs&&e.mode==="gida")n.besin=bs;   // undefined: eskisi korunur, null: silinir
   var out=(list||[]).filter(function(x){return x!==old});out.unshift(n);
   return out.slice(0,max||KAYIT_AYAR.enFazla);
 }
@@ -50,6 +53,7 @@ function kayitGeriYukle(list,json,max){
     if(kayitFind(out,x.mode,x.text))return;
     out.push({id:String(x.id||"k"+Math.random().toString(36).slice(2)),t:+x.t||Date.now(),u:+x.u||+x.t||Date.now(),mode:x.mode,
       name:String(x.name||t("kayit.adsiz")).slice(0,60),note:String(x.note||"").slice(0,300),text:x.text.trim(),oz:x.oz&&typeof x.oz.u==="number"?x.oz:null});
+    var bs=x.mode==="gida"&&typeof besinKayitNorm==="function"?besinKayitNorm(x.besin):null;if(bs)out[out.length-1].besin=bs;
     eklenen++;
   });
   out.sort(function(a,b){return (b.u||b.t)-(a.u||a.t)});

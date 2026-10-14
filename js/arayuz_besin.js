@@ -2,7 +2,7 @@
    100 g (içecekte 100 ml) başına; renk yalnızca değerler tutarlıysa ve birim biliniyorsa (emin olunmayan renk gösterilmez).
    Değerin kaynağı sırayla: kullanıcının düzelttiği değerler (localStorage "besin_elle", metne bağlı) → okunan metindeki tablo
    → barkoddan gelen Open Food Facts değerleri. "Tablonun fotoğrafını ekle": okunan tablo metni içerik metninin sonuna eklenir,
-   aynı tarama güncellenir (kayıt ve geçmişle birlikte saklanır). */
+   aynı tarama güncellenir (kayıt ve geçmişle birlikte saklanır). Kayıtlı üründe gösterilen tablo kaynağıyla birlikte saklanır (kayıt.besin). */
 var BESIN_SOZ=null;    // besinSozluk(data/besin.json)
 var BESIN_EKLE=null;   // {taban: fotoğraftan önceki metin, n: fotoğrafın OKU.n'i (seçilince), t}
 var BESIN_EKLE_SURE=5*60000;
@@ -12,15 +12,32 @@ function besinYukle(){
 }
 function besinElleListe(){try{var a=JSON.parse(localStorage.getItem("besin_elle")||"[]");return Array.isArray(a)?a:[]}catch(e){return []}}
 function besinElleYaz(a){try{localStorage.setItem("besin_elle",JSON.stringify(a));return true}catch(e){return false}}
-/* Ekrandaki metnin tablosu: {k: besinGorunum girdisi, kaynak: "elle"|"etiket"|"off", t, okunan: metinden ayrıştırılan (düzeltme formu için)} ya da null */
-function besinKaynak(tx){
+/* Ekrandaki metnin tablosu: {k: besinGorunum girdisi, kaynak: "elle"|"etiket"|"off", t, okunan: metinden ayrıştırılan (düzeltme formu için)} ya da null.
+   Sıra: bu cihazda elle düzeltilen → kayıtlı üründe saklanan elle değerler (başka cihaz, yedek) → okunan metindeki tablo → barkoddan OFF
+   → kayıtlı üründe saklanan diğer değerler (kayıt barkodsuz açıldığında OFF değerleri). kayitsiz: kayıtta saklananlar sayılmaz (kaydı yenilerken). */
+function besinKaynak(tx,kayitsiz){
   var okunan=BESIN_SOZ?besinAyristir(tx,BESIN_SOZ):null;
   var e=besinElleBul(besinElleListe(),besinMetinAnahtar("gida",tx));
   if(e)return {k:{b:e.b,lt:e.lt||{},birim:e.birim,sorun:[],onay:true},kaynak:"elle",t:e.t,okunan:okunan};
+  var kb=kayitsiz?null:besinKayitli(tx);
+  if(kb&&kb.kaynak==="elle")return besinKayittan(kb,okunan);
   if(okunan)return {k:okunan,kaynak:"etiket",okunan:okunan};
   var r=BARKOD&&BARKOD.r;
   if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:{},birim:r.besin.birim,sorun:[]},kaynak:"off",t:r.besinT||r.t};
-  return null;
+  return kb?besinKayittan(kb,okunan):null;
+}
+function besinKayitli(tx){
+  if(typeof kayitFind!=="function")return null;
+  var k=kayitFind(kayitLoad(),"gida",tx);return k&&k.besin?besinKayitNorm(k.besin):null;
+}
+function besinKayittan(bs,okunan){return {k:{b:bs.b,lt:bs.lt,birim:bs.birim,sorun:bs.sorun,onay:bs.onay},kaynak:bs.kaynak,t:bs.t,okunan:okunan,kayit:true}}
+/* Metin kayıtlı bir gıdaysa saklanan tabloyu ekrandaki kaynakla yeniler (elle düzeltme ya da düzeltmeyi geri alma sonrası) */
+function besinKayitYenile(tx){
+  if(typeof kayitLoad!=="function")return;
+  var a=kayitLoad(),k=kayitFind(a,"gida",tx);if(!k)return;
+  var bs=besinKayitKopya(besinKaynak(tx,true));
+  if(bs)k.besin=bs;else if(k.besin&&k.besin.kaynak==="elle")delete k.besin;else return;
+  kayitStore(a);
 }
 function besinDeger(v,lt){var s=t("birim.g_l",{n:sayi(v)});return lt?t("besin.kucuktur",{d:s}):s}
 function besinKart(tx){
@@ -98,7 +115,8 @@ function besinEkMesaj(metin,msj){return BESIN_SOZ&&!besinAyristir(metin,BESIN_SO
 function besinElleKaydet(tx,k){
   var a=besinElleEkle(besinElleListe(),besinMetinAnahtar("gida",tx),{b:k.b,birim:k.birim,t:Date.now()});
   if(k.lt&&Object.keys(k.lt).length)a[0].lt=k.lt;
-  return besinElleYaz(a);
+  if(!besinElleYaz(a))return false;
+  besinKayitYenile(tx);return true;
 }
 /* Düzeltme formu: sekiz satır (boş = okunmadı; "<0,5" yazılabilir) ve birim. Kaydedilen değerler kullanıcı onayı sayılır. */
 function besinForm(tx,K,ret,kart){
@@ -133,7 +151,7 @@ function besinForm(tx,K,ret,kart){
   body.appendChild(go);body.appendChild(msg);
   if(K.kaynak==="elle"){
     var geri=el("button","alt",t("besin.form.geri"));geri.type="button";
-    geri.onclick=function(){var k=besinMetinAnahtar("gida",tx);besinElleYaz(besinElleListe().filter(function(x){return x&&x.k!==k}));closeSheet();kart.replaceWith(besinKart(tx))};
+    geri.onclick=function(){var k=besinMetinAnahtar("gida",tx);besinElleYaz(besinElleListe().filter(function(x){return x&&x.k!==k}));besinKayitYenile(tx);closeSheet();kart.replaceWith(besinKart(tx))};
     body.appendChild(geri);
   }
   openSheet(t("besin.form.baslik"),null,body,ret);
