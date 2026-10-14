@@ -52,6 +52,8 @@ jobs:
         run: node test/kayit.js
       - name: Rozetler
         run: node test/rozet.js
+      - name: Topluluk
+        run: node test/topluluk.js
       - name: Cihaz verisi sürümü
         run: node test/veri_surum.js
       - name: Barkod
@@ -66,6 +68,8 @@ jobs:
         run: python3 test/dogrula_veri.py
       - name: OCR Worker
         run: node worker/test.mjs
+      - name: Topluluk (Worker, gerçek SQLite)
+        run: node worker/test_topluluk.mjs
       - name: Veri üreteçleri (data/ ile kaynak/ uyumlu mu)
         # Üreteçleri depodaki kaynak dosyalarıyla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
         run: |

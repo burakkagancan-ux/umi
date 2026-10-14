@@ -394,6 +394,48 @@ async function scan(p,mode,text){
       ok(!istek&&(await p.textContent('#eklebar'))==='','kimlik yoksa istek yok ve Eklediklerim düğmesi yok');
       await p.unroute(/workers\.dev\/katki$/);
     }
+    // G-04: Topluluk ekranı (ortak hedef + eksik ürünler, GET /topluluk) ve içerik bulunamayan barkodun bir kez bildirilmesi (POST /aranan)
+    {
+      const D=JSON.parse(fs.readFileSync(path.join(R,'data','barkod_off.json'),'utf8')).u;
+      const gec=k=>p.evaluate(x=>barkodGecerli(x),k);
+      const adli=[];for(const k of Object.keys(D))if(!Object.keys(D[k][4]||{}).length&&D[k][1]&&k.length===13&&await gec(k)){adli.push(k);break}
+      const icerikli=Object.keys(D).find(k=>D[k][4]&&D[k][4].tr&&/^869\d{10}$/.test(k));
+      const yok='5000112637922';
+      ok(adli.length&&icerikli&&!D[yok],'topluluk testi için veri: '+adli[0]+' / '+icerikli);
+      const istekler=[];
+      await p.route(/workers\.dev\/topluluk/,r=>{istekler.push(r.request().url());r.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:JSON.stringify({
+        sayilar:{urun:{gida:40,koz:3},dogrulanan:{gida:30,koz:7}},t:Date.now(),
+        eksik:[{kod:icerikli,tur:'gida',n:12,son:Date.now()},{kod:yok,tur:'gida',n:4,son:Date.now()-86400000},{kod:adli[0],tur:'gida',n:2,son:Date.now()}]})})});
+      let aranan=[];
+      await p.route(/workers\.dev\/aranan$/,r=>{aranan.push(r.request().postDataJSON());r.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:'{"n":5}'})});
+      await p.evaluate(()=>{localStorage.removeItem('aranan');localStorage.setItem('tur','gida')});
+      await p.goto(B+'ocr.html#profil');await p.waitForSelector('#toplulukbar button');
+      await p.evaluate(()=>setMode('gida',true));   // ekran seçili türle açılır
+      ok(/Topluluk/.test(await p.textContent('#toplulukbar')),'Profilim: Topluluk düğmesi');
+      await p.click('#toplulukbar button');await p.waitForSelector('#topluluk:not([hidden]) .tpitem',{timeout:10000}).catch(()=>{});
+      const s1=await p.evaluate(()=>({hd:document.querySelector('#topluluk .tphedef').textContent,bar:document.querySelector('#topluluk .rzbar').getAttribute('aria-valuenow'),
+        l:[...document.querySelectorAll('#topluluk .tpitem')].map(x=>x.textContent),mod:document.body.classList.contains('mode-topluluk'),h:location.hash,tab:document.querySelector('.tabbar a[aria-current]').getAttribute('data-tab')}));
+      ok(s1.mod&&s1.h==='#topluluk'&&s1.tab==='profil','#topluluk ekranı Profilim sekmesinde: '+JSON.stringify([s1.h,s1.tab]));
+      ok(/Ortak hedef/.test(s1.hd)&&/Birlikte 100 doğrulanmış ürüne ulaşalım/.test(s1.hd)&&/37 \/ 100 doğrulanmış ürün/.test(s1.hd)&&s1.bar==='37','ortak hedef: 37 / 100: '+s1.hd.slice(0,200));
+      ok(/Gıda: 40 ürün eklendi, 30 tanesi doğrulandı/.test(s1.hd)&&/Temizlik: 0 ürün eklendi/.test(s1.hd)&&/kişisel sıralama yoktur/.test(s1.hd),'türlere göre sayılar, sıralama yok');
+      ok(s1.l.length===2&&s1.l[0].includes(yok)&&/4 kez arandı/.test(s1.l[0])&&s1.l[1].includes(adli[0])&&s1.l[1].includes(D[adli[0]][1])&&!s1.l.join().includes(icerikli),'eksik ürünler: uygulamada içeriği olan çıkar, adı bilinen adıyla: '+JSON.stringify(s1.l));
+      ok(istekler.length===1&&/\/topluluk\?tur=gida$/.test(istekler[0]),'istek: GET /topluluk?tur=gida (kimlik yok): '+istekler.join());
+      await p.click('#topluluk .seg button[data-tur="koz"]');await p.waitForFunction(()=>document.querySelectorAll('#topluluk .tpitem').length===0&&/Bu türde/.test(document.querySelector('#topluluk .klistk').textContent)||document.querySelectorAll('#topluluk .tpitem').length>0,null,{timeout:5000}).catch(()=>{});
+      ok(/\/topluluk\?tur=koz$/.test(istekler.at(-1)),'Kozmetik süzgeci: tur=koz');
+      await p.click('#topluluk .seg button[data-tur="gida"]');await p.waitForSelector('#topluluk .tpitem');
+      await p.evaluate(()=>setMode('tem',true));   // ürün gıda: "Bu ürün elimde" gıdaya geçer
+      // "Bu ürün elimde": ekran kapanır, barkod Etiket Oku'da aranır, bulunamayınca bir kez bildirilir ve kaç kez arandığı yazar
+      await p.click('#topluluk .tpitem button');
+      await p.waitForFunction(()=>/henüz veritabanında yok/.test((document.querySelector('#sonuc .bkaynak')||{}).textContent||''),null,{timeout:15000});
+      await p.waitForFunction(()=>/5 kez arandı/.test(document.querySelector('#sonuc .bkaynak').textContent),null,{timeout:5000}).catch(()=>{});
+      const s2=await p.evaluate(()=>({mod:document.body.classList.contains('mode-topluluk'),h:location.hash,kart:document.querySelector('#sonuc .bkaynak').textContent,ar:JSON.parse(localStorage.getItem('aranan')||'[]')}));
+      ok(await p.evaluate(()=>MODE==='gida'),'"Bu ürün elimde" ürünün türüne geçer');
+      ok(!s2.mod&&s2.h===''&&/5 kez arandı/.test(s2.kart)&&/ilk ekleyen siz/.test(s2.kart),'"Bu ürün elimde" → Etiket Oku, bulunamadı kartında arama sayısı: '+s2.kart.slice(0,160));
+      ok(aranan.length===1&&JSON.stringify(aranan[0])===JSON.stringify({kod:yok,tur:'gida'})&&s2.ar.join()===yok,'POST /aranan yalnızca barkod ve tür; cihazda hatırlanır: '+JSON.stringify(aranan));
+      await p.evaluate(k=>barkodIsle(k),yok);await p.waitForTimeout(800);
+      ok(aranan.length===1,'aynı barkod bu cihazdan ikinci kez bildirilmez');
+      await p.unroute(/workers\.dev\/topluluk/);await p.unroute(/workers\.dev\/aranan$/);
+    }
     ok(!errs.length,'rozet konsol hatası: '+errs.join(' | '));errs.length=0;
   }
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');

@@ -61,3 +61,7 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 | Okumadıklarım | Not read yet | Ansiklopedi süzgeci. |
 | Eklediklerim | Products I added | Barkodla eklenen ürünler ekranı (G-02). |
 | Doğrulandı / Doğrulanmayı bekliyor | Verified / Awaiting verification | Eklenen ürünün durumu. |
+| Topluluk | Community | Ortak hedef ve eksik ürünler ekranı (G-04). |
+| Ortak hedef | Shared goal | Herkesin doğrulanmış ürünlerinin toplamı; kişisel sıralama yok. |
+| Aranan ama henüz içeriği olmayan ürünler | Wanted products without ingredients yet | "Eksik ürünler" listesi. |
+| Bu ürün elimde | I have this product | Listeden barkodu Etiket Oku'da açar. |

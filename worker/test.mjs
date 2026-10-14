@@ -56,7 +56,7 @@ const d1 = (eskiTablo) => { const rows = [], sqls = []; let ddl = 0;
     async first() { return { n: rows.filter((r) => r.kod === this.args[0]).length }; },
     async run() { sqls.push(sql);
       if (/^ALTER/.test(sql)) { if (!eskiTablo) throw new Error("duplicate column name: kim"); return {}; }
-      if (!/^INSERT/.test(sql)) return {};
+      if (!/^INSERT INTO katki/.test(sql)) return {};
       const [kod, tur, dil, metin, t, kim] = this.args; rows.push({ kod, tur, dil, metin, t, kim }); return {}; } });
   return { rows, sqls, get ddl() { return ddl; }, prepare: st, batch: async (l) => { ddl += l.length; return []; } }; };
 const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz, emülgatör (soya lesitini), kabartıcı (sodyum bikarbonat).";
@@ -86,7 +86,7 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const r = e.URUNLER.rows[0];
   if (!r || Object.keys(r).sort().join() !== "dil,kim,kod,metin,t,tur" || r.kim !== null) { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman, katkıcı olmalı (IP yok); kimliksiz katkıda kim boş", r); }
   await t("urun: tek katkı doğrulanmamış", breq("/urun/8690504025207"), e, 200, (j) => j.bulundu && !j.dogrulandi && j.sayi === 1 && j.tur === "gida");
-  if (e.URUNLER.ddl !== 2 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
+  if (e.URUNLER.ddl !== 6 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
   // Katkıcı kimliği (O-22)
   const kim = "0123456789abcdef0123456789abcdef";
   await t("urun: geçersiz katkıcı kimliği", post({ kod: "4006381333931", tur: "gida", dil: "tr", metin: metinA, kim: "ali@ornek.com" }), e, 400);

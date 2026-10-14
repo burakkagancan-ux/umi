@@ -252,7 +252,7 @@
  "gizlilik.2": "Photograph only the ingredients section of the pack. Make sure no personal information such as a face, name, address or document is in the frame.",
  "gizlilik.3": "Your profile choices (allergens, vegan etc.) are stored only on this device and are not sent to us.",
  "gizlilik.4": "The app does not require an account and uses no advertising or tracking tools. When you share a result, only the daily share count goes up by one; no product, text or personal information is sent.",
- "gizlilik.5": "When you scan a barcode, the number is sent to our server to find the product; the server asks Open Food Facts on its own behalf, so your IP address is not passed on or stored. Ingredients you read from a photo are saved with the barcode only if you allow it (without the photo, location or personal information). With your contributions goes a contributor number generated at random on this device at your first contribution; it is not derived from your name, device or IP address and only serves to count your contributions together. The My badges and Products I added screens use this number to ask the server only for the status of the products you added.",
+ "gizlilik.5": "When you scan a barcode, the number is sent to our server to find the product; the server asks Open Food Facts on its own behalf, so your IP address is not passed on or stored. Ingredients you read from a photo are saved with the barcode only if you allow it (without the photo, location or personal information). With your contributions goes a contributor number generated at random on this device at your first contribution; it is not derived from your name, device or IP address and only serves to count your contributions together. The My badges and Products I added screens use this number to ask the server only for the status of the products you added. When no ingredients are found for a barcode, its number and product type are counted once from this device for the list of wanted products (without your IP address or contributor number).",
  "gizlilik.baslik": "Privacy: what happens to your photo?",
  "kanser.baslik": "Substance that may be carcinogenic",
  "kanser.gida_not": "Based on the IARC classification (Group 2A probably, 2B possibly carcinogenic). The risk cannot be calculated because the amount is not on the label.",
@@ -1062,6 +1062,31 @@
  },
  "ekle.dogrulandi": "Verified",
  "ekle.bekliyor": "Awaiting verification",
+ "topluluk.baslik": "Community",
+ "topluluk.alt": "Shared goal and wanted products",
+ "topluluk.hedef_baslik": "Shared goal",
+ "topluluk.hedef_metin": "Let's reach {h} verified products together.",
+ "topluluk.hedef_tamam": "We reached the goal of {h} verified products. Thank you!",
+ "topluluk.hedef_sayi": "{s} / {h} verified products",
+ "topluluk.tur_sayi": {
+  "one": "{s} product added, {d} verified",
+  "other": "{s} products added, {d} verified"
+ },
+ "topluluk.hedef_not": "A product is verified when two different people add the same ingredients at least 10 minutes apart. The numbers are everyone's additions combined; there is no personal ranking.",
+ "topluluk.eksik_baslik": "Wanted products without ingredients yet",
+ "topluluk.eksik_not": "Products whose barcode people scanned but whose ingredients could not be found; most wanted first. If you have the product, you can add it by taking a photo of the ingredients.",
+ "topluluk.eksik_bos": "There are no wanted products of this type without ingredients right now.",
+ "topluluk.arandi": {
+  "one": "Searched {s} time",
+  "other": "Searched {s} times"
+ },
+ "topluluk.son": "last searched {tarih}",
+ "topluluk.elimde": "I have this product",
+ "topluluk.gizlilik": "This list contains no personal information: only the barcode number, the product type and how many times it was searched. The product name is added on your device from the Open Food Facts data in the app.",
+ "topluluk.yok_arandi": {
+  "one": "This product was searched {s} time. You could be the first to add its ingredients.",
+  "other": "This product was searched {s} times. You could be the first to add its ingredients."
+ },
  "rozet.sunucu_t": "Server count: {t}",
  "rozet.sunucu_yok": "The server count could not be fetched yet.",
  "rozet.sunucu_kimlik_yok": "Counting starts when you add your first product by barcode.",
