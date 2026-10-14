@@ -100,10 +100,19 @@ function rozetBirlestir(a,b){
 }
 function rozetBosMu(d){d=rozetNorm(d);return !ROZET_YEREL.some(function(x){return Object.keys(d[x]).length})}
 
-/* ---------- Simge: her ailenin kendi işareti; ad sırası (1-8) yükseldikçe çerçeve ve süs zenginleşir ----------
-   1 düz madalya · 2 dış halka · 3 çift halka · 4 bir yıldız · 5 üç yıldız · 6 altın halka · 7 altın yıldızlar · 8 tırtıllı altın kenar + beş yıldız.
-   Renkler risk renklerinden ayrı: madalya ana yeşil, süs altın; kazanılmamış gri. Şekil hep daire (uyarı üçgeni ve ünlemiyle karışmaz). */
-var ROZET_RENK={ana:"#1F4D3A",altin:"#B8902A",gri:"#B9B5AC",griAcik:"#D6D2C8",beyaz:"#FFFFFF"};
+/* ---------- Simge: her ailenin kendi şekli, rengi ve işareti; kademe (ad sırası 1-8) yükseldikçe malzeme ve süs değişir ----------
+   Aile: Okur lacivert daire · Etiket Dedektifi mor altıgen · Ürün Avcısı petrol kalkan · Öncü kahve yuvarlak kare · Doğrulayıcı yeşil mühür (tırtıllı).
+   Kademe: 1 bronz çerçeve · 2 bronz + yıldız (yıldızlar kademenin metalinde) · 3 gümüş çerçeve + iç halka · 4 gümüş + iki yıldız · 5 altın çerçeve · 6 altın + üç yıldız
+           · 7 altın + defne dalları · 8 kalın altın, defne, beş yıldız, altın iç halka.
+   Renkler risk renklerinden (kırmızı, turuncu, sarı) ayrı; uyarı üçgeni ya da eşkenar dörtgen şekli yok. Kazanılmamış: gri. */
+var ROZET_RENK={bronz:"#A0703F",gumus:"#8F979E",altin:"#B8902A",gri:"#B9B5AC",griAcik:"#D6D2C8",beyaz:"#FFFFFF"};
+var ROZET_STIL={
+  kitap:{sekil:"daire",renk:"#234A7A"},
+  buyutec:{sekil:"altigen",renk:"#5A3E8E"},
+  hedef:{sekil:"kalkan",renk:"#155E63"},
+  bayrak:{sekil:"kare",renk:"#6E4A2A"},
+  onay:{sekil:"muhur",renk:"#1F4D3A"}
+};
 var ROZET_ISARET={
   kitap:'<path d="M12 16.5c-2.6-1.6-5.6-2-8.5-1.6v-9c2.9-.4 5.9 0 8.5 1.6 2.6-1.6 5.6-2 8.5-1.6v9c-2.9-.4-5.9 0-8.5 1.6zM12 7.5v9" fill="none" stroke="#FFF" stroke-width="1.7" stroke-linejoin="round"/>',
   buyutec:'<circle cx="10.5" cy="10.5" r="5" fill="none" stroke="#FFF" stroke-width="2"/><path d="M14.2 14.2l5 5" stroke="#FFF" stroke-width="2.4" stroke-linecap="round"/>',
@@ -115,17 +124,38 @@ function rozetYildiz(cx,cy,r,renk){
   var p=[];for(var i=0;i<10;i++){var a=Math.PI/2+i*Math.PI/5,rr=i%2?r*0.45:r;p.push((cx+rr*Math.cos(a)).toFixed(2)+","+(cy-rr*Math.sin(a)).toFixed(2))}
   return '<polygon points="'+p.join(" ")+'" fill="'+renk+'"/>';
 }
+/* Ailenin şekli (cx,cy merkezli, r yarıçaplı); öznitelikler (fill/stroke) metin olarak eklenir */
+function rozetSekil(sekil,cx,cy,r,oz){
+  var f=function(n){return n.toFixed(2)},i,p=[];
+  if(sekil==="altigen"){for(i=0;i<6;i++){var a=Math.PI/6+i*Math.PI/3;p.push(f(cx+r*Math.cos(a))+","+f(cy+r*Math.sin(a)))}return '<polygon points="'+p.join(" ")+'" stroke-linejoin="round" '+oz+'/>'}
+  if(sekil==="muhur"){for(i=0;i<48;i++){var b=i*Math.PI/24,rr=r*(0.94+0.06*Math.cos(12*b));p.push(f(cx+rr*Math.cos(b))+","+f(cy+rr*Math.sin(b)))}return '<polygon points="'+p.join(" ")+'" '+oz+'/>'}
+  if(sekil==="kare"){var k=r*0.86;return '<rect x="'+f(cx-k)+'" y="'+f(cy-k)+'" width="'+f(2*k)+'" height="'+f(2*k)+'" rx="'+f(k*0.42)+'" '+oz+'/>'}
+  if(sekil==="kalkan"){var w=r*0.9,t=cy-r*0.88;return '<path d="M'+f(cx-w)+' '+f(t+r*0.14)+'Q'+f(cx-w)+' '+f(t)+' '+f(cx-w+r*0.14)+' '+f(t)+'H'+f(cx+w-r*0.14)+'Q'+f(cx+w)+' '+f(t)+' '+f(cx+w)+' '+f(t+r*0.14)+'V'+f(cy+r*0.12)+'Q'+f(cx+w)+' '+f(cy+r*0.72)+' '+f(cx)+' '+f(cy+r*1.06)+'Q'+f(cx-w)+' '+f(cy+r*0.72)+' '+f(cx-w)+' '+f(cy+r*0.12)+'Z" '+oz+'/>'}
+  return '<circle cx="'+cx+'" cy="'+cy+'" r="'+f(r)+'" '+oz+'/>';
+}
+/* Defne dalları: alttan iki yana kıvrılan yapraklar */
+function rozetDefne(cx,cy,r,renk){
+  var o=['<path d="M'+(cx-r*0.5).toFixed(2)+' '+(cy+r*0.87).toFixed(2)+'A'+r+' '+r+' 0 0 1 '+(cx-r*0.94).toFixed(2)+' '+(cy-r*0.34).toFixed(2)+'M'+(cx+r*0.5).toFixed(2)+' '+(cy+r*0.87).toFixed(2)+'A'+r+' '+r+' 0 0 0 '+(cx+r*0.94).toFixed(2)+' '+(cy-r*0.34).toFixed(2)+'" fill="none" stroke="'+renk+'" stroke-width=".9" stroke-linecap="round"/>'];
+  [-1,1].forEach(function(yon){
+    for(var i=0;i<5;i++){var a=Math.PI/2+yon*(0.6+i*0.34),x=cx+(r+1.2)*Math.cos(a),y=cy+(r+1.2)*Math.sin(a),d=a*180/Math.PI+90-yon*28;
+      o.push('<ellipse cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" rx="3.1" ry="1.3" transform="rotate('+d.toFixed(1)+' '+x.toFixed(2)+' '+y.toFixed(2)+')" fill="'+renk+'"/>')}
+  });
+  return o.join("");
+}
 /* simge: ROZET_ISARET anahtarı; sira: 0 (hiç) ya da 1-8; kazanildi false ise gri. 48x48 görünümlü SVG metni döner. */
 function rozetSvg(simge,sira,kazanildi){
-  var s=Math.max(1,Math.min(8,sira|0)),R=ROZET_RENK,ana=kazanildi?R.ana:R.gri,sus=kazanildi?(s>=6?R.altin:R.ana):R.griAcik,yil=kazanildi?(s>=8?R.ana:s>=7?R.altin:R.ana):R.gri,o=[];
+  var s=Math.max(1,Math.min(8,sira|0)),R=ROZET_RENK,st=ROZET_STIL[simge]||ROZET_STIL.kitap,cx=24,cy=s>=7?24:25,o=[];
+  var metal=!kazanildi?R.griAcik:s>=5?R.altin:s>=3?R.gumus:R.bronz,ana=kazanildi?st.renk:R.gri,yil=kazanildi?metal:R.gri;
+  var rDis=s>=7?17.5:19,rIc=s>=8?13.6:s>=5?14.6:15.6;
   o.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true">');
-  if(s>=8){var p=[];for(var i=0;i<32;i++){var a=i*Math.PI/16,rr=i%2?21.2:23;p.push((24+rr*Math.cos(a)).toFixed(2)+","+(25+rr*Math.sin(a)).toFixed(2))}o.push('<polygon points="'+p.join(" ")+'" fill="'+sus+'"/>')}
-  else if(s>=2)o.push('<circle cx="24" cy="25" r="21" fill="none" stroke="'+sus+'" stroke-width="'+(s>=6?2.4:1.6)+'"/>');
-  o.push('<circle cx="24" cy="25" r="17" fill="'+ana+'"/>');
-  if(s>=3)o.push('<circle cx="24" cy="25" r="15" fill="none" stroke="'+(kazanildi?(s>=8?R.altin:"#FFFFFF"):R.griAcik)+'" stroke-width="1" opacity=".7"/>');
-  o.push('<g transform="translate(14 15) scale(.8333)">'+(ROZET_ISARET[simge]||"")+'</g>');
-  var y=[[],[],[],[24],[16,24,32],[16,24,32],[16,24,32],[10,17,24,31,38]][s-1];
-  y.forEach(function(x){var dy=s>=8?Math.abs(x-24)*0.18:Math.abs(x-24)*0.25;o.push(rozetYildiz(x,4.5+dy,s>=8?3.2:3.6,yil))});
+  if(s>=7)o.push(rozetDefne(cx,cy,21,kazanildi?R.altin:R.griAcik));
+  o.push(rozetSekil(st.sekil,cx,cy,rDis,'fill="'+metal+'"'));
+  o.push(rozetSekil(st.sekil,cx,cy,rIc,'fill="'+ana+'"'));
+  if(s>=3)o.push(rozetSekil(st.sekil,cx,cy,rIc-1.8,'fill="none" stroke="'+(kazanildi?(s>=8?R.altin:R.beyaz):R.griAcik)+'" stroke-width="'+(s>=8?1.2:.8)+'" opacity="'+(s>=8?1:.55)+'"'));
+  var ik=s>=8?.66:.72;
+  o.push('<g transform="translate('+(cx-12*ik).toFixed(2)+' '+(cy-12*ik).toFixed(2)+') scale('+ik+')">'+(ROZET_ISARET[simge]||"")+'</g>');
+  var y=[[],[24],[],[19,29],[],[16,24,32],[],[12,18,24,30,36]][s-1],ust=cy-rDis-0.5;
+  y.forEach(function(x){o.push(rozetYildiz(x,Math.max(3.2,ust+Math.abs(x-24)*0.22),s>=8?2.8:3.3,yil))});
   o.push('</svg>');return o.join("");
 }
 
