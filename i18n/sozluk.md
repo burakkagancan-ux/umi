@@ -55,3 +55,7 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 | Etiket Oku | Read Label | Sayfa adı. |
 | Analiz Et | Analyse | |
 | Ürün Avcısı | Product Hunter | Ürün ekleyen kullanıcının rozeti. Kullanıcının ürün eklemesi için "katkı / katkıcı" denmez: uygulamada "katkı" katkı maddesi (uyarı) çağrıştırır (kullanıcı kararı 14.10.2026). Arayüzde "ürün ekle / eklediklerim". |
+| Rozet / Rozetlerim | Badge / My badges | Kullanıcının yaptığına verilir, ürüne değil (G-01). |
+| Okur · Etiket Dedektifi · Öncü · Doğrulayıcı | Reader · Label Detective · Pioneer · Verifier | Rozet aileleri; kademe adları i18n rozet.<aile>.k1–k8. |
+| Yeni rozet | New badge | Kutlama kartı ve paylaşım kartı başlığı. |
+| Okumadıklarım | Not read yet | Ansiklopedi süzgeci. |

@@ -370,7 +370,7 @@ function render(res,br){
   payBar(box,{mode:"gida",text:$("metin").value});
 }
 /* Analiz; ardından barkod kaynağı/katkı kartı (js/arayuz_barkod.js) */
-function run(){runIc();if(typeof barkodSonra==="function")barkodSonra()}
+function run(){runIc();if(typeof barkodSonra==="function")barkodSonra();if(typeof rozetSonra==="function")rozetSonra()}
 function runIc(){
   var tx=$("metin").value;
   if(MODE==="koz"){

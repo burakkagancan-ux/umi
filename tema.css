@@ -15,3 +15,20 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tabbar a[aria-current="page"]{color:var(--ok)}
 .tabbar a[data-tab="liste"]{display:none}   /* Liste şimdilik menüde yok (12.10.2026, kullanıcı kararı); sayfa ve veri güncellemesi çalışmaya devam eder. Geri açınca: html[data-ulke="TR"] ... {display:flex} (js/dil.js) */
+/* Rozetler (js/arayuz_rozet.js; ocr.html ve ansiklopedi.html): madalya simgesi, kutlama kartı, Rozetlerim aile kartları, ekranın üstündeki küçük simge */
+.rzs{display:inline-flex;flex:none;width:40px;height:40px}.rzs svg{width:100%;height:100%}.rzs.orta{width:56px;height:56px}.rzs.buyuk{width:88px;height:88px}
+.rozetsimge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;text-decoration:none}.rozetsimge[hidden]{display:none!important}.rozetsimge .rzs{width:36px;height:36px}
+.rozetkut{position:relative;display:flex;gap:14px;align-items:flex-start;background:var(--okbg);border:1px solid #C7DACF;border-radius:16px;padding:14px 44px 14px 14px;margin:10px 0}
+.rozetkut .rzx{position:absolute;top:6px;inset-inline-end:6px;width:36px;height:36px;min-height:0;padding:0;border-radius:50%;background:none;color:var(--ink);border:0;font-size:22px;line-height:1}
+.rozetkut .rzu{font-size:13px;font-weight:600;color:var(--ok);text-transform:uppercase;letter-spacing:.04em}
+.rzg{flex:1;min-width:0}.rza{font-family:var(--hf);font-weight:700;font-size:20px;line-height:1.2}.rzf{font-size:14px;color:var(--ok);font-weight:600}.rzp{margin:6px 0 0;font-size:14px}
+.rzrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.rzlink{display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
+.rozetkut .rzrow button,.rzaile .rzrow button{font:inherit;font-weight:600;min-height:44px;padding:8px 14px;border-radius:12px;border:1.5px solid var(--ok);background:var(--ok);color:var(--bg);cursor:pointer}
+.rzaile .rzrow button.alt{background:none;color:var(--ok)}.rozetkut .how,.rzaile .how{font-size:12px;color:var(--mute);margin-top:4px}
+.rzaile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}.rzaile.yakinda{opacity:.75}
+.rzhd{display:flex;gap:12px;align-items:center}.rzaile h3{font-size:14px;margin:0;color:var(--mute);font-family:var(--bf);font-weight:600}
+.rzbar{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden;margin:10px 0 4px}.rzbar span{display:block;height:100%;background:var(--ok);border-radius:999px}
+.rzil{font-size:13px;color:var(--mute)}
+.rzks{display:flex;flex-wrap:wrap;gap:6px 4px;margin-top:10px}.rzk{display:flex;flex-direction:column;align-items:center;width:40px;font-size:11px;color:var(--mute);font-variant-numeric:tabular-nums}.rzk .rzs{width:32px;height:32px}.rzk:not(.on) .rzs{opacity:.6}.rzk.on{color:var(--ink);font-weight:600}
+.okd{flex:none;margin-inline-start:auto;width:22px;height:22px;color:var(--ok)}.okd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.okfil{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:6px 14px;margin:0 0 6px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line);cursor:pointer}.okfil[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}

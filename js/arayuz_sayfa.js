@@ -9,11 +9,18 @@ DIL_HAZIR.then(function(){
   setMode(MODE,false);
   window.addEventListener("hashchange",tabSync);tabSync();
   kayitProfil();
+  rozetProfil();rozetSimgeGuncelle();
+  window.addEventListener("hashchange",rozetHash);rozetHash();
 });
+/* Rozetler (js/arayuz_rozet.js): Etiket Oku'nun bağlamı seçili türün Etiket Dedektifi rozeti; kutlama kartı sonucun üstüne */
+function ROZET_BAGLAM(){return {aile:"dedektif",tur:MODE}}
+var ROZET_BEKLE=null;
+function rozetGoster(c){if($("sonuc").querySelector(".resbar"))sonucUst(c);else ROZET_BEKLE=c}
+function rozetSonra(){if(ROZET_BEKLE&&$("sonuc").querySelector(".resbar")){sonucUst(ROZET_BEKLE);ROZET_BEKLE=null}}
 
 /* ---------- Alt menü: "Profil" sekmesi bu sayfadaki profil bölümünü açar ---------- */
 function tabSync(){
-  var prof=location.hash==="#profil";
+  var prof=location.hash==="#profil"||location.hash==="#rozetler";
   document.querySelectorAll(".tabbar a").forEach(function(a){if(a.getAttribute("data-tab")===(prof?"profil":"oku"))a.setAttribute("aria-current","page");else if(a.getAttribute("data-tab")!=="liste")a.removeAttribute("aria-current")});
   document.body.classList.toggle("mode-profil",prof);
   document.querySelector("h1").textContent=t(prof?"profil.baslik":"sayfa.baslik");
@@ -103,6 +110,7 @@ function fotoOku(){
     var ek=besinEkMetin(n,tx);
     if(ek!=null){$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
+    if(HSCAN&&tx.trim())rozetSay("dedektif",MODE,"f:"+rozetIz(tx),rozetGoster);   // aynı fotoğrafın yeniden okunması (çerçeve) sayılmaz
     if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();
   }
   function hata(m){if(gecerli())ST.textContent=m}

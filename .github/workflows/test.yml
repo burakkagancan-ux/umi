@@ -50,6 +50,8 @@ jobs:
         run: node test/paylas.js
       - name: Kaydedilen ürünler
         run: node test/kayit.js
+      - name: Rozetler
+        run: node test/rozet.js
       - name: Cihaz verisi sürümü
         run: node test/veri_surum.js
       - name: Barkod
@@ -67,7 +69,7 @@ jobs:
       - name: Veri üreteçleri (data/ ile kaynak/ uyumlu mu)
         # Üreteçleri depodaki kaynak dosyalarıyla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
         run: |
-          for g in gen_e_kodlari gen_bilesenler gen_e_aciklama gen_kozmetik gen_eslesmeler gen_temizlik gen_ansiklopedi gen_ceviri_veri gen_barkod gen_besin gen_manifest; do python3 $g.py; done
+          for g in gen_e_kodlari gen_bilesenler gen_e_aciklama gen_kozmetik gen_eslesmeler gen_temizlik gen_ansiklopedi gen_rozetler gen_ceviri_veri gen_barkod gen_besin gen_manifest; do python3 $g.py; done
           git diff --stat --exit-code -I '"generated":' -- data/ i18n/veri/ i18n/manifest/ manifest.webmanifest
           # Üretecin yazdığı ama depoya eklenmemiş dosya (ör. yeni ansiklopedi sayfası data/ansiklopedi/<kimlik>.json)
           yeni=$(git ls-files --others --exclude-standard -- data/ i18n/veri/ i18n/manifest/); if [ -n "$yeni" ]; then echo "Depoda olmayan üretilmiş dosya:"; echo "$yeni"; exit 1; fi

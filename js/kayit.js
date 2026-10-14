@@ -34,10 +34,11 @@ function kayitFark(eski,yeni){
   var s=function(o){return t("kayit.fark_say",{u:o.u,d:o.d})};
   return {once:s(eski),simdi:s(yeni),kotu:yeni.u>eski.u||(yeni.u===eski.u&&yeni.d>eski.d)};
 }
-/* Yedek dosyası: {uygulama:"tagsis", tur:"kayitli", surum:1, kayitlar:[...], katkici?}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir.
-   katkici: barkod katkıcı kimliği (O-22); cihaz ya da adres değişince katkılar aynı kişiye yazılmaya devam etsin diye. Doğrulaması arayüzde (katkiciGecerli). */
-function kayitYedek(list,now,katkici){
-  var d={uygulama:"tagsis",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]};if(katkici)d.katkici=katkici;
+/* Yedek dosyası: {uygulama:"tagsis", tur:"kayitli", surum:1, kayitlar:[...], katkici?, rozetler?}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir.
+   katkici: barkod katkıcı kimliği (O-22); cihaz ya da adres değişince katkılar aynı kişiye yazılmaya devam etsin diye. Doğrulaması arayüzde (katkiciGecerli).
+   rozetler: rozet sayımı (G-01, js/rozet.js); geri yüklenince bu cihazdakiyle birleşir (rozetBirlestir). Eski yedekte yoktur. */
+function kayitYedek(list,now,katkici,rozetler){
+  var d={uygulama:"tagsis",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]};if(katkici)d.katkici=katkici;if(rozetler)d.rozetler=rozetler;
   return JSON.stringify(d);
 }
 function kayitGeriYukle(list,json,max){
@@ -52,5 +53,5 @@ function kayitGeriYukle(list,json,max){
     eklenen++;
   });
   out.sort(function(a,b){return (b.u||b.t)-(a.u||a.t)});
-  return {ok:true,list:out.slice(0,max||KAYIT_AYAR.enFazla),eklenen:eklenen,fazla:Math.max(0,out.length-(max||KAYIT_AYAR.enFazla)),katkici:typeof d.katkici==="string"?d.katkici:""};
+  return {ok:true,list:out.slice(0,max||KAYIT_AYAR.enFazla),eklenen:eklenen,fazla:Math.max(0,out.length-(max||KAYIT_AYAR.enFazla)),katkici:typeof d.katkici==="string"?d.katkici:"",rozetler:d.rozetler&&typeof d.rozetler==="object"?d.rozetler:null};
 }
