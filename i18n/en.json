@@ -690,6 +690,15 @@
  "profil.kilo": "Weight",
  "profil.kilo_notu": "Your weight is used to calculate the daily limit on additive cards for you.",
  "profil.kisisel": "Personal details",
+ "profil.ozel.baslik": "Not listed? Add your own",
+ "profil.ozel.yer": "E.g. kiwi, cocoa, latex",
+ "profil.ozel.ekle": "Add",
+ "profil.ozel.sil": "Remove {ad}",
+ "profil.ozel.not": "The name you type is searched for in the label text (kiwi → kiwis). If it has other names, add them too.",
+ "profil.ozel.cok": "You can add up to {n} allergens.",
+ "profil.ozel.kisa": "Type at least 2 letters.",
+ "profil.ozel.var": "{ad} is already added.",
+ "profil.ozel.yok_not": "The names you added were only searched for as written; they may appear under other names.",
  "profil.ozet_secim": {
   "one": "My profile · {n} choice",
   "other": "My profile · {n} choices"

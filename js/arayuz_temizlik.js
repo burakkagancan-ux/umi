@@ -71,9 +71,10 @@ function tSummaryCard(S,A){
   if(A.hazards.some(function(x){return x.how.indexOf("benzer")>-1&&x.how.indexOf("kod")<0}))d.appendChild(el("div","how",t("tem.ozet.benzer")));
   return d;
 }
-function tProfileCards(S,A){
+function tProfileCards(S,A,metin){
   var out=[],j=function(a){return a.join(", ")},has=function(c){return A.hazards.some(function(x){return x.code===c})};
   function name(c){return c+" ("+hzKisa(TIDX.byCode[c])+")"}
+  var oz=ozelKart(metin==null?$("metin").value:metin);if(oz)out.push(oz);
   if(PROF.koku){
     var e208=has("EUH208")?[A.euh208&&A.euh208.length?t("tem.prof.euh208_l",{l:A.euh208.join("; ")}):t("tem.prof.euh208")]:[];
     if(S.fragrance.length)out.push(card("r",t("koz.prof.koku_var"),[j(S.fragrance)].concat(e208,S.parfum?[t("tem.prof.parfum_ek")]:[])));

@@ -34,7 +34,7 @@ function loadDb(i){
 }
 
 /* ---------- Profil ---------- */
-var PROF={al:[],lactose:false,koku:false,astim:false,preg:false,emziriyorum:false,baby:false,child:false,vegan:false,veg:false,pku:false,pet:false,salt:false,cinsiyet:"",yas:null,boy:null,kilo:null};
+var PROF={al:[],alOzel:[],lactose:false,koku:false,astim:false,preg:false,emziriyorum:false,baby:false,child:false,vegan:false,veg:false,pku:false,pet:false,salt:false,cinsiyet:"",yas:null,boy:null,kilo:null};
 try{var sp=JSON.parse(localStorage.getItem("profil")||"null");if(sp&&sp.al)Object.keys(sp).forEach(function(k){PROF[k]=sp[k]})}catch(e){}
 /* Seçenek: [profil alanı, çeviri anahtarı] */
 var LIFE=[["baby","profil.secenek.baby"],["child","profil.secenek.child"],["preg","profil.secenek.preg"],["emziriyorum","profil.secenek.emziriyorum"],["vegan","profil.secenek.vegan"],["veg","profil.secenek.veg"],["pet","profil.secenek.pet"]];
@@ -45,7 +45,8 @@ function saveProf(){try{localStorage.setItem("profil",JSON.stringify(PROF))}catc
 function buildProfile(){
   var box=$("profil");box.textContent="";
   if(!BDB){box.appendChild(el("div","mut",t("profil.bilesen_gerekli")));return}
-  function cb(label,checked,on){var l=el("label","pc");var i=document.createElement("input");i.type="checkbox";i.checked=checked;i.onchange=function(){on(i.checked);saveProf();updProfSum();[b1,b2,b3].forEach(function(b){if(b)b._upd()});if(LAST.length||$("metin").value.trim())run()};l.appendChild(i);l.appendChild(document.createTextNode(" "+label));return l}
+  function degisti(){saveProf();updProfSum();[b1,b2,b3].forEach(function(b){if(b)b._upd()});if(LAST.length||$("metin").value.trim())run()}
+  function cb(label,checked,on){var l=el("label","pc");var i=document.createElement("input");i.type="checkbox";i.checked=checked;i.onchange=function(){on(i.checked);degisti()};l.appendChild(i);l.appendChild(document.createTextNode(" "+label));return l}
   // Bölüm: başlık, isteğe bağlı kısa açıklama ve içerik kutusu (liste ya da kart)
   function bolum(ad,not,cls){var sc=el("section","pbol");sc.appendChild(el("h2",null,ad));if(not)sc.appendChild(el("p","mut",not));var k=el("div",cls);sc.appendChild(k);box.appendChild(sc);return k}
   // Açılır satır (kapalı başlar); başlıkta seçili sayısı görünür. n(): o satırdaki seçim sayısı
@@ -58,9 +59,10 @@ function buildProfile(){
       hk=bolum(t("profil.hakkinda"),null,"plist");
   // Sizin için uyarılar: Alerjenler, Yaşam Evresi, Diğer (seçimler düğme gibi görünen onay kutuları)
   var b1=null,b2=null,b3=null;
-  b1=pdrop(uy,t("profil.alerjenler"),function(){return PROF.al.length});var g=el("div","pg");
+  b1=pdrop(uy,t("profil.alerjenler"),function(){return PROF.al.length+PROF.alOzel.length});var g=el("div","pg");
   alAbc(BDB.meta.allergens).forEach(function(a){g.appendChild(cb(a[1],PROF.al.indexOf(a[0])>-1,function(v){PROF.al=PROF.al.filter(function(x){return x!==a[0]});if(v)PROF.al.push(a[0])}))});
   b1.appendChild(g);
+  b1.appendChild(ozelAlerjenKutusu(degisti));
   b2=pdrop(uy,t("profil.yasam"),function(){return LIFE.filter(function(x){return PROF[x[0]]}).length});var g2=el("div","pg");
   abc(LIFE).forEach(function(x){g2.appendChild(cb(x[1],!!PROF[x[0]],function(v){PROF[x[0]]=v}))});
   b2.appendChild(g2);
@@ -112,11 +114,48 @@ function buildProfile(){
   box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
 }
+/* Listede olmayan alerjen: kullanıcı adını yazar, eklediklerini görür ve siler (PROF.alOzel; etiket metninde ozelAra ile aranır) */
+var OZEL_EN_COK=30;
+function ozelAlerjenKutusu(degisti){
+  var k=el("div","pozel");k.appendChild(el("div","pt",t("profil.ozel.baslik")));
+  var f=document.createElement("form"),i=document.createElement("input"),b=el("button",null,t("profil.ozel.ekle")),ls=el("div","pozl"),uy=el("p","mut");
+  i.type="text";i.maxLength=40;i.autocomplete="off";i.placeholder=t("profil.ozel.yer");i.setAttribute("aria-label",t("profil.ozel.baslik"));b.type="submit";
+  f.appendChild(i);f.appendChild(b);k.appendChild(f);k.appendChild(uy);k.appendChild(ls);k.appendChild(el("p","mut",t("profil.ozel.not")));
+  function ciz(){
+    ls.textContent="";
+    PROF.alOzel.forEach(function(ad){
+      var c=el("span","chip pozc",ad),x=el("button","pozsil","×");x.type="button";x.setAttribute("aria-label",t("profil.ozel.sil",{ad:ad}));
+      x.onclick=function(){PROF.alOzel=PROF.alOzel.filter(function(y){return y!==ad});ciz();degisti()};
+      c.appendChild(x);ls.appendChild(c)});
+    var dolu=PROF.alOzel.length>=OZEL_EN_COK;i.disabled=b.disabled=dolu;uy.textContent=dolu?t("profil.ozel.cok",{n:OZEL_EN_COK}):"";
+  }
+  f.onsubmit=function(e){
+    e.preventDefault();var ad=i.value.replace(/\s+/g," ").trim();i.value="";if(!ad)return;
+    if(norm(ad).replace(/ /g,"").length<2){uy.textContent=t("profil.ozel.kisa");return}
+    if(PROF.alOzel.some(function(y){return norm(y)===norm(ad)})){uy.textContent=t("profil.ozel.var",{ad:ad});return}
+    if(PROF.alOzel.length>=OZEL_EN_COK)return;
+    PROF.alOzel.push(ad);ciz();degisti();i.focus();
+  };
+  ciz();return k;
+}
+/* Eklenen alerjenlerin metindeki karşılıkları, seçilen alerjen satırlarıyla aynı biçimde ("kivi: kivi püresi") */
+function ozelSatir(metin){
+  var o={yes:[],may:[]};
+  PROF.alOzel.forEach(function(ad){var r=ozelAra(metin,ad);if(r.yes.length)o.yes.push(ad+": "+r.yes.join(", "));if(r.may.length)o.may.push(ad+": "+r.may.join(", "))});
+  return o;
+}
+/* Kozmetik ve temizlikte yalnızca eklenen alerjenlerin kartı (gıdada seçilen alerjenlerle tek kart) */
+function ozelKart(metin){
+  if(!PROF.alOzel.length)return null;var o=ozelSatir(metin);
+  if(o.yes.length)return card("r",t("gida.prof.alerjen_var"),o.yes.concat(o.may.length?[t("gida.prof.ayrica_icerebilir",{l:o.may.join("; ")})]:[]));
+  if(o.may.length)return card("y",t("gida.prof.alerjen_icerebilir"),o.may);
+  return card("g",t("gida.prof.alerjen_yok"),[t("profil.ozel.yok_not")]);
+}
 /* Alerjen adları veriden (bilesenler.json meta.allergens; çevirisi i18n/veri "alerjen.<kimlik>"); sıralama dilin alfabesine göre */
 function alAbc(a){return a.map(function(x){return [x[0],veriS(x[1],"alerjen."+x[0])]}).sort(function(x,y){return dilKarsilastir(x[1],y[1])})}
 function alName(f){var a=(BDB&&BDB.meta.allergens)||[];for(var i=0;i<a.length;i++)if(a[i][0]===f)return veriS(a[i][1],"alerjen."+f);return f}
 function updProfSum(){
-  var n=(PROF.cinsiyet?1:0)+(PROF.kilo!=null?1:0)+(PROF.yas!=null?1:0)+(PROF.boy!=null?1:0)+PROF.al.length+LIFE.filter(function(x){return PROF[x[0]]}).length+OTHER.filter(function(x){return PROF[x[0]]}).length;
+  var n=(PROF.cinsiyet?1:0)+(PROF.kilo!=null?1:0)+(PROF.yas!=null?1:0)+(PROF.boy!=null?1:0)+PROF.al.length+PROF.alOzel.length+LIFE.filter(function(x){return PROF[x[0]]}).length+OTHER.filter(function(x){return PROF[x[0]]}).length;
   $("profsum").textContent=n?t("profil.ozet_secim",{n:n}):t("profil.baslik");
 }
 
@@ -126,15 +165,16 @@ function card(cls,title,lines){
   (lines||[]).forEach(function(l){if(l)d.appendChild(typeof l==="string"?el("div","ln",l):l)});
   return d;
 }
-function profileCards(S){
-  var out=[],any=PROF.al.length||LIFE.some(function(x){return PROF[x[0]]})||OTHER.some(function(x){return PROF[x[0]]});
+function profileCards(S,metin){
+  var out=[],any=PROF.al.length||PROF.alOzel.length||LIFE.some(function(x){return PROF[x[0]]})||OTHER.some(function(x){return PROF[x[0]]});
   if(!any)return out;
-  if(PROF.al.length){
-    var yes=[],may=[];
+  if(PROF.al.length||PROF.alOzel.length){
+    var yes=[],may=[],oz=ozelSatir(metin==null?$("metin").value:metin);
     PROF.al.forEach(function(f){var a=S.allergen[f];if(!a)return;if(a.yes.length)yes.push(alName(f)+": "+a.yes.join(", "));if(a.may.length)may.push(alName(f)+": "+a.may.join(", "))});
+    yes=yes.concat(oz.yes);may=may.concat(oz.may);
     if(yes.length)out.push(card("r",t("gida.prof.alerjen_var"),yes.concat(may.length?[t("gida.prof.ayrica_icerebilir",{l:may.join("; ")})]:[])));
     else if(may.length)out.push(card("y",t("gida.prof.alerjen_icerebilir"),may));
-    else out.push(card("g",t("gida.prof.alerjen_yok"),[t("gida.prof.alerjen_yok_not")]));
+    else out.push(card("g",t("gida.prof.alerjen_yok"),[t("gida.prof.alerjen_yok_not")].concat(PROF.alOzel.length?[t("profil.ozel.yok_not")]:[])));
   }
   if(PROF.lactose){
     var L=S.lactose;

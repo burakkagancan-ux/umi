@@ -155,7 +155,7 @@ function showCompare(ida,idb){
   var g3=el("div","kcols kpers");
   [A,B].forEach(function(P){
     var c=el("div","kcol");c.appendChild(el("h3",null,P.name));
-    var cards=mode==="koz"?kProfileCards(P.S,P.res):mode==="tem"?tProfileCards(P.S,P.A):profileCards(P.S);
+    var cards=mode==="koz"?kProfileCards(P.S,P.res,P.text):mode==="tem"?tProfileCards(P.S,P.A,P.text):profileCards(P.S,P.text);
     if(!cards.length)c.appendChild(el("div","mut",t("kars.kisisel_bos")));
     cards.forEach(function(x){c.appendChild(x)});g3.appendChild(c);
   });

@@ -75,7 +75,7 @@ function cmpProduct(text,idx,prof,name){
   return {name:name||"",text:text,res:res,S:S,items:items,counts:cnt,maxRank:maxRank,yellow:cnt[2],
     top:items.filter(function(it){return it.rank===maxRank&&maxRank>0}),
     unknown:{total:segs.length,found:hit,ratio:segs.length?(segs.length-hit)/segs.length:0},
-    misfit:cmpMisfit(S,prof,idx),allergen:al,
+    misfit:cmpMisfit(S,prof,idx).concat(cmpMisfitOzel(text,prof)),allergen:al,
     gluten:gl&&gl.yes.length?"var":gl&&gl.may.length?"icerebilir":"yok",
     vegan:S.vegan.no.length?"degil":S.vegan.unsure.length?"belirsiz":"yok",
     palm:S.palm.slice(),sugar:sugar,uretim:uretimOzet(res,idx)};
@@ -84,6 +84,10 @@ function cmpProduct(text,idx,prof,name){
 /* Kozmetik ürün özeti. Seviye: AB'de yasak ve başka pazarda yasak (red/orange) 3, dikkat (yellow) 2, diğerleri 0.
    Tanınmayan oran: INCI listesindeki bileşenlerden tanınmayanlar. */
 var CMP_KRANK={red:3,orange:3,yellow:2,info:0};
+/* Profilim'de elle eklenen alerjenler (prof.alOzel): her üç türde etiket metninde aranır (ozelAra, js/ortak.js) */
+function cmpMisfitOzel(text,prof){
+  return ((prof&&prof.alOzel)||[]).map(function(ad){var r=ozelAra(text,ad);return r.yes.length?t("kars.uyum.alerjen",{ad:ad,l:r.yes.join(", ")}):null}).filter(Boolean);
+}
 function cmpMisfitK(S,prof){
   var o=[],j=function(a){return a.join(", ")};
   if(!prof)return o;
@@ -102,7 +106,7 @@ function cmpProductK(text,K,prof,name,opts){
     by[r.name]={key:r.name,ids:[r.name],name:r.name,rank:rk};items.push(by[r.name]);
   });
   return cmpWrap({mode:"koz",name:name||"",text:text,res:res,S:S,noun:"madde",
-    unknown:{total:S.total,found:S.found,ratio:S.total?(S.total-S.found)/S.total:0},misfit:cmpMisfitK(S,prof)},items);
+    unknown:{total:S.total,found:S.found,ratio:S.total?(S.total-S.found)/S.total:0},misfit:cmpMisfitK(S,prof).concat(cmpMisfitOzel(text,prof))},items);
 }
 
 /* Temizlik ürün özeti. Tehlike ifadeleri ve madde notları: ciddi tehlike (red) 3, uyarı (yellow) 2, bilgi 0; adı yazılan diğer maddeler 0.
@@ -130,7 +134,7 @@ function cmpProductT(text,T,K,prof,name){
   A.subs.forEach(function(x){var s=x.s;add(s.inci[0],s.inci.length>1?"Enzim: "+s.inci.join(", ").toLowerCase():s.inci[0],CMP_TRANK[s.level]||0,"sub",x)});
   A.inci.forEach(function(x){add(x.name,x.name,0,"inci",x)});
   return cmpWrap({mode:"tem",name:name||"",text:text,A:A,S:S,noun:"tem",
-    unknown:{total:0,found:0,ratio:0},misfit:cmpMisfitT(S,A,T,prof)},items);
+    unknown:{total:0,found:0,ratio:0},misfit:cmpMisfitT(S,A,T,prof).concat(cmpMisfitOzel(text,prof))},items);
 }
 /* Ortak alanlar: sayılar, en riskli seviye, en riskli maddeler */
 function cmpWrap(P,items){
