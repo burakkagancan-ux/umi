@@ -1,7 +1,7 @@
 # Yol haritası: küresel Tağşiş
 
 Bu dosya projenin ana iş planıdır. Her oturumun başında okunur. Bir iş başlayınca, bitince ya da plan değişince aynı PR içinde güncellenir (durum, tarih, PR numarası).
-İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 14.10.2026 (G-04 topluluk hedefleri: ortak hedef ve eksik ürünler).
+İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 14.10.2026 (A-02: besin tablosu kayıtlı ürün, karşılaştırma ve paylaşım kartında).
 
 Durum işaretleri: ⬜ başlamadı · 🔄 sürüyor · ✅ bitti · ⏸ bekletiliyor · 👤 kullanıcının işi
 
@@ -63,7 +63,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
 |---|---|---|---|---|---|
 | A-01 | Telefon testleri ve sonuçlara göre ayar | 👤 + Claude | — | Kullanıcının bulduğu her sorun PR'la kapanır | 🔄 👤 |
-| A-02 | Besin değeri tablosu (şeker, yağ, doymuş yağ, tuz; 100 g başına; NHS/AB eşikleri; puansız renkli gösterim). Adımlar: (1) barkod → Open Food Facts besin değerleri ✅ 13.10.2026; (2) etiket metninden tablo ayrıştırıcı + tutarlılık denetimi ✅ 13.10.2026 (js/besin.js, test/besin.js; denetimi geçmeyen değer "şüpheli", renk gösterilmez, kullanıcıya sorulur); (3) ekran: dört satır renkli, eşik kaynağı, düzeltilebilir değerler, "tabloyu da ekle" düğmesi ✅ 13.10.2026 (eşikler Birleşik Krallık FoP 2016 Ek 3; js/arayuz_besin.js); (4) 20–30 gerçek etiket fotoğrafıyla ölçüm (👤 fotoğraflar) | Claude + 👤 | — | Etiketteki tablo okunur, eşik kaynakları görünür, testli; gerçek etiket setinde hiç yanlış renk güvenle gösterilmez | 🔄 |
+| A-02 | Besin değeri tablosu (şeker, yağ, doymuş yağ, tuz; 100 g başına; NHS/AB eşikleri; puansız renkli gösterim). Adımlar: (1) barkod → Open Food Facts besin değerleri ✅ 13.10.2026; (2) etiket metninden tablo ayrıştırıcı + tutarlılık denetimi ✅ 13.10.2026 (js/besin.js, test/besin.js; denetimi geçmeyen değer "şüpheli", renk gösterilmez, kullanıcıya sorulur); (3) ekran: dört satır renkli, eşik kaynağı, düzeltilebilir değerler, "tabloyu da ekle" düğmesi ✅ 13.10.2026 (eşikler Birleşik Krallık FoP 2016 Ek 3; js/arayuz_besin.js); (3b) tablo kayıtlı ürüne (kaynağıyla saklanır, yedekle gider), karşılaştırmaya (dört satır; karar değişmez) ve paylaşım kartına (yalnızca renk gösterilebilen tablo) ✅ 14.10.2026; (4) 20–30 gerçek etiket fotoğrafıyla ölçüm (👤 fotoğraflar) | Claude + 👤 | — | Etiketteki tablo okunur, eşik kaynakları görünür, testli; gerçek etiket setinde hiç yanlış renk güvenle gösterilmez | 🔄 |
 | A-03 | Gizlilik dostu ölçüm: günlük tarama, mod, paylaşım, 7 gün sonra geri dönüş (kişisel veri ve metin yok; Worker KV) | Claude | — | Kişisel veri gönderilmez, KVKK notu güncellenir | ⬜ |
 | A-04 | Fotoğraf okuma kalitesi: iki sütunlu etiket, kavisli ambalaj, otomatik kırpma önerisi (galeriden yükleme eklendi, #90) | Claude | — | Gerçek etiket setinde ölçülen iyileşme | 🔄 |
 | A-05 | Helal katmanı ("kaynağı belirsiz, sertifikaya bakın"; hüküm vermez) | Claude | — | Kaynaklı, yalnızca bilgi; MENA pazarının ön koşulu | ⬜ |

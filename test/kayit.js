@@ -43,4 +43,19 @@ const kim='0123456789abcdef0123456789abcdef';
 ok(!('katkici' in JSON.parse(K.kayitYedek(L,5))),'katkı yapılmamışsa yedekte kimlik yok');
 g=K.kayitGeriYukle([],K.kayitYedek([],5,kim));ok(g.ok&&g.katkici===kim&&g.eklenen===0,'yalnızca kimlik içeren yedek de geri yüklenir');
 ok(K.kayitGeriYukle([],y).katkici==='','kimliksiz yedekte boş');
+// Besin değeri tablosu kayıtla saklanır (yalnızca gıda), yeniden kaydedince korunur, yedekle gider ve temizlenerek geri gelir
+{
+  const bs={b:{kcal:250,yag:12,doymus:6,karb:30,seker:20,lif:1,protein:4,tuz:0.2},lt:{},birim:'g',sorun:[],onay:false,kaynak:'off',t:7};
+  let B=K.kayitAdd([],{id:'b1',t:1,mode:'gida',name:'Bisküvi',text:'Un, şeker',besin:bs});
+  ok(B[0].besin&&B[0].besin.kaynak==='off','tablo kayıtla saklanır');
+  B=K.kayitAdd(B,{id:'b2',t:2,mode:'gida',name:'Bisküvi 2',text:'Un, şeker'});
+  ok(B[0].besin&&B[0].besin.b.yag===12,'tablosuz yeniden kaydetme eski tabloyu korur');
+  B=K.kayitAdd(B,{id:'b3',t:3,mode:'gida',name:'Bisküvi 3',text:'Un, şeker',besin:null});
+  ok(!B[0].besin,'null tabloyu siler');
+  ok(!K.kayitAdd([],{id:'b4',t:1,mode:'koz',name:'Krem',text:'Aqua',besin:bs})[0].besin,'kozmetikte tablo saklanmaz');
+  const yb=K.kayitYedek(K.kayitAdd([],{id:'b1',t:1,mode:'gida',name:'Bisküvi',text:'Un, şeker',besin:bs}),5);
+  let gb=K.kayitGeriYukle([],yb);ok(gb.ok&&gb.list[0].besin&&gb.list[0].besin.b.tuz===0.2&&gb.list[0].besin.kaynak==='off','tablo yedekle geri gelir');
+  gb=K.kayitGeriYukle([],JSON.stringify({tur:'kayitli',kayitlar:[{mode:'gida',text:'a',name:'x',besin:{b:'bozuk'}},{mode:'koz',text:'b',name:'y',besin:bs}]}));
+  ok(gb.ok&&gb.eklenen===2&&gb.list.every(x=>!x.besin),'bozuk ya da gıda dışı tablo alınmaz');
+}
 console.log(n+' kayıt denetimi, '+fail+' hata');process.exit(fail?1:0);

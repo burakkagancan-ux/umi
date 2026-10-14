@@ -207,6 +207,50 @@ async function scan(p,mode,text){
     await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.geri')).click());
     k=await kart();
     ok(k&&!k.dz.length&&await p.evaluate(()=>JSON.parse(localStorage.getItem('besin_elle')).length===0),'"okunan değerlere dön" düzeltmeyi siler');
+    // Kayıtlı ürün, karşılaştırma ve paylaşım kartı: barkoddan gelen OFF değerleri kayıtla saklanır; barkodsuz açılınca, yedekten
+    // geri yüklenince ve karşılaştırmada tablo geri gelir; elle düzeltme kayda yazılır; paylaşım kartı modelinde dört satır
+    {
+      const kod='86920131';   // data/barkod_off.json: Eti Puf, tutarlı OFF besin değerleri
+      await p.evaluate(()=>{localStorage.removeItem('besin_elle');localStorage.removeItem('kayitli')});
+      await p.evaluate(k=>barkodIsle(k),kod);
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:15000}).catch(()=>{});
+      const metin=await p.inputValue('#metin');
+      ok(/Open Food Facts/.test((await kart()||{}).metin||''),'barkoddan OFF değerleri: '+JSON.stringify(await kart()));
+      await p.click('#sonuc .resbar .kayitb');await p.waitForSelector('#sheet:not([hidden]) .kform input');
+      await p.fill('#sheet .kform input','Puf');
+      await p.evaluate(()=>[...document.querySelectorAll('#sheet .kform button')].find(b=>b.textContent===t('kayit.kaydet')).click());
+      const kb=await p.evaluate(()=>kayitLoad()[0].besin);
+      ok(kb&&kb.kaynak==='off'&&kb.b.yag===8.9&&kb.birim==='g','kayıtta OFF tablosu kaynağıyla: '+JSON.stringify(kb));
+      // Barkodsuz açılış (BARKOD yok): tablo kayıttan
+      await p.evaluate(()=>{BARKOD=null;kayitSonuc(kayitLoad()[0])});
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
+      k=await kart();ok(k&&k.dz.join()==='orta,yuksek,yuksek,dusuk'&&/Open Food Facts/.test(k.metin),'kayıt barkodsuz açılınca tablo ve kaynağı geri gelir: '+JSON.stringify(k));
+      // Paylaşım kartı modeli
+      const pb=await p.evaluate(()=>{const s=paySource();return s.besin&&s.besin.satir.map(x=>x.alan+':'+x.duzey).join()});
+      ok(pb==='yag:orta,doymus:yuksek,seker:yuksek,tuz:dusuk','paylaşım kartında besin satırları: '+pb);
+      // Yedek → başka cihaz (kayıt yok) → geri yükle
+      await p.evaluate(()=>{const y=kayitYedek(kayitLoad(),0);localStorage.removeItem('kayitli');const r=kayitGeriYukle([],y);kayitStore(r.list);BARKOD=null;kayitSonuc(kayitLoad()[0])});
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
+      ok((await kart()).dz.length===4,'yedekten geri yüklenen kayıtta tablo');
+      // Elle düzeltme kayda yazılır; düzeltme bu cihazdan silinse de (başka cihaz) kayıttaki elle değer önce gelir
+      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+      await p.waitForSelector('#sheet:not([hidden]) .bform');
+      await p.fill('#sheet input[data-alan="seker"]','4');
+      await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+      await p.waitForFunction(()=>document.getElementById('sheet').hidden,null,{timeout:3000}).catch(()=>{});
+      ok(await p.evaluate(()=>{const b=kayitLoad()[0].besin;return b.kaynak==='elle'&&b.b.seker===4&&b.onay===true}),'elle düzeltme kayda yazıldı');
+      await p.evaluate(()=>{localStorage.removeItem('besin_elle');BARKOD=null;kayitSonuc(kayitLoad()[0])});
+      await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
+      k=await kart();ok(k&&k.dz[2]==='dusuk'&&/siz girdiniz/.test(k.metin),'kayıttaki elle değer başka cihazda da: '+JSON.stringify(k));
+      // Karşılaştırma: tablolu ve tablosuz iki kayıtlı gıda
+      await p.evaluate(()=>{localStorage.setItem('kayitli',JSON.stringify(kayitAdd(kayitLoad(),{id:'k2',t:Date.now()+1,mode:'gida',name:'Kraker',text:'Buğday unu, tuz, maya'})))});
+      await p.evaluate(()=>showCompare(kayitLoad()[1].id,'k2'));
+      await p.waitForSelector('#kars:not([hidden]) .ktab');
+      const kr=await p.evaluate(()=>{const c=[...document.querySelectorAll('#kars .ktab > div')].map(x=>x.textContent);const i=c.indexOf(t('besin.baslik'));return {bas:c.slice(i,i+3),yag:c.slice(c.indexOf(t('besin.alan.yag')),c.indexOf(t('besin.alan.yag'))+3),dz:document.querySelectorAll('#kars .ktab .bdz').length}});
+      ok(kr.bas.join('|')==='Besin değerleri|100 g|Tablo yok'&&kr.yag.join('|')==='Yağ|8,9 g Orta|—'&&kr.dz===4,'karşılaştırmada besin satırları: '+JSON.stringify(kr));
+      await p.evaluate(()=>closeCompare());
+      await p.evaluate(()=>localStorage.removeItem('kayitli'));
+    }
     // Kozmetikte kart yok
     await sample(p,'koz');ok(!await p.$('#sonuc .besin'),'kozmetikte besin kartı yok');
     await p.click('#m-gida');

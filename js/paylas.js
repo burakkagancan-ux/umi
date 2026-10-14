@@ -92,9 +92,17 @@ function payModel(src,opt,cfg,L){
   var pers=opt.kisisel?(src.personal||[]).slice(0,cfg.enFazlaKisisel):[];
   return {mode:src.mode,name:opt.name||t("pay.tarama"),counts:{ok:c[0],dikkat:c[1],uyari:c[2]},unverified:src.unverified||0,
     total:items.length,top:top,more:Math.max(0,risky.length-n),allergens:src.allergens||"",personal:pers,
-    facts:(src.facts||[]).slice(),recog:src.recog||null,t:opt.t||null,
+    facts:(src.facts||[]).slice(),recog:src.recog||null,t:opt.t||null,besin:src.besin||null,
     okNames:items.filter(function(it){return it.lvl===0}).map(function(it){return it.name}),
     hasPersonal:!!(src.personal&&src.personal.length)};
+}
+/* Besin değerleri bölümü (yalnızca gıda, yalnızca renk gösterilebilen tablo: js/besin.js besinOzet). Satır: "Yağ 12 g · Orta" + düzey rengi */
+var PAY_BESIN_RENK={dusuk:["okbg","ok"],orta:["ambbg","amb"],yuksek:["redbg","red"]};
+function payBesinSatir(b){
+  return ((b&&b.satir)||[]).filter(function(s){return s.duzey}).map(function(s){
+    var d=t("birim.g_l",{n:dilSayi(Math.round(s.v*100)/100)});if(s.lt)d=t("besin.kucuktur",{d:d});
+    return {s:t("pay.kart.besin_satir",{ad:t("besin.alan."+s.alan),d:d,duzey:t("besin.duzey."+s.duzey)}),duzey:s.duzey};
+  });
 }
 /* Ürün adının altındaki tek satırlık olgu özeti (skor değil, yalnızca sayı) */
 function payOzet(M){
@@ -148,7 +156,7 @@ function payChips(x,list,maxW,maxRows){
   return out;
 }
 /* Kartı çizer. L: yerleşim (PAYLAS_AYAR.yerlesim[boyut]); logo: yüklenmiş görüntü ya da null. Çizilen metinler sırayla döner (test için).
-   Bölümler yukarıdan aşağı akar; sığmazsa önce madde satırı sayısı azalır ("+N madde daha"), sonra bilgi etiketleri düşer. Not ve alt bant sabit. */
+   Bölümler yukarıdan aşağı akar; sığmazsa önce madde satırı sayısı azalır ("+N madde daha"), sonra bilgi etiketleri, sonra besin değerleri düşer. Not ve alt bant sabit. */
 function payDraw(x,M,L,cfg,logo){
   cfg=cfg||PAYLAS_AYAR;
   var W=L.w,H=L.h,P=L.pad,CW=W-2*P,out=[],R=PAY_RENK,draw=true,tem=M.mode==="tem";
@@ -248,6 +256,13 @@ function payDraw(x,M,L,cfg,logo){
     ch.forEach(function(c){var cy=y+c.row*68;box(P+c.x,cy,c.w,56,28,R.sunk);txt(c.s,P+c.x+22,cy+38,R.ink)});
     return y+(ch[ch.length-1].row+1)*68+20;
   }
+  function besin(y){
+    var bs=payBesinSatir(M.besin);if(!bs.length)return y;
+    payFont(x,600,30);txt(t("besin.baslik_"+M.besin.birim),P,y+30,R.mute);y+=52;
+    var ch=payChips(x,bs.map(function(b){return b.s}),CW,2);
+    ch.forEach(function(c){var rk=PAY_BESIN_RENK[bs.filter(function(b){return b.s===c.s})[0].duzey],cy=y+c.row*68;box(P+c.x,cy,c.w,56,28,R[rk[0]]);txt(c.s,P+c.x+22,cy+38,R[rk[1]])});
+    return ch.length?y+(ch[ch.length-1].row+1)*68+20:y;
+  }
   function allergens(y){
     if(!M.allergens)return y;
     payFont(x,600,34);var lb=t(M.mode==="gida"?"pay.kart.alerjenler":"pay.kart.koku"),lw=meas(lb);txt(lb,P,y+30,R.ink);
@@ -263,27 +278,29 @@ function payDraw(x,M,L,cfg,logo){
     return y+ph+28;
   }
   // Yerleşim: önce ölçülür (çizmeden), sığana kadar madde satırı ve bilgi etiketi azaltılır
-  var n=M.top.length,keepFacts=true;
+  var n=M.top.length,keepFacts=true,keepBesin=true;
   function flow(){
     var y=head(P);
     if(risky){y=counts(y);y=rows(y,n)}
     if(keepFacts)y=facts(y);
+    if(keepBesin)y=besin(y);
     y=allergens(y);y=personal(y);
     return y;
   }
   draw=false;
-  while(flow()>maxY){if(n>2)n--;else if(keepFacts&&M.facts.length)keepFacts=false;else if(n>1)n--;else break}
+  while(flow()>maxY){if(n>2)n--;else if(keepFacts&&M.facts.length)keepFacts=false;else if(keepBesin&&M.besin)keepBesin=false;else if(n>1)n--;else break}
   draw=true;
   x.fillStyle=R.bg;x.fillRect(0,0,W,H);
   var y=head(P);
   if(risky){y=counts(y);y=rows(y,n)}
   else{
     y=olumlu(y);
-    draw=false;var after=personal(allergens(keepFacts?facts(0):0)),r=0;
+    draw=false;var after=personal(allergens(keepBesin?besin(keepFacts?facts(0):0):keepFacts?facts(0):0)),r=0;
     while(r<8&&okunan(y,r+1)+after<=maxY)r++;   // okunan maddeler kalan yere sığdığı kadar satır
     draw=true;y=okunan(y,r);
   }
   if(keepFacts)y=facts(y);
+  if(keepBesin)y=besin(y);
   y=allergens(y);y=personal(y);
   // Alt bölüm: tanınma + not
   var ny=foot-36-(notL.length-1)*34;

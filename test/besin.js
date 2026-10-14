@@ -2,7 +2,7 @@
 // etiket metninden tablo ayrıştırma (satır satır, hücre hücre, sütun sütun okunmuş OCR; porsiyon/%RI sütunu; diller; içerik listesiyle aynı metin).
 // Çalıştır: node test/besin.js
 const fs=require('fs'),path=require('path'),{execFileSync}=require('child_process');
-eval(require('./yukle.js')+';global.B={besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN}');
+eval(require('./yukle.js')+';global.B={besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const veri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8'));
 const S=B.besinSozluk(veri);
@@ -213,5 +213,21 @@ ok(L.length===2&&L[0].k===k1&&L[0].t===3&&B.besinElleBul(L,k1).birim==='ml'&&B.b
 for(let i=0;i<150;i++)L=B.besinElleEkle(L,'k'+i,{b:cik,birim:'g'});
 ok(L.length===100&&L[0].k==='k149','en çok 100 kayıt');
 ok(B.besinElleBul('bozuk',k1)===null&&B.besinElleEkle(null,k1,{b:cik}).length===1,'bozuk depo');
+// Kayıtlı ürünle saklanan tablo (besinKayitNorm, besinKayitKopya) ve karşılaştırma/paylaşım özeti (besinOzet)
+{
+  const bb={kcal:250,yag:12,doymus:6,karb:30,seker:20,lif:1,protein:4,tuz:0.2};
+  const kop=B.besinKayitKopya({k:{b:bb,lt:{tuz:true},birim:'g',sorun:[]},kaynak:'off',t:5});
+  ok(kop&&kop.kaynak==='off'&&kop.t===5&&kop.birim==='g'&&kop.lt.tuz===true&&kop.b.yag===12&&kop.onay===false,'kopya kaynağıyla: '+j(kop));
+  ok(B.besinKayitKopya(null)===null,'kaynak yoksa kopya yok');
+  ok(B.besinKayitNorm(null)===null&&B.besinKayitNorm({b:{}})===null&&B.besinKayitNorm({b:{yag:'x'}})===null,'değersiz ya da bozuk tablo atılır');
+  const nr=B.besinKayitNorm({b:{yag:3,tuz:1e9,zehir:5},lt:{yag:true,tuz:true,kcal:true},birim:'kg',sorun:['enerji','<script>',5],onay:'evet',kaynak:'baska',t:-1});
+  ok(nr&&nr.b.yag===3&&nr.b.tuz===null&&!('zehir' in nr.b)&&j(nr.lt)==='{"yag":true}'&&nr.birim===''&&j(nr.sorun)==='["enerji"]'&&nr.onay===false&&nr.kaynak==='etiket'&&!('t' in nr),'yedekten gelen tablo temizlenir: '+j(nr));
+  ok(B.besinKayitNorm({b:{yag:-1},birim:'g'}).b.yag===-1,'eksi değer korunur (denetim şüpheli yapsın)');
+  const oz=B.besinOzet({b:bb,lt:{},birim:'g',sorun:[]});
+  ok(oz&&oz.birim==='g'&&oz.satir.map(s=>s.alan+':'+s.duzey).join()==='yag:orta,doymus:yuksek,seker:orta,tuz:dusuk','özet düzeyleri: '+j(oz));
+  ok(B.besinOzet({b:bb,lt:{},birim:'',sorun:[]})===null,'birim bilinmiyorsa özet yok');
+  ok(B.besinOzet({b:Object.assign({},bb,{doymus:20}),lt:{},birim:'g',sorun:[]})===null,'şüpheli tabloda özet yok');
+  ok(B.besinOzet({b:{yag:12,tuz:0.2},lt:{},birim:'g',sorun:[]}).satir.length===2,'okunmayan satır özete girmez');
+}
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

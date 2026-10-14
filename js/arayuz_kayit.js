@@ -9,6 +9,11 @@ function kayitTarih(ms){return dilTarih(ms,"gun")}
 function kayitSimdi(mode,text){
   try{if(!karsReady(mode))return null;return kayitOzet(karsProduct({mode:mode,text:text,name:""}))}catch(e){return null}
 }
+/* Gıdada ekranda gösterilen besin tablosunun kaynağıyla kopyası (js/arayuz_besin.js); tablo yoksa undefined (eski kayıttaki korunur) */
+function kayitBesin(mode,text){
+  if(mode!=="gida"||typeof besinKaynak!=="function")return undefined;
+  return besinKayitKopya(besinKaynak(text))||undefined;
+}
 /* Sonuç barındaki düğme: kayıtlıysa "Kaydedildi", değilse "Kaydet" */
 function kayitBtn(mode){
   var text=$("metin").value.trim(),k=kayitFind(kayitLoad(),mode,text);
@@ -50,7 +55,7 @@ function kayitForm(mode,text,ret){
     var name=inp.value.trim();if(!name){msg.textContent=t("kayit.form.ad_ver");inp.focus();return}
     var list=kayitLoad();
     if(!kayitFind(list,mode,text)&&list.length>=KAYIT_AYAR.enFazla){msg.textContent=t("kayit.form.sinir",{n:KAYIT_AYAR.enFazla});return}
-    list=kayitAdd(list,{id:"k"+Date.now(),t:Date.now(),mode:mode,name:name,note:nt.value,text:text,oz:kayitSimdi(mode,text)},KAYIT_AYAR.enFazla);
+    list=kayitAdd(list,{id:"k"+Date.now(),t:Date.now(),mode:mode,name:name,note:nt.value,text:text,oz:kayitSimdi(mode,text),besin:kayitBesin(mode,text)},KAYIT_AYAR.enFazla);
     if(!kayitStore(list)){msg.textContent=t("kayit.form.yer_yok");return}
     if(h&&h.name!==name)histRename(h.id,name);   // karşılaştırma ve paylaşım kartı da bu adı kullanır
     closeSheet();setSt(mode,t("kayit.form.kaydedildi",{ad:name}));kayitBarYenile();kayitProfil();fotoTemizle();
