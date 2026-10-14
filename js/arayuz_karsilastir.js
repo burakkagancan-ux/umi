@@ -85,8 +85,8 @@ function showCompare(ida,idb){
   box.appendChild(el("h2",null,t("kars.baslik_"+KARS_TUR[mode])));
   // 1) İki sütun: ad + risk özeti
   var hd=el("div","kcols");
-  [[A,ea],[B,eb]].forEach(function(pe){
-    var P=pe[0],c=el("div","kcol");
+  [[A,ea],[B,eb]].forEach(function(pe,i){
+    var P=pe[0],c=el("div","kcol kc"+(i+1));
     var inp=document.createElement("input");inp.type="text";inp.className="kn";inp.value=P.name;inp.maxLength=40;inp.setAttribute("aria-label",t("kars.urun_adi"));
     inp.onchange=function(){var v=inp.value.trim();if(v){histRename(pe[1].id,v);showCompare(ida,idb)}else inp.value=P.name};
     c.appendChild(inp);
@@ -104,10 +104,13 @@ function showCompare(ida,idb){
   dc.appendChild(el("div","how",t(mode==="tem"?"kars.dayanak_tem":"kars.dayanak")));
   box.appendChild(dc);
   // 3) Satır satır
-  var tb=el("div","ktab");
+  // Üstte iki ürünün adı (kaydırınca yapışık kalır, sütunlar renkle eşleşir); iki değer farklıysa satır belirgin (.fark)
+  var tb=el("div","ktab"),th=el("div","kth");
+  [A,B].forEach(function(P,i){th.appendChild(el("div","khd kc"+(i+1),P.name))});tb.appendChild(th);
   function tr(label,fa,fb){
-    tb.appendChild(el("div","kl",label));
-    [fa(A),fb?fb(B):fa(B)].forEach(function(v){var c=el("div","kv");if(typeof v==="string")c.textContent=v;else c.appendChild(v);tb.appendChild(c)});
+    var kl=el("div","kl",label),cs=[fa(A),fb?fb(B):fa(B)].map(function(v,i){var c=el("div","kv kc"+(i+1));if(typeof v==="string")c.textContent=v;else c.appendChild(v);return c});
+    if(cs[0].textContent!==cs[1].textContent){kl.classList.add("fark");kl.setAttribute("data-fark",t("kars.farkli"));cs.forEach(function(c){c.classList.add("fark")})}
+    tb.appendChild(kl);cs.forEach(function(c){tb.appendChild(c)});
   }
   var lst=function(a){return a.length?t("ortak.say_liste",{n:a.length,l:a.join(", ")}):t("ortak.bulunamadi")};
   tr(t(mode==="tem"?"kars.satir.en_riskli_tem":"kars.satir.en_riskli"),function(P){
@@ -149,13 +152,13 @@ function showCompare(ida,idb){
   // 4) Madde farkları
   box.appendChild(el("h2",null,t(mode==="tem"?"kars.fark_tem":"kars.fark")));
   var g2=el("div","kcols kdiff");
-  g2.appendChild(diffList(t("kars.sadece",{ad:A.name}),F.onlyA,A));g2.appendChild(diffList(t("kars.sadece",{ad:B.name}),F.onlyB,B));
-  box.appendChild(g2);box.appendChild(diffList(t("kars.ikisinde"),F.both,A));
+  g2.appendChild(diffList(t("kars.sadece",{ad:A.name}),F.onlyA,A,"kc1"));g2.appendChild(diffList(t("kars.sadece",{ad:B.name}),F.onlyB,B,"kc2"));
+  box.appendChild(g2);box.appendChild(diffList(t("kars.ikisinde"),F.both,A,"kc0"));
   // 5) Kişisel uyarılar
   box.appendChild(el("h2",null,t("kars.kisisel")));
   var g3=el("div","kcols kpers");
-  [A,B].forEach(function(P){
-    var c=el("div","kcol");c.appendChild(el("h3",null,P.name));
+  [A,B].forEach(function(P,i){
+    var c=el("div","kcol kc"+(i+1));c.appendChild(el("h3",null,P.name));
     var cards=mode==="koz"?kProfileCards(P.S,P.res,P.text):mode==="tem"?tProfileCards(P.S,P.A,P.text):profileCards(P.S,P.text);
     if(!cards.length)c.appendChild(el("div","mut",t("kars.kisisel_bos")));
     cards.forEach(function(x){c.appendChild(x)});g3.appendChild(c);
@@ -180,8 +183,8 @@ function karsBesin(A,B,tr){
     });
   });
 }
-function diffList(title,items,P){
-  var d=document.createElement("details");d.className="kgrp";d.appendChild(el("summary",null,t("ortak.baslik_sayi",{ad:title,n:items.length})));
+function diffList(title,items,P,renk){
+  var d=document.createElement("details");d.className="kgrp "+(renk||"");d.appendChild(el("summary",null,t("ortak.baslik_sayi",{ad:title,n:items.length})));
   if(!items.length){d.appendChild(el("div","mut",t("ortak.yok")));return d}
   items.forEach(function(it){
     var b=el("button","kitem kmad");b.type="button";b.appendChild(cmpIcon(it.rank,it.dogal));b.appendChild(el("span","kin",it.name));
