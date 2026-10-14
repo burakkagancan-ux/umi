@@ -167,7 +167,7 @@ function turSecici(){
   });
   return s;
 }
-var OKUMADIK=false,ARISK="";   // ARISK: renk süzgeci ("" tümü, red, amber, green)
+var OKUMADIK=false,ARISK="",KACIK=false;   // ARISK: renk süzgeci ("" tümü, red, amber, green); KACIK: Kaydettiklerim açık mı
 function showSearch(){
   ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
@@ -185,7 +185,12 @@ function showSearch(){
       res.forEach(function(r){out.appendChild(rowFor(r,oku))});return;
     }
     var m=marks().map(function(x){return ABY[x]}).filter(Boolean);
-    if(m.length){out.appendChild(h("h2","sec",t("ans.kaydettiklerim")));var kl=h("div","grpl");m.forEach(function(r){kl.appendChild(rowFor(r,oku))});out.appendChild(kl)}
+    // Kaydettiklerim açılır liste: kapalı başlar, açık/kapalı durumu sayfa içinde süzgeç değişince korunur
+    if(m.length){
+      var kd=h("details","kdrop");kd.open=KACIK;kd.ontoggle=function(){KACIK=kd.open};
+      var ks=h("summary");ks.appendChild(h("span",null,t("ans.kaydettiklerim")));ks.appendChild(h("span","n",dilSayi(m.length)));kd.appendChild(ks);
+      var kl=h("div","grpl");m.forEach(function(r){kl.appendChild(rowFor(r,oku))});kd.appendChild(kl);out.appendChild(kd);
+    }
     out.appendChild(h("h2","sec",t("ans.incelenen")));
     // Süzgeçler: renk (Tümü / Uyarı / Dikkat / Özel uyarı yok) ve "Okumadıklarım" (yalnızca henüz açılmamış sayfalar, Okur rozetine kalanlar)
     var cur=AD.records.filter(function(r){return r.review==="curated"&&ansTur(r)===AOKU}),kalan=cur.filter(function(r){return !oku[r.id]});

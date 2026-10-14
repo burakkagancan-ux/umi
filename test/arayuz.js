@@ -434,6 +434,13 @@ async function scan(p,mode,text){
     const t1=await p.evaluate(()=>({okd:document.querySelectorAll('#ana a.row .okd').length,satir:document.querySelectorAll('#ana a.row').length,bas:document.querySelector('#ana .okfil').getAttribute('aria-pressed')}));
     ok(t1.bas==='true'&&t1.satir===t0.satir-10&&t1.okd===0,'"Okumadıklarım": okunanlar listeden çıkar: '+JSON.stringify(t1));
     await p.click('#ana .okfil');
+    // Kaydettiklerim açılır liste (14.10.2026): kapalı başlar, sayı başlıkta, süzgeç değişince açık kalır
+    await p.evaluate(()=>localStorage.setItem('yerimleri',JSON.stringify(['E322','E330'])));await p.reload();await p.waitForSelector('#ana details.kdrop');
+    const kd0=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,bas:d.querySelector('summary').textContent,satir:d.querySelectorAll('a.row').length}});
+    await p.click('#ana details.kdrop>summary');await p.click('#ana .rfil.red');
+    const kd1=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,gor:d.querySelector('a.row').offsetHeight>0}});
+    await p.click('#ana .rfil.tum');await p.evaluate(()=>localStorage.removeItem('yerimleri'));
+    ok(!kd0.acik&&/^Kaydettiklerim2$/.test(kd0.bas)&&kd0.satir===2&&kd1.acik&&kd1.gor,'Kaydettiklerim açılır liste: '+JSON.stringify([kd0,kd1]));
     // Rozetlerim (Profilim altında): aileler, ilerleme, kademeler, yakında olanlar, paylaşım
     await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet:not([hidden]) .rzaile');
     const r=await p.evaluate(()=>{const k=q=>document.querySelector('#rozet .rzaile[data-aile="'+q+'"]');return {mod:document.body.classList.contains('mode-rozet'),aile:document.querySelectorAll('#rozet .rzaile').length,
