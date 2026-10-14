@@ -15742,16 +15742,16 @@
 "tr": "Türkiye'de izinli listeden çıkarıldı."
 },
 "cat.acidity_regulator": {
-"s": "Acidity regulator / mineral salt",
-"tr": "Asitlik düzenleyici / mineral tuz"
+"s": "Acidity Regulator / Mineral Salt",
+"tr": "Asitlik Düzenleyici / Mineral Tuz"
 },
 "cat.acidity_regulator.what": {
 "s": "Alters or controls the acidity or alkalinity of a food; the mineral salts in this group are also used as raising agents, firming agents or stabilisers.",
 "tr": "Gıdanın asitliğini ya da bazlığını değiştirir veya sabit tutar; bu gruptaki mineral tuzlar mayalandırıcı, sertleştirici ya da stabilizatör olarak da kullanılır."
 },
 "cat.anticaking": {
-"s": "Anti-caking agent",
-"tr": "Topaklanmayı önleyici"
+"s": "Anti-Caking Agent",
+"tr": "Topaklanmayı Önleyici"
 },
 "cat.anticaking.what": {
 "s": "Reduces the tendency of particles in powdered foods to stick together and form lumps.",
@@ -15782,40 +15782,40 @@
 "tr": "Yağ ile su gibi normalde karışmayan maddelerin karışık kalmasını sağlar."
 },
 "cat.flavour_enhancer": {
-"s": "Flavour enhancer",
-"tr": "Lezzet artırıcı"
+"s": "Flavour Enhancer",
+"tr": "Lezzet Artırıcı"
 },
 "cat.flavour_enhancer.what": {
 "s": "Enhances the existing taste or odour of a food.",
 "tr": "Gıdanın mevcut tadını ya da kokusunu güçlendirir."
 },
 "cat.gas": {
-"s": "Gas / propellant",
-"tr": "Gaz / itici gaz"
+"s": "Gas / Propellant",
+"tr": "Gaz / İtici Gaz"
 },
 "cat.gas.what": {
 "s": "A protective gas placed in the packaging instead of air, or a propellant gas used to expel a food from its container.",
 "tr": "Ambalaja hava yerine konan koruyucu gaz ya da gıdayı kabından çıkarmaya yarayan itici gazdır."
 },
 "cat.glazing_agent": {
-"s": "Glazing agent / coating agent",
-"tr": "Parlatıcı / kaplama maddesi"
+"s": "Glazing Agent / Coating Agent",
+"tr": "Parlatıcı / Kaplama Maddesi"
 },
 "cat.glazing_agent.what": {
 "s": "Gives the outer surface of a food a shiny appearance or a protective coating.",
 "tr": "Gıdanın dış yüzeyine parlak bir görünüm ya da koruyucu bir kaplama verir."
 },
 "cat.modified_starch": {
-"s": "Modified starch",
-"tr": "Modifiye nişasta"
+"s": "Modified Starch",
+"tr": "Modifiye Nişasta"
 },
 "cat.modified_starch.what": {
 "s": "Starch whose properties have been changed by physical, enzymatic or chemical treatment; it mostly thickens and keeps the thickness during heat treatment.",
 "tr": "Fiziksel, enzimatik ya da kimyasal işlemle özellikleri değiştirilmiş nişastadır; çoğunlukla kıvam verir ve kıvamı ısıl işlemde korur."
 },
 "cat.other": {
-"s": "Other (carrier, humectant, etc.)",
-"tr": "Diğer (taşıyıcı, nem tutucu vb.)"
+"s": "Other (Carrier, Humectant, etc.)",
+"tr": "Diğer (Taşıyıcı, Nem Tutucu vb.)"
 },
 "cat.other.what": {
 "s": "Performs auxiliary functions, such as carrying or dissolving other additives or preventing a food from drying out.",
@@ -15830,8 +15830,8 @@
 "tr": "Mikroorganizmaların (bakteri, küf, maya) neden olduğu bozulmayı geciktirerek gıdanın raf ömrünü uzatır."
 },
 "cat.stabiliser": {
-"s": "Stabiliser / bulking agent",
-"tr": "Stabilizatör / dolgu"
+"s": "Stabiliser / Bulking Agent",
+"tr": "Stabilizatör / Dolgu"
 },
 "cat.stabiliser.what": {
 "s": "Maintains the physical and chemical state of a food or adds volume without significantly increasing its energy value.",
@@ -15846,8 +15846,8 @@
 "tr": "Gıdaya tatlı tat vermek için ya da masa tatlandırıcısı olarak kullanılır."
 },
 "cat.thickener": {
-"s": "Thickener / gelling agent",
-"tr": "Kıvam artırıcı / jelleştirici"
+"s": "Thickener / Gelling Agent",
+"tr": "Kıvam Artırıcı / Jelleştirici"
 },
 "cat.thickener.what": {
 "s": "Increases the thickness of a food or gives it texture by forming a gel.",

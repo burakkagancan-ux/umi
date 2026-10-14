@@ -2844,7 +2844,7 @@
   },
   "Kıvam artırıcı / jelleştirici": {
    "code": "thickener",
-   "ad": "Kıvam artırıcı / jelleştirici",
+   "ad": "Kıvam Artırıcı / Jelleştirici",
    "ne": "Gıdanın kıvamını artırır ya da jel oluşturarak ona doku kazandırır."
   },
   "Tatlandırıcı": {
@@ -2854,42 +2854,42 @@
   },
   "Lezzet artırıcı": {
    "code": "flavour_enhancer",
-   "ad": "Lezzet artırıcı",
+   "ad": "Lezzet Artırıcı",
    "ne": "Gıdanın mevcut tadını ya da kokusunu güçlendirir."
   },
   "Asitlik düzenleyici / mineral tuz": {
    "code": "acidity_regulator",
-   "ad": "Asitlik düzenleyici / mineral tuz",
+   "ad": "Asitlik Düzenleyici / Mineral Tuz",
    "ne": "Gıdanın asitliğini ya da bazlığını değiştirir veya sabit tutar; bu gruptaki mineral tuzlar mayalandırıcı, sertleştirici ya da stabilizatör olarak da kullanılır."
   },
   "Topaklanmayı önleyici": {
    "code": "anticaking",
-   "ad": "Topaklanmayı önleyici",
+   "ad": "Topaklanmayı Önleyici",
    "ne": "Toz gıdalarda parçacıkların birbirine yapışıp topaklanmasını azaltır."
   },
   "Modifiye nişasta": {
    "code": "modified_starch",
-   "ad": "Modifiye nişasta",
+   "ad": "Modifiye Nişasta",
    "ne": "Fiziksel, enzimatik ya da kimyasal işlemle özellikleri değiştirilmiş nişastadır; çoğunlukla kıvam verir ve kıvamı ısıl işlemde korur."
   },
   "Gaz / itici gaz": {
    "code": "gas",
-   "ad": "Gaz / itici gaz",
+   "ad": "Gaz / İtici Gaz",
    "ne": "Ambalaja hava yerine konan koruyucu gaz ya da gıdayı kabından çıkarmaya yarayan itici gazdır."
   },
   "Parlatıcı / kaplama maddesi": {
    "code": "glazing_agent",
-   "ad": "Parlatıcı / kaplama maddesi",
+   "ad": "Parlatıcı / Kaplama Maddesi",
    "ne": "Gıdanın dış yüzeyine parlak bir görünüm ya da koruyucu bir kaplama verir."
   },
   "Stabilizatör / dolgu": {
    "code": "stabiliser",
-   "ad": "Stabilizatör / dolgu",
+   "ad": "Stabilizatör / Dolgu",
    "ne": "Gıdanın fiziksel ve kimyasal yapısını korur ya da enerji değerini belirgin artırmadan hacim katar."
   },
   "Diğer (taşıyıcı, nem tutucu, çözücü vb.)": {
    "code": "other",
-   "ad": "Diğer (taşıyıcı, nem tutucu vb.)",
+   "ad": "Diğer (Taşıyıcı, Nem Tutucu vb.)",
    "ne": "Başka katkı maddelerini taşımak ya da çözmek, gıdanın kurumasını önlemek gibi yardımcı işlevler görür."
   }
  },
