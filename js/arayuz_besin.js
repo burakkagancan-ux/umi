@@ -23,7 +23,7 @@ function besinKaynak(tx,kayitsiz){
   if(kb&&kb.kaynak==="elle")return besinKayittan(kb,okunan);
   if(okunan)return {k:okunan,kaynak:"etiket",okunan:okunan};
   var r=BARKOD&&BARKOD.r;
-  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:r.besinLt||{},birim:r.besin.birim,sorun:[],por:r.besinPor||null},kaynak:r.besinKaynak==="topluluk"?"topluluk":"off",t:r.besinT||r.t};
+  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:r.besinLt||{},birim:r.besin.birim,sorun:[],por:r.besinPor||null},kaynak:r.besinKaynak==="topluluk"?"topluluk":"off",t:r.besinT||r.t,dogrulandi:!!r.besinDogrulandi};
   return kb?besinKayittan(kb,okunan):null;
 }
 function besinKayitli(tx){
@@ -79,7 +79,7 @@ function besinKart(tx){
   // ABD/Kanada etiketi: değerler porsiyon başına yazılı, 100 g'a çevrildi (O-23)
   if(G.por)d.appendChild(el("div","how",t(G.birim==="ml"?"besin.porsiyon_cevrildi_ml":"besin.porsiyon_cevrildi_g",{m:t(G.por.u==="ml"?"birim.ml_l":"birim.g_l",{n:sayi(G.por.m)})})));
   d.appendChild(el("div","how",K.kaynak==="elle"?t("besin.kaynak_elle",{tarih:dilTarih(K.t,"gun")}):K.kaynak==="off"?(K.t?t("besin.kaynak_off",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_off_tarihsiz")):
-    K.kaynak==="topluluk"?t("besin.kaynak_topluluk",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_etiket")));
+    K.kaynak==="topluluk"?t(K.dogrulandi?"besin.kaynak_topluluk_dogrulandi":"besin.kaynak_topluluk",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_etiket")));
   var pn=el("div","ipanel");pn.hidden=true;besinEsikPanel(pn);d.appendChild(pn);
   ib.onclick=function(){pn.hidden=!pn.hidden;ib.setAttribute("aria-expanded",pn.hidden?"false":"true");ib.classList.toggle("on",!pn.hidden)};
   var db=el("button","alt",t("besin.duzelt"));db.type="button";db.onclick=function(){besinForm(tx,K,db,d)};

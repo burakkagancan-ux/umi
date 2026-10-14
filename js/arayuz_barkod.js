@@ -27,7 +27,7 @@ function barkodUrun(kod){
     var m={};if(j.bulundu)m[j.dil||"?"]=j.metin;   // içeriksiz kayıt yalnızca besin tablosu taşır (barkodBesinEkle)
     var r={kod:kod,kaynak:"urun",tur:j.bulundu?barkodTur(j.tur):"gida",ad:"",marka:"",t:j.t||0,metin:m,dogrulandi:!!j.dogrulandi,sayi:j.sayi||1};
     var bs=j.besin&&typeof besinKayitNorm==="function"?besinKayitNorm(j.besin):null;
-    if(bs){r.besin=bs.b;r.besin.birim=bs.birim;r.besinLt=bs.lt;r.besinPor=bs.por||null;r.besinKaynak="topluluk";r.besinT=j.besinT||0}
+    if(bs){r.besin=bs.b;r.besin.birim=bs.birim;r.besinLt=bs.lt;r.besinPor=bs.por||null;r.besinKaynak="topluluk";r.besinT=j.besinT||0;r.besinDogrulandi=!!j.besinDogrulandi}
     return r;
   });
 }
