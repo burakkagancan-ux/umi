@@ -2,7 +2,7 @@
 // tanım dosyası ve metinler. Çalıştır: node test/rozet.js
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
 const src=require('./yukle.js');
-eval(src+';'+fs.readFileSync(path.join(R,'js/rozet.js'),'utf8')+';global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,kayitYedek,kayitGeriYukle,t}');
+eval(src+';'+fs.readFileSync(path.join(R,'js/rozet.js'),'utf8')+';global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,ROZET_STIL,kayitYedek,kayitGeriYukle,t}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const def=JSON.parse(fs.readFileSync(path.join(R,'data/rozetler.json'),'utf8'));
 const ans=JSON.parse(fs.readFileSync(path.join(R,'data/ansiklopedi.json'),'utf8'));
@@ -77,13 +77,18 @@ ok(g.ok&&JSON.stringify(Z.rozetNorm(g.rozetler))===JSON.stringify(bb),'rozetler 
 ok(!('rozetler' in JSON.parse(Z.kayitYedek([],5))),'rozet yoksa yedekte alan yok');
 ok(Z.kayitGeriYukle([],JSON.stringify({tur:'kayitli',kayitlar:[]})).rozetler===null,'eski yedekte rozet yok');
 
-// Simge: her ailede 8 sıra; kazanılmamış gri; altın süs yalnızca üst sıralarda; risk renkleri kullanılmaz
+// Simge: her ailede 8 sıra; aileler şekil ve renkle ayrışır; kazanılmamış gri; altın yalnızca üst sıralarda; risk renkleri kullanılmaz
 for(const a of Object.keys(Z.ROZET_ISARET))for(let k=1;k<=8;k++){
   const sv=Z.rozetSvg(a,k,true);ok(/^<svg[^>]*viewBox="0 0 48 48"/.test(sv)&&sv.endsWith('</svg>'),'svg: '+a+k);
   ok(!/#8A5A00|#A4470B|#B3261E/i.test(sv),'simgede risk rengi: '+a+k);
 }
-ok(!/#B8902A/.test(Z.rozetSvg('kitap',5,true))&&/#B8902A/.test(Z.rozetSvg('kitap',6,true)),'altın 6. sıradan');
-ok(!/#1F4D3A/.test(Z.rozetSvg('kitap',8,false)),'kazanılmamış gri');
+ok(!/#B8902A/.test(Z.rozetSvg('kitap',4,true))&&/#B8902A/.test(Z.rozetSvg('kitap',5,true)),'altın 5. sıradan');
+const stiller=Object.keys(Z.ROZET_ISARET).map(a=>Z.ROZET_STIL[a]);
+ok(stiller.every(Boolean),'her işaretin stili var');
+ok(new Set(stiller.map(x=>x.renk)).size===stiller.length&&new Set(stiller.map(x=>x.sekil)).size===stiller.length,'aileler renk ve şekille ayrışır');
+for(const a of Object.keys(Z.ROZET_ISARET))ok(!Z.rozetSvg(a,8,false).includes(Z.ROZET_STIL[a].renk)&&!/#B8902A/.test(Z.rozetSvg(a,8,false)),'kazanılmamış gri: '+a);
+const tum=new Set();for(const a of Object.keys(Z.ROZET_ISARET))for(let k=1;k<=8;k++)tum.add(Z.rozetSvg(a,k,true));
+ok(tum.size===Object.keys(Z.ROZET_ISARET).length*8,'her aile × kademe simgesi farklı');
 ok(Z.rozetSvg('kitap',8,true).length>Z.rozetSvg('kitap',1,true).length,'sıra yükseldikçe süs artar');
 
 // Paylaşım kartı: ürün ve kişisel bilgi yok; çizilen metinler
