@@ -25,12 +25,16 @@
 //   POST /urun          {kod, tur, dil, metin, kim?} katkı (yalnızca kullanıcının açık izniyle gönderilir). IP, cihaz ya da kişisel bilgi saklanmaz.
 //                       kim: cihazda bir kez rastgele üretilen takma katkıcı kimliği (32 onaltılık hane; kişisel bilgiden türetilmez, O-22).
 //                       Katkıları ileride rozet ve "Katkılarım" için sahibine yazmaya yarar; GET yanıtında hiç görünmez.
+//   POST /katki         {kim} Eklediklerim ve ürün rozetleri (G-02): bu kimliğin eklediği barkodlar, durumları (bekliyor / doğrulandı,
+//                       öncü, doğrulayıcı) ve türe göre sayılar. Kimlik URL'de değil gövdede (kayıtlara ve önbelleklere geçmesin).
+//                       200 {eklenen, avci, oncu, dogrulayici: {tür: sayı}, urunler: [{kod, tur, t, dogrulandi, oncu, dogrulayici, ozet}]}
+//                       Başkalarının metni ve kimliği yanıta girmez. Kimlik yoksa sayım yok (400).
 //   OFF verisi D1'e yazılmaz (ODbL ayrımı).
 //
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
 //   Ürün, metin, IP ya da kişisel bilgi saklanmaz; anahtar yalnızca "g:YYYY-AA-GG:t". GET /sayac son 60 günün toplamlarını döndürür.
 
-import { barkodGecerli, besinOff, sozcukler, urunSec } from "./barkod.js";
+import { barkodGecerli, besinOff, katkiOzet, sozcukler, urunSec } from "./barkod.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -169,6 +173,19 @@ async function urun(request, env, kod, R) {
   return R(201, { tamam: true });
 }
 
+const KATKICI_BARKOD_EN_COK = 500;     // Eklediklerim: bir kimliğin en yeni bu kadar barkodu değerlendirilir
+async function katki(request, env, R) {
+  let j;
+  try { const raw = await request.text(); if (raw.length > 1000) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
+  const kim = String((j && j.kim) || "");
+  if (!KATKICI_RE.test(kim)) return R(400, { error: "Geçersiz katkıcı kimliği." });
+  const bos = { eklenen: {}, avci: {}, oncu: {}, dogrulayici: {}, urunler: [] };
+  if (!env.URUNLER) return R(200, { ...bos, devreDisi: true });
+  const db = await d1(env);
+  const { results } = await db.prepare("SELECT kod, tur, metin, t, kim FROM katki WHERE kod IN (SELECT kod FROM katki WHERE kim = ? GROUP BY kod ORDER BY MAX(t) DESC LIMIT " + KATKICI_BARKOD_EN_COK + ") ORDER BY t DESC").bind(kim).all();
+  return R(200, katkiOzet(results || [], kim));   // reply zaten no-store
+}
+
 async function barkod(request, env, allowed, R, yol) {
   if (request.method === "OPTIONS") return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, request.headers.get("Origin") || "") });
   if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
@@ -177,8 +194,9 @@ async function barkod(request, env, allowed, R, yol) {
     const { success } = await env.BARKOD_LIMIT.limit({ key: "barkod:" + ip });
     if (!success) return R(429, { error: "Çok sık sorgu yapıldı. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" });
   }
-  const p = yol.split("/").filter(Boolean);   // ["off", kod] | ["urun", kod] | ["urun"]
+  const p = yol.split("/").filter(Boolean);   // ["off", kod] | ["urun", kod] | ["urun"] | ["katki"]
   if (p[0] === "urun" && request.method === "POST" && p.length === 1) return urun(request, env, null, R);
+  if (p[0] === "katki") return request.method === "POST" && p.length === 1 ? katki(request, env, R) : R(405, { error: "Geçersiz istek." });
   if (request.method !== "GET" || p.length !== 2) return R(405, { error: "Geçersiz istek." });
   const kod = p[1];
   if (!/^\d{8,14}$/.test(kod)) return R(400, { error: "Geçersiz barkod." });
@@ -192,7 +210,7 @@ export default {
     const R = (status, obj, extra) => reply(env, origin, status, obj, extra);
     const yol = new URL(request.url).pathname;
     if (yol === "/sayac") return sayac(request, env, allowed, R);
-    if (/^\/(off|urun)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
+    if (/^\/(off|urun|katki)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, origin) });

@@ -358,7 +358,7 @@ async function scan(p,mode,text){
       okur:k('okur').textContent,kad:k('okur').querySelectorAll('.rzk').length,on:k('okur').querySelectorAll('.rzk.on').length,son:k('okur').querySelector('.rzk:last-child').textContent,avci:k('avci').className,avt:k('avci').textContent,sek:document.querySelector('#rozet .seg button[aria-checked="true"]').textContent}});
     ok(r.mod&&r.aile===5&&/Okur/.test(r.okur)&&/10 \/ 25 · sonraki: Kitap Kurdu/.test(r.okur),'Rozetlerim: beş aile, gıda Okuru ilerlemesi: '+r.okur.slice(0,120));
     ok(r.kad===7&&r.on===2&&r.son==='hepsi','gıda Okuru 7 kademe (son "hepsi"), 2 kazanıldı: '+JSON.stringify([r.kad,r.on,r.son]));
-    ok(/yakinda/.test(r.avci)&&/doğrulanınca/.test(r.avt)&&r.sek==='Gıda (3)','ürün aileleri yakında; Gıda sekmesinde 3 rozet: '+r.sek);
+    ok(!/yakinda/.test(r.avci)&&/Henüz rozet yok/.test(r.avt)&&/henüz alınamadı/.test(r.avt)&&r.sek==='Gıda (3)','ürün aileleri: sunucuya ulaşılamadı, henüz rozet yok; Gıda sekmesinde 3 rozet: '+r.avt.slice(0,160)+' / '+r.sek);
     await p.waitForSelector('#rozet .rzaile[data-aile="okur"] .rzrow button:not([disabled])',{timeout:8000}).catch(()=>{});
     ok(await p.isEnabled('#rozet .rzaile[data-aile="okur"] .rzrow button').catch(()=>false),'rozet paylaşım görseli hazırlandı');
     await p.click('#rozet .seg button[data-tur="koz"]');
@@ -366,6 +366,34 @@ async function scan(p,mode,text){
     await p.click('#rozet .kback');await p.waitForFunction(()=>location.hash==='#profil'&&!document.body.classList.contains('mode-rozet'));
     ok(/3 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 3 rozet": '+await p.textContent('#rozetbar'));
     ok(await p.evaluate(()=>JSON.parse(kayitYedek([],0,'',rozetLoad())).rozetler.okur.gida.length===10),'rozetler yedek dosyasına girer');
+    // G-02: ürün rozetleri ve Eklediklerim sunucudan (POST /katki {kim}); kimlik gövdede, yanıt sayıları ve listeyi verir
+    {
+      let istek=null;
+      const yanit={eklenen:{gida:3},avci:{gida:10},oncu:{gida:1},dogrulayici:{gida:2},urunler:[
+        {kod:'8690504025207',tur:'gida',t:Date.now()-86400000,dogrulandi:true,oncu:true,dogrulayici:false,ozet:'Kakao kitlesi, şeker'},
+        {kod:'4006381333931',tur:'gida',t:Date.now()-3600000,dogrulandi:false,oncu:false,dogrulayici:false,ozet:'Su, şeker'}]};
+      await p.route(/workers\.dev\/katki$/,r=>{istek={yontem:r.request().method(),url:r.request().url(),govde:r.request().postDataJSON()};r.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:JSON.stringify(yanit)})});
+      await p.evaluate(()=>{const d=rozetLoad();delete d.sunucu;localStorage.setItem('rozetler',JSON.stringify(d))});
+      await p.goto(B+'ocr.html#eklediklerim');await p.waitForSelector('#ekle:not([hidden]) .ekitem',{timeout:10000}).catch(()=>{});
+      const kim=await p.evaluate(()=>katkiciAl());
+      ok(istek&&istek.yontem==='POST'&&/\/katki$/.test(istek.url)&&istek.govde&&istek.govde.kim===kim&&Object.keys(istek.govde).join()==='kim'&&!istek.url.includes(kim),'istek: POST /katki, yalnızca kimlik ve gövdede: '+JSON.stringify(istek));
+      const e1=await p.evaluate(()=>({n:document.querySelectorAll('#ekle .ekitem').length,ilk:document.querySelector('#ekle .ekitem').textContent,ikinci:document.querySelectorAll('#ekle .ekitem')[1].textContent,ozet:document.querySelector('#ekle .klistk>p').textContent,kut:[...document.querySelectorAll('#sonuc .rozetkut, #ekle .rozetkut')].map(x=>x.querySelector('.rza').textContent)}));
+      ok(e1.n===2&&/Doğrulandı/.test(e1.ilk)&&/Öncü/.test(e1.ilk)&&/Doğrulanmayı bekliyor/.test(e1.ikinci)&&/2 ürün eklediniz, 1 tanesi doğrulandı/.test(e1.ozet),'Eklediklerim listesi ve durumlar: '+JSON.stringify(e1));
+      ok(e1.kut.length===1&&await p.evaluate(()=>/\+2 yeni rozet daha/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İzci/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İlk Adım/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İkinci Göz/.test(document.querySelector('#ekle .rozetkut').textContent)),'sunucudan gelen üç yeni kademe tek kartta kutlanır: '+e1.kut.join(','));
+      await p.click('#ekle .kback');await p.waitForFunction(()=>location.hash==='#profil');
+      ok(/Eklediklerim/.test(await p.textContent('#eklebar'))&&/2 ürün/.test(await p.textContent('#eklebar')),'Profilim: Eklediklerim düğmesi');
+      await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet .rzaile[data-aile="avci"]');
+      await p.click('#rozet .seg button[data-tur="gida"]');   // bu sayfada önceden Kozmetik sekmesi seçilmişti
+      const r2=await p.evaluate(()=>({avci:document.querySelector('#rozet .rzaile[data-aile="avci"]').textContent,sek:document.querySelector('#rozet .seg button[aria-checked="true"]').textContent,kut:document.querySelectorAll('#rozet .rozetkut').length}));
+      ok(/İzci/.test(r2.avci)&&/10 \/ 25 · sonraki: Avcı/.test(r2.avci)&&/Sunucudaki sayım/.test(r2.avci)&&r2.sek==='Gıda (7)'&&r2.kut===0,'Rozetlerim: Ürün Avcısı sunucudan, aynı kademe yeniden kutlanmaz: '+JSON.stringify(r2).slice(0,240));
+      // Sayılar 6 saat içinde yeniden sorulmaz (açılış), kimliği olmayan cihaz hiç sormaz
+      istek=null;await p.goto(B+'ocr.html');await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);await p.waitForTimeout(600);
+      ok(!istek,'açılışta taze sayım varsa istek yok');
+      await p.evaluate(()=>{localStorage.removeItem('katkici');const d=rozetLoad();delete d.sunucu;localStorage.setItem('rozetler',JSON.stringify(d))});
+      await p.goto(B+'ocr.html#profil');await p.reload();await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);await p.waitForTimeout(600);
+      ok(!istek&&(await p.textContent('#eklebar'))==='','kimlik yoksa istek yok ve Eklediklerim düğmesi yok');
+      await p.unroute(/workers\.dev\/katki$/);
+    }
     ok(!errs.length,'rozet konsol hatası: '+errs.join(' | '));errs.length=0;
   }
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');

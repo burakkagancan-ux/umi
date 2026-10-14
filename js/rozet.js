@@ -1,13 +1,15 @@
 /* Rozetler (YOL_HARITASI.md G-01): saf mantık (DOM yok); testler de yükler. Tanımlar data/rozetler.json (gen_rozetler.py), metinler i18n rozet.*.
    Rozet kullanıcının yaptığına verilir, ürüne değil. Hesapsız, yalnızca bu cihazda: localStorage "rozetler" (şema ROZET_SURUM).
-   Durum: {v, okur:{gida:[madde kimliği…]}, dedektif:{gida:[iz…]}, gor:{"okur.gida":kademe}}
+   Durum: {v, okur:{gida:[madde kimliği…]}, dedektif:{gida:[iz…]}, gor:{"okur.gida":kademe}, sunucu?:{t, avci:{gida:n}, oncu:{…}, dogrulayici:{…}}}
    - okur: ansiklopedide açılan farklı madde sayfaları; dedektif: okunan farklı etiket ("f:"+metin izi) ya da barkod ("b:"+barkod)
    - gor: kutlaması gösterilmiş en yüksek kademe (yeni kademede bir kez kutlanır)
-   Ürün ekleme aileleri (avci, oncu, dogrulayici) sunucudaki doğrulanmış sayımdan gelir (G-02); o zamana kadar tanımda hazir:false. */
+   - sunucu: ürün ekleme ailelerinin (tanımda sunucu:true: avci, oncu, dogrulayici) doğrulanmış sayısı; Worker POST /katki yanıtından
+     (G-02, rozetSunucuYaz). Cihazda sayılamaz: doğrulama başka bir kullanıcının eklemesiyle sunucuda olur. */
 var ROZET_SURUM=1;
 var ROZET_AYAR={izSiniri:1000};   // bir ailede saklanan en çok farklı öğe (son kademe 1000; ötesi sayılmaz, yer tutmasın)
 /* Sayımı cihazda tutulan aileler (sunucudan gelenler G-02 ile eklenir) */
 var ROZET_YEREL=["okur","dedektif"];
+var ROZET_SUNUCU=["avci","oncu","dogrulayici"];   // Worker /katki yanıtındaki alan adlarıyla aynı
 function rozetBos(){return {v:ROZET_SURUM,okur:{},dedektif:{},gor:{}}}
 /* Saklanan ya da yedekten gelen durumu doğrular: bilinmeyen alan atılır, öğeler tekilleşir, sınır uygulanır */
 function rozetNorm(d){
@@ -21,9 +23,14 @@ function rozetNorm(d){
       if(l.length)o[a][tur]=l;
     });
   });
+  if(d.sunucu&&typeof d.sunucu==="object"&&d.sunucu.t>0){var su={t:+d.sunucu.t};ROZET_SUNUCU.forEach(function(a){su[a]=rozetSayilar(d.sunucu[a])});o.sunucu=su}
   if(d.gor&&typeof d.gor==="object")Object.keys(d.gor).forEach(function(k){var n=d.gor[k];if(/^[a-z]+\.[a-z]+$/.test(k)&&n===(n|0)&&n>0&&n<=8)o.gor[k]=n});
   return o;
 }
+/* {tür: sayı} doğrulaması (sunucu yanıtı ya da saklanan durum): yalnızca bilinen biçimde tür ve 0-100000 arası tam sayı */
+function rozetSayilar(o){var r={};if(o&&typeof o==="object"&&!Array.isArray(o))Object.keys(o).forEach(function(tur){var n=o[tur];if(/^[a-z]{2,8}$/.test(tur)&&n===(n|0)&&n>0&&n<=100000)r[tur]=n});return r}
+/* Sunucu yanıtını (Worker POST /katki) duruma yazar; zaman: yanıt zamanı (ms). Durum yerinde değişmez. */
+function rozetSunucuYaz(d,j,zaman){d=rozetNorm(d);if(!j||typeof j!=="object")return d;var su={t:zaman||1};ROZET_SUNUCU.forEach(function(a){su[a]=rozetSayilar(j[a])});d.sunucu=su;return d}
 /* Metin izi: aynı etiket metni iki kez sayılmasın (boşluk ve büyük/küçük harf farkı yok sayılır). FNV-1a 32 bit, 36 tabanında. */
 function rozetIz(s){
   s=String(s||"").toLowerCase().replace(/\s+/g," ").trim();
@@ -47,7 +54,10 @@ function rozetAdAnahtar(def,aile,tur,i){
 }
 /* Ad sırası (1-8): simgenin süsü bu sıraya göre zenginleşir; "hepsi" kademesi en süslü (8) */
 function rozetSira(def,aile,tur,i){var k=rozetAdAnahtar(def,aile,tur,i);return k?+k.slice(k.lastIndexOf(".k")+2):0}
-function rozetSayi(d,aile,tur){var s=d&&d[aile]&&d[aile][tur];return Array.isArray(s)?s.length:0}
+function rozetSayi(d,aile,tur){
+  if(ROZET_SUNUCU.indexOf(aile)>-1){var su=d&&d.sunucu&&d.sunucu[aile];return su?su[tur]|0:0}
+  var s=d&&d[aile]&&d[aile][tur];return Array.isArray(s)?s.length:0;
+}
 /* Bir ailenin bir türdeki durumu: kademe (ulaşılan eşik sayısı), ad anahtarı, sonraki eşik, ilerleme (0-1) */
 function rozetDurumu(def,d,aile,tur){
   var a=rozetAile(def,aile),e=rozetEsikler(def,a,tur),n=rozetSayi(d,aile,tur),k=0;
@@ -85,6 +95,7 @@ function rozetBirlestir(a,b){
     var l=(a[x][tur]||[]).slice();b[x][tur].forEach(function(o){if(l.indexOf(o)<0&&l.length<ROZET_AYAR.izSiniri)l.push(o)});a[x][tur]=l;
   })});
   Object.keys(b.gor).forEach(function(k){if(b.gor[k]>(a.gor[k]||0))a.gor[k]=b.gor[k]});
+  if(b.sunucu&&(!a.sunucu||b.sunucu.t>a.sunucu.t))a.sunucu=b.sunucu;   // sunucu sayısı: daha yeni olan
   return a;
 }
 function rozetBosMu(d){d=rozetNorm(d);return !ROZET_YEREL.some(function(x){return Object.keys(d[x]).length})}

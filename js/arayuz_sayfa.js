@@ -11,6 +11,8 @@ DIL_HAZIR.then(function(){
   kayitProfil();
   rozetProfil();rozetSimgeGuncelle();
   window.addEventListener("hashchange",rozetHash);rozetHash();
+  ekleProfil();window.addEventListener("hashchange",ekleHash);ekleHash();
+  ekleSunucu(EKLE_AYAR.tazeSn,rozetGoster);   // ürün rozetleri: sunucudaki doğrulanmış sayım (G-02)
 });
 /* Rozetler (js/arayuz_rozet.js): Etiket Oku'nun bağlamı seçili türün Etiket Dedektifi rozeti; kutlama kartı sonucun üstüne */
 function ROZET_BAGLAM(){return {aile:"dedektif",tur:MODE}}
@@ -20,7 +22,7 @@ function rozetSonra(){if(ROZET_BEKLE&&$("sonuc").querySelector(".resbar")){sonuc
 
 /* ---------- Alt menü: "Profil" sekmesi bu sayfadaki profil bölümünü açar ---------- */
 function tabSync(){
-  var prof=location.hash==="#profil"||location.hash==="#rozetler";
+  var prof=/^#(profil|rozetler|eklediklerim)$/.test(location.hash);
   document.querySelectorAll(".tabbar a").forEach(function(a){if(a.getAttribute("data-tab")===(prof?"profil":"oku"))a.setAttribute("aria-current","page");else if(a.getAttribute("data-tab")!=="liste")a.removeAttribute("aria-current")});
   document.body.classList.toggle("mode-profil",prof);
   document.querySelector("h1").textContent=t(prof?"profil.baslik":"sayfa.baslik");

@@ -32,25 +32,56 @@ export function benzerlik(a, b) {
   const u = A.size + B.size - n; return u ? n / u : 0;
 }
 
-// Katkılar benzerliğe göre gruplanır; grubun içinde en az KATKI_ARALIK_MS arayla gelmiş iki katkı varsa doğrulanmış.
-// Aynı katkıcı kimliğinden (kim) gelen iki katkı birbirini doğrulamaz; kimliği olmayan (O-22 öncesi) katkılar ayrı kişi sayılır.
-// En iyi grup: doğrulanmış > kalabalık > yeni. Gösterilen metin grubun en yeni katkısı; kim yanıta girmez.
-export function urunSec(satirlar) {
+// Katkılar benzerliğe göre gruplanır (aynı tür, grubun ilk katkısına benzerlik ≥ BENZERLIK; satırlar yeniden eskiye sıralı gelir).
+// Grubun içinde en az KATKI_ARALIK_MS arayla gelmiş iki katkı varsa doğrulanmış. Aynı katkıcı kimliğinden (kim) gelen iki katkı
+// birbirini doğrulamaz; kimliği olmayan (O-22 öncesi) katkılar ayrı kişi sayılır.
+function dogrulayanCift(a, b) { return Math.abs(a.t - b.t) >= KATKI_ARALIK_MS && !(a.kim && a.kim === b.kim); }
+export function grupla(satirlar) {
   const gruplar = [];
   for (const s of satirlar) {
     const g = gruplar.find((x) => x.tur === s.tur && benzerlik(x.ilk.metin, s.metin) >= BENZERLIK);
     if (g) g.s.push(s); else gruplar.push({ tur: s.tur, ilk: s, s: [s] });
   }
   for (const g of gruplar) {
-    g.dogrulandi = g.s.some((a, i) => g.s.some((b, j) => j > i && Math.abs(a.t - b.t) >= KATKI_ARALIK_MS && !(a.kim && a.kim === b.kim)));
+    g.dogrulandi = g.s.some((a, i) => g.s.some((b, j) => j > i && dogrulayanCift(a, b)));
     g.son = g.s.reduce((a, b) => (b.t > a.t ? b : a));
   }
+  return gruplar;
+}
+// En iyi grup: doğrulanmış > kalabalık > yeni. Gösterilen metin grubun en yeni katkısı; kim yanıta girmez.
+export function urunSec(satirlar) {
+  const gruplar = grupla(satirlar);
   gruplar.sort((a, b) => (b.dogrulandi - a.dogrulandi) || (b.s.length - a.s.length) || (b.son.t - a.son.t));
   const g = gruplar[0];
   if (!g) return { bulundu: false };
   return { bulundu: true, tur: g.son.tur, dil: g.son.dil || "", metin: g.son.metin, t: g.son.t, dogrulandi: g.dogrulandi, sayi: g.s.length };
 }
 
+// Eklediklerim ve ürün rozetleri (G-02): bir katkıcının eklediği barkodlar ve rozet sayıları. satirlar: bu katkıcının eklediği
+// barkodların bütün katkıları {kod, tur, metin, t, kim} (yeniden eskiye). Barkod başına bir kez sayılır, sayılar türe göre:
+//   avci: eklediği içerik doğrulanmış (Ürün Avcısı) · oncu: barkodun ilk katkısı onunki ve doğrulanmış (Öncü) ·
+//   dogrulayici: doğrulanmış grupta, başkasının en az KATKI_ARALIK_MS önce eklediği içeriği o eklemiş (Doğrulayıcı) · eklenen: toplam barkod.
+// Başkalarının metni ve kimliği yanıta girmez; listede yalnızca katkıcının kendi metninin başı.
+export const EKLEDIKLERIM_EN_COK = 200;
+export function katkiOzet(satirlar, kim) {
+  const say = { eklenen: {}, avci: {}, oncu: {}, dogrulayici: {} }, urunler = [], kodlar = new Map();
+  for (const s of satirlar) { if (!kodlar.has(s.kod)) kodlar.set(s.kod, []); kodlar.get(s.kod).push(s); }
+  const art = (o, tur) => { o[tur] = (o[tur] || 0) + 1; };
+  for (const [kod, l] of kodlar) {
+    const benim = l.filter((s) => s.kim === kim);
+    if (!benim.length) continue;
+    const gruplar = grupla(l), son = benim.reduce((a, b) => (b.t > a.t ? b : a)), tur = son.tur;
+    const gb = gruplar.filter((g) => g.dogrulandi && g.s.some((s) => s.kim === kim));
+    const ilk = l.reduce((a, b) => (b.t < a.t ? b : a));
+    const dogrulandi = gb.length > 0;
+    const oncu = ilk.kim === kim && gruplar.some((g) => g.dogrulandi && g.s.includes(ilk));
+    const dogrulayici = gb.some((g) => g.s.some((m) => m.kim === kim && g.s.some((o) => o.kim !== kim && m.t - o.t >= KATKI_ARALIK_MS)));
+    art(say.eklenen, tur); if (dogrulandi) art(say.avci, tur); if (oncu) art(say.oncu, tur); if (dogrulayici) art(say.dogrulayici, tur);
+    urunler.push({ kod, tur, t: son.t, dogrulandi, oncu, dogrulayici, ozet: String(son.metin).slice(0, 80) });
+  }
+  urunler.sort((a, b) => b.t - a.t);
+  return { ...say, urunler: urunler.slice(0, EKLEDIKLERIM_EN_COK) };
+}
 
 // Besin değerleri (A-02): Open Food Facts nutriments (*_100g) → {kcal, yag, doymus, karb, seker, lif, protein, tuz, birim}; değer yoksa null.
 // js/besin.js besinOff ve off_al.py besin_al ile aynı hesap (test/besin.js karşılaştırır). Tutarlılık uygulamada denetlenir.
