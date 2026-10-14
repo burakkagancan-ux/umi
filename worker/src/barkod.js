@@ -83,6 +83,20 @@ export function katkiOzet(satirlar, kim) {
   return { ...say, urunler: urunler.slice(0, EKLEDIKLERIM_EN_COK) };
 }
 
+// Topluluk (G-04): içeriği eklenen ve doğrulanan ürün sayıları. POST /urun her katkıda barkodun önceki ve sonraki durumunu karşılaştırır;
+// sayaçlar yalnızca durum değişince artar (doğrulama geri alınmaz: katkı silinmez, urunSec doğrulanmış grubu öne alır).
+// satirlar: katkiOzet ile aynı biçim, bütün barkodlar. Döner: {urun: {tür: n}, dogrulanan: {tür: n}} (tür: barkodun en iyi grubunun türü).
+export function toplulukSay(satirlar) {
+  const kodlar = new Map(), o = { urun: {}, dogrulanan: {} };
+  for (const s of satirlar) { if (!kodlar.has(s.kod)) kodlar.set(s.kod, []); kodlar.get(s.kod).push(s); }
+  for (const l of kodlar.values()) {
+    const u = urunSec(l.sort((a, b) => b.t - a.t));
+    o.urun[u.tur] = (o.urun[u.tur] || 0) + 1;
+    if (u.dogrulandi) o.dogrulanan[u.tur] = (o.dogrulanan[u.tur] || 0) + 1;
+  }
+  return o;
+}
+
 // Besin değerleri (A-02): Open Food Facts nutriments (*_100g) → {kcal, yag, doymus, karb, seker, lif, protein, tuz, birim}; değer yoksa null.
 // js/besin.js besinOff ve off_al.py besin_al ile aynı hesap (test/besin.js karşılaştırır). Tutarlılık uygulamada denetlenir.
 const BESIN_OFF = { yag: "fat", doymus: "saturated-fat", karb: "carbohydrates", seker: "sugars", lif: "fiber", protein: "proteins", tuz: "salt" };

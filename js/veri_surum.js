@@ -12,6 +12,7 @@ var VERI_ANAHTAR={
   yerimleri:"dizi",    // ansiklopedide kaydedilen maddeler (js/arayuz_ansiklopedi.js)
   profil:"nesne",      // hassasiyetler (js/arayuz.js)
   kayit_suz:"nesne",   // kayıt listesinin süzgeci ve sırası
+  aranan:"dizi",       // bu cihazdan "aranıyor" diye bildirilen barkodlar, bir kez sayılsın diye (js/arayuz_topluluk.js, G-04)
   besin_elle:"dizi",   // elle düzeltilen besin değeri tabloları, metne bağlı (js/arayuz_besin.js)
   rozetler:"nesne",    // rozet sayımı (G-01, js/rozet.js; kendi şema sürümü "v": ROZET_SURUM, rozetNorm okurken doğrular)
   dil:"yazi",ulke:"yazi",tur:"yazi",ktip:"yazi",pay_boyut:"yazi",

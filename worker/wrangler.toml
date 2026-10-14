@@ -62,3 +62,11 @@ id = "44f2c5a4b1ae41908edbb776a10e54a1"
 binding = "URUNLER"
 database_name = "tagsis-urunler"
 database_id = "fd2764c5-a992-4c5f-83c4-32d9098c5941"
+
+# Topluluk (G-04): aynı IP aynı barkodun "aranıyor" sayısını dakikada en çok bir kez artırır (IP saklanmaz, yalnızca sınırın anahtarı)
+[[ratelimits]]
+name = "ARANAN_LIMIT"
+namespace_id = "1005"
+  [ratelimits.simple]
+  limit = 1
+  period = 60

@@ -71,6 +71,8 @@ function barkodYok(kod,r){
   var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){$("dosya").click()};
   row.appendChild(b);row.appendChild(g);d.appendChild(row);box.appendChild(d);
   ST.textContent=t("barkod.yok_durum",{kod:kod});
+  // Topluluk (G-04): eksik ürünler listesi için bir kez bildirilir; başkaları da aradıysa söylenir
+  arananBildir(kod,(r&&r.tur)||MODE,function(n){if(BARKOD&&BARKOD.kod===kod&&d.isConnected)d.insertBefore(el("div","how",t("topluluk.yok_arandi",{n:n,s:dilSayi(n)})),row)});
 }
 /* Etiket fotoğrafı okundu (js/arayuz_sayfa.js çağırır): barkoddan sonra süre içindeyse o barkodla ilişkilenir */
 function barkodFoto(){

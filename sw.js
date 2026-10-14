@@ -1,9 +1,9 @@
-const CACHE = "tagsis-v50";
+const CACHE = "tagsis-v51";
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar
 const CORE = [
   "./", "index.html", "ocr.html", "ansiklopedi.html", "manifest.webmanifest",
   "js/veri_surum.js", "js/ceviri.js", "js/dil.js", "i18n/diller.json", "i18n/tr.json",   // yalnızca kaynak dil; seçili dilin dosyaları sayfa açılınca iner (DINAMIK)
-  "js/ortak.js", "js/gida.js", "js/kozmetik.js", "js/eslesme.js", "js/temizlik.js", "js/karsilastir_ayar.js", "js/karsilastir.js", "js/paylas_ayar.js", "js/paylas.js", "js/kayit.js", "js/arayuz_kayit.js", "js/arayuz_liste.js", "js/besin.js", "js/barkod.js", "js/arayuz_barkod.js", "js/arayuz_besin.js", "data/besin.json", "js/rozet.js", "js/arayuz_rozet.js", "js/arayuz_eklediklerim.js", "data/rozetler.json",
+  "js/ortak.js", "js/gida.js", "js/kozmetik.js", "js/eslesme.js", "js/temizlik.js", "js/karsilastir_ayar.js", "js/karsilastir.js", "js/paylas_ayar.js", "js/paylas.js", "js/kayit.js", "js/arayuz_kayit.js", "js/arayuz_liste.js", "js/besin.js", "js/barkod.js", "js/arayuz_barkod.js", "js/arayuz_besin.js", "data/besin.json", "js/rozet.js", "js/arayuz_rozet.js", "js/arayuz_eklediklerim.js", "js/topluluk.js", "js/arayuz_topluluk.js", "data/rozetler.json",
   "js/arayuz.js", "js/arayuz_kozmetik.js", "js/arayuz_temizlik.js", "js/arayuz_karsilastir.js", "js/arayuz_paylas.js", "js/arayuz_sayfa.js",
   "js/ansiklopedi.js", "js/arayuz_ansiklopedi.js", "data/ansiklopedi.json", "data/ansiklopedi_tr.json",   // ansiklopedi dizini; madde sayfaları açılınca iner
   "icon-192.png", "icon-512.png", "apple-touch-icon.png",
