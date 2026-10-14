@@ -112,6 +112,7 @@ function fotoOku(){
   function yaz(tx,msj){
     if(!gecerli())return;
     // Besin tablosunun fotoğrafı: okunan metin içerik metninin sonuna eklenir, aynı tarama güncellenir (js/arayuz_besin.js)
+    var yo=besinYenidenOku(n,tx);if(yo!=null){OKU.okundu=true;ST.textContent=yo;return}
     var ek=besinEkMetin(n,tx);
     if(ek!=null){besinEkUygula(ek);$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
