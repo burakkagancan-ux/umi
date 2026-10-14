@@ -60,7 +60,7 @@ MAY_FORWARD = ["may contain", "may also contain", "may contain traces", "traces 
                "produced in a factory", "produced in a facility", "manufactured in a facility", "manufactured in a factory",
                "manufactured on shared equipment", "processed in a facility", "packed in a facility", "facility that also",
                "factory that also", "factory which also", "shared equipment", "same equipment", "same production line"]
-NEGATIONS = ["icermez", "yoktur", "icermemektedir", "ilave edilmemistir", "katilmamistir", "free"]
+NEGATIONS = ["icermez", "icermiyor", "yoktur", "yok", "icermemektedir", "bulunmaz", "bulunmamaktadir", "ilave edilmemistir", "eklenmemistir", "katilmamistir", "kullanilmamistir", "kullanilmamaktadir", "free"]
 # İngilizce önden olumsuzluk ("no added sugar", "free from milk"): yalnızca İngilizce görünen metinde, maddenin hemen önünde
 NEG_PREFIX = ["no", "non", "without", "no added", "free from", "contains no", "no artificial", "not contain", "contain no"]
 AROMA_NEXT = ["aromasi", "aromali", "aroma", "esansi", "flavour", "flavouring", "flavor", "flavoring", "flavoured", "flavored"]

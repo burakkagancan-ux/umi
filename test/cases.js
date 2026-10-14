@@ -20,6 +20,11 @@ const cases=[
  ["Alkol içermez, domuz kaynaklı madde içermez", ["B:alkol~neg","B:domuz~neg"], ["B:domuz"]],
  ["Alkol ve domuz ürünleri ile katkı maddesi içermez", ["B:alkol~neg","B:domuz~neg"], ["B:alkol","B:domuz"]],
  ["Alkol veya domuz yağı yoktur", ["B:alkol~neg","B:domuz~neg"], ["B:alkol"]],
+ // Kullanıcı tespiti (14.10.2026): "katkıları" ve "bulunmamaktadır" olumsuzluğu bölmüyordu, domuz içerikte varmış gibi görünüyordu
+ ["Domuz yağı ve katkıları yoktur.", ["B:domuz~neg"], ["B:domuz"]],
+ ["İçindekiler: un, tuz. Ürünümüzde domuz yağı ve katkıları bulunmamaktadır.", ["B:un","B:tuz","B:domuz~neg"], ["B:domuz"]],
+ ["Domuz kökenli katkı maddeleri içermez", ["B:domuz~neg"], ["B:domuz"]],
+ ["İçindekiler: buğday unu, domuz yağı, tuz.", ["B:domuz"], ["B:domuz~neg"]],
  ["İçindekiler: şeker, süt, palm yağı içermez", ["B:seker","B:sut","B:palm~neg"], ["B:sut~neg","B:seker~neg"]],
  ["Şeker ve süt", ["B:seker","B:sut"], ["B:sut~neg"]],
  ["Bal kabağı çekirdeği, tuz", ["B:n_balkabagi"], ["B:bal"]],

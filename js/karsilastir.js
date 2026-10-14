@@ -84,9 +84,9 @@ function cmpProduct(text,idx,prof,name){
 /* Kozmetik ürün özeti. Seviye: AB'de yasak ve başka pazarda yasak (red/orange) 3, dikkat (yellow) 2, diğerleri 0.
    Tanınmayan oran: INCI listesindeki bileşenlerden tanınmayanlar. */
 var CMP_KRANK={red:3,orange:3,yellow:2,info:0};
-/* Profilim'de elle eklenen alerjenler (prof.alOzel): her üç türde etiket metninde aranır (ozelAra, js/ortak.js) */
+/* Profilim'de elle eklenen alerjenler (prof.alOzel): her üç türde etiket metninde, sözlükteki bütün dil karşılıklarıyla aranır (ozelAraHepsi, js/ortak.js) */
 function cmpMisfitOzel(text,prof){
-  return ((prof&&prof.alOzel)||[]).map(function(ad){var r=ozelAra(text,ad);return r.yes.length?t("kars.uyum.alerjen",{ad:ad,l:r.yes.join(", ")}):null}).filter(Boolean);
+  return ((prof&&prof.alOzel)||[]).map(function(ad){var r=ozelAraHepsi(text,ad);return r.yes.length?t("kars.uyum.alerjen",{ad:ozelGoster(ad,DIL.kod),l:r.yes.join(", ")}):null}).filter(Boolean);
 }
 function cmpMisfitK(S,prof){
   var o=[],j=function(a){return a.join(", ")};

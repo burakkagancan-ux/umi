@@ -195,7 +195,7 @@ function mayZones(tok,idx){
   return z;
 }
 // Olumsuzluk: madde ile "içermez" arasında geçebilecek sözcükler ve maddeleri bağlayan sözcükler
-var NEGFILL={kaynakli:1,madde:1,maddesi:1,maddeler:1,urun:1,urunu:1,urunleri:1,eti:1,turevi:1,turevleri:1,katki:1,katkisi:1,bilesen:1,bileseni:1,hicbir:1,kesinlikle:1,iz:1,miktarda:1};
+var NEGFILL={kaynakli:1,kokenli:1,menseli:1,madde:1,maddesi:1,maddeler:1,maddeleri:1,urun:1,urunu:1,urunleri:1,eti:1,yagi:1,yaglari:1,turevi:1,turevleri:1,katki:1,katkisi:1,katkilar:1,katkilari:1,bilesen:1,bileseni:1,bilesenler:1,bilesenleri:1,hicbir:1,kesinlikle:1,iz:1,miktarda:1};
 var NEGJOIN={ve:1,veya:1,ile:1,ya:1,da:1,de:1,hem:1,ne:1,"|":1,and:1,or:1,nor:1};
 function analyze(text,idx){
   var tok=normText(text).split(" ").filter(Boolean),en=enMetin(tok);
