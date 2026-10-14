@@ -197,6 +197,21 @@ async function scan(p,mode,text){
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .t'),null,{timeout:8000}).catch(()=>{});
     k=await kart();
     ok(k&&!k.dz.length&&/besin değeri tablosu yok/.test(k.metin)&&k.btn.includes('Tablonun fotoğrafını çek'),'tablosuz metin: renk yok, fotoğraf ekle düğmesi: '+JSON.stringify(k&&k.btn));
+    // Tablo yokken elle giriş (14.10.2026): boş form, birim seçilir, kaydedince renk ve "siz girdiniz"; metin değişmez
+    {
+      const m0=await p.inputValue('#metin');
+      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.elle_gir')).click());
+      await p.waitForSelector('#sheet:not([hidden]) .bform');
+      ok(await p.inputValue('#sheet input[data-alan="yag"]')===''&&!(await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].some(b=>b.textContent===t('besin.form.geri')))),'elle giriş: form boş, "okunan değerlere dön" yok');
+      await p.evaluate(()=>[...document.querySelectorAll('#sheet .brad button')].find(b=>b.textContent==='100 g').click());
+      for(const [a,v] of [['yag','30'],['doymus','12'],['seker','40'],['tuz','0,2']])await p.fill('#sheet input[data-alan="'+a+'"]',v);
+      await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+      await p.waitForFunction(()=>document.getElementById('sheet').hidden,null,{timeout:3000}).catch(()=>{});
+      k=await kart();
+      ok(k&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg[0]==='30 g'&&/siz girdiniz/.test(k.metin)&&k.btn.includes('Tablonun fotoğrafını çek')&&await p.inputValue('#metin')===m0,'elle girilen tablo renkli, metin aynı, fotoğraf eklenebilir: '+JSON.stringify(k));
+      await p.evaluate(()=>{localStorage.removeItem('besin_elle');run()});
+      await p.waitForFunction(()=>/besin değeri tablosu yok/.test((document.querySelector('#sonuc .besin')||{}).textContent||''),null,{timeout:8000}).catch(()=>{});
+    }
     // Tablo fotoğrafı: okunan metin sona eklenir, yeni tarama açılmaz
     {
       const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
@@ -213,6 +228,21 @@ async function scan(p,mode,text){
       await p.evaluate(()=>localStorage.removeItem('kayitli'));
       ok(await p.evaluate(()=>histLoad().length)===n0&&await p.evaluate(m=>histLoad()[0].text===m.trim(),m),'aynı tarama güncellendi (yeni kayıt yok)');
       ok(await p.evaluate(()=>/E322/.test(document.getElementById('sonuc').textContent)),'içerik analizi sürüyor (E322)');
+      // Tablo okunmuşken yeniden fotoğraf (14.10.2026): metne ikinci tablo eklenmez, yeni değerler formda onaya gelir
+      k=await kart();
+      ok(k.btn.includes('Tablonun fotoğrafını yeniden çek')&&!k.btn.includes('Tablonun fotoğrafını çek'),'okunmuş tabloda "yeniden çek" düğmesi: '+JSON.stringify(k.btn));
+      await p.unroute(ocrYol);
+      await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:'Besin değerleri 100 g\nEnerji 1500 kJ / 360 kcal\nYağ 3 g\nDoymuş yağ 1 g\nKarbonhidrat 70 g\nŞekerler 4 g\nProtein 9 g\nTuz 0,9 g'})}));
+      const n1=await p.evaluate(()=>histLoad().length);
+      const [fc2]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_yeniden')).click())]);
+      await fc2.setFiles(path.join(R,'icon-192.png'));
+      await p.waitForSelector('#sheet:not([hidden]) .bform',{timeout:8000}).catch(()=>{});
+      ok(await p.inputValue('#sheet input[data-alan="yag"]').catch(()=>'')==='3'&&await p.inputValue('#metin')===m&&(await kart()).deg[0]==='25,1 g','yeniden çekilen tablo formda, metin ve eski değerler kaydedilene kadar aynı');
+      await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
+      await p.waitForFunction(()=>document.getElementById('sheet').hidden,null,{timeout:3000}).catch(()=>{});
+      k=await kart();
+      ok(k&&k.deg.slice(0,4).join('|')==='3 g|1 g|4 g|0,9 g'&&/siz girdiniz/.test(k.metin)&&await p.evaluate(()=>histLoad().length)===n1,'kaydedince yeni değerler, yeni tarama yok: '+JSON.stringify(k));
+      await p.evaluate(()=>localStorage.removeItem('besin_elle'));
       await p.unroute(ocrYol);
       await p.evaluate(()=>fotoTemizle());
     }
