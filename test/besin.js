@@ -2,7 +2,7 @@
 // etiket metninden tablo ayrıştırma (satır satır, hücre hücre, sütun sütun okunmuş OCR; porsiyon/%RI sütunu; diller; içerik listesiyle aynı metin).
 // Çalıştır: node test/besin.js
 const fs=require('fs'),path=require('path'),{execFileSync}=require('child_process');
-eval(require('./yukle.js')+';global.B={besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet}');
+eval(require('./yukle.js')+';global.B={besinPorNorm,besinPorsiyonPayi,besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet}');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const veri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8'));
 const S=B.besinSozluk(veri);
@@ -65,6 +65,11 @@ const sec=B.barkodSec({urun,off:r},['tr']);
 ok(sec.kaynak==='urun'&&sec.besin&&sec.besin.yag===25.1&&!urun.besin,'doğrulanmış katkı seçilir, besin OFF\'tan eklenir, asıl kayıt değişmez');
 ok(B.barkodSec({off:{...r,metin:{}}},['tr']).besin.kcal===505,'içeriği olmayan üründe de besin taşınır');
 ok(!B.barkodSec({urun},['tr']).besin,'OFF yoksa besin yok');
+{ // topluluk tablosu (porsiyondan çevrilmiş, O-23) OFF içeriğine eklenince porsiyon aralığı da taşınır
+  const top={kod:'8690504025207',kaynak:'urun',tur:'gida',metin:{},besin:{yag:14.5,birim:'g'},besinLt:{},besinPor:{m:55,u:'g',ara:{yag:[13.6,15.5]}},besinKaynak:'topluluk',besinT:9};
+  const s2=B.barkodSec({off:{...r,besin:null},urun:top},['tr']);
+  ok(s2&&s2.besinKaynak==='topluluk'&&s2.besinPor&&s2.besinPor.m===55,'topluluk tablosunun porsiyon bilgisi taşınır '+j(s2&&s2.besinPor));
+}
 const offVeri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8'));
 const bes=Object.values(offVeri.u).filter(x=>x.length>5);
 ok(!bes.length||j(offVeri.meta.besin_alan)===j([...B.BESIN_ALAN,'birim']),'barkod_off.json besin sırası js/besin.js ile aynı');
@@ -228,6 +233,76 @@ ok(B.besinElleBul('bozuk',k1)===null&&B.besinElleEkle(null,k1,{b:cik}).length===
   ok(B.besinOzet({b:bb,lt:{},birim:'',sorun:[]})===null,'birim bilinmiyorsa özet yok');
   ok(B.besinOzet({b:Object.assign({},bb,{doymus:20}),lt:{},birim:'g',sorun:[]})===null,'şüpheli tabloda özet yok');
   ok(B.besinOzet({b:{yag:12,tuz:0.2},lt:{},birim:'g',sorun:[]}).satir.length===2,'okunmayan satır özete girmez');
+}
+// 7) Porsiyon başına etiket (O-23): ABD ve Kanada; porsiyon büyüklüğüyle 100 g'a çevrilir, yuvarlama aralığı düzeyi belirsiz yapabilir
+{
+  const US=`Nutrition Facts
+8 servings per container
+Serving size 2/3 cup (55g)
+Amount per serving
+Calories 230
+% Daily Value*
+Total Fat 8g 10%
+Saturated Fat 1g 5%
+Trans Fat 0g
+Cholesterol 0mg 0%
+Sodium 160mg 7%
+Total Carbohydrate 37g 13%
+Dietary Fiber 4g 14%
+Total Sugars 12g
+Includes 10g Added Sugars 20%
+Protein 3g
+Vitamin D 2mcg 10%
+* The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.`;
+  let r=ay(US);
+  ok(r&&r.por&&r.por.m===55&&r.por.u==='g'&&r.birim==='g'&&!r.sorun.includes('yuz_yok'),'ABD etiketi: porsiyon 55 g okunur, 100 g başlığı sorunu yok '+j(r));
+  ok(r&&yakin(r.b.kcal,418.18)&&yakin(r.b.yag,14.55)&&yakin(r.b.doymus,1.82)&&yakin(r.b.karb,67.27)&&yakin(r.b.seker,21.82)&&yakin(r.b.lif,7.27)&&yakin(r.b.protein,5.45)&&yakin(r.b.tuz,0.73),'ABD: Calories kcal, eklenmiş şeker değil toplam şeker, sodyum mg → tuz, 100 g\'a çevrilir '+j(r&&r.b));
+  ok(r&&r.durum==='tamam','ABD: tutarlı '+j(r&&r.sorun));
+  // yağ 8 g (±0,25) → 14,1–15,0 g: orta; doymuş 1 g (±0,25) → 1,36–2,27: eşik 1,5 içinde → düzey yok; şeker 12 g (±0,5) → 20,9–22,7: eşik 22,5 içinde → yok
+  let g=B.besinGorunum(r);
+  ok(g&&g.renk&&g.por&&g.por.m===55&&g.satir.map(s=>s.alan+':'+s.duzey).join()==='yag:orta,doymus:null,seker:null,tuz:orta','ABD: yuvarlama aralığı eşiği kesen satır renksiz '+j(g&&g.satir));
+  ok(yakin(r.por.ara.tuz[0],0.705)&&yakin(r.por.ara.tuz[1],0.75),'sodyum 160 mg ±5 mg → tuz aralığı '+j(r.por.ara.tuz));
+  const CA=`Nutrition Facts
+Valeur nutritive
+Per 1 cup (250 mL) / pour 1 tasse (250 mL)
+Calories 110
+% Daily Value* / % valeur quotidienne*
+Fat / Lipides 0 g 0 %
+Saturated / saturés 0 g
++ Trans / trans 0 g 0 %
+Carbohydrate / Glucides 26 g
+Fibre / Fibres 0 g 0 %
+Sugars / Sucres 22 g 22 %
+Protein / Protéines 2 g
+Cholesterol / Cholestérol 0 mg
+Sodium 0 mg 0 %
+Potassium 450 mg 10 %`;
+  r=ay(CA);
+  ok(r&&r.por&&r.por.m===250&&r.birim==='ml'&&yakin(r.b.kcal,44)&&r.b.yag===0&&yakin(r.b.seker,8.8)&&r.b.tuz===0&&r.durum==='tamam','Kanada (iki dilli, mL): 100 ml\'ye çevrilir '+j(r));
+  g=B.besinGorunum(r);
+  ok(g&&g.satir.map(s=>s.alan+':'+s.duzey).join()==='yag:dusuk,doymus:dusuk,seker:orta,tuz:dusuk','Kanada: 0 g (0–0,5 g/porsiyon) düşük kalır '+j(g&&g.satir));
+  // 100 g sütunu olan etiket değişmez: "Per 100g" başlığı porsiyon sanılmaz
+  r=ay('Nutrition information\nTypical values Per 100g Per 30g serving\nEnergy 1615kJ/383kcal 485kJ/115kcal\nFat 2.0g 0.6g\nof which saturates 0.4g 0.1g\nCarbohydrate 84g 25g\nof which sugars 37g 11g\nFibre 2.5g 0.8g\nProtein 4.5g 1.4g\nSalt 0.75g 0.23g');
+  ok(r&&!r.por&&r.b.kcal===383&&r.b.yag===2&&r.b.tuz===0.75&&r.durum==='tamam','100 g sütunlu etikette porsiyon çevrilmez '+j(r));
+  // Porsiyon büyüklüğü okunamayan porsiyon etiketi eskisi gibi şüpheli
+  r=ay('Amount per serving\nCalories 230\nTotal Fat 8g\nSodium 160mg\nTotal Sugars 12g');
+  ok(r&&!r.por&&r.sorun.includes('yuz_yok')&&r.b.kcal===230,'porsiyon gramı yoksa çevrilmez, şüpheli '+j(r));
+  // "%" yalnızca aynı satırdaki sayıya bağlanır
+  ok(B.besinParcala('Calories 230\n% Daily Value')[1].u==='','satır sonundaki % sayıya bağlanmaz');
+  // Yuvarlama payı (FDA 21 CFR 101.9(c))
+  ok(j(B.besinPorsiyonPayi('yag',0,false))==='[0,0.5]'&&j(B.besinPorsiyonPayi('yag',3,false))==='[2.75,3.25]'&&j(B.besinPorsiyonPayi('yag',8,false))==='[7.5,8.5]','yağ yuvarlaması');
+  ok(j(B.besinPorsiyonPayi('seker',1,true))==='[0,1]'&&j(B.besinPorsiyonPayi('seker',12,false))==='[11.5,12.5]','şeker yuvarlaması ve "<1 g"');
+  // besinDuzey: aralığın iki ucu aynı düzeyde değilse bilinmiyor
+  ok(B.besinDuzey('seker',4,false,'g',[3,4.5])==='dusuk'&&B.besinDuzey('seker',4.9,false,'g',[4,6])===null,'aralıkla düzey');
+  // Kayıt, Worker ve uygulama aynı süzgeç
+  const W=await import(path.join(__dirname,'..','worker','src','barkod.js'));
+  const pors=[{m:55,u:'g',ara:{yag:[13.6,15.5],tuz:[0.7,0.75]}},{m:0,u:'g'},{m:55,u:'kg'},{m:5000,u:'g'},{m:30,u:'ml',ara:{yag:[2,1],seker:'x',tuz:[0,1],zehir:[0,1]}},null,'x'];
+  pors.forEach(x=>ok(j(B.besinPorNorm(x))===j(W.besinPorNorm(x)),'porsiyon süzgeci Worker ile aynı: '+j(x)));
+  ok(j(B.besinPorNorm(pors[4]))==='{"m":30,"u":"ml","ara":{"tuz":[0,1]}}','bozuk aralık atılır');
+  const kk=B.besinKayitKopya({k:ay(US),kaynak:'etiket'});
+  ok(kk&&kk.por&&kk.por.m===55&&j(B.besinGorunum(kk).satir.map(s=>s.duzey))==='["orta",null,null,"orta"]','kayıtlı üründe porsiyon aralığı korunur '+j(kk&&kk.por));
+  const wk=W.besinKatki({b:ay(US).b,lt:{},birim:'g',por:ay(US).por});
+  ok(wk&&wk.por&&wk.por.m===55&&!('por' in W.besinKatki({b:{yag:1,tuz:1},birim:'g'})),'Worker porsiyon bilgisini saklar '+j(wk&&wk.por));
 }
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

@@ -97,7 +97,7 @@ function barkodBesinEkle(r,s){
   var b=[s.off,s.offCanli,s.urun].filter(function(x){return x&&x.besin})[0];
   if(!b)return r;
   var o={};for(var k in r)o[k]=r[k];
-  o.besin=b.besin;o.besinT=b.besinT||b.t;o.besinLt=b.besinLt;o.besinKaynak=b.besinKaynak;return o;
+  o.besin=b.besin;o.besinT=b.besinT||b.t;o.besinLt=b.besinLt;o.besinPor=b.besinPor||null;o.besinKaynak=b.besinKaynak;return o;
 }
 /* Fotoğrafla okunan metnin katkı olarak önerilmesi: içerik listesi gibi görünmeli (gıda, kozmetik: parçaların çoğu tanınmış;
    temizlik: en az bir tehlike ifadesi ya da madde tanınmış). Yanlış okunmuş metin veritabanına girmesin. */

@@ -23,14 +23,14 @@ function besinKaynak(tx,kayitsiz){
   if(kb&&kb.kaynak==="elle")return besinKayittan(kb,okunan);
   if(okunan)return {k:okunan,kaynak:"etiket",okunan:okunan};
   var r=BARKOD&&BARKOD.r;
-  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:r.besinLt||{},birim:r.besin.birim,sorun:[]},kaynak:r.besinKaynak==="topluluk"?"topluluk":"off",t:r.besinT||r.t};
+  if(r&&r.besin&&BARKOD.metin&&tx.trim()===BARKOD.metin.trim())return {k:{b:r.besin,lt:r.besinLt||{},birim:r.besin.birim,sorun:[],por:r.besinPor||null},kaynak:r.besinKaynak==="topluluk"?"topluluk":"off",t:r.besinT||r.t};
   return kb?besinKayittan(kb,okunan):null;
 }
 function besinKayitli(tx){
   if(typeof kayitFind!=="function")return null;
   var k=kayitFind(kayitLoad(),"gida",tx);return k&&k.besin?besinKayitNorm(k.besin):null;
 }
-function besinKayittan(bs,okunan){return {k:{b:bs.b,lt:bs.lt,birim:bs.birim,sorun:bs.sorun,onay:bs.onay},kaynak:bs.kaynak,t:bs.t,okunan:okunan,kayit:true}}
+function besinKayittan(bs,okunan){return {k:{b:bs.b,lt:bs.lt,birim:bs.birim,sorun:bs.sorun,onay:bs.onay,por:bs.por||null},kaynak:bs.kaynak,t:bs.t,okunan:okunan,kayit:true}}
 /* Metin kayıtlı bir gıdaysa saklanan tabloyu ekrandaki kaynakla yeniler (elle düzeltme ya da düzeltmeyi geri alma sonrası) */
 function besinKayitYenile(tx){
   if(typeof kayitLoad!=="function")return;
@@ -76,6 +76,8 @@ function besinKart(tx){
   }
   var eksik=G.satir.filter(function(s){return s.v==null}).map(function(s){return t("besin.alan."+s.alan)});
   if(eksik.length)d.appendChild(el("div","how",t("besin.eksik",{l:eksik.join(", ")})));
+  // ABD/Kanada etiketi: değerler porsiyon başına yazılı, 100 g'a çevrildi (O-23)
+  if(G.por)d.appendChild(el("div","how",t(G.birim==="ml"?"besin.porsiyon_cevrildi_ml":"besin.porsiyon_cevrildi_g",{m:t(G.por.u==="ml"?"birim.ml_l":"birim.g_l",{n:sayi(G.por.m)})})));
   d.appendChild(el("div","how",K.kaynak==="elle"?t("besin.kaynak_elle",{tarih:dilTarih(K.t,"gun")}):K.kaynak==="off"?(K.t?t("besin.kaynak_off",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_off_tarihsiz")):
     K.kaynak==="topluluk"?t("besin.kaynak_topluluk",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_etiket")));
   var pn=el("div","ipanel");pn.hidden=true;besinEsikPanel(pn);d.appendChild(pn);

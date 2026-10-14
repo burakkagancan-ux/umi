@@ -2,7 +2,9 @@
    Değerler iki yoldan gelir: (1) barkod → Open Food Facts'in 100 g / 100 ml değerleri (besinOff, data/barkod_off.json ve Worker /off);
    (2) etiket fotoğrafından okunan metin (besinAyristir). İkisi de aynı tutarlılık denetiminden geçer (besinDenetle): denetimi geçmeyen
    değer "şüpheli" olur; ekran şüpheli değerle renk göstermez, kullanıcıya sorar. Emin olunmayan renk hiç gösterilmez.
-   Satır adları ve sütun başlıkları data/besin.json'da (kaynak/besin_adlari.tsv → gen_besin.py); yeni dil kod değişikliği istemez. */
+   Satır adları ve sütun başlıkları data/besin.json'da (kaynak/besin_adlari.tsv → gen_besin.py); yeni dil kod değişikliği istemez.
+   100 g sütunu olmayan etiket (ABD, Kanada: porsiyon başına, sodyum mg) porsiyon büyüklüğü okunursa 100 g'a çevrilir (O-23); etiketteki
+   yuvarlama payı da çevrilir (por.ara) ve düzeyi bu aralıkta değişen satır renksiz kalır. */
 var BESIN_ALAN=["kcal","yag","doymus","karb","seker","lif","protein","tuz"];   // off_al.py ve Worker aynı adları kullanır
 var BESIN_AYAR={
   kjKcal:4.184,                 // 1 kcal = 4,184 kJ (AB 1169/2011 Ek XIV)
@@ -15,7 +17,9 @@ var BESIN_AYAR={
   kcalUst:900,                  // 100 g'da en çok (saf yağ)
   anaSatir:["yag","doymus","seker","tuz"],   // renkli gösterimin dört satırı; eksikse "eksik" listesinde
   enAzSatir:3,                  // metinde tablo sayılması için değeri okunan en az satır (enerji satırı ya da "100 g" başlığı varsa 2)
-  adlarArasiSozcuk:2            // satır adıyla değeri arasında (aynı satırda) atlanabilecek bilinmeyen sözcük ("Yağ (toplam)", "Fett gesamt")
+  adlarArasiSozcuk:2,           // satır adıyla değeri arasında (aynı satırda) atlanabilecek bilinmeyen sözcük ("Yağ (toplam)", "Fett gesamt")
+  porsiyonBak:10,               // porsiyon büyüklüğü başlığından ("Serving size") sonra gramın aranacağı parça sayısı ("2/3 cup (55g)")
+  porsiyonUst:1000              // porsiyon en çok (g ya da ml); üstü okuma hatası sayılır
 };
 function besinSayi(v){return typeof v==="number"&&isFinite(v)?v:null}
 function besinYuvarla(v){return v==null?null:Math.round(v*1000)/1000}
@@ -82,7 +86,8 @@ function besinNorm(s){
   return low(String(s==null?"":s).replace(/ß/g,"ss").normalize("NFD").replace(/[̀-ͯ]/g,"")).replace(/[^\p{L}\p{N}%]+/gu," ").trim();
 }
 /* data/besin.json → arama sözlüğü. adlar: [alan, dil, ad]; "_" ile başlayan alanlar işaret: _atla (tabloda olan ama kullanılmayan satır:
-   trans yağ, nişasta…; daha kısa bir adın yanlış eşleşmesini önler), _porsiyon ve _ri (sütun başlıkları). */
+   trans yağ, nişasta…; daha kısa bir adın yanlış eşleşmesini önler), _porsiyon ve _ri (sütun başlıkları), _boy (porsiyon büyüklüğü:
+   ardından gelen gram/ml). "kalori" alanı birimi yazılmayan enerji satırıdır ("Calories 230": kcal). */
 function besinSozluk(veri){
   var S={ad:{},enUzun:1};
   ((veri&&veri.adlar)||[]).forEach(function(r){
@@ -95,13 +100,14 @@ function besinSozluk(veri){
 var BESIN_BIRIM={kcal:"kcal",kj:"kj",g:"g",gr:"g",mg:"mg","µg":"ug",mcg:"ug",ug:"ug",ml:"ml","%":"%"};
 /* Metni parçalara ayırır: sayı (ondalık virgül/nokta, "<" ve bitişik birim), birim, sözcük, satır sonu */
 function besinParcala(metin){
-  var re=/([<≤]\s*)?(\d+(?:[.,]\d+)?)\s*(kcal|kj|mg|µg|mcg|ug|gr|g|ml|%)?(?![\p{L}\p{N}])|%|[\p{L}][\p{L}\p{M}'’-]*|\n|\.(?!\d)/giu,m,out=[];
+  // "%" yalnızca aynı satırda sayıya bağlanır: "Calories 230⏎% Daily Value" başlığı enerjiyi yüzde yapıyordu (O-23)
+  var re=/([<≤]\s*)?(\d+(?:[.,]\d+)?)(?:\s*(kcal|kj|mg|µg|mcg|ug|gr|g|ml)|[^\S\n]*(%))?(?![\p{L}\p{N}])|%|[\p{L}][\p{L}\p{M}'’-]*|\n|\.(?!\d)/giu,m,out=[];
   // E kodu ("E330", "E 150c") sayı değildir: içerik listesinde satır adının ardından gelirse değer sanılırdı ("Şeker, E330" → şekerler 330 g)
   var s=String(metin==null?"":metin).replace(/\r/g,"").replace(/(^|[^\p{L}\p{N}])[Ee][ -]?\d{3,4}[a-j]?(?![\p{L}\p{N}])/gu,"$1ekodu");
   while((m=re.exec(s))){
     if(m[0]==="\n"||m[0]==="."){out.push({t:"nl"});continue}   // cümle sonu da satır sonu gibi: "…, tuz. Besin değerleri" 
     if(m[2]!=null){
-      var ham=m[2],v=Number(ham.replace(",",".")),u=m[3]?BESIN_BIRIM[m[3].toLowerCase()]:"";
+      var ham=m[2],v=Number(ham.replace(",",".")),u=m[3]?BESIN_BIRIM[m[3].toLowerCase()]:m[4]?"%":"";
       // "2.151 kJ": binlik ayırıcı (kJ'de üç ondalık hane olmaz)
       if(u==="kj"&&/^\d\.\d{3}$/.test(ham))v=Number(ham.replace(".",""));
       out.push({t:"s",v:v,u:u||"",lt:!!m[1],ham:ham,sifir:/^0\d/.test(ham)});
@@ -151,20 +157,52 @@ function besinHucre(sat){
   }
   return out;
 }
+/* Porsiyon büyüklüğü başlığından sonra ilk gram ya da ml ("Serving size 2/3 cup (55g)", "Per 1 cup (250 mL)"): {m, u} ya da null.
+   Satır sonu en çok bir kez geçilir (başlık ve değer OCR'da ayrı satıra düşebilir). */
+function besinPorsiyonBul(p,i){
+  var nl=0,n=0;
+  for(var j=i+1;j<p.length&&n<BESIN_AYAR.porsiyonBak;j++){
+    if(p[j].t==="nl"){if(++nl>1)break;continue}
+    n++;
+    if(p[j].t==="s"&&(p[j].u==="g"||p[j].u==="ml")&&p[j].v>0&&!p[j].lt)return p[j].v<=BESIN_AYAR.porsiyonUst?{m:p[j].v,u:p[j].u}:null;
+  }
+  return null;
+}
+/* Porsiyon başına yazılmış değerin yuvarlama payı (porsiyon başına, g): [alt, üst]. ABD FDA 21 CFR 101.9(c) yuvarlama kuralları
+   (Kanada'nınki aynı ya da daha ince; AB'ninki daha ince): yağ 0,5 g altı 0, 5 g'a kadar 0,5'lik, sonra 1'lik; şekerler 0,5 g altı 0,
+   sonra 1'lik; sodyum 5 mg altı 0, 140 mg'a kadar 5'lik, sonra 10'luk. Kuraldan ince yazılmış değer (Kanada "0,3 g") ±0,05.
+   lt ("<1 g"): 0 ile değer arası. na: tuz sodyumdan hesaplandı (s tuz gramı). */
+function besinPorsiyonPayi(alan,s,lt,na){
+  if(lt)return [0,s];
+  var h;
+  if(na){
+    var mg=s/BESIN_AYAR.tuzSodyum*1000,k=BESIN_AYAR.tuzSodyum/1000;
+    if(mg===0)return [0,5*k];
+    h=mg<5?0.5:mg<=140?2.5:5;return [Math.max(0,mg-h)*k,(mg+h)*k];
+  }
+  if(s===0)return [0,alan==="tuz"?0.05:0.5];
+  if(alan==="yag"||alan==="doymus")h=s<0.5?0.05:s<5?0.25:0.5;
+  else h=s<1?0.05:0.5;
+  return [Math.max(0,s-h),s+h];
+}
 /* Etiket metninden besin değeri tablosu. metin: OCR çıktısı (satır sonları korunur); S: besinSozluk(data/besin.json).
-   Döner: null (tablo yok) ya da {b, lt: {alan: "<" ile yazılmış}, birim: "g"|"ml"|"", sutun, yontem: "satir"|"sutun", durum, sorun, eksik, hesap}.
+   Döner: null (tablo yok) ya da {b, lt: {alan: "<" ile yazılmış}, birim: "g"|"ml"|"", sutun, yontem: "satir"|"sutun", durum, sorun, eksik, hesap,
+   por?: {m, u, ara}}.
    Sütun: başlıktaki "100 g / 100 ml" sütununun sırası (porsiyon ve %RI sütunlarına göre); başlık yoksa ilk sütun alınır ama durum "suphe" olur.
+   100 g başlığı yok ama porsiyon büyüklüğü okunmuşsa (O-23) porsiyon sütunu alınır, değerler 100 g'a çevrilir; por.ara: dört renkli satırın
+   100 g'daki yuvarlama aralığı [alt, üst] (besinPorsiyonPayi).
    Ayrıştırma sorunları (yuz_yok: 100 g başlığı yok, sutun_sira: adlar ve değerler ayrı bloklarda, ondalik: "05" gibi virgülü kaybolmuş
    olabilecek sayı, birim_yok: enerjinin birimi yok, cok_satir: aynı satır iki kez) de durumu "suphe" yapar. */
 function besinAyristir(metin,S){
-  var p=besinParcala(metin),A=BESIN_AYAR,rows=[],cur=null,isaret=[],i,j,satirSonu=false,atlanan=0;
+  var p=besinParcala(metin),A=BESIN_AYAR,rows=[],cur=null,isaret=[],i,j,satirSonu=false,atlanan=0,porsiyon=null;
   for(i=0;i<p.length;i++){
     var x=p[i];
     if(x.t==="nl"){satirSonu=true;continue}
     if(x.t==="w"){
       var a=besinAdBul(p,i,S);
+      if(a&&a.alan==="_boy"){if(!porsiyon)porsiyon=besinPorsiyonBul(p,a.son);i=a.son;cur=null;continue}
       if(a&&a.alan.charAt(0)!=="_"||a&&a.alan==="_atla"){
-        cur={alan:a.alan,s:[],birimler:[]};rows.push(cur);
+        cur=a.alan==="kalori"?{alan:"enerji",s:[],birimler:["kcal"]}:{alan:a.alan,s:[],birimler:[]};rows.push(cur);
         i=a.son;satirSonu=false;atlanan=0;continue;
       }
       if(a&&(a.alan==="_porsiyon"||a.alan==="_ri")){isaret.push(a.alan==="_ri"?"ri":"porsiyon");i=a.son;cur=null;continue}
@@ -183,7 +221,9 @@ function besinAyristir(metin,S){
   // Sütun: başlıktaki işaretlerin (100 g, porsiyon, %RI) sırasında "100 g"nin yeri
   var sutun=0,birim="",sorun=[],yi=-1;
   for(i=0;i<isaret.length;i++)if(isaret[i].indexOf("yuz")===0){yi=i;break}
-  if(yi>=0){sutun=yi;birim=isaret[yi]==="yuz_ml"?"ml":"g"}else sorun.push("yuz_yok");
+  if(yi>=0){sutun=yi;birim=isaret[yi]==="yuz_ml"?"ml":"g"}
+  else if(porsiyon){sutun=Math.max(0,isaret.indexOf("porsiyon"));birim=porsiyon.u}   // porsiyon sütunu, aşağıda 100 g'a çevrilir
+  else sorun.push("yuz_yok");
   var yontem="satir",bos=0;
   for(i=0;i<rows.length&&!rows[i].s.length;i++)bos++;
   // Akıştaki hücreler sütun sütun sırayla satırlara verilir; kJ ve kcal yan yanaysa tek hücre. Sıra tahmin olduğu için durum hep "suphe".
@@ -213,11 +253,20 @@ function besinAyristir(metin,S){
     if(h.sifir&&sorun.indexOf("ondalik")<0)sorun.push("ondalik");
     if(h.birimsiz&&sorun.indexOf("birim_yok")<0)sorun.push("birim_yok");
   });
-  if(b.tuz==null&&na){b.tuz=besinYuvarla(na.v*A.tuzSodyum);if(na.lt)lt.tuz=true}
+  var tuzNa=false;
+  if(b.tuz==null&&na){b.tuz=besinYuvarla(na.v*A.tuzSodyum);if(na.lt)lt.tuz=true;tuzNa=true}
   var n=BESIN_ALAN.filter(function(k){return b[k]!=null}).length;
   if(n<A.enAzSatir&&!(n>=2&&(b.kcal!=null||yi>=0)))return null;
+  var por=null;
+  if(yi<0&&porsiyon){
+    var f=100/porsiyon.m;por={m:porsiyon.m,u:porsiyon.u,ara:{}};
+    A.anaSatir.forEach(function(k){if(b[k]!=null){var r=besinPorsiyonPayi(k,b[k],lt[k],k==="tuz"&&tuzNa);por.ara[k]=[besinYuvarla(r[0]*f),besinYuvarla(r[1]*f)]}});
+    BESIN_ALAN.forEach(function(k){if(b[k]!=null)b[k]=besinYuvarla(b[k]*f)});
+  }
   var d=besinDenetle(b),hepsi=sorun.concat(d.sorun);
-  return {b:b,lt:lt,birim:birim,sutun:sutun,yontem:yontem,durum:hepsi.length?"suphe":d.durum,sorun:hepsi,eksik:d.eksik,hesap:d.hesap};
+  var o={b:b,lt:lt,birim:birim,sutun:sutun,yontem:yontem,durum:hepsi.length?"suphe":d.durum,sorun:hepsi,eksik:d.eksik,hesap:d.hesap};
+  if(por)o.por=por;
+  return o;
 }
 
 /* ---------- Renkli gösterim (3. adım) ----------
@@ -234,15 +283,17 @@ var BESIN_ESIK={
 /* Kullanıcı onayından sonra da renk göstermeyen sorunlar (değerler birbiriyle çelişiyor). Enerji ve ayrıştırma sorunları onayla kalkar
    (alkollü içecek, okunamayan başlık): renklenen dört satır enerjiye bağlı değil. */
 var BESIN_KESIN=["eksi","yuz_asti","doymus_yag","seker_karb","toplam"];
-/* v: değer (g / 100 g ya da 100 ml), lt: "<" ile yazılmış, birim: "g" | "ml". Döner: "dusuk" | "orta" | "yuksek" | null (bilinmiyor) */
-function besinDuzey(alan,v,lt,birim){
+/* v: değer (g / 100 g ya da 100 ml), lt: "<" ile yazılmış, birim: "g" | "ml", ara: porsiyondan çevrilen değerin yuvarlama aralığı
+   [alt, üst] (iki ucu aynı düzeydeyse o düzey, değilse bilinmiyor). Döner: "dusuk" | "orta" | "yuksek" | null (bilinmiyor) */
+function besinDuzey(alan,v,lt,birim,ara){
   var e=BESIN_ESIK[birim]&&BESIN_ESIK[birim][alan];v=besinSayi(v);
   if(!e||v==null)return null;
+  if(ara){var u=besinDuzey(alan,ara[0],false,birim),w=besinDuzey(alan,ara[1],false,birim);return u===w?u:null}
   if(lt)return v<=e[0]?"dusuk":null;   // "< 0,5 g": eşiğin altında kalıyorsa düşük; yoksa gerçek değer bilinmiyor
   return v<=e[0]?"dusuk":v<=e[1]?"orta":"yuksek";
 }
-/* Ekrandaki model. k: {b, lt, birim, sorun (ayrıştırma + denetim), onay (kullanıcı değerleri doğruladı ya da düzeltti)}.
-   Döner: {renk: bool, neden: "suphe"|"birim"|"" , birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik} ya da null (değer yok).
+/* Ekrandaki model. k: {b, lt, birim, sorun (ayrıştırma + denetim), onay (kullanıcı değerleri doğruladı ya da düzeltti), por? (porsiyondan çevrildi)}.
+   Döner: {renk: bool, neden: "suphe"|"birim"|"" , birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik, por: {m, u} | null} ya da null (değer yok).
    Renk yalnızca: birim biliniyor ve (sorun yok ya da kullanıcı onayladı ve kesin çelişki yok). */
 function besinGorunum(k){
   if(!k||!k.b)return null;
@@ -251,11 +302,11 @@ function besinGorunum(k){
   var kesin=sorun.some(function(s){return BESIN_KESIN.indexOf(s)>=0});
   var birim=k.birim==="ml"||k.birim==="g"?k.birim:"";
   var neden=kesin||(sorun.length&&!k.onay)?"suphe":!birim?"birim":"";
-  var lt=k.lt||{};
+  var lt=k.lt||{},ara=k.por&&k.por.ara||{};
   return {
     renk:!neden,neden:neden,birim:birim,sorun:sorun,eksik:d.eksik,onay:!!k.onay,
-    enerji:besinSayi(k.b.kcal),
-    satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden?null:besinDuzey(a,v,lt[a],birim)}})
+    enerji:besinSayi(k.b.kcal),por:k.por?{m:k.por.m,u:k.por.u}:null,
+    satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden?null:besinDuzey(a,v,lt[a],birim,ara[a])}})
   };
 }
 /* Kullanıcının elle düzelttiği tablo, metne bağlı saklanır (localStorage "besin_elle"): aynı metin yeniden açılınca düzeltme geri gelir.
@@ -274,8 +325,15 @@ function besinElleEkle(liste,anahtar,kayit){
 function besinElleBul(liste,anahtar){return (Array.isArray(liste)?liste:[]).filter(function(x){return x&&x.k===anahtar&&x.b})[0]||null}
 /* Kayıtlı ürünle saklanan tablo (A-02 sonrası): kaydederken ekranda gösterilen değerlerin kopyası, kaynağıyla.
    Kayıt açıldığında barkod bilgisi ya da elle düzeltme (başka cihaz, yedekten geri yükleme) olmasa da tablo geri gelir.
-   {b, lt, birim, sorun, onay, kaynak: "elle"|"etiket"|"off"|"topluluk", t}. Geçersizse null (yedek dosyası dışarıdan gelebilir). */
+   {b, lt, birim, sorun, onay, kaynak: "elle"|"etiket"|"off"|"topluluk", t, por?}. Geçersizse null (yedek dosyası dışarıdan gelebilir). */
 var BESIN_KAYNAK=["elle","etiket","off","topluluk"];
+/* Porsiyondan çevrilmiş tablonun bilgisi {m, u, ara: {alan: [alt, üst]}}; geçersizse null. Worker (worker/src/barkod.js besinPorNorm) aynı süzgeç. */
+function besinPorNorm(x){
+  if(!x||typeof x!=="object"||typeof x.m!=="number"||!(x.m>0&&x.m<=BESIN_AYAR.porsiyonUst)||(x.u!=="g"&&x.u!=="ml"))return null;
+  var ara={};
+  BESIN_AYAR.anaSatir.forEach(function(a){var r=x.ara&&x.ara[a];if(Array.isArray(r)&&r.length===2&&r.every(function(v){return typeof v==="number"&&isFinite(v)&&v>=0&&v<=10000})&&r[0]<=r[1])ara[a]=[r[0],r[1]]});
+  return {m:x.m,u:x.u,ara:ara};
+}
 function besinKayitNorm(x){
   if(!x||typeof x!=="object"||!x.b||typeof x.b!=="object")return null;
   var b={},lt={},dolu=false;
@@ -284,10 +342,11 @@ function besinKayitNorm(x){
   var o={b:b,lt:lt,birim:x.birim==="g"||x.birim==="ml"?x.birim:"",sorun:(Array.isArray(x.sorun)?x.sorun:[]).filter(function(s){return typeof s==="string"&&/^[a-z_]{1,20}$/.test(s)}).slice(0,12),
     onay:x.onay===true,kaynak:BESIN_KAYNAK.indexOf(x.kaynak)>=0?x.kaynak:"etiket"};
   if(typeof x.t==="number"&&isFinite(x.t)&&x.t>0)o.t=x.t;
+  var por=besinPorNorm(x.por);if(por)o.por=por;
   return o;
 }
 /* Ekrandaki kaynaktan (besinKaynak: {k, kaynak, t}) saklanacak kopya */
-function besinKayitKopya(K){return K?besinKayitNorm({b:K.k.b,lt:K.k.lt,birim:K.k.birim,sorun:K.k.sorun,onay:K.k.onay,kaynak:K.kaynak,t:K.t}):null}
+function besinKayitKopya(K){return K?besinKayitNorm({b:K.k.b,lt:K.k.lt,birim:K.k.birim,sorun:K.k.sorun,onay:K.k.onay,kaynak:K.kaynak,t:K.t,por:K.k.por}):null}
 /* Karşılaştırma ve paylaşım kartı için dört satırın kısa özeti; renk gösterilemiyorsa (şüpheli, birim bilinmiyor) null */
 function besinOzet(k){
   var G=besinGorunum(k);if(!G||!G.renk)return null;

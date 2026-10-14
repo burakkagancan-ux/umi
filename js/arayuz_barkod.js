@@ -27,7 +27,7 @@ function barkodUrun(kod){
     var m={};if(j.bulundu)m[j.dil||"?"]=j.metin;   // içeriksiz kayıt yalnızca besin tablosu taşır (barkodBesinEkle)
     var r={kod:kod,kaynak:"urun",tur:j.bulundu?barkodTur(j.tur):"gida",ad:"",marka:"",t:j.t||0,metin:m,dogrulandi:!!j.dogrulandi,sayi:j.sayi||1};
     var bs=j.besin&&typeof besinKayitNorm==="function"?besinKayitNorm(j.besin):null;
-    if(bs){r.besin=bs.b;r.besin.birim=bs.birim;r.besinLt=bs.lt;r.besinKaynak="topluluk";r.besinT=j.besinT||0}
+    if(bs){r.besin=bs.b;r.besin.birim=bs.birim;r.besinLt=bs.lt;r.besinPor=bs.por||null;r.besinKaynak="topluluk";r.besinT=j.besinT||0}
     return r;
   });
 }
@@ -190,13 +190,14 @@ function barkodKatki(){
   B.soru=d;sonucUst(d);
 }
 /* Ekrandaki, etiketten okunmuş (ya da okunup elle düzeltilmiş) besin tablosu; şüpheliyse ya da OFF'tan geliyorsa null (OFF verisi
-   kendi veritabanımıza yazılmaz, ODbL ayrımı). Döner {b, lt, birim}. */
+   kendi veritabanımıza yazılmaz, ODbL ayrımı). Döner {b, lt, birim, por?} (por: porsiyondan çevrildi, yuvarlama aralığıyla; O-23). */
 function barkodBesinAl(){
   if(MODE!=="gida"||typeof besinKaynak!=="function")return null;
   var tx=$("metin").value;if(!barkodEkranda(tx))return null;
   var K=besinKaynak(tx);if(!K||!K.okunan||(K.kaynak!=="etiket"&&K.kaynak!=="elle"))return null;
   var G=besinGorunum(K.k);if(!G||G.neden==="suphe")return null;
-  return {b:K.k.b,lt:K.k.lt||{},birim:G.birim};
+  var o={b:K.k.b,lt:K.k.lt||{},birim:G.birim};if(K.k.por)o.por=K.k.por;
+  return o;
 }
 /* Tabloyu barkoda gönderir. Döner: 0 tablo yok, 1 aynısı zaten gitti, 2 şimdi gönderildi */
 function barkodBesinGonder(B){
