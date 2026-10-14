@@ -104,6 +104,7 @@ async function scan(p,mode,text){
     const kod=Object.keys(D).find(k=>D[k][0]==='food'&&D[k][4].tr&&D[k][1]&&/^869\d{10}$/.test(k));
     const yok=['4006381333931','5000112637922','3017620422003'].find(k=>!D[k]&&!D['0'+k]);
     ok(kod&&yok,'barkod testi için veri: '+kod+' / '+yok);
+    await p.evaluate(()=>localStorage.removeItem('rozetler'));   // önceki bölümlerde okunan fotoğraflar sayılmış olabilir
     await p.click('#barkodb');await p.waitForSelector('#sheet:not([hidden]) .belle input');
     await p.waitForFunction(()=>/Kamera açılamadı|Barkodu çerçevenin/.test(document.querySelector('#sheet .bsheet>.how').textContent),null,{timeout:8000});
     await p.fill('#sheet .belle input','8690504025208');await p.click('#sheet .belle button');
@@ -116,6 +117,11 @@ async function scan(p,mode,text){
     ok(await p.isVisible('#sonuc .resbar')&&await p.evaluate(()=>document.querySelectorAll('#sonuc .res').length>1),'analiz sonucu kaynak kartının altında');
     ok(st.gecmis&&st.gecmis.text===st.metin&&!/^Tarama \d+$/.test(st.gecmis.name),'tarama geçmişinde ürün adıyla: '+(st.gecmis&&st.gecmis.name));
     ok(await p.isHidden('#sheet'),'alt sayfa kapandı');
+    // Rozet (G-01): bulunan ilk barkod gıda Etiket Dedektifi'nin ilk kademesi; kutlama kartı sonucun üstünde, üstte küçük simge
+    await p.waitForSelector('#sonuc .rozetkut',{timeout:5000}).catch(()=>{});
+    ok(/Yeni rozet/.test(await p.textContent('#sonuc .rozetkut').catch(()=>''))&&/Gözlemci/.test(await p.textContent('#sonuc .rozetkut').catch(()=>'')),'ilk barkod: "Gözlemci" kutlama kartı');
+    ok(await p.isVisible('#rozetsimge')&&/Gözlemci/.test(await p.getAttribute('#rozetsimge','aria-label')),'Etiket Oku üstünde gıda Etiket Dedektifi simgesi');
+    await p.click('#m-koz');ok(await p.isHidden('#rozetsimge'),'kozmetikte rozet yok: simge gizli');await p.click('#m-gida');
     await p.click('#barkodb');await p.waitForSelector('#sheet:not([hidden]) .belle input');
     await p.fill('#sheet .belle input',yok);await p.click('#sheet .belle button');
     await p.waitForFunction(()=>/henüz veritabanında yok/.test((document.querySelector('#sonuc .bkaynak')||{}).textContent||''),null,{timeout:15000});
@@ -331,6 +337,37 @@ async function scan(p,mode,text){
   // Türkçede veri metni Türkçe (12.10.2026: yedek dil İngilizce seçili dilin üstüne yazıyordu)
   await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');
   {const s=await p.textContent('#ana');ok(/Lesitinler/.test(s)&&!/Lecithins/.test(s),'ansiklopedi Türkçe metin: '+s.slice(0,80))}
+  // Rozet (G-01): açılan her farklı sayfa gıda Okuru'na sayılır; ilk sayfada kutlama, sonra yalnızca yeni kademede
+  {
+    const o=await p.evaluate(()=>({n:rozetLoad().okur.gida.length,g:rozetLoad().gor['okur.gida'],kut:!!document.querySelector('#ana .rozetkut'),simge:document.getElementById('rozetsimge').getAttribute('aria-label')}));
+    ok(o.n===6&&o.g===1&&!o.kut,'ansiklopedi: 6 farklı sayfa sayıldı, aynı sayfa bir kez, kutlama yalnızca ilkinde: '+JSON.stringify(o));
+    ok(/Meraklı/.test(o.simge||''),'ansiklopedi üstünde gıda Okuru simgesi: '+o.simge);
+    await p.evaluate(()=>localStorage.setItem('rozetler',JSON.stringify({v:1,okur:{gida:'E100,E101,E102,E104,E110,E120,E122,E123,E124'.split(',')},dedektif:rozetLoad().dedektif,gor:{'okur.gida':1,'dedektif.gida':1}})));
+    await p.goto(B+'ansiklopedi.html?id=E127');await p.waitForSelector('#ana .risk');await p.waitForSelector('#ana .rozetkut',{timeout:5000}).catch(()=>{});
+    ok(/Okur/.test(await p.textContent('#ana .rozetkut').catch(()=>''))&&/10 farklı ansiklopedi sayfası/.test(await p.textContent('#ana .rozetkut').catch(()=>'')),'10. sayfa: "Okur" kademesi kutlanır');
+    await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.waitForSelector('#ana .okfil');
+    const t0=await p.evaluate(()=>({okd:document.querySelectorAll('#ana a.row .okd').length,satir:document.querySelectorAll('#ana a.row').length,fil:document.querySelector('#ana .okfil').textContent}));
+    ok(t0.okd>=10&&/Okumadıklarım \(\d+\)/.test(t0.fil),'okunan sayfalar işaretli, süzgeç sayısı: '+JSON.stringify(t0));
+    await p.click('#ana .okfil');
+    const t1=await p.evaluate(()=>({okd:document.querySelectorAll('#ana a.row .okd').length,satir:document.querySelectorAll('#ana a.row').length,bas:document.querySelector('#ana .okfil').getAttribute('aria-pressed')}));
+    ok(t1.bas==='true'&&t1.satir===t0.satir-10&&t1.okd===0,'"Okumadıklarım": okunanlar listeden çıkar: '+JSON.stringify(t1));
+    await p.click('#ana .okfil');
+    // Rozetlerim (Profilim altında): aileler, ilerleme, kademeler, yakında olanlar, paylaşım
+    await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet:not([hidden]) .rzaile');
+    const r=await p.evaluate(()=>{const k=q=>document.querySelector('#rozet .rzaile[data-aile="'+q+'"]');return {mod:document.body.classList.contains('mode-rozet'),aile:document.querySelectorAll('#rozet .rzaile').length,
+      okur:k('okur').textContent,kad:k('okur').querySelectorAll('.rzk').length,on:k('okur').querySelectorAll('.rzk.on').length,son:k('okur').querySelector('.rzk:last-child').textContent,avci:k('avci').className,avt:k('avci').textContent,sek:document.querySelector('#rozet .seg button[aria-checked="true"]').textContent}});
+    ok(r.mod&&r.aile===5&&/Okur/.test(r.okur)&&/10 \/ 25 · sonraki: Kitap Kurdu/.test(r.okur),'Rozetlerim: beş aile, gıda Okuru ilerlemesi: '+r.okur.slice(0,120));
+    ok(r.kad===7&&r.on===2&&r.son==='hepsi','gıda Okuru 7 kademe (son "hepsi"), 2 kazanıldı: '+JSON.stringify([r.kad,r.on,r.son]));
+    ok(/yakinda/.test(r.avci)&&/doğrulanınca/.test(r.avt)&&r.sek==='Gıda (3)','ürün aileleri yakında; Gıda sekmesinde 3 rozet: '+r.sek);
+    await p.waitForSelector('#rozet .rzaile[data-aile="okur"] .rzrow button:not([disabled])',{timeout:8000}).catch(()=>{});
+    ok(await p.isEnabled('#rozet .rzaile[data-aile="okur"] .rzrow button').catch(()=>false),'rozet paylaşım görseli hazırlandı');
+    await p.click('#rozet .seg button[data-tur="koz"]');
+    ok(/Çok yakında/.test(await p.textContent('#rozet .rzaile[data-aile="okur"]'))&&/Henüz rozet yok/.test(await p.textContent('#rozet .rzaile[data-aile="dedektif"]')),'kozmetik: Okur yakında, Dedektif henüz yok');
+    await p.click('#rozet .kback');await p.waitForFunction(()=>location.hash==='#profil'&&!document.body.classList.contains('mode-rozet'));
+    ok(/3 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 3 rozet": '+await p.textContent('#rozetbar'));
+    ok(await p.evaluate(()=>JSON.parse(kayitYedek([],0,'',rozetLoad())).rozetler.okur.gida.length===10),'rozetler yedek dosyasına girer');
+    ok(!errs.length,'rozet konsol hatası: '+errs.join(' | '));errs.length=0;
+  }
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');
   // Arama kutusu boşken bütün elle incelenmiş maddeler listelenir; arama sonucu gelince liste kısalır
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});

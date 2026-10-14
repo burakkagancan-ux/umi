@@ -54,6 +54,7 @@ function barkodGoster(kod,r){
   if(r.tur!==MODE)setMode(r.tur,true);
   $("metin").value=m.s;HSCAN=HOCR=true;
   ST.textContent=t("barkod.bulundu",{kod:kod});
+  rozetSay("dedektif",r.tur,"b:"+kod,rozetGoster);   // aynı barkod bir kez sayılır
   run();
 }
 function barkodYok(kod,r){

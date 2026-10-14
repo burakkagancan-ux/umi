@@ -1,0 +1,12 @@
+{
+ "_aciklama": "Rozet tanımları (YOL_HARITASI.md G-01). Yeni rozet ailesi = buraya kayıt + i18n anahtarları (rozet.<aile>.ad, .k1-.k8, .acik); kod değişmez. gen_rozetler.py data/rozetler.json'u üretir.",
+ "kademeler": [1, 10, 25, 50, 100, 250, 500, 1000],
+ "turler": ["gida", "koz", "tem"],
+ "aileler": [
+  {"id": "okur", "simge": "kitap", "hazir": true, "ust": "ansiklopedi", "_not": "ansiklopedide açılan farklı madde sayfası; üst sınır o türün sayfa sayısı"},
+  {"id": "dedektif", "simge": "buyutec", "hazir": true, "_not": "okunan farklı etiket ya da barkod (aynı barkod ve aynı metin bir kez sayılır)"},
+  {"id": "avci", "simge": "hedef", "hazir": false, "_not": "eklenip doğrulanan ürün; sayım sunucuda (G-02 gelince hazir: true)"},
+  {"id": "oncu", "simge": "bayrak", "hazir": false, "_not": "veritabanına ilk kez eklenen ürün, doğrulanınca (G-02)"},
+  {"id": "dogrulayici", "simge": "onay", "hazir": false, "_not": "başkasının eklediği ürünü doğrulayan ekleme (G-02)"}
+ ]
+}

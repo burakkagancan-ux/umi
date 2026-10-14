@@ -13,6 +13,7 @@ var VERI_ANAHTAR={
   profil:"nesne",      // hassasiyetler (js/arayuz.js)
   kayit_suz:"nesne",   // kayıt listesinin süzgeci ve sırası
   besin_elle:"dizi",   // elle düzeltilen besin değeri tabloları, metne bağlı (js/arayuz_besin.js)
+  rozetler:"nesne",    // rozet sayımı (G-01, js/rozet.js; kendi şema sürümü "v": ROZET_SURUM, rozetNorm okurken doğrular)
   dil:"yazi",ulke:"yazi",tur:"yazi",ktip:"yazi",pay_boyut:"yazi",
   barkod_katki:"yazi",katkici:"yazi"   // barkod katkı izni ve katkıcı kimliği (O-22)
 };

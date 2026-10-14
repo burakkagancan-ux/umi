@@ -22,6 +22,11 @@ function prof(){try{return JSON.parse(localStorage.getItem("profil")||"null")}ca
 function marks(){try{var a=JSON.parse(localStorage.getItem("yerimleri")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
 function setMarks(a){try{localStorage.setItem("yerimleri",JSON.stringify(a))}catch(e){}}
 function link(r){return "ansiklopedi.html?m="+encodeURIComponent(r.slug)}
+/* Rozetler (js/arayuz_rozet.js): açılan her farklı madde sayfası o türün Okur rozetine sayılır; okunan sayfa listede işaretli */
+var ATUR={food:"gida",cosmetic:"koz",cleaning:"tem"},AOKU="gida";   // AOKU: tür süzgecinin seçimi (şimdilik yalnızca gıda)
+function ansTur(r){return ATUR[r.product_types[0]]||"gida"}
+function ROZET_BAGLAM(){return {aile:"okur",tur:AOKU}}
+function okunan(){var d=rozetLoad(),o={};Object.keys(d.okur).forEach(function(k){d.okur[k].forEach(function(id){o[id]=1})});return o}
 
 /* ---------- Madde sayfası ---------- */
 function showRecord(r){
@@ -73,6 +78,7 @@ function showRecord(r){
     box.appendChild(rw);
   }
   footer(box,r);
+  rozetSay("okur",ansTur(r),r.id,function(c){box.insertBefore(c,box.firstChild)});
 }
 function uretimAd(c){return {dogal:t("ans.uretim.dogal"),fermente:t("ans.uretim.fermente"),islenmis:t("ans.uretim.islenmis"),sentetik:t("ans.uretim.sentetik"),belirsiz:t("ans.uretim.belirsiz")}[c]}
 function panelGenel(r){
@@ -142,9 +148,11 @@ a$("geri").onclick=function(){
 };
 
 /* ---------- Arama ve kayıtlı maddeler ---------- */
-function rowFor(r){
+function rowFor(r,oku){
   var a=h("a","row");a.href=link(r);a.appendChild(svg(rico(r)));a.appendChild(h("span","rc",r.id));
-  var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",at("cat."+r.category)+" · "+at("risk."+r.risk_level)));a.appendChild(n);return a;
+  var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",at("cat."+r.category)+" · "+at("risk."+r.risk_level)));a.appendChild(n);
+  if(oku&&oku[r.id]){var k=h("span","okd");k.appendChild(svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'));k.setAttribute("role","img");k.setAttribute("aria-label",t("rozet.okundu"));a.appendChild(k)}
+  return a;
 }
 /* Tür süzgeci: şimdilik yalnızca gıda maddeleri var; kozmetik ve temizlik ansiklopedisi gelene kadar seçilemez, altında "Çok yakında" */
 function turSecici(){
@@ -157,6 +165,7 @@ function turSecici(){
   });
   return s;
 }
+var OKUMADIK=false;
 function showSearch(){
   ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
@@ -167,16 +176,21 @@ function showSearch(){
   function draw(){
     var q=inp.value;out.textContent="";
     try{history.replaceState(null,"",q.trim()?"ansiklopedi.html?q="+encodeURIComponent(q):"ansiklopedi.html")}catch(e){}
+    var oku=okunan();
     if(q.trim()){
       var res=ansSearch(AIDX,q,40);
       out.appendChild(h("p","mut",res.length?t("ans.sonuc",{n:res.length,s:res.length+(res.length===40?"+":"")}):t("ans.sonuc_yok")));
-      res.forEach(function(r){out.appendChild(rowFor(r))});return;
+      res.forEach(function(r){out.appendChild(rowFor(r,oku))});return;
     }
     var m=marks().map(function(x){return ABY[x]}).filter(Boolean);
     out.appendChild(h("h2","sec",t("ans.kaydettiklerim")));
-    if(m.length)m.forEach(function(r){out.appendChild(rowFor(r))});else out.appendChild(h("p","mut",t("ans.kayit_yok")));
+    if(m.length)m.forEach(function(r){out.appendChild(rowFor(r,oku))});else out.appendChild(h("p","mut",t("ans.kayit_yok")));
     out.appendChild(h("h2","sec",t("ans.incelenen")));
-    AD.records.filter(function(r){return r.review==="curated"}).forEach(function(r){out.appendChild(rowFor(r))});
+    // "Okumadıklarım" süzgeci: yalnızca henüz açılmamış sayfalar (Okur rozetine kalanlar)
+    var cur=AD.records.filter(function(r){return r.review==="curated"&&ansTur(r)===AOKU}),kalan=cur.filter(function(r){return !oku[r.id]});
+    var fb=h("button","okfil",t("rozet.okumadiklarim",{n:kalan.length}));fb.type="button";fb.setAttribute("aria-pressed",String(OKUMADIK));
+    fb.onclick=function(){OKUMADIK=!OKUMADIK;draw()};out.appendChild(fb);
+    (OKUMADIK?kalan:cur).forEach(function(r){out.appendChild(rowFor(r,oku))});
     out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.length})));
   }
   var tm=null;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(draw,150)});
@@ -205,6 +219,7 @@ function ansSayfa(r){
     dilOnbellege([p]);for(var k in v[1])AT[k]=v[1][k];return v[0];
   });
 }
+DIL_HAZIR.then(rozetSimgeGuncelle);
 Promise.all([aGet("data/ansiklopedi.json"),DIL_HAZIR.then(ansMetin)]).then(function(v){
   AD=v[0];AT=v[1];AD.records.forEach(function(r){ABY[r.id]=r});AIDX=ansIndex(AD.records,AT);
   var sp=new URLSearchParams(location.search),m=sp.get("m"),id=sp.get("id"),r=null;
