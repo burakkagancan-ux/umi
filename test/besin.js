@@ -65,6 +65,11 @@ const sec=B.barkodSec({urun,off:r},['tr']);
 ok(sec.kaynak==='urun'&&sec.besin&&sec.besin.yag===25.1&&!urun.besin,'doğrulanmış katkı seçilir, besin OFF\'tan eklenir, asıl kayıt değişmez');
 ok(B.barkodSec({off:{...r,metin:{}}},['tr']).besin.kcal===505,'içeriği olmayan üründe de besin taşınır');
 ok(!B.barkodSec({urun},['tr']).besin,'OFF yoksa besin yok');
+{ // topluluk tablosu (porsiyondan çevrilmiş, O-23) OFF içeriğine eklenince porsiyon aralığı da taşınır
+  const top={kod:'8690504025207',kaynak:'urun',tur:'gida',metin:{},besin:{yag:14.5,birim:'g'},besinLt:{},besinPor:{m:55,u:'g',ara:{yag:[13.6,15.5]}},besinKaynak:'topluluk',besinT:9};
+  const s2=B.barkodSec({off:{...r,besin:null},urun:top},['tr']);
+  ok(s2&&s2.besinKaynak==='topluluk'&&s2.besinPor&&s2.besinPor.m===55,'topluluk tablosunun porsiyon bilgisi taşınır '+j(s2&&s2.besinPor));
+}
 const offVeri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8'));
 const bes=Object.values(offVeri.u).filter(x=>x.length>5);
 ok(!bes.length||j(offVeri.meta.besin_alan)===j([...B.BESIN_ALAN,'birim']),'barkod_off.json besin sırası js/besin.js ile aynı');
