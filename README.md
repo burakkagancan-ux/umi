@@ -13,7 +13,7 @@ Site: https://burakkagancan-ux.github.io/tagsis/
   - Temizlik: H/EUH/P ifadeleri, deterjan içerik grupları, karıştırma uyarıları.
   - İki gıda ürününü karşılaştırma ve sonucu görsel olarak paylaşma.
 - **Ansiklopedi:** E kodları için kaynaklı madde sayfaları.
-- **Hassasiyetlerim:** Alerjen, vegan, hamilelik, bebek, PKU, tuz kısıtlaması gibi profillere göre kişisel uyarılar.
+- **Profilim:** Alerjen, vegan, hamilelik, bebek, PKU, tuz kısıtlaması gibi profillere göre kişisel uyarılar.
 
 ## İlkeler
 

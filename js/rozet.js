@@ -140,7 +140,7 @@ function rozetKartCiz(x,M,cfg,madalya,logo,yazi){
   function txt(s,X,Y,c,al){x.fillStyle=c;x.textAlign=al||"center";x.fillText(s,X,Y);out.push(s)}
   function sar(s,maxW){var w=String(s||"").split(/\s+/),l=[],c="";w.forEach(function(k){var d=c?c+" "+k:k;if(c&&x.measureText(d).width>maxW){l.push(c);c=k}else c=d});if(c)l.push(c);return l}
   x.direction=rtl?"rtl":"ltr";
-  x.fillStyle="#F5F1E8";x.fillRect(0,0,W,H);
+  x.fillStyle="#FFFFFF";x.fillRect(0,0,W,H);
   var foot=H-L.bant,y=260;
   font(600,44);txt(M.ust,W/2,y,"#5A615C");
   var ms=L.madalya,my=y+70;

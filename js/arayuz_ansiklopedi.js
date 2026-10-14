@@ -148,16 +148,18 @@ a$("geri").onclick=function(){
 };
 
 /* ---------- Arama ve kayıtlı maddeler ---------- */
-function rowFor(r,oku){
-  var a=h("a","row");a.href=link(r);a.appendChild(svg(rico(r)));a.appendChild(h("span","rc",r.id));
-  var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",at("cat."+r.category)+" · "+at("risk."+r.risk_level)));a.appendChild(n);
+function rowFor(r,oku,kat){   // kat: listede kategori başlığı varsa satırda kategori yazılmaz
+  var a=h("a","row");a.href=link(r);a.appendChild(svg(rico(r)));
+  var n=h("span","rn",at(r.names.primary));n.appendChild(h("span","rk",r.id+" · "+(kat?"":at("cat."+r.category)+" · ")+at("risk."+r.risk_level)));a.appendChild(n);
   if(oku&&oku[r.id]){var k=h("span","okd");k.appendChild(svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'));k.setAttribute("role","img");k.setAttribute("aria-label",t("rozet.okundu"));a.appendChild(k)}
   return a;
 }
-/* Tür süzgeci: şimdilik yalnızca gıda maddeleri var; kozmetik ve temizlik ansiklopedisi gelene kadar seçilemez, altında "Çok yakında" */
+/* Tür süzgeci: kozmetik ve temizlik ansiklopedisi gelene kadar gösterilmez (ANS_TURLER'de tek tür; 14.10.2026 kullanıcı kararı).
+   Bir tür daha eklenince görünür; henüz olmayanlar seçilemez, altında "Çok yakında" */
+var ANS_TURLER=["gida"];
 function turSecici(){
   var s=h("div","seg");s.setAttribute("role","radiogroup");s.setAttribute("aria-label",t("sayfa.urun_turu"));
-  [["gida",true],["koz",false],["tem",false]].forEach(function(x){
+  [["gida",true],["koz",ANS_TURLER.indexOf("koz")>-1],["tem",ANS_TURLER.indexOf("tem")>-1]].forEach(function(x){
     var b=h("button");b.type="button";b.id="tur-"+x[0];b.setAttribute("role","radio");b.setAttribute("aria-checked",x[1]?"true":"false");
     b.appendChild(h("span",null,t("kayit.tur."+x[0])));
     if(!x[1]){b.setAttribute("aria-disabled","true");b.appendChild(h("small",null,t("ans.cok_yakinda")))}
@@ -165,11 +167,11 @@ function turSecici(){
   });
   return s;
 }
-var OKUMADIK=false;
+var OKUMADIK=false,ARISK="";   // ARISK: renk süzgeci ("" tümü, red, amber, green)
 function showSearch(){
   ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
-  box.appendChild(turSecici());
+  if(ANS_TURLER.length>1)box.appendChild(turSecici());
   var lb=h("label","vh",t("ans.ara"));lb.htmlFor="ara";box.appendChild(lb);
   var inp=h("input");inp.type="search";inp.id="ara";inp.placeholder=t("ans.ara_yer");inp.autocomplete="off";inp.setAttribute("enterkeyhint","search");box.appendChild(inp);
   var out=h("div","list");out.setAttribute("aria-live","polite");box.appendChild(out);
@@ -183,14 +185,28 @@ function showSearch(){
       res.forEach(function(r){out.appendChild(rowFor(r,oku))});return;
     }
     var m=marks().map(function(x){return ABY[x]}).filter(Boolean);
-    out.appendChild(h("h2","sec",t("ans.kaydettiklerim")));
-    if(m.length)m.forEach(function(r){out.appendChild(rowFor(r,oku))});else out.appendChild(h("p","mut",t("ans.kayit_yok")));
+    if(m.length){out.appendChild(h("h2","sec",t("ans.kaydettiklerim")));var kl=h("div","grpl");m.forEach(function(r){kl.appendChild(rowFor(r,oku))});out.appendChild(kl)}
     out.appendChild(h("h2","sec",t("ans.incelenen")));
-    // "Okumadıklarım" süzgeci: yalnızca henüz açılmamış sayfalar (Okur rozetine kalanlar)
+    // Süzgeçler: renk (Tümü / Uyarı / Dikkat / Özel uyarı yok) ve "Okumadıklarım" (yalnızca henüz açılmamış sayfalar, Okur rozetine kalanlar)
     var cur=AD.records.filter(function(r){return r.review==="curated"&&ansTur(r)===AOKU}),kalan=cur.filter(function(r){return !oku[r.id]});
+    var fr=h("div","fils");fr.setAttribute("role","group");fr.setAttribute("aria-label",t("ans.suzgec"));
+    [["",t("kayit.tumu")],["red",t("risk.uyari")],["amber",t("risk.dikkat")],["green",t("risk.yok")]].forEach(function(x){
+      var n=cur.filter(function(r){return !x[0]||r.risk_level===x[0]}).length;
+      var b=h("button","rfil "+(x[0]||"tum"));b.type="button";b.setAttribute("aria-pressed",String(ARISK===x[0]));
+      if(x[0])b.appendChild(h("span","dot"));b.appendChild(document.createTextNode(x[1]+" "));b.appendChild(h("span","n",dilSayi(n)));
+      b.onclick=function(){ARISK=x[0];draw()};fr.appendChild(b);
+    });
     var fb=h("button","okfil",t("rozet.okumadiklarim",{n:kalan.length}));fb.type="button";fb.setAttribute("aria-pressed",String(OKUMADIK));
-    fb.onclick=function(){OKUMADIK=!OKUMADIK;draw()};out.appendChild(fb);
-    (OKUMADIK?kalan:cur).forEach(function(r){out.appendChild(rowFor(r,oku))});
+    fb.onclick=function(){OKUMADIK=!OKUMADIK;draw()};fr.appendChild(fb);out.appendChild(fr);
+    // İşleve göre başlıklı gruplar (en kalabalık önce)
+    var L=(OKUMADIK?kalan:cur).filter(function(r){return !ARISK||r.risk_level===ARISK}),G={},sira=[];
+    L.forEach(function(r){if(!G[r.category]){G[r.category]=[];sira.push(r.category)}G[r.category].push(r)});
+    sira.sort(function(a,b){return G[b].length-G[a].length});
+    if(!L.length)out.appendChild(h("p","mut",t("ans.sonuc_yok")));
+    sira.forEach(function(c){
+      var hd=h("h3","grph");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));out.appendChild(hd);
+      var gl=h("div","grpl");G[c].forEach(function(r){gl.appendChild(rowFor(r,oku,true))});out.appendChild(gl);
+    });
     out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.length})));
   }
   var tm=null;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(draw,150)});

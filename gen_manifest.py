@@ -40,7 +40,7 @@ def manifest(kod, bilgi, sozluk, kok):
         "start_url": kok + "ocr.html",
         "scope": kok or "./",
         "display": "standalone",
-        "background_color": "#eef1ee",
+        "background_color": "#ffffff",
         "theme_color": "#1d4d3a",
         "icons": [ikon("icon-192.png", "192x192"), ikon("icon-512.png", "512x512"), ikon("icon-maskable-512.png", "512x512", "maskable")],
         "shortcuts": [kisayol(t("sayfa.baslik"), "ocr.html"), kisayol(t("nav.ansiklopedi"), "ansiklopedi.html")],

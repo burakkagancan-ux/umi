@@ -1,6 +1,6 @@
 /* Ortak görünüm (ansiklopedi ile aynı): index.html, ocr.html, ansiklopedi.html. Yazı tipleri fonts/ansiklopedi.css'te. */
-:root{--bg:#F5F1E8;--card:#FFFFFF;--line:#E4DED2;--ok:#1F4D3A;--ink:#1B211E;--mute:#5A615C;
---amb:#8A5A00;--ambbg:#FFF3D1;--hi:#A4470B;--hibg:#FCE9DA;--red:#B3261E;--redbg:#FBE9E7;--okbg:#E6EFE9;--sunk:#EEE9DD;
+:root{--bg:#FFFFFF;--card:#FFFFFF;--line:#E3E5E3;--ok:#1F4D3A;--ink:#1B211E;--mute:#5A615C;
+--amb:#8A5A00;--ambbg:#FFF3D1;--hi:#A4470B;--hibg:#FCE9DA;--red:#B3261E;--redbg:#FBE9E7;--okbg:#E6EFE9;--sunk:#F1F2F1;
 --hf:"Bricolage Grotesque",system-ui,sans-serif;--bf:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
 --warn:var(--hi);--warnbg:var(--hibg);--yel:var(--amb);--yelbg:var(--ambbg);--unbg:var(--sunk)}
 *{box-sizing:border-box}
@@ -31,4 +31,4 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .rzil{font-size:13px;color:var(--mute)}
 .rzks{display:flex;flex-wrap:wrap;gap:6px 4px;margin-top:10px}.rzk{display:flex;flex-direction:column;align-items:center;width:40px;font-size:11px;color:var(--mute);font-variant-numeric:tabular-nums}.rzk .rzs{width:32px;height:32px}.rzk:not(.on) .rzs{opacity:.6}.rzk.on{color:var(--ink);font-weight:600}
 .okd{flex:none;margin-inline-start:auto;width:22px;height:22px;color:var(--ok)}.okd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.okfil{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:6px 14px;margin:0 0 6px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line);cursor:pointer}.okfil[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}
+.okfil,.rfil{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:6px 14px;margin:0 0 6px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line);cursor:pointer}.okfil[aria-pressed="true"],.rfil[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}

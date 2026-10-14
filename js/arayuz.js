@@ -1,4 +1,4 @@
-/* Arayüz: ortak yardımcılar, veri yükleme, Hassasiyetlerim, gıda sonuç ekranı, mod anahtarı. */
+/* Arayüz: ortak yardımcılar, veri yükleme, Profilim, gıda sonuç ekranı, mod anahtarı. */
 var OCR_URL="https://inapp-ocr-3a8f.burakkagancan.workers.dev";   // Cloudflare Worker adresi; boşsa telefonda Tesseract kullanılır
 var DB=null,BDB=null,ABOUT={},IDX=null,FLAGS={},BRANDS=null,ST=document.getElementById("st"),LAST=[],LASTSUM=null,LASTBR=[];
 var CLS=["g","u","y","r"],LBL_K=["risk.yok","risk.dogrulanmadi","risk.dikkat","risk.uyari"];
@@ -11,7 +11,10 @@ function vIsaret(e,r){if(!r||!r.cevrilmedi)return e;e.lang=r.kod;var m=el("span"
 function secBox(box,title,n){var d=el("details","sec");d.appendChild(el("summary",null,t("ortak.baslik_sayi",{ad:title,n:n})));box.appendChild(d);return d}   // varsayılan kapalı açılır bölüm
 /* Durum satırı her mod için ayrı tutulur; mod değişince o modun mesajı gösterilir */
 var STMSG={gida:"",koz:"",tem:""};
-function setSt(mode,msg){STMSG[mode]=msg;if((typeof MODE==="undefined"||!MODE?"gida":MODE)===mode)ST.textContent=msg}
+/* Durum satırı. bilgi=true: yalnızca bilgi ("listeler yüklendi"), ekranda gösterilmez; başka bir mesaj yazılınca satır yine görünür */
+var ST_BILGI={};
+function setSt(mode,msg,bilgi){STMSG[mode]=msg;if(bilgi)ST_BILGI[msg]=1;if((typeof MODE==="undefined"||!MODE?"gida":MODE)===mode)ST.textContent=msg}
+new MutationObserver(function(){ST.classList.toggle("bilgi",!!ST_BILGI[ST.textContent])}).observe(ST,{childList:true,characterData:true,subtree:true});
 window.onerror=function(m,src,l){ST.textContent=t("ortak.sayfa_hatasi",{m:m,l:l});};
 
 /* ---------- Veri yükleme ---------- */
@@ -25,7 +28,7 @@ function loadDb(i){
     return getJson("data/bilesenler.json").then(function(b){BDB=b},function(){BDB=null});
   }).then(function(){
     IDX=buildIndex(DB,BDB);
-    setSt("gida",BDB?t("gida.yuklendi",{n:DB.ingredients.length,b:BDB.items.length}):t("gida.yuklendi_bilesensiz",{n:DB.ingredients.length}));
+    setSt("gida",BDB?t("gida.yuklendi",{n:DB.ingredients.length,b:BDB.items.length}):t("gida.yuklendi_bilesensiz",{n:DB.ingredients.length}),true);
     buildProfile();
   }).catch(function(){if(!DB)loadDb(i+1)});
 }
@@ -36,29 +39,36 @@ try{var sp=JSON.parse(localStorage.getItem("profil")||"null");if(sp&&sp.al)Objec
 /* Seçenek: [profil alanı, çeviri anahtarı] */
 var LIFE=[["baby","profil.secenek.baby"],["child","profil.secenek.child"],["preg","profil.secenek.preg"],["emziriyorum","profil.secenek.emziriyorum"],["vegan","profil.secenek.vegan"],["veg","profil.secenek.veg"],["pet","profil.secenek.pet"]];
 var OTHER=[["lactose","profil.secenek.lactose"],["koku","profil.secenek.koku"],["astim","profil.secenek.astim"],["salt","profil.secenek.salt"],["pku","profil.secenek.pku"]];
-/* Hassasiyetlerim'in altındaki sorumluluk reddi beyanı (metin i18n dosyalarında profil.sorumluluk.1-4) */
+/* Profilim'in altındaki sorumluluk reddi beyanı (metin i18n dosyalarında profil.sorumluluk.1-4) */
 var SORUMLULUK=["profil.sorumluluk.1","profil.sorumluluk.2","profil.sorumluluk.3","profil.sorumluluk.4"];
 function saveProf(){try{localStorage.setItem("profil",JSON.stringify(PROF))}catch(e){}}
 function buildProfile(){
   var box=$("profil");box.textContent="";
   if(!BDB){box.appendChild(el("div","mut",t("profil.bilesen_gerekli")));return}
   function cb(label,checked,on){var l=el("label","pc");var i=document.createElement("input");i.type="checkbox";i.checked=checked;i.onchange=function(){on(i.checked);saveProf();updProfSum();[b1,b2,b3].forEach(function(b){if(b)b._upd()});if(LAST.length||$("metin").value.trim())run()};l.appendChild(i);l.appendChild(document.createTextNode(" "+label));return l}
-  function pbox(ad){var d=el("div","pbox");d.appendChild(el("div","pt",ad));box.appendChild(d);return d}
-  // Açılır kutu (kapalı başlar); başlıkta seçili sayısı görünür. n(): o kutudaki seçim sayısı
-  function pdrop(ad,n){var d=document.createElement("details");d.className="pbox pdrop";var sm=el("summary","pt",ad),c=el("span","pcnt");sm.appendChild(c);d.appendChild(sm);box.appendChild(d);
+  // Bölüm: başlık, isteğe bağlı kısa açıklama ve içerik kutusu (liste ya da kart)
+  function bolum(ad,not,cls){var sc=el("section","pbol");sc.appendChild(el("h2",null,ad));if(not)sc.appendChild(el("p","mut",not));var k=el("div",cls);sc.appendChild(k);box.appendChild(sc);return k}
+  // Açılır satır (kapalı başlar); başlıkta seçili sayısı görünür. n(): o satırdaki seçim sayısı
+  function pdrop(ust,ad,n){var d=document.createElement("details");d.className="pdrop";var sm=el("summary","pt",ad),c=el("span","pcnt");sm.appendChild(c);d.appendChild(sm);ust.appendChild(d);
     d._upd=function(){var k=n();c.textContent=k?t("profil.secili",{n:k}):""};d._upd();return d}
   function abc(a){return a.map(function(x){return [x[0],t(x[1])]}).sort(function(x,y){return dilKarsilastir(x[1],y[1])})}
-  // Dil: seçim localStorage "dil"de; sayfa o dilde yeniden yüklenir (i18n/diller.json'daki her dil kendi adıyla)
-  var bd=pbox(t("profil.dil")),dl=el("label","pn"),ds=document.createElement("select");ds.id="dilsec";ds.setAttribute("aria-label",t("profil.dil"));
-  Object.keys(DIL.bilgi).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=DIL.bilgi[k].ad;op.lang=k;if(k===DIL.kod)op.selected=true;ds.appendChild(op)});
-  ds.onchange=function(){try{localStorage.setItem("dil",ds.value)}catch(e){}location.reload()};
-  dl.appendChild(ds);bd.appendChild(dl);bd.appendChild(el("div","mut",t("profil.dil_not")));
-  // Ülke: seçim localStorage "ulke"de ("" = seçilmedi); ülkeye özgü kartlar ve notlar buna göre gösterilir
-  var ul=el("label","pn"),us=document.createElement("select");us.id="ulkesec";us.setAttribute("aria-label",t("profil.ulke"));
-  [""].concat(ULKELER.slice().sort(function(a,b){return t("ulke.ad."+a.toLowerCase()).localeCompare(t("ulke.ad."+b.toLowerCase()),DIL.kod)})).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
-  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
-  ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);bd.appendChild(ul);bd.appendChild(el("div","mut",t("profil.ulke_not")));
-  var b0=pbox(t("profil.kisisel")),g0=el("div","pg pnum");
+  var uy=bolum(t("profil.uyarilar"),t("profil.uyarilar_not"),"plist"),
+      kb=bolum(t("profil.kisisel"),t("profil.kilo_notu"),"pkart"),
+      ay=bolum(t("profil.ayarlar"),null,"plist pset"),
+      hk=bolum(t("profil.hakkinda"),null,"plist");
+  // Sizin için uyarılar: Alerjenler, Yaşam Evresi, Diğer (seçimler düğme gibi görünen onay kutuları)
+  var b1=null,b2=null,b3=null;
+  b1=pdrop(uy,t("profil.alerjenler"),function(){return PROF.al.length});var g=el("div","pg");
+  alAbc(BDB.meta.allergens).forEach(function(a){g.appendChild(cb(a[1],PROF.al.indexOf(a[0])>-1,function(v){PROF.al=PROF.al.filter(function(x){return x!==a[0]});if(v)PROF.al.push(a[0])}))});
+  b1.appendChild(g);
+  b2=pdrop(uy,t("profil.yasam"),function(){return LIFE.filter(function(x){return PROF[x[0]]}).length});var g2=el("div","pg");
+  abc(LIFE).forEach(function(x){g2.appendChild(cb(x[1],!!PROF[x[0]],function(v){PROF[x[0]]=v}))});
+  b2.appendChild(g2);
+  b3=pdrop(uy,t("profil.diger"),function(){return OTHER.filter(function(x){return PROF[x[0]]}).length});var g3=el("div","pg");
+  abc(OTHER).forEach(function(x){g3.appendChild(cb(x[1],!!PROF[x[0]],function(v){PROF[x[0]]=v}))});
+  b3.appendChild(g3);
+  // Kişisel bilgiler: cinsiyet, yaş, boy, kilo (2×2) ve BKİ
+  var g0=el("div","pg pnum");
   var cl=el("label","pn");cl.appendChild(el("span",null,t("profil.cinsiyet")));var cs=document.createElement("select");
   [["","profil.secin"],["kadin","profil.kadin"],["erkek","profil.erkek"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=t(o[1]);if(PROF.cinsiyet===o[0])op.selected=true;cs.appendChild(op)});
   cs.onchange=function(){PROF.cinsiyet=cs.value;saveProf();updProfSum()};cl.appendChild(cs);g0.appendChild(cl);
@@ -67,8 +77,8 @@ function buildProfile(){
     if(PROF[f[0]]!=null)i.value=dilSayi(PROF[f[0]],6);
     i.onchange=function(){var v=parseFloat(String(i.value).replace(",","."));if(isNaN(v)||v<f[3]||v>f[4]){PROF[f[0]]=null;i.value=""}else{PROF[f[0]]=f[0]==="yas"?Math.floor(v):v;i.value=dilSayi(PROF[f[0]],6)}saveProf();updProfSum();updBmi();if(LAST.length||$("metin").value.trim())run()};
     l.appendChild(i);l.appendChild(el("span","mut",t(f[2])));g0.appendChild(l)});
-  b0.appendChild(g0);
-  var bmiRow=el("div","bmi");b0.appendChild(bmiRow);
+  kb.appendChild(g0);
+  var bmiRow=el("div","bmi");kb.appendChild(bmiRow);
   function updBmi(){
     bmiRow.textContent="";
     var lab=el("span",null,t("profil.bki.etiket"));bmiRow.appendChild(lab);
@@ -82,21 +92,24 @@ function buildProfile(){
     bmiRow.appendChild(bb);
   }
   updBmi();
-  b0.appendChild(el("div","mut",t("profil.kilo_notu")));
-  var b1=null,b2=null,b3=null;
-  b1=pdrop(t("profil.alerjenler"),function(){return PROF.al.length});var g=el("div","pg");
-  alAbc(BDB.meta.allergens).forEach(function(a){g.appendChild(cb(a[1],PROF.al.indexOf(a[0])>-1,function(v){PROF.al=PROF.al.filter(function(x){return x!==a[0]});if(v)PROF.al.push(a[0])}))});
-  b1.appendChild(g);
-  b2=pdrop(t("profil.yasam"),function(){return LIFE.filter(function(x){return PROF[x[0]]}).length});var g2=el("div","pg");
-  abc(LIFE).forEach(function(x){g2.appendChild(cb(x[1],!!PROF[x[0]],function(v){PROF[x[0]]=v}))});
-  b2.appendChild(g2);
-  b3=pdrop(t("profil.diger"),function(){return OTHER.filter(function(x){return PROF[x[0]]}).length});var g3=el("div","pg");
-  abc(OTHER).forEach(function(x){g3.appendChild(cb(x[1],!!PROF[x[0]],function(v){PROF[x[0]]=v}))});
-  b3.appendChild(g3);
-  if(typeof barkodAyarKutusu==="function")box.appendChild(barkodAyarKutusu());   // barkodlu ürün katkısı tercihi
-  box.appendChild(el("div","mut",t("profil.cihazda")));
-  var sr=el("div","sorumlu");sr.appendChild(el("div","pt",t("profil.sorumluluk_baslik")));
-  SORUMLULUK.forEach(function(k){sr.appendChild(el("p",null,t(k)))});box.appendChild(sr);
+  // Ayarlar: dil, ülke, barkodlu ürün katkısı (satırda ad solda, seçim sağda)
+  // Dil: seçim localStorage "dil"de; sayfa o dilde yeniden yüklenir (i18n/diller.json'daki her dil kendi adıyla)
+  var dl=el("label","pn"),ds=document.createElement("select");ds.id="dilsec";ds.setAttribute("aria-label",t("profil.dil"));
+  Object.keys(DIL.bilgi).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=DIL.bilgi[k].ad;op.lang=k;if(k===DIL.kod)op.selected=true;ds.appendChild(op)});
+  ds.onchange=function(){try{localStorage.setItem("dil",ds.value)}catch(e){}location.reload()};
+  dl.appendChild(el("span",null,t("profil.dil")));dl.appendChild(ds);ay.appendChild(dl);
+  // Ülke: seçim localStorage "ulke"de ("" = seçilmedi); ülkeye özgü kartlar ve notlar buna göre gösterilir
+  var ul=el("label","pn"),us=document.createElement("select");us.id="ulkesec";us.setAttribute("aria-label",t("profil.ulke"));
+  [""].concat(ULKELER.slice().sort(function(a,b){return t("ulke.ad."+a.toLowerCase()).localeCompare(t("ulke.ad."+b.toLowerCase()),DIL.kod)})).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
+  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
+  ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);ay.appendChild(ul);
+  if(typeof barkodAyarKutusu==="function")ay.appendChild(barkodAyarKutusu());   // barkodlu ürün katkısı tercihi
+  ay.parentNode.appendChild(el("div","how",t("profil.dil_not")+" "+t("profil.ulke_not")));
+  // Hakkında: sorumluluk reddi ve gizlilik (Etiket Oku'daki gizlilik notunun aynısı)
+  var sr=document.createElement("details");sr.className="pdrop sorumlu";sr.appendChild(el("summary","pt",t("profil.sorumluluk_baslik")));
+  SORUMLULUK.forEach(function(k){sr.appendChild(el("p",null,t(k)))});hk.appendChild(sr);
+  var gz=$("gizlilik");if(gz){var gk=gz.cloneNode(true);gk.removeAttribute("id");gk.className="pdrop gzp";gk.open=false;gk.querySelector("summary").className="pt";hk.appendChild(gk)}
+  box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
 }
 /* Alerjen adları veriden (bilesenler.json meta.allergens; çevirisi i18n/veri "alerjen.<kimlik>"); sıralama dilin alfabesine göre */
@@ -182,6 +195,29 @@ function lifeCards(L,NA){
     t("gida.yasam.tuz_ek")));
   return out;
 }
+/* Sonucun en üstündeki özet: kaç maddede uyarı/dikkat var, renk şeridi. Puan değil, yalnızca sayılar.
+   ranks: her madde için 3 uyarı, 2 dikkat, 1 doğrulanmadı, 0 özel uyarı yok (koz/tem kendi seviyelerini bu ölçeğe çevirir) */
+function ozetKart(tur,ranks){
+  var c=[0,0,0,0];ranks.forEach(function(k){c[k]++});
+  var d=el("section","ozet");d.setAttribute("aria-label",t("ortak.ozet"));
+  d.appendChild(el("div","oz-ust",t("ozet.ust."+tur,{n:ranks.length})));
+  var tm=tur==="tem",b=c[3]?["r",t(tm?"ozet.uyari_tem":"ozet.uyari",{n:c[3]})]:c[2]?["y",t(tm?"ozet.dikkat_tem":"ozet.dikkat",{n:c[2]})]:ranks.length?["g",t("ozet.temiz")]:["",t("ozet.madde_yok")];
+  d.appendChild(el("div","oz-b "+b[0],b[1]));
+  var alt=[];if(c[3]&&c[2])alt.push(t("ozet.say.dikkat",{n:c[2]}));if(c[1])alt.push(t("ozet.say.dogrulanmadi",{n:c[1]}));if(c[0]&&(c[3]||c[2]))alt.push(t("ozet.say.yok",{n:c[0]}));
+  if(alt.length)d.appendChild(el("div","oz-alt",alt.join(" · ")));
+  if(ranks.length){var sr=el("div","oz-serit");sr.setAttribute("aria-hidden","true");ranks.slice().sort(function(x,y){return y-x}).forEach(function(k){sr.appendChild(el("span",CLS[k]))});d.appendChild(sr)}
+  return d;
+}
+/* Kilo girilmemişse günlük sınır notu sayfada bir kez (her kartta tekrar etmez) */
+function kiloNotu(){var a=el("a","kilonot",t("gida.adi.kilo_gir"));a.href="#profil";return a}
+/* Maddeleri seviyeye göre gruplar: her grubun küçük başlığı "Uyarı · 3"; kart(r) her madde için kartı üretir */
+function gruplu(box,list,rank,kart){
+  var g={};list.forEach(function(r){var k=rank(r);(g[k]=g[k]||[]).push(r)});
+  Object.keys(g).sort(function(a,b){return b-a}).forEach(function(k){
+    box.appendChild(el("h3","grp",LBL(+k)+" · "+dilSayi(g[k].length)));
+    g[k].forEach(function(r){box.appendChild(kart(r))});
+  });
+}
 function summaryCard(S,res){
   var d=el("div","res sumbox");d.appendChild(el("div","t",t("ortak.ozet")));
   function row(label,val,cls){var r=el("div","srow");r.appendChild(el("span","sl",label));var v=el("span","sv"+(cls?" "+cls:""));if(typeof val==="string")v.textContent=val;else v.appendChild(val);r.appendChild(v);d.appendChild(r)}
@@ -255,13 +291,16 @@ function additiveCard(r){
   var b=el("button","info","i");b.type="button";b.setAttribute("aria-label",t("ortak.hakkinda",{ad:itAd(it)}));b.setAttribute("aria-expanded","false");
   top.appendChild(b);d.appendChild(top);
   d.appendChild(el("div","how",LBL(r.rank)+" · "+(r.how==="kod"?t(r.fixed?"gida.kart.kodla_duzeltildi":"gida.kart.kodla"):r.how==="isim"?t("ortak.isimle"):t("ortak.benzer",{l:r.text}))+(r.may?t("ortak.icerebilir_bolum"):"")));
-  it.flags.forEach(function(f){if((f==="sodium"&&!PROF.salt)||f==="aluminium"||f==="gmo_suspect")return;/* sodyum etiketi yalnızca tuz kısıtlaması seçiliyse */d.appendChild(el("span","chip",veriS(FLAGS[f]||f,"e.bayrak."+f)))});
+  // Kartın yüzünde yalnızca ad, durum ve bayraklar (tek satır); etiketler ve günlük sınır dokununca açılan ayrıntı sayfasında
+  var pn=el("div","ipanel");pn.hidden=true;
+  var bay=[];
+  it.flags.forEach(function(f){if((f==="sodium"&&!PROF.salt)||f==="aluminium"||f==="gmo_suspect")return;/* sodyum etiketi yalnızca tuz kısıtlaması seçiliyse */var a=veriS(FLAGS[f]||f,"e.bayrak."+f);bay.push(a);pn.appendChild(el("span","chip",a))});
+  if(bay.length)d.appendChild(el("div","ln neden",bay.join(" · ")));
   var us=uretimSinif(r.ids,IDX);   // üretim yolu: gri bilgi etiketi, risk rengini değiştirmez
-  if(us){var uc=el("span","chip uret");var ui=el("span","uic");ui.setAttribute("aria-hidden","true");uc.appendChild(ui);uc.appendChild(document.createTextNode(t(URETIM_AD[us])));d.appendChild(uc)}
+  if(us){var uc=el("span","chip uret");var ui=el("span","uic");ui.setAttribute("aria-hidden","true");uc.appendChild(ui);uc.appendChild(document.createTextNode(t(URETIM_AD[us])));pn.appendChild(uc)}
   var seenA={};items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(seenA[k])return;seenA[k]=1});
   var nA=Object.keys(seenA).length,doneA={};
-  items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(doneA[k])return;doneA[k]=1;d.appendChild(adiBlock(x.adi,nA>1||items.length>1&&items.some(function(y){return !y.adi})?x.id:""))});
-  var pn=el("div","ipanel");pn.hidden=true;
+  items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(doneA[k])return;doneA[k]=1;pn.appendChild(adiBlock(x.adi,nA>1||items.length>1&&items.some(function(y){return !y.adi})?x.id:""))});
   var same=items.length>1&&items.every(function(x){return ABOUT[x.id]===ABOUT[items[0].id]&&!(x.tgk_note&&ulke()==="TR")});
   if(same){var r4=veriMetin(ABOUT[items[0].id]||"","e."+items[0].id+".about"),p4=el("div","ln");p4.appendChild(el("b",null,t("gida.kart.nedir")));p4.appendChild(document.createTextNode(r4.s));pn.appendChild(vIsaret(p4,r4))}
   else items.forEach(function(x){
@@ -297,7 +336,7 @@ function additiveCard(r){
   b.removeAttribute("aria-expanded");b.setAttribute("aria-haspopup","dialog");
   b.onclick=function(e){e.stopPropagation();openSheet(ttl,LBL(r.rank),pn,b)};
   d.classList.add("tap");
-  d.addEventListener("click",function(e){if(e.target.closest("button,a,.adi"))return;openSheet(ttl,LBL(r.rank),pn,b)});
+  d.addEventListener("click",function(e){if(e.target.closest("button,a"))return;openSheet(ttl,LBL(r.rank),pn,b)});
   d._open=function(ret){openSheet(ttl,LBL(r.rank),pn,ret||b)};   // karşılaştırma ekranından açmak için
   return d;
 }
@@ -354,13 +393,15 @@ function render(res,br){
     cd.appendChild(ipan);b.onclick=function(){ipan.hidden=!ipan.hidden;b.setAttribute("aria-expanded",ipan.hidden?"false":"true");b.classList.toggle("on",!ipan.hidden)};
     box.appendChild(cd);
   }
+  var E=res.filter(function(r){return !r.isB&&!r.neg});
+  box.insertBefore(ozetKart("gida",E.map(function(r){return r.rank})),box.firstChild);
   profileCards(S).forEach(function(c){box.appendChild(c)});
+  if(PROF.kilo==null&&E.some(function(r){return r.ids.some(function(id){var a=IDX.byId[id].adi;return a&&a.st==="set"})}))box.appendChild(kiloNotu());
   box.appendChild(summaryCard(S,res));
   box.appendChild(besinKart($("metin").value));   // besin değeri tablosu (js/arayuz_besin.js)
   if(LASTBR.length&&ulke()==="TR")box.appendChild(brandCard(LASTBR));
   comboSection(box,findCombos(COMBO,"gida",comboItemsFood(res,IDX)));
-  var E=res.filter(function(r){return !r.isB&&!r.neg});
-  if(E.length){box.appendChild(el("h2",null,t("gida.katkilar")));E.forEach(function(r){box.appendChild(additiveCard(r))})}
+  if(E.length){box.appendChild(el("h2",null,t("gida.katkilar")));gruplu(box,E,function(r){return r.rank},additiveCard)}
   var B=res.filter(function(r){return r.isB&&!r.neg}),notes=B.map(function(r){return IDX.byId[r.ids[0]]}).filter(function(it){return it.note});
   if(B.length){
     var bd=secBox(box,t("gida.diger_icerik"),B.length);

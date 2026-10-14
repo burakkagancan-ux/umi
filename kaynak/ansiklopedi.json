@@ -3037,7 +3037,7 @@
   }
  },
  "bayrak_uyarilari": {
-  "_aciklama": "e_kodlari.json bayraklarından otomatik profil uyarısı. profile: Hassasiyetlerim anahtarı (allergen_* alerjenler, diğerleri PROF alanı).",
+  "_aciklama": "e_kodlari.json bayraklarından otomatik profil uyarısı. profile: Profilim anahtarı (allergen_* alerjenler, diğerleri PROF alanı).",
   "allergen_soy_possible": [
    {
     "profile": "allergen_soy",

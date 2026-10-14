@@ -441,11 +441,13 @@ async function scan(p,mode,text){
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');
   // Arama kutusu boşken bütün elle incelenmiş maddeler listelenir; arama sonucu gelince liste kısalır
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000});
-  {const f=await p.$$eval('#ana a.row .rc',e=>e.map(x=>x.textContent));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
-  // Tür süzgeci (13.10.2026): Gıda seçili; Kozmetik ve Temizlik seçilemez, altında "Çok yakında"
-  {const s=await p.$$eval('#ana .seg button',e=>e.map(x=>[x.textContent,x.getAttribute('aria-checked'),x.getAttribute('aria-disabled')].join('|')));
-   ok(s.join(',')==='Gıda|true|,KozmetikÇok yakında|false|true,TemizlikÇok yakında|false|true','ansiklopedi tür süzgeci: '+s.join(','))}
-  await p.click('#tur-koz',{force:true});ok(await p.getAttribute('#tur-gida','aria-checked')==='true','ansiklopedi: Kozmetik seçilemiyor');
+  {const f=await p.$$eval('#ana a.row .rk',e=>e.map(x=>x.textContent.split(' · ')[0]));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
+  await p.fill('#ara','');await p.waitForSelector('#ana .rfil');
+  // Tür süzgeci (14.10.2026, kullanıcı kararı): kozmetik ve temizlik ansiklopedisi gelene kadar görünmez; renk süzgeci ve işlev başlıkları var
+  {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana h3.grph').length}));
+   ok(s.seg===0&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5,'ansiklopedi: tür süzgeci yok, renk süzgeci ve gruplar: '+JSON.stringify(s));
+   await p.click('#ana .rfil.red');const r=await p.evaluate(()=>[...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent));
+   ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');await p.click('#ana .rfil.tum')}
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
   await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');
@@ -502,8 +504,7 @@ async function scan(p,mode,text){
   ok(/What does it do\?/.test(await p.textContent('#ana .panel'))&&(await p.textContent('#tab-otorite'))==='Authorities','ansiklopedi sekmeleri İngilizce');
   {const k=await anahtarVar();ok(!k,'ansiklopedi: çıplak anahtar: '+k)}
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');
-  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name or E number')&&/My saved substances/.test(await p.textContent('#ana')),'ansiklopedi arama İngilizce');
-  ok(/^CosmeticsComing soon$/.test(await p.textContent('#tur-koz')),'ansiklopedi tür süzgeci İngilizce');
+  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name or E number')&&/^All 333$/.test(await p.textContent('#ana .rfil.tum')),'ansiklopedi arama ve süzgeç İngilizce');
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
@@ -519,7 +520,7 @@ async function scan(p,mode,text){
   ok((await p.$$eval('.tabbar a',a=>a.map(x=>x.dataset.tab).join(',')))==='ansiklopedi,oku,liste,profil','alt menü sırası');
   ok(!(await p.isVisible('.tabbar a[data-tab="liste"]'))&&await p.isVisible('.tabbar a[data-tab="profil"]'),'ülke seçilmemişken Liste menüde görünmüyor');
   {const k=await anahtarVar();ok(!k,'Liste: çıplak anahtar: '+k)}
-  // Dil seçimi: Hassasiyetlerim'den Türkçe → sayfa Türkçe yeniden yüklenir
+  // Dil seçimi: Profilim'den Türkçe → sayfa Türkçe yeniden yüklenir
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#dilsec');
   await Promise.all([p.waitForNavigation(),p.selectOption('#dilsec','tr')]);await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);
   ok(await p.getAttribute('html','lang')==='tr'&&await p.evaluate(()=>localStorage.getItem('dil'))==='tr','dil seçici: Türkçe kaydedildi ve uygulandı');
@@ -568,7 +569,7 @@ async function scan(p,mode,text){
   ok(/henüz bu cihaza inmedi/.test(await p.textContent('#ana')),'çevrimdışı: açılmamış sayfa notu: '+(await p.textContent('#ana')).slice(0,80));
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.fill('#ara','lesitin');
   await p.waitForFunction(()=>{const n=document.querySelectorAll('#ana a.row').length;return n>0&&n<50},null,{timeout:10000}).catch(()=>{});
-  ok(await p.$$eval('#ana a.row .rc',e=>e.length&&e[0].textContent==='E322'),'çevrimdışı: ansiklopedi araması');
+  ok(await p.$$eval('#ana a.row .rk',e=>e.length&&e[0].textContent.startsWith('E322 ·')),'çevrimdışı: ansiklopedi araması');
   ok(!errs.length,'çevrimdışı konsol hatası: '+errs.join(' | '));
   await ctx.close();
 

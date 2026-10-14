@@ -8,7 +8,7 @@
  "start_url": "../../ocr.html",
  "scope": "../../",
  "display": "standalone",
- "background_color": "#eef1ee",
+ "background_color": "#ffffff",
  "theme_color": "#1d4d3a",
  "icons": [
   {

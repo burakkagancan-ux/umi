@@ -160,7 +160,7 @@ function barkodKatki(tx){
   row.appendChild(e);row.appendChild(h);d.appendChild(row);d.appendChild(lb);
   sonucUst(d);
 }
-/* Hassasiyetlerim: katkı tercihi (Sor / Her zaman kaydet / Kaydetme) */
+/* Profilim: katkı tercihi (Sor / Her zaman kaydet / Kaydetme) */
 function barkodAyarKutusu(){
   var d=el("div","pbark");d.appendChild(el("div","pt",t("barkod.ayar_baslik")));
   d.appendChild(el("div","mut",t("barkod.ayar_metin")));

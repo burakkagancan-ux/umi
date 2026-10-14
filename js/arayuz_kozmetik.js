@@ -8,7 +8,7 @@ function loadK(){
   setSt("koz",t("koz.yukleniyor"));
   KLOAD=Promise.all([getJson("data/kozmetik.json"),getJson("data/kozmetik_inci.json").catch(function(){return null})]).then(function(a){
     KDB=a[0];KINCI=a[1];KIDX=buildKIndex(KDB,KINCI);
-    setSt("koz",KINCI?t("koz.yuklendi",{n:KDB.entries.length,i:KINCI.items.length}):t("koz.yuklendi_incisiz",{n:KDB.entries.length}));
+    setSt("koz",KINCI?t("koz.yuklendi",{n:KDB.entries.length,i:KINCI.items.length}):t("koz.yuklendi_incisiz",{n:KDB.entries.length}),true);
     return KIDX;
   }).catch(function(e){KLOAD=null;setSt("koz",t("koz.yuklenemedi_st"));throw e});
   return KLOAD;
@@ -196,12 +196,13 @@ function renderK(res){
     cd.appendChild(ipan);b.onclick=function(){ipan.hidden=!ipan.hidden;b.setAttribute("aria-expanded",ipan.hidden?"false":"true");b.classList.toggle("on",!ipan.hidden)};
     box.appendChild(cd);
   }
+  box.insertBefore(ozetKart("koz",res.filter(function(r){return r.found}).map(function(r){return CMP_KRANK[r.level]||0})),box.firstChild);
   kProfileCards(S,res).forEach(function(c){box.appendChild(c)});
   box.appendChild(kSummaryCard(S));
   if(S.comedo.length&&PTYPE!=="rinse")box.appendChild(comedoCard(res));
   comboSection(box,findCombos(COMBO,"koz",comboItemsK(res)));
   var W=res.filter(function(r){return r.found&&r.rank>0}).sort(function(a,b){return b.rank-a.rank||a.pos-b.pos});
-  if(W.length){box.appendChild(el("h2",null,t("koz.dikkat_baslik")));W.forEach(function(r){box.appendChild(kCard(r))})}
+  if(W.length){box.appendChild(el("h2",null,t("koz.dikkat_baslik")));W.forEach(function(r){box.appendChild(kCard(r))})}   // seviye adı her kartın durum satırında (AB'de yasak / Uyarı / Dikkat)
   var tb=secBox(box,t("koz.tum"),res.length);
   var ol=el("ol","klist");
   res.forEach(function(r){
