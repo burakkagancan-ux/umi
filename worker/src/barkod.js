@@ -121,7 +121,8 @@ export function besinOff(n, miktar) {
 
 // Topluluk besin tablosu (A-02): kullanıcı etiketteki tabloyu okutup (açık izniyle) barkoda bağlar. İçerik katkısından ayrı saklanır:
 // tablo içerik metnine bağlı değildir, içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Gelen değer burada yalnızca
-// biçim ve sınırlarla süzülür ({b: {alan: sayı|null}, lt: {alan: true}, birim: "g"|"ml"|""}); tutarlılık uygulamada denetlenir (besinDenetle).
+// biçim ve sınırlarla süzülür ({b: {alan: sayı|null}, lt: {alan: true}, birim: "g"|"ml"|"", por?}); tutarlılık uygulamada denetlenir (besinDenetle).
+// por (O-23): porsiyon başına yazılmış etiketten 100 g'a çevrildi {m, u, ara: {alan: [alt, üst]}}; js/besin.js besinPorNorm ile aynı süzgeç.
 export const BESIN_ALAN = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"];   // js/besin.js BESIN_ALAN ile aynı
 export function besinKatki(x) {
   if (!x || typeof x !== "object" || !x.b || typeof x.b !== "object") return null;
@@ -136,7 +137,18 @@ export function besinKatki(x) {
   }
   if (n < 2) return null;
   const birim = x.birim === "g" || x.birim === "ml" ? x.birim : "";
-  return { b, lt, birim };
+  const por = besinPorNorm(x.por);
+  return por ? { b, lt, birim, por } : { b, lt, birim };
+}
+const BESIN_ANA = ["yag", "doymus", "seker", "tuz"];   // js/besin.js BESIN_AYAR.anaSatir
+export function besinPorNorm(x) {
+  if (!x || typeof x !== "object" || typeof x.m !== "number" || !(x.m > 0 && x.m <= 1000) || (x.u !== "g" && x.u !== "ml")) return null;
+  const ara = {};
+  for (const a of BESIN_ANA) {
+    const r = x.ara && x.ara[a];
+    if (Array.isArray(r) && r.length === 2 && r.every((v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 10000) && r[0] <= r[1]) ara[a] = [r[0], r[1]];
+  }
+  return { m: x.m, u: x.u, ara };
 }
 // Gösterilecek tablo: en yeni katkı. satirlar: {besin (JSON metni), t} yeniden eskiye. Döner {besin, besinT} ya da null.
 export function besinSec(satirlar) {

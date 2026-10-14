@@ -192,6 +192,11 @@ async function scan(p,mode,text){
     ok(await p.evaluate(()=>{const s=document.querySelector('#sonuc .sumbox');return s&&s.nextElementSibling&&s.nextElementSibling.classList.contains('besin')}),'kart özetin hemen altında');
     await p.click('#sonuc .besin .info');
     ok(/Birleşik Krallık Sağlık Bakanlığı/.test(await p.textContent('#sonuc .besin .ipanel'))&&/17,5 g/.test(await p.textContent('#sonuc .besin .ipanel'))&&await p.isVisible('#sonuc .besin .ipanel a'),'(i): eşikler ve kaynak bağlantısı');
+    // Porsiyon başına etiket (ABD, O-23): 100 g'a çevrilir, not yazılır, yuvarlama aralığı eşiği kesen satır düzeysiz
+    await scan(p,'gida','Ingredients: whole grain oats, sugar, salt.\nNutrition Facts\nServing size 2/3 cup (55g)\nAmount per serving\nCalories 230\n% Daily Value*\nTotal Fat 8g 10%\nSaturated Fat 1g 5%\nSodium 160mg 7%\nTotal Carbohydrate 37g 13%\nDietary Fiber 4g 14%\nTotal Sugars 12g\nProtein 3g');
+    await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
+    k=await kart();
+    ok(k&&k.dz.join()==='orta,orta'&&k.deg.slice(0,4).join('|')==='14,55 g|1,82 g|21,82 g|0,73 g'&&/porsiyon \(55 g\) başına yazılı; 100 g'a çevrildi/.test(k.metin),'ABD etiketi: 100 g\'a çevrilir, not, belirsiz satır düzeysiz: '+JSON.stringify(k));
     // Tablo yok
     await scan(p,'gida','Şeker, kakao yağı, süt tozu, E322');
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .t'),null,{timeout:8000}).catch(()=>{});

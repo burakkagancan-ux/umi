@@ -4,6 +4,9 @@
 #   alan   : enerji, yag, doymus, karb, seker, lif, protein, tuz, sodyum (tuz yoksa tuz = sodyum x 2,5)
 #            _atla     : tabloda olan ama kullanılmayan satır (trans yağ, doymamış yağlar, nişasta, polioller…); daha kısa adın yanlış eşleşmesini önler
 #            _porsiyon : porsiyon sütunu başlığı;  _ri : referans alım yüzdesi sütunu başlığı ("100 g" / "100 ml" başlığı sayıdan bulunur)
+#            _boy      : porsiyon büyüklüğü başlığı; ardından gelen ilk gram/ml porsiyondur ("Serving size 2/3 cup (55g)"). 100 g sütunu
+#                        olmayan etikette (ABD, Kanada) değerler bununla 100 g'a çevrilir (O-23)
+#            kalori    : birimi yazılmayan enerji satırı ("Calories 230" = kcal)
 #   kaynak : off   = Open Food Facts besin taksonomisi (openfoodfacts-server taxonomies/nutrients.txt; ODbL), adın kendisi orada geçiyor
 #            ab1169 = AB 1169/2011 Ek XV ifade biçimi (EUR-Lex bu ortamdan okunamadı; OFF'ta ya da başka etikette görüldüğü için eklendi)
 #            etiket = etiketlerde görülen yazım (başlık ve kısaltmalar); yeni satır eklenirken nerede görüldüğü yorum satırına yazılır
@@ -85,6 +88,15 @@ _ri	en	RI	etiket
 _ri	en	GDA	etiket
 _ri	en	NRV	etiket
 _ri	en	Reference intake	etiket
+# ABD (FDA 21 CFR 101.9 Nutrition Facts) ve Kanada (Nutrition Facts / Valeur nutritive) etiketleri, O-23 (14.10.2026)
+kalori	en	Calories	etiket
+_atla	en	Calories from fat	etiket
+seker	en	Total sugars	etiket
+seker	en	Total sugar	etiket
+_boy	en	Serving size	etiket
+_boy	en	Per	etiket
+_ri	en	Daily Value	etiket
+_ri	en	DV	etiket
 
 # --- Almanca
 enerji	de	Energie	off
@@ -131,6 +143,9 @@ _atla	fr	Amidon	ab1169
 _porsiyon	fr	Portion	etiket
 _porsiyon	fr	par portion	etiket
 _ri	fr	AR	etiket
+# Kanada etiketinin Fransızca yarısı ("pour 1 tasse (250 mL)", "% valeur quotidienne"), O-23
+_boy	fr	pour	etiket
+_ri	fr	valeur quotidienne	etiket
 
 # --- İtalyanca
 enerji	it	Energia	off

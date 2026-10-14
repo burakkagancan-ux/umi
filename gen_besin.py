@@ -11,7 +11,7 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 KAYNAK = os.path.join(HERE, "kaynak", "besin_adlari.tsv")
 CIKTI = os.path.join(HERE, "data", "besin.json")
-ALANLAR = {"enerji", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz", "sodyum", "_atla", "_porsiyon", "_ri"}
+ALANLAR = {"enerji", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz", "sodyum", "kalori", "_atla", "_porsiyon", "_ri", "_boy"}
 KAYNAKLAR = {
     "off": "Open Food Facts besin taksonomisi (openfoodfacts-server, taxonomies/nutrients.txt), ODbL 1.0",
     "ab1169": "AB 1169/2011 Ek XV (beslenme beyanının ifade biçimi)",
