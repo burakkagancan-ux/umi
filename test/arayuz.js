@@ -601,9 +601,9 @@ async function scan(p,mode,text){
   {const f=await p.$$eval('#ana a.row .rk',e=>e.map(x=>x.textContent.split(' · ')[0]));ok(f[0]==='E322','ansiklopedi araması: '+f.slice(0,5).join(','))}
   await p.fill('#ara','');await p.waitForSelector('#ana .rfil');
   // Tür süzgeci (14.10.2026, kullanıcı kararı): kozmetik ve temizlik ansiklopedisi gelene kadar görünmez; renk süzgeci ve işlev başlıkları var
-  {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana h3.grph').length}));
-   ok(s.seg===0&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5,'ansiklopedi: tür süzgeci yok, renk süzgeci ve gruplar: '+JSON.stringify(s));
-   await p.click('#ana .rfil.red');const r=await p.evaluate(()=>[...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent));
+  {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana details.gdrop').length,acik:document.querySelectorAll('#ana details.gdrop[open]').length}));
+   ok(s.seg===0&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5&&s.acik===0,'ansiklopedi: tür süzgeci yok, renk süzgeci ve kapalı açılır gruplar: '+JSON.stringify(s));
+   await p.click('#ana .rfil.red');const r=await p.evaluate(()=>{document.querySelectorAll('#ana details.gdrop').forEach(d=>d.open=true);return [...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent)});
    ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');await p.click('#ana .rfil.tum')}
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
   await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});

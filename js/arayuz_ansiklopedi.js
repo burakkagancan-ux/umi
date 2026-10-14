@@ -167,7 +167,7 @@ function turSecici(){
   });
   return s;
 }
-var OKUMADIK=false,ARISK="",KACIK=false;   // ARISK: renk süzgeci ("" tümü, red, amber, green); KACIK: Kaydettiklerim açık mı
+var OKUMADIK=false,ARISK="",KACIK=false,GACIK={};   // ARISK: renk süzgeci ("" tümü, red, amber, green); KACIK: Kaydettiklerim açık mı; GACIK: açık işlev grupları
 function showSearch(){
   ACUR=null;a$("kaydet").hidden=true;document.title=t("nav.ansiklopedi");
   var box=a$("ana");box.textContent="";
@@ -203,14 +203,15 @@ function showSearch(){
     });
     var fb=h("button","okfil",t("rozet.okumadiklarim",{n:kalan.length}));fb.type="button";fb.setAttribute("aria-pressed",String(OKUMADIK));
     fb.onclick=function(){OKUMADIK=!OKUMADIK;draw()};fr.appendChild(fb);out.appendChild(fr);
-    // İşleve göre başlıklı gruplar (en kalabalık önce)
+    // İşleve göre açılır gruplar (en kalabalık önce; kapalı başlar, açık/kapalı durumu süzgeç değişince korunur)
     var L=(OKUMADIK?kalan:cur).filter(function(r){return !ARISK||r.risk_level===ARISK}),G={},sira=[];
     L.forEach(function(r){if(!G[r.category]){G[r.category]=[];sira.push(r.category)}G[r.category].push(r)});
     sira.sort(function(a,b){return G[b].length-G[a].length});
     if(!L.length)out.appendChild(h("p","mut",t("ans.sonuc_yok")));
     sira.forEach(function(c){
-      var hd=h("h3","grph");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));out.appendChild(hd);
-      var gl=h("div","grpl");G[c].forEach(function(r){gl.appendChild(rowFor(r,oku,true))});out.appendChild(gl);
+      var gd=h("details","gdrop");gd.open=!!GACIK[c];gd.ontoggle=function(){GACIK[c]=gd.open};
+      var hd=h("summary");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));gd.appendChild(hd);
+      var gl=h("div","grpl");G[c].forEach(function(r){gl.appendChild(rowFor(r,oku,true))});gd.appendChild(gl);out.appendChild(gd);
     });
     out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.length})));
   }
