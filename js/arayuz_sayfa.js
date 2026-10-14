@@ -4,6 +4,8 @@
 getJson("data/e_aciklama.json").then(function(a){ABOUT=a.about||{}}).catch(function(){ABOUT={}});
 getJson("data/tagsis.json").then(function(b){BRANDS=buildBrands(b)}).catch(function(){BRANDS=null});
 DIL_HAZIR.then(function(){
+  // Sonuç gelene kadar "Sonuç" başlığı yerine fotoğraf ipuçları görünür (ocr.html .ipucu)
+  new MutationObserver(function(){document.body.classList.add("sonuclu")}).observe($("sonuc"),{childList:true,characterData:true,subtree:true});
   besinYukle();
   loadDb(0);
   setMode(MODE,false);

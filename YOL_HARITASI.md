@@ -68,6 +68,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | A-04 | Fotoğraf okuma kalitesi: iki sütunlu etiket, kavisli ambalaj, otomatik kırpma önerisi (galeriden yükleme eklendi, #90) | Claude | — | Gerçek etiket setinde ölçülen iyileşme | 🔄 |
 | A-05 | Helal katmanı ("kaynağı belirsiz, sertifikaya bakın"; hüküm vermez) | Claude | — | Kaynaklı, yalnızca bilgi; MENA pazarının ön koşulu | ⬜ |
 | A-06 | Aylık mevzuat izleme (EUR-Lex, Resmî Gazete; CosIng zaten var) | Claude | — | Değişiklik varsa otomatik issue ya da PR | ⬜ |
+| A-07 | Ön yüz yenilemesi (kullanıcı isteği 14.10.2026; taslak claude.ai Artifact): krem yerine beyaz zemin; Etiket Oku'da tek ana fotoğraf kartı; sonuçta özet kartı (sayılar, puan yok), seviyeye göre gruplu sade kartlar, ayrıntı alt sayfada; Profilim bölümlü düzen; ansiklopedide renk süzgeci ve işlev grupları, tür süzgeci kozmetik/temizlik gelene kadar gizli; arayüzde "Hassasiyetlerim" yerine "Profilim" | Claude | — | TR + EN; tarayıcı testi geçer | ✅ 14.10.2026 |
 
 ### Faz B: Küresel altyapı
 

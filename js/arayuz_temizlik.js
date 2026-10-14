@@ -10,7 +10,7 @@ function loadT(){
   // Koku alerjenleri ve koruyucular kozmetik INCI listesinden tanınır
   TLOAD=Promise.all([getJson("data/temizlik.json"),loadK()]).then(function(a){
     TDB=a[0];TIDX=buildTIndex(TDB);
-    setSt("tem",t("tem.yuklendi",{n:TDB.hazards.length,g:TDB.groups.length}));
+    setSt("tem",t("tem.yuklendi",{n:TDB.hazards.length,g:TDB.groups.length}),true);
     return TIDX;
   }).catch(function(e){TLOAD=null;setSt("tem",t("tem.yuklenemedi_st"));throw e});
   return TLOAD;
@@ -116,6 +116,7 @@ function renderT(A){
     cd.appendChild(ipan);b.onclick=function(){ipan.hidden=!ipan.hidden;b.setAttribute("aria-expanded",ipan.hidden?"false":"true");b.classList.toggle("on",!ipan.hidden)};
     box.appendChild(cd);
   }
+  box.insertBefore(ozetKart("tem",A.hazards.map(function(x){return CMP_TRANK[x.h.level]||0}).concat(A.subs.filter(function(x){return !x.s.mix}).map(function(x){return CMP_TRANK[x.s.level]||0}))),box.firstChild);
   tProfileCards(S,A).forEach(function(c){box.appendChild(c)});
   box.appendChild(tSummaryCard(S,A));
   // Kozmetik ve gıda ekranlarındaki düzen: dikkat gerektirenler kart olarak, listeler kapalı açılır bölümlerde

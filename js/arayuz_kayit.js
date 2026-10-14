@@ -1,4 +1,4 @@
-/* Arayüz: kaydedilen ürünler. Sonuç barında "Kaydet", Hassasiyetlerim'de "Kaydedilen Ürünlerim" ekranı (tür süzgeci, arama, sıralama,
+/* Arayüz: kaydedilen ürünler. Sonuç barında "Kaydet", Profilim'de "Kaydedilen Ürünlerim" ekranı (tür süzgeci, arama, sıralama,
    aç / karşılaştır / yeniden adlandır / sil, yedekle / geri yükle). Saf mantık js/kayit.js. Kayıtlar yalnızca bu cihazda. */
 var KAYIT_ACILAN=null;   // listeden açılan kaydın kimliği: sonuç çizilince değerlendirme değişti mi bakılır
 function kayitLoad(){try{var a=JSON.parse(localStorage.getItem("kayitli")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
@@ -64,7 +64,7 @@ function kayitForm(mode,text,ret){
 }
 function kayitBarYenile(){var o=document.querySelector("#sonuc .resbar .kayitb");if(o)o.parentNode.replaceChild(kayitBtn(MODE),o)}
 
-/* ---------- Hassasiyetlerim: "Kaydedilen Ürünlerim" düğmesi ---------- */
+/* ---------- Profilim: "Kaydedilen Ürünlerim" düğmesi ---------- */
 function kayitProfil(){
   var box=$("kayitbar");if(!box)return;box.textContent="";
   var n=kayitLoad().length,b=el("button","kayitac");b.type="button";

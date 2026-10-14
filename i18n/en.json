@@ -26,7 +26,6 @@
  "ans.kaydet": "Save",
  "ans.kaydet_cikar": "Remove from saved",
  "ans.kaydettiklerim": "My saved substances",
- "ans.kayit_yok": "No saved substances yet. You can save one with the bookmark button on its page.",
  "ans.kaynagi_ac": "Open source",
  "ans.kaynak_yok": "No sources have been added for this substance yet.",
  "ans.kimde": "In whom",
@@ -37,7 +36,7 @@
  "ans.ne_ise": "What does it do?",
  "ans.nerede": "Where is it found?",
  "ans.otomatik": "This page was generated automatically from the app's additive list and has not yet been reviewed by hand. It will be updated as detailed information is added.",
- "ans.profil_eslesti": "Matches your sensitivity: {ad}",
+ "ans.profil_eslesti": "Matches your profile: {ad}",
  "ans.resmi": "Official",
  "ans.sekme.genel": "General",
  "ans.sekme.kaynak": "Sources",
@@ -1093,5 +1092,48 @@
  "rozet.daha": {
   "one": "+{n} more new badge: {l}",
   "other": "+{n} more new badges: {l}"
- }
+ },
+ "ozet.ust.gida": {
+  "one": "Food · {n} additive read",
+  "other": "Food · {n} additives read"
+ },
+ "ozet.ust.koz": {
+  "one": "Cosmetics · {n} ingredient recognised",
+  "other": "Cosmetics · {n} ingredients recognised"
+ },
+ "ozet.ust.tem": {
+  "one": "Cleaning · {n} hazard statement or substance",
+  "other": "Cleaning · {n} hazard statements and substances"
+ },
+ "ozet.uyari": {
+  "one": "{n} ingredient with a warning",
+  "other": "{n} ingredients with a warning"
+ },
+ "ozet.dikkat": {
+  "one": "{n} ingredient needs caution",
+  "other": "{n} ingredients need caution"
+ },
+ "ozet.temiz": "No ingredient with a specific warning",
+ "ozet.madde_yok": "Nothing to assess was found",
+ "ozet.say.dikkat": "{n} caution",
+ "ozet.say.dogrulanmadi": "{n} status not verified",
+ "ozet.say.yok": "{n} no specific warning",
+ "gida.adi.kilo_gir": "Enter your weight in My profile to see daily limits for your body weight.",
+ "foto.kamera_alt": "The result appears as soon as it is read.",
+ "foto.cek": "Take photo",
+ "foto.galeri": "From gallery",
+ "ipucu.baslik": "For a good photo",
+ "ipucu.1": "The whole list in frame",
+ "ipucu.2": "Avoid glare",
+ "ipucu.3": "Crop afterwards to fix",
+ "ozet.uyari_tem": {
+  "one": "{n} warning",
+  "other": "{n} warnings"
+ },
+ "ozet.dikkat_tem": "{n} caution",
+ "profil.uyarilar": "Alerts for you",
+ "profil.uyarilar_not": "What you choose here appears as personal alerts in results.",
+ "profil.ayarlar": "Settings",
+ "profil.hakkinda": "About",
+ "ans.suzgec": "Filter"
 }

@@ -9,7 +9,7 @@ Gıda, kozmetik ve temizlik ürünlerinin etiketindeki içerik listesini fotoğr
 
 - Site: https://burakkagancan-ux.github.io/tagsis/ (GitHub Pages, `main` dalından)
 - Depo: https://github.com/burakkagancan-ux/tagsis
-- Sayfalar: Liste (`index.html`), Etiket Oku (`ocr.html`; Gıda / Kozmetik / Temizlik modu), Ansiklopedi (`ansiklopedi.html`), Hassasiyetlerim (profil).
+- Sayfalar: Liste (`index.html`), Etiket Oku (`ocr.html`; Gıda / Kozmetik / Temizlik modu), Ansiklopedi (`ansiklopedi.html`), Profilim.
 - OCR: `ocr.html` → Cloudflare Worker (`worker/`) → Google Cloud Vision; Worker'a ulaşılamazsa Tesseract.js.
 - Gelir modeli henüz seçilmedi (YOL_HARITASI.md D-01).
 

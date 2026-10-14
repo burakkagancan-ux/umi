@@ -162,7 +162,7 @@ Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi har
 
 ### Çevrilmeyen sayfalar — KAPANDI (12.10.2026)
 - ansiklopedi.html arayüzü (`ans.*` anahtarları) ve index.html (Liste; `ulke.tr.liste.*`, kod js/arayuz_liste.js'e taşındı) iki dilde; alt menü üç sayfada çevrili. Bakanlık verisinde firma, ürün ve yer adları çevrilmez; ürün grubu ve uygunsuzluk türü 12.10.2026'dan beri çevrili (İngilizcede başlık altındaki not buna göre). test/ceviri.js üç sayfayı da denetler; tarayıcı testinde İngilizce ansiklopedi ve Liste turu. Ansiklopedide inceleme tarihi artık dile göre ("8 Ekim 2026" / "8 October 2026"; önce 08.10.2026).
-- KISMEN ÇÖZÜLDÜ (09.10.2026, PR #105): Ülke ayarı var (Hassasiyetlerim > Dil kutusu; `ulke()`, saf mantık `ulkeSec`). Türkiye'ye özgü bilgiler (TGK adı/notu, Bakanlık listesi kartı, kozmetik TR durumu, TR izin notu, UZEM) yalnızca Türkiye seçiliyse görünür. Kalan (B-05): ikinci ülkenin verisi (Birleşik Krallık FSA, ABD FDA) ve ülkeye göre öne çıkan kural.
+- KISMEN ÇÖZÜLDÜ (09.10.2026, PR #105): Ülke ayarı var (Profilim > Dil kutusu; `ulke()`, saf mantık `ulkeSec`). Türkiye'ye özgü bilgiler (TGK adı/notu, Bakanlık listesi kartı, kozmetik TR durumu, TR izin notu, UZEM) yalnızca Türkiye seçiliyse görünür. Kalan (B-05): ikinci ülkenin verisi (Birleşik Krallık FSA, ABD FDA) ve ülkeye göre öne çıkan kural.
 
 ### İngilizce etiket tanıma (B-08, 08.10.2026)
 - Ölçüm: `node test/olcum_ingilizce.js` (30 etiket: 10 İngiltere/AB, 10 ABD, 10 zor durum; test/veri/ingilizce_etiketler.json). CI'da `node test/ingilizce.js` eşikleri denetler: içerik parçası ≥ %85, beklenen alerjen %100, yanlış uyarı 0.

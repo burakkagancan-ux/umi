@@ -44,7 +44,7 @@ Her dilde aynı kavram aynı terimle yazılır. Yeni dil eklenirken bu tabloya o
 | Formaldehit salıcı | Formaldehyde releaser | |
 | Gözenek tıkayıcı olabilir | May clog pores | Bilgi notu; skor yok. |
 | Durulanan / Durulanmayan | Rinse-off / Leave-on | |
-| Hassasiyetlerim / Profilim | My profile | Arayüzde tek ad. |
+| Profilim | My profile | Arayüzde tek ad; "Hassasiyetlerim" kullanılmaz (14.10.2026). |
 | Kişisel uyarılar | Personal alerts | |
 | Bu bir onay değildir | This is not an approval | |
 | Karşılaştır | Compare | Karar dili: "içerik açısından daha iyi görünüyor" = "looks better in terms of ingredients". |
