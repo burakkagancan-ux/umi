@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Maskelenebilir (Android): işaret %80'e küçültülür, yuvarlak maskenin güvenli alanında (yarıçap %40) kalır. -->
+<rect width="512" height="512" fill="#2741C8"/>
+<g transform="translate(256 256) scale(.8) translate(-256 -256)">
+<path d="M80 256 H152" stroke="#fff" stroke-width="28" stroke-linecap="round"/>
+<circle cx="232" cy="256" r="80" fill="none" stroke="#fff" stroke-width="28"/>
+<path d="M312 256 L432 168" stroke="#9FE3FF" stroke-width="28" stroke-linecap="round"/>
+<path d="M312 256 H440" stroke="#fff" stroke-width="28" stroke-linecap="round"/>
+<path d="M312 256 L432 344" stroke="#D2C4FF" stroke-width="28" stroke-linecap="round"/>
+</g>
+</svg>
