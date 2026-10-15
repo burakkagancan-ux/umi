@@ -1,7 +1,7 @@
 # tagsis — Proje dokümanı
 
 Terminalden (Claude Code CLI) devam etmek için tek sayfalık özet. Son güncelleme: 07.10.2026.
-Ayrıntılar: [CLAUDE.md](CLAUDE.md) (kararlar, veri, mimari), [YOL_HARITASI.md](YOL_HARITASI.md) (küresel iş planı), [TEKNIK_BORC.md](TEKNIK_BORC.md) (ertelenen işler).
+Ayrıntılar: [CLAUDE.md](CLAUDE.md) (kurallar ve konu dizini) ve [belgeler/mimari/](belgeler/mimari/) (konu başına: veri, mimari, kararlar), [YOL_HARITASI.md](YOL_HARITASI.md) (küresel iş planı), [TEKNIK_BORC.md](TEKNIK_BORC.md) (ertelenen işler).
 
 ## 1. Proje özeti
 
@@ -59,7 +59,7 @@ for t in sozdizimi cases e_dogrulama sodyum kanser eslesme uretim ocr_tolerans \
 python3 test/dogrula_veri.py && node worker/test.mjs
 ```
 
-CI ayrıca üreteçleri çalıştırıp `data/` değişmiş mi bakar. Tarayıcı testi: Playwright + yerel sunucu (bkz. CLAUDE.md "Testler").
+CI ayrıca üreteçleri çalıştırıp `data/` değişmiş mi bakar. Tarayıcı testi: Playwright + yerel sunucu (bkz. belgeler/mimari/testler.md "Testler").
 
 ## 5. Çalışma kuralları
 
