@@ -29,6 +29,11 @@ function srcLinks(urls){
   (urls||[]).forEach(function(u,i){var a=el("a",null,u.replace(/^https?:\/\/(www\.)?/,"").split("/")[0]);a.href=u;a.target="_blank";a.rel="noopener";if(i)ps.appendChild(document.createTextNode(" · "));ps.appendChild(a)});
   return ps;
 }
+/* Temizlik ansiklopedisine bağlantı: INCI adı ansiklopedide varsa (TIDX.ans, kimlik CAS) bağlantı, yoksa null */
+function tAnsBag(name,cls,txt){
+  var id=TIDX.ans[name];if(!id)return null;
+  var a=el("a",cls,txt);a.href="ansiklopedi.html?id="+encodeURIComponent(id);return a;
+}
 function infoCard(cls,title,how,body){
   var d=el("div","res "+cls),top=el("div","hd");
   top.appendChild(el("div","t",title));
@@ -139,6 +144,7 @@ function renderT(A){
     var s=x.s,sm=veriMetin(s.text,"t.madde."+s.id+".metin"),m=/^(.+?\.\s.+?\.)(\s[A-ZÇĞİÖŞÜ].*)?$/.exec(sm.s),vis=m?m[1]:sm.s,rest=m&&m[2]?m[2].trim():"";   // ilk iki cümle görünür, kalanı (i) arkasında
     box.appendChild(infoCard(TCLS[s.level],s.inci.length>1?t("tem.enzim_l",{l:s.inci.join(", ").toLowerCase()}):s.inci[0],t(TLBL[s.level])+" · "+(s.kind==="koruyucu"?t("koz.ozet.koruyucu"):s.kind==="enzim"?t("tem.enzim"):s.kind),function(pn,d){
       d.appendChild(vIsaret(el("div","ln",vis),sm));if(rest)pn.appendChild(vIsaret(el("div","ln",rest),sm));pn.appendChild(srcLinks(s.sources));
+      s.inci.forEach(function(n){var a=tAnsBag(n,"ans",(s.inci.length>1?n+" · ":"")+t("tem.ansiklopedi"));if(a)pn.appendChild(a)});
     }));
   });
   if(A.prec&&A.prec.length){
@@ -171,6 +177,7 @@ function renderT(A){
       if(fs.length)li.appendChild(el("span","fn"," · "+fs.map(kIslevAd).join(", ")));
       if(x.how==="benzer")li.appendChild(el("span","fn",t("koz.okunan",{l:x.raw})));
       else if(norm(x.raw)!==norm(x.name))li.appendChild(el("span","fn",t("koz.etikette",{l:x.raw})));
+      var al=tAnsBag(x.name,"ansl",t("tem.ansiklopedi_kisa"));if(al){li.appendChild(el("span","fn"," · "));li.appendChild(al)}
       if(x.fragrance)li.appendChild(el("span","chip",t("koz.ozet.koku")));if(x.pres)li.appendChild(el("span","chip",t("koz.ozet.koruyucu")));if(x.color)li.appendChild(el("span","chip",t("tem.ozet.renk")));
       ul.appendChild(li);
     });

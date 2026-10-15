@@ -15,7 +15,7 @@ function buildTIndex(tdb){
   var subs=tdb.subs.map(function(s){return {s:s,rx:rx(s.pat||[])}});
   var subByInci={};tdb.subs.forEach(function(s){s.inci.forEach(function(a){subByInci[a]=s})});
   var cap=tdb.capsule?{rx:rx(tdb.capsule.pat),d:tdb.capsule}:null;
-  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],am:null};
+  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
 }
 /* Temizlik eş anlamlıları (kaynak/temizlik_esanlamlilar.tsv) kozmetik dizinindeki INCI kayıtlarına bağlanır; ilk kullanımda kurulur */
 function tAliasMap(T,K){
