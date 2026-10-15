@@ -234,8 +234,10 @@ function barkodBesinKatki(){
 }
 /* Profilim: katkı tercihi (Sor / Her zaman kaydet / Kaydetme) */
 function barkodAyarKutusu(){
-  var d=el("div","pbark");d.appendChild(el("div","pt",t("barkod.ayar_baslik")));
-  d.appendChild(el("div","mut",t("barkod.ayar_metin")));
+  var d=el("div","pbark"),hd=el("div","pt",t("barkod.ayar_baslik"));d.appendChild(hd);
+  // açıklama (i) düğmesinin arkasında, alt sayfada
+  var ib=el("button","info sm","i");ib.type="button";ib.setAttribute("aria-label",t("ortak.hakkinda",{ad:t("barkod.ayar_baslik")}));
+  ib.onclick=function(){openSheet(t("barkod.ayar_baslik"),null,el("p",null,t("barkod.ayar_metin")),ib)};hd.appendChild(ib);
   var s=document.createElement("select");s.setAttribute("aria-label",t("barkod.ayar_baslik"));
   [["",t("barkod.ayar_sor")],["evet",t("barkod.ayar_evet")],["hayir",t("barkod.ayar_hayir")]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent=o[1];s.appendChild(op)});
   s.value=barkodIzin();s.onchange=function(){barkodIzinYaz(s.value)};

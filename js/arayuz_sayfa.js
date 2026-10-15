@@ -41,6 +41,8 @@ var CROP={x:0,y:0,w:1,h:1};   // görüntüye oranla (0-1)
 function drawCrop(){var c=$("crop");c.style.left=CROP.x*100+"%";c.style.top=CROP.y*100+"%";c.style.width=CROP.w*100+"%";c.style.height=CROP.h*100+"%"}
 function resetCrop(){CROP={x:0,y:0,w:1,h:1};drawCrop()}
 $("cropreset").onclick=function(){resetCrop();okuIste(0)};
+/* Deneme sürümü notu: sayfanın en altındaki bağlantı, metin alt sayfada */
+$("denemeb").onclick=function(){openSheet(t("sayfa.deneme"),null,el("p",null,t("sayfa.deneme_not")),$("denemeb"))};
 (function(){
   var drag=null,MIN=0.08;
   function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
