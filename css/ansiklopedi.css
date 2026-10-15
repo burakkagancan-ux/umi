@@ -21,7 +21,7 @@ h2.name{font-size:30px;margin:0 0 6px}
 .risk{display:flex;gap:12px;align-items:flex-start}
 .risk .ico{flex:0 0 auto;width:40px;height:40px}
 .risk .lbl{font:700 18px/1.2 var(--hf)}
-.risk.green{border-left:6px solid var(--ok)}.risk.green .lbl{color:var(--ok)}
+.risk.green{border-left:6px solid var(--yesil)}.risk.green .lbl{color:var(--yesil)}
 .risk.green.n{border-left-color:#8A8F8B}.risk.green.n .lbl{color:var(--ink)}
 .risk.amber{border-left:6px solid var(--amb);background:var(--ambbg)}.risk.amber .lbl{color:var(--amb)}
 .risk.red{border-left:6px solid var(--hi);background:var(--hibg)}.risk.red .lbl{color:var(--hi)}
@@ -47,7 +47,7 @@ h2.name{font-size:30px;margin:0 0 6px}
 .ag{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}.ag:first-child{border-top:0}
 .ag .who{font-weight:700}.ag .d{font-size:15px;margin-top:2px}
 .st{flex:0 0 auto;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;white-space:nowrap;background:var(--sunk);color:var(--ink)}
-.st.approved{background:var(--okbg);color:var(--ok)}
+.st.approved{background:var(--yesilbg);color:var(--yesil)}
 .st.label_required,.st.concern,.st.classified{background:var(--ambbg);color:var(--amb)}
 .st.banned,.st.withdrawn,.st.not_listed{background:var(--hibg);color:var(--hi)}
 .src{padding:12px 0;border-top:1px solid var(--line)}.src:first-child{border-top:0}
@@ -86,7 +86,7 @@ input[type=search]{border-radius:16px}
 .fils{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:4px -2px 0;scrollbar-width:none}
 .fils .okfil,.fils .rfil{flex:none;display:inline-flex;align-items:center;gap:7px;margin:0;white-space:nowrap}
 .fils .rfil .n{font-weight:500;opacity:.8}
-.fils .dot{width:9px;height:9px;border-radius:50%}.rfil.red .dot{background:var(--hi)}.rfil.amber .dot{background:#D9A42B}.rfil.green .dot{background:var(--ok)}
+.fils .dot{width:9px;height:9px;border-radius:50%}.rfil.red .dot{background:var(--hi)}.rfil.amber .dot{background:#D9A42B}.rfil.green .dot{background:var(--yesil)}
 .fils .rfil[aria-pressed="true"] .dot{box-shadow:0 0 0 2px #fff}
 details.gdrop{border-top:1px solid var(--line)}details.gdrop:last-of-type{border-bottom:1px solid var(--line)}
 details.gdrop>summary{font-family:var(--hf);font-size:18px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 4px}details.gdrop>summary::-webkit-details-marker{display:none}

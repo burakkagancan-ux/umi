@@ -133,7 +133,7 @@ export function payWrap(text,maxW,maxLines,measure){
   return lines.map(cut);
 }
 /* ---------- Çizim ---------- */
-export var PAY_RENK={bg:"#FFFFFF",card:"#FFFFFF",line:"#E3E5E3",ok:"#1F4D3A",okbg:"#E6EFE9",ink:"#1B211E",mute:"#5A615C",amb:"#8A5A00",ambbg:"#FFF3D1",hi:"#A4470B",hibg:"#FCE9DA",red:"#B3261E",redbg:"#FBE9E7",sunk:"#EEE9DD",bant2:"#CFE0D6",notr:"#8A8F8B"};
+export var PAY_RENK={bg:"#FFFFFF",card:"#FFFFFF",line:"#E3E5E3",ok:"#2741C8",okbg:"#E8ECFB",ink:"#1B211E",mute:"#5A615C",amb:"#8A5A00",ambbg:"#FFF3D1",hi:"#A4470B",hibg:"#FCE9DA",red:"#B3261E",redbg:"#FBE9E7",sunk:"#EEE9DD",bant2:"#D4DCFA",notr:"#8A8F8B"};
 export var PAY_HF='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF='"Figtree",system-ui,sans-serif';
 /* Dil dosyasında yazı tipi tanımlıysa (i18n/diller.json "yazi": Latin dışı alfabe) kartta da o kullanılır */
 export function payYazi(hf){var y=typeof DIL!=="undefined"&&DIL.yazi;return hf?(y&&y.baslik)||PAY_HF:(y&&y.govde)||PAY_BF}
