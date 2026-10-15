@@ -22,12 +22,9 @@ jobs:
       - name: Birim testleri (test/hepsi.js bütün test dosyalarını bulur ve paralel çalıştırır; altın çıktı dahil)
         run: node test/hepsi.js
       - name: Veri üreteçleri (data/ ile kaynak/ uyumlu mu)
-        # Üreteçleri depodaki kaynak dosyalarıyla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
-        run: |
-          for g in gen_e_kodlari gen_bilesenler gen_e_aciklama gen_kozmetik gen_eslesmeler gen_temizlik gen_ansiklopedi gen_rozetler gen_ceviri_veri gen_barkod gen_besin gen_manifest; do python3 $g.py; done
-          git diff --stat --exit-code -I '"generated":' -- data/ i18n/veri/ i18n/manifest/ manifest.webmanifest
-          # Üretecin yazdığı ama depoya eklenmemiş dosya (ör. yeni ansiklopedi sayfası data/ansiklopedi/<kimlik>.json)
-          yeni=$(git ls-files --others --exclude-standard -- data/ i18n/veri/ i18n/manifest/); if [ -n "$yeni" ]; then echo "Depoda olmayan üretilmiş dosya:"; echo "$yeni"; exit 1; fi
+        # uret.py üreteçleri sırayla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
+        # Üretecin yazıp depoya eklenmemiş dosyası (ör. yeni ansiklopedi sayfası) da hata.
+        run: python3 uret.py --denetle
       - name: Değerlendirme değişiklik kaydı (renk değişti mi, kaydı var mı)
         run: python3 degisiklik_kaydi.py
       - name: Süre (8 dakikayı geçerse uyarı; zaman aşımı 15, O-16)

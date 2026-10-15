@@ -31,8 +31,8 @@ jobs:
       - name: Üreteç ve test
         if: steps.fark.outputs.var == '1'
         run: |
-          python3 gen_barkod.py
-          node test/barkod.js
+          python3 uret.py   # gen_barkod ve diğerleri (bağımsız; değişmeyenler aynı kalır)
+          node test/hepsi.js
       - name: PR aç
         if: steps.fark.outputs.var == '1'
         env:

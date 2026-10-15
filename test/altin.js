@@ -69,9 +69,13 @@ function ilkFark(a,b,yol){
 
 const simdi={tr:calistir('tr'),en:calistir('en')};
 if(process.argv.includes('--guncelle')){
-  fs.writeFileSync(GORUNTU,zlib.gzipSync(JSON.stringify(simdi),{level:9}));
+  // Kaç durumun değiştiği yazılır (aylık veri güncellemesi PR'ında görünsün)
+  let eski={},degisen=0;try{eski=JSON.parse(zlib.gunzipSync(fs.readFileSync(GORUNTU)))}catch(e){}
+  for(const dil of Object.keys(simdi))for(const tur of Object.keys(simdi[dil]))for(const k of Object.keys(simdi[dil][tur]))
+    if(JSON.stringify(((eski[dil]||{})[tur]||{})[k])!==JSON.stringify(simdi[dil][tur][k]))degisen++;
+  if(degisen)fs.writeFileSync(GORUNTU,zlib.gzipSync(JSON.stringify(simdi),{level:9}));
   const n=Object.values(simdi.tr).reduce((s,x)=>s+Object.keys(x).length,0);
-  console.log('Altın çıktı yazıldı: '+n+' durum × 2 dil → '+path.relative(process.cwd(),GORUNTU));
+  console.log('Altın çıktı: '+n+' durum × 2 dil, '+degisen+' durum değişti'+(degisen?' → '+path.relative(process.cwd(),GORUNTU)+' yazıldı':' (dosya aynı kaldı)'));
   process.exit(0);
 }
 if(!fs.existsSync(GORUNTU)){console.log('HATA altın çıktı yok; node test/altin.js --guncelle');process.exit(1)}
