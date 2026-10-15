@@ -62,7 +62,7 @@ function ekleAc(){
 function ekleSatir(u){
   var c=el("div","kitem ekitem");
   var hd=el("span","kin",u.kod);c.appendChild(hd);
-  var m=el("span","kis");m.appendChild(el("span","chip",t(KAYIT_TUR[u.tur]||"kayit.tur.gida")));m.appendChild(document.createTextNode(" "+dilTarih(u.t,"gun")));c.appendChild(m);
+  var m=el("span","kis");var tc=el("span","chip turr",t(KAYIT_TUR[u.tur]||"kayit.tur.gida"));tc.setAttribute("data-tur",KAYIT_TUR[u.tur]?u.tur:"gida");m.appendChild(tc);m.appendChild(document.createTextNode(" "+dilTarih(u.t,"gun")));c.appendChild(m);
   var dr=el("span","ekdurum");
   dr.appendChild(el("span","chip "+(u.dogrulandi?"ekok":"ekbek"),t(u.dogrulandi?"ekle.dogrulandi":"ekle.bekliyor")));
   if(u.oncu)dr.appendChild(el("span","chip ekok",t("rozet.oncu.ad")));

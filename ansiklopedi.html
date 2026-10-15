@@ -78,7 +78,7 @@ details.kdrop[open]>summary::after{transform:rotate(225deg) translateY(-2px)}det
 .foot a{display:inline-flex;align-items:center;min-height:44px}
 .auto{font-size:14px;color:var(--mute);background:var(--sunk);border-radius:10px;padding:10px 12px;margin:12px 0}
 /* Tür süzgeci (Etiket Oku'daki Gıda | Kozmetik | Temizlik anahtarıyla aynı görünüm); henüz olmayan türler soluk, altında "Çok yakında" */
-.seg{display:flex;border:1.5px solid var(--ok);border-radius:14px;overflow:hidden;margin:0 0 12px}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin:0 0 12px}
 .seg button{flex:1;min-height:48px;border:0;border-radius:0;background:var(--card);color:var(--ok);font-weight:600;padding:6px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
 .seg button+button{border-inline-start:1px solid var(--line)}
 .seg button[aria-checked="true"]{background:var(--ok);color:var(--bg)}
@@ -91,6 +91,7 @@ input[type=search]:focus{outline:3px solid var(--ok);outline-offset:1px}
 .row{display:flex;gap:12px;align-items:center;min-height:56px;padding:8px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin:6px 0;text-decoration:none;color:var(--ink)}
 .row .rc{font:700 14px/1 var(--hf);color:var(--ok);flex:0 0 54px}.row .rn{flex:1;min-width:0;font-weight:600}.row .rk{font-size:13px;color:var(--mute);font-weight:400;display:block}
 .row svg{width:22px;height:22px;flex:0 0 auto}
+.row .rn .turr{margin-inline-start:8px;vertical-align:2px}
 @media (max-width:380px){.quick{grid-template-columns:1fr 1fr}h2.name{font-size:26px}}
 /* Liste (14.10.2026): renk süzgeçleri, işleve göre başlıklı gruplar, satırda önce ad */
 h1{letter-spacing:-.01em}
