@@ -1,6 +1,7 @@
 // Altın çıktı testi: sabit derlemin (test/veri/altin_metinler.json) saf mantıktaki bütün çıktısı kayıtlı anlık görüntüyle birebir aynı mı.
 // Amaç: yeniden yapılanmada (modül yapısı, ortak değerlendirme modeli) davranışın hiç değişmediğini kanıtlamak.
-// Kapsam: üç türde analiz + özet + karşılaştırma ürünü (profilsiz, dolu profil, bebek profili), paylaşım kartı modeli; besin tablosu ayrıştırma; Türkçe ve İngilizce.
+// Kapsam: üç türde analiz + özet + karşılaştırma ürünü (profilsiz, dolu profil, bebek profili), paylaşım kartı modeli, profil kartları (15.10.2026'dan beri)
+// ve paylaşım kartının kişisel satırları; besin tablosu ayrıştırma; Türkçe ve İngilizce.
 // Kullanım: node test/altin.js              → karşılaştırır (CI)
 //           node test/altin.js --guncelle   → anlık görüntüyü yeniden yazar. Yalnızca davranış BİLEREK değiştiğinde; PR açıklamasında nedeni yazılır.
 const fs=require('fs'),path=require('path'),zlib=require('zlib');
@@ -35,15 +36,21 @@ function calistir(dil){
   const out={gida:{},koz:{},tem:{},besin:{}};
   for(const m of D.gida){
     const P=L.cmpProduct(m,idx,dolu,'');
-    out.gida[m]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfit(P.S,bebek,idx).concat(L.cmpMisfitOzel(m,bebek)),pay:L.payModel(L.payFromFood(m,idx))});
+    const al=f=>L.cmpAlName(idx,f);
+    out.gida[m]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfit(P.S,bebek,idx).concat(L.cmpMisfitOzel(m,bebek)),pay:L.payModel(L.payFromFood(m,idx)),
+      kart:L.profilKartGida(P.S,m,dolu,al),kartBebek:L.profilKartGida(P.S,m,bebek,al)});
   }
   for(const x of D.koz){
     const m=typeof x==='string'?x:x.m,o=typeof x==='string'?undefined:x.o,P=L.cmpProductK(m,K,dolu,'',o);
-    out.koz[JSON.stringify(x)]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfitK(P.S,bebek),pay:L.payModel(L.payFromK(P.res,P.S,K))});
+    const kb=L.profilKartKoz(P.S,P.res,m,bebek,'baby');
+    out.koz[JSON.stringify(x)]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfitK(P.S,bebek),pay:L.payModel(L.payFromK(P.res,P.S,K)),
+      kart:L.profilKartKoz(P.S,P.res,m,dolu,''),kartBebek:kb,kisisel:L.kisiselSatirlar(kb)});
   }
   for(const m of D.tem){
     const P=L.cmpProductT(m,T,K,dolu,'');
-    out.tem[m]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfitT(P.S,P.A,T,bebek),pay:L.payModel(L.payFromT(P.A,P.S))});
+    const kb=L.profilKartTem(P.S,P.A,m,bebek,T);
+    out.tem[m]=kararli({urun:urunAyikla(P,dil),bebek:L.cmpMisfitT(P.S,P.A,T,bebek),pay:L.payModel(L.payFromT(P.A,P.S)),
+      kart:L.profilKartTem(P.S,P.A,m,dolu,T),kartBebek:kb,kisisel:L.kisiselSatirlar(kb)});
   }
   const BS=L.besinSozluk(oku('besin.json'));
   for(const e of JSON.parse(fs.readFileSync(path.join(V,'besin_etiketler.json'),'utf8')).etiketler){

@@ -76,39 +76,7 @@ function tSummaryCard(S,A){
   if(A.hazards.some(function(x){return x.how.indexOf("benzer")>-1&&x.how.indexOf("kod")<0}))d.appendChild(el("div","how",t("tem.ozet.benzer")));
   return d;
 }
-function tProfileCards(S,A,metin){
-  var out=[],j=function(a){return a.join(", ")},has=function(c){return A.hazards.some(function(x){return x.code===c})};
-  function name(c){return c+" ("+hzKisa(TIDX.byCode[c])+")"}
-  var oz=ozelKart(metin==null?$("metin").value:metin);if(oz)out.push(oz);
-  if(PROF.koku){
-    var e208=has("EUH208")?[A.euh208&&A.euh208.length?t("tem.prof.euh208_l",{l:A.euh208.join("; ")}):t("tem.prof.euh208")]:[];
-    if(S.fragrance.length)out.push(card("r",t("koz.prof.koku_var"),[j(S.fragrance)].concat(e208,S.parfum?[t("tem.prof.parfum_ek")]:[])));
-    else if(S.parfum||e208.length)out.push(card("y",t("koz.prof.parfum"),e208.concat([t("tem.prof.parfum_not")])));
-    else out.push(card("g",t("koz.prof.koku_yok"),[t("ortak.onay_degil_okuma")]));
-  }
-  if(PROF.astim){
-    var rows=[];
-    if(S.resp.length)rows.push([S.resp.some(function(c){return /^(H334|EUH071)$/.test(c)})?"r":"y",t("tem.prof.solunum_l",{l:S.resp.map(name).join("; ")})]);
-    if(S.enzyme)rows.push(["y",t("tem.prof.enzim")]);
-    if(["H222","H223","H229","EUH211"].some(has))rows.push(["y",t("tem.prof.sprey")]);
-    if(S.parfum)rows.push(["y",t("tem.prof.parfum_var")]);
-    out.push(lifeCard(t("tem.prof.astim"),rows,t("tem.prof.solunum_yok"),t("ortak.onay_degil_okuma")));
-  }
-  if(PROF.preg||PROF.baby||PROF.child){
-    var r2=[];
-    if(S.cmr.length)r2.push(["r",t("tem.prof.cmr_l",{l:S.cmr.map(name).join("; ")})]);
-    if(S.ed.length)r2.push(["r",t("tem.prof.ed_l",{l:S.ed.map(name).join("; ")})]);
-    if(PROF.baby||PROF.child){
-      var sw=S.swallow.concat(S.eye).filter(function(c){return TIDX.byCode[c].level==="red"});
-      if(sw.length)r2.push(["r",t("tem.prof.yutma_ciddi",{l:sw.map(name).join("; ")})]);
-      else if(S.swallow.length||S.eye.length)r2.push(["y",t("tem.prof.yutma",{l:S.swallow.concat(S.eye).map(name).join("; ")})]);
-    }
-    if((PROF.baby||PROF.child)&&A.capsule)r2.push(["r",t("tem.prof.kapsul")]);
-    var who=PROF.preg?"hamile":PROF.baby?"bebek":"cocuk";
-    out.push(lifeCard(t("tem.prof."+who),r2,t("tem.prof."+who+"_yok"),t("tem.prof.onay_sakla"),r2.length?zehirHatti():null));
-  }
-  return out;
-}
+function tProfileCards(S,A,metin){return profilKartTem(S,A,metin==null?$("metin").value:metin,PROF,TIDX).map(kartEl)}
 function renderT(A){
   var box=$("sonuc");box.textContent="";
   if(!A.hazards.length&&!A.groups.length&&!A.inci.length&&!A.subs.length){box.textContent=t("tem.bos");return}

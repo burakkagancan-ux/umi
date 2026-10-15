@@ -16,19 +16,12 @@ function payBar(box,src){
 }
 /* Sonucun üstüne kart eklemek için (öneri kartları bar'ın altına girer) */
 function sonucUst(c){var box=$("sonuc"),bar=box.querySelector(".resbar");box.insertBefore(c,bar?bar.nextSibling:box.firstChild)}
-/* Profil kartlarından kişisel uyarı satırları: yalnızca kırmızı/sarı olanlar, başlık + ilk satır (satır başlığı tekrar ediyorsa yalnızca satır) */
-function payPersonal(cards){
-  return cards.filter(function(c){return c.classList.contains("r")||c.classList.contains("y")}).map(function(c){
-    var b=c.querySelector(".t"),l=c.querySelector(".ln");b=b?b.textContent:"";l=l?l.textContent:"";
-    return {t:l&&l.indexOf(b)===0?l:b+(l?": "+l:""),lvl:c.classList.contains("r")?2:1};
-  });
-}
 function paySource(){
   var s=PAY_SRC,o;if(!s)return null;
   if(s.mode==="gida"){var P=degerlendir("gida",s.text,degBaglam(),PROF,"");o=payFromFood(s.text,IDX,P);o.personal=P.misfit.map(function(s){return {t:s,lvl:2}});   // karşılaştırmadaki "profilinize uymuyor" satırları (ortak ürün modeli)
     var K=typeof besinKaynak==="function"?besinKaynak(s.text):null;o.besin=K?besinOzet(K.k):null}   // sonuçtaki besin kartıyla aynı değerler; renk yoksa kartta yok
-  else if(s.mode==="koz"){o=payFromK(s.res,s.S,KIDX);o.personal=payPersonal(kProfileCards(s.S,s.res))}
-  else{o=payFromT(s.A,s.S);o.personal=payPersonal(tProfileCards(s.S,s.A))}
+  else if(s.mode==="koz"){o=payFromK(s.res,s.S,KIDX);o.personal=kisiselSatirlar(profilKartKoz(s.S,s.res,$("metin").value,PROF,PTYPE))}   // profil kartlarının verisi (js/profil_kart.js)
+  else{o=payFromT(s.A,s.S);o.personal=kisiselSatirlar(profilKartTem(s.S,s.A,$("metin").value,PROF,TIDX))}
   return o;
 }
 /* Kartın adı ve tarama zamanı: kayıtlı ürünün adı önce, sonra tarama geçmişi */

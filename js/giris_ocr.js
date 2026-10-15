@@ -16,4 +16,5 @@ import * as besin from "./besin.js";
 import * as barkod from "./barkod.js";
 import * as topluluk from "./topluluk.js";
 import * as rozet from "./rozet.js";
-kopru(ceviri, ortak, gida, kozmetik, eslesme, degerlendirme, temizlik, karsilastir_ayar, karsilastir, paylas_ayar, paylas, kayit, besin, barkod, topluluk, rozet);
+import * as profil_kart from "./profil_kart.js";
+kopru(ceviri, ortak, gida, kozmetik, eslesme, degerlendirme, temizlik, karsilastir_ayar, karsilastir, paylas_ayar, paylas, kayit, besin, barkod, topluluk, rozet, profil_kart);
