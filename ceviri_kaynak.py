@@ -5,7 +5,9 @@ yeni bir anahtar ailesi eklenince buraya da eklenir (gen_ceviri_veri.py bilinmey
 gen_ceviri_veri.py bunu çevirinin hangi Türkçeden yapıldığını denetlemek için kullanır: Türkçe değişmişse çeviri bayattır.
 Çalıştır: python3 ceviri_kaynak.py <anahtar>   (o anahtarın bugünkü Türkçesi)
           python3 ceviri_kaynak.py --eksik <dil>   (çevrilmemiş ya da bayat veri metinleri, ceviri_<dil>_veri.tsv biçiminde;
-          çeviri sütunu boş: çevirmen ya da çeviri platformu doldurur, satırlar dosyaya eklenir)"""
+          çeviri sütunu boş: çevirmen ya da çeviri platformu doldurur, satırlar dosyaya eklenir)
+Çevirmenin kaynak dili İngilizce (O-12): --eksik en Türkçeyi, diğer diller İngilizceyi verir; İngilizcesi henüz olmayan metin
+diğer dillerde listelenmez (önce İngilizce çevrilir)."""
 import json, os, sys
 
 K = os.path.dirname(os.path.abspath(__file__))
@@ -83,8 +85,16 @@ def tr_metin(anahtar, metinler):
 
 
 def eksikler(dil, metinler):
-    """Dilde karşılığı olmayan ya da Türkçesi değişmiş (bayat) veri metinleri: [(anahtar, Türkçe)]."""
+    """Dilde karşılığı olmayan ya da kaynağı değişmiş (bayat) veri metinleri: [(anahtar, kaynak metin)].
+    Kaynak: İngilizcede Türkçe, diğer dillerde İngilizce (gen_ceviri_veri.kaynak_metin ile aynı kural)."""
     kaynak = os.path.join(K, "kaynak")
+    if dil == "en":
+        hedef = dict(metinler)
+    else:
+        import gen_ceviri_veri as g   # döngüsel içe aktarma: gen_ceviri_veri bu dosyayı içe aktarır
+        g.TR = metinler
+        en = g.uret("en", yaz=False)
+        hedef = {k: en[k] for k in metinler if k in en}
     var = set()
     for f in sorted(os.listdir(kaynak)):
         if not (f == "ceviri_%s.tsv" % dil or f.startswith("ceviri_%s_" % dil) and f.endswith(".tsv")):
@@ -93,9 +103,9 @@ def eksikler(dil, metinler):
             if l.startswith("#") or not l.strip():
                 continue
             r = l.rstrip("\n").split("\t")
-            if f != "ceviri_%s_veri.tsv" % dil or len(r) > 2 and tr_metin(r[0], metinler) == r[2]:
+            if f != "ceviri_%s_veri.tsv" % dil or len(r) > 2 and hedef.get(r[0], tr_metin(r[0], metinler) if dil == "en" else None) == r[2]:
                 var.add(r[0])
-    return [(k, v) for k, v in sorted(metinler.items()) if k not in var and "metin:" + v not in var]   # veriMetin metnin kendisiyle de arar
+    return [(k, v) for k, v in sorted(hedef.items()) if k not in var and "metin:" + metinler[k] not in var]   # veriMetin metnin kendisiyle de arar
 
 
 if __name__ == "__main__":
