@@ -1,6 +1,7 @@
 // Katkı denetimi (O-21) ve topluluk besin tablosunun doğrulanması (O-26) Worker testi: node worker/test_yonetim.mjs
 // D1 yerine gerçek SQLite (node:sqlite, Node 22.13+), test_topluluk.mjs ile aynı düzen.
 import { DatabaseSync } from "node:sqlite";
+console.error = () => {};   // Worker'ın hata kaydı (kayit) satırları test çıktısını kirletmesin; içeriği worker/test.mjs denetler
 import { KATKI_ARALIK_MS, besinUyumlu, besinSec, besinGrupla } from "./src/barkod.js";
 import { YONETIM_JS, yonetimOzet } from "./src/yonetim.js";
 const ORIGIN = "https://burakkagancan-ux.github.io";

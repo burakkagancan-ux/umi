@@ -9,6 +9,8 @@ const env = () => ({ VISION_KEY: "k", ALLOWED_ORIGIN: ORIGIN, IP_LIMIT: lim(6), 
 const img = "/9j/" + "A".repeat(200);
 const req = (body, o = {}) => new Request("https://x.workers.dev/", { method: o.method || "POST", headers: { "Content-Type": "application/json", "Origin": o.origin ?? ORIGIN, "CF-Connecting-IP": "1.2.3.4", ...(o.h || {}) }, body: o.method === "OPTIONS" || o.method === "GET" ? undefined : body });
 let fail = 0;
+// Hata kaydı (kayit): console.error satırları toplanır; sonda IP ve içerik geçmiyor mu denetlenir
+const KAYIT = [], TUM_KAYIT = []; console.error = (...a) => { KAYIT.push(a.join(" ")); TUM_KAYIT.push(a.join(" ")); };
 async function t(name, r, e, status, check) {
   const res = await w.fetch(r, e); const txt = await res.text(); let j = {}; try { j = JSON.parse(txt); } catch {}
   const ok = res.status === status && (!check || check(j, res));
@@ -133,5 +135,20 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const o = katkiOzet([{ kod: "1", tur: "gida", metin: "Su, şeker, karbondioksit, aroma vericiler, asitlik düzenleyici", t: T0 + 2 * M, kim: A },
     { kod: "1", tur: "gida", metin: metinA, t: T0 + M, kim: C }, { kod: "1", tur: "gida", metin: metinA, t: T0, kim: B }], A);
   if (o.avci.gida || o.oncu.gida || o.dogrulayici.gida || o.eklenen.gida !== 1 || o.urunler[0].dogrulandi) { fail++; console.log("HATA katkiOzet: başka içerikteki doğrulama sayılmamalı", o); } else console.log("ok   katkiOzet: farklı içerik ayrı"); }
+// Hata kaydı ve yakalanmayan hata (15.10.2026)
+visionReply = () => ({ status: 400, body: { responses: [{ error: { message: "API key not valid" } }] } });
+{ KAYIT.length = 0; await w.fetch(req(JSON.stringify({ image: img })), env());
+  const k = KAYIT.map((x) => JSON.parse(x));
+  if (k.length !== 1 || k[0].olay !== "vision_hata" || k[0].ayrinti !== "API key not valid") { fail++; console.log("HATA kayıt: Vision hatası tek satır olmalı", KAYIT); } else console.log("ok   kayıt: Vision hatası"); }
+{ const e = env(); e.IP_LIMIT = lim(0); KAYIT.length = 0; await w.fetch(req(JSON.stringify({ image: img })), e);
+  if (!KAYIT.some((x) => JSON.parse(x).olay === "sinir_ip")) { fail++; console.log("HATA kayıt: IP sınırı", KAYIT); } else console.log("ok   kayıt: IP sınırı"); }
+{ const e = env(); e.URUNLER = { prepare() { throw new Error("D1 çöktü"); }, batch: async () => { throw new Error("D1 çöktü"); } }; KAYIT.length = 0;
+  await t("beklenmeyen hata: JSON 500 ve CORS", new Request("https://x.workers.dev/urun/8690504025207", { headers: { Origin: ORIGIN, "CF-Connecting-IP": "1.2.3.4" } }), e, 500,
+    (j, r) => j.error && r.headers.get("Access-Control-Allow-Origin") === ORIGIN);
+  const k = KAYIT.map((x) => JSON.parse(x));
+  if (!k.some((x) => x.olay === "beklenmeyen" && x.ayrinti.startsWith("/urun ") && !x.ayrinti.includes("8690504025207"))) { fail++; console.log("HATA kayıt: beklenmeyen hata yolun ilk parçasıyla, barkodsuz", KAYIT); } else console.log("ok   kayıt: beklenmeyen hata"); }
+// Bütün testler boyunca kayda IP, fotoğraf ya da okunan metin geçmedi
+{ const hepsi = TUM_KAYIT.join("\n");
+  if (/1\.2\.3\.4|\/9j\/AAAA|Aqua, Glycerin/.test(hepsi)) { fail++; console.log("HATA kayıt: IP ya da içerik kayda geçti"); } else console.log("ok   kayıt: IP ve içerik yok"); }
 console.log(fail ? fail + " hata" : "tüm testler geçti");
 process.exit(fail ? 1 : 0);

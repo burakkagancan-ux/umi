@@ -5,6 +5,8 @@
 // Yanıt:  200 { "text": "..." }  |  4xx/5xx { "error": "Türkçe açıklama" }
 //
 // Gizlilik: fotoğraf ve okunan metin hiçbir yere yazılmaz, kayda (log) geçirilmez.
+// Hata kaydı (Workers Logs, 15.10.2026): yalnızca kayit() satırları; olay adı ve kısa ayrıntı. IP, fotoğraf, metin, barkod ve
+// katkıcı kimliği yazılmaz. İstek kayıtları (invocation logs, IP ve başlık içerir) wrangler.toml'da kapalı.
 //
 // Ortam (Cloudflare panelinde / wrangler.toml):
 //   VISION_KEY      gizli (secret)  Google Cloud Vision API anahtarı
@@ -67,6 +69,10 @@ function cors(env, origin) {
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin",
   };
+}
+
+function kayit(olay, ayrinti) {
+  console.error(JSON.stringify(ayrinti == null ? { olay } : { olay, ayrinti: String(ayrinti).slice(0, 200) }));
 }
 
 function reply(env, origin, status, obj, extra) {
@@ -163,7 +169,7 @@ async function d1(env) {
       env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS besin_kod ON besin (kod, t DESC)"),
     ]);
     // O-22 öncesi oluşmuş tabloya kim sütunu (eski satırlarda boş kalır). Sütun zaten varsa SQLite hata verir; yok sayılır.
-    try { await env.URUNLER.prepare("ALTER TABLE katki ADD COLUMN kim TEXT").run(); } catch {}
+    try { await env.URUNLER.prepare("ALTER TABLE katki ADD COLUMN kim TEXT").run(); } catch (e) { if (!/duplicate column/i.test(e && e.message)) kayit("d1_alter", e && e.message); }
     await env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS katki_kim ON katki (kim)").run();
     D1_HAZIR = true;
   }
@@ -314,7 +320,7 @@ async function yonetim(request, env, yol) {
   }
   const yetki = await yonetimYetki(env, request);
   if (yetki === "kapali") return R(404, { error: "Yönetim kapalı.", kapali: true });
-  if (yetki !== "tamam") return R(401, { error: "Anahtar geçersiz." });
+  if (yetki !== "tamam") { kayit("yonetim_yetkisiz"); return R(401, { error: "Anahtar geçersiz." }); }
   if (!env.URUNLER) return R(503, { error: "Veritabanı bağlı değil." });
   return yonetimApi(request, env, await d1(env), yol, R);
 }
@@ -325,7 +331,7 @@ async function barkod(request, env, allowed, R, yol) {
   if (env.BARKOD_LIMIT) {
     const ip = request.headers.get("CF-Connecting-IP") || "bilinmiyor";
     const { success } = await env.BARKOD_LIMIT.limit({ key: "barkod:" + ip });
-    if (!success) return R(429, { error: "Çok sık sorgu yapıldı. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" });
+    if (!success) { kayit("sinir_barkod"); return R(429, { error: "Çok sık sorgu yapıldı. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" }); }
   }
   const p = yol.split("/").filter(Boolean);   // ["off", kod] | ["urun", kod] | ["urun"] | ["besin"] | ["katki"] | ["aranan"] | ["topluluk"]
   if (p[0] === "urun" && request.method === "POST" && p.length === 1) return urun(request, env, null, R);
@@ -339,79 +345,90 @@ async function barkod(request, env, allowed, R, yol) {
   return p[0] === "off" ? off(request, kod, R) : urun(request, env, kod, R);
 }
 
+// Yakalanmayan hata (ör. D1 kesintisi): Cloudflare'in CORS'suz hata sayfası yerine JSON 500 ve bir kayıt satırı (yolun yalnızca ilk parçası)
 export default {
   async fetch(request, env) {
-    const origin = request.headers.get("Origin") || "";
-    const allowed = origins(env).includes(origin);
-    const R = (status, obj, extra) => reply(env, origin, status, obj, extra);
-    const yol = new URL(request.url).pathname;
-    if (yol === "/sayac") return sayac(request, env, allowed, R);
-    if (/^\/(off|urun|besin|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
-    if (yol === "/yonetim" || yol.startsWith("/yonetim/")) return yonetim(request, env, yol);
-
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, origin) });
-    }
-    if (request.method !== "POST") return R(405, { error: "Yalnızca POST isteği kabul edilir." });
-    if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
-
-    // 1) İstek sınırı: önce IP başına, sonra genel sınır
-    const ip = request.headers.get("CF-Connecting-IP") || "bilinmiyor";
-    if (env.IP_LIMIT) {
-      const { success } = await env.IP_LIMIT.limit({ key: "ip:" + ip });
-      if (!success) return R(429, { error: "Çok sık okuma yapıldı. Lütfen bir dakika sonra tekrar deneyin." }, { "Retry-After": "60" });
-    }
-    if (env.GLOBAL_LIMIT) {
-      const { success } = await env.GLOBAL_LIMIT.limit({ key: "global" });
-      if (!success) return R(429, { error: "Hizmet şu an yoğun. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" });
-    }
-
-    // 2) Boyut ve biçim denetimi
-    const len = Number(request.headers.get("Content-Length") || "0");
-    if (len > MAX_BODY) return R(413, { error: "Fotoğraf çok büyük. Daha küçük bir alan seçip tekrar deneyin." });
-    let raw;
-    try { raw = await request.text(); } catch { return R(400, { error: "İstek okunamadı." }); }
-    if (raw.length > MAX_BODY) return R(413, { error: "Fotoğraf çok büyük. Daha küçük bir alan seçip tekrar deneyin." });
-    let image;
-    try { image = JSON.parse(raw).image; } catch { return R(400, { error: "Geçersiz istek." }); }
-    if (typeof image !== "string" || image.length < 100) return R(400, { error: "Fotoğraf bulunamadı." });
-    // Yalnızca JPEG (/9j/), PNG (iVBOR) ve WebP (UklGR) kabul edilir
-    if (!/^(\/9j\/|iVBOR|UklGR)/.test(image) || /[^A-Za-z0-9+/=]/.test(image)) {
-      return R(415, { error: "Desteklenmeyen dosya biçimi." });
-    }
-
-    if (!env.VISION_KEY) return R(500, { error: "Okuma hizmeti yapılandırılmamış." });
-
-    // 3) Google Cloud Vision
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), VISION_TIMEOUT_MS);
-    try {
-      const r = await fetch("https://vision.googleapis.com/v1/images:annotate?key=" + encodeURIComponent(env.VISION_KEY), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requests: [{
-            image: { content: image },
-            features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
-            imageContext: { languageHints: ["tr", "en"] },
-          }],
-        }),
-        signal: ctrl.signal,
-      });
-      const j = await r.json().catch(() => ({}));
-      const res = (j.responses && j.responses[0]) || {};
-      if (!r.ok || res.error) {
-        const code = r.status === 429 || (j.error && j.error.status === "RESOURCE_EXHAUSTED") ? 429 : 502;
-        if (code === 429) return R(429, { error: "Okuma kapasitesi doldu. Lütfen daha sonra tekrar deneyin." });
-        // Google'ın hata mesajı (ör. "API key not valid") sorun tespiti için iletilir; anahtarı içermez
-        const msg = (res.error && res.error.message) || (j.error && j.error.message) || ("HTTP " + r.status);
-        return R(502, { error: "OCR hatası: " + String(msg).slice(0, 200) });
-      }
-      return R(200, { text: (res.fullTextAnnotation && res.fullTextAnnotation.text) || "" });
-    } catch (e) {
-      return R(504, { error: e && e.name === "AbortError" ? "Okuma zaman aşımına uğradı." : "Okuma hizmetine ulaşılamadı." });
-    } finally {
-      clearTimeout(timer);
+    try { return await isle(request, env); }
+    catch (e) {
+      kayit("beklenmeyen", "/" + (new URL(request.url).pathname.split("/")[1] || "") + " " + ((e && e.message) || e));
+      return reply(env, request.headers.get("Origin") || "", 500, { error: "Beklenmeyen bir hata oldu. Lütfen biraz sonra tekrar deneyin." });
     }
   },
 };
+
+async function isle(request, env) {
+  const origin = request.headers.get("Origin") || "";
+  const allowed = origins(env).includes(origin);
+  const R = (status, obj, extra) => reply(env, origin, status, obj, extra);
+  const yol = new URL(request.url).pathname;
+  if (yol === "/sayac") return sayac(request, env, allowed, R);
+  if (/^\/(off|urun|besin|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
+  if (yol === "/yonetim" || yol.startsWith("/yonetim/")) return yonetim(request, env, yol);
+
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: allowed ? 204 : 403, headers: cors(env, origin) });
+  }
+  if (request.method !== "POST") return R(405, { error: "Yalnızca POST isteği kabul edilir." });
+  if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
+
+  // 1) İstek sınırı: önce IP başına, sonra genel sınır
+  const ip = request.headers.get("CF-Connecting-IP") || "bilinmiyor";
+  if (env.IP_LIMIT) {
+    const { success } = await env.IP_LIMIT.limit({ key: "ip:" + ip });
+    if (!success) { kayit("sinir_ip"); return R(429, { error: "Çok sık okuma yapıldı. Lütfen bir dakika sonra tekrar deneyin." }, { "Retry-After": "60" }); }
+  }
+  if (env.GLOBAL_LIMIT) {
+    const { success } = await env.GLOBAL_LIMIT.limit({ key: "global" });
+    if (!success) { kayit("sinir_genel"); return R(429, { error: "Hizmet şu an yoğun. Lütfen biraz sonra tekrar deneyin." }, { "Retry-After": "60" }); }
+  }
+
+  // 2) Boyut ve biçim denetimi
+  const len = Number(request.headers.get("Content-Length") || "0");
+  if (len > MAX_BODY) return R(413, { error: "Fotoğraf çok büyük. Daha küçük bir alan seçip tekrar deneyin." });
+  let raw;
+  try { raw = await request.text(); } catch { return R(400, { error: "İstek okunamadı." }); }
+  if (raw.length > MAX_BODY) return R(413, { error: "Fotoğraf çok büyük. Daha küçük bir alan seçip tekrar deneyin." });
+  let image;
+  try { image = JSON.parse(raw).image; } catch { return R(400, { error: "Geçersiz istek." }); }
+  if (typeof image !== "string" || image.length < 100) return R(400, { error: "Fotoğraf bulunamadı." });
+  // Yalnızca JPEG (/9j/), PNG (iVBOR) ve WebP (UklGR) kabul edilir
+  if (!/^(\/9j\/|iVBOR|UklGR)/.test(image) || /[^A-Za-z0-9+/=]/.test(image)) {
+    return R(415, { error: "Desteklenmeyen dosya biçimi." });
+  }
+
+  if (!env.VISION_KEY) { kayit("vision_anahtar_yok"); return R(500, { error: "Okuma hizmeti yapılandırılmamış." }); }
+
+  // 3) Google Cloud Vision
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), VISION_TIMEOUT_MS);
+  try {
+    const r = await fetch("https://vision.googleapis.com/v1/images:annotate?key=" + encodeURIComponent(env.VISION_KEY), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requests: [{
+          image: { content: image },
+          features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
+          imageContext: { languageHints: ["tr", "en"] },
+        }],
+      }),
+      signal: ctrl.signal,
+    });
+    const j = await r.json().catch(() => ({}));
+    const res = (j.responses && j.responses[0]) || {};
+    if (!r.ok || res.error) {
+      const code = r.status === 429 || (j.error && j.error.status === "RESOURCE_EXHAUSTED") ? 429 : 502;
+      if (code === 429) { kayit("vision_kota"); return R(429, { error: "Okuma kapasitesi doldu. Lütfen daha sonra tekrar deneyin." }); }
+      // Google'ın hata mesajı (ör. "API key not valid") sorun tespiti için iletilir; anahtarı içermez
+      const msg = (res.error && res.error.message) || (j.error && j.error.message) || ("HTTP " + r.status);
+      kayit("vision_hata", msg);
+      return R(502, { error: "OCR hatası: " + String(msg).slice(0, 200) });
+    }
+    return R(200, { text: (res.fullTextAnnotation && res.fullTextAnnotation.text) || "" });
+  } catch (e) {
+    kayit(e && e.name === "AbortError" ? "vision_zaman_asimi" : "vision_ulasilamadi", e && e.message);
+    return R(504, { error: e && e.name === "AbortError" ? "Okuma zaman aşımına uğradı." : "Okuma hizmetine ulaşılamadı." });
+  } finally {
+    clearTimeout(timer);
+  }
+}
