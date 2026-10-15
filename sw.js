@@ -1,7 +1,7 @@
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar (CORE) ve önbellek adı (CACHE): gen_sw.py üretir
 // <uretilen gen_sw.py>
 // Elle düzenlenmez: python3 uret.py (gen_sw.py) yazar. CACHE dosya içeriklerinin özeti; CORE kurulumda önbelleğe alınanlar.
-const CACHE = "tagsis-c442c65cc6ca";
+const CACHE = "tagsis-eb344fc07000";
 const CORE = [
   "./",
   "index.html",
@@ -18,7 +18,9 @@ const CORE = [
   "js/yukari.js",
   "js/arayuz_liste.js",
   "js/giris_ocr.js",
-  "js/arayuz.js",
+  "js/arayuz_ortak.js",
+  "js/arayuz_profil.js",
+  "js/arayuz_sonuc.js",
   "js/arayuz_kozmetik.js",
   "js/arayuz_temizlik.js",
   "js/arayuz_karsilastir.js",
@@ -49,6 +51,7 @@ const CORE = [
   "js/barkod.js",
   "js/topluluk.js",
   "js/rozet.js",
+  "js/profil_kart.js",
   "js/ansiklopedi.js",
   "fonts/bricolage-grotesque-latin-ext-700-normal.woff2",
   "fonts/bricolage-grotesque-latin-700-normal.woff2",
@@ -58,10 +61,6 @@ const CORE = [
   "fonts/figtree-latin-600-normal.woff2",
   "icon-512.png",
   "icon-maskable-512.png",
-  "data/e_kodlari.json",
-  "data/eslesmeler.json",
-  "data/bilesenler.json",
-  "data/alerjen_sozluk.json",
   "data/ansiklopedi.json",
   "data/besin.json",
   "data/kozmetik.json",
@@ -69,6 +68,10 @@ const CORE = [
   "data/tagsis.json",
   "data/arsiv.json",
   "data/durum.json",
+  "data/e_kodlari.json",
+  "data/eslesmeler.json",
+  "data/bilesenler.json",
+  "data/alerjen_sozluk.json",
   "data/rozetler.json",
   "data/e_aciklama.json",
   "data/temizlik.json",

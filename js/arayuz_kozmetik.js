@@ -127,43 +127,7 @@ function kSummaryCard(S){
   if(S.fuzzy.length)d.appendChild(el("div","how",t("koz.ozet.benzer")));
   return d;
 }
-function kProfileCards(S,res,metin){
-  var out=[],j=function(a){return a.join(", ")},oz=ozelKart(metin==null?$("metin").value:metin);
-  if(oz)out.push(oz);
-  if(PROF.koku){
-    if(S.fragrance.length)out.push(card("r",t("koz.prof.koku_var"),[j(S.fragrance)].concat(S.parfum?[t("koz.prof.koku_parfum")]:[])));
-    else if(S.parfum)out.push(card("y",t("koz.prof.parfum"),[t("koz.prof.parfum_not")]));
-    else out.push(card("g",t("koz.prof.koku_yok"),[t("ortak.onay_degil_okuma")]));
-  }
-  if(PROF.vegan){
-    var no=S.nonVeg.concat(S.nonVegan);
-    if(no.length)out.push(card("r",t("gida.prof.vegan_degil"),[j(no)].concat(S.veganUnsure.length?[t("gida.prof.kaynak_belirsiz",{l:j(S.veganUnsure)})]:[])));
-    else if(S.veganUnsure.length)out.push(card("y",t("gida.prof.vegan_belirsiz"),[t("koz.prof.vegan_belirsiz_l",{l:j(S.veganUnsure)})]));
-    else out.push(card("g",t("koz.prof.hayvansal_yok"),[t("ortak.onay_degil_vegan")]));
-  }
-  if(PROF.veg){
-    if(S.nonVeg.length)out.push(card("r",t("gida.prof.vejetaryen_degil"),[t("koz.prof.kesim_l",{l:j(S.nonVeg)})]));
-    else out.push(card("g",t("koz.prof.kesim_yok"),[t("ortak.onay_degil_etiket")]));
-  }
-  // Endokrin bozucu şüphesi: hamilelik ve küçük çocuklar için ayrı kart (yalnızca madde bulunursa)
-  if((PROF.preg||PROF.baby||PROF.child||PTYPE==="baby")&&(S.ed.length||S.child.length)){
-    var el2=[];
-    if(S.ed.length)el2.push(t("koz.prof.endokrin_l",{l:j(S.ed)}));
-    if(S.child.length&&(PROF.baby||PROF.child||PTYPE==="baby"))el2.push(t("koz.prof.danimarka",{l:j(S.child)}));
-    el2.push(PROF.preg?t("koz.prof.hamile_doktor"):t("koz.prof.cocuk_doktor"));
-    out.push(card("y",t("koz.ozet.endokrin"),el2));
-  }
-  if(PROF.preg){
-    if(S.vitA.length)out.push(card("y",t("koz.prof.hamile"),[t("koz.prof.vita",{l:j(S.vitA)})]));
-    else out.push(card("g",t("gida.yasam.hamile_yok"),[t("koz.prof.hamile_onay")]));
-  }
-  if(PROF.baby||PROF.child||PTYPE==="baby"){
-    var rows=[];res.forEach(function(r){var a=null;r.reg.forEach(function(e){if(e.kids_under&&(a===null||e.kids_under<a))a=e.kids_under});if(a)rows.push(t("koz.prof.cocuk_satir",{ad:r.name,n:a}))});
-    if(rows.length)out.push(card("y",t("koz.prof.cocuk"),rows.concat([t("koz.prof.cocuk_not")])));
-    else out.push(card("g",t("koz.prof.cocuk_yok"),[t("ortak.onay_degil_etiket")]));
-  }
-  return out;
-}
+function kProfileCards(S,res,metin){return profilKartKoz(S,res,metin==null?$("metin").value:metin,PROF,PTYPE).map(kartEl)}
 /* Gözenek tıkayıcılık (komedojenite) bilgi notu: skor yok, renk yok; ayrıntı (i) düğmesinde. Durulanan üründe gösterilmez. */
 function comedoCard(res){
   var L=KIDX.watchLists.komedo||{text:""},hits=[];

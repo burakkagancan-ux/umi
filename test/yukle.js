@@ -4,7 +4,7 @@
 // Kullanım: const L=require('./yukle.js'); L.analyze(...)   ya da   Object.assign(globalThis,require('./yukle.js'))
 const fs=require('fs'),path=require('path');
 const I=path.join(__dirname,'..','i18n');
-const MODULLER=['ceviri','ortak','gida','kozmetik','eslesme','temizlik','degerlendirme','karsilastir_ayar','karsilastir','paylas_ayar','paylas','kayit','besin','barkod','rozet','topluluk','ansiklopedi'];
+const MODULLER=['ceviri','ortak','gida','kozmetik','eslesme','temizlik','degerlendirme','karsilastir_ayar','karsilastir','paylas_ayar','paylas','kayit','besin','barkod','rozet','topluluk','ansiklopedi','profil_kart'];
 const L={};
 for(const f of MODULLER)Object.assign(L,require(path.join(__dirname,'..','js',f+'.js')));
 const oku=k=>{const p=path.join(I,k+'.json');return fs.existsSync(p)?JSON.parse(fs.readFileSync(p,'utf8')):{}};
