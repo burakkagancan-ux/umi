@@ -10,8 +10,14 @@ if(process.argv[2]==='--fark'){
   console.log(`\n${Object.keys(a).length} metin, ${n} metinde fark`);process.exit(0);
 }
 const kok=path.resolve(process.argv[2]||path.join(__dirname,'..'));
-const js=['ceviri','ortak','gida'].map(f=>fs.readFileSync(path.join(kok,'js',f+'.js'),'utf8')).join('\n');
-eval(js+';dilKur("tr",{tr:'+fs.readFileSync(path.join(kok,'i18n','tr.json'),'utf8')+'},{tr:{ad:"Türkçe",yon:"ltr",yerel:"tr-TR"}},{tr:{}});global.G={analyze,buildIndex,summarize}');
+// Kök başka bir çalışma kopyası olabilir (öncesi/sonrası karşılaştırması): js/ ES modülüyse (15.10.2026 sonrası) içe aktarılır, değilse eski yolla birleştirilip çalıştırılır
+const trSoz=JSON.parse(fs.readFileSync(path.join(kok,'i18n','tr.json'),'utf8')),trBilgi={tr:{ad:"Türkçe",yon:"ltr",yerel:"tr-TR"}};
+if(/^\s*export /m.test(fs.readFileSync(path.join(kok,'js','gida.js'),'utf8'))){
+  const C=require(path.join(kok,'js','ceviri.js'));C.dilKur('tr',{tr:trSoz},trBilgi,{tr:{}});global.G=require(path.join(kok,'js','gida.js'));
+}else{
+  const js=['ceviri','ortak','gida'].map(f=>fs.readFileSync(path.join(kok,'js',f+'.js'),'utf8')).join('\n');
+  eval(js+';dilKur("tr",'+JSON.stringify({tr:trSoz})+','+JSON.stringify(trBilgi)+',{tr:{}});global.G={analyze,buildIndex,summarize}');
+}
 const db=JSON.parse(fs.readFileSync(path.join(kok,'data','e_kodlari.json'))),bdb=JSON.parse(fs.readFileSync(path.join(kok,'data','bilesenler.json')));
 const idx=G.buildIndex(db,bdb);
 const D=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','turkce_etiketler.json'))).etiketler.slice();

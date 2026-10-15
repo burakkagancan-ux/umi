@@ -1,8 +1,7 @@
 // Üretim yolu (sentetik / işlenmiş / fermentasyon) testleri. Çalıştır: node test/uretim.js
 const fs=require('fs');
 const {idx,L}=require('./run.js');
-const src=require('./yukle.js');
-const C={};new Function('C',src+';C.uretimSinif=uretimSinif;C.uretimOzet=uretimOzet;C.uretimMetin=uretimMetin;C.URETIM_AD=URETIM_AD;')(C);
+Object.assign(globalThis,require('./yukle.js'));const C={};C.uretimSinif=uretimSinif;C.uretimOzet=uretimOzet;C.uretimMetin=uretimMetin;C.URETIM_AD=URETIM_AD;
 const db=JSON.parse(fs.readFileSync(__dirname+'/../data/e_kodlari.json'));const E={};db.ingredients.forEach(i=>E[i.id]=i);
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 // Veri bütünlüğü

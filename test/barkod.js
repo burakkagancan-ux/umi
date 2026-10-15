@@ -1,7 +1,7 @@
 // Barkod: kontrol hanesi, biçim dönüşümü, içerik dili, kaynak sırası, katkı kuralı; Worker ile aynı benzerlik hesabı; data/barkod_off.json yapısı.
 // Çalıştır: node test/barkod.js
 const fs=require('fs'),path=require('path');
-eval(require('./yukle.js')+';global.B={barkodTemiz,barkodKontrol,barkodUpcE,barkodGecerli,barkodNorm,barkodAdaylar,barkodTur,barkodMetin,barkodOffBul,barkodSec,barkodKatkiUygun,barkodBenzer,katkiciGecerli,katkiciUret,BARKOD_AYAR}');
+Object.assign(globalThis,require('./yukle.js'));global.B={barkodTemiz,barkodKontrol,barkodUpcE,barkodGecerli,barkodNorm,barkodAdaylar,barkodTur,barkodMetin,barkodOffBul,barkodSec,barkodKatkiUygun,barkodBenzer,katkiciGecerli,katkiciUret,BARKOD_AYAR};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 (async()=>{
 // 1) Kontrol hanesi ve biçimler (örnekler: GS1 / Wikipedia)

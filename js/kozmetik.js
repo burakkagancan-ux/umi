@@ -1,8 +1,10 @@
 /* Kozmetik (INCI): dizin, listeyi bölme, OCR toleranslı arama, analiz ve özet. Saf mantık; testler de yükler. */
+import {DIL_KAYNAK, t, tDil, veriMetin, veriS} from "./ceviri.js";
+import {lev, norm} from "./ortak.js";
 /* ---------- Kozmetik (INCI) ---------- */
-var KRANK={info:0,yellow:1,orange:2,red:3};
+export var KRANK={info:0,yellow:1,orange:2,red:3};
 /* kdb: kozmetik.json, kinci: kozmetik_inci.json. Anahtar: norm(INCI adı). */
-function buildKIndex(kdb,kinci){
+export function buildKIndex(kdb,kinci){
   var map=new Map(),byFirst={};
   function slot(k,name){var s=map.get(k);if(!s){s={name:name,funcs:[],flags:[],reg:[],k3:[]};map.set(k,s)}return s}
   (kinci?kinci.items:[]).forEach(function(it){var k=norm(it[0]);if(!k)return;var s=slot(k,it[0]);s.funcs=it[1].map(function(i){return kinci.functions[i]});s.flags=it[2]||[]});
@@ -26,14 +28,14 @@ function buildKIndex(kdb,kinci){
   return {map:map,nos:nos,byFirst:byFirst,bySecond:bySecond,flagLevels:m.inci_flag_levels||{},flagReasons:m.inci_flag_reasons||{},flags:m.flags||{},watchLists:m.watch_lists||{},trText:m.tr_text||{}};
 }
 /* Metin kozmetik etiketine benziyor mu? (Gıda seçiliyken öneri göstermek için) */
-function looksCosmetic(text){
+export function looksCosmetic(text){
   var tx=" "+norm(text)+" ",n=0;
   ["aqua","parfum","ingredients","glycerin","cetearyl","sodium laureth","dimethicone","phenoxyethanol","tocopheryl","peg ","ci 77","butylene glycol","propylene glycol","xanthan gum","sodium benzoate","citric acid","fragrance","limonene","linalool","carbomer","isopropyl","paraben","stearate","gliserin","setearil","sodyum lauril","sodyum lauret","fenoksietanol","dimetikon","shea"].forEach(function(w){if(tx.indexOf(" "+w)>-1)n++});
   var food=["seker","tuz","un ","sut","yag","icindekiler","bugday","nisasta","aroma verici","enerji","protein"].filter(function(w){return tx.indexOf(" "+w)>-1}).length;
   return n>=3&&n>food;
 }
 /* INCI listesini öğelere böler. Dönüş: [{raw, may}] */
-function inciItems(text){
+export function inciItems(text){
   var tx=String(text||"").replace(/\r/g,"");
   var m=/(ingredients|ingrédients|ingredientes|zutaten|İçindekiler|İÇİNDEKİLER|içindekiler|i̇çindekiler|bileşenler|Bileşenler|BİLEŞENLER|bilesenler|composition|inci)\s*[:：]/i.exec(tx);
   if(m)tx=tx.slice(m.index+m[0].length);
@@ -54,17 +56,17 @@ function inciItems(text){
 }
 /* Sık OCR karışmaları: "rn"->"m" ("Parfurn"), harf içindeki rakam ("8enzyl", "50dium", "Pantheh0l").
    Rakam yalnızca en az 3 harf içeren sözcükte ve sözcüğün sonunda değilse harfe çevrilir (PEG-32, C12-15, CI 77891 korunur). */
-var KSHORT=["water","parfum","aroma","silica","butane","kaolin","glycol"];
-var KNOFUZZ=["chloride","chlorides","chlorite","silikat"];   // tek başına kalan iyon adı başka maddeye benzetilmez ("CHLORIDE" -> CHLORINE, AB'de yasak olmasın)   // 4 harfliler (aqua, mica, talc, urea) bilerek yok: "area", "talk" gibi sözcüklerle karışır
-var OCRD={"0":"o","1":"l","5":"s","8":"b","6":"g"};
-function ocrFix(k){
+export var KSHORT=["water","parfum","aroma","silica","butane","kaolin","glycol"];
+export var KNOFUZZ=["chloride","chlorides","chlorite","silikat"];   // tek başına kalan iyon adı başka maddeye benzetilmez ("CHLORIDE" -> CHLORINE, AB'de yasak olmasın)   // 4 harfliler (aqua, mica, talc, urea) bilerek yok: "area", "talk" gibi sözcüklerle karışır
+export var OCRD={"0":"o","1":"l","5":"s","8":"b","6":"g"};
+export function ocrFix(k){
   return k.split(" ").map(function(w){
     if(w.indexOf("rn")>-1)w=w.replace(/rn/g,"m");
     if(/\d/.test(w)&&(w.match(/[a-z]/g)||[]).length>=3)w=w.replace(/\d+(?=[a-z])/g,function(ds){return ds.replace(/\d/g,function(d){return OCRD[d]||d})});
     return w;
   }).join(" ");
 }
-function kLookup(k,K,noFix){
+export function kLookup(k,K,noFix){
   if(!k)return null;
   var s=K.map.get(k);if(s)return {s:s,how:"isim",key:k};
   var ns=K.nos.get(k.replace(/ /g,""));if(ns)return {s:K.map.get(ns),how:"isim",key:ns};
@@ -88,7 +90,7 @@ function kLookup(k,K,noFix){
   if(best&&!tie&&bd<=tol)return {s:K.map.get(best),how:"benzer",key:best,dist:bd};
   return null;
 }
-function kMatch(raw,K){
+export function kMatch(raw,K){
   var cands=[raw],inner=[];
   raw.replace(/\(([^)]*)\)/g,function(x,a){inner.push(a)});
   var noPar=raw.replace(/\([^)]*\)/g," ").replace(/\s+/g," ").trim();
@@ -101,7 +103,7 @@ function kMatch(raw,K){
 }
 /* Virgülü kaybolmuş ya da birleşmiş öğeyi bilinen INCI adlarına böler (dinamik programlama).
    Dönüş: {segs:[{h,text}], left:[kalan sözcük grupları]} ya da null */
-function kSegment(raw,K){
+export function kSegment(raw,K){
   var tk=norm(raw).split(" ").filter(Boolean),n=tk.length;
   if(n<2||n>160)return null;
   var best=[{sc:0}],i,L;
@@ -124,10 +126,10 @@ function kSegment(raw,K){
   return segs.length?{segs:segs,left:left}:null;
 }
 /* İçerik listesi olmayan metin mi? (Türkçe kullanım talimatı, adres, telefon, firma) */
-var MARKER_RE=/^(ingredients?|icindekiler|bilesenler|composition|inci|ingredientes|zutaten)$/;
-var PROSE_RE=/[çğışöüÇĞŞÖÜİ]|\b(ve|ile|icin|bir|gibi|olan|ise|kez|gunde|kullan\w*|sakla\w*|uyari\w*|dikkat|tarafindan|ithal|uretici\w*|imalat\w*|icerir|ppm|mah|sk|cad|sok|no|tel|ltd|sti|made in|lot|skt|exp|www|http|danis\w*|cocuk\w*|bebek\w*)\b|\d{3}\s?\d{3}\s?\d{2}\s?\d{2}/i;
-function isProse(raw){var w=raw.trim().split(/\s+/).length;return PROSE_RE.test(raw)||PROSE_RE.test(norm(raw))||w>=9}
-function kResult(raw,h,may,pos,K,opts){
+export var MARKER_RE=/^(ingredients?|icindekiler|bilesenler|composition|inci|ingredientes|zutaten)$/;
+export var PROSE_RE=/[çğışöüÇĞŞÖÜİ]|\b(ve|ile|icin|bir|gibi|olan|ise|kez|gunde|kullan\w*|sakla\w*|uyari\w*|dikkat|tarafindan|ithal|uretici\w*|imalat\w*|icerir|ppm|mah|sk|cad|sok|no|tel|ltd|sti|made in|lot|skt|exp|www|http|danis\w*|cocuk\w*|bebek\w*)\b|\d{3}\s?\d{3}\s?\d{2}\s?\d{2}/i;
+export function isProse(raw){var w=raw.trim().split(/\s+/).length;return PROSE_RE.test(raw)||PROSE_RE.test(norm(raw))||w>=9}
+export function kResult(raw,h,may,pos,K,opts){
   var r={raw:raw,may:may,pos:pos,found:!!h,how:h?h.how:null,name:h?h.s.name:raw,funcs:h?h.s.funcs:[],iflags:h?h.s.flags:[],reg:h?h.s.reg:[],k3:h?(h.s.k3||[]):[],level:"info",notes:[]};
   r.reg.forEach(function(e){if(KRANK[e.level]>KRANK[r.level])r.level=e.level});
   r.iflags.forEach(function(f){var l=K.flagLevels[f];if(l&&KRANK[l]>KRANK[r.level])r.level=l});
@@ -144,7 +146,7 @@ function kResult(raw,h,may,pos,K,opts){
   return r;
 }
 /* Kart notu kodundan ekrandaki metin */
-function kNot(n){
+export function kNot(n){
   if(n==="rinse")return t("koz.not.durulanan");
   if(n.indexOf("k:")===0)return t("koz.not.cocuk",{n:n.slice(2)});
   if(n.indexOf("o:")===0)return t("koz.not.yalnizca",{l:veriS(n.slice(2),null)});
@@ -152,7 +154,7 @@ function kNot(n){
 }
 /* AB kaydının kalıp gerekçesi (gen_kozmetik.py level_reason ile aynı kurgu, metinler koz.gerekce.* anahtarlarında).
    tt: biçimleyici (varsayılan t; Türkçe karşılaştırma için tDil). Veri dosyasındaki gerekçe bu kalıptan farklıysa (elle yazılmış) kGerekceMetin veriyi gösterir. */
-function kGerekce(e,tt){
+export function kGerekce(e,tt){
   tt=tt||t;var a=e.annex,f=e.flags||[],has=function(x){return f.indexOf(x)>-1},reg=e.regulation||"";
   if(a==="II"){var r=tt("koz.gerekce.ek2",{ref:e.ref,reg:reg?", "+reg:""});if(has("cmr_ban"))r+=" "+tt("koz.gerekce.ek2_cmr");return r+" "+tt("koz.gerekce.ek2_okuma")}
   var p=[];
@@ -166,14 +168,14 @@ function kGerekce(e,tt){
   return p.join(" ");
 }
 /* Ekrandaki gerekçe: veri kalıptan üretilmişse seçili dilde kalıp, değilse veri metni (çevirisi yoksa işaretli) */
-function kGerekceMetin(e){
+export function kGerekceMetin(e){
   if(e.reason&&kGerekce(e,function(k,v){return tDil(DIL_KAYNAK,k,v)})===e.reason)return {s:kGerekce(e),cevrilmedi:false};
   return veriMetin(e.reason,"k."+e.id+".reason");
 }
 /* CosIng işlev adı (veride Türkçe; resmi İngilizcesi i18n/veri/en.json "k.islev:<Türkçe>", gen_ceviri_veri.py) */
-function kIslevAd(f){return veriS(f,"k.islev:"+f)}
+export function kIslevAd(f){return veriS(f,"k.islev:"+f)}
 /* opts: {ptype:"rinse"|"leave"|"makeup"|"baby"|""}. Dönüş dizisinin .extra alanı: liste dışında kalan metin. */
-function analyzeK(text,K,opts){
+export function analyzeK(text,K,opts){
   opts=opts||{};
   var items=inciItems(text),out=[],seen={},extra=[],found=0,ended=false,pos=0;
   function add(raw,h,may){var key=h?h.s.name:"?"+norm(raw);if(seen[key])return;seen[key]=1;if(h)found++;out.push(kResult(raw,h,may,pos++,K,opts))}
@@ -195,7 +197,7 @@ function analyzeK(text,K,opts){
   out.extra=extra;
   return out;
 }
-function summarizeK(res,K){
+export function summarizeK(res,K){
   var o={total:res.length,found:0,red:[],euBan:[],carc:[],orange:[],yellow:[],ban:[],ed:[],child:[],comedo:[],fragrance:[],formaldehyde:[],preservative:[],pfas:[],nonVegan:[],nonVeg:[],veganUnsure:[],cancer:[],parfum:false,unknown:[],kids:[],vitA:[],hairdye:[],fuzzy:[]};
   function push(a,v){if(a.indexOf(v)<0)a.push(v)}
   res.forEach(function(r){

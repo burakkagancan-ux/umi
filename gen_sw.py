@@ -1,6 +1,6 @@
 """sw.js'in kurulumda önbelleğe aldığı dosya listesini (CORE) ve önbellek adını (CACHE) üretir (15.10.2026; önce elle yazılıyordu).
 
-CORE: sayfaların (index.html, ocr.html, ansiklopedi.html) yüklediği yerel dosyalar, CSS'teki yazı tipleri, uygulama simgeleri,
+CORE: sayfaların (index.html, ocr.html, ansiklopedi.html) yüklediği yerel dosyalar ve modüllerin içe aktardıkları, CSS'teki yazı tipleri, uygulama simgeleri,
 js/*.js'in adıyla okuduğu data/*.json dosyaları ve kaynak dil (Türkçe). Dile ve sayfaya bağlı dosyalar (seçili dil, ansiklopedi
 madde sayfaları) CORE'a girmez, sayfa açılınca iner (sw.js DINAMIK). İstek geldikçe önbelleğe alınanlar ISTEKLE'de.
 CACHE: "tagsis-" + CORE dosyalarının içerik özeti. Kod, çeviri ya da veri değişince ad kendiliğinden değişir, service worker
@@ -39,6 +39,14 @@ def core_listesi():
     for s in SAYFALAR:
         for m in re.finditer(r'(?:src|href)="([^"#:?]+\.(?:js|css|png|webmanifest|json))"', oku(s)):
             ekle(m.group(1))
+    # ES modülleri: sayfadaki giriş modülünün içe aktardıkları (zincirle); "import … from "./x.js"" satırları
+    i = 0
+    while i < len(dosya):
+        f = dosya[i]
+        if f.endswith(".js"):
+            for m in re.finditer(r'^\s*(?:import|export)\b[^;]*?\bfrom\s*"(\.{1,2}/[^"]+\.js)"', oku(f), re.M):
+                ekle(os.path.join(os.path.dirname(f), m.group(1)))
+        i += 1
     for css in [f for f in dosya if f.endswith(".css")]:
         for m in re.finditer(r"url\(([^)\"']+)\)", oku(css)):
             ekle(os.path.join(os.path.dirname(css), m.group(1)))

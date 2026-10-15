@@ -25,11 +25,7 @@ function kararli(x,yol){
 // İngilizce turda dilden bağımsız ham eşleşmeler (res, A) Türkçeyle aynı olduğu için yalnızca Türkçede saklanır; metin anahtarda zaten var
 function urunAyikla(P,dil){const o=Object.assign({},P);delete o.text;if(dil!=='tr'){delete o.res;delete o.A}return o}
 function calistir(dil){
-  process.env.DIL_TEST=dil;
-  delete require.cache[require.resolve('./yukle.js')];
-  const src=require('./yukle.js');
-  const L=eval(src+';({buildIndex,buildKIndex,buildTIndex,cmpProduct,cmpProductK,cmpProductT,cmpMisfit,cmpMisfitK,cmpMisfitT,cmpMisfitOzel,analyzeK,summarizeK,analyzeT,summarizeT,'+
-    'payFromFood,payFromK,payFromT,payModel,besinSozluk,besinAyristir,besinGorunum})');
+  const L=require('./yukle.js');L.dilYukle(dil);
   const idx=L.buildIndex(oku('e_kodlari.json'),oku('bilesenler.json'));
   const K=L.buildKIndex(oku('kozmetik.json'),oku('kozmetik_inci.json'));
   const T=L.buildTIndex(oku('temizlik.json'),K);

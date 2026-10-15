@@ -1,27 +1,31 @@
 /* Paylaşılabilir sonuç kartı: saf mantık (DOM yok). Kart modeli, paylaşım metni, satır kırma ve canvas çizimi.
    Çizim yalnızca verilen 2B bağlamı (ctx) kullanır; testler sahte bir bağlamla çizilen metinleri denetler.
    Seviye (lvl): 0 özel uyarı yok, 1 dikkat, 2 uyarı. Skor yok. Kişisel (profil) uyarılar yalnızca opt.kisisel açıkken karta girer. */
-var PAY_LBL=["risk.yok","risk.dikkat","risk.uyari"];   // çeviri anahtarları
+import {DIL, dilSayi, dilTarih, t, veriS} from "./ceviri.js";
+import {cmpProduct, histOtoNo} from "./karsilastir.js";
+import {PAYLAS_AYAR} from "./paylas_ayar.js";
+import {hzKisa} from "./temizlik.js";
+export var PAY_LBL=["risk.yok","risk.dikkat","risk.uyari"];   // çeviri anahtarları
 /* Tarih dile göre (Intl): "5 Ekim 2026", "5 Ekim 14:30" */
-function payGun(ms){return dilTarih(ms,"gun")}
-function payTarih(ms){return dilTarih(ms,"gunsaat")}
+export function payGun(ms){return dilTarih(ms,"gun")}
+export function payTarih(ms){return dilTarih(ms,"gunsaat")}
 /* Kartta ürün adı: kullanıcının verdiği ad; otomatik ad ("Tarama 3") ise sıra + tarih ve saat */
-function payAd(e,now){
+export function payAd(e,now){
   if(!e)return t("pay.ad_tarih",{ad:t("pay.tarama"),d:payTarih(now||Date.now())});
   var no=histOtoNo(e.name);
   if(no||!(e.name||"").trim())return t("pay.ad_tarih",{ad:no?t("kars.tarama_n",{n:no}):t("pay.tarama"),d:payTarih(e.t||now||Date.now())});
   return e.name.trim();
 }
 /* Otomatik ad mı (tarih kartın başında ayrıca yazılmaz)? */
-function payOtoAd(name){var T=t("pay.tarama");return name===T||(name||"").indexOf(T+" ")===0}
-function payUniq(items){var by={},out=[];items.forEach(function(it){var k=it.name;if(by[k]){if(it.lvl>by[k].lvl){by[k].lvl=it.lvl;by[k].why=it.why||""}return}by[k]={name:it.name,lvl:it.lvl,why:it.why||""};out.push(by[k])});return out}
+export function payOtoAd(name){var T=t("pay.tarama");return name===T||(name||"").indexOf(T+" ")===0}
+export function payUniq(items){var by={},out=[];items.forEach(function(it){var k=it.name;if(by[k]){if(it.lvl>by[k].lvl){by[k].lvl=it.lvl;by[k].why=it.why||""}return}by[k]={name:it.name,lvl:it.lvl,why:it.why||""};out.push(by[k])});return out}
 /* Gıda maddesinin karttaki kısa gerekçesi: en önemli bayraktan bir olgu (kaynak ve ayrıntı sonuç ekranında). Metin: pay.neden.<bayrak> */
-var PAY_NEDEN_E=[["banned_eu",1],["eu_warning_label",1],["hyperactivity","eu_warning_label"],["fda_banned",1],
+export var PAY_NEDEN_E=[["banned_eu",1],["eu_warning_label",1],["hyperactivity","eu_warning_label"],["fda_banned",1],
   ["iarc_listed",null],["reproductive_toxicity",1],["allergen_sulphite",1],["phenylalanine",1],
   ["laxative_polyols",1],["fodmap",1],["adi",null],["debated",1],["sodium",1]];
 /* Aşağıdaki düzenli ifadeler veri metnine (e_kodlari.json reason, Türkçe) bakar; arayüz metni değildir */
-var PAY_ADI=/ADI|alım değer/,PAY_ADI_ASIM=/aş(ıl|ab|ım)|üzerinde olduğ/;   // EFSA'nın tahmini alım ADI'yi aşabilir dediği maddeler (K6)
-function payNedenE(ids,idx){
+export var PAY_ADI=/ADI|alım değer/,PAY_ADI_ASIM=/aş(ıl|ab|ım)|üzerinde olduğ/;   // EFSA'nın tahmini alım ADI'yi aşabilir dediği maddeler (K6)
+export function payNedenE(ids,idx){
   var its=ids.map(function(id){return idx.byId[id]}).filter(function(it){return it&&!it.isB});
   for(var k=0;k<PAY_NEDEN_E.length;k++)for(var j=0;j<its.length;j++){
     var it=its[j],rs=it.reason||"";
@@ -38,7 +42,7 @@ function payNedenE(ids,idx){
   return its.length?veriS(its[0].category||"",null):"";
 }
 /* Gıda: karşılaştırmadaki ürün özeti (cmpProduct) kullanılır; rank 3 uyarı, 2 dikkat, 1 doğrulanmadı, 0 özel uyarı yok */
-function payFromFood(text,idx){
+export function payFromFood(text,idx){
   var P=cmpProduct(text,idx,null,""),items=[],unv=0,S=P.S,L=S.life,f=[];
   P.items.forEach(function(it){if(it.rank===1){unv++;return}items.push({name:it.name,lvl:it.rank===3?2:it.rank===2?1:0,why:it.rank>1?payNedenE(it.ids,idx):""})});
   var a=P.allergen,al=(a.yes.length?t("ortak.icerir_l",{l:a.yes.join(", ")}):"")+(a.yes.length&&a.may.length?" · ":"")+(a.may.length?t("ortak.icerebilir_l",{l:a.may.join(", ")}):"");
@@ -52,8 +56,8 @@ function payFromFood(text,idx){
   return {mode:"gida",items:payUniq(items),unverified:unv,allergens:al,facts:f,recog:{total:P.unknown.total,found:P.unknown.found}};
 }
 /* Kozmetik maddesinin kısa gerekçesi. K: kozmetik dizini (watchLists için; yoksa liste kimliği yazılmaz) */
-var PAY_NEDEN_K=["cmr2_carc","cmr2","formaldehyde_releaser","pfas","allergen_preservative","allergen_hairdye","allergen_fragrance"];   // sırayla; metin pay.nedenk.<bayrak>
-function payNedenK(r,K){
+export var PAY_NEDEN_K=["cmr2_carc","cmr2","formaldehyde_releaser","pfas","allergen_preservative","allergen_hairdye","allergen_fragrance"];   // sırayla; metin pay.nedenk.<bayrak>
+export function payNedenK(r,K){
   if(r.level==="red"&&(r.reg||[]).some(function(e){return e.annex==="II"}))return t("koz.seviye.red");
   var W=(K&&K.watchLists)||{},k3=(r.k3||[]).filter(function(w){return W[w.list]}).map(function(w){var L=W[w.list];return {level:L.level,chip:veriS(L.chip,"k.liste."+w.list+".cip")}});
   var o=k3.filter(function(L){return L.level==="orange"})[0];if(r.level==="orange"&&o)return o.chip;
@@ -64,7 +68,7 @@ function payNedenK(r,K){
   return an?t("pay.nedenk.sinirli",{ek:String(an).trim()}):"";
 }
 /* Kozmetik: AB'de yasak ve başka pazarda yasak (red/orange) uyarı, yellow dikkat */
-function payFromK(res,S,K){
+export function payFromK(res,S,K){
   var items=[],f=[];
   res.forEach(function(r){if(!r.found)return;var l=r.level==="red"||r.level==="orange"?2:r.level==="yellow"?1:0;items.push({name:r.name,lvl:l,why:l?payNedenK(r,K):""})});
   if(S&&(S.nonVegan||[]).concat(S.nonVeg||[]).length)f.push(t("gida.prof.vegan_degil"));
@@ -72,7 +76,7 @@ function payFromK(res,S,K){
     recog:S&&S.total?{total:S.total,found:S.found}:null};
 }
 /* Temizlik: tehlike ifadeleri ve madde notları; ciddi tehlike (red) uyarı, yellow dikkat */
-function payFromT(A,S){
+export function payFromT(A,S){
   var items=[],L=function(l){return l==="red"?2:l==="yellow"?1:0},f=[];
   A.hazards.forEach(function(x){var l=L(x.h.level);items.push({name:x.code+" "+hzKisa(x.h),lvl:l})});   // ifadenin kendisi açıklayıcı; iki satıra tam yazılır
   A.subs.forEach(function(x){var l=L(x.s.level);items.push({name:x.s.inci.length>1?t("tem.enzim_l",{l:x.s.inci.join(", ").toLowerCase()}):x.s.inci[0],lvl:l,why:l&&x.s.mix?t("pay.neden.gaz"):""})});
@@ -82,7 +86,7 @@ function payFromT(A,S){
   return {mode:"tem",items:payUniq(items),unverified:0,allergens:S&&S.fragrance.length?S.fragrance.join(", "):"",facts:f,recog:null};
 }
 /* Kart modeli. src: {mode, items:[{name,lvl,why}], unverified, allergens, facts, recog, personal:[{t:metin, lvl:1|2}]}; opt: {name, kisisel, t}; L: yerleşim (madde sayısı için) */
-function payModel(src,opt,cfg,L){
+export function payModel(src,opt,cfg,L){
   opt=opt||{};cfg=cfg||PAYLAS_AYAR;
   var items=(src.items||[]).slice(),c=[0,0,0];
   items.forEach(function(it){c[it.lvl]++});
@@ -97,28 +101,28 @@ function payModel(src,opt,cfg,L){
     hasPersonal:!!(src.personal&&src.personal.length)};
 }
 /* Besin değerleri bölümü (yalnızca gıda, yalnızca renk gösterilebilen tablo: js/besin.js besinOzet). Satır: "Yağ 12 g · Orta" + düzey rengi */
-var PAY_BESIN_RENK={dusuk:["okbg","ok"],orta:["ambbg","amb"],yuksek:["redbg","red"]};
-function payBesinSatir(b){
+export var PAY_BESIN_RENK={dusuk:["okbg","ok"],orta:["ambbg","amb"],yuksek:["redbg","red"]};
+export function payBesinSatir(b){
   return ((b&&b.satir)||[]).filter(function(s){return s.duzey}).map(function(s){
     var d=t("birim.g_l",{n:dilSayi(Math.round(s.v*100)/100)});if(s.lt)d=t("besin.kucuktur",{d:d});
     return {s:t("pay.kart.besin_satir",{ad:t("besin.alan."+s.alan),d:d,duzey:t("besin.duzey."+s.duzey)}),duzey:s.duzey};
   });
 }
 /* Ürün adının altındaki tek satırlık olgu özeti (skor değil, yalnızca sayı) */
-function payOzet(M){
+export function payOzet(M){
   var n=M.counts.dikkat+M.counts.uyari;
   if(!n)return "";
   return t(M.mode==="tem"?"pay.ozet_tem":"pay.ozet",{toplam:M.total,n:n});
 }
 /* Paylaşım metni (görselle birlikte) */
-function payText(M,cfg){
+export function payText(M,cfg){
   cfg=cfg||PAYLAS_AYAR;
   var n=M.counts.dikkat+M.counts.uyari,tm=M.mode==="tem"?"_tem":"";
   var s=n?t("pay.metin.var"+tm,{n:n}):t("pay.metin.yok"+tm);
   return t("pay.metin",{ad:M.name,s:s,uyg:cfg.uygulamaAdi,adres:cfg.adres});
 }
 /* Metni en çok maxLines satıra böler; sığmayan son satır "…" ile kısaltılır. measure(metin) → piksel genişliği */
-function payWrap(text,maxW,maxLines,measure){
+export function payWrap(text,maxW,maxLines,measure){
   var words=String(text||"").replace(/\s+/g," ").trim().split(" ").filter(Boolean),lines=[],cur="";
   function cut(s){if(measure(s)<=maxW)return s;while(s.length>1&&measure(s+"…")>maxW)s=s.slice(0,-1);return s.replace(/[\s,·:;-]+$/,"")+"…"}
   words.forEach(function(w){var c=cur?cur+" "+w:w;if(measure(c)<=maxW||!cur)cur=c;else{lines.push(cur);cur=w}});
@@ -127,13 +131,13 @@ function payWrap(text,maxW,maxLines,measure){
   return lines.map(cut);
 }
 /* ---------- Çizim ---------- */
-var PAY_RENK={bg:"#FFFFFF",card:"#FFFFFF",line:"#E3E5E3",ok:"#1F4D3A",okbg:"#E6EFE9",ink:"#1B211E",mute:"#5A615C",amb:"#8A5A00",ambbg:"#FFF3D1",hi:"#A4470B",hibg:"#FCE9DA",red:"#B3261E",redbg:"#FBE9E7",sunk:"#EEE9DD",bant2:"#CFE0D6",notr:"#8A8F8B"};
-var PAY_HF='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF='"Figtree",system-ui,sans-serif';
+export var PAY_RENK={bg:"#FFFFFF",card:"#FFFFFF",line:"#E3E5E3",ok:"#1F4D3A",okbg:"#E6EFE9",ink:"#1B211E",mute:"#5A615C",amb:"#8A5A00",ambbg:"#FFF3D1",hi:"#A4470B",hibg:"#FCE9DA",red:"#B3261E",redbg:"#FBE9E7",sunk:"#EEE9DD",bant2:"#CFE0D6",notr:"#8A8F8B"};
+export var PAY_HF='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF='"Figtree",system-ui,sans-serif';
 /* Dil dosyasında yazı tipi tanımlıysa (i18n/diller.json "yazi": Latin dışı alfabe) kartta da o kullanılır */
-function payYazi(hf){var y=typeof DIL!=="undefined"&&DIL.yazi;return hf?(y&&y.baslik)||PAY_HF:(y&&y.govde)||PAY_BF}
-function payRR(x,X,Y,W,H,r){x.beginPath();x.moveTo(X+r,Y);x.lineTo(X+W-r,Y);x.quadraticCurveTo(X+W,Y,X+W,Y+r);x.lineTo(X+W,Y+H-r);x.quadraticCurveTo(X+W,Y+H,X+W-r,Y+H);x.lineTo(X+r,Y+H);x.quadraticCurveTo(X,Y+H,X,Y+H-r);x.lineTo(X,Y+r);x.quadraticCurveTo(X,Y,X+r,Y);x.closePath()}
+export function payYazi(hf){var y=typeof DIL!=="undefined"&&DIL.yazi;return hf?(y&&y.baslik)||PAY_HF:(y&&y.govde)||PAY_BF}
+export function payRR(x,X,Y,W,H,r){x.beginPath();x.moveTo(X+r,Y);x.lineTo(X+W-r,Y);x.quadraticCurveTo(X+W,Y,X+W,Y+r);x.lineTo(X+W,Y+H-r);x.quadraticCurveTo(X+W,Y+H,X+W-r,Y+H);x.lineTo(X+r,Y+H);x.quadraticCurveTo(X,Y+H,X,Y+H-r);x.lineTo(X,Y+r);x.quadraticCurveTo(X,Y,X+r,Y);x.closePath()}
 /* Seviye simgesi (sonuç ekranıyla aynı): gri daire + tire (özel uyarı yok; yeşil onay yalnızca doğal kaynaklı tek maddede, kartta madde düzeyinde gösterilmez), amber üçgen + ünlem, koyu turuncu daire + ünlem; cx,cy merkez, s boyut */
-function payIcon(x,lvl,cx,cy,s,red){
+export function payIcon(x,lvl,cx,cy,s,red){
   var k=s/24;x.save();x.translate(cx-s/2,cy-s/2);x.scale(k,k);
   x.lineCap="round";x.lineJoin="round";x.strokeStyle="#FFFFFF";x.lineWidth=2.4;
   if(lvl===1){x.fillStyle=PAY_RENK.amb;x.beginPath();x.moveTo(12,2.5);x.lineTo(23,21.5);x.lineTo(1,21.5);x.closePath();x.fill();
@@ -143,9 +147,9 @@ function payIcon(x,lvl,cx,cy,s,red){
     else{x.beginPath();x.moveTo(7.5,12);x.lineTo(16.5,12);x.stroke()}}
   x.restore();
 }
-function payFont(x,w,px,hf){x.font=w+" "+px+"px "+payYazi(hf)}
+export function payFont(x,w,px,hf){x.font=w+" "+px+"px "+payYazi(hf)}
 /* Gri bilgi etiketlerini (olgular) satırlara yerleştirir: [{s, x, w, row}] */
-function payChips(x,list,maxW,maxRows){
+export function payChips(x,list,maxW,maxRows){
   var out=[],cx=0,row=0,pad=22,gap=12;
   for(var i=0;i<list.length;i++){
     var w=x.measureText(list[i]).width+2*pad;if(w>maxW)continue;
@@ -158,7 +162,7 @@ function payChips(x,list,maxW,maxRows){
 /* Kartı çizer. L: yerleşim (PAYLAS_AYAR.yerlesim[boyut]); logo: yüklenmiş görüntü ya da null. Çizilen metinler sırayla döner (test için; .h kartın yüksekliği).
    L.oto: önce ölçülür, kart içeriğe göre L.h'den L.enBoy'a kadar uzar (canvas yüksekliği burada ayarlanır).
    Bölümler yukarıdan aşağı akar; sığmazsa önce madde satırı sayısı azalır ("+N madde daha"), sonra bilgi etiketleri, sonra besin değerleri düşer. Not ve alt bant sabit. */
-function payDraw(x,M,L,cfg,logo){
+export function payDraw(x,M,L,cfg,logo){
   cfg=cfg||PAYLAS_AYAR;
   var W=L.w,H=L.h,P=L.pad,CW=W-2*P,out=[],R=PAY_RENK,draw=true,tem=M.mode==="tem";
   // Sağdan sola dillerde (DIL.yon "rtl") yerleşim aynalanır: x koordinatları W-x, hizalama ters, metin yönü rtl

@@ -1,5 +1,6 @@
 /* Ansiklopedi: saf mantık (DOM yok). Kayıt doğrulama, Türkçe harf duyarsız arama, profil uyarısı eşleştirme. ortak.js'ten sonra yüklenir; testler de yükler. */
-var ANS={
+import {norm} from "./ortak.js";
+export var ANS={
   risk:["green","amber","red"],evidence:["strong","moderate","limited"],diet:["yes","no","unknown"],
   source:["plant","animal","insect","synthetic","mineral","plant_or_animal","unknown"],ptype:["food","cosmetic","cleaning"],
   severity:["high","medium","low"],review:["curated","auto"],production:["dogal","fermente","islenmis","sentetik","belirsiz"],
@@ -7,11 +8,11 @@ var ANS={
   status:["approved","label_required","restricted","concern","classified","banned","withdrawn","not_listed","reviewed"]
 };
 /* Arama anahtarı: ı/i, ş/s vb. eşlenir, büyük/küçük harf, boşluk ve tire yok sayılır ("E-322" = "e322") */
-function ansFold(s){return norm(String(s||"")).replace(/ /g,"")}
-function ansSlug(s){return norm(String(s||"")).replace(/ /g,"-")}
-function ansT(T,k){return k&&T&&Object.prototype.hasOwnProperty.call(T,k)?T[k]:""}
+export function ansFold(s){return norm(String(s||"")).replace(/ /g,"")}
+export function ansSlug(s){return norm(String(s||"")).replace(/ /g,"-")}
+export function ansT(T,k){return k&&T&&Object.prototype.hasOwnProperty.call(T,k)?T[k]:""}
 /* Kayıt doğrulama: hata listesi döner (boşsa geçerli). ids verilirse related_ids'in varlığı da denetlenir. */
-function ansValidate(r,T,ids){
+export function ansValidate(r,T,ids){
   var e=[],cur=r&&r.review==="curated";
   function need(c,m){if(!c)e.push(m)}
   function txt(k,m){need(typeof k==="string"&&ansT(T,k).trim()!=="",m)}
@@ -59,14 +60,14 @@ function ansValidate(r,T,ids){
   return e;
 }
 /* Arama dizini: her kayıt için ad, kod ve eş anlamlıların katlanmış biçimleri */
-function ansIndex(recs,T){
+export function ansIndex(recs,T){
   return recs.map(function(r){
     var keys=[r.id,ansT(T,r.names.primary)].concat(r.names.aliases).map(ansFold).filter(function(k){return k});
     return {r:r,keys:keys};
   });
 }
 /* Sıra: tam eşleşme > başında geçen > içinde geçen; eşitlikte veri sırası */
-function ansSearch(idx,q,limit){
+export function ansSearch(idx,q,limit){
   var f=ansFold(q);if(!f)return[];
   var out=[];
   idx.forEach(function(x,i){
@@ -78,7 +79,7 @@ function ansSearch(idx,q,limit){
   return out.slice(0,limit||30).map(function(x){return x.r});
 }
 /* Profil uyarısı yalnızca kullanıcının seçtiği hassasiyetle eşleşirse döner. prof: localStorage "profil" biçimi ({al:[...], vegan:true, ...}) */
-function ansProfileWarnings(r,prof){
+export function ansProfileWarnings(r,prof){
   if(!prof)return[];
   return (r.profile_warnings||[]).filter(function(w){
     if(w.profile.indexOf("allergen_")===0)return Array.isArray(prof.al)&&prof.al.indexOf(w.profile)>-1;

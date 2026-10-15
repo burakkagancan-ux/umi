@@ -46,8 +46,8 @@ module.exports=async({br,B,opt,ok,server})=>{
     await p.evaluate(()=>closeCompare());
   }
   // Sağdan sola dil: kart aynalanarak çizilir, hata vermez (Arapça çevirisi yok; yalnızca altyapı)
-  ok(await p.evaluate(()=>{const s=DIL;try{dilKur('ar',{tr:DIL.sozluk.tr,en:DIL.sozluk.en,ar:{}},{ar:{ad:'العربية',yon:'rtl'}});const c=document.createElement('canvas'),L=PAYLAS_AYAR.yerlesim.hikaye;c.width=L.w;c.height=L.h;
-    const out=payDraw(c.getContext('2d'),payModel(paySource(),{name:'X'},PAYLAS_AYAR,L),L,PAYLAS_AYAR,null);return out.length>5}finally{DIL=s}}),'sağdan sola kart çizimi');
+  ok(await p.evaluate(()=>{const s={kod:DIL.kod,sozluk:DIL.sozluk,bilgi:DIL.bilgi,veri:DIL.veri};try{dilKur('ar',{tr:DIL.sozluk.tr,en:DIL.sozluk.en,ar:{}},{ar:{ad:'العربية',yon:'rtl'}});const c=document.createElement('canvas'),L=PAYLAS_AYAR.yerlesim.hikaye;c.width=L.w;c.height=L.h;
+    const out=payDraw(c.getContext('2d'),payModel(paySource(),{name:'X'},PAYLAS_AYAR,L),L,PAYLAS_AYAR,null);return out.length>5}finally{dilKur(s.kod,s.sozluk,s.bilgi,s.veri)}}),'sağdan sola kart çizimi');
   // Ansiklopedi ve Liste arayüzü İngilizce (12.10.2026); Bakanlık verisi Türkçe kalır
   await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');
   ok(await p.getAttribute('html','lang')==='en'&&(await p.textContent('h1'))==='Encyclopedia','ansiklopedi İngilizce başlık');

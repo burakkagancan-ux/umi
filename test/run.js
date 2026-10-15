@@ -1,6 +1,5 @@
 const fs=require('fs');
-const src=require('./yukle.js');
-eval(src+';global.L={buildIndex,analyze,summarize,buildBrands,findBrands,normText}');
+Object.assign(globalThis,require('./yukle.js'));global.L={buildIndex,analyze,summarize,buildBrands,findBrands,normText};
 const db=JSON.parse(fs.readFileSync(__dirname+'/../data/e_kodlari.json'));
 const bdb=JSON.parse(fs.readFileSync(__dirname+'/../data/bilesenler.json'));
 const tg=JSON.parse(fs.readFileSync(__dirname+'/../data/tagsis.json'));

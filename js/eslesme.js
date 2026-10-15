@@ -1,7 +1,8 @@
 /* "Birlikte dikkat" eşleşmeleri (gıda ve kozmetik). Saf mantık; testler de yükler. */
+import {itAd} from "./gida.js";
 /* "Birlikte dikkat" eşleşmeleri (data/eslesmeler.json). items: [{keys:[E kodu ya da INCI adı], label}]
    cift: her gruptan en az bir madde (aynı madde iki grubu birden karşılayamaz); toplam: aynı gruptan en az R.min farklı madde */
-function findCombos(rules,mode,items){
+export function findCombos(rules,mode,items){
   var out=[];
   (rules||[]).forEach(function(R){
     if(R.mode!==mode)return;
@@ -15,10 +16,10 @@ function findCombos(rules,mode,items){
   });
   return out;
 }
-function comboItemsFood(res,idx){
+export function comboItemsFood(res,idx){
   return res.filter(function(r){return !r.isB&&!r.neg&&!r.may}).map(function(r){
     return {keys:r.ids,label:r.ids.length===1?r.ids[0]+" "+itAd(idx.byId[r.ids[0]]):r.text}});
 }
-function comboItemsK(res){
+export function comboItemsK(res){
   return res.filter(function(r){return r.found&&!r.may}).map(function(r){return {keys:[r.name].concat(r.name.split(" / ")),label:r.name}});
 }

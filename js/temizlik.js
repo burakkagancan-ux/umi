@@ -1,8 +1,11 @@
 /* Temizlik ürünleri: H/EUH/P ifadeleri, deterjan içerik grupları, INCI maddeleri, özet. Saf mantık; testler de yükler. */
+import {veriS} from "./ceviri.js";
+import {isProse, kMatch} from "./kozmetik.js";
+import {lev, low, norm} from "./ortak.js";
 /* ---------- Temizlik ürünleri ---------- */
 /* tdb: temizlik.json. Zararlılık ifadeleri hem koddan (H318, EUH208) hem metinden (Türkçe/İngilizce) bulunur. */
-function tVariants(p){var out=[p];if(p.indexOf("yol acabilir")>-1){out.push(p.replace(/yol acabilir/g,"neden olabilir"));out.push(p.replace(/yol acabilir/g,"yol acar"))}if(p.indexOf("yol acar")>-1)out.push(p.replace(/yol acar/g,"neden olur"));return out}
-function buildTIndex(tdb){
+export function tVariants(p){var out=[p];if(p.indexOf("yol acabilir")>-1){out.push(p.replace(/yol acabilir/g,"neden olabilir"));out.push(p.replace(/yol acabilir/g,"yol acar"))}if(p.indexOf("yol acar")>-1)out.push(p.replace(/yol acar/g,"neden olur"));return out}
+export function buildTIndex(tdb){
   var byCode={},phrases=[],pByCode={},pphrases=[];
   // Varyant ("yol açar") başka bir ifadenin asıl metnine denk gelirse eklenmez (H371 -> H370 olmasın)
   var prim={};tdb.hazards.concat(tdb.combos||[],tdb.precautions||[]).forEach(function(h){prim[norm(h.tr)]=1});
@@ -18,7 +21,7 @@ function buildTIndex(tdb){
   return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
 }
 /* Temizlik eş anlamlıları (kaynak/temizlik_esanlamlilar.tsv) kozmetik dizinindeki INCI kayıtlarına bağlanır; ilk kullanımda kurulur */
-function tAliasMap(T,K){
+export function tAliasMap(T,K){
   if(T.am)return T.am;
   var am=new Map();
   function uniq(a){return a.filter(function(x,i){return a.indexOf(x)===i})}
@@ -30,7 +33,7 @@ function tAliasMap(T,K){
   return T.am=am;
 }
 /* Birebir arama: temizlik eş anlamlısı, kozmetik dizini, boşluksuz yazım, "sulph" -> "sulf". Kısaltmalar (LAS, BIT) yalnızca büyük harfle yazılmışsa. */
-function tLook(key,raw,K,T){
+export function tLook(key,raw,K,T){
   if(!key)return null;
   var a=tAliasMap(T,K).get(key);
   if(a){if(!a.kisa||new RegExp("(^|[^A-Za-z])"+key.toUpperCase()+"([^A-Za-z]|$)").test(raw))return {s:a.s,how:"isim",key:key,alias:true};return null}
@@ -40,7 +43,7 @@ function tLook(key,raw,K,T){
   return null;
 }
 /* Kodlar: "H318", "EUH 208", "H301+H311", "H360FD". Geçersiz son ek atılır (OCR "H302Yutulması"). */
-function tCodes(text,T){
+export function tCodes(text,T){
   var out=[],re=/(^|[^A-Za-z])(EUH|H)\s?(\d{3})([A-Za-z]{0,2})/g,m;
   while((m=re.exec(text))){
     var base=m[2]+m[3],c=base+m[4];
@@ -52,7 +55,7 @@ function tCodes(text,T){
 }
 /* Metin eşleşmesi: ifadenin en az 5 harfli bir sözcüğü metinde aynen geçiyorsa çevresindeki pencere benzer yazımla karşılaştırılır. */
 /* Önlem kodları: "P305+P351+P338"; birleşik kod listede yoksa tek tek */
-function tPCodes(text,T){
+export function tPCodes(text,T){
   var out=[],re=/(^|[^A-Za-z])P\s?(\d{3})((?:\s?\+\s?P\s?\d{3})*)/g,m;
   while((m=re.exec(text))){
     var parts=["P"+m[2]].concat((m[3].match(/\d{3}/g)||[]).map(function(d){return "P"+d})),c=parts.join("+");
@@ -64,18 +67,18 @@ function tPCodes(text,T){
 /* EUH208 içinde adı geçen madde: "X içerir. Alerjik reaksiyona..." / "Contains X. May produce an allergic reaction" */
 /* Tehlike/önlem ifadesinin ekrandaki metni: veride CLP'nin resmi metni var (tr: SEA'ya dayalı, en: CLP Ek III/IV); başka dilde çevirisi yoksa İngilizce.
    hzKisa: kart başlığında ve listelerde "içerir. " öneki (Türkçe birleşik ifadeler) ve sondaki nokta atılır. */
-function hzMetin(h){return veriS(h.tr,null,{en:h.en})}
-function hzKisa(h){return hzMetin(h).replace(/^içerir\. /,"").replace(/\.$/,"")}
+export function hzMetin(h){return veriS(h.tr,null,{en:h.en})}
+export function hzKisa(h){return hzMetin(h).replace(/^içerir\. /,"").replace(/\.$/,"")}
 /* İçerik grubu adı (AB 648/2004 Ek VII) */
-function tGrupAd(g){return veriS(g.tr,"t.grup."+g.id)}
-function tEuh208(text){
+export function tGrupAd(g){return veriS(g.tr,"t.grup."+g.id)}
+export function tEuh208(text){
   var out=[],tx=String(text||"").replace(/\s+/g," "),m;
   var re1=/(?:^|[.:;!]\s*|EUH\s?208\s*:?\s*)([^.:;!]{3,140}?)\s+i[cç]erir\.?\s*Alerjik reaksiyon/gi;
   var re2=/Contains:?\s*([^.;!]{3,140}?)\.?\s*May produce an allergic reaction/gi;
   [re1,re2].forEach(function(r){while((m=r.exec(tx))){var n=m[1].replace(/^(EUH\s?208\s*:?\s*)/i,"").trim();if(n&&out.indexOf(n)<0)out.push(n)}});
   return out;
 }
-function tPhrases(text,T,list){
+export function tPhrases(text,T,list){
   var tk=norm(text).split(" ").filter(Boolean),pos={},cands=[];
   tk.forEach(function(w,i){(pos[w]=pos[w]||[]).push(i)});
   (list||T.phrases).forEach(function(ph){
@@ -98,14 +101,14 @@ function tPhrases(text,T,list){
   return acc;
 }
 /* Gruplar ve bantlar için sadeleştirilmiş metin: Türkçe harfler eşlenir, nokta cümle sonu "|" olur, %<>- korunur */
-function tPrep(text){return low(String(text||"")).replace(/\.(?=\s|$)/g," | ").replace(/[^a-z0-9%<>≤≥|\-–]+/g," ")}
-var TBANDS=[
+export function tPrep(text){return low(String(text||"")).replace(/\.(?=\s|$)/g," | ").replace(/[^a-z0-9%<>≤≥|\-–]+/g," ")}
+export var TBANDS=[
   ["b15_30",/%\s?15\s?[-–]\s?%?\s?30|(?:^|[^0-9])15\s?[-–]\s?30\s?%/g],
   ["b5_15",/%\s?5\s?[-–]\s?%?\s?15|(?:^|[^0-9])5\s?[-–]\s?15\s?%/g],
   ["b30",/%\s?30\s(?:ve\s|veya\s)?(?:uzeri|ustu|fazla)|(?:>|≥)\s?%?\s?30|30\s?%\s(?:and|or)\s(?:over|more|above)|%\s?30\s?\+/g],
   ["b5",/%\s?5\s(?:ten\s|den\s|in\s)?(?:az|asagi|altinda|dusuk)|(?:<|≤)\s?%?\s?5(?![0-9])|less than 5\s?%|(?:^|[^0-9])5\s?%\s(?:ten\s|den\s)?az/g]
 ];
-function tGroups(N,T){
+export function tGroups(N,T){
   var bands=[],hits=[],m;
   TBANDS.forEach(function(b){b[1].lastIndex=0;while((m=b[1].exec(N))){var s=m.index+(/^[^%<>≤≥0-9l]/.test(m[0])?1:0);if(!bands.some(function(x){return s<x.e&&x.s<m.index+m[0].length}))bands.push({b:b[0],s:s,e:m.index+m[0].length})}});
   bands.sort(function(a,b){return a.s-b.s});
@@ -136,7 +139,7 @@ function tGroups(N,T){
   return Object.keys(out).map(function(k){return out[k]});
 }
 /* INCI ile yazılmış maddeler (parfüm alerjenleri, koruyucular): parantez, virgül, iki nokta ile bölünen kısa parçalar kozmetik dizininde aranır */
-function tInci(text,K,T){
+export function tInci(text,K,T){
   var out=[],seen={};
   function take(h,raw){
     var s=h.s;if(seen[s.name])return;
@@ -163,7 +166,7 @@ function tInci(text,K,T){
   });
   return out;
 }
-function analyzeT(text,T,K){
+export function analyzeT(text,T,K){
   var N=tPrep(text),hz={},order=[];
   function add(code,how){var h=T.byCode[code];if(!h)return;if(!hz[code]){hz[code]={code:code,h:h,how:[]};order.push(code)}if(hz[code].how.indexOf(how)<0)hz[code].how.push(how)}
   tCodes(text,T).forEach(function(c){add(c,"kod")});
@@ -186,8 +189,8 @@ function analyzeT(text,T,K){
   var e208=tEuh208(text);if(hz.EUH208)hz.EUH208.names=e208;
   return {hazards:hazards,groups:groups,subs:subs,inci:inci,signal:sig,prec:prec,capsule:capsule,euh208:e208};
 }
-var TRANK={info:0,yellow:1,red:2};
-function summarizeT(A){
+export var TRANK={info:0,yellow:1,red:2};
+export function summarizeT(A){
   var o={red:[],yellow:[],info:[],byGroup:{},cmr:[],cancer:[],ed:[],resp:[],swallow:[],eye:[],mix:false,mixWhy:[],fragrance:[],pres:[],color:[],parfum:false,enzyme:false,level:"info"};
   function push(a,v){if(a.indexOf(v)<0)a.push(v)}
   A.hazards.forEach(function(x){
@@ -208,7 +211,7 @@ function summarizeT(A){
   return o;
 }
 /* Metin temizlik ürünü etiketine benziyor mu? */
-function looksCleaning(text){
+export function looksCleaning(text){
   var N=" "+tPrep(text)+" ",n=0;
   [/yuzey\s(?:aktif|etken)/,/surfactant/,/(?:^|[^a-z])euh\s?\d{3}/,/(?:^|[^a-z])h\s?3[0-9]{2}(?![0-9])/,/deterjan/,/agartici/,/zeolit/,/fosfonat/,/polikarboksilat/,/optik\s(?:parlatici|beyazlatici|agartici)/,/camasir/,/bulasik/,/yumusatici/,/tehlike/,/cocuklarin\sulasamayacagi/].forEach(function(r){if(r.test(N))n++});
   return n>=2;

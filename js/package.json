@@ -1,0 +1,4 @@
+{
+  "type": "module",
+  "description": "js/ altındaki ES modülleri (saf mantık) Node testlerinde de modül olarak yüklensin. Klasik arayüz betikleri Node'da çalıştırılmaz; tarayıcı bu dosyayı okumaz."
+}

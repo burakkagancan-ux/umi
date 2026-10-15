@@ -1,8 +1,7 @@
 // Rozetler (G-01): eşikler ve "hepsi" kademesi, ad anahtarları, sayım ve tekilleştirme, kutlama bir kez, yedek birleştirme, simge, paylaşım kartı,
 // tanım dosyası ve metinler. Çalıştır: node test/rozet.js
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
-const src=require('./yukle.js');
-eval(src+';'+fs.readFileSync(path.join(R,'js/rozet.js'),'utf8')+';global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,ROZET_STIL,kayitYedek,kayitGeriYukle,t}');
+Object.assign(globalThis,require('./yukle.js'));global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,ROZET_STIL,kayitYedek,kayitGeriYukle,t};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const def=JSON.parse(fs.readFileSync(path.join(R,'data/rozetler.json'),'utf8'));
 const ans=JSON.parse(fs.readFileSync(path.join(R,'data/ansiklopedi.json'),'utf8'));
