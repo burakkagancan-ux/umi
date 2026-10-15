@@ -2,7 +2,8 @@
    Çizim yalnızca verilen 2B bağlamı (ctx) kullanır; testler sahte bir bağlamla çizilen metinleri denetler.
    Seviye (lvl): 0 özel uyarı yok, 1 dikkat, 2 uyarı. Skor yok. Kişisel (profil) uyarılar yalnızca opt.kisisel açıkken karta girer. */
 import {DIL, dilSayi, dilTarih, t, veriS} from "./ceviri.js";
-import {cmpProduct, histOtoNo} from "./karsilastir.js";
+import {cmpProduct} from "./degerlendirme.js";
+import {histOtoNo} from "./karsilastir.js";
 import {PAYLAS_AYAR} from "./paylas_ayar.js";
 import {hzKisa} from "./temizlik.js";
 export var PAY_LBL=["risk.yok","risk.dikkat","risk.uyari"];   // çeviri anahtarları
@@ -41,9 +42,10 @@ export function payNedenE(ids,idx){
   }
   return its.length?veriS(its[0].category||"",null):"";
 }
-/* Gıda: karşılaştırmadaki ürün özeti (cmpProduct) kullanılır; rank 3 uyarı, 2 dikkat, 1 doğrulanmadı, 0 özel uyarı yok */
-export function payFromFood(text,idx){
-  var P=cmpProduct(text,idx,null,""),items=[],unv=0,S=P.S,L=S.life,f=[];
+/* Gıda: ortak ürün modeli (js/degerlendirme.js cmpProduct) kullanılır; rank 3 uyarı, 2 dikkat, 1 doğrulanmadı, 0 özel uyarı yok.
+   P: aynı metnin hazır ürün modeli (verilirse yeniden hesaplanmaz; profil kartı etkilemez: buradaki alanlar profilden bağımsız) */
+export function payFromFood(text,idx,P){
+  P=P||cmpProduct(text,idx,null,"");var items=[],unv=0,S=P.S,L=S.life,f=[];
   P.items.forEach(function(it){if(it.rank===1){unv++;return}items.push({name:it.name,lvl:it.rank===3?2:it.rank===2?1:0,why:it.rank>1?payNedenE(it.ids,idx):""})});
   var a=P.allergen,al=(a.yes.length?t("ortak.icerir_l",{l:a.yes.join(", ")}):"")+(a.yes.length&&a.may.length?" · ":"")+(a.may.length?t("ortak.icerebilir_l",{l:a.may.join(", ")}):"");
   // Ürüne ait olgular (kişisel değil): gri bilgi etiketi olarak çizilir

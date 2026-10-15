@@ -145,9 +145,8 @@ function barkodDilAdi(k){
 /* Okunan içerik, kaydetmeye uygun mu (çoğu tanınmış bir içerik listesi) */
 function barkodUygun(tx){
   try{
-    if(MODE==="koz"){if(!KIDX)return false;var S=summarizeK(analyzeK(tx,KIDX,{ptype:PTYPE}),KIDX);return barkodKatkiUygun("koz",S.total,S.found)}
-    if(MODE==="tem"){if(!TIDX)return false;var A=analyzeT(tx,TIDX,KIDX);return barkodKatkiUygun("tem",0,A.hazards.length+A.subs.length+A.inci.length)}
-    if(!IDX)return false;var P=cmpProduct(tx,IDX,null,"");return barkodKatkiUygun("gida",P.unknown.total,P.unknown.found);
+    var c=degBaglam();if(!degHazir(MODE,c))return false;
+    var P=degerlendir(MODE,tx,c,null,""),n=degTanima(P);return barkodKatkiUygun(P.mode,n.total,n.found);
   }catch(e){return false}
 }
 function barkodIzin(){try{return localStorage.getItem("barkod_katki")||""}catch(e){return ""}}
