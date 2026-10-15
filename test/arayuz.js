@@ -174,40 +174,6 @@ async function scan(p,mode,text){
     ok(urunN===2&&besinG.length===1&&/içerik ve besin tablosu/.test(await p.textContent('#sonuc')),'"Kaydet": içerik ve tablo birlikte gider');
     await p.unroute(ocrYol);await p.unroute(/workers\.dev\/besin$/);
     await p.evaluate(()=>fotoTemizle());
-    // Etiket fotoğrafında barkod (BARKOD_AYAR.fotodan): "Barkod okut"a basmadan, fotoğraftaki barkod okunan içerikle ilişkilenir;
-    // fotoğrafta içerik listesi yoksa veritabanındaki içerik gelir; ayar kapalıyken eskisi gibi
-    const eanPng=async kd=>{const u=await p.evaluate(k=>{
-      const L=['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'],P=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
-      const R=s=>s.replace(/./g,c=>c==='0'?'1':'0'),G=s=>R(s).split('').reverse().join('');
-      let b='101';for(let i=1;i<7;i++){const x=L[+k[i]];b+=P[+k[0]][i-1]==='L'?x:G(x)}b+='01010';for(let i=7;i<13;i++)b+=R(L[+k[i]]);b+='101';
-      const c=document.createElement('canvas'),w=4;c.width=(b.length+40)*w;c.height=260;const x=c.getContext('2d');
-      x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#000';[...b].forEach((v,i)=>{if(v==='1')x.fillRect((i+20)*w,30,w,200)});
-      return c.toDataURL('image/png');
-    },kd);return {name:'etiket.png',mimeType:'image/png',buffer:Buffer.from(u.split(',')[1],'base64')}};
-    let ocrMetin=ICERIK;gonderilen=null;
-    await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:ocrMetin})}));
-    await p.unroute(/workers\.dev\/urun$/);await p.route(/workers\.dev\/urun$/,r=>{gonderilen=r.request().postDataJSON();r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
-    await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
-    await p.setInputFiles('#foto',await eanPng(yok));
-    await p.waitForFunction(()=>/Fotoğrafta barkod bulundu/.test(document.getElementById('sonuc').textContent)&&/başka kullanıcılar için kaydedelim/.test(document.getElementById('sonuc').textContent),null,{timeout:15000}).catch(()=>{});
-    ok(await p.evaluate(([k,m])=>!!BARKOD&&BARKOD.kod===k&&BARKOD.foto&&document.getElementById('metin').value.trim()===m,[yok,ICERIK]),'fotoğraftaki barkod okunan içerikle ilişkilenir, içerik fotoğraftan kalır');
-    ok(/Fotoğrafta barkod bulundu \(/.test(await p.textContent('#sonuc'))&&/başka kullanıcılar için kaydedelim/.test(await p.textContent('#sonuc')),'not ve katkı sorusu görünür');
-    await p.click('#sonuc .bkaynak .row button:not(.alt)');
-    for(let i=0;i<20&&!gonderilen;i++)await p.waitForTimeout(100);
-    ok(gonderilen&&gonderilen.kod===yok&&gonderilen.metin===ICERIK,'"Kaydet": fotoğraftaki barkodla içerik gider: '+JSON.stringify(gonderilen&&gonderilen.kod));
-    // Fotoğrafta içerik listesi yok (yalnızca barkod): veritabanındaki içerik gelir
-    ocrMetin='Üretici: Örnek Gıda A.Ş. İstanbul';
-    await p.setInputFiles('#foto',await eanPng(kod));
-    await p.waitForFunction(k=>BARKOD&&BARKOD.kod===k&&BARKOD.metin,kod,{timeout:15000}).catch(()=>{});
-    ok(await p.evaluate(m=>document.getElementById('metin').value===m&&/Open Food Facts/.test(document.getElementById('sonuc').textContent),D[kod][4].tr.trim()),'fotoğrafta yalnızca barkod: veritabanındaki içerik ve kaynak kartı');
-    // Ayar kapalı: barkod aranmaz
-    ocrMetin=ICERIK;
-    await p.evaluate(()=>{BARKOD_AYAR.fotodan=false;BARKOD=null});
-    await p.setInputFiles('#foto',await eanPng(yok));
-    await p.waitForFunction(m=>document.getElementById('metin').value===m,ICERIK,{timeout:10000}).catch(()=>{});await p.waitForTimeout(800);
-    ok(await p.evaluate(()=>!BARKOD&&!/Fotoğrafta barkod bulundu/.test(document.getElementById('sonuc').textContent)),'BARKOD_AYAR.fotodan=false: fotoğrafta barkod aranmaz');
-    await p.evaluate(()=>{BARKOD_AYAR.fotodan=true;fotoTemizle()});
-    await p.unroute(ocrYol);
     await p.unroute(/workers\.dev\/urun$/);
     await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
   }

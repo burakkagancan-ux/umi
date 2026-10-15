@@ -73,7 +73,7 @@ $("denemeb").onclick=function(){openSheet(t("sayfa.deneme"),null,el("p",null,t("
 function fotoSec(){
   var f=this.files[0];if(!f)return;var im=$("pre");im.src=URL.createObjectURL(f);
   $("cropwrap").style.display="block";$("cropbar").style.display="flex";resetCrop();
-  OKU.n++;OKU.okundu=false;besinFotoSecildi();var n=OKU.n;im.onload=function(){im.onload=null;okuIste(0);barkodFotoAra(im,n)};   // barkod da aranır (js/arayuz_barkod.js)   // ayrı düğme yok: fotoğraf gelince okunur
+  OKU.n++;OKU.okundu=false;besinFotoSecildi();im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
   this.value="";   // aynı dosya yeniden seçilebilsin
 }
 $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;

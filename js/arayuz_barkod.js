@@ -37,24 +37,20 @@ function barkodOffCanli(kod){
     return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null,besin:j.besin||null};
   });
 }
-/* Barkodu sırayla arar → bulunan sonuç (içeriksiz olabilir: r.icerikYok) ya da null */
-function barkodAra(kod){
-  var sira=barkodSira(),s={};
-  return Promise.all([barkodOffYukle().then(function(v){s.off=barkodOffBul(v,kod)}),barkodUrun(kod).then(function(u){s.urun=u})]).then(function(){
-    var r=barkodSec(s,sira);
-    if(r&&!r.icerikYok)return r;
-    return barkodOffCanli(kod).then(function(c){s.offCanli=c;return barkodSec(s,sira)});
-  }).then(function(r){
-    if(r&&r.ad&&!r.icerikYok&&s.off&&s.off.ad&&!r.ad){r.ad=s.off.ad;r.marka=s.off.marka}
-    return r;
-  });
-}
 /* Barkod bulundu: sırayla ara, sonucu göster */
 function barkodIsle(ham){
   var kod=barkodNorm(ham);
   if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
   ST.textContent=t("barkod.araniyor",{kod:kod});
-  barkodAra(kod).then(function(r){if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r)});
+  var sira=barkodSira(),s={};
+  Promise.all([barkodOffYukle().then(function(v){s.off=barkodOffBul(v,kod)}),barkodUrun(kod).then(function(u){s.urun=u})]).then(function(){
+    var r=barkodSec(s,sira);
+    if(r&&!r.icerikYok)return r;
+    return barkodOffCanli(kod).then(function(c){s.offCanli=c;return barkodSec(s,sira)});
+  }).then(function(r){
+    if(r&&r.ad&&!r.icerikYok&&s.off&&s.off.ad&&!r.ad){r.ad=s.off.ad;r.marka=s.off.marka}
+    if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r);
+  });
 }
 function barkodAd(r){return r&&r.ad?((r.marka&&r.ad.toLocaleLowerCase(DIL.yerel).indexOf(r.marka.toLocaleLowerCase(DIL.yerel))<0?r.marka+" ":"")+r.ad):""}
 function barkodGoster(kod,r){
@@ -85,38 +81,8 @@ function barkodYok(kod,r){
   // Topluluk (G-04): eksik ürünler listesi için bir kez bildirilir; başkaları da aradıysa söylenir
   arananBildir(kod,(r&&r.tur)||MODE,function(n){if(BARKOD&&BARKOD.kod===kod&&d.isConnected)d.insertBefore(el("div","how",t("topluluk.yok_arandi",{n:n,s:dilSayi(n)})),row)});
 }
-/* Etiket fotoğrafında barkod (BARKOD_AYAR.fotodan): fotoğraf seçilince (fotoSec) okumayla aynı anda aranır. Bulunursa okunan metin
-   o barkodla ilişkilenir; "Barkod okut"a ayrıca basmak gerekmez. Fotoğraftaki içerik her zaman kazanır: veritabanındaki içerik
-   yalnızca okunan metin içerik listesine benzemiyorsa (fotoğrafta yalnızca barkod var) gösterilir. Besin tablosu fotoğrafında aranmaz. */
-var BARKOD_FOTO_ARA=null;        // {n: fotoğrafın OKU.n'i, bitti, kod: bulunan barkod ya da null}
-var BARKOD_FOTO_COZ=null;        // çözücü bir kez kurulur
-function barkodFotoAra(im,n){
-  BARKOD_FOTO_ARA=null;
-  if(!BARKOD_AYAR.acik||!BARKOD_AYAR.fotodan||(BESIN_EKLE&&BESIN_EKLE.n===n))return;
-  var F=BARKOD_FOTO_ARA={n:n,bitti:false,kod:null};
-  BARKOD_FOTO_COZ=BARKOD_FOTO_COZ||barkodCozucu(BARKOD_AYAR.fotodanEnBuyuk).catch(function(){BARKOD_FOTO_COZ=null;return null});
-  BARKOD_FOTO_COZ.then(function(c){return c?c(im):null}).catch(function(){return null}).then(function(k){
-    F.bitti=true;F.kod=k&&barkodGecerli(k)?barkodNorm(k):null;
-    // Okuma barkoddan önce bittiyse ilişki şimdi kurulur (yoksa fotoOku → barkodFoto kurar)
-    if(F.kod&&F===BARKOD_FOTO_ARA&&OKU.n===n&&OKU.okundu&&!OKU.mesgul&&$("metin").value.trim()){barkodFoto();barkodSonra()}
-  });
-}
-/* Fotoğrafta bulunan barkod: başka bir barkod ilişkisi varsa onun yerine geçer */
-function barkodFotoKod(){
-  var F=BARKOD_FOTO_ARA;
-  if(!F||!F.bitti||!F.kod||F.n!==OKU.n||(BARKOD&&BARKOD.kod===F.kod))return;
-  var kod=F.kod,B=BARKOD={kod:kod,r:null,ad:"",metin:null,t:Date.now(),foto:false,katki:false,fotodan:true};
-  var tx=$("metin").value.trim(),uygun=barkodUygun(tx);
-  barkodAra(kod).then(function(r){
-    if(B!==BARKOD||F.n!==OKU.n)return;
-    if(!uygun&&r&&!r.icerikYok&&$("metin").value.trim()===tx){barkodGoster(kod,r);return}   // fotoğrafta içerik yok: veritabanındaki gelir
-    var ad=r?barkodAd(r):"";if(!ad)return;
-    B.ad=ad;if(B.icerik&&!B.adVerildi){B.adVerildi=true;barkodGecmisAdi(ad)}
-  });
-}
 /* Etiket fotoğrafı okundu (js/arayuz_sayfa.js çağırır): barkoddan sonra süre içindeyse o barkodla ilişkilenir */
 function barkodFoto(){
-  barkodFotoKod();
   if(!BARKOD)return;
   if(Date.now()-BARKOD.t>BARKOD_FOTO_SURE){BARKOD=null;return}
   BARKOD.foto=true;BARKOD.katki=false;
@@ -144,7 +110,6 @@ function barkodSonra(){
   if(BARKOD.foto&&tx){
     if(!ek){BARKOD.icerik=tx;BARKOD.ek=null}
     if(BARKOD.ad&&!BARKOD.adVerildi){BARKOD.adVerildi=true;barkodGecmisAdi(BARKOD.ad)}
-    if(BARKOD.fotodan)sonucUst(el("div","res u bkaynak how",t("barkod.fotoda_bulundu",{kod:BARKOD.kod})));
     barkodKatki();
     barkodBesinKatki();
     return;
@@ -292,25 +257,25 @@ function barkodZxYukle(){
   return BARKOD_ZX;
 }
 /* Çözücü: kaynak (video, resim ya da tuval) → barkod metni ya da null */
-function barkodCozucu(enBuyuk){
+function barkodCozucu(){
   if("BarcodeDetector" in window){
     return Promise.resolve(BarcodeDetector.getSupportedFormats?BarcodeDetector.getSupportedFormats():["ean_13"]).then(function(f){
       var bi=["ean_13","ean_8","upc_a","upc_e"].filter(function(x){return f.indexOf(x)>-1});
       if(!bi.length)throw new Error("format");
       var det=new BarcodeDetector({formats:bi});
       return function(src){return det.detect(src).then(function(l){return l.length?l[0].rawValue:null},function(){return null})};
-    }).catch(function(){return barkodZxCozucu(enBuyuk)});
+    }).catch(barkodZxCozucu);
   }
-  return barkodZxCozucu(enBuyuk);
+  return barkodZxCozucu();
 }
-function barkodZxCozucu(enBuyuk){
+function barkodZxCozucu(){
   return barkodZxYukle().then(function(Z){
     var h=new Map(),F=Z.BarcodeFormat;h.set(Z.DecodeHintType.POSSIBLE_FORMATS,[F.EAN_13,F.EAN_8,F.UPC_A,F.UPC_E]);h.set(Z.DecodeHintType.TRY_HARDER,true);
     var rd=new Z.MultiFormatReader();rd.setHints(h);
     var cv=document.createElement("canvas"),x=cv.getContext("2d",{willReadFrequently:true});
     return function(src){
       var w=src.videoWidth||src.naturalWidth||src.width,hh=src.videoHeight||src.naturalHeight||src.height;if(!w||!hh)return Promise.resolve(null);
-      var sc=Math.min(1,(enBuyuk||1280)/Math.max(w,hh));cv.width=Math.round(w*sc);cv.height=Math.round(hh*sc);x.drawImage(src,0,0,cv.width,cv.height);
+      var sc=Math.min(1,1280/Math.max(w,hh));cv.width=Math.round(w*sc);cv.height=Math.round(hh*sc);x.drawImage(src,0,0,cv.width,cv.height);
       try{var bm=new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(cv)));return Promise.resolve(rd.decode(bm).getText())}
       catch(e){return Promise.resolve(null)}
     };

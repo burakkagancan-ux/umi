@@ -3,8 +3,6 @@
    → (3) Open Food Facts canlı sorgu (Worker /off) → (4) bulunamadı: etiketin fotoğrafı. Ürünün üzerindeki etiket her zaman asıl kaynaktır. */
 var BARKOD_AYAR={
   acik:true,
-  fotodan:true,            // etiket fotoğrafında barkod da aranır (false: kapalı, fotoğraf eskisi gibi yalnızca okunur)
-  fotodanEnBuyuk:1600,     // ZXing yolunda fotoğrafın en uzun kenarı (px); BarcodeDetector tam boyutla çalışır
   offDosya:"data/barkod_off.json",
   zamanAsimi:3500,         // Worker sorguları (ms); aşılırsa sıradaki adıma geçilir
   katkiEnAzParca:3,        // katkı önerisi için içerik listesinde en az parça
