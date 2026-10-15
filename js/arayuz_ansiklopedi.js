@@ -145,10 +145,6 @@ function footer(box,r){
 }
 function syncMark(){var b=a$("kaydet"),on=!!ACUR&&marks().indexOf(ACUR.id)>-1;b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?t("ans.kaydet_cikar"):t("ans.kaydet"))}
 a$("kaydet").onclick=function(){if(!ACUR)return;var m=marks().filter(function(x){return x!==ACUR.id});if(m.length===marks().length)m.unshift(ACUR.id);setMarks(m);syncMark()};
-a$("geri").onclick=function(){
-  var same=document.referrer&&document.referrer.indexOf(location.origin)===0;
-  if(same&&history.length>1)history.back();else location.href=ACUR?"ansiklopedi.html":"ocr.html";
-};
 
 /* ---------- Arama ve kayıtlı maddeler ---------- */
 function rowFor(r,oku,kat){   // kat: listede kategori başlığı varsa satırda kategori ve tür yazılmaz (grup tek türdür)
@@ -157,7 +153,8 @@ function rowFor(r,oku,kat){   // kat: listede kategori başlığı varsa satırd
   if(oku&&oku[r.id]){var k=h("span","okd");k.appendChild(svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'));k.setAttribute("role","img");k.setAttribute("aria-label",t("rozet.okundu"));a.appendChild(k)}
   return a;
 }
-/* Tür süzgeci: ANS_TURLER'de birden çok tür varsa görünür (14.10.2026 kullanıcı kararı); henüz olmayanlar seçilemez, altında "Çok yakında".
+/* Tür süzgeci: ANS_TURLER'de birden çok tür varsa görünür (14.10.2026 kullanıcı kararı); henüz olmayanlar seçilemez ve soluk, "Çok yakında" yalnızca title ve
+   ekran okuyucu adında (15.10.2026 kullanıcı isteği: Etiket Oku'daki anahtarla boyutu dahil aynı; alt satır düğmeyi uzatıyordu).
    Temizlik 15.10.2026'da eklendi (30 madde, kimlik CAS). Seçim liste, süzgeç sayıları ve Okur rozetinin türünü belirler. */
 var ANS_TURLER=["gida","tem"];
 function turSecici(ciz){
@@ -165,7 +162,7 @@ function turSecici(ciz){
   [["gida",true],["koz",ANS_TURLER.indexOf("koz")>-1],["tem",ANS_TURLER.indexOf("tem")>-1]].forEach(function(x){
     var b=h("button");b.type="button";b.id="tur-"+x[0];b.setAttribute("data-tur",x[0]);b.setAttribute("role","radio");b.setAttribute("aria-checked",AOKU===x[0]?"true":"false");
     b.appendChild(h("span",null,t("kayit.tur."+x[0])));
-    if(!x[1]){b.setAttribute("aria-disabled","true");b.appendChild(h("small",null,t("ans.cok_yakinda")))}
+    if(!x[1]){b.setAttribute("aria-disabled","true");b.title=t("ans.cok_yakinda");b.setAttribute("aria-label",t("kayit.tur."+x[0])+" ("+t("ans.cok_yakinda")+")")}
     else b.onclick=function(){if(AOKU===x[0])return;AOKU=x[0];depoYazMetin("ans_tur",AOKU);ARISK="";GACIK={};
       [].forEach.call(s.querySelectorAll("button"),function(y){y.setAttribute("aria-checked",y.id==="tur-"+AOKU?"true":"false")});ciz()};
     s.appendChild(b);
