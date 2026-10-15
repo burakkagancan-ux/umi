@@ -48,10 +48,9 @@ function besinKart(tx){
   if(!G){
     hd.appendChild(el("div","t",t("besin.baslik")));
     d.appendChild(el("div","ln",t("besin.yok")));
-    d.appendChild(besinFotoDugmeler(tx));
-    var eb=el("button","alt",t("besin.elle_gir"));eb.type="button";
+    var fr=besinFotoDugmeler(tx),eb=besinIkonDugme("alt","besin.elle_gir",BESIN_IKON.kalem);
     eb.onclick=function(){besinForm(tx,{k:{b:{},lt:{},birim:""},kaynak:"yok"},eb,d)};
-    d.appendChild(eb);
+    fr.appendChild(eb);d.appendChild(fr);
     return d;
   }
   hd.appendChild(el("div","t",t(G.birim?"besin.baslik_"+G.birim:"besin.baslik")));
@@ -82,11 +81,10 @@ function besinKart(tx){
     K.kaynak==="topluluk"?t(K.dogrulandi?"besin.kaynak_topluluk_dogrulandi":"besin.kaynak_topluluk",{tarih:dilTarih(K.t,"gun")}):t("besin.kaynak_etiket")));
   var pn=el("div","ipanel");pn.hidden=true;besinEsikPanel(pn);d.appendChild(pn);
   ib.onclick=function(){pn.hidden=!pn.hidden;ib.setAttribute("aria-expanded",pn.hidden?"false":"true");ib.classList.toggle("on",!pn.hidden)};
-  var db=el("button","alt",t("besin.duzelt"));db.type="button";db.onclick=function(){besinForm(tx,K,db,d)};
-  d.appendChild(db);
+  var db=besinIkonDugme("alt","besin.duzelt",BESIN_IKON.kalem);db.onclick=function(){besinForm(tx,K,db,d)};
   // Metinde okunmuş bir tablo varsa yeni fotoğraf metne eklenmez (iki tablo karışır); okunan değerler düzeltme formunda onaya gelir
-  if(K.kaynak==="off"||K.kaynak==="topluluk"||!K.okunan)d.appendChild(besinFotoDugmeler(tx));
-  else d.appendChild(besinFotoDugmeler(tx,true));
+  var fr=besinFotoDugmeler(tx,!(K.kaynak==="off"||K.kaynak==="topluluk"||!K.okunan));
+  fr.insertBefore(db,fr.firstChild);d.appendChild(fr);
   return d;
 }
 /* Eşiklerin kaynağı ve değerleri (BESIN_ESIK'ten; sayılar dilin biçiminde) */
@@ -104,10 +102,21 @@ function besinEsikPanel(pn){
 /* "Tablonun fotoğrafını ekle": kamera ya da galeri; okunan metin içerik metninin sonuna eklenir (js/arayuz_sayfa.js besinEkMetin).
    yeniden: tablo zaten okunmuş; yeni fotoğraf metne eklenmez, değerleri düzeltme formunda gelir (besinYenidenOku) */
 function besinFotoDugmeler(tx,yeniden){
-  var row=el("div","row");
-  var b=el("button",yeniden?"alt":null,t(yeniden?"besin.foto_yeniden":"besin.foto_ekle"));b.type="button";b.onclick=function(){besinFotoIste(tx,"foto",yeniden)};
-  var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){besinFotoIste(tx,"dosya",yeniden)};
+  var row=el("div","row bikon");
+  var b=besinIkonDugme(yeniden?"alt":"",yeniden?"besin.foto_yeniden":"besin.foto_ekle",BESIN_IKON.kamera);b.onclick=function(){besinFotoIste(tx,"foto",yeniden)};
+  var g=besinIkonDugme("alt","foto.dosya",BESIN_IKON.galeri);g.onclick=function(){besinFotoIste(tx,"dosya",yeniden)};
   row.appendChild(b);row.appendChild(g);return row;
+}
+/* Kartın üç işlevi yazısız ikon düğmesi; ad aria-label ve title (uzun basma / üzerine gelme ipucu) */
+var BESIN_IKON={
+  kalem:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  kamera:'<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/>',
+  galeri:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>'
+};
+function besinIkonDugme(cls,ad,yol){
+  var b=el("button",(cls?cls+" ":"")+"ikb");b.type="button";
+  b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+yol+'</svg>';
+  b.setAttribute("aria-label",t(ad));b.title=t(ad);return b;
 }
 function besinFotoIste(tx,inp,yeniden){BESIN_EKLE={taban:tx,n:null,t:Date.now(),son:null,yeniden:!!yeniden};$(inp).click()}
 /* Fotoğraf seçildi (fotoSec, OKU.n arttıktan sonra): bekleyen istek bu fotoğrafa bağlanır; başka bir fotoğraf istek biter */

@@ -153,7 +153,7 @@ async function scan(p,mode,text){
     await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:TAB})}));
     await p.route(/workers\.dev\/besin$/,r=>{besinG.push(r.request().postDataJSON());r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
     await p.unroute(/workers\.dev\/urun$/);await p.route(/workers\.dev\/urun$/,r=>{urunN++;r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
-    const tabloEkle=async()=>{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_ekle')).click())]);
+    const tabloEkle=async()=>{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.foto_ekle')).click())]);
       await fc.setFiles(path.join(R,'icon-192.png'));await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{})};
     await tabloEkle();
     for(let i=0;i<20&&!besinG.length;i++)await p.waitForTimeout(100);
@@ -182,7 +182,7 @@ async function scan(p,mode,text){
   // düzeltince renk; tablo fotoğrafı metnin sonuna eklenir ve aynı tarama güncellenir; elle düzeltme metne bağlı saklanır
   {
     const TABLO='İçindekiler: şeker, bitkisel yağ (palm), kakao, tuz.\nBesin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
-    const kart=()=>p.evaluate(()=>{const d=document.querySelector('#sonuc .besin');return d?{t:d.querySelector('.t').textContent,dz:[...d.querySelectorAll('.bdz')].map(x=>x.className.split(' ')[1]),deg:[...d.querySelectorAll('.bdeg')].map(x=>x.textContent),metin:d.textContent,btn:[...d.querySelectorAll('button')].map(b=>b.textContent)}:null});
+    const kart=()=>p.evaluate(()=>{const d=document.querySelector('#sonuc .besin');return d?{t:d.querySelector('.t').textContent,dz:[...d.querySelectorAll('.bdz')].map(x=>x.className.split(' ')[1]),deg:[...d.querySelectorAll('.bdeg')].map(x=>x.textContent),metin:d.textContent,btn:[...d.querySelectorAll('button')].map(b=>b.getAttribute('aria-label')||b.textContent)}:null});
     await p.evaluate(()=>localStorage.removeItem('besin_elle'));
     await scan(p,'gida',TABLO);
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
@@ -205,7 +205,7 @@ async function scan(p,mode,text){
     // Tablo yokken elle giriş (14.10.2026): boş form, birim seçilir, kaydedince renk ve "siz girdiniz"; metin değişmez
     {
       const m0=await p.inputValue('#metin');
-      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.elle_gir')).click());
+      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.elle_gir')).click());
       await p.waitForSelector('#sheet:not([hidden]) .bform');
       ok(await p.inputValue('#sheet input[data-alan="yag"]')===''&&!(await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].some(b=>b.textContent===t('besin.form.geri')))),'elle giriş: form boş, "okunan değerlere dön" yok');
       await p.evaluate(()=>[...document.querySelectorAll('#sheet .brad button')].find(b=>b.textContent==='100 g').click());
@@ -224,7 +224,7 @@ async function scan(p,mode,text){
       const n0=await p.evaluate(()=>histLoad().length);
       // Kaydedilmiş ürüne tablo eklenince kayıt yeni metne taşınır (ikinci kayıt açılmaz)
       await p.evaluate(()=>{localStorage.removeItem('kayitli');kayitStore(kayitAdd([],{id:'k1',t:Date.now(),mode:'gida',name:'Deneme',text:document.getElementById('metin').value,oz:null}))});
-      const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_ekle')).click())]);
+      const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.foto_ekle')).click())]);
       await fc.setFiles(path.join(R,'icon-192.png'));
       await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
       const m=await p.inputValue('#metin');
@@ -239,7 +239,7 @@ async function scan(p,mode,text){
       await p.unroute(ocrYol);
       await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:'Besin değerleri 100 g\nEnerji 1500 kJ / 360 kcal\nYağ 3 g\nDoymuş yağ 1 g\nKarbonhidrat 70 g\nŞekerler 4 g\nProtein 9 g\nTuz 0,9 g'})}));
       const n1=await p.evaluate(()=>histLoad().length);
-      const [fc2]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.foto_yeniden')).click())]);
+      const [fc2]=await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.foto_yeniden')).click())]);
       await fc2.setFiles(path.join(R,'icon-192.png'));
       await p.waitForSelector('#sheet:not([hidden]) .bform',{timeout:8000}).catch(()=>{});
       ok(await p.inputValue('#sheet input[data-alan="yag"]').catch(()=>'')==='3'&&await p.inputValue('#metin')===m&&(await kart()).deg[0]==='25,1 g','yeniden çekilen tablo formda, metin ve eski değerler kaydedilene kadar aynı');
@@ -258,7 +258,7 @@ async function scan(p,mode,text){
     k=await kart();
     ok(k&&/eşleşme|bulunamadı/i.test(await p.textContent('#sonuc')),'yalnızca tablo okunmuşsa: içerik bulunamadı notu + besin kartı');
     ok(k&&!k.dz.length&&/tutarlı görünmüyor/.test(k.metin)&&/100 g sütunu bulunamadı/.test(k.metin),'şüpheli tabloda renk yok, nedeni yazılı: '+JSON.stringify(k&&k.metin));
-    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.duzelt')).click());
     await p.waitForSelector('#sheet:not([hidden]) .bform');
     ok(await p.inputValue('#sheet input[data-alan="yag"]')==='25,1'&&await p.inputValue('#sheet input[data-alan="kcal"]')==='505','form okunan değerlerle dolu');
     await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
@@ -275,7 +275,7 @@ async function scan(p,mode,text){
     await scan(p,'gida','Su, tuz');await p.evaluate(t=>{HSCAN=true;document.getElementById('metin').value=t;run()},SUPHE);
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
     ok((await kart()).dz.length===4,'aynı metin yeniden açılınca düzeltme geri gelir');
-    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+    await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.duzelt')).click());
     await p.waitForSelector('#sheet:not([hidden]) .bform');
     await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.geri')).click());
     k=await kart();
@@ -306,7 +306,7 @@ async function scan(p,mode,text){
       await p.waitForFunction(()=>document.querySelectorAll('#sonuc .besin .bdz').length===4,null,{timeout:8000}).catch(()=>{});
       ok((await kart()).dz.length===4,'yedekten geri yüklenen kayıtta tablo');
       // Elle düzeltme kayda yazılır; düzeltme bu cihazdan silinse de (başka cihaz) kayıttaki elle değer önce gelir
-      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.textContent===t('besin.duzelt')).click());
+      await p.evaluate(()=>[...document.querySelectorAll('#sonuc .besin button')].find(b=>b.getAttribute('aria-label')===t('besin.duzelt')).click());
       await p.waitForSelector('#sheet:not([hidden]) .bform');
       await p.fill('#sheet input[data-alan="seker"]','4');
       await p.evaluate(()=>[...document.querySelectorAll('#sheet .bform button')].find(b=>b.textContent===t('besin.form.kaydet')).click());
