@@ -89,7 +89,7 @@ function kayitAc(){
   // Tür süzgeci
   var sg=el("div","seg kseg");sg.setAttribute("role","radiogroup");sg.setAttribute("aria-label",t("kayit.suzgec"));
   [["","kayit.tumu"],["gida","kayit.tur.gida"],["koz","kayit.tur.koz"],["tem","kayit.tur.tem"]].forEach(function(x){
-    var b=el("button",null,t("ortak.baslik_sayi",{ad:t(x[1]),n:say[x[0]]}));b.type="button";b.setAttribute("role","radio");b.setAttribute("data-m",x[0]);b.setAttribute("aria-checked",String(KAYIT_SUZ.mode===x[0]));
+    var b=el("button",null,t("ortak.baslik_sayi",{ad:t(x[1]),n:say[x[0]]}));b.type="button";b.setAttribute("role","radio");b.setAttribute("data-m",x[0]);if(x[0])b.setAttribute("data-tur",x[0]);b.setAttribute("aria-checked",String(KAYIT_SUZ.mode===x[0]));
     b.onclick=function(){KAYIT_SUZ.mode=x[0];kayitSuzKaydet();kayitAc()};sg.appendChild(b);
   });
   box.appendChild(sg);
@@ -143,7 +143,7 @@ function kayitKapat(){document.body.classList.remove("mode-kayit");$("kayit").hi
 function kayitSatir(k){
   var b=el("button","kitem kkayit");b.type="button";
   b.appendChild(el("span","kin",k.name));
-  var m=el("span","kis");m.appendChild(el("span","chip",t(KAYIT_TUR[k.mode])));m.appendChild(document.createTextNode(" "+kayitTarih(k.u||k.t)));b.appendChild(m);
+  var m=el("span","kis");var tc=el("span","chip turr",t(KAYIT_TUR[k.mode]));tc.setAttribute("data-tur",k.mode);m.appendChild(tc);m.appendChild(document.createTextNode(" "+kayitTarih(k.u||k.t)));b.appendChild(m);
   var oz=el("span","koz");
   if(k.oz){
     if(k.oz.u){oz.appendChild(cmpIcon(3));oz.appendChild(document.createTextNode(t("kars.say.uyari",{n:k.oz.u})+"  "))}
