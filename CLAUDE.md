@@ -1,7 +1,7 @@
 # Proje notları (Claude için)
 
 Bu dosya her yeni Claude oturumunda okunur. Güncel durum, kararlar ve çalışma kuralları burada.
-Son güncelleme: 15.10.2026 (global ad çakışması denetimi O-15, CI süre uyarısı O-16).
+Son güncelleme: 15.10.2026 (global ad çakışması denetimi O-15, CI süre uyarısı O-16, çevirmenin kaynak dili İngilizce O-12).
 
 ## Roller ve dil
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.
