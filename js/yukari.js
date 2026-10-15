@@ -5,7 +5,7 @@
      (geniş yeşil kutu) düşüyor ya da Ansiklopedi'de hiç görünmüyordu (14.10.2026). "button.yukari" sayfaların button kurallarını geçer.
      Alt menünün üstünde, alt sayfaların (z-index 40) altında. */
   var st=document.createElement("style");
-  st.textContent='button.yukari{position:fixed;inset-inline-end:16px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:30;width:48px;height:48px;min-height:0;margin:0;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:0;background:var(--ok,#1F4D3A);color:#fff;box-shadow:0 2px 6px rgba(27,33,30,.18),0 6px 18px rgba(27,33,30,.14);cursor:pointer}'+
+  st.textContent='button.yukari{position:fixed;inset-inline-end:16px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:30;width:48px;height:48px;min-height:0;margin:0;padding:0;display:flex;align-items:center;justify-content:center;border-radius:50%;border:0;background:var(--ok,#2741C8);color:#fff;box-shadow:0 2px 6px rgba(27,33,30,.18),0 6px 18px rgba(27,33,30,.14);cursor:pointer}'+
     'button.yukari[hidden]{display:none}button.yukari svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}';
   document.head.appendChild(st);
   var b=document.createElement("button");

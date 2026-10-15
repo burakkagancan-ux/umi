@@ -156,7 +156,7 @@ export const YONETIM_HTML = `<!doctype html>
 </main>
 <script src="/yonetim/sayfa.js"></script>
 </body></html>`;
-export const YONETIM_CSS = `:root{--ana:#1F4D3A;--cizgi:#E3E5E3;--sunk:#F1F2F1;--yazi:#1B1F1C;--soluk:#5D655F;--amb:#9A6700;--hi:#B4470F}
+export const YONETIM_CSS = `:root{--ana:#2741C8;--cizgi:#E3E5E3;--sunk:#F1F2F1;--yazi:#1B1F1C;--soluk:#5D655F;--amb:#9A6700;--hi:#B4470F}
 *{box-sizing:border-box}body{margin:0;background:#fff;color:var(--yazi);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
 header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--cizgi)}
 h1{font-size:20px;margin:0;color:var(--ana)}h2{font-size:17px;margin:18px 0 8px;color:var(--ana)}
