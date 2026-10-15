@@ -31,8 +31,9 @@ jobs:
       - name: Üreteçler ve testler
         if: steps.fark.outputs.var == '1'
         run: |
-          for g in gen_kozmetik gen_eslesmeler gen_temizlik; do python3 $g.py; done
-          for t in sozdizimi ocr_tolerans kozmetik_veri kozmetik_cases kozmetik_k3 temizlik karsilastir paylas; do node test/$t.js; done
+          python3 uret.py   # bütün üreteçler sırayla (kozmetik verisine bağlı ansiklopedi, çeviri ve rozet çıktıları da yenilenir)
+          node test/altin.js --guncelle | tee altin.txt   # CosIng değişikliği analiz sonucunu değiştirebilir; kaç durumun değiştiği PR'da görünür
+          node test/hepsi.js
       - name: PR aç
         if: steps.fark.outputs.var == '1'
         env:
@@ -42,13 +43,13 @@ jobs:
           git config user.name "tagsis-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -b "$dal"
-          git add kaynak/cosing data/
+          git add kaynak/cosing data/ i18n/ test/veri/altin_cikti.json.gz
           git commit -m "CosIng verisi güncellendi ($(cut -d' ' -f3 kaynak/cosing/surum.txt) tarihine kadarki yayınlar)"
           git push -f origin "$dal"
           # Bu PR'ı bot açtığı için Testler kendiliğinden çalışmaz; renk değişikliği denetiminin sonucu açıklamaya yazılır
           renk=$(python3 degisiklik_kaydi.py 2>&1 || true)
           gh pr create --base main --head "$dal" --title "CosIng güncellemesi $(date +%Y-%m)" \
-            --body "CosIng'den aylık indirme. Yeni bir AB değişikliği varsa kaynak/kozmetik_guncellemeler.tsv'ye Türkçe not ve Türkiye durumu eklenmeli (bkz. TEKNIK_BORC.md). Testler bu iş içinde çalıştı.
+            --body "CosIng'den aylık indirme. Yeni bir AB değişikliği varsa kaynak/kozmetik_guncellemeler.tsv'ye Türkçe not ve Türkiye durumu eklenmeli (bkz. TEKNIK_BORC.md). Testler bu iş içinde çalıştı. $(cat altin.txt 2>/dev/null)
 
           Renk değişiklikleri (O-05; KAYIT YOK satırı varsa birleştirmeden önce kaynak/degisiklik_kaydi.tsv'ye yazılıp python3 degisiklik_kaydi.py --guncelle çalıştırılmalı):
           \`\`\`

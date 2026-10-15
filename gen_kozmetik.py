@@ -24,18 +24,7 @@ from collections import defaultdict
 VERSION = "0.2.0"
 LAST_UPDATED = "2026-10-03"
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-
-def kaynak_json(ad):
-    """kaynak/ klasöründeki JSON veri dosyası"""
-    with open(os.path.join(HERE, "kaynak", ad), encoding="utf-8") as f:
-        return json.load(f)
-
-
-def kaynak_tsv(ad):
-    """kaynak/ klasöründeki TSV veri dosyası: boş ve '#' ile başlayan satırlar atlanır, sütunlar sekmeyle ayrılır."""
-    with open(os.path.join(HERE, "kaynak", ad), encoding="utf-8") as f:
-        return [ln.rstrip("\n").split("\t") for ln in f if ln.strip() and not ln.startswith("#")]
+from uretec_ortak import kaynak_json, kaynak_tsv   # ortak yardımcılar (uretec_ortak.py)
 
 
 OUT = os.path.join(HERE, "data", "kozmetik.json")

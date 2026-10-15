@@ -10,12 +10,8 @@ gen_ansiklopedi.py'den SONRA çalıştır.
 import json, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+from uretec_ortak import oku_json as oku   # ortak yardımcılar (uretec_ortak.py)
 TUR = {"food": "gida", "cosmetic": "koz", "cleaning": "tem"}
-
-
-def oku(p):
-    with open(os.path.join(HERE, p), encoding="utf-8") as f:
-        return json.load(f)
 
 
 def temiz(d):

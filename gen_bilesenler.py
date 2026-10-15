@@ -12,12 +12,7 @@ import json, re, os, datetime
 
 VERSION = "0.3.0"
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-
-def kaynak_json(ad):
-    """kaynak/ klasöründeki JSON veri dosyası"""
-    with open(os.path.join(HERE, "kaynak", ad), encoding="utf-8") as f:
-        return json.load(f)
+from uretec_ortak import kaynak_json, load_en   # ortak yardımcılar (uretec_ortak.py)
 
 
 OUT = os.path.join(HERE, "data", "bilesenler.json")
@@ -66,18 +61,6 @@ NEG_PREFIX = ["no", "non", "without", "no added", "free from", "contains no", "n
 AROMA_NEXT = ["aromasi", "aromali", "aroma", "esansi", "flavour", "flavouring", "flavor", "flavoring", "flavoured", "flavored"]
 
 # İngilizce eş anlamlılar: kaynak/ingilizce_esanlamlilar.tsv (hedef<TAB>ad<TAB>koşul<TAB>kaynak); E kodu satırlarını gen_e_kodlari.py okur.
-def load_en(path=os.path.join(HERE, "kaynak", "ingilizce_esanlamlilar.tsv")):
-    out = {}
-    with open(path, encoding="utf-8") as f:
-        for n, line in enumerate(f, 1):
-            line = line.rstrip("\n")
-            if not line.strip() or line.startswith("#"):
-                continue
-            p = line.split("\t")
-            assert len(p) == 4 and p[0] and p[1] and p[3], ("ingilizce_esanlamlilar.tsv satır %d" % n, line)
-            for h in p[0].split(","):
-                out.setdefault(h, []).append((p[1], p[2]))
-    return out
 EN = load_en()
 
 def main():

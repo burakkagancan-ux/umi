@@ -11,12 +11,7 @@ import json, os, datetime
 
 VERSION = "0.1.1"
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-
-def kaynak_tsv(ad):
-    """kaynak/ klasöründeki TSV veri dosyası: boş ve '#' ile başlayan satırlar atlanır, sütunlar sekmeyle ayrılır."""
-    with open(os.path.join(HERE, "kaynak", ad), encoding="utf-8") as f:
-        return [ln.rstrip("\n").split("\t") for ln in f if ln.strip() and not ln.startswith("#")]
+from uretec_ortak import kaynak_tsv   # ortak yardımcılar (uretec_ortak.py)
 
 
 # Açıklamalar: kaynak/e_aciklama.tsv. "@AD<TAB>metin" satırları ortak metindir; "E214<TAB>@PARABEN" o metni kullanır.

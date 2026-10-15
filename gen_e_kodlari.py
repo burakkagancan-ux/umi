@@ -22,12 +22,7 @@ import json, os, re
 VERSION = '0.3.1'
 LAST_UPDATED = '2026-10-04'
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-
-def kaynak_json(ad):
-    """kaynak/ klasöründeki JSON veri dosyası"""
-    with open(os.path.join(HERE, "kaynak", ad), encoding="utf-8") as f:
-        return json.load(f)
+from uretec_ortak import kaynak_json, load_en   # ortak yardımcılar (uretec_ortak.py)
 
 
 OUT = os.path.join(HERE, "data", "e_kodlari.json")
@@ -208,21 +203,6 @@ def apply_verify(rec, review):
 # İngilizce eş anlamlılar (08.10.2026, B-08): kaynak/ingilizce_esanlamlilar.tsv. hedef<TAB>ad<TAB>koşul<TAB>kaynak.
 # E kodu satırları "aliases_en" alanına (koşul "en" ise "en_only"; hedef virgülle birden çok kod olabilir); bileşen satırlarını gen_bilesenler.py okur.
 EN_TSV = os.path.join(HERE, "kaynak", "ingilizce_esanlamlilar.tsv")
-
-
-def load_en(path=EN_TSV):
-    out = {}
-    with open(path, encoding="utf-8") as f:
-        for n, line in enumerate(f, 1):
-            line = line.rstrip("\n")
-            if not line.strip() or line.startswith("#"):
-                continue
-            p = line.split("\t")
-            assert len(p) == 4 and p[0] and p[1] and p[3], ("ingilizce_esanlamlilar.tsv satır %d: 4 sütun, ad ve kaynak dolu olmalı" % n, line)
-            assert p[2] in ("", "en"), ("ingilizce_esanlamlilar.tsv satır %d: koşul boş ya da 'en'" % n, line)
-            for h in p[0].split(","):          # birden çok E kodu: "E1404,E1410"
-                out.setdefault(h, []).append((p[1], p[2]))
-    return out
 
 
 EN = load_en()

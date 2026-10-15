@@ -11,13 +11,9 @@ Uygulamanın kimliği (id) bütün dillerde aynı: dil değişince ana ekrandaki
 import json, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+from uretec_ortak import oku_json as oku   # ortak yardımcılar (uretec_ortak.py)
 I18N = os.path.join(HERE, "i18n")
 KAYNAK_DIL, YEDEK_DIL = "tr", "en"
-
-
-def oku(p):
-    with open(p, encoding="utf-8") as f:
-        return json.load(f)
 
 
 def manifest(kod, bilgi, sozluk, kok):
