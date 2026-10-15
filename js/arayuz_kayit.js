@@ -1,8 +1,8 @@
 /* Arayüz: kaydedilen ürünler. Sonuç barında "Kaydet", Profilim'de "Kaydedilen Ürünlerim" ekranı (tür süzgeci, arama, sıralama,
    aç / karşılaştır / yeniden adlandır / sil, yedekle / geri yükle). Saf mantık js/kayit.js. Kayıtlar yalnızca bu cihazda. */
 var KAYIT_ACILAN=null;   // listeden açılan kaydın kimliği: sonuç çizilince değerlendirme değişti mi bakılır
-function kayitLoad(){try{var a=JSON.parse(localStorage.getItem("kayitli")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
-function kayitStore(a){try{localStorage.setItem("kayitli",JSON.stringify(a));return true}catch(e){return false}}
+function kayitLoad(){return depoDizi("kayitli")}
+function kayitStore(a){return depoYaz("kayitli",a)}
 function kayitGet(id){return kayitLoad().filter(function(x){return x.id===id})[0]||null}
 function kayitTarih(ms){return dilTarih(ms,"gun")}
 /* Ekrandaki sonucun özeti (veri yüklüyse) */
@@ -80,7 +80,7 @@ function kayitProfil(){
 
 /* ---------- Kaydedilen Ürünlerim ekranı ---------- */
 var KAYIT_SUZ={mode:"",q:"",sira:"yeni"};
-try{var ks=JSON.parse(localStorage.getItem("kayit_suz")||"null");if(ks&&typeof ks==="object"){KAYIT_SUZ.mode=KAYIT_TUR[ks.mode]?ks.mode:"";KAYIT_SUZ.sira=["yeni","ad","risk"].indexOf(ks.sira)>-1?ks.sira:"yeni"}}catch(e){}
+(function(){var ks=depoJson("kayit_suz",null);if(ks&&typeof ks==="object"){KAYIT_SUZ.mode=KAYIT_TUR[ks.mode]?ks.mode:"";KAYIT_SUZ.sira=["yeni","ad","risk"].indexOf(ks.sira)>-1?ks.sira:"yeni"}})();
 function kayitAc(){
   var box=$("kayit");box.textContent="";
   var bk=el("button","alt kback",t("kayit.geri"));bk.type="button";bk.onclick=kayitKapat;box.appendChild(bk);
@@ -137,7 +137,7 @@ function kayitAc(){
   r2.appendChild(ex);r2.appendChild(im);r2.appendChild(fi);yd.appendChild(r2);yd.appendChild(ym);box.appendChild(yd);
   document.body.classList.add("mode-kayit");box.hidden=false;window.scrollTo(0,0);bk.focus();
 }
-function kayitSuzKaydet(){try{localStorage.setItem("kayit_suz",JSON.stringify({mode:KAYIT_SUZ.mode,sira:KAYIT_SUZ.sira}))}catch(e){}}
+function kayitSuzKaydet(){depoYaz("kayit_suz",{mode:KAYIT_SUZ.mode,sira:KAYIT_SUZ.sira})}
 function kayitKapat(){document.body.classList.remove("mode-kayit");$("kayit").hidden=true;window.scrollTo(0,0)}
 /* Liste satırı: ad, tür, tarih, özet; dokununca işlemler */
 function kayitSatir(k){

@@ -3,8 +3,8 @@ var HCUR=null,HSCAN=true,HOCR=false,CMP_IDS=null;   // HCUR: ekrandaki taramanı
 // Mod değişince kutudaki metin yeni modda yeniden analiz edilir. HMOD: "gor" sekmeyle geçiş (geçmişe yazılmaz, tarama kendi türünde kalır),
 // "tasi" öneri kartıyla geçiş ("Kozmetik olarak analiz et": ekrandaki tarama yeni türe taşınır). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır.
 var HMOD=null;
-function histLoad(){try{var a=JSON.parse(localStorage.getItem("taramalar")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
-function histStore(a){try{localStorage.setItem("taramalar",JSON.stringify(a))}catch(e){}}
+function histLoad(){return depoDizi("taramalar")}
+function histStore(a){depoYaz("taramalar",a)}
 /* Kayıtlı ürünler de karşılaştırılabilir: kimlik geçmişte yoksa kayıtlarda aranır (js/arayuz_kayit.js) */
 function histGet(id){return histLoad().filter(function(x){return x.id===id})[0]||(typeof kayitGet==="function"?kayitGet(id):null)}
 function histRename(id,name){var a=histLoad();a.forEach(function(x){if(x.id===id)x.name=name});histStore(a);

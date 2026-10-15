@@ -3,12 +3,12 @@
    - Eksik ürünler: çok aranan ama içeriği olmayan barkodlar; "Bu ürün elimde" barkodu Etiket Oku'da açar, içerik fotoğrafı istenir.
    - Arama bildirimi: barkodda içerik bulunamayınca (barkodYok) barkod ve tür bir kez POST /aranan ile bildirilir; kimlik gitmez. */
 var TOPLULUK_SUZ=null;   // ekrandaki tür süzgeci (açılışta seçili mod)
-function arananLoad(){try{var l=JSON.parse(localStorage.getItem("aranan")||"[]");return Array.isArray(l)?l:[]}catch(e){return []}}
+function arananLoad(){return depoDizi("aranan")}
 /* barkodYok çağırır: içerik bulunamayan barkod bu cihazdan bir kez bildirilir; sunucu kaç kez arandığını döndürürse goster(n) */
 function arananBildir(kod,tur,goster){
   if(!OCR_URL)return Promise.resolve(null);
   var l=arananEkle(arananLoad(),kod);if(!l)return Promise.resolve(null);
-  try{localStorage.setItem("aranan",JSON.stringify(l))}catch(e){}
+  depoYaz("aranan",l);
   return barkodWorker("/aranan",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:kod,tur:tur})}).then(function(j){
     if(j&&+j.n>1&&goster)goster(+j.n);
     return j;

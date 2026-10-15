@@ -49,4 +49,4 @@ function veriGoc(depo,hedef){
   return {once:once,simdi:v,adim:v-once,ileri:false};
 }
 // Tarayıcıda yüklenir yüklenmez çalışır (node testlerinde window yok)
-if(typeof window!=="undefined")try{veriGoc(window.localStorage)}catch(e){}
+if(typeof window!=="undefined")try{var _d=depoArka();if(_d)veriGoc(_d)}catch(e){}   // arka uç js/depo.js

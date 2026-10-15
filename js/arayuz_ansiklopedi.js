@@ -18,13 +18,13 @@ function notr(r){return r.risk_level==="green"&&!(r.production&&r.production.cla
 function rico(r){return RICON[notr(r)?"notr":r.risk_level]}
 var PWICON='<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.5" fill="#fff"/>';
 function tarih(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?dilTarih(Date.UTC(+m[1],m[2]-1,+m[3],12),"gun"):""}
-function prof(){try{return JSON.parse(localStorage.getItem("profil")||"null")}catch(e){return null}}
-function marks(){try{var a=JSON.parse(localStorage.getItem("yerimleri")||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
-function setMarks(a){try{localStorage.setItem("yerimleri",JSON.stringify(a))}catch(e){}}
+function prof(){return depoJson("profil",null)}
+function marks(){return depoDizi("yerimleri")}
+function setMarks(a){depoYaz("yerimleri",a)}
 function link(r){return "ansiklopedi.html?m="+encodeURIComponent(r.slug)}
 /* Rozetler (js/arayuz_rozet.js): açılan her farklı madde sayfası o türün Okur rozetine sayılır; okunan sayfa listede işaretli */
 var ATUR={food:"gida",cosmetic:"koz",cleaning:"tem"},AOKU="gida";   // AOKU: tür süzgecinin seçimi (localStorage "ans_tur")
-try{var _at=localStorage.getItem("ans_tur");if(_at==="gida"||_at==="tem")AOKU=_at}catch(e){}
+(function(){var _at=depoMetin("ans_tur");if(_at==="gida"||_at==="tem")AOKU=_at})();
 function ansTur(r){return ATUR[r.product_types[0]]||"gida"}
 /* Tür etiketi (tema.css .turr): arama sonucunda adı aynı olan gıda ve temizlik maddesi renkle ve adla ayrılır */
 function turEtiket(r){var e=h("span","turr",t("kayit.tur."+ansTur(r)));e.setAttribute("data-tur",ansTur(r));return e}
@@ -166,7 +166,7 @@ function turSecici(ciz){
     var b=h("button");b.type="button";b.id="tur-"+x[0];b.setAttribute("data-tur",x[0]);b.setAttribute("role","radio");b.setAttribute("aria-checked",AOKU===x[0]?"true":"false");
     b.appendChild(h("span",null,t("kayit.tur."+x[0])));
     if(!x[1]){b.setAttribute("aria-disabled","true");b.appendChild(h("small",null,t("ans.cok_yakinda")))}
-    else b.onclick=function(){if(AOKU===x[0])return;AOKU=x[0];try{localStorage.setItem("ans_tur",AOKU)}catch(e){}ARISK="";GACIK={};
+    else b.onclick=function(){if(AOKU===x[0])return;AOKU=x[0];depoYazMetin("ans_tur",AOKU);ARISK="";GACIK={};
       [].forEach.call(s.querySelectorAll("button"),function(y){y.setAttribute("aria-checked",y.id==="tur-"+AOKU?"true":"false")});ciz()};
     s.appendChild(b);
   });

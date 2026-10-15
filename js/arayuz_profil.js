@@ -1,13 +1,13 @@
 /* Arayüz: Profilim (seçimler, kişisel bilgiler, BKİ, elle eklenen alerjenler, ayarlar, hakkında). Klasik betik; arayuz_ortak.js'ten sonra.
    Profil kartlarının kuralları saf mantıkta (js/profil_kart.js); burada yalnızca Profilim ekranı ve PROF. */
 var PROF={al:[],alOzel:[],lactose:false,koku:false,astim:false,preg:false,emziriyorum:false,baby:false,child:false,vegan:false,veg:false,pku:false,pet:false,salt:false,cinsiyet:"",yas:null,boy:null,kilo:null};
-try{var sp=JSON.parse(localStorage.getItem("profil")||"null");if(sp&&sp.al)Object.keys(sp).forEach(function(k){PROF[k]=sp[k]})}catch(e){}
+(function(){var sp=depoJson("profil",null);if(sp&&sp.al)Object.keys(sp).forEach(function(k){PROF[k]=sp[k]})})();
 /* Seçenek: [profil alanı, çeviri anahtarı] */
 var LIFE=[["baby","profil.secenek.baby"],["child","profil.secenek.child"],["preg","profil.secenek.preg"],["emziriyorum","profil.secenek.emziriyorum"],["vegan","profil.secenek.vegan"],["veg","profil.secenek.veg"],["pet","profil.secenek.pet"]];
 var OTHER=[["lactose","profil.secenek.lactose"],["koku","profil.secenek.koku"],["astim","profil.secenek.astim"],["salt","profil.secenek.salt"],["pku","profil.secenek.pku"]];
 /* Profilim'in altındaki sorumluluk reddi beyanı (metin i18n dosyalarında profil.sorumluluk.1-4) */
 var SORUMLULUK=["profil.sorumluluk.1","profil.sorumluluk.2","profil.sorumluluk.3","profil.sorumluluk.4"];
-function saveProf(){try{localStorage.setItem("profil",JSON.stringify(PROF))}catch(e){}}
+function saveProf(){depoYaz("profil",PROF)}
 function buildProfile(){
   var box=$("profil");box.textContent="";
   if(!BDB){box.appendChild(el("div","mut",t("profil.bilesen_gerekli")));return}
@@ -69,12 +69,12 @@ function buildProfile(){
   // Dil: seçim localStorage "dil"de; sayfa o dilde yeniden yüklenir (i18n/diller.json'daki her dil kendi adıyla)
   var dl=el("label","pn"),ds=document.createElement("select");ds.id="dilsec";ds.setAttribute("aria-label",t("profil.dil"));
   Object.keys(DIL.bilgi).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=DIL.bilgi[k].ad;op.lang=k;if(k===DIL.kod)op.selected=true;ds.appendChild(op)});
-  ds.onchange=function(){try{localStorage.setItem("dil",ds.value)}catch(e){}location.reload()};
+  ds.onchange=function(){depoYazMetin("dil",ds.value);location.reload()};
   dl.appendChild(el("span",null,t("profil.dil")));dl.appendChild(ds);ay.appendChild(dl);
   // Ülke: seçim localStorage "ulke"de ("" = seçilmedi); ülkeye özgü kartlar ve notlar buna göre gösterilir
   var ul=el("label","pn"),us=document.createElement("select");us.id="ulkesec";us.setAttribute("aria-label",t("profil.ulke"));
   [""].concat(ULKELER.slice().sort(function(a,b){return t("ulke.ad."+a.toLowerCase()).localeCompare(t("ulke.ad."+b.toLowerCase()),DIL.kod)})).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
-  us.onchange=function(){try{localStorage.setItem("ulke",us.value)}catch(e){}ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
+  us.onchange=function(){depoYazMetin("ulke",us.value);ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
   ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);ay.appendChild(ul);
   if(typeof barkodAyarKutusu==="function")ay.appendChild(barkodAyarKutusu());   // barkodlu ürün katkısı tercihi
   ay.parentNode.appendChild(el("div","how",t("profil.dil_not")+" "+t("profil.ulke_not")));

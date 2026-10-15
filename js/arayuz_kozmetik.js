@@ -1,7 +1,7 @@
 /* Arayüz: kozmetik sonuç ekranı. */
 /* ---------- Kozmetik modu ---------- */
 var MODE="gida",PTYPE="",KDB=null,KINCI=null,KIDX=null,KLOAD=null;
-try{var tu=localStorage.getItem("tur");MODE=tu==="koz"||tu==="tem"?tu:"gida";PTYPE=localStorage.getItem("ktip")||""}catch(e){}
+(function(){var tu=depoMetin("tur");MODE=tu==="koz"||tu==="tem"?tu:"gida";PTYPE=depoMetin("ktip")||""})();
 function loadK(){
   if(KIDX)return Promise.resolve(KIDX);
   if(KLOAD)return KLOAD;
@@ -21,7 +21,7 @@ function setMode(m,save,tasi){
   $("ptype").hidden=m!=="koz";
   $("karsla").hidden=!KARS_AYAR.acik;
   $("camtxt").textContent=t("foto.kamera_"+(m==="koz"?"koz":m==="tem"?"tem":"gida"));
-  if(save)try{localStorage.setItem("tur",m)}catch(e){}
+  if(save)depoYazMetin("tur",m);
   if(typeof rozetSimgeGuncelle==="function")rozetSimgeGuncelle();   // üstteki simge seçili türün rozeti
   ST.textContent=STMSG[m]||t((m==="koz"?"koz":m==="tem"?"tem":"gida")+".yukleniyor");
   if(m==="koz")loadK().then(function(){if($("metin").value.trim())run()},function(){});
@@ -35,7 +35,7 @@ document.querySelectorAll("#ptype button").forEach(function(b){
   b.onclick=function(){
     PTYPE=PTYPE===b.getAttribute("data-p")?"":b.getAttribute("data-p");
     document.querySelectorAll("#ptype button").forEach(function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-p")===PTYPE))});
-    try{localStorage.setItem("ktip",PTYPE)}catch(e){}
+    depoYazMetin("ktip",PTYPE);
     if(MODE==="koz"&&$("metin").value.trim())run();
   };
   b.setAttribute("aria-pressed",String(b.getAttribute("data-p")===PTYPE));
