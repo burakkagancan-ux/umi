@@ -305,5 +305,26 @@ Potassium 450 mg 10 %`;
   const wk=W.besinKatki({b:ay(US).b,lt:{},birim:'g',por:ay(US).por});
   ok(wk&&wk.por&&wk.por.m===55&&!('por' in W.besinKatki({b:{yag:1,tuz:1},birim:'g'})),'Worker porsiyon bilgisini saklar '+j(wk&&wk.por));
 }
+// 6) Gerçek etiket seti (A-02 4. adım, test/veri/besin_etiketler.json; ölçüm: node test/olcum_besin.js): emin olunmayan renk gösterilmez.
+// Renk gösterilen her satırın düzeyi, fotoğraftan elle okunan değerin düzeyiyle aynı olmalı.
+{
+  const E=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_etiketler.json'),'utf8')).etiketler;
+  for(const e of E){
+    const r=ay(e.metin);if(!r)continue;
+    const g=B.besinGorunum({b:r.b,lt:r.lt,birim:r.birim,sorun:r.sorun,por:r.por});if(!g||!g.renk)continue;
+    const c=e.porsiyon?100/e.porsiyon:1;
+    for(const s of g.satir){if(!s.duzey)continue;const v=e.d[B.BESIN_ALAN.indexOf(s.alan)];
+      ok(v!=null&&B.besinDuzey(s.alan,v*c,false,e.birim||'g')===s.duzey,`gerçek etiket ${e.id} (${e.ad}): ${s.alan} ${s.v} → ${s.duzey}, etikette ${v}`)}
+  }
+  // Düzeltmeler: başlık sırası karışık (porsiyon sütunu 100 g sanılıyordu), kayık satır (kJ/kcal tutmuyor), "Tuz/Sodyum" tek satır, alt alta adlar
+  const bul=id=>ay(E.find(e=>e.id===id).metin);
+  let r=bul('IMG_3955');ok(r&&r.b.yag===17.2&&r.b.tuz===1.6&&r.durum==='tamam','başlıkta porsiyon önce okunmuş: 100 g sütunu değerlerden bulunur '+j(r&&r.b));
+  r=bul('IMG_3952');ok(r&&r.b.seker===9.1&&r.durum==='tamam','porsiyon (50g) sütunu 100 g sanılmaz '+j(r&&r.b));
+  r=bul('IMG_3951');ok(r&&r.sorun.includes('enerji_cift')&&r.durum==='suphe','kJ/kcal tutmayan enerji hücresi (satırlar kaymış) şüpheli '+j(r&&r.sorun));
+  r=bul('IMG_3935');ok(r&&r.b.tuz===0.78,'"Tuz/Sodyum 0.78/0.31": tuz 0,78 '+j(r&&r.b));
+  r=bul('IMG_3954');ok(r&&r.sorun.includes('sutun_sira'),'adlar alt alta, değerler son satırda: şüpheli '+j(r&&r.sorun));
+  r=ay('Enerji ve Besin Öğeleri 1 porsiyon için 100 g için\nYağ 4,3 g 17,2 g\nDoymuş yağ 0,4 g 1,7 g\nŞekerler 2,0 g 7,8 g\nTuz 0,4 g 1,6 g');
+  ok(r&&r.sorun.includes('sutun_belirsiz')&&r.durum==='suphe','porsiyon gramı yoksa 100 g sütunu doğrulanamaz: şüpheli '+j(r&&r.sorun));
+}
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

@@ -1,0 +1,524 @@
+{
+ "meta": {
+  "aciklama": "A-02 4. adım ölçüm seti: gerçek besin tablosu fotoğraflarının (kullanıcı, 15.10.2026) Google Cloud Vision çıktısı (uygulamanın Worker'ı, 1800 px JPEG) ve fotoğraftan elle okunan doğru değerler. Fotoğraflar depoda değil.",
+  "alanlar": "d: [kcal, yag, doymus, karb, seker, lif, protein, tuz] 100 g (birim \"ml\" ise 100 ml) başına; null = etikette yok ya da okunamıyor. porsiyon: etikette yalnızca porsiyon sütunu var, d porsiyon başına.",
+  "tarih": "2026-10-15"
+ },
+ "etiketler": [
+  {
+   "id": "IMG_3928",
+   "ad": "VeganMilk Cheez (100 g + %RA)",
+   "d": [
+    209,
+    18.8,
+    16.7,
+    7.9,
+    2.8,
+    1.2,
+    1.4,
+    1.1
+   ],
+   "metin": "Net: 250ge\n100 g için\nRA\nEMERU VE\nBESIN ÖGELER\n100 g ipin\nEnerji (kJ/kcal)\n871/209\n% 10,4\nYang Call\n18,8\n% 26,9\nDoymus ved (g)\n16,7\n% 83,5\nKarbonhidrat (g)\n7,9\nSekerler ()\n2,8\n%31\n1,2\n% 4,6\nProtein (g\n1,4\n% 2,7\nTu\n11\n%18,3\n% 3,0\n\"Degerler ortalama bir yetişkinin referans alm\n(RA) düzeyini belirtir. (8400 kJ/2000 kcal)\nAmbalajı şişmiş veya hasar görmüş\nürünleri satın almayınız.\n+4C,+8C aralığında buzdolabında muhafaza ediniz. Güneşten koruyunuz\nÜretim Parti No ve Son Tüketim Tarihi (STT) bilgileri kapak etiketinin üzerindedi\nİÇİNDEKİLER: Su, Hindistan Cevizi Yağı, Badem Püresi, Meyve Li, Seler\nBezelye Proteini, Tuz, Kiwam arttına (Gellan Gum), Cheddar aromas, Ma\nEkstrakti, Beta Karoten. Alerjen Uyarısı: Eser miktarda sert kabukla\nmeyveler içerebilir.\nBitkisel Bazlı Cheddar Aromalı Sürülebilir Kıvamda Yiyecek.\nVeganMilk bitkisel içerikli olarak Hindistan Cevizi ve Badem bazından sunb\nkrem kıvamında Cheez Creamy'yi sizler için hazırladı. Labne aromalı ve Chedd\naromalı çeşitleriyle vegan Cheez Creamy'yi kahvaltılannada, ekmek istine\nsürerek, atıştırmalıklanınızın üzerinde, ikramlik kanepelerinizin üzerinde met\nçeşidi olarak mezelerle, salatalar ve yemeklerinizin sos yapımında ve sand\nekmeklerinin içerilerine sürerek lezzetler elde edebilirsiniz."
+  },
+  {
+   "id": "IMG_3930",
+   "ad": "Çubuk turşusu (TR/EN, lif yok)",
+   "d": [
+    9,
+    0.07,
+    0,
+    1.86,
+    0.96,
+    null,
+    0.38,
+    2.5
+   ],
+   "metin": "ÇUBUK TURŞUSU\nÇUBUK PICKLE\nENERJİ VE BESİN ÖĞELERİ\n100g-\nNUTRITION VALUES (PER 100g)\nIçin\nEnerji Energy (kJ/kcal)\n38/9\nYağ (g) | Fat (g)\n0,07\n■ Doymuş yağ (a) | Saturates (g)\n0\nKarbonhidrat (g) | Carb (g)\n1,86\n■ Şekerler (g) | Sugars (g)\n0,96\nProtein (g)\n0,38\nTuz (g) | Salt (g)\n2,5\nTÜRK GIDA KODEKSİNE UYGUNDUR.\nYERLİ\nTOMO\nBURETIM\nTavsiye Edlen\nPark Mo Ambalajdar\nSerin v\nAmbalajar\nlower"
+  },
+  {
+   "id": "IMG_3931",
+   "ad": "Kühne tatlı-ekşi turşu (küçük yazı, %RA)",
+   "d": [
+    29,
+    0.1,
+    0.0,
+    7.5,
+    4.7,
+    0.5,
+    1.8,
+    1.5
+   ],
+   "metin": "22\nKühne\nTatlı-Ekşi\nKarışık Turşu\ngaleri\n100p\nQwic Fine Tu\n123/29\nYağ ig\n01\nKarbon 73\n147\nLig\n0.5\nTHE\n1,5\n360g\nNet\n640ge"
+  },
+  {
+   "id": "IMG_3926",
+   "ad": "BİM tahin (kcal/kJ ters, trans yağ)",
+   "d": [
+    682,
+    62,
+    10.3,
+    1.3,
+    0,
+    7.57,
+    25.9,
+    0.3
+   ],
+   "metin": "İçindekiler: Susamdan mamüldür.\nKullanmadan önce iyice çalkalayınız.\nYağ ayrışması bozulma sebebi değildir.\nAlerjen Uyarısı: Susam Ürünüdür.\nSeri No, Üretim ve Tavsiye Edilen Tüketim Tarihi (TETT)\nambalajın üzerindedir. Serin ve kuru yerde saklayınız\nMenşe Ülke: Ithal hammadde kullanılarak Türkiye'de üretilmiştir.\nGıda İşletmecisi: BIM Birleşik Mağazalar A.Ş.\nAbdurrahmangazi Mah. Ebubekir Cad. No:73 Sancaktepe/istanbul\n600g\nBu ürün (Progida Tanm\nÜrünleri Sanayi ve\nTicaret A.Ş. tarafindan\nBİM Birleşik Mağazalar\nA.S. adına üretilmiştir.\nÜretici adresi:\nŞabanoğluosb\nMahallesi Yaşarda\nCaddesi No:17/1\nEnerji ve Besin Değerleri\nEnerji\n100g için\n682 kcal/2667k\nYad\n62 g\nTAHIN\n-Doymuş Yağ\n10,3 g\nTrans Yağ\nKarbonhidrat\nOg\n1,3g\nOg\nLIF\n7,57 g\nProtein\n25,9 g\n444\n0,3 g\nSekerler\nTekkeköy/SAMSUN\nIşletme Kayıt No\nTR-55-K-014214\nÜretici Tel/taks\nNo: +90 362268"
+  },
+  {
+   "id": "IMG_3925",
+   "ad": "Mevsimlik fasulye turşusu (lif en sonda)",
+   "d": [
+    28,
+    0.3,
+    0.14,
+    4.1,
+    1.4,
+    1.7,
+    1.3,
+    3.83
+   ],
+   "metin": "iplik\nUrsusu\nİçindekiler: Fasulye, Kaya Tuzu,\nSu, Üzüm Sirkesi, Sarımsak\nAçıldıktan sonra 6 ay içerisinde Enerji ve Besin Öğeleri 100g için\ntüketilmesi tavsiye edilir.\nSerin yerde saklayınız.\nGüneş ışığında bırakmayınız.\nAçıldıktan sonra buzdolabında\nmuhafaza ediniz.\nAsitleri (g)\nEnerji (kJ ve kcal)\n116/28\nYağ (g)\n0,3\nDoymuş yağ\n0,14\nKarbonhidrat (g)\n4,1\nŞeker(Toplam) (g)\n1,4\nProtein (g)\n1,3\nMEVSİMLİK GIDA ÜRÜN. PAZ. SAN.\nTuz (g)\n3,83\nve TİC. LTD. ŞTİ.\nDiyet Lif\n1,7\nGluten ve yumurta içeren gida\nile aynı hatta üretilmiştir.\nBahçelievler Mh. Ergenekon Sk. No:11/A Merkez/ZONGULDAK\nS.T.T.: 21.07.2021 Işletme Kayıt No: TR-67-K-008079\nS.T.T. PARTİ NUMARASIDIR.\nMenşei: TÜRKİYE"
+  },
+  {
+   "id": "IMG_3932",
+   "ad": "Ülker gofret (DE/FR/NL/SV, Türkçe yok)",
+   "d": [
+    575,
+    36,
+    19,
+    57,
+    36,
+    2.4,
+    5.0,
+    0.22
+   ],
+   "metin": "ÜLKER\nCikolatalı\nGOFRET\nNährwerte / Information nutritionnelle /\nVoedingswaarde informatie / Näringsinformation\nEnergie / Énergie / Energie / Energi\nFett/Matières Grasses / Vetten / Fett\ndavon gesättigte Fettsäuren / dont acides gras saturés /\nwaarvan verzadigde vetzuren / varav mättat fett\nKohlenhydrate/Glucides / Koolhydraten/Kolhydrat\nper 100 g / in 100 g\npour 100 g\n(kJ/kcal) 2397/575\n(g)\n36\n(g)\n19\n(q)\n57\n36\n(g)\n2,4\n(g)\n5,0\n(g)\n0,22\ndavon Zucker/dont sucres/waarvan suikers / varav sockerarter (g)\nBallaststoffe/Fibres alimentaires/Vezels / Fiber\nEiweiß/Protéines / Eiwitten / Protein\nSalz/Sel/Zout/Salt\nWaffelriegel mit Milchschokolade 36% und Haselnuss- Kakaocreme 43%, Zutaten: Zucker, Welzenmehl, pflanzliche Fette Palm, ganz\ngehänet Palm Palmkem, Haselnussmark (10%), Vollmilchpulver, Kakaobutter, Kakaomasse, Stärke, Molkenerzeugnis Milch), Emulgatoren\nAmmoniumphosphatide, Polyglycerin-Polyricinoleat, Sojalecithine Speisesalz, Magerkakaopulver Magermilchpulver, Eiklarpulver, Aroma,\nBack Ammarbonate Dinathundphosphat Kann Spuren von anderen Nüssen und Erdnüssen enthalten. Enthält keine Zutaten von Schwein\nKühl und trocken lagen. Vor direkten Sonnenlicht schützen."
+  },
+  {
+   "id": "IMG_3942",
+   "ad": "Gürcüce/TR, 100 g + porsiyon (RA)",
+   "d": [
+    548,
+    34.5,
+    5.0,
+    51.4,
+    0.5,
+    3.9,
+    5.9,
+    1.4
+   ],
+   "metin": "ägðamaбnds: zañóng, bodobgob gae, &fogo\nEnerji ve Besin Ögeleri/\n100 g\nNutrition Facts\nİçin\n1 porsiyon (25)\nkin (RA\nEnerji / Energy\n2282 kl\n548 keal\nYag/Fal\n3458\nDoymuş yak/Saturated Fat\n5.0 g\n571 kl\n137 kcal (47)\n86g(%12)\n1,3g (%)\nTrans ya Trans Fat\n0,03 g\n0,01 g\nKarbonhidrat/ Carbohydrate\n51,48\n12.9 g (55)\nŞekerler / Sugars\n058\n3,96\n0.1g\n1,0g (%4)\nLif/Fiber\n5.91\n15g (85)\nProtein\nTuz/Salt\n148\n0,4 g (966)\n+ icindeki toplam yağın 100 g'inda"
+  },
+  {
+   "id": "IMG_3929",
+   "ad": "Badem ezmesi (TR/EN, eğik sıfırlı yazı)",
+   "d": [
+    619,
+    54,
+    5.1,
+    18.5,
+    4,
+    14.4,
+    22,
+    0.1
+   ],
+   "metin": "ek miktarda\nALSIYUM\nPOTASYUM\nMAGNEZYUM\nLIF\niçerir!\nİçindekiler/Ingredients:\nBadem/Almond\nEnerji ve Besin Öğeleri\n100 g için\nVitamin v\nNutrition Information\nper 100 g\nVitamins\nEnerji Energy (kcal/kj]\n619/2592\nKalsiyum\nYağ / Fat (g)\n54\nPotasyu\nDoymuş Yağ Saturated Fat (g)\n5.1\nMagnezyu\nŞekerler / Sugars [g]\nKarbonhidrat / Carbonhydrate (g) 18.5\n4\nLif Fibre [g]\n14.4\n22\n8.1\nBAHCE.COM\nProtein (g)\nTuz Salt (g)\nDoğal yağı yukarı çıkabilir, karıştırarak tüketiniz.\nŞeker ilavesizdir. Doğal olarak şeker içerir.\nGlüten içermez. Koruyucu içermez.\nZARI SOYULMUŞ! BLANCHED! O\nZA"
+  },
+  {
+   "id": "IMG_3937",
+   "ad": "Porsiyon (30 g) önce, 100 g sonra; parlama",
+   "d": [
+    440,
+    17,
+    9.0,
+    67,
+    null,
+    1.6,
+    5.8,
+    0.4
+   ],
+   "not": "şeker 100 g hücresi parlamada (40/41)",
+   "metin": "Lif/Fibre\n-Şekerler/of which Sugars\nKarbonhidrat /Carbohydrate\nEnerji ve Besin Öğeleri 1 porsiyon için (30 g)* (100g için)\nNutrition Information\nEnerji / Energy\nYağ / Fat\nPer portion (30 g) Per 100 g)\n- Doymuş Yağ / of which Saturates 9 27\nYağ/of\nkcal 132\n440\ng 5.1\n17\n9,0\ng\n20\n67\ng\n12\nProtein\n9\n0,48\n16\ng\nTuz/Salt\n1,7\n5.8\nC\ng\n0.12\n0.40\n*Bir paket 1 porsiyondur./ One pack is 1 portion.\ntun"
+  },
+  {
+   "id": "IMG_3936",
+   "ad": "Tek sütun (100g'da), trans yağ",
+   "d": [
+    450,
+    17,
+    9.4,
+    66,
+    21,
+    5.1,
+    6.1,
+    0.9
+   ],
+   "metin": "Enerji ve Besin Öğeleri (100g'da)\nEnerji (kJ/kcal)\n1889/450\nYağ (g)\n17\nDoymuş Yağ (g)\n9.4\nTrans Yağ (g)\nKarbonhidrat (g)\n66\nŞekerler (g)\n21\nLif (g)\n5,1\nProtein (g)\n6,1\n08\nTuz (g)\n0,90\n121"
+  },
+  {
+   "id": "IMG_3947",
+   "ad": "Küçük düşük çözünürlük",
+   "d": [
+    398,
+    4.7,
+    3.4,
+    75.4,
+    2.3,
+    3.3,
+    11.3,
+    0.9
+   ],
+   "metin": "ENERJİ ve BESIN ÖGELERİ\nENERJI VE BESIN ÖĞELERİ\n100 g\n16\nEnerji (Kcal)\n398kcal/1649kj K\n4,7\nYağ (g)\nDoymuş yağ (g)\n3,4\nA\nKarbonhidrat (g)\n75,4\nŞekerier (g)\nH\n2,3\nLif (g)\n3,3\nProtein (g)\nA\n11,3\n0,9"
+  },
+  {
+   "id": "IMG_3946",
+   "ad": "Sütlü kahve, 100 mL + bardak + %RA (içecek)",
+   "d": [
+    27,
+    1.0,
+    0.6,
+    3.0,
+    2.4,
+    0.3,
+    1.3,
+    0.05
+   ],
+   "birim": "ml",
+   "metin": "Sütlü Çözünebilir Kahve Karışımı\nEnerji ve\n100 mL\n1 bardak\n1 bardak\nBesin Öğeleri\niçin**\niçin**\niçin RA*\nEnerji, kJ/kcal\n112/27\n235/56\n%3\nYağ.g\n1.0\n2.1\n%3\n-Doymuş yağ, g\n0.6\n1.3\n%6\nKarbonhidrat, g\n3.0\n6.3\n%2\n-Şekerler. g\n2.4\n5,1\n%6\nLif.g\n0,3\n0.7\n%3\nProtein, &\n1,3\n2.7\n%5\nTuz, g\n0.05\n0.11\n%2\n*Ortalama bir yetişkinin referans alım (RA) değeri (8400 kJ/2000 kcal)\n**Tarifine göre hazırlanmış ürünün değerleri (14g içecek tozu + 180 mL su)"
+  },
+  {
+   "id": "IMG_3950",
+   "ad": "Börek (satır sırası farklı)",
+   "d": [
+    290.5,
+    14,
+    6.4,
+    35.9,
+    0.1,
+    null,
+    5.3,
+    1.4
+   ],
+   "metin": "Enerji Ve Besin Ögeleri\n100 g İçin\nEnerji (kj ve kcal)\n1216,3/290,5\nKarbonhidrat (g)\n35,9\n-Şeker (g)\n0,1\nKEEP\nFRO\nKEEP FR\nYağ (g)\n14\n-Doymuş Yağ (g)\n6,4\nKEE\nÜRETİCİ Fİ\nProtein (g)\nLB BÖRE\n5,3\nTuz (g)\n1,4\nTEL:0 (322\nYenidoğar\nYüreğir / A\nİşletme\nTR-01-K"
+  },
+  {
+   "id": "IMG_3927",
+   "ad": "Knorr bulyon (iki 100 g sütunu: ürün + hazırlanmış)",
+   "d": [
+    278,
+    19.0,
+    14.0,
+    17.6,
+    1.6,
+    3.0,
+    6.1,
+    49.3
+   ],
+   "metin": "Pilavınız için;\n2 su bardağı (335 g) yıkanmış\npirinci, 3 kaşık (45 ml) sıvı yağ\nile kavurun. Üzerine 1 adet Knorr\ntavuk suyu tabletini, 3 bardak\n(600 ml) sıcak su içinde eritip\nilave edin. Kısık ateşte pişirip\nSıcak olarak servis edin.\nÇorbalarınız için;\n5 bardak sıcak suda 1 adet Knorr\ntavuk suyu tabletini karıştırarak\neritin ve hazırladığınız tavuk suyunu\nçorbalarınıza ilave edin.\nİyi bir haberimiz var!\nYemeklerde garanti lezz\nKNORR TAVUK SUYU BULYON (Tavuk Suyu Tableti)\nİçindekiler: Iyotlu tuz, bitkisel yağ (palm), nişasta,\naroma arttırıcılar (monosodyum glutamat, disodyum\ninosinat, disodyum guanilat), kıvam arttırıcı (ksantan\ngam), aroma vericiler (buğday), şeker, karabiber,\nkurutulmuş öğütülmüş tavuk eti (%0.05), zerdeçal,\nkimyon. Iz miktarda yumurta, kereviz, süt ve süt\nürünleri, hardal, soya, çam fıstığı ve susam\niçerebilir.\nBulyonlanmızda kemik ya da sakatat eklenmemiş\nlezzetli etler kullanılır. Etlerimiz haşlanıp kurutulur,\nözenle seçilen baharat ve sebzelerle lezzetlendirilir.\nTürk Gıda Kodeksi'ne uygun olarak üretilmiştir.\nİşletme Kayıt No: TR-34-K-015306\n1 It =\n24 Ad x10a-240.ge\nEnerji ve\nBesin Öğeleri\nEnerji\nYağ\n100\n100 g\nhazırlan\nbulyon için\npilav i\n278 kcal/1162 kJ 165 kcal/\n19,0 g\n4,9\nDoymuş Yağ\n14,0g\n0,7\nKarbonhidrat\n17,6g\n27,0\nŞekerler\n1,6g\n<0,1\nLif\n3,0g\n<0,1\nProtein\nTuz\n6,19\n2,3\n49,3g\n0,5\n*Değerler ortalama bir yetişkinin referans alim düz\nwww.herkessofraya.com\n8"
+  },
+  {
+   "id": "IMG_3955",
+   "ad": "Cips TR/EN, 100 g + porsiyon + referans ürün",
+   "d": [
+    450,
+    17.2,
+    1.7,
+    66.7,
+    7.8,
+    3.5,
+    5.4,
+    1.6
+   ],
+   "metin": "Nort\nREFERANS\nÜRÜN*\n1 porsiyon\nEnerji ve Besin Öğeleri 100 g için\nNutrition Facts\niçin (25 g)\n1 porsiyon\n(RA)\niçin (25 g)\n1913kJ\n478 kJ\n571 kJ\nEnerji/Energy\n450 kcal\n113 kcal (%6)\n137 kcal\nYağ / Fat\n17,2 g\n4,3 g (%6)\n8,6 g\nDoymuş yağ\n1,7 g\n0,4 g (%2)\n0,9 g\nSaturated Fat\nKarbonhidrat\n66,7 g\n17 g (%6)\n12,9 g\nCarbohydrate\nSekerler/Sugars\n7,8 g\n2,0 g (%2)\n0,1 g\nLif/Fiber\n3,5 g\n0,9 g (%4)\n1,0 g\nProtein\n5,4 g\n1,4 g (%3)\n1,5 g\nTuzz/Salt\n1,6 g\n0,4 g (%7)\n0,4 g\nBelcra olarak atıştırmalık ürünler kategorisinden Lay's Klasik\nPatates Cipsi kullanılmıştır.\nRA-Değerler ortalama bir yetişkinin Referans Alım düzeyini"
+  },
+  {
+   "id": "IMG_3943",
+   "ad": "TR/EN/DE, 100 g + porsiyon, kıvrık",
+   "d": [
+    537,
+    33.0,
+    4.8,
+    52.0,
+    2.9,
+    3.8,
+    6.2,
+    1.3
+   ],
+   "metin": "Enerji ve Besin Ögeleri/\nNutrition Facts/Nährwertangaben\nEnerji/Energy/Energie\nYağ/Fat/Fett\n100g 1 porsiyon\niçin için 25g (RA)\n2241kl\n560kT\n537 kcal 134 kcal (97)\n33,0g 8,3 g (%12)\nDoymuş yağ/Saturated Fat / Gesättigte Fettsäuren 48g\nKarbonhidrat /Carbohydrate/Kohlenhydrate\nŞekerler/Sugars/Zucker\nLif/Fiber/Ballaststoffe\nProtein/Eiweiß\nTuz/Salt/Salz\n52.0g\nDD 50\n2.9g\n1,2 g (%6)\n13 g (%5)\n0,7 g (%1)\n3,8 g\n1,0 g (%4)\n6,2 g\n1,6 g (%3)\n13 g\n50 GD\n0,3 g (%5)\nRA-Değerler ortalama bir yetişkinin Referans Alim düzeyini belirtir\n(8400kJ/2000 kcal)\nBu paketin içerdiği porsiyon adedi bilgisine ön yüzdeki gramaj bilgisini\nkullanarak ulaşabilirsiniz. Buna göre; \"62g-86g arası paket yaklaşık 3\nDorsiyon\", \"87g-111g arası paket yaklaşık 4 porsiyon', '112g-136g arası\nSaket yaklaşık 5 porsiyon\" içerir.\n100a. 30d080 2241 kJ/537 kcal. gbodn\nAsdoo 2.9a, dmtam"
+  },
+  {
+   "id": "IMG_3951",
+   "ad": "Lavaş (değerler satır adının üstünde, kayık)",
+   "d": [
+    290,
+    4.3,
+    2.1,
+    55.2,
+    4.5,
+    2.7,
+    7.5,
+    1.3
+   ],
+   "metin": "er:\nbilizör (Gliser\nKabartıcılar (Sodyum Asit Pirofosfat, Sodyum Bikarbonat),\nAsitlik Düzenleyiciler (Sitrik Asit, Malik Asit),\nKoruyucular (Potasyum Sorbat, Kalsiyum Propiyonat).\nTavsiye Edilen Tüketim Tarihi (T.E.T.T) ve Parti No (L) ambalajın üzerin\nÜrünlerimizin hiçbir çeşidinde domuz yağı ve ürünleri yoktur.\nPaket açıldıktan sonra buzdolabında saklayınız ve 7 gün içerisinde tü\nak tüketilmesi tavsiye edilir. Serin, kuru ve güneş görmeyen yerde mu\nEnerji ve Besin Öğeleri\n100 g\n1211/290\n1 Adet(70g)\n848/203\nEnerji (kJ/kcal)\n4,3\n3.0\nYağ (g)\n2,1\n1,5\n-Doymuş Yağ (g)\n-Tekli Doymamış Yağ (g)\n1,1\n0,8\n-Çoklu Doymamış Yağ (g)\n1,0\n0,7\nKarbonhitrat (g)\n55,2\n38,7\n-Sekerler (g)\n4,5\n3.2\nA\nLif(g)\nProtein (g)\nTuz (g)\n2,7\n1,9\n7,5\n5,3\n1,3\n0,9\n1 paket lavaş 25 cm 12 adettir."
+  },
+  {
+   "id": "IMG_3933",
+   "ad": "Gofret, porsiyon (40 g) önce, 100 g sonra",
+   "d": [
+    533,
+    30,
+    16,
+    57,
+    48,
+    2.4,
+    7.5,
+    0.48
+   ],
+   "metin": "Yad\nDoy\nKarbi\nSau Çikolata Kaplamalı Fındıklı Kremalı Gofret. Sütlü Çikolata (%49), Krema (%4 içindekiler: Şeker. Bitkisel En\nYağlar (Palm, Paim Çekirdeği, Shea), Tam Yağlı Süttozu, Kakao Yağı, Buğday Unu, Yağsız Suttozu, Kakao Kitlesi, Findak Mutri\n(%5,9), Peyniraltı Suyu Tozu, Yağı Azaltims Kakao Tazu, Maltodekstrin, Emülgatörler (Amonyum Fostatitler, Soya Ener\nLestin, Poliglicerol Polirisinoteat), Modifiye Nişasta, Tuz, Aroma Vericiler. Yumurta Seyazı, Kabartiolar (Amonyum\nHidrojen Karbonat Sodyum Hidrojen Karbonat Eser Miktarda Yerlistiği ve Sert Kabuklu Meyveler İçerebilir.\nEN Milk Chocolate Coated Water with Hazelnut Cream, Milk Chocolate (49%), Cream (44%) Ingredients: Sugar,\nVegetable Fats (Palm, Palm Kernel, Shea), Whole Milk Powder, Cocoa Butter, Wheat Flour, Skimmed Milk Powder,\nCocoa Mass, Hazelnuts (5.9%), Whey Powder, Fat Reduced Cocoa Powder, Maltodextrin, Emulsifiers (Ammonium\nPhosphatides, Soy Lecithin, Polyglycerol Polyricinoleate), Modified Starch, Salt, Flavourings, Egg White, Raising\nAgents (Ammonium Hydrogen Carbonate, Sodium Hydrogen Carbonate). May Contain Traces of Peanut and Nuts. \"\"Bir\nSel\nL\nProb\nTuz\n2195120\n966110 YON\nker, Bitkisel\n80-2940 mm 90%\nEnerji ve Besin Öğeleri 1 porsiyon için (40 g)** 100 g için\ndesi, Fındık Nutrition Information\nPer portion (40 g)Per 100 g\n-\ntitler, Soya\n(Amonyum\nİçerebilir.\nEnerji/Energy\n(kcal)\n213\n533\nYağ/Fat\n-\n-\nmts: Sugar,\nk Powder,\nmmonium\ne, Raising\n4\nLit/Fibre\nDoymuş yağ /of which Saturates (9)\nKarbonhidrat /Carbohydrate (g)\nŞekerler /of which Sugars\n(g)\n12\n30\n6.6\n16\n23\n57\n(g) 19\n48\n(g)\n1.0\n2.4\nProtein\n3.0\n7.5\nTuz/Salt\n19\n0.19\n0.48\nand Nuts.\nBir paket yaklaşık 6 porsiyondur. / One pack is about 6 portions."
+  },
+  {
+   "id": "IMG_3945",
+   "ad": "TR/Arapça, tek sütun, parlama",
+   "d": [
+    495,
+    20.6,
+    9.3,
+    71.4,
+    32.2,
+    null,
+    6,
+    0.8
+   ],
+   "metin": "Enerji ve Besin Öğeleri\n(Ortalama değer) (100 g'da) (100)\n495 kcal/ 2078 kj\nEnerji\nYağ\n20,6 g\nDoymuş Yağ\nJA\n9,3 g\nKabonhidrat\n71,4 g\nSekerler\nProtein S\n32,2 g\n69\nTu\nTUL\n0,8 g"
+  },
+  {
+   "id": "IMG_3948",
+   "ad": "Yalnızca porsiyon (50 g), iki sütunlu ızgara, mineraller",
+   "d": [
+    240,
+    1.8,
+    0,
+    null,
+    27.2,
+    26,
+    26,
+    0
+   ],
+   "porsiyon": 50,
+   "metin": "1 porsiyon (50 g) ürünün günlük karşılama miktarı*\nEnerji\n120 kcal % 6\nDemir\n2,5 mg\nŞeker\n13,6 g % 15 Potasyum 545 my\nToplam Yağ 0,9 g %1\nKalsiyum\n50 mg\nDoymuş Yağ 0g %0\nFosfor\n195 mg\nTuz\nOg %0\nLif\n13g\nProtein 13 g % 26\nKolesterol\n*Değerler 2000 kcal/gün üzerinden hesaplanmış olup,\ncinsiyete, yaşa, fiziksel aktiviteye ve faktörlere göre\ndeğişebilir.\n0"
+  },
+  {
+   "id": "IMG_3954",
+   "ad": "TR/EN/DE, 100 g + porsiyon",
+   "d": [
+    535,
+    32.7,
+    15.1,
+    52.2,
+    3.0,
+    4.0,
+    5.9,
+    1.2
+   ],
+   "metin": "Enerji ve Besin Ögeleri/\nNutrition Facts/Nährwertangaben\n1 porsiyon için\n100 g için (25 g) (RA)**\nEnerji/Energy/Energie\n2230kJ\n558 kJ\n535 kcal\n134 kcal (%7)\nYağ/Fat / Fett\n32.70\n8.2 g (12)\nDoymuş yağ/Saturated Fat/\nGesättigte Fettsäuren\n15.1 g\n3.8 g (%19)\nTrans yağ*/Trans Fat/Transfette\n0.19 g\n0.05 g\nKarbonhidrat/Carbohydrate/\n52.2 g\n13.1 g (5)\nKohlenhydrate\nŞekerler/Sugars/Zucker\n3,0g\n0.8g (51)\nLif/Fiber/Ballaststoffe\nProtein/Eiweiß\nTuz/Salt/Salz\n4,00\n1,0 g (54)\n5.99\n1.5 g (3)\n129\n0.39 (55)"
+  },
+  {
+   "id": "IMG_3944",
+   "ad": "Tek sütun, düşük çözünürlük",
+   "d": [
+    435,
+    20.4,
+    12.5,
+    58.1,
+    40.2,
+    1.2,
+    4.2,
+    0.8
+   ],
+   "metin": "Enerji ve Besin Öğeleri (100g'da) Tavsiye\nNo'su p\nEnerji (kJ/kcal)\n1823/435\n(g)\n20,4\ngüneş\nDoymuş Yağ (g)\n12,5\nve Rut\nTrans Yağ (g)\no\nÜrünleri\nKarbonhidrat (g)\n58,1\nYağı ve\nŞekerler (g)\n40,2\nTürkiye'\nProte (g)\nTuz (g)\n1,2 İşletme\n4.2\n0,8 Net"
+  },
+  {
+   "id": "IMG_3935",
+   "ad": "Tuz/Sodyum aynı satırda, vitamin tablosu",
+   "d": [
+    437,
+    15,
+    7.3,
+    64,
+    21,
+    3.0,
+    11,
+    0.78
+   ],
+   "metin": "ENERJİ VE BESİN ÖĞELERİ 100g için\nEnerji (kJ/kcal)\n1836/437\nYağ (g)\n-Doymuş yağ (g)\n-Trans yağ (g)\nKarbonhidrat (g)\n15\n7.3\n0\n-Şekerler (g)\nFRON\n64\n21\nLif (g)\n3.0\nProtein (g)\n11\nTuz/Sodyum (g)\n0.78/0.31\n12 VİTAMİN\n100g Beslenme 100g için\niçin Ref. Değ. %8RD*\nMAM\nA Vitamini (µg)\n400\n400\n100\nC Vitamini (mg)\n30\n25\n120\nD3 Vitamini (µg)\n8\n10\n80\nE Vitamini (mg)\n3\nB1Vitamini (mg)\n0,5\n0,5\n100\nB2 Vitamini (mg) 1\n0,8\n125\nww\nB6 Vitamini (ma)\n0,5\n0,7\n71"
+  },
+  {
+   "id": "IMG_3940",
+   "ad": "100 g + %RA + porsiyon (30 g)",
+   "d": [
+    432,
+    11.0,
+    5.7,
+    77.0,
+    23.0,
+    1.4,
+    6.6,
+    0.3
+   ],
+   "metin": "Enerji ve Besin Öğeleri 100 g için\n100 g için 1 Porsiyon\nRA\n(30 g) için\nEnerji (kJ/kcal)\n1823/432\n%22\n547/130\nYağ (g)\n11,0\n%16\n3.3\n-Doymuş Yağ (g)\n5,7\n%29\n1,7\nKarbonhidrat (g)\n77,0\n%30\n23,1\n-Şekerler (g)\n23,0\n%26\n6,9\nLif (g)\n1,4\n%6\n0,4\nProtein (g)\n6,6\n%13\n2,0\nTuz (g)\n0.3\n%5\n0,09\n*Değerler ortalama bir yetişkinin Referans Alım Düzeyini belirtir\n(8400 kJ/2000 kcal). Bu ürün yaklaşık 15 porsiyondan oluşmaktadır."
+  },
+  {
+   "id": "IMG_3949",
+   "ad": "TR/EN/AZ, 3 sütun, bulanık",
+   "d": [
+    457,
+    17,
+    1.7,
+    68,
+    null,
+    4.8,
+    5.6,
+    0.9
+   ],
+   "not": "şeker 6,0 mı 8,0 mı seçilemiyor (porsiyon 2,0 → 8,0)",
+   "metin": "quasid turpil paka, buğda unu\npabuan lestin), deksa, boyaqaddasi (kr)\nTabinda soya ola bilax\nMan heç benda donuz andan aman piy və ya alavalar yoxdur\nTackbinda rasya yaid\nEnerji ve Besin Ögeleri/\n1 porsiyon\nREFERANE\nURUN\nNutrition Facts/\n100 g ipin (25 g) için\n1 Porsiya\nEnerva Qida maddələr\n(RA)\n(25\n1920 J\n460KJ\n574 AJ\nEner/Energy\n457 kcal\n114 kcal (%)\n138 kcal\nYid/Fat\n170\n430 (6)\n860\nDoymuş yağ/Saturated Fat\n1,70\n0,4%)\n1.20\nTransya\"\nTrans ya/Trans Fat\n00\n09\nKarbonhidratl/Carbohydrate\n68g\n17 g (57)\n530\nŞekerler/Sugars/Sakar\n6,00\n2,00 (2)\n0.20\nLit/Fibre/Liftar\n480\n125)\n110\nProtein/ 20\nTiz/Salt/Dur\n550\n1,4g(3)\n12g\n09g\n0.20(4)\n040\nReferans olarak birmak ununier stegonsinden Lay's Kask P"
+  },
+  {
+   "id": "IMG_3939",
+   "ad": "100g + 75g, kcal/kj",
+   "d": [
+    455,
+    18,
+    7,
+    64,
+    4,
+    null,
+    10,
+    4
+   ],
+   "metin": "Besin Değerleri/Nutrition Facts\nEnerji/Energy (kcal/kj)\n100g 75g\n455/1911 342/1436\nYağ/Fat (g)\n18\n13\nDoymuş yağ/Saturated Fat (g)\n7\n5\nKarbonhidrat/Total\nCarbohydrates (g)\n64\n48\n-Şekerler/Sugar (g)\n4\nProtein (g)\n10\nTuz/Salt (g)\n4\n383"
+  },
+  {
+   "id": "IMG_3952",
+   "ad": "Untad lavaş, 100 g + porsiyon + RA",
+   "d": [
+    372,
+    7.8,
+    3.2,
+    47.0,
+    9.1,
+    7.8,
+    11.7,
+    0.9
+   ],
+   "metin": "1paket Untad Premium Tam Buğday Unlu Lavaş Soft Tortilla Ekmeği yaklaşık 11 porsiyondur.\n1 Porsiyon\nENERJİ VE BESİN ÖĞELERİ\n100 g için\n(50g) için\n1 porsiyon\n(50g) için R.A\nEnerji (kj/kcal)\n1558/372 779/186\n9\nYağ (g)\n7,8\n3.9\n6\n-Doymuş Yağ (g)\n3.2\n1,6\n8\nKarbonhidrat (g)\n47,0\n23,5\n9\n-Şekerler (g)\n9,1\n4,5\n5\nLif(g)\n7,8\n3,9\n16\nProtein (g)\n11,7\n5,9\n12\nTuz (g)\n0,9\n0,5\n7\n*Değerler ortalama bir yetişkinin Referans alım düzeyini belirtir.(8400kj/2000kcal)"
+  },
+  {
+   "id": "IMG_3953",
+   "ad": "Çok dilli (TR/EN/FR/AR), virgüllü kJ",
+   "d": [
+    533.9,
+    30.9,
+    8.9,
+    41.5,
+    15.5,
+    7.13,
+    20.42,
+    0.7
+   ],
+   "metin": "Enerji ve Besin Öğeleri/ 100giçin\nNutrition Facts/Elements\nper 100g\nEnregetiques Et Nutritis\npor 100e\nWill policy ball\n<-100\nJL\nEnerji/Energy/Energie//kcal 2243,3/533,9\nYağ Fat/Graisse p\n30,9\nDoymuş Yağsaturated Fa\nGrasse Saturée\n8,9\ns\n-Trans Yağ Trans fa\n0\nGrase Transg\nKarbonhidrat Carbohydrate in\n41,5\nHudele de Cartonel C\nSekerlersugars Suces\n15,5\nLitfiber/Fibre\n7.13\nProteinen Proteine/\n20,42\nTuzsalusel el-\n0,7"
+  },
+  {
+   "id": "IMG_3941",
+   "ad": "Kuru üzüm, sıra farklı, kcal-kj",
+   "d": [
+    292,
+    0.4,
+    null,
+    69.4,
+    69.4,
+    2.8,
+    2.7,
+    0.0
+   ],
+   "metin": "100 gr. Bandırmasız Kuru Üzüm'ün\nBesin Değeri İçerikleri\nNutritional Values per 100 g\n100gr. için\nRA\nEnerji/Energy(Kcal-Kj)\n292/1226\n%15\nProtein/Protein\n2,7 g\n965\nYağ/Fat\n0,4 g\n961\nKarbonhidrat/Carbohydrate 69,4 g\n9627\n(%60,5)\nŞeker/Sugar\n69,4 g\n977\ne\nLif/Fibre\n2,0 g\n%8\nTuz/Salt\n0,0 g\n%60\nd. Şti.\n*Değerler ortalama bir yetişkinin Referans\nAlm Değerini belirtir. (8400 kj/ 2000 kcal)\nGüneş ışığından koruyunuz.\nuendo coklaınız"
+  },
+  {
+   "id": "IMG_3934",
+   "ad": "Elvan (grafik tablo)",
+   "d": [
+    510,
+    28,
+    15,
+    55,
+    32,
+    null,
+    7.2,
+    0.15
+   ],
+   "metin": "Elvan\nENERJİ VE BESİN ÖĞELERİ TABLOSU\nEnerji ve Besin Öğeleri 100 gr\nEnerji (kJ ve kcal)\n2132/510\nYağ (g)\n28\n- Doymuş yağ (g)\n15\nKarbonhidrat (g)\n55\n- Şekerler (g)\n32\nProtein (g)\n7,2\nTuz (g)\n0,15"
+  },
+  {
+   "id": "IMG_3924",
+   "ad": "Kühne kornişon (etikette şeker > karbonhidrat)",
+   "d": [
+    15,
+    0.22,
+    0.1,
+    1.74,
+    2.12,
+    0.4,
+    1.2,
+    2.48
+   ],
+   "not": "etiketin kendisi tutarsız: şüpheli çıkması doğru",
+   "metin": "İçindekiler: Salatalık(955), su, Kornişon Turşusu Tavsiye Edilen Tiketim Tarihi (1)\nsirke, tuz, sanmsak(%0.5).\nBesin Öğeleri (100 g için)\nSerin yerde muhafaza ediniz\nGüneş işığından koruyunuz.\nAçtıktan sonra buzdolabında\nEnerji\nmuhafaza ediniz. Pastörize\nYağ\nedilmiştir. Gıda İşletmecisi:-Doymuş Yağ\nCarl Kühne Fermantasyon ve Gıda Doymuş Yağ\nKarbonhidrat\nMah. Kavak Sokak Impa iş-Şekerler\nSan. ve Tic. A.Ş. Rüzgarlıbahçe\nMerkezi No: 12 Kat: 6 Kavaak Lif\nBeykoz/İSTANBUL\nProtein\nTel:0216 462 20 55\nTuz\ninfo@kuehne.com.tr\nwww.kuehne.com.tr\nİşletme kayıt no:\nTR-35-K-015278\nve Parti Numarası kapaktadır.\nÜretici Firma: Euro Gida San. ve Tic\n0,19 RENKLENDİRici\nA.Ş. Armutlu 85. yıl Cumhuriyet Mah.\n15 kcal/63 kj\nSan Cad. No:108/4 Kemalpaşa/ZMİR\n0,22 g\nKORUYUCU VE\n1,749\nİÇERMEZ.\n2,12 g\n0,4g\nMense ülke\n370\n1,2g Net Ağırlık\n2,48 g\n340ge\nSüzme Ağırlık\n8 696027 011796\n190g\nÇEVKO"
+  },
+  {
+   "id": "IMG_3958",
+   "ad": "Tek sütun, küçük",
+   "d": [
+    507,
+    26,
+    12,
+    61,
+    32,
+    3.3,
+    5.0,
+    0.6
+   ],
+   "metin": "Enerji ve Besin Öğeleri (100g'da)\nEnerji (kJ/kcal)\n2120/507\nYağ (9)\n26\nDoymuş Yağ (g)\n12\nKarbonhidrat (g)\n61\nSekerler (g)\n32\nLif(g)\nProtein (g)\nSc\n133\n50\nTuz (g)\n0.60"
+  },
+  {
+   "id": "IMG_3956",
+   "ad": "100 g + %RA + vitaminler, yamuk",
+   "d": [
+    224,
+    1.8,
+    0.3,
+    39.6,
+    2.6,
+    7.0,
+    8.8,
+    0.6
+   ],
+   "metin": "Enar ve\nBaan Öğeleri\n100 g için\n100g için\nKRA*\nEnerji (kJ ve kcal)\n952/224\n%11\nYoğ (g)\n1,8\n%3\nDoymuş Yağ (g)\n0,3\n%2\nKarbonhidrat (g)\n39,6\n%15\nŞekerler (g)\n2,6\n%3\nLif (g)\n7,0\n%28\nProtein (g)\n8,8\n%18\nTuz (g)\n0,6\n%10\nNiasin (mg)\n2,39\n%15\nFolik Asit (ug)\n51\n%26\nTiamin (mg)\n0,39\n%29\nFosfor (mg)\n%17\n119,32\n\"Ortalama bir yetişkinin referans alim\n(RA) değeri (8400 kJ/2000 kcal)"
+  },
+  {
+   "id": "IMG_3957",
+   "ad": "100 g + paket (8 g), bulanık",
+   "d": [
+    571,
+    35,
+    13,
+    53,
+    47,
+    3.6,
+    9.3,
+    0.22
+   ],
+   "metin": "Mense Ülke: Türkiye\n05\nÜcretsiz Müşteri\nDanışma Hatti\n0850 223 28 88\nPP\nEnerji ve Besin Öğeleri\n100g için\n1 Pakette (8g)\nIsh\nEnerji (kJ/kcal)\n2383/571\n190/46\nYağ (g)\n35\n2,8\nDoymuş Yağ (g)\n13\n1.0\nKarbonhidrat (g)\n53\n4.2\n-Şekerler (g)\n47\n38\nL(Q)\n3,6\n0.29\nProtein (g)\n9,3\n0,74\nTuz (g)\n0.22\n0.02\nTrans yağ içermemektedir."
+  }
+ ]
+}
