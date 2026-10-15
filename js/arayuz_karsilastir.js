@@ -31,12 +31,8 @@ function histSave(text,mode){
 }
 /* Türe göre karşılaştırma özeti; liste yüklenmemişse null */
 var KARS_TUR={gida:"gida",koz:"koz",tem:"tem"};   // çeviri anahtarı ekleri (kars.az_*, kars.yukleniyor_*, kars.baslik_*)
-function karsReady(mode){return mode==="koz"?!!KIDX:mode==="tem"?!!TIDX:!!IDX}
-function karsProduct(e){
-  if(e.mode==="koz")return cmpProductK(e.text,KIDX,PROF,e.name,{ptype:PTYPE});
-  if(e.mode==="tem")return cmpProductT(e.text,TIDX,KIDX,PROF,e.name);
-  return cmpProduct(e.text,IDX,PROF,e.name);
-}
+function karsReady(mode){return degHazir(mode,degBaglam())}
+function karsProduct(e){return degerlendir(e.mode,e.text,degBaglam(),PROF,e.name)}
 /* Fotoğraf düğmelerinin altındaki düğme: ekrandaki türün son taramalarından iki ürün seçtirir */
 function karsOpen(pre,ret){
   if(!KARS_AYAR.acik)return;

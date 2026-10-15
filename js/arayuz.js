@@ -3,6 +3,8 @@ var OCR_URL="https://inapp-ocr-3a8f.burakkagancan.workers.dev";   // Cloudflare 
 var DB=null,BDB=null,ABOUT={},IDX=null,FLAGS={},BRANDS=null,ST=document.getElementById("st"),LAST=[],LASTSUM=null,LASTBR=[];
 var CLS=["g","u","y","r"],LBL_K=["risk.yok","risk.dogrulanmadi","risk.dikkat","risk.uyari"];
 function LBL(i){return t(LBL_K[i])}
+/* Ortak değerlendirme modelinin (js/degerlendirme.js) dizinleri: yüklenmemiş olan null */
+function degBaglam(){return {idx:IDX,K:typeof KIDX!=="undefined"?KIDX:null,T:typeof TIDX!=="undefined"?TIDX:null,ptype:typeof PTYPE!=="undefined"?PTYPE:""}}
 function $(i){return document.getElementById(i)}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 /* Veri metni öğesi: seçili dilde çevirisi yoksa metin kendi dilinde (lang) gösterilir, yanına küçük "henüz çevrilmedi" işareti eklenir (js/ceviri.js veriMetin) */
