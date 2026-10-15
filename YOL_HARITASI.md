@@ -156,7 +156,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 | U-04 | Gıda ansiklopedisi açıkları: AB konsolide metin karşılaştırması, TGK 2023 (TEKNIK_BORC.md) | ⏸ |
 | U-05 | Kozmetik PFAS bayrağının ad düzeyine indirilmesi (TEKNIK_BORC.md) | ⬜ |
 | U-06 | Gelişim alanları ve teknik borç: CLAUDE.md "Gelişim alanları" ve TEKNIK_BORC.md | 🔄 |
-| U-07 | **Altyapı yenilemesi (15.10.2026, kullanıcı onayı; her adım ayrı PR, sırayla birleşir):** (1) altın çıktı testi + test toplayıcı + tarayıcı testi paralel grup ✅ PR 1; (2) tek üreteç komutu uret.py + ortak üreteç yardımcıları ✅ PR 2; (3) sw.js CORE ve CACHE sürümünün üretilmesi; (4) saf mantığın ES modüllerine geçişi, Worker kopyasının kalkması; (5) ortak değerlendirme modeli (üç tür tek sonuç biçimi; karşılaştırma, paylaşım, kayıt ona bağlı); (6) arayüzün modüllere geçişi ve arayuz.js'in bölünmesi; (7) tek depolama modülü; (8) ortak bileşen CSS'i; (9) belge bölme ve oturum başına okunan bağlamın küçültülmesi | 🔄 |
+| U-07 | **Altyapı yenilemesi (15.10.2026, kullanıcı onayı; her adım ayrı PR, sırayla birleşir):** (1) altın çıktı testi + test toplayıcı + tarayıcı testi paralel grup ✅ PR 1; (2) tek üreteç komutu uret.py + ortak üreteç yardımcıları ✅ PR 2; (3) sw.js CORE ve CACHE sürümünün üretilmesi ✅ PR 3; (4) saf mantığın ES modüllerine geçişi, Worker kopyasının kalkması; (5) ortak değerlendirme modeli (üç tür tek sonuç biçimi; karşılaştırma, paylaşım, kayıt ona bağlı); (6) arayüzün modüllere geçişi ve arayuz.js'in bölünmesi; (7) tek depolama modülü; (8) ortak bileşen CSS'i; (9) belge bölme ve oturum başına okunan bağlamın küçültülmesi | 🔄 |
 
 ---
 

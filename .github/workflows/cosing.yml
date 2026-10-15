@@ -43,7 +43,7 @@ jobs:
           git config user.name "tagsis-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -b "$dal"
-          git add kaynak/cosing data/ i18n/ test/veri/altin_cikti.json.gz
+          git add kaynak/cosing data/ i18n/ sw.js test/veri/altin_cikti.json.gz
           git commit -m "CosIng verisi güncellendi ($(cut -d' ' -f3 kaynak/cosing/surum.txt) tarihine kadarki yayınlar)"
           git push -f origin "$dal"
           # Bu PR'ı bot açtığı için Testler kendiliğinden çalışmaz; renk değişikliği denetiminin sonucu açıklamaya yazılır
