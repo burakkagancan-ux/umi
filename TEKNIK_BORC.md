@@ -2,6 +2,12 @@
 
 Bilerek ertelenen işler. Yayına (mağaza/duyuru) çıkmadan önce kapatılmalı.
 
+## Besin tablosu okuma oranı (A-02, 15.10.2026)
+- Güvenlik ölçütü sağlandı (34 gerçek etiketin hiçbirinde yanlış renk yok; CI denetler), ama okuma oranı düşük: 3 etikette tablo bulunamadı, 17'si şüpheli (renk yok, kullanıcıya soruluyor), yalnızca 14'ünde renk var. Ölçüm: `node test/olcum_besin.js --metin`.
+- Başlıca nedenler (Google Vision'ın metin sırası): değerler satır adından önce ya da tablonun sonunda toplu okunuyor (IMG_3937, 3933, 3943, 3949, 3951); "Yağ" OCR'da "Yad" okunuyor (3926); kJ/kcal ters sırada ("682 kcal/2667k", 3926; "kcal/kj", 3939); yalnızca Almanca/Fransızca/Felemenkçe/İsveççe tablo (3932, Türkçe yok); küçük, düşük çözünürlüklü fotoğraf (3931, 3924).
+- Kalıcı çözüm adayı: Worker'ın Vision yanıtındaki sözcük kutularını (koordinat) da döndürüp tabloyu satır/sütun konumundan kurmak; metin sırasına dayanan kurallar bu tür hataları tek tek yamıyor. Ölçek kuralı açısından: diller çoğaldıkça metin sırası kuralları büyür, koordinat yöntemi dilden bağımsızdır.
+- Bilinen kalan risk: IMG_3944'te "Protein" "Prote" okunduğu ve lif satırının adı kaybolduğu için tuz 0,8 yerine 1,2 okunuyor; renk tesadüfen aynı (Orta). Bu tür (ad kaybolup değerin bir satır kayması) metinden ucuzca yakalanamıyor; koordinat yöntemi çözer.
+
 ## 2. Worker'ın kayıt (log) tutmaması — KAPANDI (kodda log yok, observability kapalı, panelde Exports/Logpush tanımlı değil)
 - `ocr.html` gizlilik notu "fotoğraf ve metin kaydedilmez" diyor. Worker kodunda `console.log` ile görüntü ya da metin yazılmadığı ve Workers Logs/Logpush'ın kapalı olduğu kontrol edilmeli.
 

@@ -19,7 +19,13 @@ var BESIN_AYAR={
   enAzSatir:3,                  // metinde tablo sayılması için değeri okunan en az satır (enerji satırı ya da "100 g" başlığı varsa 2)
   adlarArasiSozcuk:2,           // satır adıyla değeri arasında (aynı satırda) atlanabilecek bilinmeyen sözcük ("Yağ (toplam)", "Fett gesamt")
   porsiyonBak:10,               // porsiyon büyüklüğü başlığından ("Serving size") sonra gramın aranacağı parça sayısı ("2/3 cup (55g)")
-  porsiyonUst:1000              // porsiyon en çok (g ya da ml); üstü okuma hatası sayılır
+  porsiyonUst:1000,             // porsiyon en çok (g ya da ml); üstü okuma hatası sayılır
+  kjPay:5,                      // aynı hücrede kJ ve kcal: kJ = kcal x 4,184 en az bu kadar kJ ...
+  kjOran:0.04,                  // ... ya da %4 farkla tutmalı (ikisi ayrı yuvarlanır); tutmazsa satırlar kaymış okunmuştur ("4,3 / 3,0")
+  sutunEnAz:2,                  // 100 g sütununun değerlerden doğrulanması için en az bu kadar satır ...
+  sutunOran:0.6,                // ... ve iki sayılı satırların en az bu oranı porsiyon oranını tutmalı
+  sutunPay:0.1,                 // porsiyon değeri = 100 g değeri x porsiyon / 100: en az 0,1 ...
+  sutunPayOran:0.12             // ... ya da %12 fark (porsiyon değeri ayrı yuvarlanır)
 };
 function besinSayi(v){return typeof v==="number"&&isFinite(v)?v:null}
 function besinYuvarla(v){return v==null?null:Math.round(v*1000)/1000}
@@ -144,7 +150,10 @@ function besinHucre(sat){
       var y=sat.s[i+1],uy=y&&(y.u||(!y.u&&q.length?q[0]:""));
       if((u==="kj"||u==="kcal")&&y&&(uy==="kj"||uy==="kcal")&&uy!==u){
         if(!y.u){q.push(q.shift())}
-        var kcal=u==="kcal"?x:y;out.push({v:kcal.v,lt:kcal.lt,sifir:x.sifir||y.sifir});i++;continue;
+        var kcal=u==="kcal"?x:y,kj=u==="kj"?x:y,beklenen=kcal.v*BESIN_AYAR.kjKcal;
+        var h={v:kcal.v,lt:kcal.lt,sifir:x.sifir||y.sifir};
+        if(Math.abs(kj.v-beklenen)>Math.max(BESIN_AYAR.kjPay,beklenen*BESIN_AYAR.kjOran))h.kjUyumsuz=true;
+        out.push(h);i++;continue;
       }
       if(u==="kcal")out.push({v:x.v,lt:x.lt,sifir:x.sifir});
       else if(u==="kj")out.push({v:x.v/BESIN_AYAR.kjKcal,lt:x.lt,sifir:x.sifir});
@@ -156,6 +165,31 @@ function besinHucre(sat){
     out.push({v:g,lt:x.lt,sifir:x.sifir});
   }
   return out;
+}
+/* Başlıkta hem 100 g hem porsiyon sütunu varken 100 g sütununu değerlerden bulur: OCR başlık hücrelerinin sırasını karıştırabilir
+   ("1 porsiyon" yazısı "100 g için"den önce okunur, porsiyon sütunu 100 g sanılırdı). Porsiyon gramı olarak metindeki her gram/ml
+   miktarı denenir ("(25 g)", "Per 30g serving"); iki sayılı satırlarda porsiyon değeri = 100 g değeri x porsiyon / 100 tutmalı.
+   Döner: 100 g sütununun hücre sırası (besinHucre) ya da null (doğrulanamadı). */
+function besinSutunDogrula(rows,metin){
+  var A=BESIN_AYAR,adaylar=[],cift=[];
+  besinParcala(metin).forEach(function(x){
+    if(x.t==="s"&&(x.u==="g"||x.u==="ml")&&x.v>0&&(x.v<90||x.v>110)&&x.v<=A.porsiyonUst&&adaylar.indexOf(x.v)<0)adaylar.push(x.v);   // 100'e yakın porsiyon iki sütunu ayırmaz
+  });
+  rows.forEach(function(r){
+    var h=besinHucre(r),s=[];
+    for(var i=0;i<h.length&&s.length<2;i++)if(!h[i].yuzde&&h[i].v!=null)s.push(i);
+    if(s.length===2&&(h[s[0]].v>0||h[s[1]].v>0))cift.push([s[0],h[s[0]].v,s[1],h[s[1]].v]);
+  });
+  var yakin=function(a,b){return Math.abs(a-b)<=Math.max(A.sutunPay,Math.max(a,b)*A.sutunPayOran)},en=null;
+  adaylar.forEach(function(p){
+    var oy={},k=p/100;
+    cift.forEach(function(c){
+      if(yakin(c[3],c[1]*k))oy[c[0]]=(oy[c[0]]||0)+1;        // ilk sayı 100 g, ikincisi porsiyon
+      else if(yakin(c[1],c[3]*k))oy[c[2]]=(oy[c[2]]||0)+1;   // ilk sayı porsiyon, ikincisi 100 g
+    });
+    for(var s in oy)if(oy[s]>=A.sutunEnAz&&oy[s]>=cift.length*A.sutunOran&&(!en||oy[s]>en.n))en={s:Number(s),n:oy[s]};
+  });
+  return en?en.s:null;
 }
 /* Porsiyon büyüklüğü başlığından sonra ilk gram ya da ml ("Serving size 2/3 cup (55g)", "Per 1 cup (250 mL)"): {m, u} ya da null.
    Satır sonu en çok bir kez geçilir (başlık ve değer OCR'da ayrı satıra düşebilir). */
@@ -192,7 +226,8 @@ function besinPorsiyonPayi(alan,s,lt,na){
    100 g başlığı yok ama porsiyon büyüklüğü okunmuşsa (O-23) porsiyon sütunu alınır, değerler 100 g'a çevrilir; por.ara: dört renkli satırın
    100 g'daki yuvarlama aralığı [alt, üst] (besinPorsiyonPayi).
    Ayrıştırma sorunları (yuz_yok: 100 g başlığı yok, sutun_sira: adlar ve değerler ayrı bloklarda, ondalik: "05" gibi virgülü kaybolmuş
-   olabilecek sayı, birim_yok: enerjinin birimi yok, cok_satir: aynı satır iki kez) de durumu "suphe" yapar. */
+   olabilecek sayı, birim_yok: enerjinin birimi yok, cok_satir: aynı satır iki kez, sutun_belirsiz: başlıkta 100 g ve porsiyon sütunu
+   var ama 100 g sütunu değerlerden doğrulanamadı, enerji_cift: aynı hücredeki kJ ile kcal birbirini tutmuyor, satırlar kaymış olabilir) de durumu "suphe" yapar. */
 function besinAyristir(metin,S){
   var p=besinParcala(metin),A=BESIN_AYAR,rows=[],cur=null,isaret=[],i,j,satirSonu=false,atlanan=0,porsiyon=null;
   for(i=0;i<p.length;i++){
@@ -202,6 +237,8 @@ function besinAyristir(metin,S){
       var a=besinAdBul(p,i,S);
       if(a&&a.alan==="_boy"){if(!porsiyon)porsiyon=besinPorsiyonBul(p,a.son);i=a.son;cur=null;continue}
       if(a&&a.alan.charAt(0)!=="_"||a&&a.alan==="_atla"){
+        // "Tuz/Sodyum (g) 0.78/0.31": aynı satırda ikinci ad yeni satır açmaz; değerler adların sırasında, ilk değer ilk adın
+        if(cur&&!cur.s.length&&!satirSonu&&(cur.alan==="tuz"&&a.alan==="sodyum"||cur.alan==="sodyum"&&a.alan==="tuz")){i=a.son;continue}
         cur=a.alan==="kalori"?{alan:"enerji",s:[],birimler:["kcal"]}:{alan:a.alan,s:[],birimler:[]};rows.push(cur);
         i=a.son;satirSonu=false;atlanan=0;continue;
       }
@@ -240,6 +277,21 @@ function besinAyristir(metin,S){
     }
   }
   var hs=yontem==="sutun"?0:sutun;   // sütun sütun okunmuşsa her satırda tek hücre kaldı
+  if(yontem==="satir"&&yi>=0&&isaret.indexOf("porsiyon")>=0){
+    var ds=besinSutunDogrula(rows,metin);
+    if(ds==null)sorun.push("sutun_belirsiz");else hs=sutun=ds;
+  }
+  // Adlar alt alta, değerler sonra okunmuşsa ("Lif / Protein / Tuz ⏎ 4,00 1,0 5.99 1.5 129 0.39") bloğun son satırı bütün değerleri toplar:
+  // değersiz başka bir satırın ("Fat / Lipides" çevirisi aynı satırdır) ardındaki satırda tablonun olağan hücre sayısından fazla hücre varsa satırlar karışmıştır.
+  if(yontem==="satir"){
+    var say=rows.filter(function(r){return r.s.length}).map(function(r){return besinHucre(r).length}).sort(function(x,y){return x-y});
+    var olagan=say.length?say[Math.floor((say.length-1)/2)]:0;
+    for(i=1;i<rows.length;i++){
+      if(!rows[i].s.length||besinHucre(rows[i]).length<=olagan)continue;
+      for(j=i-1;j>=0&&rows[j].alan===rows[i].alan&&!rows[j].s.length;j--);   // "Tuz / Salt / Salz": aynı satırın çevirileri atlanır
+      if(j>=0&&!rows[j].s.length){sorun.push("sutun_sira");break}
+    }
+  }
   var b={},lt={},gorulen={};
   BESIN_ALAN.forEach(function(k){b[k]=null});
   var na=null;
@@ -250,6 +302,7 @@ function besinAyristir(metin,S){
     if(BESIN_ALAN.indexOf(k)<0)return;
     if(gorulen[k]){if(Math.abs(b[k]-h.v)>1e-9&&sorun.indexOf("cok_satir")<0)sorun.push("cok_satir");return}   // çok dilli etikette aynı satır tekrar: aynıysa sorun yok
     gorulen[k]=1;b[k]=besinYuvarla(h.v);if(h.lt)lt[k]=true;
+    if(h.kjUyumsuz&&sorun.indexOf("enerji_cift")<0)sorun.push("enerji_cift");
     if(h.sifir&&sorun.indexOf("ondalik")<0)sorun.push("ondalik");
     if(h.birimsiz&&sorun.indexOf("birim_yok")<0)sorun.push("birim_yok");
   });

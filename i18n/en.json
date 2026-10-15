@@ -958,6 +958,8 @@
  "besin.sorun.ondalik": "a number may have lost its decimal point",
  "besin.sorun.birim_yok": "the unit of energy could not be read",
  "besin.sorun.cok_satir": "the same line was read twice with different values",
+ "besin.sorun.sutun_belirsiz": "the per 100 g column could not be told apart from the per serving column",
+ "besin.sorun.enerji_cift": "kJ and kcal do not match, lines may have been read out of place",
  "besin.birim_sor": "Are the values per 100 g or per 100 ml? Drinks have different thresholds, so no colours are shown until you choose.",
  "besin.birim_g": "100 g",
  "besin.birim_ml": "100 ml",

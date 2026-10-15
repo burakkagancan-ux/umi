@@ -916,6 +916,8 @@
  "besin.sorun.ondalik": "virgülü okunmamış olabilecek bir sayı var",
  "besin.sorun.birim_yok": "enerjinin birimi okunamadı",
  "besin.sorun.cok_satir": "aynı satır farklı değerlerle iki kez okundu",
+ "besin.sorun.sutun_belirsiz": "100 g sütunu porsiyon sütunundan ayırt edilemedi",
+ "besin.sorun.enerji_cift": "kJ ile kcal birbirini tutmuyor, satırlar kaymış okunmuş olabilir",
  "besin.birim_sor": "Değerler 100 g başına mı, 100 ml başına mı? İçeceklerde eşikler farklı olduğu için seçmeden renk gösterilmez.",
  "besin.birim_g": "100 g",
  "besin.birim_ml": "100 ml",
