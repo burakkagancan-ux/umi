@@ -10,8 +10,14 @@ keep_vars = true
 # sayesinde dağıtım onları silmez. Burada tekrar tanımlanmaz (gizli değişkenle çakışmasın diye).
 
 # Kayıt (log) kapalı: fotoğraf ve metin hiçbir yerde tutulmaz
+# Hata kaydı (15.10.2026, kullanıcı kararı): yalnızca Worker'ın kendi kayit() satırları (olay adı, kısa ayrıntı; IP ve içerik yok).
+# İstek kayıtları (invocation_logs) kapalı: IP, başlık ve adres içerdiği için. Panel: Workers & Pages > inapp-ocr-3a8f > Observability.
 [observability]
-enabled = false
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+invocation_logs = false
 
 # IP başına dakikada en fazla 6 okuma
 [[ratelimits]]

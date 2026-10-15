@@ -7,7 +7,8 @@ Adres: https://inapp-ocr-3a8f.burakkagancan.workers.dev
 - **İstek sınırı:** IP başına dakikada 6, toplamda dakikada 30 okuma (Cloudflare konumu başına; yaklaşık sayım). Aşınca 429 ve Türkçe mesaj.
 - **Köken denetimi:** Yalnızca `ALLOWED_ORIGIN` adresleri kabul edilir (virgülle birden çok adres yazılabilir; panelde tanımlı).
 - **Boyut ve biçim:** En fazla ~4 MB; yalnızca JPEG, PNG, WebP.
-- **Kayıt yok:** Kodda `console.log` yok; `wrangler.toml` içinde gözlemlenebilirlik (Workers Logs) kapalı.
+- **Hata kaydı (15.10.2026):** Workers Logs açık, ama yalnızca Worker'ın kendi `kayit()` satırları yazılır: olay adı (ör. `vision_hata`, `vision_kota`, `vision_zaman_asimi`, `sinir_ip`, `sinir_genel`, `sinir_barkod`, `yonetim_yetkisiz`, `beklenmeyen`) ve en çok 200 karakter ayrıntı. IP, fotoğraf, okunan metin, barkod ve katkıcı kimliği yazılmaz (`worker/test.mjs` denetler). İstek kayıtları (`invocation_logs`, IP ve başlık içerir) `wrangler.toml`'da kapalı. Görmek için: panel → Workers & Pages → `inapp-ocr-3a8f` → Observability → Logs. Ücretsiz planda günde 200.000 satıra kadar, 3 gün saklanır.
+- **Yakalanmayan hata:** (ör. D1 kesintisi) Cloudflare'in CORS'suz hata sayfası yerine JSON 500 döner ve `beklenmeyen` satırı yazılır (yolun yalnızca ilk parçası, ör. `/urun`).
 - **Zaman aşımı:** Vision 20 saniyede yanıt vermezse istek kesilir.
 
 ## Dağıtım (Cloudflare Workers Builds)
