@@ -219,16 +219,16 @@ export function rozetKartCiz(x,M,cfg,madalya,logo,yazi){
   if(madalya)x.drawImage(madalya,(W-ms)/2,my,ms,ms);
   y=my+ms+130;
   font(700,96,true);sar(M.ad,W-2*P).slice(0,2).forEach(function(l){txt(l,W/2,y,"#1B211E");y+=110});
-  y+=10;font(600,46);txt(M.aile,W/2,y,"#1F4D3A");
+  y+=10;font(600,46);txt(M.aile,W/2,y,"#2741C8");
   y+=100;font(400,42);sar(M.aciklama,W-2*P-40).slice(0,4).forEach(function(l){txt(l,W/2,y,"#1B211E");y+=58});
   if(M.tarih){font(400,34);txt(M.tarih,W/2,foot-60,"#5A615C")}
   // Alt bant: sonuç kartıyla aynı (logo açık çerçeveyle, ad + slogan, adres)
-  x.fillStyle="#1F4D3A";x.fillRect(0,foot,W,L.bant);
+  x.fillStyle="#2741C8";x.fillRect(0,foot,W,L.bant);
   var ls=Math.min(112,L.bant-40),ly=foot+(L.bant-ls)/2,lx=rtl?W-P-ls:P;
   if(logo){x.fillStyle="#FFFFFF";x.fillRect(lx-4,ly-4,ls+8,ls+8);x.drawImage(logo,lx,ly,ls,ls)}
   var bx=rtl?W-P-(logo?ls+28:0):P+(logo?ls+28:0),al=rtl?"right":"left";
   font(700,38,true);txt(cfg.uygulamaAdi,bx,ly+ls*0.48,"#FFFFFF",al);
-  font(600,26);txt(cfg.slogan,bx,ly+ls*0.95,"#CFE0D6",al);
-  font(400,26);txt(cfg.adres.replace(/^https?:\/\//,"").replace(/\/$/,""),rtl?P:W-P,ly+ls*0.48,"#CFE0D6",rtl?"left":"right");
+  font(600,26);txt(cfg.slogan,bx,ly+ls*0.95,"#D4DCFA",al);
+  font(400,26);txt(cfg.adres.replace(/^https?:\/\//,"").replace(/\/$/,""),rtl?P:W-P,ly+ls*0.48,"#D4DCFA",rtl?"left":"right");
   return out;
 }
