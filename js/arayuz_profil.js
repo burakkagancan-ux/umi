@@ -78,10 +78,11 @@ function buildProfile(){
   ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);ay.appendChild(ul);
   if(typeof barkodAyarKutusu==="function")ay.appendChild(barkodAyarKutusu());   // barkodlu ürün katkısı tercihi
   ay.parentNode.appendChild(el("div","how",t("profil.dil_not")+" "+t("profil.ulke_not")));
-  // Hakkında: sorumluluk reddi ve gizlilik (Etiket Oku'daki gizlilik notunun aynısı)
+  // Hakkında: sorumluluk reddi ve gizlilik (15.10.2026'dan beri yalnızca burada; Etiket Oku altbilgisinden kaldırıldı)
   var sr=document.createElement("details");sr.className="pdrop sorumlu";sr.appendChild(el("summary","pt",t("profil.sorumluluk_baslik")));
   SORUMLULUK.forEach(function(k){sr.appendChild(el("p",null,t(k)))});hk.appendChild(sr);
-  var gz=$("gizlilik");if(gz){var gk=gz.cloneNode(true);gk.removeAttribute("id");gk.className="pdrop gzp";gk.open=false;gk.querySelector("summary").className="pt";hk.appendChild(gk)}
+  var gk=document.createElement("details");gk.className="pdrop gzp";gk.appendChild(el("summary","pt",t("gizlilik.baslik")));
+  var gl=document.createElement("ul");["gizlilik.1","gizlilik.2","gizlilik.3","gizlilik.4","gizlilik.5"].forEach(function(k){gl.appendChild(el("li",null,t(k)))});gk.appendChild(gl);hk.appendChild(gk);
   box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
 }
