@@ -198,15 +198,15 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .pdrop .pc:has(input:checked){background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
 .pdrop .pc:has(input:focus-visible){outline:3px solid var(--ok);outline-offset:2px}.pdrop .pc input:focus-visible{outline:0}
 .pkart{border:1px solid var(--line);border-radius:20px;padding:14px}
-.pkart .pnum{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pkart .pnum .pn{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:6px;background:var(--sunk);border-radius:14px;padding:6px 12px 8px;min-height:0}
-.pkart .pnum .pn>span:first-child{grid-column:1/-1;font-size:12px;font-weight:600;color:var(--mute)}
-.pkart .pnum .pn input,.pkart .pnum .pn select{width:100%;min-width:0;border:0;background:transparent;font-size:17px;padding:2px 0;color:var(--ink)}
+.pkart .pnum{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pkart .pnum .pn{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:6px;background:var(--sunk);border-radius:12px;padding:4px 10px 5px;min-height:0}
+.pkart .pnum .pn>span:first-child{grid-column:1/-1;font-size:11px;font-weight:600;color:var(--mute)}
+.pkart .pnum .pn input,.pkart .pnum .pn select{width:100%;min-width:0;border:0;background:transparent;font-size:15px;padding:1px 0;color:var(--ink)}
 .pkart .pnum .pn select{grid-column:1/-1}
 .pkart .bmi{margin:12px 0 0;padding:10px 12px;border-radius:14px;background:var(--okbg)}
 .pset>.pn{display:flex;justify-content:space-between;gap:12px;min-height:56px;padding:0 16px;font-size:16px;font-weight:600}
 .pset>.pn select{border:0;background:transparent;color:var(--mute);font-size:15px;width:10em;max-width:55%;text-align:end;text-align-last:end}
-.pset .pbark{margin:0;padding:12px 16px 14px}.pset .pbark .pt{font-size:16px;margin:4px 0}.pset .pbark .mut{font-size:13px}
+.pset .pbark{margin:0;padding:12px 16px 14px}.pset .pbark .pt{display:flex;align-items:center;font-size:16px;margin:4px 0}.pset .pbark .mut{font-size:13px}
 .pset .pbark select{margin-top:8px;width:100%;min-height:44px;border-radius:12px;background:var(--sunk);border:0}
 .pbol>.how{margin:8px 4px 0}
 .plist .sorumlu{margin:0;padding:0 16px;border-top:0;font-size:14px}.plist .sorumlu p{margin:0 0 8px;color:var(--mute)}
@@ -270,7 +270,7 @@ label.camera .cambtn{grid-column:1/-1;display:flex;align-items:center;justify-co
 .ipg svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ok);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 body.sonuclu .ipucu,body:not(.sonuclu) #sonuch,body:not(.sonuclu) #sonuc{display:none}
 .altbilgi{margin-top:32px;text-align:center}
-.altbilgi .note{background:none;padding:0;margin:0;color:var(--mute);font-size:12px}
+.altbilgi button.deneme{min-height:44px;margin:0;padding:0 12px;background:none;border:0;color:var(--mute);font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .altbilgi details.gz{margin:4px 0 0;text-align:start}.altbilgi details.gz>summary{justify-content:center}
 .ozet{border:1px solid var(--line);border-radius:24px;padding:18px;margin:6px 0 12px;box-shadow:0 1px 2px rgba(27,33,30,.04)}
 .oz-ust{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
@@ -328,7 +328,7 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 <div id="rozet" hidden></div>
 <div id="ekle" hidden></div>
 <div id="topluluk" hidden></div>
-<div class="altbilgi"><div class="note"><strong data-i18n="sayfa.deneme">Deneme sürümü.</strong> <span data-i18n="sayfa.deneme_not">Katkı maddesi ve bileşen bilgileri taslaktır ve doğrulanmamıştır; tıbbi veya resmi bir tavsiye değildir. Bu resmi bir uygulama değildir.</span></div>
+<div class="altbilgi">
 <details class="gz" id="gizlilik"><summary data-i18n="gizlilik.baslik">Gizlilik: Fotoğrafınıza ne oluyor?</summary>
 <ul>
 <li data-i18n="gizlilik.1">Fotoğraf, yalnızca üzerindeki yazının okunması için Google Cloud Vision hizmetine gönderilir. Bu uygulama fotoğrafı kaydetmez. Okunan metin, ürünleri karşılaştırabilmeniz için yalnızca bu cihazda saklanır (son 20 tarama ve sizin kaydettiğiniz ürünler); bize iletilmez. Google tarafındaki işlem Google'ın kendi koşullarına tabidir.</li>
@@ -337,6 +337,7 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 <li data-i18n="gizlilik.4">Uygulama üyelik istemez, reklam ya da izleme aracı kullanmaz. Bir sonucu paylaştığınızda yalnızca günlük paylaşım sayısı bir artar; ürün, okunan metin ya da kişisel bilgi gönderilmez.</li>
 <li data-i18n="gizlilik.5">Barkod okuttuğunuzda barkod numarası ürünü bulmak için sunucumuza gönderilir; sunucu Open Food Facts'e kendi adına sorar, IP adresiniz iletilmez ve saklanmaz. Fotoğrafla okuttuğunuz içerik yalnızca siz izin verirseniz barkodla birlikte kaydedilir (fotoğraf, konum ya da kişisel bilgi olmadan). Katkıyla birlikte, ilk katkınızda bu cihazda rastgele üretilen bir katkıcı numarası gider; adınızdan, cihazınızdan ya da IP adresinizden türetilmez ve katkılarınızı bir arada saymaya yarar. Rozetlerim ve Eklediklerim ekranı bu numarayla sunucudan yalnızca sizin eklediğiniz ürünlerin durumunu sorar. İçeriği bulunamayan barkodun numarası ve türü, eksik ürünler listesi için bu cihazdan bir kez sayılır (IP adresi ya da katkıcı numarası olmadan).</li>
 </ul></details>
+<button type="button" class="deneme" id="denemeb" data-i18n="sayfa.deneme">Deneme Sürümü</button>
 </div>
 </div>
 <div id="sheet" class="sheet" hidden><div class="sheet-bg" id="sheet-bg"></div><div class="sheet-pn" role="dialog" aria-modal="true" aria-labelledby="sheet-t"><div class="sheet-hd"><div class="t" id="sheet-t"></div><button type="button" class="sheet-x" id="sheet-x" aria-label="Kapat" data-i18n-attr="aria-label:ortak.kapat">×</button></div><div id="sheet-b"></div></div></div>
