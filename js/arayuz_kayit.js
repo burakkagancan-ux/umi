@@ -115,7 +115,7 @@ function kayitAc(){
   var ex=el("button","alt",t("kayit.yedek.indir"));ex.type="button";ex.disabled=!all.length&&!katkiciAl()&&rozetBosMu(rozetLoad());
   ex.onclick=function(){
     var blob=new Blob([kayitYedek(kayitLoad(),0,katkiciGecerli(katkiciAl())?katkiciAl():"",rozetBosMu(rozetLoad())?null:rozetLoad())],{type:"application/json"}),a=document.createElement("a"),d=new Date();
-    a.href=URL.createObjectURL(blob);a.download="tagsis-kayitlar-"+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+".json";document.body.appendChild(a);a.click();
+    a.href=URL.createObjectURL(blob);a.download="umi-kayitlar-"+d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+".json";document.body.appendChild(a);a.click();
     setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000);
   };
   var im=el("button","alt",t("kayit.yedek.yukle"));im.type="button";

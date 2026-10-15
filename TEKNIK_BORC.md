@@ -43,7 +43,7 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 Altyapı ve İngilizce arayüz tamam (belgeler/mimari/cok_dil.md "Çok dil"). Bilerek bırakılanlar:
 
 ### Ana ekrana eklenen uygulama (manifest) — KAPANDI (13.10.2026)
-- Uygulama adı, açıklaması ve kısayolları dile göre: `python3 gen_manifest.py` i18n/<dil>.json'daki manifest.* (ve sayfa.baslik, nav.ansiklopedi) anahtarlarından manifest.webmanifest (Türkçe) ve i18n/manifest/<dil>.webmanifest üretir; js/dil.js bağlantıyı seçili dile çevirir. Liste menüden kalktığı için başlangıç sayfası ocr.html, ikinci kısayol Ansiklopedi; kimlik (id) değişmedi. Ad "Tağşiş" kaldı: küresel ad O-02 kararını bekliyor (kararla tek satır: manifest.ad). Paylaşım kartındaki ad da O-02 ile.
+- Uygulama adı, açıklaması ve kısayolları dile göre: `python3 gen_manifest.py` i18n/<dil>.json'daki manifest.* (ve sayfa.baslik, nav.ansiklopedi) anahtarlarından manifest.webmanifest (Türkçe) ve i18n/manifest/<dil>.webmanifest üretir; js/dil.js bağlantıyı seçili dile çevirir. Liste menüden kalktığı için başlangıç sayfası ocr.html, ikinci kısayol Ansiklopedi; kimlik (id) değişmedi. Ad 15.10.2026'da "Umi" oldu (O-02, kullanıcı kararı; manifest.ad, manifest.kisa_ad). Paylaşım kartındaki ad da O-02 ile.
 
 Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
 Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi hariç toplam 1.164 metin.

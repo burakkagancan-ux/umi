@@ -88,7 +88,7 @@ ok(own.includes(cfg.uygulamaAdi)&&own.includes(cfg.slogan),'alt bant: uygulama a
 
 // 7) Paylaşım metni ve uygulama adı tek sabitten
 M=P.payModel(src5,{name:'Kraker'});
-ok(P.payText(M)==='Kraker içeriğine baktım: 5 madde dikkat gerektiriyor. Tağşiş ile sen de tara: https://burakkagancan-ux.github.io/tagsis/','metin: '+P.payText(M));
+ok(P.payText(M)==='Kraker içeriğine baktım: 5 madde dikkat gerektiriyor. Umi ile sen de tara: https://burakkagancan-ux.github.io/umi/','metin: '+P.payText(M));
 const c2=Object.assign({},cfg,{uygulamaAdi:'YeniAd',adres:'https://ornek.app/'});
 ok(/YeniAd ile sen de tara: https:\/\/ornek\.app\/$/.test(P.payText(M,c2)),'ad sabitten okunur');
 {const c=fakeCtx();P.payDraw(c,M,L,c2,null);ok(c.texts.some(x=>x.s==='YeniAd')&&c.texts.some(x=>x.s==='ornek.app'),'kartta yeni ad ve adres')}

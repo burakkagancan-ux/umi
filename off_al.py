@@ -27,7 +27,7 @@ import datetime, json, os, re, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "kaynak", "off")
-UA = "Tagsis/1.0 (https://github.com/burakkagancan-ux/tagsis; barkod verisi, ayda bir)"
+UA = "Umi/1.0 (https://github.com/burakkagancan-ux/umi; barkod verisi, ayda bir)"
 BEKLE_ARAMA = 6.5   # saniye; OFF arama sınırı dakikada 10 sorgu
 BEKLE = 1.5   # saniye; OFF ürün sorgusu sınırı dakikada 100 (paylaşılan IP'lerde daha düşük olabiliyor)
 DBS = [   # (kısa ad, alan adı)

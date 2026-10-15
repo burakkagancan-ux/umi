@@ -112,7 +112,7 @@ async function sayac(request, env, allowed, R) {
 // ---------- Barkod ----------
 const OFF_TIMEOUT_MS = 3_000;
 const OFF_CACHE_SN = 86_400;           // bulunan ürün 1 gün, bulunamayan 6 saat önbellekte
-const OFF_UA = "Tagsis/1.0 (https://github.com/burakkagancan-ux/tagsis; barkod sorgusu)";
+const OFF_UA = "Umi/1.0 (https://github.com/burakkagancan-ux/umi; barkod sorgusu)";
 const OFF_DB = [["food", "world.openfoodfacts.org"], ["beauty", "world.openbeautyfacts.org"], ["products", "world.openproductsfacts.org"]];
 const OFF_DIL = ["tr", "en", "de", "fr", "nl", "ar", "ru", "es", "it"];
 const KATKI_BARKOD_EN_COK = 30;        // bir barkoda en çok bu kadar katkı (kötüye kullanım sınırı)

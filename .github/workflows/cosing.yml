@@ -40,7 +40,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           dal="cosing/$(date +%Y-%m)"
-          git config user.name "tagsis-bot"
+          git config user.name "umi-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout -b "$dal"
           git add kaynak/cosing data/ i18n/ sw.js test/veri/altin_cikti.json.gz

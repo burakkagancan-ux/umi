@@ -110,7 +110,7 @@ const ISTISNA={
   'js/gida.js':['ilave edilmemiştir','domuz kaynaklı madde içermez',' içermez','tatlandırıcı','Tatlandırıcı','alkolü'],   // olumsuzluk ve tatlandırıcı eşleştirmesi: etiket dilindeki sözcükler / veri kategorisi
   'js/kozmetik.js':['ingrédients'],   // etiket başlığı sözcükleri (düzenli ifade dışındaki dizge)
   'js/arayuz_temizlik.js':['Saç boyası','Saç bakımı','Cilt bakımı','Ağız bakımı','Tırnak bakımı','Bronzlaştırıcı','Kepek önleyici'],   // TFUNC_SKIP: kozmetik_inci.json işlev değerleri
-  'js/paylas_ayar.js':['Tağşiş'],   // uygulamanın adı (marka; çevrilmez)
+  'js/paylas_ayar.js':['Umi'],   // uygulamanın adı (marka; çevrilmez)
   'js/dil.js':['Türkçe'],   // diller.json yüklenemezse yedek: dilin kendi adı
 };
 for(const [f,src] of Object.entries(kaynak)){
