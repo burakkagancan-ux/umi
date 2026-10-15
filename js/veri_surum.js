@@ -16,7 +16,8 @@ var VERI_ANAHTAR={
   besin_elle:"dizi",   // elle düzeltilen besin değeri tabloları, metne bağlı (js/arayuz_besin.js)
   rozetler:"nesne",    // rozet sayımı (G-01, js/rozet.js; kendi şema sürümü "v": ROZET_SURUM, rozetNorm okurken doğrular)
   dil:"yazi",ulke:"yazi",tur:"yazi",ktip:"yazi",pay_boyut:"yazi",
-  barkod_katki:"yazi",katkici:"yazi"   // barkod katkı izni ve katkıcı kimliği (O-22)
+  barkod_katki:"yazi",katkici:"yazi",   // barkod katkı izni ve katkıcı kimliği (O-22)
+  ans_tur:"yazi"   // ansiklopedide seçili tür (gida/tem)
 };
 /* Göç adımları: VERI_GOC[n] verisi n-1 sürümünde olan depoyu n sürümüne getirir. depo: {getItem, setItem, removeItem} */
 var VERI_GOC={

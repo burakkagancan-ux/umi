@@ -1,4 +1,4 @@
-{"meta":{"lang": "en", "generated": "2026-10-14", "count": 4176},
+{"meta":{"lang": "en", "generated": "2026-10-15", "count": 4178},
 "t":{
 "E100.name":"Curcumin",
 "E101.name":"Riboflavin",
@@ -411,6 +411,7 @@
 "kaynak.469da60b6f":"Regulation (EU) No 1169/2011 on the provision of food information to consumers",
 "kaynak.497622be7d":"Regulation (EC) No 1333/2008 on food additives – consolidated text (18.08.2026)",
 "kaynak.4cf823cf8b":"WHO/FAO JECFA (IPCS INCHEM; 51st meeting)",
+"kaynak.4cff39b04f":"Healthy Cleaning Guide",
 "kaynak.55fe76c801":"Regulation (EC) No 1333/2008, Annex III Part 4 (additives in food flavourings; text as of 31.12.2020)",
 "kaynak.71c1ba02c4":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 9 (categories 11.3–12.5; text as of 31.12.2020)",
 "kaynak.737dd93735":"European Commission",
@@ -440,6 +441,7 @@
 "kaynak.e79a87e2b8":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 3 (categories 04.2.1–04.2.5; text as of 31.12.2020)",
 "kaynak.eae572f770":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 7 (text as of 31.12.2020)",
 "kaynak.ebb93137cd":"European Commission (EUR-Lex, consolidated text)",
+"kaynak.f905bfdded":"Ministry of Health of Türkiye, General Directorate of Public Health",
 "profile.allergen_celery":"Celery allergy",
 "profile.allergen_crustacean":"Crustacean allergy",
 "profile.allergen_egg":"Egg allergy",
