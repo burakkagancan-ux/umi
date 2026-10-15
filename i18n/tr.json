@@ -73,7 +73,6 @@
  "barkod.foto_cek": "İçerik listesini fotoğrafla",
  "barkod.foto_okunuyor": "Fotoğraftaki barkod okunuyor…",
  "barkod.foto_sec": "Barkodun fotoğrafını seç",
- "barkod.fotoda_bulundu": "Fotoğrafta barkod bulundu ({kod}); okunan içerik bu barkodla ilişkilendirildi.",
  "barkod.fotoda_yok": "Fotoğrafta barkod okunamadı. Daha yakından ve net çekip tekrar deneyin ya da numarasını yazın.",
  "barkod.gecersiz": "Geçersiz barkod: {kod}. Numarayı kontrol edin.",
  "barkod.icerik_yok": "{ad}: içerik listesi henüz veritabanında yok",
