@@ -2,7 +2,7 @@
 // Gerçek etiket setinde (test/veri/besin_etiketler.json) satır satır doğru / yanlış / boş sayısı ve yanlış renk gösterilen satırlar.
 // Kullanım: node test/olcum_besin.js [--metin]   (--metin: değeri yanlış ya da tablosu bulunamayan etiketin OCR metnini de yazar)
 const fs=require('fs'),path=require('path');
-eval(require('./yukle.js')+';global.B={BESIN_ALAN,besinAyristir,besinSozluk,besinGorunum,besinDuzey}');
+Object.assign(globalThis,require('./yukle.js'));global.B={BESIN_ALAN,besinAyristir,besinSozluk,besinGorunum,besinDuzey};
 const S=B.besinSozluk(JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8')));
 const E=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_etiketler.json'),'utf8')).etiketler,metinYaz=process.argv.includes('--metin');
 const say={yok:0,suphe:0,tamam:0,renkli:0,yanlisRenk:0},alan={};

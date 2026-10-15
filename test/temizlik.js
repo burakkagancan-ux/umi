@@ -1,8 +1,7 @@
 // Temizlik ürünü analizi testleri. Çalıştır: node test/temizlik.js
 const fs=require('fs');
 const {K}=require('./kozmetik_cases.js');
-const src=require('./yukle.js');
-eval(src+';global.TL={buildTIndex,analyzeT,summarizeT,looksCleaning,looksCosmetic}');
+Object.assign(globalThis,require('./yukle.js'));global.TL={buildTIndex,analyzeT,summarizeT,looksCleaning,looksCosmetic};
 const tdb=JSON.parse(fs.readFileSync(__dirname+'/../data/temizlik.json'));
 const T=TL.buildTIndex(tdb);
 let fail=0,n=0;

@@ -1,7 +1,7 @@
 // Ansiklopedi: veri bütünlüğü, model doğrulama, Türkçe harf duyarsız arama, profil uyarısı eşleşmesi.
 // Çalıştır: node test/ansiklopedi.js
 const fs=require('fs');
-eval(['ortak','ansiklopedi'].map(f=>fs.readFileSync(__dirname+'/../js/'+f+'.js','utf8')).join('\n'));
+Object.assign(globalThis,require('./yukle.js'));
 // Dizin (data/ansiklopedi.json, ansiklopedi_tr.json) açılışta, madde sayfası (data/ansiklopedi/<kimlik>.json, data/ansiklopedi/tr/<kimlik>.json) açılınca iner
 const J=f=>JSON.parse(fs.readFileSync(__dirname+'/../data/'+f));
 const D=J('ansiklopedi.json'),TI=J('ansiklopedi_tr.json').t,T=Object.assign({},TI);

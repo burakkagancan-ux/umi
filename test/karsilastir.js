@@ -1,6 +1,5 @@
 // İki ürünü karşılaştırma: karar mantığı, madde farkları, tanınmayan oran, geçmiş. Çalıştır: node test/karsilastir.js
-const src=require('./yukle.js');
-eval(src+';global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,cmpMisfitOzel,ozelAra,ozelAraHepsi,ozelSozlukKur,ozelKayit,ozelGoster,ozelAyni,histAdd,histName,KARS_AYAR,buildTIndex}');
+Object.assign(globalThis,require('./yukle.js'));global.K={cmpProduct,cmpProductK,cmpProductT,cmpDecide,cmpDiff,cmpMisfit,cmpMisfitOzel,ozelAra,ozelAraHepsi,ozelSozlukKur,ozelKayit,ozelGoster,ozelAyni,histAdd,histName,KARS_AYAR,buildTIndex};
 const {idx}=require('./run.js');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const cfg=K.KARS_AYAR;

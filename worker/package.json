@@ -1,6 +1,7 @@
 {
   "name": "inapp-ocr-worker",
   "private": true,
+  "type": "module",
   "description": "Etiket Oku OCR Worker'ı (Cloudflare Workers + Google Cloud Vision)",
   "scripts": {
     "deploy": "wrangler deploy",

@@ -2,7 +2,7 @@
 const fs=require('fs');
 const {idx,L}=require('./run.js');
 const {K,KL}=require('./kozmetik_cases.js');
-eval(require('./yukle.js')+';global.TL={buildTIndex,analyzeT,summarizeT}');
+Object.assign(globalThis,require('./yukle.js'));global.TL={buildTIndex,analyzeT,summarizeT};
 const T=TL.buildTIndex(JSON.parse(fs.readFileSync(__dirname+'/../data/temizlik.json')));
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const g=t=>L.summarize(L.analyze(t,idx),idx).cancer.map(c=>typeof c==='string'?c:c.name).join();

@@ -2,7 +2,7 @@
 // Set: test/veri/ingilizce_etiketler.json (30 etiket: 10 İngiltere/AB, 10 ABD, 10 zor durum). CI'daki eşik denetimi test/ingilizce.js'te (aynı olc() işlevi).
 // İçerik parçası: içerik listesinin ayraç dışındaki virgülle ayrılmış öğesi; içinde en az bir madde eşleştiyse tanınmış sayılır.
 // Yanlış uyarı: beklenmeyen alerjen (içerir ya da içerebilir) ve beklenmeyen dikkat/uyarı seviyeli E kodu; beklenen kod beklenenden yüksek seviyeyle de sayılır.
-eval(require('./yukle.js')+';global.G={analyze,summarize,buildIndex,normText,cmpSegments}');
+Object.assign(globalThis,require('./yukle.js'));global.G={analyze,summarize,buildIndex,normText,cmpSegments};
 const {idx}=require('./run.js');
 const SET=require(process.argv[2]&&require.main===module?require('path').resolve(process.argv[2]):'./veri/ingilizce_etiketler.json').etiketler;   // başka set: node test/olcum_ingilizce.js test/veri/ingilizce_kor.json
 function olc(etiketler){

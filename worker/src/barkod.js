@@ -1,36 +1,12 @@
-// Barkod yardımcıları (Worker). js/barkod.js ile aynı hesaplar: Worker ayrı dağıtıldığı için kopya; test/barkod.js ikisini karşılaştırır.
+// Barkod yardımcıları (Worker). Uygulamayla ortak hesaplar (kontrol hanesi, benzerlik, Open Food Facts besin dönüşümü, porsiyon süzgeci)
+// kopya değil: js/barkod.js ve js/besin.js'ten içe aktarılır (U-07, 15.10.2026); wrangler dağıtımda paketler. Burada yalnızca Worker'a özgü olanlar.
+import { BARKOD_AYAR, barkodBenzer, barkodGecerli, barkodKontrol, barkodSozcukler } from "../../js/barkod.js";
+import { BESIN_ALAN, besinBirim, besinOff, besinPorNorm } from "../../js/besin.js";
+export { barkodGecerli, BESIN_ALAN, besinBirim, besinOff, besinPorNorm };
+export const kontrolHanesi = barkodKontrol, sozcukler = barkodSozcukler, benzerlik = barkodBenzer;
+export const BENZERLIK = BARKOD_AYAR.benzerlik;
 export const KATKI_ARALIK_MS = 10 * 60_000;   // doğrulama: iki benzer katkı arasında en az 10 dakika
-export const BENZERLIK = 0.85;                // js/barkod.js BARKOD_AYAR.benzerlik ile aynı
 
-export function kontrolHanesi(govde) {
-  let t = 0;
-  for (let i = govde.length - 1, w = 3; i >= 0; i--, w = 4 - w) t += Number(govde[i]) * w;
-  return (10 - (t % 10)) % 10;
-}
-function upcE(e) {
-  if (!/^[01]\d{7}$/.test(e)) return null;
-  const s = e[0], d = e.slice(1, 7), c = e[7], x = d[5];
-  const g = x <= "2" ? d.slice(0, 2) + x + "0000" + d.slice(2, 5) : x === "3" ? d.slice(0, 3) + "00000" + d.slice(3, 5) : x === "4" ? d.slice(0, 4) + "00000" + d[4] : d.slice(0, 5) + "0000" + x;
-  return s + g + c;
-}
-export function barkodGecerli(s) {
-  s = String(s || "").replace(/[^0-9]/g, "");
-  if (s.length === 13 || s.length === 12) return kontrolHanesi(s.slice(0, -1)) === Number(s.slice(-1));
-  if (s.length === 8) {
-    if (kontrolHanesi(s.slice(0, 7)) === Number(s[7])) return true;
-    const a = upcE(s); return !!a && kontrolHanesi(a.slice(0, 11)) === Number(a[11]);
-  }
-  return false;
-}
-export function sozcukler(s) {
-  const m = { "ı": "i", "İ": "i", "ş": "s", "Ş": "s", "ğ": "g", "Ğ": "g", "ü": "u", "Ü": "u", "ö": "o", "Ö": "o", "ç": "c", "Ç": "c" };
-  return String(s || "").replace(/[ıİşŞğĞüÜöÖçÇ]/g, (c) => m[c]).toLowerCase().split(/[^a-z0-9%]+/).filter((w) => w.length > 1);
-}
-export function benzerlik(a, b) {
-  const A = new Set(sozcukler(a)), B = new Set(sozcukler(b));
-  let n = 0; for (const w of A) if (B.has(w)) n++;
-  const u = A.size + B.size - n; return u ? n / u : 0;
-}
 
 // Katkılar benzerliğe göre gruplanır (aynı tür, grubun ilk katkısına benzerlik ≥ BENZERLIK; satırlar yeniden eskiye sıralı gelir).
 // Grubun içinde en az KATKI_ARALIK_MS arayla gelmiş iki katkı varsa doğrulanmış. Aynı katkıcı kimliğinden (kim) gelen iki katkı
@@ -97,33 +73,11 @@ export function toplulukSay(satirlar) {
   return o;
 }
 
-// Besin değerleri (A-02): Open Food Facts nutriments (*_100g) → {kcal, yag, doymus, karb, seker, lif, protein, tuz, birim}; değer yoksa null.
-// js/besin.js besinOff ve off_al.py besin_al ile aynı hesap (test/besin.js karşılaştırır). Tutarlılık uygulamada denetlenir.
-const BESIN_OFF = { yag: "fat", doymus: "saturated-fat", karb: "carbohydrates", seker: "sugars", lif: "fiber", protein: "proteins", tuz: "salt" };
-export function besinBirim(miktar) {
-  const s = String(miktar == null ? "" : miktar).toLowerCase();
-  if (/\d\s*(ml|cl|dl|l|lt|litre|liter|litres|liters)\b/.test(s)) return "ml";
-  return /\d\s*(g|gr|kg|gram|grams)\b/.test(s) ? "g" : "";
-}
-export function besinOff(n, miktar) {
-  if (!n || typeof n !== "object") return null;
-  const f = (k) => { let v = n[k]; if (v === "" || v == null) return null; v = Number(v); return Number.isFinite(v) && v >= 0 ? v : null; };
-  const b = { kcal: f("energy-kcal_100g") };
-  if (b.kcal == null) { let kj = f("energy-kj_100g"); if (kj == null) kj = f("energy_100g"); b.kcal = kj == null ? null : kj / 4.184; }
-  for (const k in BESIN_OFF) b[k] = f(BESIN_OFF[k] + "_100g");
-  if (b.tuz == null) { const na = f("sodium_100g"); b.tuz = na == null ? null : na * 2.5; }
-  const alan = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"];
-  if (alan.every((a) => b[a] == null)) return null;
-  for (const a of alan) b[a] = b[a] == null ? null : Math.round(b[a] * 1000) / 1000;
-  b.birim = besinBirim(miktar);
-  return b;
-}
 
 // Topluluk besin tablosu (A-02): kullanıcı etiketteki tabloyu okutup (açık izniyle) barkoda bağlar. İçerik katkısından ayrı saklanır:
 // tablo içerik metnine bağlı değildir, içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Gelen değer burada yalnızca
 // biçim ve sınırlarla süzülür ({b: {alan: sayı|null}, lt: {alan: true}, birim: "g"|"ml"|"", por?}); tutarlılık uygulamada denetlenir (besinDenetle).
 // por (O-23): porsiyon başına yazılmış etiketten 100 g'a çevrildi {m, u, ara: {alan: [alt, üst]}}; js/besin.js besinPorNorm ile aynı süzgeç.
-export const BESIN_ALAN = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"];   // js/besin.js BESIN_ALAN ile aynı
 export function besinKatki(x) {
   if (!x || typeof x !== "object" || !x.b || typeof x.b !== "object") return null;
   const b = {}, lt = {};
@@ -139,16 +93,6 @@ export function besinKatki(x) {
   const birim = x.birim === "g" || x.birim === "ml" ? x.birim : "";
   const por = besinPorNorm(x.por);
   return por ? { b, lt, birim, por } : { b, lt, birim };
-}
-const BESIN_ANA = ["yag", "doymus", "seker", "tuz"];   // js/besin.js BESIN_AYAR.anaSatir
-export function besinPorNorm(x) {
-  if (!x || typeof x !== "object" || typeof x.m !== "number" || !(x.m > 0 && x.m <= 1000) || (x.u !== "g" && x.u !== "ml")) return null;
-  const ara = {};
-  for (const a of BESIN_ANA) {
-    const r = x.ara && x.ara[a];
-    if (Array.isArray(r) && r.length === 2 && r.every((v) => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 10000) && r[0] <= r[1]) ara[a] = [r[0], r[1]];
-  }
-  return { m: x.m, u: x.u, ara };
 }
 // O-26: topluluk tabloları içerik katkısı gibi doğrulanır. İki tablo uyumlu: birim aynı, ikisinde de okunmuş en az BESIN_UYUM.enAz satır
 // var ve bu satırların her birinde fark en çok max(pay[satır], oran x büyük değer). Aynı etiketin iki okuması genelde birebir aynıdır;

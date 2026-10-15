@@ -1,6 +1,5 @@
 // Kaydedilen ürünler: ekleme, tekrar kaydetme, süzgeç, arama, sıralama, değerlendirme değişikliği, yedek. Çalıştır: node test/kayit.js
-const src=require('./yukle.js');
-eval(src+';global.K={kayitAdd,kayitFind,kayitList,kayitSay,kayitFark,kayitOzet,kayitYedek,kayitGeriYukle,cmpProduct,KAYIT_AYAR}');
+Object.assign(globalThis,require('./yukle.js'));global.K={kayitAdd,kayitFind,kayitList,kayitSay,kayitFark,kayitOzet,kayitYedek,kayitGeriYukle,cmpProduct,KAYIT_AYAR};
 const {idx}=require('./run.js');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 let L=[];

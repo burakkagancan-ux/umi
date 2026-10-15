@@ -1,8 +1,7 @@
 // Paylaşılabilir sonuç kartı: kart modeli, kişisel uyarı gizliliği, en riskli 3 madde, uzun ad, olumlu kart, dil, paylaşım metni.
 // Çizim sahte bir 2B bağlamla yapılır; karta yazılan metinler kaydedilir. Çalıştır: node test/paylas.js
 const fs=require('fs');
-const src=require('./yukle.js');
-eval(src+';global.P={payOzet,payNedenE,payNedenK,payModel,payText,payWrap,payDraw,payAd,payFromFood,payFromK,payFromT,PAYLAS_AYAR,buildTIndex,analyzeT,summarizeT}');
+Object.assign(globalThis,require('./yukle.js'));global.P={payOzet,payNedenE,payNedenK,payModel,payText,payWrap,payDraw,payAd,payFromFood,payFromK,payFromT,PAYLAS_AYAR,buildTIndex,analyzeT,summarizeT};
 const {idx}=require('./run.js');
 const {K,KL}=require('./kozmetik_cases.js');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};

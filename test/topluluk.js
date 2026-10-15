@@ -1,8 +1,7 @@
 // Topluluk (G-04): ortak hedef eşikleri, eksik ürün listesinin süzülmesi, arama bildiriminin tekilleştirilmesi, metinler.
 // Çalıştır: node test/topluluk.js
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
-const src=require('./yukle.js');
-eval(src+';'+fs.readFileSync(path.join(R,'js/topluluk.js'),'utf8')+';global.Z={toplulukHedef,toplulukToplam,toplulukEksik,arananEkle,TOPLULUK_AYAR,t}');
+Object.assign(globalThis,require('./yukle.js'));global.Z={toplulukHedef,toplulukToplam,toplulukEksik,arananEkle,TOPLULUK_AYAR,t};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 
 // Ortak hedef: sıradaki eşik, bir önceki eşikten bu yana ilerleme; son eşik geçilince tamam

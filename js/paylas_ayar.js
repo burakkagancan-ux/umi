@@ -1,6 +1,7 @@
 /* Paylaşılabilir sonuç kartı: ayarlar. Uygulama adı ve adres yalnızca buradan okunur; slogan ve not dil dosyasında (pay.slogan, pay.not).
    Özelliği kapatmak için acik:false yapın; sonuç ekranındaki paylaş düğmesi görünmez. */
-var PAYLAS_AYAR={
+import {t} from "./ceviri.js";
+export var PAYLAS_AYAR={
   acik:true,
   uygulamaAdi:"Tağşiş",                                    // kesinleşince yalnızca burası değişir
   adres:"https://burakkagancan-ux.github.io/tagsis/",      // mağaza bağlantısı olunca burası değişir

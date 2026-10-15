@@ -143,7 +143,7 @@ for(const [f,src] of Object.entries(kaynak)){
 }
 
 // 6) Çalışma: Türkçe biçimler eski görünümle aynı
-eval(fs.readFileSync(path.join(R,'js','ceviri.js'),'utf8')+';global.C={dilKur,t,tVar,dilSayi,dilTarih,veriMetin,dilSec,ulkeSec,DIL}');
+global.C=require('../js/ceviri.js');
 C.dilKur('tr',{tr:Object.assign({},tr,{'test.cogul':{one:'{n} madde',other:'{n} maddeler'}})},bilgi);
 ok(C.t('kars.sadece',{ad:'Süt'})==='Sadece Süt','yer tutucu: '+C.t('kars.sadece',{ad:'Süt'}));
 ok(C.t('yok.boyle.anahtar')==='yok.boyle.anahtar','tanımsız anahtar kendisini döndürür');
@@ -165,7 +165,7 @@ ok(C.dilSec(null,['de-DE','tr-TR'],['tr','en'])==='tr'&&C.dilSec(null,['en-US'],
 // 7) Her dilde paylaşım kartı: sayı kutusu etiketleri kutuya, metinler karta sığar (test/paylas.js'teki sahte ölçüm: karakter başına 0,55 px)
 for(const kod of Object.keys(bilgi)){
   const sozluk={tr};for(const k of new Set(['en',kod]))if(fs.existsSync(path.join(I,k+'.json')))sozluk[k]=oku(path.join(I,k+'.json'));
-  const src=require('./yukle.js');const P=eval(src+';dilKur('+JSON.stringify(kod)+','+JSON.stringify(sozluk)+','+JSON.stringify(bilgi)+',{});({payModel,payDraw,PAYLAS_AYAR})');
+  const P=require('./yukle.js');P.dilKur(kod,sozluk,bilgi,{});
   const L=P.PAYLAS_AYAR.yerlesim.hikaye,c=(()=>{const T=[];let px=30;return {texts:T,set font(f){px=+(/(\d+)px/.exec(f)||[0,30])[1]},measureText:s=>({width:String(s).length*px*0.55}),
     fillText:(s,X,Y)=>T.push({s,x:X,y:Y,w:String(s).length*px*0.55}),fillRect(){},beginPath(){},moveTo(){},lineTo(){},quadraticCurveTo(){},closePath(){},fill(){},stroke(){},arc(){},save(){},restore(){},translate(){},scale(){},clip(){},drawImage(){},set fillStyle(v){},set strokeStyle(v){},set lineWidth(v){},set lineCap(v){},set lineJoin(v){},set textAlign(v){},set textBaseline(v){},set direction(v){}}})();
   const M=P.payModel({mode:'gida',items:[{name:'A',lvl:0},{name:'B',lvl:1,why:'x'},{name:'C',lvl:2,why:'y'}],facts:[],allergens:''},{name:'Ürün'},P.PAYLAS_AYAR,L);

@@ -2,7 +2,7 @@
 // etiket metninden tablo ayrıştırma (satır satır, hücre hücre, sütun sütun okunmuş OCR; porsiyon/%RI sütunu; diller; içerik listesiyle aynı metin).
 // Çalıştır: node test/besin.js
 const fs=require('fs'),path=require('path'),{execFileSync}=require('child_process');
-eval(require('./yukle.js')+';global.B={besinPorNorm,besinPorsiyonPayi,besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet}');
+Object.assign(globalThis,require('./yukle.js'));global.B={besinPorNorm,besinPorsiyonPayi,besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const veri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8'));
 const S=B.besinSozluk(veri);

@@ -1,9 +1,14 @@
 /* İki ürünü (gıda, kozmetik ya da temizlik) karşılaştırma: saf mantık (DOM yok); testler de yükler. Skor yok: karar madde seviyelerine, profile ve alerjenlere dayanır.
    Seviye (rank): 0 özel uyarı yok, 1 doğrulanmadı, 2 dikkat, 3 uyarı (gida.js RANK). Bileşenler (seviyesiz) 0 sayılır. */
+import {DIL, t, veriS} from "./ceviri.js";
+import {analyze, itAd, summarize, uretimDogal, uretimOzet} from "./gida.js";
+import {analyzeK, summarizeK} from "./kozmetik.js";
+import {SENT, normText, ozelAraHepsi, ozelGoster} from "./ortak.js";
+import {analyzeT, hzKisa, summarizeT} from "./temizlik.js";
 /* Karar cümlelerinde seviye adı ve madde sözcüğü: çeviri anahtarları kars.sev.0-3, kars.noun.madde/tem */
 
 /* İçerik listesindeki parçalar (virgül/noktalı virgülle ayrılan, ayraç içi üst parçaya dahil). "İçindekiler:" varsa ondan sonraki ilk cümle. */
-function cmpSegments(tok){
+export function cmpSegments(tok){
   var st=0,i,end=tok.length,out=[],dep=0,a;
   for(i=0;i<tok.length;i++)if(tok[i]==="icindekiler"||tok[i]==="bilesenler"||tok[i]==="ingredients"){st=i+1;break}
   if(tok[st]===":")st++;
@@ -19,16 +24,16 @@ function cmpSegments(tok){
   return out;
 }
 /* Veritabanında bulunmayan sıradan bileşenler: yalnızca "tanınmayan oran" hesabında tanınmış sayılır, madde listesine girmez (normalleştirilmiş sözcükler) */
-var CMP_SADE={};("su domates salca zeytin zeytinyagi aycicek kanola misir findik ceviz badem antep fistik hindistan cevizi susam tahin "+
+export var CMP_SADE={};("su domates salca zeytin zeytinyagi aycicek kanola misir findik ceviz badem antep fistik hindistan cevizi susam tahin "+
   "karabiber biber pul kimyon nane kekik tarcin zencefil zerdecal kori hardal sumak yenibahar karanfil defne biberiye feslegen dereotu maydanoz "+
   "limon elma portakal mandalina cilek visne kiraz kayisi seftali armut uzum incir hurma muz ananas nar ahududu bogurtlen yaban mersini erik ayva "+
   "nohut mercimek fasulye bezelye pirinc bulgur yulaf arpa cavdar irmik makarna un nisasta patates havuc sogan sarimsak pirasa ispanak lahana mantar "+
   "salatalik kabak patlican tursu sirke maya peynir yogurt tereyagi krema et tavuk dana kuzu hindi balik ton somon kakao bal pekmez meyve sebze "+
   "baharat baharatlar ot otlar suyu puresi konsantre kurutulmus kuru toz tane kirmizi yesil siyah beyaz").split(" ").forEach(function(w){CMP_SADE[w]=1});
-function cmpAlName(idx,f){var a=(idx.bmeta&&idx.bmeta.allergens)||[];for(var i=0;i<a.length;i++)if(a[i][0]===f)return veriS(a[i][1],"alerjen."+f);return f}
+export function cmpAlName(idx,f){var a=(idx.bmeta&&idx.bmeta.allergens)||[];for(var i=0;i<a.length;i++)if(a[i][0]===f)return veriS(a[i][1],"alerjen."+f);return f}
 
 /* Profile uymayan (sonuç ekranında kırmızı profil kartı çıkaran) durumlar. prof: localStorage "profil" biçimi. */
-function cmpMisfit(S,prof,idx){
+export function cmpMisfit(S,prof,idx){
   var o=[],L=S.life,j=function(a){return a.join(", ")};
   if(!prof)return o;
   (prof.al||[]).forEach(function(f){var a=S.allergen[f];if(a&&a.yes.length)o.push(t("kars.uyum.alerjen",{ad:cmpAlName(idx,f),l:j(a.yes)}))});
@@ -50,7 +55,7 @@ function cmpMisfit(S,prof,idx){
 }
 
 /* Okunan metinden karşılaştırma için ürün özeti */
-function cmpProduct(text,idx,prof,name){
+export function cmpProduct(text,idx,prof,name){
   var res=analyze(text,idx),S=summarize(res,idx),tok=normText(text).split(" ").filter(Boolean);
   var by={},items=[];
   res.forEach(function(r){
@@ -83,12 +88,12 @@ function cmpProduct(text,idx,prof,name){
 
 /* Kozmetik ürün özeti. Seviye: AB'de yasak ve başka pazarda yasak (red/orange) 3, dikkat (yellow) 2, diğerleri 0.
    Tanınmayan oran: INCI listesindeki bileşenlerden tanınmayanlar. */
-var CMP_KRANK={red:3,orange:3,yellow:2,info:0};
+export var CMP_KRANK={red:3,orange:3,yellow:2,info:0};
 /* Profilim'de elle eklenen alerjenler (prof.alOzel): her üç türde etiket metninde, sözlükteki bütün dil karşılıklarıyla aranır (ozelAraHepsi, js/ortak.js) */
-function cmpMisfitOzel(text,prof){
+export function cmpMisfitOzel(text,prof){
   return ((prof&&prof.alOzel)||[]).map(function(ad){var r=ozelAraHepsi(text,ad);return r.yes.length?t("kars.uyum.alerjen",{ad:ozelGoster(ad,DIL.kod),l:r.yes.join(", ")}):null}).filter(Boolean);
 }
-function cmpMisfitK(S,prof){
+export function cmpMisfitK(S,prof){
   var o=[],j=function(a){return a.join(", ")};
   if(!prof)return o;
   if(prof.koku&&S.fragrance.length)o.push(t("kars.uyum.koku",{l:j(S.fragrance)}));
@@ -97,7 +102,7 @@ function cmpMisfitK(S,prof){
   if(prof.veg&&S.nonVeg.length)o.push(t("kars.uyum.vejetaryen",{l:j(S.nonVeg)}));
   return o;
 }
-function cmpProductK(text,K,prof,name,opts){
+export function cmpProductK(text,K,prof,name,opts){
   var res=analyzeK(text,K,opts),S=summarizeK(res,K),items=[],by={};
   res.forEach(function(r){
     if(!r.found)return;
@@ -111,8 +116,8 @@ function cmpProductK(text,K,prof,name,opts){
 
 /* Temizlik ürün özeti. Tehlike ifadeleri ve madde notları: ciddi tehlike (red) 3, uyarı (yellow) 2, bilgi 0; adı yazılan diğer maddeler 0.
    Temizlik etiketinde tam içerik listesi olmadığı için tanınmayan oran uygulanmaz. */
-var CMP_TRANK={red:3,yellow:2,info:0};
-function cmpMisfitT(S,A,T,prof){
+export var CMP_TRANK={red:3,yellow:2,info:0};
+export function cmpMisfitT(S,A,T,prof){
   var o=[],j=function(a){return a.join(", ")},lv=function(c){return T.byCode[c]&&T.byCode[c].level};
   if(!prof)return o;
   if(prof.koku&&S.fragrance.length)o.push(t("kars.uyum.koku",{l:j(S.fragrance)}));
@@ -127,7 +132,7 @@ function cmpMisfitT(S,A,T,prof){
   }
   return o.filter(function(x,i){return o.indexOf(x)===i});
 }
-function cmpProductT(text,T,K,prof,name){
+export function cmpProductT(text,T,K,prof,name){
   var A=analyzeT(text,T,K),S=summarizeT(A),items=[],by={};
   function add(key,nm,rk,kind,x){if(by[key]){if(rk>by[key].rank)by[key].rank=rk;return}by[key]={key:key,ids:[key],name:nm,rank:rk,kind:kind,x:x};items.push(by[key])}
   A.hazards.forEach(function(x){add(x.code,x.code+" "+hzKisa(x.h),CMP_TRANK[x.h.level]||0,"hz",x)});
@@ -137,7 +142,7 @@ function cmpProductT(text,T,K,prof,name){
     unknown:{total:0,found:0,ratio:0},misfit:cmpMisfitT(S,A,T,prof).concat(cmpMisfitOzel(text,prof))},items);
 }
 /* Ortak alanlar: sayılar, en riskli seviye, en riskli maddeler */
-function cmpWrap(P,items){
+export function cmpWrap(P,items){
   items.sort(function(x,y){return y.rank-x.rank||x.name.localeCompare(y.name,"tr")});
   var cnt=[0,0,0,0];items.forEach(function(it){cnt[it.rank]++});
   P.items=items;P.counts=cnt;P.maxRank=items.length?items[0].rank:0;P.yellow=cnt[2];
@@ -146,7 +151,7 @@ function cmpWrap(P,items){
 }
 
 /* Madde farkları: anahtar madde kimliğidir (E322 ile "soya lesitini" aynı madde) */
-function cmpDiff(A,B){
+export function cmpDiff(A,B){
   var kb={},ka={},o={onlyA:[],onlyB:[],both:[]};
   B.items.forEach(function(it){kb[it.key]=it});A.items.forEach(function(it){ka[it.key]=it});
   A.items.forEach(function(it){if(kb[it.key])o.both.push({key:it.key,ids:it.ids,name:it.name,rank:Math.max(it.rank,kb[it.key].rank),dogal:it.dogal,kind:it.kind,x:it.x});else o.onlyA.push(it)});
@@ -154,11 +159,11 @@ function cmpDiff(A,B){
   return o;
 }
 
-function cmpHighUnknown(P,cfg){return P.unknown.total>=cfg.enAzParca&&P.unknown.ratio>cfg.taninmayanOran}
+export function cmpHighUnknown(P,cfg){return P.unknown.total>=cfg.enAzParca&&P.unknown.ratio>cfg.taninmayanOran}
 
 /* Karar (sırayla): profil uyumu, en riskli maddenin seviyesi, dikkat (sarı) madde sayısı, yoksa "Benzer".
    Tanınmayan oranı yüksek üründe kazanan ilan edilmez. Dil: "içerik açısından daha iyi görünüyor"; "sağlıklı" denmez. */
-function cmpDecide(A,B,cfg){
+export function cmpDecide(A,B,cfg){
   var P={A:A,B:B},o=function(w,kind,title,reason){return {winner:w,kind:kind,title:title,reason:reason||""}};
   var other=function(k){return k==="A"?"B":"A"};
   var winT=function(k){return t("kars.karar.daha_iyi",{ad:P[k].name})};
@@ -185,7 +190,7 @@ function cmpDecide(A,B,cfg){
   return o(null,"benzer",t("kars.karar.benzer"),t("kars.karar.benzer_not"));
 }
 /* Kazananın lehine tek bir ek fark (yalnızca gıda): palm yağı ya da şeker kaynağı sayısı */
-function cmpExtra(r,W,L){
+export function cmpExtra(r,W,L){
   if(!L.palm||!W.palm)return r;   // kozmetik ve temizlikte bu ek fark yok
   if(L.palm.length&&!W.palm.length)return r+" "+t("kars.karar.palm",{ad:L.name});
   if(L.sugar.length>W.sugar.length)return r+" "+t("kars.karar.seker",{a:W.name,na:W.sugar.length,b:L.name,nb:L.sugar.length});
@@ -194,15 +199,15 @@ function cmpExtra(r,W,L){
 
 /* Tarama geçmişi: en yeni başta, aynı tür + aynı metin tekrar eklenmez, en fazla max kayıt */
 /* Varsayılan ad: "Tarama N" (dile göre kars.tarama_n); N, geçmişteki en büyük sıra numarasının bir fazlası */
-function histName(list){var n=0;(list||[]).forEach(function(x){var k=histOtoNo(x.name);if(k>n)n=k});return t("kars.tarama_n",{n:n+1})}
+export function histName(list){var n=0;(list||[]).forEach(function(x){var k=histOtoNo(x.name);if(k>n)n=k});return t("kars.tarama_n",{n:n+1})}
 /* Otomatik ad mı? Yüklü her dilin biçimi tanınır (dil değişse de eski "Tarama 3" otomatik sayılır); sıra numarasını, değilse 0 döndürür */
-function histOtoNo(name){
+export function histOtoNo(name){
   name=name||"";
   for(var k in DIL.sozluk){var p=DIL.sozluk[k]&&DIL.sozluk[k]["kars.tarama_n"];if(!p||p.indexOf("{n}")<0)continue;
     var re=new RegExp("^"+p.split("{n}").map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}).join("(\\d+)")+"$"),m=re.exec(name);if(m)return +m[1]}
   return 0;
 }
-function histAdd(list,e,max){
+export function histAdd(list,e,max){
   var tx=(e.text||"").trim();if(!tx)return list.slice(0,max);
   var out=(list||[]).filter(function(x){return !(x.mode===e.mode&&(x.text||"").trim()===tx)});
   out.unshift(e);return out.slice(0,max);

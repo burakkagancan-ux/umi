@@ -2,8 +2,7 @@
 const fs=require('fs');
 const {idx,L}=require('./run.js');
 const {K,KL}=require('./kozmetik_cases.js');
-const src=require('./yukle.js');
-const C={};new Function('C',src+';C.findCombos=findCombos;C.comboItemsFood=comboItemsFood;C.comboItemsK=comboItemsK;')(C);
+Object.assign(globalThis,require('./yukle.js'));const C={};C.findCombos=findCombos;C.comboItemsFood=comboItemsFood;C.comboItemsK=comboItemsK;
 const db=JSON.parse(fs.readFileSync(__dirname+'/../data/eslesmeler.json'));const R=db.rules;
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const food=t=>C.findCombos(R,'gida',C.comboItemsFood(L.analyze(t,idx),idx)).map(c=>c.rule.id).sort();
