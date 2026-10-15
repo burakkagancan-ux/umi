@@ -22,8 +22,8 @@ D.records.forEach((x,i)=>{const r=R[i];
 // 1. Veri bütünlüğü: her kayıt geçerli, slug ve id tekil, tarama verisindeki her E kodunun sayfası var
 R.forEach(r=>{const e=ansValidate(r,T,by);ok(!e.length,r.id+': '+e.join('; '))});
 ok(new Set(R.map(r=>r.slug)).size===R.length,'slug tekil değil');
-const RG=R.filter(r=>r.product_types[0]==='food'),RT=R.filter(r=>r.product_types[0]==='cleaning');
-ok(RG.length===E.ingredients.length&&E.ingredients.every(i=>by[i.id])&&RG.length+RT.length===R.length,'her E kodunun ansiklopedi kaydı olmalı');
+const RG=R.filter(r=>r.product_types[0]==='food'),RT=R.filter(r=>r.product_types[0]==='cleaning'),RK=R.filter(r=>r.product_types[0]==='cosmetic');
+ok(RG.length===E.ingredients.length&&E.ingredients.every(i=>by[i.id])&&RG.length+RT.length+RK.length===R.length,'her E kodunun ansiklopedi kaydı olmalı');
 RG.forEach(r=>ok(r.slug===ansSlug(r.id+' '+T[r.names.primary]),r.id+' slug JS ile aynı üretilmeli: '+r.slug));
 const cur=R.filter(r=>r.review==='curated');
 ok(cur.length>=5&&by.E322.review==='curated','en az 5 elle incelenmiş kayıt, E322 dahil');
@@ -145,5 +145,28 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
  ok(first('çamaşır suyu')==='7681-52-9'&&ansSearch(IX,'kostik soda',2).some(r=>r.id==='1310-73-2')&&first('SLES')==='68891-38-3'&&first('7681-52-9')==='7681-52-9'&&ansSearch(IX,'tuz ruhu',2).some(r=>r.id==='7647-01-0'),'temizlik araması (ad, halk adı, kısaltma, CAS)');
  ok(pw('9014-01-1',{al:[],astim:true})==='astim'&&pw('5989-27-5',{al:[],koku:true})==='koku'&&pw('5989-27-5',{al:[]})==='','temizlik profil uyarıları (astım, koku)');
  RT.forEach(r=>ok(!r.production&&r.diet_flags.vegan==='unknown',r.id+' gıda alanı yok'));
+}
+// 7. Kozmetik ansiklopedisi (15.10.2026, U-01 ilk parti): kimlik INCI (boşluk yerine _), renk Etiket Oku'daki kozmetik sonucuyla (kResult) aynı
+{const KDB=J('kozmetik.json'),KI=buildKIndex(KDB,J('kozmetik_inci.json')),RM3={info:'green',yellow:'amber',orange:'red',red:'red'};
+ const K=JSON.parse(fs.readFileSync(__dirname+'/../kaynak/ansiklopedi_kozmetik.json','utf8')).kayitlar;
+ ok(RK.length===K.length&&K.length>=30,'kozmetik maddesi: '+RK.length);
+ K.forEach(k=>{const id=k.inci.replace(/ /g,'_'),r=by[id];if(!r){ok(false,id+' kaydı yok');return}
+  ok(/^[A-Z0-9_\-]+$/.test(id),id+' kimlik dosya adına uygun');
+  const s=KI.map.get(norm(k.inci));ok(s,id+' INCI dizinde yok');
+  if(s){const kr=kResult(k.inci,{s:s,how:'tam'},false,0,KI,{});ok(r.risk_level===RM3[kr.level],id+' renk Etiket Oku ile aynı değil: '+r.risk_level+' / '+kr.level)}
+  const ents=KDB.entries.filter(e=>e.inci.includes(k.inci));
+  ok(r.regulatory.filter(g=>/\.reg\.\d+$/.test(g.detail)).length===ents.length,id+' her AB ek kaydı bir kurum satırı');
+  ok(ents.length||r.regulatory.some(g=>g.status==='not_listed'),id+' ekte yoksa "listede yok" satırı');
+  r.regulatory.filter(g=>/\.reg\.\d+$|^koz\.reg\.yok$/.test(g.detail)).forEach(g=>ok(/CELEX:3\d{4}R\d{4}$/.test(g.source_url),id+' EUR-Lex bağlantısı: '+g.source_url));
+  ok(r.sources.some(s=>s.official&&s.url==='https://ec.europa.eu/growth/tools-databases/cosing/'),id+' CosIng kaynağı');
+  ok(r.effects.length>0&&r.related_ids.length>0,id+' etki ve benzer madde');
+  ok(r.slug===ansSlug(k.inci),id+' slug INCI adından');
+ });
+ ok(by.PHENOXYETHANOL.risk_level==='green'&&by.METHYLISOTHIAZOLINONE.risk_level==='amber'&&by.SALICYLIC_ACID.risk_level==='red'&&by.GLYCERIN.risk_level==='green','fenoksietanol yeşil, MIT sarı, salisilik asit (CMR 2) turuncu-kırmızı, gliserin yeşil');
+ ok(first('phenoxyethanol')==='PHENOXYETHANOL'&&ansSearch(IX,'SODIUM LAURETH SULFATE',2).some(r=>r.id==='SODIUM_LAURETH_SULFATE')&&ansSearch(IX,'oksibenzon',3).some(r=>r.id==='BENZOPHENONE-3')&&ansSearch(IX,'shea',3).some(r=>r.id==='BUTYROSPERMUM_PARKII_BUTTER'),'kozmetik araması (INCI, Türkçe ad, halk adı)');
+ ok(ansSearch(IX,'limonen',5).some(r=>r.id==='LIMONENE')&&ansSearch(IX,'limonen',5).some(r=>r.id==='5989-27-5'),'aynı madde kozmetik ve temizlikte ayrı sayfa');
+ ok(pw('LIMONENE',{al:[],koku:true})==='koku'&&pw('PROPYLPARABEN',{al:[],baby:true})==='baby'&&pw('BENZOPHENONE-3',{al:[],preg:true})==='preg'&&pw('GLYCERIN',{al:[],koku:true,preg:true})==='','kozmetik profil uyarıları (koku, bebek, endokrin listesi)');
+ ok(by.SODIUM_LAURETH_SULFATE.effects.some(x=>x.text==='tem.h.H318'&&x.amount==='koz.eff.miktar'),'SLES: saf maddenin ECHA sınıfı etki satırı');
+ RK.forEach(r=>ok(!r.production,r.id+' üretim yolu alanı yok'));
 }
 console.log(n+' ansiklopedi denetimi, '+fail+' hata');process.exit(fail?1:0);

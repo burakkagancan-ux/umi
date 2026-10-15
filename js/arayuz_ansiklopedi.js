@@ -24,8 +24,10 @@ function setMarks(a){depoYaz("yerimleri",a)}
 function link(r){return "ansiklopedi.html?m="+encodeURIComponent(r.slug)}
 /* Rozetler (js/arayuz_rozet.js): açılan her farklı madde sayfası o türün Okur rozetine sayılır; okunan sayfa listede işaretli */
 var ATUR={food:"gida",cosmetic:"koz",cleaning:"tem"},AOKU="gida";   // AOKU: tür süzgecinin seçimi (localStorage "ans_tur")
-(function(){var _at=depoMetin("ans_tur");if(_at==="gida"||_at==="tem")AOKU=_at})();
+(function(){var _at=depoMetin("ans_tur");if(_at==="gida"||_at==="koz"||_at==="tem")AOKU=_at})();
 function ansTur(r){return ATUR[r.product_types[0]]||"gida"}
+/* Ekrandaki kimlik: kozmetik kimliği INCI adıdır, dosya adı için boşlukları alt çizgi (gen_ansiklopedi.py koz_kimlik) */
+function kod(r){return r.id.replace(/_/g," ")}
 /* Tür etiketi (tema.css .turr): arama sonucunda adı aynı olan gıda ve temizlik maddesi renkle ve adla ayrılır */
 function turEtiket(r){var e=h("span","turr",t("kayit.tur."+ansTur(r)));e.setAttribute("data-tur",ansTur(r));return e}
 function ROZET_BAGLAM(){return {aile:"okur",tur:AOKU}}
@@ -35,9 +37,9 @@ function okunan(){var d=rozetLoad(),o={};Object.keys(d.okur).forEach(function(k)
 function showRecord(r){
   ACUR=r;var box=a$("ana");box.textContent="";
   var name=at(r.names.primary);
-  document.title=r.id+" "+name+" · "+t("nav.ansiklopedi");
+  document.title=kod(r)+" "+name+" · "+t("nav.ansiklopedi");
   var bm=a$("kaydet");bm.hidden=false;syncMark();
-  var bd=h("div","badges");bd.appendChild(h("span","ecode",r.id));bd.appendChild(turEtiket(r));bd.appendChild(h("span","cat",at("cat."+r.category)));box.appendChild(bd);
+  var bd=h("div","badges");bd.appendChild(h("span","ecode",kod(r)));bd.appendChild(turEtiket(r));bd.appendChild(h("span","cat",at("cat."+r.category)));box.appendChild(bd);
   box.appendChild(h("h2","name",name));
   if(r.summary)box.appendChild(h("p","sum",at(r.summary)));
   // Genel değerlendirme
@@ -140,7 +142,7 @@ function panelKaynak(r){
 function footer(box,r){
   var f=h("div","foot");f.appendChild(h("div",null,t("ans.sorumluluk")));
   var a=h("a",null,t("ans.hata_bildir"));
-  a.href=AREPO+"?title="+encodeURIComponent(r?t("ans.hata.baslik_madde",{ad:r.id+" "+at(r.names.primary)}):t("ans.hata.baslik"))+"&body="+encodeURIComponent(t("ans.hata.govde",{url:location.href}));
+  a.href=AREPO+"?title="+encodeURIComponent(r?t("ans.hata.baslik_madde",{ad:kod(r)+" "+at(r.names.primary)}):t("ans.hata.baslik"))+"&body="+encodeURIComponent(t("ans.hata.govde",{url:location.href}));
   a.target="_blank";a.rel="noopener";f.appendChild(a);box.appendChild(f);
 }
 function syncMark(){var b=a$("kaydet"),on=!!ACUR&&marks().indexOf(ACUR.id)>-1;b.setAttribute("aria-pressed",on?"true":"false");b.setAttribute("aria-label",on?t("ans.kaydet_cikar"):t("ans.kaydet"))}
@@ -149,14 +151,14 @@ a$("kaydet").onclick=function(){if(!ACUR)return;var m=marks().filter(function(x)
 /* ---------- Arama ve kayıtlı maddeler ---------- */
 function rowFor(r,oku,kat){   // kat: listede kategori başlığı varsa satırda kategori ve tür yazılmaz (grup tek türdür)
   var a=h("a","row");a.href=link(r);a.appendChild(svg(rico(r)));
-  var n=h("span","rn",at(r.names.primary));if(!kat)n.appendChild(turEtiket(r));n.appendChild(h("span","rk",r.id+" · "+(kat?"":at("cat."+r.category)+" · ")+at("risk."+r.risk_level)));a.appendChild(n);
+  var n=h("span","rn",at(r.names.primary));if(!kat)n.appendChild(turEtiket(r));n.appendChild(h("span","rk",kod(r)+" · "+(kat?"":at("cat."+r.category)+" · ")+at("risk."+r.risk_level)));a.appendChild(n);
   if(oku&&oku[r.id]){var k=h("span","okd");k.appendChild(svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'));k.setAttribute("role","img");k.setAttribute("aria-label",t("rozet.okundu"));a.appendChild(k)}
   return a;
 }
 /* Tür süzgeci: ANS_TURLER'de birden çok tür varsa görünür (14.10.2026 kullanıcı kararı); henüz olmayanlar seçilemez ve soluk, "Çok yakında" yalnızca title ve
    ekran okuyucu adında (15.10.2026 kullanıcı isteği: Etiket Oku'daki anahtarla boyutu dahil aynı; alt satır düğmeyi uzatıyordu).
    Temizlik 15.10.2026'da eklendi (30 madde, kimlik CAS). Seçim liste, süzgeç sayıları ve Okur rozetinin türünü belirler. */
-var ANS_TURLER=["gida","tem"];
+var ANS_TURLER=["gida","koz","tem"];
 function turSecici(ciz){
   var s=h("div","seg");s.setAttribute("role","radiogroup");s.setAttribute("aria-label",t("sayfa.urun_turu"));
   [["gida",true],["koz",ANS_TURLER.indexOf("koz")>-1],["tem",ANS_TURLER.indexOf("tem")>-1]].forEach(function(x){
@@ -252,8 +254,8 @@ Promise.all([aGet("data/ansiklopedi.json"),DIL_HAZIR.then(ansMetin)]).then(funct
   if(r){
     try{if(sp.get("m")!==r.slug)history.replaceState(null,"","ansiklopedi.html?m="+r.slug)}catch(e){}
     return ansSayfa(r).then(showRecord,function(){
-      document.title=r.id+" "+at(r.names.primary)+" · "+t("nav.ansiklopedi");var box=a$("ana");box.textContent="";
-      box.appendChild(h("h2","name",r.id+" "+at(r.names.primary)));
+      document.title=kod(r)+" "+at(r.names.primary)+" · "+t("nav.ansiklopedi");var box=a$("ana");box.textContent="";
+      box.appendChild(h("h2","name",kod(r)+" "+at(r.names.primary)));
       box.appendChild(h("p","mut",t("ans.inmedi")));
       footer(box,r);
     });

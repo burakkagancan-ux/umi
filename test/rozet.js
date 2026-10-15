@@ -17,7 +17,8 @@ ok(def.aileler.every(a=>a.hazir)&&def.aileler.filter(a=>a.sunucu).map(a=>a.id).j
 // Eşikler: üst sınırlı ailede büyük kademeler düşer, son kademe toplam ("hepsi")
 const e=Z.rozetEsikler(def,'okur','gida');
 ok(JSON.stringify(e)===JSON.stringify([1,10,25,50,100,250].filter(x=>x<gidaSayfa).concat([gidaSayfa])),'gıda Okuru eşikleri: '+e);
-ok(Z.rozetEsikler(def,'okur','koz').length===0,'ansiklopedisi olmayan türde eşik yok');
+ok(Z.rozetEsikler(def,'okur','koz').join()==='1,10,25,32','kozmetik Okuru eşikleri sayfa sayısıyla biter (U-01 ilk parti, 32 madde): '+Z.rozetEsikler(def,'okur','koz'));
+ok(Z.rozetEsikler(def,'okur','yok').length===0,'ansiklopedisi olmayan türde eşik yok');
 ok(Z.rozetEsikler(def,'dedektif','tem').join()==='1,10,25,50,100,250,500,1000','sınırsız ailede sekiz kademe');
 ok(Z.rozetEsikler({kademeler:def.kademeler,aileler:[{id:'okur',toplam:{gida:250}}]},'okur','gida').join()==='1,10,25,50,100,250','toplam bir kademeye eşitse o kademe son');
 ok(Z.rozetEsikler({kademeler:def.kademeler,aileler:[{id:'okur',toplam:{gida:7}}]},'okur','gida').join()==='1,7','küçük toplam: 1 ve hepsi');
@@ -48,7 +49,7 @@ ok(!Z.rozetEkle(d,'oncu','gida','1').eklendi,'ürün ailesi cihazda sayılmaz');
  const yeni=Z.rozetSunucuYaz(Z.rozetBos(),{avci:{gida:20}},2000),eski=Z.rozetSunucuYaz(Z.rozetBos(),{avci:{gida:1}},500);
  ok(Z.rozetBirlestir(eski,yeni).sunucu.avci.gida===20&&Z.rozetBirlestir(yeni,eski).sunucu.avci.gida===20,'birleştirmede daha yeni sunucu sayısı');
  ok(Z.rozetToplam(def,s1)>=Z.rozetToplam(def,d)+3,'toplam rozete sunucu aileleri de girer')}
-ok(Z.rozetDurumu(def,d,'okur','koz').yakinda,'kozmetik ansiklopedisi yok: yakında');
+ok(!Z.rozetDurumu(def,d,'okur','koz').yakinda&&Z.rozetDurumu(def,d,'okur','yok').yakinda,'kozmetik ansiklopedisi var: yakında değil; ansiklopedisi olmayan tür yakında');
 let tam=Z.rozetBos();for(let i=0;i<gidaSayfa;i++)tam=Z.rozetEkle(tam,'okur','gida','E'+i).d;
 r=Z.rozetDurumu(def,tam,'okur','gida');ok(r.hepsi&&r.sonraki==null&&r.ilerleme===1&&r.ad==='rozet.okur.k8','bütün sayfalar: hepsi');
 let cok=Z.rozetBos();for(let i=0;i<1005;i++)cok=Z.rozetEkle(cok,'dedektif','gida','f:'+i).d;
