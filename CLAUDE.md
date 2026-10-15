@@ -36,13 +36,14 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 - js/ saf mantık (ES modülü, testli): ceviri, ortak, gida, kozmetik, temizlik, eslesme, degerlendirme (ortak ürün modeli), profil_kart, karsilastir(_ayar), paylas(_ayar), kayit, besin, barkod, rozet, topluluk, ansiklopedi. Sayfa girişleri giris_*.js + kopru.js.
 - js/ arayüz (klasik betik, `defer`, sayfadaki sırayla): depo.js (cihaz deposu, ilk), veri_surum.js, dil.js, yukari.js, arayuz_ortak/profil/sonuc.js, arayuz_<alan>.js.
 - worker/: Cloudflare Worker (OCR, barkod, D1, yönetim); ortak hesapları js/'ten içe aktarır.
-- kaynak/: elle yazılan veri (TSV/JSON) → gen_*.py → data/ (üretilir, elle düzenlenmez). sw.js'in CORE/CACHE'i gen_sw.py ile üretilir.
+- kaynak/: elle yazılan veri (TSV/JSON) → gen_*.py → data/ (üretilir, elle düzenlenmez). sw.js'in CORE/CACHE'i gen_sw.py ile üretilir. kaynak/simge/: uygulama simgesinin SVG kaynağı (gen_simge.js).
 - test/: birim testleri, test/arayuz/ (tarayıcı grupları), test/veri/ (etiket setleri, altın çıktı).
 
 ## Komutlar
 - `python3 uret.py`: bütün veri üreteçleri + sw.js (veri ya da kod değişince; CI `--denetle` ile denetler).
 - `node test/hepsi.js [süzgeç]`: bütün birim testleri (~2 sn). `node test/altin.js`: davranış birebir aynı mı (bilerek değişince `--guncelle`, PR'da nedeniyle).
 - `node test/arayuz.js [grup]`: tarayıcı testi (~11 sn; Playwright 1.47.2).
+- `node gen_simge.js`: uygulama simgeleri (kaynak/simge/*.svg → kökteki PNG'ler; simge değişince, ardından `python3 uret.py`).
 - Ölçümler (CI'da değil): `node test/olcum_besin.js`, `node test/olcum_ingilizce.js`, `node test/olcum_turkce.js`.
 
 ## Roller ve dil
