@@ -5,7 +5,7 @@ Kullanım:
   python3 uret.py --denetle   CI: üreteçleri çalıştırır, data/ ve çeviri çıktıları depodakiyle aynı değilse ya da depoya eklenmemiş
                               üretilmiş dosya varsa hata verir (veri değiştiren PR üretilen JSON'u da içermeli)
 
-Yeni üreteç: SIRA listesine bağımlılıklarından sonra eklenir. Sıra bağımlılıktır: bir üreteç yalnızca kendinden önce gelenlerin
+Yeni üreteç: SIRA listesine bağımlılıklarından sonra eklenir (gen_sw her zaman en son, ayrıca çalışır). Sıra bağımlılıktır: bir üreteç yalnızca kendinden önce gelenlerin
 çıktısını okuyabilir (ör. gen_eslesmeler, gen_e_kodlari ve gen_kozmetik'ten sonra; gen_ansiklopedi, gen_temizlik'ten sonra).
 """
 import os, re, subprocess, sys, time
@@ -25,7 +25,9 @@ SIRA = [
     "gen_besin",          # data/besin.json (bağımsız)
     "gen_manifest",       # manifest.webmanifest, i18n/manifest/ (i18n/<dil>.json)
 ]
-CIKTI = ["data/", "i18n/veri/", "i18n/manifest/", "manifest.webmanifest"]
+CIKTI = ["data/", "i18n/veri/", "i18n/manifest/", "manifest.webmanifest", "sw.js"]
+# En son: sw.js CORE ve CACHE (dosya içeriklerinin özeti). Tarih satırı geri alındıktan sonra çalışır ki özet depodaki içerikten hesaplansın.
+SON = "gen_sw"
 
 
 def git(*a):
@@ -39,22 +41,26 @@ def yalniz_tarih(dosya):
     return bool(satir) and all('"generated":' in l for l in satir)
 
 
+def calistir(g):
+    t = time.time()
+    r = subprocess.run([sys.executable, g + ".py"], cwd=HERE, capture_output=True, text=True)
+    if r.returncode:
+        print(r.stdout + r.stderr)
+        sys.exit("HATA: %s.py çıkış kodu %d" % (g, r.returncode))
+    print("%-18s %.1f sn" % (g, time.time() - t))
+
+
 def main():
     denetle = "--denetle" in sys.argv
     bas = time.time()
     for g in SIRA:
-        t = time.time()
-        r = subprocess.run([sys.executable, g + ".py"], cwd=HERE, capture_output=True, text=True)
-        if r.returncode:
-            print(r.stdout + r.stderr)
-            sys.exit("HATA: %s.py çıkış kodu %d" % (g, r.returncode))
-        print("%-18s %.1f sn" % (g, time.time() - t))
-    print("toplam %.1f sn" % (time.time() - bas))
-    degisen = [f for f in git("diff", "--name-only", "--", *CIKTI).splitlines() if f]
-    tarih = [f for f in degisen if yalniz_tarih(f)]
+        calistir(g)
+    tarih = [f for f in git("diff", "--name-only", "--", *CIKTI).splitlines() if f and yalniz_tarih(f)]
     if tarih:
         git("checkout", "--", *tarih)   # yalnızca üretilen dosyalar ve yalnızca tarih satırı değişmişse
-    degisen = [f for f in degisen if f not in tarih]
+    calistir(SON)
+    print("toplam %.1f sn" % (time.time() - bas))
+    degisen = [f for f in git("diff", "--name-only", "--", *CIKTI).splitlines() if f]
     yeni = [f for f in git("ls-files", "--others", "--exclude-standard", "--", *CIKTI).splitlines() if f]
     if degisen:
         print("Değişen üretilmiş dosyalar:\n  " + "\n  ".join(degisen))
