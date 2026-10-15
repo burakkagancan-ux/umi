@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Başlangıç zamanı (süre izleme, O-16)
+        run: echo "BASLA=$(date +%s)" >> "$GITHUB_ENV"
       - name: Sözdizimi (sayfalardaki script blokları)
         run: node test/sozdizimi.js
       - name: Gıda
@@ -81,6 +83,11 @@ jobs:
           yeni=$(git ls-files --others --exclude-standard -- data/ i18n/veri/ i18n/manifest/); if [ -n "$yeni" ]; then echo "Depoda olmayan üretilmiş dosya:"; echo "$yeni"; exit 1; fi
       - name: Değerlendirme değişiklik kaydı (renk değişti mi, kaydı var mı)
         run: python3 degisiklik_kaydi.py
+      - name: Süre (8 dakikayı geçerse uyarı; zaman aşımı 15, O-16)
+        if: always()
+        run: |
+          s=$(( $(date +%s) - BASLA )); echo "Süre: $((s/60)) dk $((s%60)) sn" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$s" -gt 480 ]; then echo "::warning::Bu iş $((s/60)) dakika sürdü (sınır 15). Testleri bölüp paralel çalıştırma zamanı (YOL_HARITASI.md O-16)."; fi
 
   # Arayüz: sayfalar gerçek tarayıcıda (Chromium) açılıp tıklanır; üç modda analiz, karşılaştırma, ansiklopedi, çevrimdışı açılış.
   arayuz:
@@ -91,9 +98,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Başlangıç zamanı (süre izleme, O-16)
+        run: echo "BASLA=$(date +%s)" >> "$GITHUB_ENV"
       - name: Playwright ve Chromium kurulumu
         run: |
           npm i --no-save --no-package-lock playwright@1.47.2
           npx playwright install --with-deps chromium
       - name: Arayüz testi
         run: node test/arayuz.js
+      - name: Süre (8 dakikayı geçerse uyarı; zaman aşımı 15, O-16)
+        if: always()
+        run: |
+          s=$(( $(date +%s) - BASLA )); echo "Süre: $((s/60)) dk $((s%60)) sn" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$s" -gt 480 ]; then echo "::warning::Bu iş $((s/60)) dakika sürdü (sınır 15). Testleri bölüp paralel çalıştırma zamanı (YOL_HARITASI.md O-16)."; fi
