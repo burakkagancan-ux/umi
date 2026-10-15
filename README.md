@@ -63,7 +63,7 @@ Yeni bir `js/` dosyası eklenirse `ocr.html` ve `sw.js` içindeki `CORE` listesi
 
 ## Daha fazlası
 
-Ayrıntılı kararlar, veri kaynakları ve bilinen sınırlamalar için [CLAUDE.md](CLAUDE.md), ertelenen işler için [TEKNIK_BORC.md](TEKNIK_BORC.md).
+Ayrıntılı kararlar, veri kaynakları ve bilinen sınırlamalar için [CLAUDE.md](CLAUDE.md) ve konu dosyaları [belgeler/mimari/](belgeler/mimari/), ertelenen işler için [TEKNIK_BORC.md](TEKNIK_BORC.md).
 
 ## Lisans
 
