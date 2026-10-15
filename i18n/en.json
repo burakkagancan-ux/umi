@@ -79,6 +79,7 @@
  "barkod.foto_cek": "Photograph the ingredient list",
  "barkod.foto_okunuyor": "Reading the barcode in the photo…",
  "barkod.foto_sec": "Choose a photo of the barcode",
+ "barkod.fotoda_bulundu": "Barcode found in the photo ({kod}); the ingredients read are linked to this barcode.",
  "barkod.fotoda_yok": "No barcode could be read in the photo. Take a closer, sharper photo and try again, or type the number.",
  "barkod.gecersiz": "Invalid barcode: {kod}. Check the number.",
  "barkod.icerik_yok": "{ad}: the ingredient list is not in the database yet",

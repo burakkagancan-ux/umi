@@ -1,7 +1,7 @@
 # Proje notları (Claude için)
 
 Bu dosya her yeni Claude oturumunda okunur. Güncel durum, kararlar ve çalışma kuralları burada.
-Son güncelleme: 15.10.2026 (ürün türü renkleri; A-02 4. adım: gerçek etiket setiyle besin tablosu ölçümü; global ad çakışması denetimi O-15, CI süre uyarısı O-16, çevirmenin kaynak dili İngilizce O-12).
+Son güncelleme: 15.10.2026 (fotoğrafta barkod; ürün türü renkleri; A-02 4. adım: gerçek etiket setiyle besin tablosu ölçümü; global ad çakışması denetimi O-15, CI süre uyarısı O-16, çevirmenin kaynak dili İngilizce O-12).
 
 ## Roller ve dil
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.
@@ -113,6 +113,7 @@ Son güncelleme: 15.10.2026 (ürün türü renkleri; A-02 4. adım: gerçek etik
 - Veri: `python3 off_al.py` (OFF klasik arama, countries_tags = en:turkey; 503 verirse search-a-licious + tek tek ürün sorgusu) → kaynak/off/urunler.json → `python3 gen_barkod.py` → data/barkod_off.json ({meta, u: {barkod: [db, ad, marka, t, {dil: metin}, besin?]}}; besin A-02, bkz. Besin değeri tablosu). Ayda bir .github/workflows/off.yml (PR açar). data/barkod_off.json sw.js CORE'da değil (istek geldikçe önbelleğe girer; test/onbellek.js istisnası).
 - Saf mantık js/barkod.js (barkodGecerli, barkodNorm, barkodAdaylar, barkodMetin, barkodOffBul, barkodSec, barkodKatkiUygun, barkodBenzer; BARKOD_AYAR), arayüz js/arayuz_barkod.js (barkodAc, barkodIsle, barkodGoster, barkodYok, barkodSonra: her run() sonrası; barkodKatki, barkodAyarKutusu). run() artık runIc() + barkodSonra().
 - Testler: test/barkod.js (birim + Worker hesabıyla eşitlik + veri yapısı), worker/test.mjs (/off, /urun, D1 taklidi), test/arayuz.js (elle barkod: bulunan ürün, kaynak kartı, geçmiş adı; geçersiz ve bulunamayan barkod; katkı izni ve gönderilen alanlar). Kamerayla gerçek okuma telefonda denenir.
+- Fotoğrafta barkod (15.10.2026, kullanıcı isteği; BARKOD_AYAR.fotodan, geri alma: false ya da PR'ı Revert): Etiket Oku'da seçilen her fotoğrafta (besin tablosu fotoğrafı hariç) okumayla aynı anda barkod aranır (barkodFotoAra; BarcodeDetector tam boyut, ZXing en uzun kenar 1600 px). Bulunursa BARKOD o barkoda geçer (fotodan:true; önceki barkod ilişkisinin yerine), okunan içerik barkodla ilişkilenir, sonuçta "Fotoğrafta barkod bulundu" notu ve olağan katkı sorusu; barkodAra ile adı alınır (geçmiş adı). Fotoğraftaki içerik kazanır; okunan metin içerik listesine benzemiyorsa (barkodUygun) ve veritabanında içerik varsa barkodGoster. Okuma barkoddan önce biterse ilişki çözücü bitince kurulur. Tarayıcı testi: çizilmiş EAN-13 görseliyle üç durum (ilişki + katkı, yalnızca barkod, ayar kapalı).
 
 ## Besin değeri tablosu (A-02, 13.10.2026; 1., 2. ve 3. adım)
 - İlke: emin olunmayan renk hiç gösterilmez. Değerler iki yoldan gelir ve ikisi de aynı tutarlılık denetiminden geçer (besinDenetle): denetimi geçmeyen değer `durum: "suphe"` olur; 3. adımda ekran şüpheli değerle renk göstermeyecek, kullanıcıya soracak (değerleri düzeltebilecek).
