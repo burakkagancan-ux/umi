@@ -149,11 +149,11 @@ function barkodUygun(tx){
     var P=degerlendir(MODE,tx,c,null,""),n=degTanima(P);return barkodKatkiUygun(P.mode,n.total,n.found);
   }catch(e){return false}
 }
-function barkodIzin(){try{return localStorage.getItem("barkod_katki")||""}catch(e){return ""}}
-function barkodIzinYaz(v){try{if(v)localStorage.setItem("barkod_katki",v);else localStorage.removeItem("barkod_katki")}catch(e){}}
+function barkodIzin(){return depoMetin("barkod_katki")||""}
+function barkodIzinYaz(v){if(v)depoYazMetin("barkod_katki",v);else depoSil("barkod_katki")}
 /* Katkıcı kimliği yalnızca ilk katkıda üretilir (katkı yapmayanın cihazında hiç yoktur); yedek dosyasına girer */
-function katkiciAl(){try{return localStorage.getItem("katkici")||""}catch(e){return ""}}
-function katkiciYaz(k){try{if(katkiciGecerli(k))localStorage.setItem("katkici",k)}catch(e){}}
+function katkiciAl(){return depoMetin("katkici")||""}
+function katkiciYaz(k){if(katkiciGecerli(k))depoYazMetin("katkici",k)}
 function katkiciKimlik(){
   var k=katkiciAl();if(katkiciGecerli(k))return k;
   try{var b=new Uint8Array(16);crypto.getRandomValues(b);k=katkiciUret(b)}catch(e){return ""}

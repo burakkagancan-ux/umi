@@ -9,8 +9,8 @@ function rozetDefYukle(){
   if(!ROZET_DEF_SOZ)ROZET_DEF_SOZ=fetch("data/rozetler.json").then(function(r){if(!r.ok)throw new Error("rozetler");return r.json()}).then(function(d){ROZET_DEF=d;return d});
   return ROZET_DEF_SOZ;
 }
-function rozetLoad(){try{return rozetNorm(JSON.parse(localStorage.getItem("rozetler")||"null"))}catch(e){return rozetBos()}}
-function rozetStore(d){try{localStorage.setItem("rozetler",JSON.stringify(rozetNorm(d)));return true}catch(e){return false}}
+function rozetLoad(){try{return rozetNorm(depoJson("rozetler",null))}catch(e){return rozetBos()}}
+function rozetStore(d){return depoYaz("rozetler",rozetNorm(d))}
 function rozetSimgeAdi(aile){var a=rozetAile(ROZET_DEF,aile);return a?a.simge:""}
 function rozetSvgEl(aile,sira,kazanildi,cls){var s=rzEl("span","rzs"+(cls?" "+cls:""));s.innerHTML=rozetSvg(rozetSimgeAdi(aile),sira,kazanildi);return s}
 /* Açıklama: ne yapıldığı (sayıyla); üst sınırlı ailenin son kademesinde "hepsi" metni */

@@ -26,7 +26,7 @@ function paySource(){
 }
 /* Kartın adı ve tarama zamanı: kayıtlı ürünün adı önce, sonra tarama geçmişi */
 function payName(){var tx=$("metin").value.trim(),k=typeof kayitFind==="function"?kayitFind(kayitLoad(),MODE,tx):null;if(k)return {name:k.name,t:k.t};var e=histLoad().filter(function(x){return x.id===HCUR&&(x.text||"").trim()===tx})[0];return {name:payAd(e||null,Date.now()),t:e&&e.t||Date.now()}}
-function payBoyut(){var b=null;try{b=localStorage.getItem("pay_boyut")}catch(e){}return PAYLAS_AYAR.yerlesim[b]?b:PAYLAS_AYAR.boyut}
+function payBoyut(){var b=depoMetin("pay_boyut");return PAYLAS_AYAR.yerlesim[b]?b:PAYLAS_AYAR.boyut}
 function payFonts(){
   if(!document.fonts||!document.fonts.load)return Promise.resolve();
   return Promise.all(["700 76px "+payYazi(true),"400 32px "+payYazi(false),"600 32px "+payYazi(false)].map(function(f){return document.fonts.load(f,t("pay.yazi_ornek")).catch(function(){})}));
@@ -44,7 +44,7 @@ function payOpen(ret){
   if(ks.length>1){
     var seg=el("div","seg payseg");seg.setAttribute("role","radiogroup");seg.setAttribute("aria-label",t("pay.bicim"));
     ks.forEach(function(k){var b=el("button",null,PAYLAS_AYAR.yerlesim[k].etiket||k);b.type="button";b.setAttribute("role","radio");b.setAttribute("aria-checked",String(k===bo));
-      b.onclick=function(){if(k===bo)return;bo=k;L=PAYLAS_AYAR.yerlesim[k];try{localStorage.setItem("pay_boyut",k)}catch(e){}
+      b.onclick=function(){if(k===bo)return;bo=k;L=PAYLAS_AYAR.yerlesim[k];depoYazMetin("pay_boyut",k);
         seg.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-checked",String(x===b))});draw()};
       seg.appendChild(b)});
     body.appendChild(seg);

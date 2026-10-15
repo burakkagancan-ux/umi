@@ -4,8 +4,8 @@ function dilGetir(p){return fetch(p).then(function(r){if(!r.ok)throw new Error(p
 /* Dile ve sayfaya bağlı dosyalar kurulumda önbelleğe inmez (sw.js); sayfa kullandıklarını service worker'a bildirir ki internetsiz de açılsın.
    (İlk ziyarette sayfa henüz service worker'ın denetiminde değil; kendi isteği önbelleğe yazılmaz.) */
 function dilOnbellege(u){try{if(navigator.serviceWorker)navigator.serviceWorker.ready.then(function(r){if(r.active)r.active.postMessage({onbellek:u})})}catch(e){}}
-function dilKayitli(){try{return localStorage.getItem("dil")}catch(e){return null}}
-function ulkeKayitli(){try{return localStorage.getItem("ulke")}catch(e){return null}}
+function dilKayitli(){return depoMetin("dil")}
+function ulkeKayitli(){return depoMetin("ulke")}
 function ulke(){return ulkeSec(ulkeKayitli(),DIL.kod)}   // ULKELER'den biri ya da "" (seçilmedi)
 /* <html data-ulke>: alt menüdeki Liste (Bakanlık listesi) yalnızca Türkiye seçiliyken görünür (tema.css). Dil dosyası inmeden önce tahminle
    konur ki Türkiye'de menü açılışta kaymasın; dil kurulunca ve ülke değişince kesinleşir. */

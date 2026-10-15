@@ -12,7 +12,7 @@ function build(raw){return raw.map(function(r){
   o.hay=fold([o.firma,o.marka,o.urun].join(" "));return o;
 }).sort(function(a,b){return b.tarih-a.tarih})}
 var DATA=build(RAW),IMPORTED=false;
-try{localStorage.removeItem("tagsis_raw")}catch(e){}   // eski "Veriyi güncelle" ile kaydedilmiş veri artık kullanılmaz
+depoSil("tagsis_raw");   // eski "Veriyi güncelle" ile kaydedilmiş veri artık kullanılmaz
 function el(tag,c,x){var e=document.createElement(tag);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 /* Ürün grubu ve uygunsuzluk türü: seçili dildeki ad; çevirisi yoksa Türkçe (lang="tr") */
 function grupAd(v){return veriMetin(v,"liste:"+v)}

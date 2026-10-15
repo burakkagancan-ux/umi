@@ -49,7 +49,12 @@ for(let i=1;i<=V.VERI_SURUM;i++)ok(typeof V.VERI_GOC[i]==='function','VERI_GOC['
 
 // Kodda localStorage'a yazılan/okunan her anahtar VERI_ANAHTAR'da (yeni anahtar eklenince listeye ve gerekirse göçe girsin)
 const js=fs.readdirSync(__dirname+'/../js').filter(f=>f.endsWith('.js')).map(f=>fs.readFileSync(__dirname+'/../js/'+f,'utf8')).join('\n');
-const kullanilan=new Set([...js.matchAll(/localStorage\.(?:getItem|setItem|removeItem)\("([^"]+)"/g)].map(m=>m[1]));
+const kullanilan=new Set([...js.matchAll(/(?:localStorage\.(?:getItem|setItem|removeItem)|depo(?:Metin|Json|Dizi|Yaz|YazMetin|Sil))\("([^"]+)"/g)].map(m=>m[1]));
+// Cihaz deposuna yalnızca js/depo.js dokunur (U-07 7. adım); doğrudan localStorage erişimi mağaza sürümündeki kalıcı depoya geçişi bozar
+for(const f of fs.readdirSync(__dirname+'/../js').filter(f=>f.endsWith('.js')&&f!=='depo.js')){
+  const k=fs.readFileSync(__dirname+'/../js/'+f,'utf8').replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm,'');
+  ok(!/localStorage\s*\.\s*(getItem|setItem|removeItem|clear)|localStorage\s*\[/.test(k),'js/'+f+' localStorage\'a doğrudan erişiyor; js/depo.js işlevlerini kullanın (depoMetin, depoJson, depoDizi, depoYaz, depoYazMetin, depoSil)');
+}
 const bilinen=new Set([...Object.keys(V.VERI_ANAHTAR),'tagsis_raw']);
 const eksik=[...kullanilan].filter(k=>!bilinen.has(k));
 ok(!eksik.length,'VERI_ANAHTAR listesinde olmayan localStorage anahtarı: '+eksik.join(', '));

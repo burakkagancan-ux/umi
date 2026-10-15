@@ -10,8 +10,8 @@ function besinYukle(){
   if(BESIN_SOZ)return Promise.resolve(BESIN_SOZ);
   return getJson("data/besin.json").then(function(j){BESIN_SOZ=besinSozluk(j);return BESIN_SOZ}).catch(function(){return null});
 }
-function besinElleListe(){try{var a=JSON.parse(localStorage.getItem("besin_elle")||"[]");return Array.isArray(a)?a:[]}catch(e){return []}}
-function besinElleYaz(a){try{localStorage.setItem("besin_elle",JSON.stringify(a));return true}catch(e){return false}}
+function besinElleListe(){return depoDizi("besin_elle")}
+function besinElleYaz(a){return depoYaz("besin_elle",a)}
 /* Ekrandaki metnin tablosu: {k: besinGorunum girdisi, kaynak: "elle"|"etiket"|"off", t, okunan: metinden ayrıştırılan (düzeltme formu için)} ya da null.
    Sıra: bu cihazda elle düzeltilen → kayıtlı üründe saklanan elle değerler (başka cihaz, yedek) → okunan metindeki tablo → barkoddan OFF
    → kayıtlı üründe saklanan diğer değerler (kayıt barkodsuz açıldığında OFF değerleri). kayitsiz: kayıtta saklananlar sayılmaz (kaydı yenilerken). */
