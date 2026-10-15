@@ -16,6 +16,10 @@ tdb.hazards.forEach(x=>{ok(['red','yellow','info'].includes(x.level),'seviye '+x
 ['H302','H315','H317','H319','H335','H412','EUH208','EUH206'].forEach(c=>ok(T.byCode[c].level==='yellow','uyarı sarı '+c));
 tdb.groups.forEach(g=>g.pat.forEach(p=>{ok(!/\(\?<[=!]/.test(p),'lookbehind '+g.id);new RegExp(p)}));
 tdb.subs.forEach(s=>s.inci.forEach(a=>ok(K.map.has(a.toLowerCase()),'INCI dizinde yok '+a)));
+// Sonuç ekranından ansiklopediye bağlantı: her ad INCI dizininde, her kimlik ansiklopedide bir sayfa; madde notları bağlanır
+Object.keys(tdb.ans).forEach(a=>{ok(K.map.has(a.toLowerCase()),'ans: INCI dizinde yok '+a);ok(fs.existsSync(__dirname+'/../data/ansiklopedi/'+tdb.ans[a]+'.json'),'ans: sayfa yok '+tdb.ans[a])});
+ok(Object.keys(tdb.ans).length>=29,'ans bağlantı sayısı '+Object.keys(tdb.ans).length);
+['hipoklorit','mit','cmit','bit','hcl','amonyak','enzim'].forEach(id=>{const s=tdb.subs.find(x=>x.id===id);ok(s&&s.inci.some(a=>tdb.ans[a]),'madde notu ansiklopediye bağlanmıyor '+id)});
 
 // [metin, beklenen ifadeler, beklenen gruplar {id: bant|null|"neg"}, ek denetim(A,S)]
 const cases=[

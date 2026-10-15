@@ -131,6 +131,18 @@ def read_aliases(known):
     return out
 
 
+def ans_baglari(known):
+    """Sonuç ekranından ansiklopediye bağlantı: INCI adı → temizlik ansiklopedisi kimliği (CAS). Adlar kaynak/ansiklopedi_temizlik.json
+    'adlar' alanından; yalnızca INCI dizininde olanlar (sonuç ekranı maddeyi INCI adıyla tanır). Bir ad iki maddeye gidemez."""
+    o = {}
+    for r in kaynak_json("ansiklopedi_temizlik.json")["kayitlar"]:
+        for a in r["adlar"]:
+            if a in known:
+                assert o.get(a, r["id"]) == r["id"], a
+                o[a] = r["id"]
+    return o
+
+
 def main():
     ki = json.load(open(os.path.join(HERE, "data", "kozmetik_inci.json"), encoding="utf-8"))
     known = {x[0] for x in ki["items"]}
@@ -181,11 +193,12 @@ def main():
         "combos": [{"codes": c[0], "tr": c[1], "en": c[2]} for c in HCOMB],
         "groups": GROUPS, "subs": SUBS, "aliases": aliases,
         "precautions": prec, "capsule": CAPSULE, "uzem": UZEM, "mix_rule": MIX_RULE,
+        "ans": ans_baglari(known),
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print("temizlik.json: %d ifade (%d EUH), %d birleşik, %d önlem, %d grup, %d madde notu, %d eş anlamlı" % (
-        len(hz), len(EUH), len(HCOMB), len(prec), len(GROUPS), len(SUBS), len(aliases)))
+    print("temizlik.json: %d ifade (%d EUH), %d birleşik, %d önlem, %d grup, %d madde notu, %d eş anlamlı, %d ansiklopedi bağlantısı" % (
+        len(hz), len(EUH), len(HCOMB), len(prec), len(GROUPS), len(SUBS), len(aliases), len(out["ans"])))
 
 
 if __name__ == "__main__":

@@ -16712,6 +16712,1234 @@
 "kaynak.f905bfdded": {
 "s": "Ministry of Health of Türkiye, General Directorate of Public Health",
 "tr": "T.C. Sağlık Bakanlığı Halk Sağlığı Genel Müdürlüğü"
+},
+"111-76-2.agn": {
+"s": "Its harmonised classification was updated in 2022 (ATP18): toxic if inhaled, harmful if swallowed, skin and eye irritation. The classification applies to the pure substance; use sprays with ventilation.",
+"tr": "Uyumlaştırılmış sınıfı 2022'de (ATP18) güncellendi: solunursa toksik, yutulursa zararlı, cilt ve göz tahrişi. Sınıf saf madde içindir; spreylerde havalandırarak kullanın."
+},
+"111-76-2.found.0": {
+"s": "Glass and surface cleaners",
+"tr": "Cam ve yüzey temizleyicileri"
+},
+"111-76-2.found.1": {
+"s": "Degreasers",
+"tr": "Yağ çözücüler"
+},
+"111-76-2.found.2": {
+"s": "Paints and inks",
+"tr": "Boya ve mürekkepler"
+},
+"111-76-2.name": {
+"s": "2-Butoxyethanol",
+"tr": "2-Bütoksietanol"
+},
+"111-76-2.pw.0": {
+"s": "Its vapour is harmful when inhaled; use spray products in a ventilated room.",
+"tr": "Buharı solunduğunda zararlıdır; sprey ürünleri havalandırılan ortamda kullanın."
+},
+"111-76-2.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 603-014-00-0 (ATP18): Acute Tox. 3 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Irrit. 2.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 603-014-00-0 (ATP18): Acute Tox. 3 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Irrit. 2."
+},
+"111-76-2.summary": {
+"s": "A solvent from the glycol ether group.",
+"tr": "Glikol eteri grubundan çözücü."
+},
+"111-76-2.what": {
+"s": "Dissolves grease and dirt and helps the surface dry without streaks.",
+"tr": "Yağı ve kiri çözer, yüzeyde iz bırakmadan buharlaşmaya yardım eder."
+},
+"1310-58-3.agn": {
+"s": "The pure substance is in the highest corrosivity category (Skin Corr. 1A); the statement on the label depends on its concentration in the product.",
+"tr": "Saf maddenin sınıfı en yüksek aşındırıcılık kategorisidir (Skin Corr. 1A); etiketteki ifade üründeki orana göre değişir."
+},
+"1310-58-3.found.0": {
+"s": "Drain openers",
+"tr": "Gider açıcılar"
+},
+"1310-58-3.found.1": {
+"s": "Paint and varnish strippers",
+"tr": "Boya ve vernik sökücüler"
+},
+"1310-58-3.found.2": {
+"s": "Liquid soaps",
+"tr": "Sıvı sabunlar"
+},
+"1310-58-3.name": {
+"s": "Potassium Hydroxide",
+"tr": "Potasyum Hidroksit"
+},
+"1310-58-3.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 019-002-00-8 (CLP00): Acute Tox. 4 (Oral)*, Skin Corr. 1A.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 019-002-00-8 (CLP00): Acute Tox. 4 (Oral)*, Skin Corr. 1A."
+},
+"1310-58-3.summary": {
+"s": "Caustic potash; a strong base (alkali).",
+"tr": "Kostik potas; güçlü bir baz (alkali)."
+},
+"1310-58-3.what": {
+"s": "Dissolves grease and raises the product's pH; used to make liquid soap.",
+"tr": "Yağı çözer, ürünün pH'ını yükseltir; sıvı sabun yapımında kullanılır."
+},
+"1310-73-2.agn": {
+"s": "The pure substance is in the highest corrosivity category (Skin Corr. 1A). Concentrated products such as drain openers carry the same statement on the label; in a diluted product the classification drops with the concentration.",
+"tr": "Saf maddenin sınıfı en yüksek aşındırıcılık kategorisidir (Skin Corr. 1A). Gider açıcılar gibi derişik ürünlerde etikette aynı ifade yer alır; seyreltik üründe sınıf orana göre düşer."
+},
+"1310-73-2.found.0": {
+"s": "Sink and drain openers",
+"tr": "Lavabo ve gider açıcılar"
+},
+"1310-73-2.found.1": {
+"s": "Oven and grill cleaners",
+"tr": "Fırın ve ızgara temizleyicileri"
+},
+"1310-73-2.found.2": {
+"s": "Metal cleaning products",
+"tr": "Metal temizleme ürünleri"
+},
+"1310-73-2.found.3": {
+"s": "Soap making",
+"tr": "Sabun üretimi"
+},
+"1310-73-2.name": {
+"s": "Sodium Hydroxide",
+"tr": "Sodyum Hidroksit"
+},
+"1310-73-2.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 011-002-00-6 (CLP00): Skin Corr. 1A.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 011-002-00-6 (CLP00): Skin Corr. 1A."
+},
+"1310-73-2.summary": {
+"s": "Caustic soda; a strong base (alkali).",
+"tr": "Kostik soda; güçlü bir baz (alkali)."
+},
+"1310-73-2.what": {
+"s": "Dissolves grease by saponifying it, breaks down organic blockages and raises the product's pH.",
+"tr": "Yağı sabunlaştırarak çözer, organik tıkanıklıkları parçalar ve ürünün pH'ını yükseltir."
+},
+"1318-02-1.agn": {
+"s": "It has no EU harmonised classification and is not in any hazard class in the registrants' joint notification.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez."
+},
+"1318-02-1.found.0": {
+"s": "Laundry detergent powders",
+"tr": "Toz çamaşır deterjanları"
+},
+"1318-02-1.found.1": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"1318-02-1.name": {
+"s": "Zeolite",
+"tr": "Zeolit"
+},
+"1318-02-1.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (100.0% of notifications): not classified.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %100,0'i): sınıflandırılmamış."
+},
+"1318-02-1.summary": {
+"s": "A crystalline sodium aluminium silicate mineral.",
+"tr": "Kristal yapılı sodyum alüminyum silikat minerali."
+},
+"1318-02-1.what": {
+"s": "Softens water by trapping calcium through ion exchange; used instead of phosphate.",
+"tr": "Sudaki kalsiyumu iyon değişimiyle tutarak suyu yumuşatır; fosfat yerine kullanılır."
+},
+"1336-21-6.agn": {
+"s": "The Turkish Ministry of Health advises against mixing it with bleach; mixing produces chloramine gases that irritate the airways.",
+"tr": "Sağlık Bakanlığı çamaşır suyuyla karıştırılmamasını öneriyor; karışımda solunum yolunu tahriş eden kloramin gazları oluşur."
+},
+"1336-21-6.found.0": {
+"s": "Glass and surface cleaners",
+"tr": "Cam ve yüzey temizleyicileri"
+},
+"1336-21-6.found.1": {
+"s": "Household cleaning products",
+"tr": "Ev temizlik ürünleri"
+},
+"1336-21-6.found.2": {
+"s": "Stain removers",
+"tr": "Leke çıkarıcılar"
+},
+"1336-21-6.name": {
+"s": "Ammonia Solution",
+"tr": "Amonyak Çözeltisi"
+},
+"1336-21-6.pw.0": {
+"s": "Its smell and vapour can irritate the airways; use with ventilation.",
+"tr": "Kokusu ve buharı solunum yolunu tahriş edebilir; havalandırarak kullanın."
+},
+"1336-21-6.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 007-001-01-2 (CLP00): Skin Corr. 1B, Aquatic Acute 1.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 007-001-01-2 (CLP00): Skin Corr. 1B, Aquatic Acute 1."
+},
+"1336-21-6.summary": {
+"s": "Ammonia dissolved in water; a base (alkali).",
+"tr": "Suda çözünmüş amonyak; bir baz (alkali)."
+},
+"1336-21-6.what": {
+"s": "Dissolves grease and dirt and evaporates without leaving streaks.",
+"tr": "Yağı ve kiri çözer, iz bırakmadan buharlaşır."
+},
+"144-55-8.agn": {
+"s": "It has no EU harmonised classification and is not in any hazard class in the registrants' joint notification. The Turkish Ministry of Health guide names bicarbonate as a safer option for surface cleaning. In food it belongs to the E500 group.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez. Sağlık Bakanlığı rehberi yüzey temizliği için karbonatı daha güvenli bir seçenek olarak anar. Gıdada E500 grubundadır."
+},
+"144-55-8.found.0": {
+"s": "Scouring powders and creams",
+"tr": "Ovma tozları ve kremleri"
+},
+"144-55-8.found.1": {
+"s": "Odour removers",
+"tr": "Koku gidericiler"
+},
+"144-55-8.found.2": {
+"s": "Cleaning-grade bicarbonate of soda",
+"tr": "Temizlik amaçlı karbonat"
+},
+"144-55-8.name": {
+"s": "Sodium Bicarbonate",
+"tr": "Sodyum Bikarbonat"
+},
+"144-55-8.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (99.0% of notifications): not classified.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %99,0'i): sınıflandırılmamış."
+},
+"144-55-8.summary": {
+"s": "Baking soda; a weak base.",
+"tr": "Yemek sodası; zayıf bir baz."
+},
+"144-55-8.what": {
+"s": "Scrubs off dirt as a mild abrasive, reduces odours and balances pH.",
+"tr": "Hafif aşındırıcı olarak kiri ovar, kokuyu azaltır ve pH'ı dengeler."
+},
+"151-21-3.agn": {
+"s": "It has no EU harmonised classification; in the registrants' joint notification it is classified as causing serious eye damage, skin irritation and harmful if swallowed (for the pure substance).",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde ciddi göz hasarı, cilt tahrişi ve yutulursa zararlı sınıflarındadır (saf madde için)."
+},
+"151-21-3.found.0": {
+"s": "Floor and general cleaners",
+"tr": "Zemin ve genel temizleyiciler"
+},
+"151-21-3.found.1": {
+"s": "Hand dishwashing liquids",
+"tr": "Elde bulaşık deterjanları"
+},
+"151-21-3.found.2": {
+"s": "Toothpaste and shampoos",
+"tr": "Diş macunu ve şampuanlar"
+},
+"151-21-3.name": {
+"s": "Sodium Lauryl Sulfate (SLS)",
+"tr": "Sodyum Lauril Sülfat (SLS)"
+},
+"151-21-3.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (29.0% of notifications): Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Aquatic Chronic 3.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %29,0'i): Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Aquatic Chronic 3."
+},
+"151-21-3.summary": {
+"s": "An anionic surfactant.",
+"tr": "Anyonik yüzey aktif madde."
+},
+"151-21-3.what": {
+"s": "Dissolves dirt and greasy residue and produces foam.",
+"tr": "Kiri ve yağlı kalıntıyı çözer, köpük yapar."
+},
+"15630-89-4.agn": {
+"s": "It has no EU harmonised classification; in the registrants' joint notification it is classified as an oxidising solid, harmful if swallowed and causing serious eye damage.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildirimi oksitleyici katı, yutulursa zararlı ve ciddi göz hasarı sınıflarındadır."
+},
+"15630-89-4.found.0": {
+"s": "Laundry detergent powders",
+"tr": "Toz çamaşır deterjanları"
+},
+"15630-89-4.found.1": {
+"s": "Oxygen-based stain removers",
+"tr": "Oksijenli leke çıkarıcılar"
+},
+"15630-89-4.found.2": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"15630-89-4.name": {
+"s": "Sodium Percarbonate",
+"tr": "Sodyum Perkarbonat"
+},
+"15630-89-4.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (41.6% of notifications): Ox. Sol. 2, Acute Tox. 4 (Oral), Eye Dam. 1.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %41,6'i): Ox. Sol. 2, Acute Tox. 4 (Oral), Eye Dam. 1."
+},
+"15630-89-4.summary": {
+"s": "A powder bleach that breaks down in water into sodium carbonate and hydrogen peroxide.",
+"tr": "Suda sodyum karbonat ve hidrojen peroksite ayrışan toz ağartıcı."
+},
+"15630-89-4.what": {
+"s": "Bleaches stains with oxygen; it is different from chlorine bleach.",
+"tr": "Lekeyi oksijenle ağartır; klorlu ağartıcıdan farklıdır."
+},
+"164462-16-2.agn": {
+"s": "It has no EU harmonised classification; most notifications to ECHA do not place it in any hazard class.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; ECHA'ya yapılan bildirimlerin çoğunda tehlike sınıfına girmez."
+},
+"164462-16-2.found.0": {
+"s": "Phosphate-free dishwasher detergents",
+"tr": "Fosfatsız bulaşık makinesi deterjanları"
+},
+"164462-16-2.found.1": {
+"s": "Liquid detergents",
+"tr": "Sıvı deterjanlar"
+},
+"164462-16-2.name": {
+"s": "Trisodium MGDA",
+"tr": "Trisodyum MGDA"
+},
+"164462-16-2.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (66.1% of notifications): not classified.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %66,1'i): sınıflandırılmamış."
+},
+"164462-16-2.summary": {
+"s": "A metal-binding (chelating) agent; used instead of phosphate and EDTA.",
+"tr": "Metal bağlayıcı (şelatlayıcı) madde; fosfat ve EDTA'nın yerine kullanılır."
+},
+"164462-16-2.what": {
+"s": "Binds calcium and magnesium in water so the detergent works better.",
+"tr": "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır."
+},
+"2634-33-5.agn": {
+"s": "Its harmonised classification was updated in 2024 (ATP21); it is a skin sensitiser (Skin Sens. 1A). At the low concentrations used in products, the pure substance's acute toxicity class does not carry over to the label. It must be listed by name on the detergent label as a preservative.",
+"tr": "Uyumlaştırılmış sınıfı 2024'te (ATP21) güncellendi; cilt hassaslaştırıcıdır (Skin Sens. 1A). Üründeki düşük oranlarda saf maddenin akut toksisite sınıfı etikete yansımaz. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur."
+},
+"2634-33-5.found.0": {
+"s": "Liquid detergents",
+"tr": "Sıvı deterjanlar"
+},
+"2634-33-5.found.1": {
+"s": "Dishwashing detergents",
+"tr": "Bulaşık deterjanları"
+},
+"2634-33-5.found.2": {
+"s": "Water-based paints and adhesives",
+"tr": "Su bazlı boya ve yapıştırıcılar"
+},
+"2634-33-5.name": {
+"s": "Benzisothiazolinone (BIT)",
+"tr": "Benzizotiyazolinon (BIT)"
+},
+"2634-33-5.pw.0": {
+"s": "A preservative that can cause contact allergy; if you are allergic to isothiazolinones, look for it on the label.",
+"tr": "Temas alerjisi yapabilen bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+},
+"2634-33-5.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 613-088-00-6 (ATP21): Acute Tox. 2 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 613-088-00-6 (ATP21): Acute Tox. 2 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1."
+},
+"2634-33-5.reg.det": {
+"s": "Must be listed by name (INCI) on the detergent label as a preservative, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun koruyucu olarak adıyla (INCI) yazılır."
+},
+"2634-33-5.summary": {
+"s": "A preservative (biocide) from the isothiazolinone group.",
+"tr": "İzotiyazolinon grubundan koruyucu (biyosit)."
+},
+"2634-33-5.what": {
+"s": "Stops bacteria and fungi from growing in water-based products.",
+"tr": "Su bazlı üründe bakteri ve mantar üremesini önler."
+},
+"2682-20-4.agn": {
+"s": "Present in products at very low concentrations; at these levels the pure substance's classes (acute toxicity, corrosivity) do not carry over to the label. What matters is skin sensitisation (Skin Sens. 1A): it can cause contact allergy even at low concentrations. It must be listed by name on the detergent label as a preservative.",
+"tr": "Üründe çok düşük oranlarda bulunur; saf maddenin sınıfları (akut toksisite, aşındırıcılık) bu oranlarda etikete yansımaz. Önemli olan cilt hassaslaştırıcılığıdır (Skin Sens. 1A): düşük oranlarda bile temas alerjisi yapabilir. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur."
+},
+"2682-20-4.found.0": {
+"s": "Liquid detergents and fabric softeners",
+"tr": "Sıvı deterjanlar ve yumuşatıcılar"
+},
+"2682-20-4.found.1": {
+"s": "Surface cleaners",
+"tr": "Yüzey temizleyicileri"
+},
+"2682-20-4.found.2": {
+"s": "Water-based paints",
+"tr": "Su bazlı boyalar"
+},
+"2682-20-4.name": {
+"s": "Methylisothiazolinone (MIT)",
+"tr": "Metilizotiyazolinon (MIT)"
+},
+"2682-20-4.pw.0": {
+"s": "A preservative that often causes contact allergy; if you are allergic to isothiazolinones, look for it on the label.",
+"tr": "Temas alerjisine sık yol açan bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+},
+"2682-20-4.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 613-326-00-9 (ATP13): Acute Tox. 2 (Inhalation), Acute Tox. 3 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1B, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Supplemental label statement: EUH071.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 613-326-00-9 (ATP13): Acute Tox. 2 (Inhalation), Acute Tox. 3 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1B, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Ek etiket ifadesi: EUH071."
+},
+"2682-20-4.reg.det": {
+"s": "Must be listed by name (INCI) on the detergent label as a preservative, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun koruyucu olarak adıyla (INCI) yazılır."
+},
+"2682-20-4.summary": {
+"s": "A preservative (biocide) from the isothiazolinone group.",
+"tr": "İzotiyazolinon grubundan koruyucu (biyosit)."
+},
+"2682-20-4.what": {
+"s": "Prevents spoilage of water-based products by stopping bacteria and fungi from growing.",
+"tr": "Su bazlı üründe bakteri ve mantar üremesini önleyerek bozulmayı engeller."
+},
+"497-19-8.agn": {
+"s": "Its only harmonised classification is eye irritation. In food it is E500.",
+"tr": "Uyumlaştırılmış sınıfı yalnızca göz tahrişidir. Gıdada E500 olarak bulunur."
+},
+"497-19-8.found.0": {
+"s": "Laundry detergent powders",
+"tr": "Toz çamaşır deterjanları"
+},
+"497-19-8.found.1": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"497-19-8.found.2": {
+"s": "All-purpose cleaners",
+"tr": "Genel amaçlı temizleyiciler"
+},
+"497-19-8.name": {
+"s": "Sodium Carbonate",
+"tr": "Sodyum Karbonat"
+},
+"497-19-8.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 011-005-00-2 (CLP00): Eye Irrit. 2.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 011-005-00-2 (CLP00): Eye Irrit. 2."
+},
+"497-19-8.summary": {
+"s": "Washing soda; a moderately strong base.",
+"tr": "Çamaşır sodası; orta güçte bir baz."
+},
+"497-19-8.what": {
+"s": "Softens water, dissolves greasy dirt and raises the pH of the wash water.",
+"tr": "Suyu yumuşatır, yağlı kiri çözer ve yıkama suyunun pH'ını yükseltir."
+},
+"5329-14-6.agn": {
+"s": "Its harmonised classification is irritant (not corrosive); it has long-lasting harmful effects on aquatic life.",
+"tr": "Uyumlaştırılmış sınıfı tahriş edicidir (aşındırıcı değil); sucul ortamda uzun süreli zararlı etkisi vardır."
+},
+"5329-14-6.found.0": {
+"s": "Descalers",
+"tr": "Kireç çözücüler"
+},
+"5329-14-6.found.1": {
+"s": "Descalers for coffee machines and kettles",
+"tr": "Kahve makinesi ve su ısıtıcısı kireç çözücüleri"
+},
+"5329-14-6.found.2": {
+"s": "Metal cleaning",
+"tr": "Metal temizleme"
+},
+"5329-14-6.name": {
+"s": "Sulfamic Acid",
+"tr": "Sülfamik Asit"
+},
+"5329-14-6.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 016-026-00-0 (CLP00): Skin Irrit. 2, Eye Irrit. 2, Aquatic Chronic 3.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 016-026-00-0 (CLP00): Skin Irrit. 2, Eye Irrit. 2, Aquatic Chronic 3."
+},
+"5329-14-6.summary": {
+"s": "A strong acid sold as a solid (powder).",
+"tr": "Katı (toz) hâlde satılan güçlü bir asit."
+},
+"5329-14-6.what": {
+"s": "Dissolves limescale and rust.",
+"tr": "Kireç ve pası çözer."
+},
+"55965-84-9.agn": {
+"s": "Present in products at very low concentrations; at these levels the acute toxicity and corrosivity classes of the pure mixture do not carry over to the label. It is a skin sensitiser (Skin Sens. 1A) and often causes contact allergy. It must be listed by name on the detergent label as a preservative.",
+"tr": "Üründe çok düşük oranlarda bulunur; saf karışımın akut toksisite ve aşındırıcılık sınıfları bu oranlarda etikete yansımaz. Cilt hassaslaştırıcıdır (Skin Sens. 1A) ve temas alerjisine sık yol açar. Deterjan etiketinde koruyucu olarak adıyla yazılması zorunludur."
+},
+"55965-84-9.found.0": {
+"s": "Liquid detergents",
+"tr": "Sıvı deterjanlar"
+},
+"55965-84-9.found.1": {
+"s": "Surface cleaners",
+"tr": "Yüzey temizleyicileri"
+},
+"55965-84-9.found.2": {
+"s": "Rinse-off cosmetic products",
+"tr": "Durulanan kozmetik ürünler"
+},
+"55965-84-9.name": {
+"s": "Methylchloroisothiazolinone and Methylisothiazolinone (CMIT/MIT)",
+"tr": "Metilkloroizotiyazolinon ve Metilizotiyazolinon (CMIT/MIT)"
+},
+"55965-84-9.pw.0": {
+"s": "A preservative that often causes contact allergy; if you are allergic to isothiazolinones, look for it on the label.",
+"tr": "Temas alerjisine sık yol açan bir koruyucudur; izotiyazolinon alerjiniz varsa etikette arayın."
+},
+"55965-84-9.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 613-167-00-5 (ATP13): Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Supplemental label statement: EUH071.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 613-167-00-5 (ATP13): Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Ek etiket ifadesi: EUH071."
+},
+"55965-84-9.reg.det": {
+"s": "Must be listed by name (INCI) on the detergent label as a preservative, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun koruyucu olarak adıyla (INCI) yazılır."
+},
+"55965-84-9.summary": {
+"s": "A 3:1 mixture of two isothiazolinones; a preservative (biocide).",
+"tr": "İki izotiyazolinonun 3:1 karışımı; koruyucu (biyosit)."
+},
+"55965-84-9.what": {
+"s": "Stops bacteria and fungi from growing in water-based products.",
+"tr": "Su bazlı üründe bakteri ve mantar üremesini önler."
+},
+"5989-27-5.agn": {
+"s": "A fragrance allergen: in a detergent, it must be named on the label above 0.01%. It oxidises on contact with air, which makes an allergic reaction more likely. In pure form, if swallowed and it enters the lungs, it can cause serious damage (H304).",
+"tr": "Koku alerjenidir: deterjanda %0,01'i aşarsa etikette adıyla yazılır. Havayla temas edince oksitlenir ve alerji yapma olasılığı artar. Saf hâlde yutulup akciğere kaçarsa ciddi hasar yapabilir (H304)."
+},
+"5989-27-5.found.0": {
+"s": "Fragranced cleaning products",
+"tr": "Parfümlü temizlik ürünleri"
+},
+"5989-27-5.found.1": {
+"s": "Degreasers",
+"tr": "Yağ çözücüler"
+},
+"5989-27-5.found.2": {
+"s": "Cosmetic products",
+"tr": "Kozmetik ürünler"
+},
+"5989-27-5.name": {
+"s": "Limonene",
+"tr": "Limonen"
+},
+"5989-27-5.pw.0": {
+"s": "A fragrance allergen; if you have a fragrance allergy, check the label for its name.",
+"tr": "Koku alerjenidir; koku alerjiniz varsa etiketteki adına bakın."
+},
+"5989-27-5.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 601-096-00-2 (ATP17): Flam. Liq. 3, Asp. Tox. 1, Skin Irrit. 2, Skin Sens. 1B, Aquatic Acute 1, Aquatic Chronic 3.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 601-096-00-2 (ATP17): Flam. Liq. 3, Asp. Tox. 1, Skin Irrit. 2, Skin Sens. 1B, Aquatic Acute 1, Aquatic Chronic 3."
+},
+"5989-27-5.reg.det": {
+"s": "Fragrance allergen: in a detergent, it must be named on the label above 0.01%.",
+"tr": "Koku alerjeni: deterjanda %0,01'i aşarsa etikette adıyla yazılır."
+},
+"5989-27-5.summary": {
+"s": "A fragrance ingredient and solvent found in orange and lemon peel oil.",
+"tr": "Portakal ve limon kabuğu yağında bulunan koku maddesi ve çözücü."
+},
+"5989-27-5.what": {
+"s": "Gives the product a citrus scent and dissolves grease.",
+"tr": "Ürüne turunçgil kokusu verir ve yağı çözer."
+},
+"63449-41-2.agn": {
+"s": "The harmonised classification is for the C8-18 alkyl mixture (index no 612-140-00-5); the C12-16 mixture common in commercial products (CAS 68424-85-1) belongs to the same group of substances. The pure substance is corrosive.",
+"tr": "Uyumlaştırılmış sınıf C8-18 alkil karışımı (dizin no 612-140-00-5) içindir; ticari ürünlerde sık geçen C12-16 karışımı (CAS 68424-85-1) aynı madde grubundandır. Saf madde aşındırıcıdır."
+},
+"63449-41-2.found.0": {
+"s": "Surface disinfectants",
+"tr": "Yüzey dezenfektanları"
+},
+"63449-41-2.found.1": {
+"s": "Disinfecting wipes",
+"tr": "Dezenfektanlı mendiller"
+},
+"63449-41-2.found.2": {
+"s": "Preservative in cosmetics and medicines",
+"tr": "Kozmetik ve ilaçlarda koruyucu"
+},
+"63449-41-2.name": {
+"s": "Benzalkonium Chloride",
+"tr": "Benzalkonyum Klorür"
+},
+"63449-41-2.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 612-140-00-5 (CLP00): Acute Tox. 4 (Dermal)*, Acute Tox. 4 (Oral)*, Skin Corr. 1B, Aquatic Acute 1.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 612-140-00-5 (CLP00): Acute Tox. 4 (Dermal)*, Acute Tox. 4 (Oral)*, Skin Corr. 1B, Aquatic Acute 1."
+},
+"63449-41-2.reg.det": {
+"s": "Must be listed on the detergent label as a disinfectant, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun dezenfektan olarak yazılır."
+},
+"63449-41-2.summary": {
+"s": "A cationic disinfectant and preservative from the quaternary ammonium group.",
+"tr": "Kuaterner amonyum grubundan katyonik dezenfektan ve koruyucu."
+},
+"63449-41-2.what": {
+"s": "Kills bacteria and fungi; leaves a thin film on the surface.",
+"tr": "Bakteri ve mantarları öldürür; yüzeyde ince bir tabaka bırakır."
+},
+"64-02-8.agn": {
+"s": "Its harmonised classification is harmful if swallowed and serious eye damage. It breaks down slowly in the environment, so some products have switched to readily biodegradable chelating agents such as MGDA.",
+"tr": "Uyumlaştırılmış sınıfı yutulursa zararlı ve ciddi göz hasarıdır. Doğada yavaş parçalanır; bu yüzden bazı ürünlerde MGDA gibi kolay parçalanan bağlayıcılara geçilmiştir."
+},
+"64-02-8.found.0": {
+"s": "Liquid detergents",
+"tr": "Sıvı deterjanlar"
+},
+"64-02-8.found.1": {
+"s": "Bathroom and kitchen cleaners",
+"tr": "Banyo ve mutfak temizleyicileri"
+},
+"64-02-8.found.2": {
+"s": "Cosmetic products",
+"tr": "Kozmetik ürünler"
+},
+"64-02-8.name": {
+"s": "Tetrasodium EDTA",
+"tr": "Tetrasodyum EDTA"
+},
+"64-02-8.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 607-428-00-2 (ATP01): Acute Tox. 4 (Oral)*, Eye Dam. 1.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 607-428-00-2 (ATP01): Acute Tox. 4 (Oral)*, Eye Dam. 1."
+},
+"64-02-8.summary": {
+"s": "A metal-binding (chelating) agent.",
+"tr": "Metal bağlayıcı (şelatlayıcı) madde."
+},
+"64-02-8.what": {
+"s": "Neutralises water hardness by binding metal ions and slows down product spoilage.",
+"tr": "Metal iyonlarını bağlayarak suyun sertliğini etkisizleştirir ve ürünün bozulmasını yavaşlatır."
+},
+"64-17-5.agn": {
+"s": "Its only harmonised classification is highly flammable liquid (H225).",
+"tr": "Uyumlaştırılmış sınıfı yalnızca kolay alevlenir sıvıdır (H225)."
+},
+"64-17-5.found.0": {
+"s": "Hand and surface disinfectants",
+"tr": "El ve yüzey dezenfektanları"
+},
+"64-17-5.found.1": {
+"s": "Glass cleaners",
+"tr": "Cam temizleyicileri"
+},
+"64-17-5.found.2": {
+"s": "Fragranced products",
+"tr": "Parfümlü ürünler"
+},
+"64-17-5.name": {
+"s": "Ethyl Alcohol",
+"tr": "Etil Alkol"
+},
+"64-17-5.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 603-002-00-5 (CLP00): Flam. Liq. 2.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 603-002-00-5 (CLP00): Flam. Liq. 2."
+},
+"64-17-5.summary": {
+"s": "An alcohol produced by fermentation or from petrochemicals.",
+"tr": "Mayalanmayla ya da petrokimyasal yolla üretilen alkol."
+},
+"64-17-5.what": {
+"s": "Dissolves dirt as a solvent; at high concentration it kills germs.",
+"tr": "Çözücü olarak kiri çözer; yüksek oranda mikropları öldürür."
+},
+"67-63-0.agn": {
+"s": "Highly flammable; its vapour may cause dizziness. Do not use near flames or heat sources.",
+"tr": "Kolay alevlenir; buharı baş dönmesi yapabilir. Ateşe ve ısı kaynaklarına yakın kullanmayın."
+},
+"67-63-0.found.0": {
+"s": "Glass and screen cleaners",
+"tr": "Cam ve ekran temizleyicileri"
+},
+"67-63-0.found.1": {
+"s": "Disinfectant wipes and sprays",
+"tr": "Dezenfektan mendil ve spreyler"
+},
+"67-63-0.found.2": {
+"s": "Stain removers",
+"tr": "Leke çıkarıcılar"
+},
+"67-63-0.name": {
+"s": "Isopropyl Alcohol",
+"tr": "İzopropil Alkol"
+},
+"67-63-0.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 603-117-00-0 (CLP00): Flam. Liq. 2, STOT SE 3, Eye Irrit. 2.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 603-117-00-0 (CLP00): Flam. Liq. 2, STOT SE 3, Eye Irrit. 2."
+},
+"67-63-0.summary": {
+"s": "An alcohol used as a solvent and disinfectant.",
+"tr": "Çözücü ve dezenfektan olarak kullanılan bir alkol."
+},
+"67-63-0.what": {
+"s": "Dissolves grease and dirt and evaporates quickly; at high concentration it kills germs.",
+"tr": "Yağı ve kiri çözer, hızla buharlaşır; yüksek oranda mikropları öldürür."
+},
+"6834-92-0.agn": {
+"s": "The pure substance is corrosive (Skin Corr. 1B); in dishwasher tablets the statement on the label depends on the concentration.",
+"tr": "Saf madde aşındırıcıdır (Skin Corr. 1B); bulaşık makinesi tabletlerinde etiketteki ifade orana göre belirlenir."
+},
+"6834-92-0.found.0": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"6834-92-0.found.1": {
+"s": "Industrial and floor cleaners",
+"tr": "Endüstriyel ve zemin temizleyicileri"
+},
+"6834-92-0.found.2": {
+"s": "Laundry detergent powders",
+"tr": "Toz çamaşır deterjanları"
+},
+"6834-92-0.name": {
+"s": "Sodium Metasilicate",
+"tr": "Sodyum Metasilikat"
+},
+"6834-92-0.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 014-010-00-8 (CLP00): STOT SE 3, Skin Corr. 1B.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 014-010-00-8 (CLP00): STOT SE 3, Skin Corr. 1B."
+},
+"6834-92-0.summary": {
+"s": "A strongly alkaline silicate salt.",
+"tr": "Güçlü bazik bir silikat tuzu."
+},
+"6834-92-0.what": {
+"s": "Dissolves greasy dirt, softens water and protects machine parts against corrosion.",
+"tr": "Yağlı kiri çözer, suyu yumuşatır ve makine parçalarını aşınmaya karşı korur."
+},
+"68411-30-3.agn": {
+"s": "It has no EU harmonised classification; in the registrants' joint notification it is classified as causing serious eye damage, skin irritation and harmful if swallowed. These classes apply to the pure substance; on the label it appears as a band such as 5–15%.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde ciddi göz hasarı, cilt tahrişi ve yutulursa zararlı sınıflarındadır. Bu sınıflar saf madde içindir; etikette %5–15 gibi bantla yazılır."
+},
+"68411-30-3.found.0": {
+"s": "Laundry detergent powders and liquids",
+"tr": "Toz ve sıvı çamaşır deterjanları"
+},
+"68411-30-3.found.1": {
+"s": "Hand dishwashing liquids",
+"tr": "Elde bulaşık deterjanları"
+},
+"68411-30-3.found.2": {
+"s": "General cleaners",
+"tr": "Genel temizleyiciler"
+},
+"68411-30-3.name": {
+"s": "Sodium Alkylbenzene Sulfonate (LAS)",
+"tr": "Sodyum Alkilbenzen Sülfonat (LAS)"
+},
+"68411-30-3.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (51.7% of notifications): Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Aquatic Chronic 3.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %51,7'i): Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Aquatic Chronic 3."
+},
+"68411-30-3.summary": {
+"s": "One of the most common anionic surfactants.",
+"tr": "En yaygın anyonik yüzey aktif maddelerden biri."
+},
+"68411-30-3.what": {
+"s": "Lifts dirt and grease and keeps them suspended in water; produces foam.",
+"tr": "Kiri ve yağı sudan ayırıp suda tutar; köpük yapar."
+},
+"68891-38-3.agn": {
+"s": "It has no EU harmonised classification; in the registrants' joint notification it is classified as skin irritation and serious eye damage (for the pure substance).",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde cilt tahrişi ve ciddi göz hasarı sınıflarındadır (saf madde için)."
+},
+"68891-38-3.found.0": {
+"s": "Hand dishwashing liquids",
+"tr": "Elde bulaşık deterjanları"
+},
+"68891-38-3.found.1": {
+"s": "Liquid laundry detergents",
+"tr": "Sıvı çamaşır deterjanları"
+},
+"68891-38-3.found.2": {
+"s": "Shampoos and shower gels",
+"tr": "Şampuan ve duş jelleri"
+},
+"68891-38-3.name": {
+"s": "Sodium Laureth Sulfate (SLES)",
+"tr": "Sodyum Lauril Eter Sülfat (SLES)"
+},
+"68891-38-3.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (50.7% of notifications): Skin Irrit. 2, Eye Dam. 1.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %50,7'i): Skin Irrit. 2, Eye Dam. 1."
+},
+"68891-38-3.summary": {
+"s": "An anionic surfactant; common in detergents and shampoos.",
+"tr": "Anyonik yüzey aktif madde; deterjan ve şampuanlarda yaygındır."
+},
+"68891-38-3.what": {
+"s": "Dissolves dirt and grease and produces plenty of foam.",
+"tr": "Kiri ve yağı çözer, bol köpük yapar."
+},
+"7173-51-5.agn": {
+"s": "The pure substance is corrosive (Skin Corr. 1B). In the EU, as a disinfectant active substance, it requires approval under the biocidal products legislation.",
+"tr": "Saf madde aşındırıcıdır (Skin Corr. 1B). AB'de dezenfektan etken maddesi olarak biyosidal ürünler mevzuatıyla izne bağlıdır."
+},
+"7173-51-5.found.0": {
+"s": "Surface disinfectants",
+"tr": "Yüzey dezenfektanları"
+},
+"7173-51-5.found.1": {
+"s": "Disinfecting kitchen and bathroom cleaners",
+"tr": "Mutfak ve banyo dezenfektanlı temizleyiciler"
+},
+"7173-51-5.found.2": {
+"s": "Wood preservatives",
+"tr": "Ahşap koruyucular"
+},
+"7173-51-5.name": {
+"s": "Didecyldimethylammonium Chloride (DDAC)",
+"tr": "Didesildimetilamonyum Klorür (DDAC)"
+},
+"7173-51-5.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 612-131-00-6 (CLP00): Acute Tox. 4 (Oral)*, Skin Corr. 1B.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 612-131-00-6 (CLP00): Acute Tox. 4 (Oral)*, Skin Corr. 1B."
+},
+"7173-51-5.reg.det": {
+"s": "Must be listed on the detergent label as a disinfectant, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun dezenfektan olarak yazılır."
+},
+"7173-51-5.summary": {
+"s": "A cationic disinfectant from the quaternary ammonium group.",
+"tr": "Kuaterner amonyum grubundan katyonik dezenfektan."
+},
+"7173-51-5.what": {
+"s": "Kills bacteria, fungi and some viruses.",
+"tr": "Bakteri, mantar ve bazı virüsleri öldürür."
+},
+"7647-01-0.agn": {
+"s": "The classification shown is for the solution (index no 017-002-01-X); gaseous hydrogen chloride is classified separately. The Turkish Ministry of Health advises against mixing it with bleach; mixing releases chlorine gas.",
+"tr": "Burada çözeltinin (dizin no 017-002-01-X) sınıfı verilmiştir; gaz hâlindeki hidrojen klorürün sınıfı ayrıdır. Sağlık Bakanlığı çamaşır suyuyla karıştırılmamasını öneriyor; karışımda klor gazı açığa çıkar."
+},
+"7647-01-0.found.0": {
+"s": "Spirits of salt (hydrochloric acid cleaner)",
+"tr": "Tuz ruhu"
+},
+"7647-01-0.found.1": {
+"s": "Toilet cleaners and descalers",
+"tr": "Tuvalet ve kireç çözücüler"
+},
+"7647-01-0.found.2": {
+"s": "Metal cleaning and rust removal",
+"tr": "Metal temizleme ve pas giderme"
+},
+"7647-01-0.name": {
+"s": "Hydrochloric Acid",
+"tr": "Hidroklorik Asit (Tuz Ruhu)"
+},
+"7647-01-0.pw.0": {
+"s": "Its vapour irritates the airways (H335); do not use in a closed space.",
+"tr": "Buharı solunum yolunu tahriş eder (H335); kapalı ortamda kullanmayın."
+},
+"7647-01-0.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 017-002-01-X (CLP00): STOT SE 3, Skin Corr. 1B.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 017-002-01-X (CLP00): STOT SE 3, Skin Corr. 1B."
+},
+"7647-01-0.summary": {
+"s": "Hydrogen chloride dissolved in water; also called spirits of salt or muriatic acid.",
+"tr": "Suda çözünmüş hidrojen klorür; halk arasında tuz ruhu."
+},
+"7647-01-0.what": {
+"s": "Dissolves limescale, rust and mineral deposits.",
+"tr": "Kireç, pas ve mineral birikintilerini çözer."
+},
+"7664-38-2.agn": {
+"s": "The classification is for the concentrated solution (Skin Corr. 1B); in a diluted product the statement on the label depends on the concentration. In food it is E338.",
+"tr": "Sınıf derişik çözelti içindir (Skin Corr. 1B); seyreltik üründe etiketteki ifade orana göre değişir. Gıdada E338 olarak bulunur."
+},
+"7664-38-2.found.0": {
+"s": "Limescale and rust removers",
+"tr": "Kireç ve pas çözücüler"
+},
+"7664-38-2.found.1": {
+"s": "Metal surface cleaning",
+"tr": "Metal yüzey temizleme"
+},
+"7664-38-2.found.2": {
+"s": "Detergent manufacturing",
+"tr": "Deterjan üretimi"
+},
+"7664-38-2.name": {
+"s": "Phosphoric Acid",
+"tr": "Fosforik Asit"
+},
+"7664-38-2.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 015-011-00-6 (CLP00): Skin Corr. 1B.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 015-011-00-6 (CLP00): Skin Corr. 1B."
+},
+"7664-38-2.summary": {
+"s": "The acid of phosphorus; also used in food as an acidity regulator.",
+"tr": "Fosforun asidi; gıdada asitlik düzenleyici olarak da kullanılır."
+},
+"7664-38-2.what": {
+"s": "Dissolves limescale and rust.",
+"tr": "Kireç ve pası çözer."
+},
+"7681-52-9.agn": {
+"s": "The label states that it releases a toxic gas in contact with acids (EUH031). The Turkish Ministry of Health advises against mixing it with acidic products such as hydrochloric acid, or with ammonia; mixing produces gases such as chlorine and chloramines.",
+"tr": "Etikette asitlerle temasında toksik gaz çıkardığı (EUH031) yazılır. Sağlık Bakanlığı tuz ruhu gibi asitli ürünlerle ya da amonyakla karıştırılmamasını öneriyor; karışımda klor gazı ve kloramin gibi gazlar oluşur."
+},
+"7681-52-9.found.0": {
+"s": "Household bleach",
+"tr": "Çamaşır suyu"
+},
+"7681-52-9.found.1": {
+"s": "Chlorine-based surface and bathroom cleaners",
+"tr": "Klorlu yüzey ve banyo temizleyicileri"
+},
+"7681-52-9.found.2": {
+"s": "Pool and water disinfection",
+"tr": "Havuz ve su dezenfeksiyonu"
+},
+"7681-52-9.name": {
+"s": "Sodium Hypochlorite",
+"tr": "Sodyum Hipoklorit"
+},
+"7681-52-9.pw.0": {
+"s": "Gases that irritate the airways may be released; do not use in a closed space, keep the room ventilated.",
+"tr": "Solunum yolunu tahriş eden gazlar açığa çıkabilir; kapalı ortamda kullanmayın, havalandırın."
+},
+"7681-52-9.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 017-011-00-1 (ATP13): Skin Corr. 1B, Eye Dam. 1, Aquatic Acute 1, Aquatic Chronic 1. Supplemental label statement: EUH031.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 017-011-00-1 (ATP13): Skin Corr. 1B, Eye Dam. 1, Aquatic Acute 1, Aquatic Chronic 1. Ek etiket ifadesi: EUH031."
+},
+"7681-52-9.summary": {
+"s": "The active ingredient of household bleach; a chlorine bleach and disinfectant.",
+"tr": "Çamaşır suyunun etken maddesi; klorlu ağartıcı ve dezenfektan."
+},
+"7681-52-9.what": {
+"s": "Whitens stains by oxidising them and kills germs.",
+"tr": "Lekeleri oksitleyerek ağartır ve mikropları öldürür."
+},
+"77-92-9.agn": {
+"s": "Also used in food (E330). As a powder or in concentrated form it can irritate the eyes; that is the reason for its EU classification.",
+"tr": "Gıdada da kullanılan madde (E330). Toz ve derişik hâlinde göz tahrişi yapabilir; AB sınıfı bu yüzdendir."
+},
+"77-92-9.found.0": {
+"s": "Descalers",
+"tr": "Kireç çözücüler"
+},
+"77-92-9.found.1": {
+"s": "Dishwasher products",
+"tr": "Bulaşık makinesi ürünleri"
+},
+"77-92-9.found.2": {
+"s": "Bathroom cleaners",
+"tr": "Banyo temizleyicileri"
+},
+"77-92-9.name": {
+"s": "Citric Acid",
+"tr": "Sitrik Asit"
+},
+"77-92-9.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 607-750-00-3 (ATP17): STOT SE 3, Eye Irrit. 2.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 607-750-00-3 (ATP17): STOT SE 3, Eye Irrit. 2."
+},
+"77-92-9.summary": {
+"s": "A weak acid found naturally in citrus fruit; industrially produced by fermentation.",
+"tr": "Turunçgillerde doğal olarak bulunan zayıf bir asit; endüstride mayalandırmayla üretilir."
+},
+"77-92-9.what": {
+"s": "Dissolves limescale, binds metal ions and adjusts the product's pH.",
+"tr": "Kireci çözer, metal iyonlarını bağlar ve ürünün pH'ını ayarlar."
+},
+"7722-84-1.agn": {
+"s": "The classification is for the concentrated solution (listed as 'hydrogen peroxide solution … %'); for the diluted solutions in household products the statement on the label depends on the concentration. It is a strong oxidiser (H271).",
+"tr": "Sınıf derişik çözelti içindir (dizinde 'hydrogen peroxide solution … %'); ev ürünlerindeki seyreltik çözeltilerde etiketteki ifade orana göre değişir. Güçlü oksitleyicidir (H271)."
+},
+"7722-84-1.found.0": {
+"s": "Oxygen-based stain removers and bleaches",
+"tr": "Oksijenli leke çıkarıcılar ve ağartıcılar"
+},
+"7722-84-1.found.1": {
+"s": "Disinfectants",
+"tr": "Dezenfektanlar"
+},
+"7722-84-1.found.2": {
+"s": "Liquid laundry bleaches",
+"tr": "Sıvı çamaşır ağartıcıları"
+},
+"7722-84-1.name": {
+"s": "Hydrogen Peroxide",
+"tr": "Hidrojen Peroksit"
+},
+"7722-84-1.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 008-003-00-9 (CLP00): Ox. Liq. 1, Acute Tox. 4 (Inhalation)*, Acute Tox. 4 (Oral)*, Skin Corr. 1A.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 008-003-00-9 (CLP00): Ox. Liq. 1, Acute Tox. 4 (Inhalation)*, Acute Tox. 4 (Oral)*, Skin Corr. 1A."
+},
+"7722-84-1.summary": {
+"s": "An oxygen-based bleach and disinfectant; breaks down into water and oxygen.",
+"tr": "Oksijen bazlı ağartıcı ve dezenfektan; parçalanınca su ve oksijene dönüşür."
+},
+"7722-84-1.what": {
+"s": "Whitens stains by oxidising them and kills germs.",
+"tr": "Lekeleri oksitleyerek ağartır ve mikropları öldürür."
+},
+"7758-29-4.agn": {
+"s": "It has no EU harmonised classification and is not in any hazard class in the registrants' joint notification. The real issue is the environment: phosphate contributes to excessive algal growth in lakes and seas, so the EU has limited the phosphorus content of consumer laundry and dishwasher detergents.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yoktur; kayıt yaptıranların ortak bildiriminde tehlike sınıfına girmez. Asıl konu çevre: fosfat göl ve denizlerde aşırı yosunlanmaya katkı yapar; AB, ev tipi çamaşır ve bulaşık makinesi deterjanlarında fosfor miktarını sınırladı."
+},
+"7758-29-4.found.0": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"7758-29-4.found.1": {
+"s": "Laundry detergent powders",
+"tr": "Toz çamaşır deterjanları"
+},
+"7758-29-4.found.2": {
+"s": "Industrial cleaners",
+"tr": "Endüstriyel temizleyiciler"
+},
+"7758-29-4.name": {
+"s": "Sodium Tripolyphosphate (STPP)",
+"tr": "Sodyum Tripolifosfat (STPP)"
+},
+"7758-29-4.reg.clp": {
+"s": "No EU harmonised classification. Registrants' joint notification (37.3% of notifications): not classified.",
+"tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %37,3'i): sınıflandırılmamış."
+},
+"7758-29-4.reg.p": {
+"s": "Total phosphorus at most 0.5 g per standard dose in consumer laundry detergents (since 2013) and 0.3 g in consumer automatic dishwasher detergents (since 2017).",
+"tr": "Ev tipi çamaşır deterjanında standart doz başına toplam fosfor en çok 0,5 g (2013'ten beri), ev tipi bulaşık makinesi deterjanında 0,3 g (2017'den beri)."
+},
+"7758-29-4.summary": {
+"s": "A water softener (builder) from the phosphate group.",
+"tr": "Fosfat grubundan su yumuşatıcı (yapıcı madde)."
+},
+"7758-29-4.what": {
+"s": "Binds calcium and magnesium in water so the detergent works better, and stops dirt from settling back.",
+"tr": "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır, kirin yeniden çökmesini önler."
+},
+"9014-01-1.agn": {
+"s": "The raw material (enzyme powder) is a respiratory sensitiser when inhaled (H334), which is why detergents use it encapsulated or in liquid form. If the finished product has this hazard, the label states it. It must be declared as an enzyme on the detergent label.",
+"tr": "Ham madde (toz enzim) solunduğunda solunum yolu hassaslaştırıcıdır (H334); bu yüzden deterjanlarda kapsüllenmiş ya da sıvı içinde kullanılır. Bitmiş üründe bu tehlike varsa etikette yazılır. Deterjan etiketinde enzim olarak belirtilmesi zorunludur."
+},
+"9014-01-1.found.0": {
+"s": "Laundry detergent powders and liquids",
+"tr": "Toz ve sıvı çamaşır deterjanları"
+},
+"9014-01-1.found.1": {
+"s": "Dishwasher detergents",
+"tr": "Bulaşık makinesi deterjanları"
+},
+"9014-01-1.found.2": {
+"s": "Stain removers",
+"tr": "Leke çıkarıcılar"
+},
+"9014-01-1.name": {
+"s": "Subtilisin (Protease Enzyme)",
+"tr": "Subtilisin (Proteaz Enzimi)"
+},
+"9014-01-1.pw.0": {
+"s": "An enzyme that can cause asthma-like symptoms when inhaled (H334); do not breathe in the dust of powder detergents.",
+"tr": "Solunduğunda astım benzeri belirtilere yol açabilen bir enzimdir (H334); toz deterjanın tozunu solumayın."
+},
+"9014-01-1.reg.clp": {
+"s": "EU binding (harmonised) classification, CLP Annex VI index no 647-012-00-8 (CLP00): STOT SE 3, Skin Irrit. 2, Eye Dam. 1, Resp. Sens. 1.",
+"tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 647-012-00-8 (CLP00): STOT SE 3, Skin Irrit. 2, Eye Dam. 1, Resp. Sens. 1."
+},
+"9014-01-1.reg.det": {
+"s": "Must be declared as an enzyme on the detergent label, whatever its concentration.",
+"tr": "Deterjan etiketinde oranı ne olursa olsun enzim olarak yazılır."
+},
+"9014-01-1.summary": {
+"s": "An enzyme obtained from bacteria that breaks down proteins.",
+"tr": "Bakterilerden elde edilen, proteinleri parçalayan enzim."
+},
+"9014-01-1.what": {
+"s": "Breaks down protein stains such as blood, egg and milk at low temperatures.",
+"tr": "Kan, yumurta, süt gibi protein lekelerini düşük sıcaklıkta parçalar."
+},
+"cat.tem_agartici": {
+"s": "Bleach",
+"tr": "Ağartıcı"
+},
+"cat.tem_agartici.what": {
+"s": "Whitens stains by oxidising them; most also kill germs.",
+"tr": "Lekeyi oksitleyerek ağartır; çoğu aynı zamanda mikrop öldürür."
+},
+"cat.tem_alkali": {
+"s": "Alkali (Base)",
+"tr": "Alkali (Baz)"
+},
+"cat.tem_alkali.what": {
+"s": "Dissolves grease and dirt and raises the product's pH.",
+"tr": "Yağı ve kiri çözer, ürünün pH'ını yükseltir."
+},
+"cat.tem_asit": {
+"s": "Acid / Descaler",
+"tr": "Asit / Kireç Çözücü"
+},
+"cat.tem_asit.what": {
+"s": "Dissolves limescale, rust and mineral deposits.",
+"tr": "Kireci, pası ve mineral birikintilerini çözer."
+},
+"cat.tem_cozucu": {
+"s": "Solvent",
+"tr": "Çözücü"
+},
+"cat.tem_cozucu.what": {
+"s": "Dissolves grease and dirt; most evaporate quickly.",
+"tr": "Yağı ve kiri çözer; çoğu çabuk buharlaşır."
+},
+"cat.tem_dezenfektan": {
+"s": "Disinfectant",
+"tr": "Dezenfektan"
+},
+"cat.tem_dezenfektan.what": {
+"s": "Kills bacteria, fungi and viruses.",
+"tr": "Bakteri, mantar ve virüsleri öldürür."
+},
+"cat.tem_enzim": {
+"s": "Enzyme",
+"tr": "Enzim"
+},
+"cat.tem_enzim.what": {
+"s": "Breaks down protein, starch or fat stains.",
+"tr": "Protein, nişasta ya da yağ lekelerini parçalar."
+},
+"cat.tem_koku": {
+"s": "Fragrance Ingredient",
+"tr": "Koku Maddesi"
+},
+"cat.tem_koku.what": {
+"s": "Gives the product its scent; some are fragrance allergens.",
+"tr": "Ürüne koku verir; bazıları koku alerjenidir."
+},
+"cat.tem_koruyucu": {
+"s": "Preservative",
+"tr": "Koruyucu"
+},
+"cat.tem_koruyucu.what": {
+"s": "Stops a water-based product from spoiling through microbial growth.",
+"tr": "Su bazlı ürünün mikropla bozulmasını önler."
+},
+"cat.tem_su": {
+"s": "Water Softener / Chelating Agent",
+"tr": "Su Yumuşatıcı / Metal Bağlayıcı"
+},
+"cat.tem_su.what": {
+"s": "Binds calcium and magnesium in water so the detergent works better.",
+"tr": "Sudaki kalsiyum ve magnezyumu bağlayarak deterjanın etkisini artırır."
+},
+"cat.tem_yuzey": {
+"s": "Surfactant",
+"tr": "Yüzey Aktif Madde"
+},
+"cat.tem_yuzey.what": {
+"s": "The main cleaning agent: lifts dirt and grease off surfaces and keeps them suspended in water.",
+"tr": "Kiri ve yağı yüzeyden ayırıp suda tutan asıl temizleyici madde."
+},
+"profile.astim": {
+"s": "Asthma / respiratory sensitivity",
+"tr": "Astım / solunum hassasiyeti"
+},
+"profile.koku": {
+"s": "Fragrance allergy",
+"tr": "Koku alerjisi"
+},
+"tem.eff.miktar": {
+"s": "The classification applies to the pure or concentrated substance; the effect in a product depends on its concentration and is stated in the hazard statements on the label.",
+"tr": "Sınıf saf ya da derişik madde içindir; üründeki etki orana göre değişir ve etiketteki tehlike ifadelerinde yazılır."
+},
+"tem.eff.yok": {
+"s": "Not in any EU hazard class (registrants' joint notification).",
+"tr": "AB'de bir tehlike sınıfına girmiyor (kayıt yaptıranların ortak bildirimi)."
+},
+"tem.eval": {
+"s": "The colour follows the most serious of the substance's EU hazard classes (the same rule as the cleaning result screen). The classification applies to the pure substance; the product's own hazard statements are on its label.",
+"tr": "Renk, maddenin AB tehlike sınıflarının en ciddisine göre verilir (temizlik sonuç ekranıyla aynı kural). Sınıf saf madde içindir; ürünün kendi tehlike ifadeleri etiketinde yazılır."
+},
+"tem.h.EUH031": {
+"s": "EUH031 Contact with acids liberates toxic gas.",
+"tr": "EUH031 Asitlerle temasında toksik gaz çıkarır."
+},
+"tem.h.EUH071": {
+"s": "EUH071 Corrosive to the respiratory tract.",
+"tr": "EUH071 Solunum yolunda aşınmaya yol açar."
+},
+"tem.h.H225": {
+"s": "H225 Highly flammable liquid and vapour.",
+"tr": "H225 Kolay alevlenir sıvı ve buhar."
+},
+"tem.h.H226": {
+"s": "H226 Flammable liquid and vapour.",
+"tr": "H226 Alevlenir sıvı ve buhar."
+},
+"tem.h.H271": {
+"s": "H271 May cause fire or explosion; strong oxidiser.",
+"tr": "H271 Yangına veya patlamaya yol açabilir; güçlü oksitleyici."
+},
+"tem.h.H272": {
+"s": "H272 May intensify fire; oxidiser.",
+"tr": "H272 Yangını güçlendirebilir; oksitleyici."
+},
+"tem.h.H301": {
+"s": "H301 Toxic if swallowed.",
+"tr": "H301 Yutulması halinde toksiktir."
+},
+"tem.h.H302": {
+"s": "H302 Harmful if swallowed.",
+"tr": "H302 Yutulması halinde zararlıdır."
+},
+"tem.h.H304": {
+"s": "H304 May be fatal if swallowed and enters airways.",
+"tr": "H304 Solunum yoluna nüfuzu ve yutulması halinde öldürücü olabilir."
+},
+"tem.h.H310": {
+"s": "H310 Fatal in contact with skin.",
+"tr": "H310 Cilt ile teması halinde öldürücüdür."
+},
+"tem.h.H311": {
+"s": "H311 Toxic in contact with skin.",
+"tr": "H311 Cilt ile teması halinde toksiktir."
+},
+"tem.h.H312": {
+"s": "H312 Harmful in contact with skin.",
+"tr": "H312 Cilt ile teması halinde zararlıdır."
+},
+"tem.h.H314": {
+"s": "H314 Causes severe skin burns and eye damage.",
+"tr": "H314 Ciddi cilt yanıklarına ve göz hasarına yol açar."
+},
+"tem.h.H315": {
+"s": "H315 Causes skin irritation.",
+"tr": "H315 Cilt tahrişine yol açar."
+},
+"tem.h.H317": {
+"s": "H317 May cause an allergic skin reaction.",
+"tr": "H317 Alerjik cilt reaksiyonlarına yol açabilir."
+},
+"tem.h.H318": {
+"s": "H318 Causes serious eye damage.",
+"tr": "H318 Ciddi göz hasarına yol açar."
+},
+"tem.h.H319": {
+"s": "H319 Causes serious eye irritation.",
+"tr": "H319 Ciddi göz tahrişine yol açar."
+},
+"tem.h.H330": {
+"s": "H330 Fatal if inhaled.",
+"tr": "H330 Solunması halinde öldürücüdür."
+},
+"tem.h.H331": {
+"s": "H331 Toxic if inhaled.",
+"tr": "H331 Solunması halinde toksiktir."
+},
+"tem.h.H332": {
+"s": "H332 Harmful if inhaled.",
+"tr": "H332 Solunması halinde zararlıdır."
+},
+"tem.h.H334": {
+"s": "H334 May cause allergy or asthma symptoms or breathing difficulties if inhaled.",
+"tr": "H334 Solunması halinde nefes alma zorlukları, astım nöbetleri veya alerjiye yol açabilir."
+},
+"tem.h.H335": {
+"s": "H335 May cause respiratory irritation.",
+"tr": "H335 Solunum yolu tahrişine yol açabilir."
+},
+"tem.h.H336": {
+"s": "H336 May cause drowsiness or dizziness.",
+"tr": "H336 Rehavete veya baş dönmesine yol açabilir."
+},
+"tem.h.H400": {
+"s": "H400 Very toxic to aquatic life.",
+"tr": "H400 Sucul ortamda çok toksiktir."
+},
+"tem.h.H410": {
+"s": "H410 Very toxic to aquatic life with long lasting effects.",
+"tr": "H410 Sucul ortamda uzun süre kalıcı, çok toksik etki."
+},
+"tem.h.H412": {
+"s": "H412 Harmful to aquatic life with long lasting effects.",
+"tr": "H412 Sucul ortamda uzun süre kalıcı, zararlı etki."
 }
 }
 }

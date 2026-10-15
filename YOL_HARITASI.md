@@ -1,7 +1,7 @@
 # Yol haritası: küresel Tağşiş
 
 Bu dosya projenin ana iş planıdır. Her oturumun başında okunur. Bir iş başlayınca, bitince ya da plan değişince aynı PR içinde güncellenir (durum, tarih, PR numarası).
-İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 15.10.2026 (C-05: fotoğrafta barkod denendi, verimli bulunmadı, geri alındı).
+İlk yazım: 08.10.2026 (rakip analizi ve kullanıcı kararıyla). Son güncelleme: 15.10.2026 (U-02: temizlik ansiklopedisi İngilizce ve sonuç ekranından bağlantı; C-05 bitti, sıradan çıkarıldı; fotoğrafta barkod denendi, verimli bulunmadı, geri alındı).
 
 Durum işaretleri: ⬜ başlamadı · 🔄 sürüyor · ✅ bitti · ⏸ bekletiliyor · 👤 kullanıcının işi
 
@@ -91,7 +91,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | C-02 | Android sürümü (TWA ya da Capacitor), kapalı test, sonra yayın | Claude | C-01 | Play Store'da yayında | ⬜ |
 | C-03 | iOS sürümü (Capacitor) | Claude | C-01 | App Store'da yayında | ⬜ |
 | C-04 | Cihaz içi metin okuma (Google ML Kit / Apple Vision); Google Vision yedek kalır. Tarama maliyeti sıfırlanır, bütün alfabeler okunur | Claude | C-02, C-03 | İnternetsiz okuma çalışır | ⬜ |
-| C-05 | **Barkod (kullanıcı kararı 08.10.2026: birinci öncelik).** Tarayıcı sürümünde başlar, mağaza sürümünü beklemez. Sıra: (1) uygulamadaki indirilmiş Open Food Facts Türkiye verisi (aylık otomatik güncelleme), (2) kendi D1 veritabanımız (`URUNLER`, PR #98; kullanıcı katkısı, açık izinle, varsayılan hayır; iki eşleşen katkıyla doğrulanır), (3) Open Food Facts / Open Beauty Facts / Open Products Facts canlı sorgu **Worker üzerinden** (GET /off/:barkod; kullanıcının IP'si üçüncü tarafa gitmez; 1 gün önbellek; 3 sn zaman aşımı), (4) bulunamadı → fotoğraf. OFF verisi D1'e yazılmaz (ODbL ayrımı); her gösterimde atıf. Paketteki etiket asıl kaynak: "fotoğrafla doğrula" hep görünür. Önce ölçüm: OFF'ta Türkiye ürün sayısı, içerik metni oranı, yaygın 100 üründe bulunma oranı. OFF'a geri katkı ayrı iş. Ölçüm 08.10.2026: OFF'ta Türkiye ~11.500 ürün (klasik dizin), yeni dizinde 3.345, içerikli %17 (TEKNIK_BORC.md). **Fotoğrafta barkod (PR #155) 15.10.2026 kullanıcı kararıyla geri alındı: verimli bulunmadı.** | Claude | — | Elle barkod girişiyle uçtan uca test; ölçüm raporu | 🔄 PR açıldı, telefon testi bekliyor |
+| C-05 | **Barkod (kullanıcı kararı 08.10.2026: birinci öncelik).** Tarayıcı sürümünde başlar, mağaza sürümünü beklemez. Sıra: (1) uygulamadaki indirilmiş Open Food Facts Türkiye verisi (aylık otomatik güncelleme), (2) kendi D1 veritabanımız (`URUNLER`, PR #98; kullanıcı katkısı, açık izinle, varsayılan hayır; iki eşleşen katkıyla doğrulanır), (3) Open Food Facts / Open Beauty Facts / Open Products Facts canlı sorgu **Worker üzerinden** (GET /off/:barkod; kullanıcının IP'si üçüncü tarafa gitmez; 1 gün önbellek; 3 sn zaman aşımı), (4) bulunamadı → fotoğraf. OFF verisi D1'e yazılmaz (ODbL ayrımı); her gösterimde atıf. Paketteki etiket asıl kaynak: "fotoğrafla doğrula" hep görünür. Önce ölçüm: OFF'ta Türkiye ürün sayısı, içerik metni oranı, yaygın 100 üründe bulunma oranı. OFF'a geri katkı ayrı iş. Ölçüm 08.10.2026: OFF'ta Türkiye ~11.500 ürün (klasik dizin), yeni dizinde 3.345, içerikli %17 (TEKNIK_BORC.md). **Fotoğrafta barkod (PR #155) 15.10.2026 kullanıcı kararıyla geri alındı: verimli bulunmadı.** | Claude | — | Elle barkod girişiyle uçtan uca test; ölçüm raporu | ✅ 15.10.2026 (dört adım yayında; kullanıcı kararıyla sıradan çıkarıldı) |
 | C-06 | Mağaza sayfaları çok dilli (ekran görüntüleri, açıklama) | Claude | B-02, C-02 | Türkçe ve İngilizce sayfa | ⬜ |
 | C-07 | Alternatif ürün önerisi (aynı kategoride daha az uyarılı ürün; markadan para alınmaz) | Claude | C-05 | Yalnızca veritabanı yeterliyse | ⬜ |
 | C-08 | **Mağaza sürümünde sayaç ve sınır denetimi (unutulmasın).** Uygulama içinden gelen isteklerde: paylaşım sayacı (/sayac, sendBeacon ve Web Share uygulama içinde çalışıyor mu, s/d ayrımı doğru mu), barkod uç noktaları (/urun, /off), Worker hız sınırları (IP_LIMIT 6/dk, GLOBAL_LIMIT 30/dk, SAYAC_LIMIT 10/dk; uygulama trafiği tek IP'den mi görünüyor), ALLOWED_ORIGIN'e uygulamanın kaynağı (capacitor://localhost, https://localhost vb.) eklendi mi, cihaz içi okumaya geçince OCR sayımı. Ölçüm (A-03) eklenmişse o da. | Claude | C-02, C-03 | Kapalı testte her sayaç ve sınır elle doğrulanır, sonuç bu satıra yazılır | ⬜ |
@@ -151,7 +151,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 | Kimlik | İş | Durum |
 |---|---|---|
 | U-01 | Kozmetik ansiklopedisi (en yaygın ~300 madde; önce İngilizce, B-03). Ansiklopedinin tür süzgecinde yeri hazır, şimdilik "Çok yakında" (13.10.2026); sayfalar gelince turSecici()'de açılır | ⬜ |
-| U-02 | Temizlik ansiklopedisi (~30 madde). 15.10.2026: 30 madde yayında (kimlik CAS; tehlike sınıfı ECHA CHEM, CLP Ek VI ya da kayıt yaptıranların ortak bildirimi); tür seçicide Temizlik açık. Kalan: İngilizce metinler (B-03), sonuç ekranındaki maddeden ansiklopediye bağlantı, madde sayısını artırmak | ◐ |
+| U-02 | Temizlik ansiklopedisi (~30 madde). 15.10.2026: 30 madde yayında (kimlik CAS; tehlike sınıfı ECHA CHEM, CLP Ek VI ya da kayıt yaptıranların ortak bildirimi); tür seçicide Temizlik açık. 15.10.2026 (2. adım): İngilizce metinler ve sonuç ekranındaki maddeden ansiklopediye bağlantı yapıldı. Kalan: SEA Ek-6 karşılaştırması, madde sayısını artırmak | ◐ |
 | U-03 | Temizlik: AB 2026/405 dijital ürün pasaportu hazırlığı (QR'dan içerik listesi okuma; 23.09.2029'dan itibaren zorunlu) | ⬜ |
 | U-04 | Gıda ansiklopedisi açıkları: AB konsolide metin karşılaştırması, TGK 2023 (TEKNIK_BORC.md) | ⏸ |
 | U-05 | Kozmetik PFAS bayrağının ad düzeyine indirilmesi (TEKNIK_BORC.md) | ⬜ |
@@ -163,7 +163,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 
 > 08.10.2026: bulut oturumu kullanılmıyor; işler bu (yerel) oturumda yapılır. Bulut için yazılan barkod işi başlamadan kaldı; İngilizce tanıma (B-08) bitti.
 
-1. **C-05 barkod** (kullanıcı kararı: birinci öncelik). Ölçüm → OFF Türkiye verisi + barkod okuma + Worker canlı sorgu → D1 kullanıcı katkısı.
+1. ~~C-05 barkod~~ ✅ 15.10.2026 (kullanıcı kararıyla sıradan çıkarıldı; dört adım yayında).
    - Paralelde, ucuzken yapılacak önleyici işler (§9.1): 👤 O-01 alan adı, O-02 küresel ad, O-03 lisans, O-04 hesap güvenliği, O-08 bütçe uyarıları kararları; ~~O-05 değişiklik kaydı~~ ✅ 13.10.2026, ~~O-06 cihaz verisi sürümü~~ ✅ 12.10.2026, ~~O-07 bağlantı denetimi~~ ✅ 12.10.2026.
    - C-05'ten hemen sonra: ~~O-22 katkıcı kimliği~~ ✅ 12.10.2026 → ~~G-01 rozetler~~ ✅ → ~~G-02 katkı ilerlemesi~~ ✅ 14.10.2026 → ~~G-04 topluluk hedefleri~~ ✅ 14.10.2026. G-03 ödülü D-01 kararını bekler.
 2. A-02 besin değeri tablosu
