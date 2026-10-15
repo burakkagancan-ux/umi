@@ -1,7 +1,7 @@
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar (CORE) ve önbellek adı (CACHE): gen_sw.py üretir
 // <uretilen gen_sw.py>
 // Elle düzenlenmez: python3 uret.py (gen_sw.py) yazar. CACHE dosya içeriklerinin özeti; CORE kurulumda önbelleğe alınanlar.
-const CACHE = "tagsis-ed607efe5bd8";
+const CACHE = "tagsis-4bfe8d94767a";
 const CORE = [
   "./",
   "index.html",
@@ -12,12 +12,14 @@ const CORE = [
   "apple-touch-icon.png",
   "fonts/ansiklopedi.css",
   "tema.css",
+  "css/liste.css",
   "js/depo.js",
   "js/veri_surum.js",
   "js/giris_liste.js",
   "js/dil.js",
   "js/yukari.js",
   "js/arayuz_liste.js",
+  "css/ocr.css",
   "js/giris_ocr.js",
   "js/arayuz_ortak.js",
   "js/arayuz_profil.js",
@@ -33,6 +35,7 @@ const CORE = [
   "js/arayuz_topluluk.js",
   "js/arayuz_besin.js",
   "js/arayuz_sayfa.js",
+  "css/ansiklopedi.css",
   "js/giris_ansiklopedi.js",
   "js/arayuz_ansiklopedi.js",
   "js/kopru.js",

@@ -40,3 +40,6 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .seg button[data-tur][aria-checked="true"]{background:var(--tur);color:#fff}
 .turr[data-tur]{display:inline-flex;align-items:center;gap:5px;border:0;border-radius:999px;padding:1px 8px;background:var(--turbg);color:var(--tur);font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap}
 .turr[data-tur]::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+/* Birden çok sayfada aynı olan kurallar (U-07 8. adım, 15.10.2026; önce sayfaların kendi stilinde ayrı ayrı yazılıydı) */
+.seg button[aria-checked="true"]{background:var(--ok);color:var(--bg)}
+body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
