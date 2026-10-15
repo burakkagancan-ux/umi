@@ -3,14 +3,15 @@
 body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 h1,h2,h3{margin:0}
 button{font:inherit;cursor:pointer}
-.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:4px;background:var(--bg);border-bottom:1px solid var(--line);padding:env(safe-area-inset-top,0px) 4px 0}
-.top h1{flex:1;font-size:20px;text-align:center}
+/* Başlık Etiket Oku ve Profilim'deki gibi: sola yaslı büyük başlık, çizgisiz, kaymaz; geri düğmesi yok (15.10.2026 kullanıcı isteği; geri için alt menü ve tarayıcı) */
+.top{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:calc(16px + env(safe-area-inset-top,0px)) 16px 0}
+.top h1{flex:1;font-size:30px;margin:6px 0 0}.top .ib{margin-block:-4px}
 .ib{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:0;border-radius:12px;background:none;color:var(--ok);padding:0}
 .ib svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ib[aria-pressed="true"] svg{fill:currentColor}
 .ib[hidden]{visibility:hidden;display:flex}
 .ib:focus-visible,.tab:focus-visible,.rel a:focus-visible,.row:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
-main{max-width:720px;margin:0 auto;padding:16px}
+main{max-width:720px;margin:0 auto;padding:0 16px 16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
 .mut{color:var(--mute);font-size:14px}
 .badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 10px}
@@ -64,8 +65,7 @@ details.kdrop[open]>summary::after{transform:rotate(225deg) translateY(-2px)}det
 .foot{margin:28px 0 8px;font-size:14px;color:var(--mute);text-align:center}
 .foot a{display:inline-flex;align-items:center;min-height:44px}
 .auto{font-size:14px;color:var(--mute);background:var(--sunk);border-radius:10px;padding:10px 12px;margin:12px 0}
-/* Tür süzgeci: görünüm tema.css'te (Etiket Oku'daki anahtarla ortak); henüz olmayan türler soluk, altında "Çok yakında" */
-.seg{margin:0 0 12px}
+/* Tür süzgeci: görünüm ve boşluk tema.css'te (Etiket Oku'daki anahtarla ortak); henüz olmayan türler soluk */
 
 .seg button[aria-disabled="true"]{cursor:default}
 input[type=search]{width:100%;min-height:48px;font:inherit;font-size:17px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
