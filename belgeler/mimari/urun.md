@@ -4,7 +4,7 @@ CLAUDE.md'den taşındı (15.10.2026, U-07 9. adım; metin aynı). Bu alana doku
 
 ## Ürün
 - Son tüketiciye Tarım ve Orman Bakanlığı taklit/tağşiş listesini gösteren PWA (index.html) ve etiketteki içerik listesini fotoğraftan okuyup analiz eden "Etiket oku" sayfası (ocr.html).
-- Site: https://burakkagancan-ux.github.io/tagsis/ (GitHub Pages, main dalı).
+- Site: https://burakkagancan-ux.github.io/umi/ (GitHub Pages, main dalı).
 - Gıda: E kodları (data/e_kodlari.json, gen_e_kodlari.py, TGK ile karşılaştırılmış), bileşen grupları (data/bilesenler.json), açıklamalar (data/e_aciklama.json), profiller (alerjen, laktoz, vegan, vejetaryen, hamile, bebek, çocuk, PKU, evcil hayvan, tansiyon/tuz kısıtlaması, koku alerjisi).
 - Kozmetik: AB 1223/2009 ekleri (data/kozmetik.json, 2.009 kayıt) + CosIng INCI listesi ve 3.173 eş anlamlı (04.10.2026: +195 yaygın Türkçe/İngilizce ad: seramid, centella, bitkisel yağlar ve özler, UV filtreleri, saç boyası, koku alerjenleri, C vitamini türevleri) (data/kozmetik_inci.json). Üretim: gen_kozmetik.py (CosIng verisi depoda: kaynak/cosing/; `python3 cosing_al.py` Komisyon'un CosIng arama servisinden indirir, 07.10.2026'dan beri; .github/workflows/cosing.yml ayda bir indirip PR açar; CosIng'den çıkarılan adlar kaynak/cosing/ingredients_eski.csv'de), kaynak/kozmetik_guncellemeler.tsv (2024-2026 AB değişiklikleri), kaynak/kozmetik_esanlamlilar.tsv.
 - Kozmetik K3 ("tartışmalı katman"): kaynak/kozmetik_k3.tsv → kozmetik.json `watch` alanı + `meta.watch_lists`. AB olası endokrin bozucu öncelik listesi (A/B, 28 madde), Kaliforniya HSC §108980 (AB 2762: 2025, AB 496: 2027), ASEAN Ek II farkı (mikonazol). Eşleştirme yalnızca INCI adıyla; CAS belgeleme için.

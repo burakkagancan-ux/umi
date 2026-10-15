@@ -1,8 +1,8 @@
-# tagsis
+# Umi
 
 Gıda, kozmetik ve temizlik ürünlerinin etiketindeki içerik listesini fotoğraftan okuyup analiz eden, ayrıca Tarım ve Orman Bakanlığı taklit/tağşiş listesini gösteren bir PWA.
 
-Site: https://burakkagancan-ux.github.io/tagsis/
+Site: https://burakkagancan-ux.github.io/umi/
 
 ## Ne yapar
 

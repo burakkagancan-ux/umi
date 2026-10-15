@@ -3,8 +3,8 @@
 import {t} from "./ceviri.js";
 export var PAYLAS_AYAR={
   acik:true,
-  uygulamaAdi:"Tağşiş",                                    // kesinleşince yalnızca burası değişir
-  adres:"https://burakkagancan-ux.github.io/tagsis/",      // mağaza bağlantısı olunca burası değişir
+  uygulamaAdi:"Umi",                                       // marka adı (O-02, 15.10.2026); yalnızca burası değişir
+  adres:"https://burakkagancan-ux.github.io/umi/",         // mağaza bağlantısı olunca burası değişir
   get slogan(){return t("pay.slogan")},
   get not(){return t("pay.not")},
   logo:"icon-192.png",

@@ -1,4 +1,4 @@
-# tagsis — Proje dokümanı
+# Umi — Proje dokümanı
 
 Terminalden (Claude Code CLI) devam etmek için tek sayfalık özet. Son güncelleme: 07.10.2026.
 Ayrıntılar: [CLAUDE.md](CLAUDE.md) (kurallar ve konu dizini) ve [belgeler/mimari/](belgeler/mimari/) (konu başına: veri, mimari, kararlar), [YOL_HARITASI.md](YOL_HARITASI.md) (küresel iş planı), [TEKNIK_BORC.md](TEKNIK_BORC.md) (ertelenen işler).
@@ -7,8 +7,8 @@ Ayrıntılar: [CLAUDE.md](CLAUDE.md) (kurallar ve konu dizini) ve [belgeler/mima
 
 Gıda, kozmetik ve temizlik ürünlerinin etiketindeki içerik listesini fotoğraftan okuyup analiz eden, ayrıca Tarım ve Orman Bakanlığı taklit/tağşiş listesini gösteren PWA.
 
-- Site: https://burakkagancan-ux.github.io/tagsis/ (GitHub Pages, `main` dalından)
-- Depo: https://github.com/burakkagancan-ux/tagsis
+- Site: https://burakkagancan-ux.github.io/umi/ (GitHub Pages, `main` dalından)
+- Depo: https://github.com/burakkagancan-ux/umi
 - Sayfalar: Liste (`index.html`), Etiket Oku (`ocr.html`; Gıda / Kozmetik / Temizlik modu), Ansiklopedi (`ansiklopedi.html`), Profilim.
 - OCR: `ocr.html` → Cloudflare Worker (`worker/`) → Google Cloud Vision; Worker'a ulaşılamazsa Tesseract.js.
 - Gelir modeli henüz seçilmedi (YOL_HARITASI.md D-01).
@@ -124,7 +124,7 @@ Google Cloud Vision dakikalık kotası düşürüldü (tamam).
 ## 9. Terminalden başlamak
 
 ```bash
-git clone https://github.com/burakkagancan-ux/tagsis && cd tagsis
+git clone https://github.com/burakkagancan-ux/umi && cd tagsis
 claude
 ```
 

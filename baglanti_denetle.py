@@ -19,7 +19,7 @@ import urllib.error, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 URL_RE = re.compile(r'https?://[^\s"<>\\]+')
-UA = "Mozilla/5.0 (tagsis kaynak denetimi; https://github.com/burakkagancan-ux/tagsis)"
+UA = "Mozilla/5.0 (tagsis kaynak denetimi; https://github.com/burakkagancan-ux/umi)"
 ZAMAN = 30
 KIRIK_KOD = {404, 410}
 try:  # python.org kurulumunda sistem sertifikaları yok; certifi varsa onu kullan

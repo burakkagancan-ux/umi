@@ -22,7 +22,7 @@ jobs:
         run: python dogrula_veri.py
       - name: Değişiklik varsa kaydet
         run: |
-          git config user.name "tagsis-bot"
+          git config user.name "umi-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data/tagsis.json data/arsiv.json data/durum.json
           git diff --cached --quiet || (git commit -m "Veri güncellendi" && git push)

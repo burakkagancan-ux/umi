@@ -13,7 +13,7 @@ Adres: https://inapp-ocr-3a8f.burakkagancan.workers.dev
 
 ## Dağıtım (Cloudflare Workers Builds)
 1. Cloudflare paneli → Workers & Pages → `inapp-ocr-3a8f` → Settings → Builds → **Connect**.
-2. GitHub'ı bağla, `burakkagancan-ux/tagsis` deposunu seç. Dal: `main`. **Root directory: `worker`**. Deploy command: `npx wrangler deploy` (varsayılan).
+2. GitHub'ı bağla, `burakkagancan-ux/umi` deposunu seç. Dal: `main`. **Root directory: `worker`**. Deploy command: `npx wrangler deploy` (varsayılan).
 3. Varsa "Build watch paths" alanına `worker/*` yaz; böylece günlük veri güncellemeleri gereksiz dağıtım tetiklemez.
 4. `VISION_KEY` ve `ALLOWED_ORIGIN` panelde kalır, dağıtım onları silmez (`keep_vars = true`).
 

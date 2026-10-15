@@ -39,11 +39,11 @@ export function kayitFark(eski,yeni){
   var s=function(o){return t("kayit.fark_say",{u:o.u,d:o.d})};
   return {once:s(eski),simdi:s(yeni),kotu:yeni.u>eski.u||(yeni.u===eski.u&&yeni.d>eski.d)};
 }
-/* Yedek dosyası: {uygulama:"tagsis", tur:"kayitli", surum:1, kayitlar:[...], katkici?, rozetler?}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir.
+/* Yedek dosyası: {uygulama:"umi" (15.10.2026 öncesi yedeklerde "tagsis"; geri yüklemede bakılmaz), tur:"kayitli", surum:1, kayitlar:[...], katkici?, rozetler?}. Geri yüklerken yalnızca geçerli kayıtlar alınır; var olanlarla birleştirilir.
    katkici: barkod katkıcı kimliği (O-22); cihaz ya da adres değişince katkılar aynı kişiye yazılmaya devam etsin diye. Doğrulaması arayüzde (katkiciGecerli).
    rozetler: rozet sayımı (G-01, js/rozet.js); geri yüklenince bu cihazdakiyle birleşir (rozetBirlestir). Eski yedekte yoktur. */
 export function kayitYedek(list,now,katkici,rozetler){
-  var d={uygulama:"tagsis",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]};if(katkici)d.katkici=katkici;if(rozetler)d.rozetler=rozetler;
+  var d={uygulama:"umi",tur:"kayitli",surum:1,tarih:now||Date.now(),kayitlar:list||[]};if(katkici)d.katkici=katkici;if(rozetler)d.rozetler=rozetler;
   return JSON.stringify(d);
 }
 export function kayitGeriYukle(list,json,max){

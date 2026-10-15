@@ -1,6 +1,6 @@
 /* Ansiklopedi sayfası arayüzü (ansiklopedi.html). ?m=<slug> ya da ?id=E322 madde sayfasını, parametresiz açılış arama ve kayıtlı maddeleri gösterir. */
 var AD=null,AT={},AIDX=null,ABY={},ACUR=null;
-var AREPO="https://github.com/burakkagancan-ux/tagsis/issues/new";
+var AREPO="https://github.com/burakkagancan-ux/umi/issues/new";
 function a$(i){return document.getElementById(i)}
 function h(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function at(k){return ansT(AT,k)}   // ansiklopedi veri metni (data/ansiklopedi_<dil>.json); arayüz metni için t() (js/ceviri.js) ayrı

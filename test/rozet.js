@@ -93,9 +93,9 @@ ok(Z.rozetSvg('kitap',8,true).length>Z.rozetSvg('kitap',1,true).length,'sıra y�
 // Paylaşım kartı: ürün ve kişisel bilgi yok; çizilen metinler
 function sahte(){const o={out:[],measureText:s=>({width:String(s).length*20})};['fillRect','drawImage','fillText'].forEach(f=>o[f]=function(){if(f==='fillText')o.out.push(arguments[0])});return o}
 const x=sahte(),M={ust:'Yeni rozet',ad:'Kitap Kurdu',aile:'Okur · Gıda',aciklama:'25 farklı ansiklopedi sayfası okudunuz (gıda).',tarih:'14 Ekim 2026'};
-const cik=Z.rozetKartCiz(x,M,{uygulamaAdi:'Tağşiş',slogan:'s',adres:'https://ornek.org/'},null,null);
+const cik=Z.rozetKartCiz(x,M,{uygulamaAdi:'Umi',slogan:'s',adres:'https://ornek.org/'},null,null);
 ok(cik.includes('Kitap Kurdu')&&cik.includes('Okur · Gıda')&&cik.includes('ornek.org')&&cik.includes('14 Ekim 2026'),'kart metinleri: '+cik.join(' | '));
-const izinli=[M.ust,M.ad,M.aile,M.tarih,'Tağşiş','s','ornek.org'].join(' ')+' '+M.aciklama;
+const izinli=[M.ust,M.ad,M.aile,M.tarih,'Umi','s','ornek.org'].join(' ')+' '+M.aciklama;
 ok(cik.every(l=>izinli.includes(l)),'kartta yalnızca rozet bilgisi ve bant: '+cik.join(' | '));
 
 // Metinler: her aile ve kademe adı, açıklamalar Türkçe ve İngilizcede var; "katkı" sözcüğü rozet metinlerinde yok (sözlük)
