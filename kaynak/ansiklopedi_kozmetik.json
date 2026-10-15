@@ -1,0 +1,1070 @@
+{
+ "_aciklama": "Kozmetik ansiklopedisi (15.10.2026, U-01 ilk parti): yaygın 32 kozmetik maddesi. Kimlik INCI adı (dosya adında ve adreste boşluk yerine alt çizgi; INCI'de tire geçebilir). Yasal durum, risk rengi, kurum satırları ve kaynaklar gen_ansiklopedi.py'de data/kozmetik.json'dan (AB 1223/2009 ekleri ve izlenen listeler; Etiket Oku'daki kozmetik sonucuyla aynı kural) ve data/kozmetik_inci.json'dan (CosIng işlevi) üretilir; burada yazılan yalnızca açıklama metinleri, 'not' (yönetmelik koşullarının Türkçe özeti) ve olası etkiler. 'clp': temizlik ansiklopedisindeki aynı maddenin CAS'ı; saf maddenin sağlık tehlike sınıfları (H3xx) oradan etki satırı olur. Etki kaynağı: reg:<ek/giriş> (o ek kaydının AB düzenlemesi), k3:<liste> (izlenen listenin kaynağı), cosing ya da 'kaynaklar' anahtarı.",
+ "kategoriler": {
+  "koz_koruyucu": [
+   "Koruyucu",
+   "Su içeren ürünün mikropla bozulmasını önler."
+  ],
+  "koz_yuzey": [
+   "Yüzey Aktif (Temizleyici)",
+   "Kiri ve yağı suyla birlikte uzaklaştırır, köpük oluşturur."
+  ],
+  "koz_nem": [
+   "Nem Tutucu",
+   "Suyu bağlayarak cildi ve saçı nemli tutar."
+  ],
+  "koz_yumusatici": [
+   "Yumuşatıcı / Yağ",
+   "Cildin üstünde ince bir tabaka oluşturarak yumuşatır ve su kaybını azaltır."
+  ],
+  "koz_uv": [
+   "UV Filtresi",
+   "Güneşin morötesi (UV) ışınlarını emer ya da yansıtır."
+  ],
+  "koz_bakim": [
+   "Bakım Etkeni",
+   "Cilt ya da saç bakımı için eklenen etken madde."
+  ],
+  "koz_koku": [
+   "Koku Maddesi",
+   "Ürüne koku verir; bazıları koku alerjenidir."
+  ],
+  "koz_kivam": [
+   "Kıvam Verici",
+   "Ürünü koyulaştırır ve karışımı dengede tutar."
+  ],
+  "koz_selat": [
+   "Metal Bağlayıcı (Şelatlayıcı)",
+   "Sudaki ve üründeki metal iyonlarını bağlar."
+  ],
+  "koz_antioks": [
+   "Antioksidan",
+   "Ürünü ve içindeki yağları oksitlenmeye karşı korur."
+  ]
+ },
+ "kaynaklar": {
+  "sccs_fenoksi": {
+   "title": "SCCS Opinion on Phenoxyethanol (SCCS/1575/16)",
+   "publisher": "Scientific Committee on Consumer Safety (SCCS)",
+   "year": 2016,
+   "url": "https://ec.europa.eu/health/scientific_committees/consumer_safety/docs/sccs_o_195.pdf",
+   "official": true
+  }
+ },
+ "kayitlar": [
+  {
+   "inci": "PHENOXYETHANOL",
+   "ad": "Fenoksietanol",
+   "adlar": [
+    "fenoksietanol",
+    "phenoxyethanol"
+   ],
+   "kategori": "koz_koruyucu",
+   "ozet": "Kozmetikte en yaygın koruyuculardan biri.",
+   "ne": "Su içeren ürünlerde bakteri ve mantar üremesini önleyerek ürünün bozulmasını engeller.",
+   "nerede": [
+    "Krem ve losyonlar",
+    "Şampuan ve duş jelleri",
+    "Makyaj ürünleri",
+    "Islak mendiller"
+   ],
+   "not": "AB'de koruyucu olarak en fazla %1 oranında kullanılabilir (Ek V, giriş 29). SCCS 2016'da bu sınırı her yaştan tüketici için güvenli buldu.",
+   "etkiler": [
+    {
+     "duzey": "yok",
+     "metin": "SCCS'ye göre %1 sınırında, çocuklar dahil her yaştan tüketici için güvenli; bu kullanım için resmi bir yan etki uyarısı yok.",
+     "kaynak": "sccs_fenoksi"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "METHYLPARABEN",
+    "SODIUM BENZOATE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "METHYLPARABEN",
+   "ad": "Metilparaben",
+   "adlar": [
+    "metilparaben",
+    "methylparaben",
+    "metil paraben"
+   ],
+   "kategori": "koz_koruyucu",
+   "ozet": "Paraben grubundan bir koruyucu.",
+   "ne": "Ürünün bakteri ve mantarla bozulmasını önler.",
+   "nerede": [
+    "Krem ve losyonlar",
+    "Şampuanlar",
+    "Makyaj ürünleri"
+   ],
+   "not": "AB'de tek başına en fazla %0,4, başka parabenlerle birlikte toplam %0,8 (asit cinsinden) kullanılabilir (Ek V, giriş 12). AB'nin olası endokrin bozucu öncelik listesinde (B grubu); liste bir hüküm değildir, değerlendirme sırasını gösterir.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "Hormon sistemini etkileyip etkilemediği AB'nin öncelik listesinde değerlendirilecek maddeler arasında; bu kayıtta kurumun maddeye özgü bir sonucu yok.",
+     "kaynak": "k3:ab_ed_b"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "PROPYLPARABEN",
+    "PHENOXYETHANOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "PROPYLPARABEN",
+   "ad": "Propilparaben",
+   "adlar": [
+    "propilparaben",
+    "propylparaben",
+    "propil paraben"
+   ],
+   "kategori": "koz_koruyucu",
+   "ozet": "Paraben grubundan bir koruyucu.",
+   "ne": "Ürünün bakteri ve mantarla bozulmasını önler.",
+   "nerede": [
+    "Krem ve losyonlar",
+    "Şampuanlar",
+    "Makyaj ürünleri"
+   ],
+   "not": "AB'de butilparabenle toplamı en fazla %0,14 (asit cinsinden) olabilir; 3 yaş altı çocukların bez bölgesine sürülen, durulanmayan ürünlerde kullanılamaz (Ek V, giriş 12a). AB'nin olası endokrin bozucu öncelik listesinde (A grubu); SCCS 2021'de %0,14 sınırında güvenli buldu. Danimarka 3 yaş altı çocuk ürünlerinde yasakladı.",
+   "etkiler": [
+    {
+     "duzey": "tutarsiz",
+     "metin": "Hormon sistemini etkileyebileceği şüphesiyle AB'nin öncelik listesine alındı; SCCS %0,14 sınırında güvenli buldu.",
+     "kaynak": "k3:ab_ed_a"
+    }
+   ],
+   "profil": [
+    {
+     "profile": "baby",
+     "severity": "medium",
+     "text": "AB'de 3 yaş altı çocukların bez bölgesine sürülen, durulanmayan ürünlerde kullanılamaz."
+    }
+   ],
+   "ilgili": [
+    "METHYLPARABEN",
+    "PHENOXYETHANOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "SODIUM BENZOATE",
+   "ad": "Sodyum Benzoat",
+   "adlar": [
+    "sodyum benzoat",
+    "sodium benzoate"
+   ],
+   "kategori": "koz_koruyucu",
+   "ozet": "Benzoik asidin sodyum tuzu; koruyucu.",
+   "ne": "Ürünün bakteri ve mantarla bozulmasını önler.",
+   "nerede": [
+    "Şampuan ve duş jelleri",
+    "Diş macunu ve ağız gargarası",
+    "Krem ve losyonlar"
+   ],
+   "not": "AB'de asit cinsinden durulanan ürünlerde en fazla %2,5, ağız bakım ürünlerinde %1,7, durulanmayan ürünlerde %0,5 kullanılabilir (Ek V, giriş 1). Gıdada E211 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de yönetmelikteki sınırlar dışında bu maddeye özgü bir sağlık uyarısı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "reg:V/1"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E211",
+    "PHENOXYETHANOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "METHYLISOTHIAZOLINONE",
+   "ad": "Metilizotiyazolinon (MIT)",
+   "adlar": [
+    "metilizotiyazolinon",
+    "methylisothiazolinone",
+    "mit"
+   ],
+   "kategori": "koz_koruyucu",
+   "ozet": "İzotiyazolinon grubundan güçlü bir koruyucu.",
+   "ne": "Çok düşük oranda bakteri ve mantar üremesini önler.",
+   "nerede": [
+    "Şampuan ve saç kremleri",
+    "Duş jelleri ve sıvı sabunlar"
+   ],
+   "not": "AB'de durulanmayan ürünlerde kullanılamaz; durulanan ürünlerde en fazla %0,0015 (15 ppm) (AB 2017/1224, Ek V giriş 57). Kısıt, temas alerjisi vakalarındaki artış üzerine kondu.",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Temas alerjisine (alerjik kontakt dermatit) yol açabilir; AB bu yüzden durulanmayan ürünlerde yasakladı.",
+     "kaynak": "reg:V/57"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "2682-20-4",
+    "PHENOXYETHANOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "ETHYLHEXYLGLYCERIN",
+   "ad": "Etilheksilgliserin",
+   "adlar": [
+    "etilheksilgliserin",
+    "ethylhexylglycerin"
+   ],
+   "kategori": "koz_bakim",
+   "ozet": "Cilt bakım maddesi ve deodorant.",
+   "ne": "CosIng'e göre cilt bakım ve deodorant işlevi var; koruyucu karışımlarında fenoksietanolle birlikte sık görülür.",
+   "nerede": [
+    "Krem ve losyonlar",
+    "Deodorantlar",
+    "Islak mendiller"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "PHENOXYETHANOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "SODIUM LAURETH SULFATE",
+   "ad": "Sodyum Laureth Sülfat (SLES)",
+   "adlar": [
+    "sodyum laureth sülfat",
+    "sodyum lauril eter sülfat",
+    "sodium laureth sulfate",
+    "sles"
+   ],
+   "kategori": "koz_yuzey",
+   "ozet": "Şampuan ve duş jellerinin en yaygın temizleyicisi.",
+   "ne": "Kiri ve yağı suyla birlikte uzaklaştırır, bol köpük oluşturur.",
+   "nerede": [
+    "Şampuanlar",
+    "Duş jelleri",
+    "Sıvı sabunlar"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Saf maddenin tehlike sınıfı (cilt tahrişi, göz hasarı) derişik hâli içindir.",
+   "etkiler": [],
+   "profil": [],
+   "ilgili": [
+    "68891-38-3",
+    "SODIUM LAURYL SULFATE",
+    "COCAMIDOPROPYL BETAINE"
+   ],
+   "inceleme": "2026-10-15",
+   "clp": "68891-38-3"
+  },
+  {
+   "inci": "SODIUM LAURYL SULFATE",
+   "ad": "Sodyum Lauril Sülfat (SLS)",
+   "adlar": [
+    "sodyum lauril sülfat",
+    "sodium lauryl sulfate",
+    "sls"
+   ],
+   "kategori": "koz_yuzey",
+   "ozet": "Güçlü köpüren bir temizleyici.",
+   "ne": "Kiri ve yağı suyla birlikte uzaklaştırır, köpük oluşturur.",
+   "nerede": [
+    "Diş macunları",
+    "Şampuanlar",
+    "Duş jelleri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Saf maddenin tehlike sınıfı (cilt tahrişi, göz hasarı) derişik hâli içindir.",
+   "etkiler": [],
+   "profil": [],
+   "ilgili": [
+    "151-21-3",
+    "SODIUM LAURETH SULFATE",
+    "COCAMIDOPROPYL BETAINE"
+   ],
+   "inceleme": "2026-10-15",
+   "clp": "151-21-3"
+  },
+  {
+   "inci": "COCAMIDOPROPYL BETAINE",
+   "ad": "Kokamidopropil Betain",
+   "adlar": [
+    "kokamidopropil betain",
+    "cocamidopropyl betaine",
+    "capb"
+   ],
+   "kategori": "koz_yuzey",
+   "ozet": "Hindistan cevizi yağı asitlerinden türetilen yumuşak bir temizleyici.",
+   "ne": "Köpüğü artırır, temizler ve ürünün kıvamını düzenler; daha sert temizleyicilerle birlikte kullanılır.",
+   "nerede": [
+    "Şampuanlar",
+    "Duş jelleri",
+    "Yüz temizleyicileri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "SODIUM LAURETH SULFATE",
+    "SODIUM LAURYL SULFATE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "GLYCERIN",
+   "ad": "Gliserin",
+   "adlar": [
+    "gliserin",
+    "glycerin",
+    "glycerol",
+    "gliserol"
+   ],
+   "kategori": "koz_nem",
+   "ozet": "Kozmetikte en yaygın nem tutucu.",
+   "ne": "Suyu bağlayarak cildi nemli tutar; ürünün çözücüsü ve kıvam düzenleyicisi olarak da kullanılır.",
+   "nerede": [
+    "Nemlendirici krem ve losyonlar",
+    "Sabun ve duş jelleri",
+    "Diş macunları"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E422 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E422",
+    "PROPYLENE GLYCOL",
+    "SODIUM HYALURONATE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "PROPYLENE GLYCOL",
+   "ad": "Propilen Glikol",
+   "adlar": [
+    "propilen glikol",
+    "propylene glycol"
+   ],
+   "kategori": "koz_nem",
+   "ozet": "Nem tutucu ve çözücü.",
+   "ne": "Suyu bağlayarak cildi nemli tutar, öteki maddeleri çözer ve ürünün kıvamını düzenler.",
+   "nerede": [
+    "Krem ve losyonlar",
+    "Saç ürünleri",
+    "Deodorantlar"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E1520 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E1520",
+    "GLYCERIN"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "SODIUM HYALURONATE",
+   "ad": "Sodyum Hiyalüronat",
+   "adlar": [
+    "sodyum hiyalüronat",
+    "sodium hyaluronate",
+    "hiyalüronik asit",
+    "hyaluronic acid"
+   ],
+   "kategori": "koz_nem",
+   "ozet": "Hiyalüronik asidin sodyum tuzu; nem tutucu.",
+   "ne": "Suyu bağlayarak cilt yüzeyinde nem tutar.",
+   "nerede": [
+    "Serumlar",
+    "Nemlendiriciler",
+    "Göz çevresi kremleri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "GLYCERIN",
+    "PANTHENOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "PANTHENOL",
+   "ad": "Pantenol (B5 Provitamini)",
+   "adlar": [
+    "pantenol",
+    "panthenol",
+    "d-pantenol",
+    "d-panthenol",
+    "dekspantenol",
+    "dexpanthenol"
+   ],
+   "kategori": "koz_bakim",
+   "ozet": "B5 vitamininin öncülü; cilt ve saç bakım maddesi.",
+   "ne": "Cilt ve saçta nem tutar, yumuşaklık verir; saçta elektriklenmeyi azaltır.",
+   "nerede": [
+    "Saç kremleri ve şampuanlar",
+    "Pişik ve onarıcı kremler",
+    "Nemlendiriciler"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "SODIUM HYALURONATE",
+    "NIACINAMIDE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "NIACINAMIDE",
+   "ad": "Niasinamid (B3 Vitamini)",
+   "adlar": [
+    "niasinamid",
+    "niacinamide",
+    "nikotinamid",
+    "nicotinamide"
+   ],
+   "kategori": "koz_bakim",
+   "ozet": "B3 vitamininin bir biçimi; cilt bakım maddesi.",
+   "ne": "CosIng'e göre cilt yüzeyini pürüzsüzleştirir.",
+   "nerede": [
+    "Serumlar",
+    "Nemlendiriciler",
+    "Leke ve gözenek karşıtı ürünler"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "PANTHENOL",
+    "RETINOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "DIMETHICONE",
+   "ad": "Dimetikon",
+   "adlar": [
+    "dimetikon",
+    "dimethicone",
+    "silikon"
+   ],
+   "kategori": "koz_yumusatici",
+   "ozet": "En yaygın silikon.",
+   "ne": "Cilt ve saç üzerinde ince bir film oluşturarak yumuşaklık ve kayganlık verir; köpürmeyi azaltır.",
+   "nerede": [
+    "Saç kremleri ve serumları",
+    "Makyaj bazları ve fondötenler",
+    "Nemlendiriciler"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E900 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E900",
+    "CYCLOPENTASILOXANE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "CYCLOPENTASILOXANE",
+   "ad": "Siklopentasiloksan (D5)",
+   "adlar": [
+    "siklopentasiloksan",
+    "cyclopentasiloxane",
+    "d5",
+    "siklometikon"
+   ],
+   "kategori": "koz_yumusatici",
+   "ozet": "Çabuk buharlaşan halkalı bir silikon.",
+   "ne": "Ürünün kolay yayılmasını sağlar, ardından buharlaşarak cilde ve saça ipeksi bir his bırakır.",
+   "nerede": [
+    "Saç serumları",
+    "Fondötenler",
+    "Antiperspirantlar"
+   ],
+   "not": "AB'de REACH ile kısıtlandı: ağırlıkça %0,1 ve üzeri durulanan ürünlerde 31 Ocak 2020'den, durulanmayan ürünlerde 6 Haziran 2027'den itibaren yasak (AB 2024/1328). Kısıtın gerekçesi çevrede kalıcılıktır. AB'nin olası endokrin bozucu öncelik listesinde (B grubu).",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Çevrede kalıcı ve canlılarda birikici olduğu için AB'de kısıtlandı; kısıtın gerekçesi insan sağlığı değil.",
+     "kaynak": "k3:ab_reach"
+    },
+    {
+     "duzey": "belirsiz",
+     "metin": "Hormon sistemini etkileyip etkilemediği AB'nin öncelik listesinde değerlendirilecek maddeler arasında.",
+     "kaynak": "k3:ab_ed_b"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "DIMETHICONE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "CETEARYL ALCOHOL",
+   "ad": "Setearil Alkol",
+   "adlar": [
+    "setearil alkol",
+    "cetearyl alcohol",
+    "setostearil alkol",
+    "cetostearyl alcohol"
+   ],
+   "kategori": "koz_kivam",
+   "ozet": "Setil ve stearil alkolden oluşan bir yağ alkolü; kurutan alkol (etanol) değildir.",
+   "ne": "Kremlere kıvam verir, yağ ile suyun karışık kalmasına yardım eder ve cildi yumuşatır.",
+   "nerede": [
+    "Kremler ve losyonlar",
+    "Saç kremleri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "XANTHAN GUM",
+    "BUTYROSPERMUM PARKII BUTTER"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "PARAFFINUM LIQUIDUM",
+   "ad": "Sıvı Parafin (Mineral Yağ)",
+   "adlar": [
+    "sıvı parafin",
+    "paraffinum liquidum",
+    "mineral oil",
+    "mineral yağ",
+    "parafin yağı"
+   ],
+   "kategori": "koz_yumusatici",
+   "ozet": "Petrolden arıtılan renksiz, kokusuz bir yağ.",
+   "ne": "Cilt yüzeyinde su kaybını azaltan bir yağ tabakası oluşturur ve cildi yumuşatır.",
+   "nerede": [
+    "Bebek yağları",
+    "Vücut kremleri",
+    "Makyaj temizleyicileri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "DIMETHICONE",
+    "BUTYROSPERMUM PARKII BUTTER"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "BUTYROSPERMUM PARKII BUTTER",
+   "ad": "Shea Yağı",
+   "adlar": [
+    "shea yağı",
+    "shea butter",
+    "karite yağı",
+    "butyrospermum parkii butter"
+   ],
+   "kategori": "koz_yumusatici",
+   "ozet": "Shea ağacının çekirdeğinden elde edilen katı bitkisel yağ.",
+   "ne": "Cildi yumuşatır ve ürüne kıvam verir.",
+   "nerede": [
+    "Vücut ve el kremleri",
+    "Dudak bakım ürünleri",
+    "Saç maskeleri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "PARAFFINUM LIQUIDUM",
+    "CETEARYL ALCOHOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "BENZOPHENONE-3",
+   "ad": "Benzofenon-3 (Oksibenzon)",
+   "adlar": [
+    "benzofenon-3",
+    "benzophenone-3",
+    "oksibenzon",
+    "oxybenzone",
+    "bp-3"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Güneş kremlerinde kullanılan bir UV filtresi.",
+   "ne": "UV ışınlarını emer; ürünü ışıkta bozulmaya karşı da korur.",
+   "nerede": [
+    "Güneş kremleri",
+    "Yüz kremleri",
+    "Dudak ürünleri"
+   ],
+   "not": "AB'de yüz, el ve dudak ürünlerinde en fazla %6, vücut ürünlerinde %2,2, diğer ürünlerde %0,5 (AB 2022/1176, Ek VI giriş 4); %0,5'i aşarsa etikette 'Benzophenone-3 içerir' yazılır. AB'nin olası endokrin bozucu öncelik listesinde (A grubu).",
+   "etkiler": [
+    {
+     "duzey": "tutarsiz",
+     "metin": "SCCS değerlendirmesinde hormon sistemine etkisi ne kanıtlanabildi ne dışlanabildi; AB'deki sınırlar bu değerlendirmeye göre kondu.",
+     "kaynak": "k3:ab_ed_a"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "OCTOCRYLENE",
+    "ETHYLHEXYL METHOXYCINNAMATE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "ETHYLHEXYL METHOXYCINNAMATE",
+   "ad": "Etilheksil Metoksisinnamat (Oktinoksat)",
+   "adlar": [
+    "etilheksil metoksisinnamat",
+    "ethylhexyl methoxycinnamate",
+    "oktinoksat",
+    "octinoxate",
+    "octyl methoxycinnamate"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Güneş kremlerinde yaygın bir UVB filtresi.",
+   "ne": "UVB ışınlarını emer.",
+   "nerede": [
+    "Güneş kremleri",
+    "Güneş koruyuculu günlük kremler",
+    "Fondötenler"
+   ],
+   "not": "AB'de UV filtresi olarak en fazla %10 kullanılabilir (Ek VI, giriş 12). AB'nin olası endokrin bozucu öncelik listesinde (B grubu).",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "Hormon sistemini etkileyip etkilemediği AB'nin öncelik listesinde değerlendirilecek maddeler arasında; bu kayıtta kurumun maddeye özgü bir sonucu yok.",
+     "kaynak": "k3:ab_ed_b"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "BENZOPHENONE-3",
+    "OCTOCRYLENE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "TITANIUM DIOXIDE",
+   "ad": "Titanyum Dioksit",
+   "adlar": [
+    "titanyum dioksit",
+    "titanium dioxide",
+    "ci 77891",
+    "tio2"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Beyaz mineral pigment ve mineral UV filtresi.",
+   "ne": "UV ışınlarını yansıtır ve dağıtır; ürüne beyazlık ve örtücülük verir.",
+   "nerede": [
+    "Mineral güneş kremleri",
+    "Fondöten ve pudralar",
+    "Diş macunları"
+   ],
+   "not": "AB'de UV filtresi olarak en fazla %25 (Ek VI, giriş 27; nano biçimi 27a) ve renklendirici olarak (CI 77891, Ek IV) izinli. 10 µm'den küçük parçacık içeren toz biçimi, solunabilecek uygulamalarda kullanılamaz; gevşek yüz pudrasında %25, saç spreyinde %1,4 sınırı var (Ek III, giriş 321). Gıdada (E171) AB'de yasaktır; kozmetik izni ayrıdır.",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Toz hâlinde solunduğunda şüpheli kanserojen olarak sınıflandırıldı; bu sınıf yalnızca solunum yoluyla maruziyet içindir, cilde sürülen ürün için geçerli değildir.",
+     "kaynak": "reg:III/321"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E171",
+    "ZINC OXIDE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "ZINC OXIDE",
+   "ad": "Çinko Oksit",
+   "adlar": [
+    "çinko oksit",
+    "zinc oxide",
+    "ci 77947"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Beyaz mineral pigment ve mineral UV filtresi.",
+   "ne": "UV ışınlarını yansıtır ve dağıtır; cildi korur ve ürüne beyazlık verir.",
+   "nerede": [
+    "Mineral güneş kremleri",
+    "Pişik kremleri",
+    "Fondöten ve pudralar"
+   ],
+   "not": "AB'de UV filtresi olarak en fazla %25 (Ek VI, giriş 30; nano biçimi 30a) ve renklendirici olarak (Ek IV) izinli. Solunarak akciğere ulaşabilecek uygulamalarda (sprey) kullanılamaz.",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Solunarak akciğere ulaşabilecek uygulamalarda (sprey) kullanılmaz; kısıt bu maruziyet yolu içindir.",
+     "kaynak": "reg:VI/30"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "TITANIUM DIOXIDE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "OCTOCRYLENE",
+   "ad": "Oktokrilen",
+   "adlar": [
+    "oktokrilen",
+    "octocrylene"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Güneş kremlerinde yaygın bir UV filtresi.",
+   "ne": "UVB ve kısa dalga UVA ışınlarını emer; öteki filtreleri ışıkta bozulmaya karşı korur.",
+   "nerede": [
+    "Güneş kremleri",
+    "Güneş koruyuculu günlük kremler"
+   ],
+   "not": "AB'de spreyde en fazla %9, diğer ürünlerde %10 (AB 2022/1176, Ek VI giriş 10); safsızlık olarak benzofenon eser düzeyde tutulmalı. AB'nin olası endokrin bozucu öncelik listesinde (A grubu); SCCS bu sınırlarla güvenli buldu.",
+   "etkiler": [
+    {
+     "duzey": "tutarsiz",
+     "metin": "Hormon sistemini etkileyebileceği şüphesiyle AB'nin öncelik listesine alındı; SCCS yönetmelikteki sınırlarla güvenli buldu.",
+     "kaynak": "k3:ab_ed_a"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "BENZOPHENONE-3",
+    "BUTYL METHOXYDIBENZOYLMETHANE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "BUTYL METHOXYDIBENZOYLMETHANE",
+   "ad": "Avobenzon",
+   "adlar": [
+    "avobenzon",
+    "avobenzone",
+    "butyl methoxydibenzoylmethane",
+    "bütil metoksidibenzoilmetan"
+   ],
+   "kategori": "koz_uv",
+   "ozet": "Güneş kremlerinde en yaygın UVA filtresi.",
+   "ne": "UVA ışınlarını emer.",
+   "nerede": [
+    "Güneş kremleri",
+    "Güneş koruyuculu günlük kremler"
+   ],
+   "not": "AB'de UV filtresi olarak en fazla %5 kullanılabilir (Ek VI, giriş 8).",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de %5 sınırı dışında bu maddeye özgü bir sağlık uyarısı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "reg:VI/8"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "OCTOCRYLENE",
+    "ETHYLHEXYL METHOXYCINNAMATE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "SALICYLIC ACID",
+   "ad": "Salisilik Asit",
+   "adlar": [
+    "salisilik asit",
+    "salicylic acid",
+    "bha"
+   ],
+   "kategori": "koz_bakim",
+   "ozet": "Sivilce ve kepek ürünlerinde kullanılan bir beta hidroksi asit (BHA).",
+   "ne": "Ölü deri hücrelerinin dökülmesini kolaylaştırır (keratolitik) ve gözenek içini temizler; düşük oranda koruyucu olarak da kullanılır.",
+   "nerede": [
+    "Sivilce ve gözenek ürünleri",
+    "Kepek şampuanları",
+    "Peeling tonikleri"
+   ],
+   "not": "AB'de üreme toksisitesi şüphesiyle sınıflandırıldı (CMR kategori 2). Koruyucu olarak en fazla %0,5 (Ek V, giriş 3); başka amaçla durulanan saç ürünlerinde %3, çoğu üründe %2, vücut losyonu, göz farı, maskara, eyeliner, ruj ve roll-on deodorantta %0,5 (Ek III, giriş 98). 3 yaş altı çocuk ürünlerinde (koruyucu olarak şampuan hariç), ağız ürünlerinde ve solunabilecek uygulamalarda kullanılmaz.",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "AB'de üreme toksisitesi şüphesiyle (Repr. 2) sınıflandırıldı; kozmetikteki sınırlar SCCS'nin bu oranlarda güvenli bulmasına dayanır.",
+     "kaynak": "reg:III/98"
+    }
+   ],
+   "profil": [
+    {
+     "profile": "child",
+     "severity": "medium",
+     "text": "AB'de 3 yaş altı çocuklar için ürünlerde kullanılmaz (koruyucu olarak şampuan hariç)."
+    },
+    {
+     "profile": "baby",
+     "severity": "medium",
+     "text": "AB'de 3 yaş altı çocuklar için ürünlerde kullanılmaz (koruyucu olarak şampuan hariç)."
+    }
+   ],
+   "ilgili": [
+    "RETINOL",
+    "NIACINAMIDE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "RETINOL",
+   "ad": "Retinol (A Vitamini)",
+   "adlar": [
+    "retinol",
+    "a vitamini",
+    "vitamin a"
+   ],
+   "kategori": "koz_bakim",
+   "ozet": "A vitamininin bir biçimi; yaşlanma karşıtı ürünlerde kullanılır.",
+   "ne": "CosIng'de cilt bakım maddesi; gece kremlerinde ve serumlarda cilt yenilenmesi için kullanılır.",
+   "nerede": [
+    "Yaşlanma karşıtı serumlar",
+    "Gece kremleri",
+    "Göz çevresi kremleri"
+   ],
+   "not": "AB'de vücut losyonunda en fazla %0,05, diğer ürünlerde %0,3 (retinol eşdeğeri) kullanılabilir; etikette 'A vitamini içerir; günlük alımınızı göz önünde bulundurun' uyarısı zorunlu (AB 2024/996, Ek III giriş 376). Kurallara uymayan ürün 1 Kasım 2025'ten beri piyasaya sürülemez, 1 Mayıs 2027'den itibaren satılamaz.",
+   "etkiler": [
+    {
+     "duzey": "asim",
+     "metin": "Gıdadan ve takviyelerden alınan A vitaminiyle birlikte toplam alım üst sınırı aşabilir; AB bu yüzden oranı sınırladı ve etiket uyarısını zorunlu kıldı.",
+     "kaynak": "reg:III/376"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "NIACINAMIDE",
+    "SALICYLIC ACID"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "TOCOPHEROL",
+   "ad": "Tokoferol (E Vitamini)",
+   "adlar": [
+    "tokoferol",
+    "tocopherol",
+    "e vitamini",
+    "vitamin e"
+   ],
+   "kategori": "koz_antioks",
+   "ozet": "E vitamini; antioksidan.",
+   "ne": "Ürünü ve içindeki yağları oksitlenmeye karşı korur; cilt bakım maddesi olarak da kullanılır.",
+   "nerede": [
+    "Kremler ve yağlar",
+    "Dudak bakım ürünleri",
+    "Güneş kremleri"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E307 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E307",
+    "BUTYROSPERMUM PARKII BUTTER"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "LIMONENE",
+   "ad": "Limonen",
+   "adlar": [
+    "limonen",
+    "limonene",
+    "d-limonen",
+    "d-limonene"
+   ],
+   "kategori": "koz_koku",
+   "ozet": "Narenciye kabuğu kokusunun ana maddesi; koku alerjeni.",
+   "ne": "Ürüne narenciye kokusu verir; çözücü olarak da kullanılır.",
+   "nerede": [
+    "Parfümlü krem ve losyonlar",
+    "Şampuan ve duş jelleri",
+    "Parfüm ve deodorantlar"
+   ],
+   "not": "AB'de koku alerjeni: durulanmayan üründe %0,001'i, durulanan üründe %0,01'i aşarsa içerik listesinde adıyla yazılması zorunlu (Ek III, giriş 88). Maddenin peroksit değeri 20 mmol/L'nin altında olmalı.",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Koku alerjisi olanlarda cilt tepkisine yol açabilir; AB bu yüzden belirli oranı aşınca adının etikette yazılmasını zorunlu kıldı.",
+     "kaynak": "reg:III/88"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "5989-27-5",
+    "LINALOOL"
+   ],
+   "inceleme": "2026-10-15",
+   "clp": "5989-27-5"
+  },
+  {
+   "inci": "LINALOOL",
+   "ad": "Linalol",
+   "adlar": [
+    "linalol",
+    "linalool"
+   ],
+   "kategori": "koz_koku",
+   "ozet": "Lavanta ve birçok çiçekte bulunan koku maddesi; koku alerjeni.",
+   "ne": "Ürüne çiçeksi koku verir.",
+   "nerede": [
+    "Parfümlü krem ve losyonlar",
+    "Şampuan ve duş jelleri",
+    "Parfüm ve deodorantlar"
+   ],
+   "not": "AB'de koku alerjeni: durulanmayan üründe %0,001'i, durulanan üründe %0,01'i aşarsa içerik listesinde adıyla yazılması zorunlu (Ek III, giriş 84).",
+   "etkiler": [
+    {
+     "duzey": "resmi",
+     "metin": "Koku alerjisi olanlarda cilt tepkisine yol açabilir; AB bu yüzden belirli oranı aşınca adının etikette yazılmasını zorunlu kıldı.",
+     "kaynak": "reg:III/84"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "LIMONENE"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "XANTHAN GUM",
+   "ad": "Ksantan Zamkı",
+   "adlar": [
+    "ksantan zamkı",
+    "ksantan gam",
+    "xanthan gum"
+   ],
+   "kategori": "koz_kivam",
+   "ozet": "Mayalandırmayla üretilen bir şeker zinciri; kıvam verici.",
+   "ne": "Sıvı ürünlere kıvam verir ve karışımı dengede tutar.",
+   "nerede": [
+    "Jeller",
+    "Losyonlar",
+    "Diş macunları"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E415 olarak geçer.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "E415",
+    "CETEARYL ALCOHOL"
+   ],
+   "inceleme": "2026-10-15"
+  },
+  {
+   "inci": "DISODIUM EDTA",
+   "ad": "Disodyum EDTA",
+   "adlar": [
+    "disodyum edta",
+    "disodium edta",
+    "edta"
+   ],
+   "kategori": "koz_selat",
+   "ozet": "Metal iyonlarını bağlayan bir yardımcı madde.",
+   "ne": "Sudaki kalsiyum, magnezyum ve öteki metal iyonlarını bağlar; ürünün rengini, kokusunu ve kıvamını korur.",
+   "nerede": [
+    "Şampuan ve duş jelleri",
+    "Kremler",
+    "Sıvı sabunlar"
+   ],
+   "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
+   "etkiler": [
+    {
+     "duzey": "belirsiz",
+     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
+     "kaynak": "cosing"
+    }
+   ],
+   "profil": [],
+   "ilgili": [
+    "64-02-8"
+   ],
+   "inceleme": "2026-10-15"
+  }
+ ]
+}

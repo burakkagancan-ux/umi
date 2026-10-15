@@ -189,6 +189,173 @@ def temizlik_kayitlari(T, official):
     return recs
 
 
+KOZ_SIRA = {"info": 0, "yellow": 1, "orange": 2, "red": 3}
+KOZ_RISK = {"info": "green", "yellow": "amber", "orange": "red", "red": "red"}
+COSING = "https://ec.europa.eu/growth/tools-databases/cosing/"
+# İzlenen listeler (kozmetik.json meta.watch_lists): kurum, bölge; durum listenin türünden (kind)
+KOZ_LISTE = {"ab_ed_a": ("European Commission", "EU"), "ab_ed_b": ("European Commission", "EU"), "ab_reach": ("European Commission", "EU"),
+             "ab_taslak": ("European Commission", "EU"), "eu_svhc_ed": ("European Chemicals Agency (ECHA)", "EU"), "ca": ("California", "US-CA"),
+             "ca_sinir": ("California", "US-CA"), "asean": ("ASEAN", "ASEAN"), "dk": ("Danimarka", "DK"), "fr": ("ANSES", "FR"),
+             "tr_taslak": ("Ticaret Bakanlığı", "TR")}
+KOZ_KIND = {"ban": "banned", "limit": "restricted", "eu": "restricted", "child": "restricted", "ed": "concern", "tr": "concern", "comedo": "reviewed"}
+
+
+def koz_kimlik(inci):
+    """Kozmetik kaydının kimliği INCI adıdır; dosya adı ve URL için boşluk yerine alt çizgi (INCI'de tire geçer: BENZOPHENONE-3)."""
+    return inci.replace(" ", "_")
+
+
+def eurlex_celex(reg):
+    """'(EU) 2022/1176' ya da '(EC) 2009/1223' → (yıl, EUR-Lex adresi)."""
+    m = re.search(r"(\d{4})/(\d+)", reg)
+    return int(m.group(1)), "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:3%sR%04d" % (m.group(1), int(m.group(2)))
+
+
+def kozmetik_kayitlari(T, official, tem):
+    """Kozmetik ansiklopedisi (kaynak/ansiklopedi_kozmetik.json, kimlik INCI). Elle yazılan yalnızca açıklama, not ve olası etkiler;
+    risk rengi, kurum satırları ve kaynaklar data/kozmetik.json'dan: Etiket Oku'daki kozmetik sonucuyla (js/kozmetik.js kResult) aynı kural,
+    yani AB ek kayıtlarının, INCI bayraklarının ve izlenen listelerin en yüksek düzeyi. 'clp' verilmişse temizlik ansiklopedisindeki
+    aynı maddenin sağlık tehlike sınıfları (H3xx) "resmi" etki satırı olur. tem: temizlik kayıtları (kimlik CAS)."""
+    K = json.load(open(os.path.join(HERE, "kaynak", "ansiklopedi_kozmetik.json"), encoding="utf-8"))
+    kdb = json.load(open(os.path.join(HERE, "data", "kozmetik.json"), encoding="utf-8"))
+    kinci = json.load(open(os.path.join(HERE, "data", "kozmetik_inci.json"), encoding="utf-8"))
+    TK = json.load(open(os.path.join(HERE, "kaynak", "ansiklopedi_temizlik.json"), encoding="utf-8"))
+    TEM = {x["id"]: x for x in TK["kayitlar"]}
+    temr = {r["id"]: r for r in tem}
+    INCI = {x[0]: x for x in kinci["items"]}
+    M = kdb["meta"]
+    WL, FLV = M["watch_lists"], M.get("inci_flag_levels", {})
+    SRC = K["kaynaklar"]
+    for code, (ad, ne) in K["kategoriler"].items():
+        T["cat." + code], T["cat." + code + ".what"] = ad, ne
+    T["profile.koku"], T["profile.astim"] = "Koku alerjisi", "Astım / solunum hassasiyeti"
+    T["region.DK"], T["region.FR"], T["region.ASEAN"] = "Danimarka", "Fransa", "ASEAN"
+    T["koz.eval"] = ("Renk, Etiket Oku'daki kozmetik sonucuyla aynı kurala göre verilir: AB kozmetik yönetmeliğinin ekleri ve izlenen listeler. "
+                     "Oranlar etikette yazmadığı için üründeki miktar bilinmez. 'Özel uyarı yok' bir onay değildir.")
+    T["koz.reg.yok"] = ("AB kozmetik yönetmeliğinin eklerinde (yasak, kısıtlı ve izinli listeler) yer almıyor; bu maddeye özgü bir sınır ya da etiket kuralı yok. "
+                        "Her ürün için genel güvenlik değerlendirmesi kuralı geçerlidir.")
+    T["koz.eff.miktar"] = "Sınıf saf madde içindir; kozmetikte seyreltik kullanıldığından üründeki etki orana göre değişir."
+    T["koz.pw.koku"] = "Koku alerjeni: AB'de belirli oranı aşınca içerik listesinde adıyla yazılır; etikette adını arayın."
+    T["koz.pw.ed"] = "AB'nin olası endokrin bozucu (hormon sistemini etkileyebileceği şüphesi olan) maddeler öncelik listesinde. Liste bir hüküm değildir."
+    ek_ad = {"II": "Yasaklı madde", "III": "Kısıtlı madde: ürün tipine göre üst sınır ve kullanım koşulları var.", "IV": "İzinli renklendirici.",
+             "V": "İzinli koruyucu, üst sınırla.", "VI": "İzinli UV filtresi, üst sınırla."}
+    rid_of = {k["inci"]: koz_kimlik(k["inci"]) for k in K["kayitlar"]}
+    recs = []
+    for k in K["kayitlar"]:
+        inci, rid = k["inci"], rid_of[k["inci"]]
+        if inci not in INCI:
+            raise SystemExit(rid + ": INCI adı CosIng listesinde yok")
+        it = INCI[inci]
+        iflags = it[2] if len(it) > 2 else []
+        ents = [e for e in kdb["entries"] if inci in e["inci"]]
+        wats = [w for w in kdb.get("watch", []) if inci in w["inci"]]
+        duzeyler = [e["level"] for e in ents] + [FLV[f] for f in iflags if f in FLV] + [WL[w["list"]]["level"] for w in wats if WL.get(w["list"], {}).get("level")]
+        duzey = max(duzeyler, key=lambda l: KOZ_SIRA[l], default="info")
+        T[rid + ".name"] = k["ad"]
+        T[rid + ".summary"], T[rid + ".what"], T[rid + ".agn"] = k["ozet"], k["ne"], k["not"]
+        for n, x in enumerate(k["nerede"]):
+            T["%s.found.%d" % (rid, n)] = x
+        srcs = [{"title": "CosIng: %s" % inci, "publisher": "European Commission", "year": 2026, "url": COSING, "official": True}]
+        regs = []
+        for n, e in enumerate(ents):
+            yil, url = eurlex_celex(e.get("regulation") or "(EC) 2009/1223")
+            fl = e.get("flags", [])
+            if e["annex"] == "II":
+                st = "banned"
+            elif e["annex"] == "III":
+                st = "label_required" if "allergen_fragrance" in fl and not e.get("max") else "restricted"
+            elif e["annex"] in ("V", "VI"):
+                st = "restricted" if e.get("max") else "approved"
+            else:
+                st = "approved"
+            metin = "AB kozmetik yönetmeliği Ek %s, giriş %s: %s" % (e["annex"], e["ref"], ek_ad[e["annex"]])
+            if "allergen_fragrance" in fl:
+                metin = "AB kozmetik yönetmeliği Ek %s, giriş %s: koku alerjeni; belirli oranı aşınca içerik listesinde adıyla yazılır." % (e["annex"], e["ref"])
+            if "nano" in fl:
+                metin += " (Nano biçimi.)"
+            for f in ("cmr2_carc", "cmr2", "cmr_ban"):
+                if f in fl:
+                    metin += " " + M["flags"][f] + "."
+                    break
+            T["%s.reg.%d" % (rid, n)] = metin
+            regs.append({"agency": "European Commission", "region": "EU", "status": st, "detail": "%s.reg.%d" % (rid, n), "year": yil, "source_url": url})
+            if url not in [s["url"] for s in srcs]:
+                srcs.append({"title": "Regulation %s amending Regulation (EC) No 1223/2009 on cosmetic products" % e["regulation"] if yil != 2009 else
+                             "Regulation (EC) No 1223/2009 on cosmetic products", "publisher": "European Parliament and Council" if yil == 2009 else "European Commission",
+                             "year": yil, "url": url, "official": True})
+        if not ents:
+            yil, url = eurlex_celex("(EC) 2009/1223")
+            regs.append({"agency": "European Commission", "region": "EU", "status": "not_listed", "detail": "koz.reg.yok", "year": yil, "source_url": url})
+            srcs.append({"title": "Regulation (EC) No 1223/2009 on cosmetic products", "publisher": "European Parliament and Council", "year": yil, "url": url, "official": True})
+        for n, w in enumerate(wats):
+            L = WL[w["list"]]
+            ajans, bolge = KOZ_LISTE.get(w["list"], (L["label"], "INT"))
+            T["%s.k3.%d" % (rid, n)] = L["label"] + ". " + (w.get("note_tr") or L["text"])
+            yil = int(w["date"][:4]) if re.match(r"\d{4}", w.get("date") or "") else None
+            regs.append({"agency": ajans, "region": bolge, "status": KOZ_KIND.get(L.get("kind"), "concern"), "detail": "%s.k3.%d" % (rid, n), "year": yil, "source_url": w["source"]})
+            if w["source"] not in [s["url"] for s in srcs]:
+                dom = re.sub(r"^https?://([^/]+).*", r"\1", w["source"])
+                srcs.append({"title": L["label"], "publisher": ajans, "year": yil or 2026, "url": w["source"],
+                             "official": any(dom == d or dom.endswith("." + d) for d in official + ["europa.eu"])})
+
+        def etki_kaynak(key):
+            if key.startswith("reg:"):
+                e = next(e for e in ents if e["id"] == key[4:])
+                yil, url = eurlex_celex(e.get("regulation") or "(EC) 2009/1223")
+                return {"label": "AB", "year": yil, "url": url, "title": "Regulation %s" % (e.get("regulation") or "(EC) 2009/1223")}
+            if key.startswith("k3:"):
+                w = next(w for w in wats if w["list"] == key[3:])
+                return {"label": KOZ_LISTE.get(w["list"], ("AB",))[0], "year": int(w["date"][:4]) if re.match(r"\d{4}", w.get("date") or "") else 2026,
+                        "url": w["source"], "title": WL[w["list"]]["label"]}
+            if key == "cosing":
+                return {"label": "CosIng", "year": 2026, "url": COSING, "title": "CosIng: " + inci}
+            s = SRC[key]
+            if s["url"] not in [x["url"] for x in srcs]:
+                srcs.append(dict(s))
+            return {"label": s["publisher"].split("(")[-1].rstrip(")") if "(" in s["publisher"] else s["publisher"], "year": s["year"], "url": s["url"], "title": s["title"]}
+        effs = []
+        for n, x in enumerate(k["etkiler"]):
+            T["%s.eff.%d" % (rid, n)] = x["metin"]
+            effs.append({"level": x["duzey"], "text": "%s.eff.%d" % (rid, n), "who": None, "amount": None, "source": etki_kaynak(x["kaynak"])})
+        if k.get("clp"):
+            c, tr = TEM[k["clp"]], temr[k["clp"]]
+            echa = next(s for s in tr["sources"] if s["url"].startswith("https://chem.echa.europa.eu/"))
+            for h in [x for x in c["clp"]["h"] if re.fullmatch(r"H3\d\d", x)]:
+                effs.append({"level": "resmi", "text": "tem.h." + h, "who": None, "amount": "koz.eff.miktar",
+                             "source": {"label": "ECHA", "year": echa["year"], "url": echa["url"], "title": echa["title"]}})
+            if echa["url"] not in [s["url"] for s in srcs]:
+                srcs.append(dict(echa))
+        if not effs:
+            raise SystemExit(rid + ": olası etki satırı yok")
+        pws = []
+        for n, w in enumerate(k["profil"]):
+            T["%s.pw.%d" % (rid, n)] = w["text"]
+            pws.append({"profile": w["profile"], "severity": w["severity"], "text": "%s.pw.%d" % (rid, n)})
+        elle = set(w["profile"] for w in pws)
+        if any("allergen_fragrance" in e.get("flags", []) for e in ents) and "koku" not in elle:
+            pws.append({"profile": "koku", "severity": "medium", "text": "koz.pw.koku"})
+        if any(WL.get(w["list"], {}).get("kind") == "ed" for w in wats):
+            pws += [{"profile": p, "severity": "low", "text": "koz.pw.ed"} for p in ("preg", "child") if p not in elle]
+        ilgili = [rid_of.get(x, x) for x in k["ilgili"]]
+        ayni = [rid_of[x["inci"]] for x in K["kayitlar"] if x["kategori"] == k["kategori"] and x["inci"] != inci]
+        ilgili = (ilgili + [x for x in ayni if x not in ilgili])[:4]
+        aliases = []
+        for a in [inci, fold(k["ad"])] + k["adlar"]:
+            a = a.lower()
+            if a and a not in aliases:
+                aliases.append(a)
+        vegan = "no" if ("non_vegan" in iflags or "non_veg" in iflags) else "unknown"
+        recs.append({
+            "id": rid, "slug": slugify(inci), "names": {"primary": rid + ".name", "aliases": aliases},
+            "category": k["kategori"], "product_types": ["cosmetic"], "risk_level": KOZ_RISK[duzey], "review": "curated",
+            "evidence_level": "strong" if ents else "moderate", "summary": rid + ".summary", "evaluation": "koz.eval",
+            "content": {"what_it_does": rid + ".what", "found_in": ["%s.found.%d" % (rid, n) for n in range(len(k["nerede"]))], "in_the_body": None},
+            "effects": effs, "agency_note": rid + ".agn",
+            "diet_flags": {"vegan": vegan, "source": "animal" if vegan == "no" else "unknown", "gluten": "unknown"},
+            "regulatory": regs, "profile_warnings": pws, "related_ids": ilgili, "sources": srcs, "last_reviewed": k["inceleme"]})
+    return recs
+
+
 def main():
     K = json.load(open(os.path.join(HERE, "kaynak", "ansiklopedi.json"), encoding="utf-8"))
     edb = json.load(open(os.path.join(HERE, "data", "e_kodlari.json"), encoding="utf-8"))
@@ -364,7 +531,8 @@ def main():
             r["sources"] = mine + [x for x in r["sources"] if x["url"] not in have]
         recs.append(r)
 
-    recs += temizlik_kayitlari(T, official)
+    tem = temizlik_kayitlari(T, official)
+    recs += tem + kozmetik_kayitlari(T, official, tem)
     ids = set(by) | set(r["id"] for r in recs)
     for r in recs:
         missing = [x for x in r["related_ids"] if x not in ids]

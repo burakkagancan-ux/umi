@@ -46,6 +46,18 @@ module.exports=async({br,B,opt,ok,server})=>{
       ok(await p.getAttribute('#tur-tem','aria-checked')==='true','seçili tür hatırlanır');
       await p.click('#tur-gida');await p.waitForSelector('#ana .okfil');
     }
+    // Kozmetik ansiklopedisi (15.10.2026, U-01): tür seçici açık, liste yalnızca kozmetik, sayfada INCI adı boşluklu, gıda kartları yok
+    {
+      await p.click('#tur-koz');await p.waitForFunction(()=>/Koruyucu/.test(document.getElementById('ana').textContent)&&/UV Filtresi/.test(document.getElementById('ana').textContent),null,{timeout:5000}).catch(()=>{});
+      const k1=await p.evaluate(()=>({sec:document.querySelector('#tur-koz').getAttribute('aria-checked'),dis:document.querySelector('#tur-koz').getAttribute('aria-disabled'),
+        toplam:[...document.querySelectorAll('#ana p.mut')].map(x=>x.textContent).join('|'),tem:/Yüzey Aktif Madde/.test(document.getElementById('ana').textContent)}));
+      ok(k1.sec==='true'&&k1.dis===null&&/32 maddenin/.test(k1.toplam)&&!k1.tem,'kozmetik türü seçilir, yalnızca kozmetik grupları: '+JSON.stringify(k1));
+      await p.goto(B+'ansiklopedi.html?id=SODIUM_LAURETH_SULFATE');await p.waitForSelector('#ana .risk');
+      const k2=await p.evaluate(()=>({kod:document.querySelector('#ana .ecode').textContent,ad:document.querySelector('#ana h2.name').textContent,quick:!!document.querySelector('#ana .quick'),
+        tur:document.querySelector('#ana .turr').getAttribute('data-tur'),metin:document.getElementById('ana').textContent}));
+      ok(k2.kod==='SODIUM LAURETH SULFATE'&&/SLES/.test(k2.ad)&&!k2.quick&&k2.tur==='koz'&&/H318/.test(k2.metin),'SLES kozmetik sayfası: INCI adı, tür etiketi, ECHA satırı: '+JSON.stringify(k2).slice(0,300));
+      await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#tur-koz');await p.click('#tur-gida');await p.waitForSelector('#ana .okfil');
+    }
     // Kaydettiklerim açılır liste (14.10.2026): kapalı başlar, sayı başlıkta, süzgeç değişince açık kalır
     await p.evaluate(()=>localStorage.setItem('yerimleri',JSON.stringify(['E322','E330'])));await p.reload();await p.waitForSelector('#ana details.kdrop');
     const kd0=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,bas:d.querySelector('summary').textContent,satir:d.querySelectorAll('a.row').length}});
@@ -63,10 +75,10 @@ module.exports=async({br,B,opt,ok,server})=>{
     await p.waitForSelector('#rozet .rzaile[data-aile="okur"] .rzrow button:not([disabled])',{timeout:8000}).catch(()=>{});
     ok(await p.isEnabled('#rozet .rzaile[data-aile="okur"] .rzrow button').catch(()=>false),'rozet paylaşım görseli hazırlandı');
     await p.click('#rozet .seg button[data-tur="koz"]');
-    ok(/Çok yakında/.test(await p.textContent('#rozet .rzaile[data-aile="okur"]'))&&/Henüz rozet yok/.test(await p.textContent('#rozet .rzaile[data-aile="dedektif"]')),'kozmetik: Okur yakında, Dedektif henüz yok');
+    ok(!/Çok yakında/.test(await p.textContent('#rozet .rzaile[data-aile="okur"]'))&&/Henüz rozet yok/.test(await p.textContent('#rozet .rzaile[data-aile="dedektif"]')),'kozmetik: Okur açık (ansiklopedi var), Dedektif henüz yok');
     await p.click('#rozet .kback');await p.waitForFunction(()=>location.hash==='#profil'&&!document.body.classList.contains('mode-rozet'));
-    // 3 gıda rozeti + yukarıda açılan temizlik sayfasının Okur rozeti (temizlik ansiklopedisi 15.10.2026)
-    ok(/4 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 4 rozet": '+await p.textContent('#rozetbar'));
+    // 3 gıda rozeti + yukarıda açılan temizlik ve kozmetik sayfalarının Okur rozetleri (15.10.2026)
+    ok(/5 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 5 rozet": '+await p.textContent('#rozetbar'));
     ok(await p.evaluate(()=>JSON.parse(kayitYedek([],0,'',rozetLoad())).rozetler.okur.gida.length===10),'rozetler yedek dosyasına girer');
     // G-02: ürün rozetleri ve Eklediklerim sunucudan (POST /katki {kim}); kimlik gövdede, yanıt sayıları ve listeyi verir
     {
