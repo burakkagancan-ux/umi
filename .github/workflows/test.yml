@@ -1,5 +1,6 @@
 name: Testler
 # Her PR'da ve main'e her gönderimde tüm testleri çalıştırır. "test" işinde dış bağımlılık yok; "arayuz" işi Playwright kurar.
+# Yeni test dosyası için buraya adım eklenmez: test/hepsi.js test/*.js, test/*.py ve worker/test*.mjs dosyalarını kendisi bulur.
 on:
   pull_request:
   push:
@@ -18,62 +19,8 @@ jobs:
           node-version: "22"
       - name: Başlangıç zamanı (süre izleme, O-16)
         run: echo "BASLA=$(date +%s)" >> "$GITHUB_ENV"
-      - name: Sözdizimi (sayfalardaki script blokları)
-        run: node test/sozdizimi.js
-      - name: Gıda
-        run: node test/cases.js
-      - name: E kodu kaynakları
-        run: node test/e_dogrulama.js
-      - name: Tuz / sodyum
-        run: node test/sodyum.js
-      - name: Kanserojen uyarısı
-        run: node test/kanser.js
-      - name: Birlikte dikkat
-        run: node test/eslesme.js
-      - name: Üretim yolu
-        run: node test/uretim.js
-      - name: OCR toleransı
-        run: node test/ocr_tolerans.js
-      - name: İngilizce etiket tanıma (eşikler, benzer yazım, diller arası çakışma)
-        run: node test/ingilizce.js
-      - name: Kozmetik veri
-        run: node test/kozmetik_veri.js
-      - name: Kozmetik durumlar
-        run: node test/kozmetik_cases.js
-      - name: Kozmetik K3
-        run: node test/kozmetik_k3.js
-      - name: Temizlik
-        run: node test/temizlik.js
-      - name: Karşılaştırma
-        run: node test/karsilastir.js
-      - name: Ansiklopedi
-        run: node test/ansiklopedi.js
-      - name: Paylaşım kartı
-        run: node test/paylas.js
-      - name: Kaydedilen ürünler
-        run: node test/kayit.js
-      - name: Rozetler
-        run: node test/rozet.js
-      - name: Topluluk
-        run: node test/topluluk.js
-      - name: Cihaz verisi sürümü
-        run: node test/veri_surum.js
-      - name: Barkod
-        run: node test/barkod.js
-      - name: Besin değeri tablosu
-        run: node test/besin.js
-      - name: Çevrimdışı önbellek listesi
-        run: node test/onbellek.js
-      - name: Çeviri (anahtarlar, yer tutucular, taşınmamış metin)
-        run: node test/ceviri.js
-      - name: Bakanlık verisi doğrulaması
-        run: python3 test/dogrula_veri.py
-      - name: OCR Worker
-        run: node worker/test.mjs
-      - name: Topluluk (Worker, gerçek SQLite)
-        run: node worker/test_topluluk.mjs
-      - name: Katkı denetimi ve besin tablosu doğrulaması (Worker, gerçek SQLite)
-        run: node worker/test_yonetim.mjs
+      - name: Birim testleri (test/hepsi.js bütün test dosyalarını bulur ve paralel çalıştırır; altın çıktı dahil)
+        run: node test/hepsi.js
       - name: Veri üreteçleri (data/ ile kaynak/ uyumlu mu)
         # Üreteçleri depodaki kaynak dosyalarıyla çalıştırır; data/ değişirse JSON elle düzenlenmiş ya da üreteç çalıştırılmamış demektir.
         run: |
@@ -104,7 +51,7 @@ jobs:
         run: |
           npm i --no-save --no-package-lock playwright@1.47.2
           npx playwright install --with-deps chromium
-      - name: Arayüz testi
+      - name: Arayüz testi (test/arayuz/ grupları paralel)
         run: node test/arayuz.js
       - name: Süre (8 dakikayı geçerse uyarı; zaman aşımı 15, O-16)
         if: always()
