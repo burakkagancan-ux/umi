@@ -71,8 +71,6 @@ button.info.sm{width:20px;height:20px;font-size:11px}
 details.gz{font-size:13px;color:var(--mute);margin:0 0 10px}details.gz summary{cursor:pointer;color:var(--ok);font-weight:600;min-height:44px;display:flex;align-items:center}details.gz ul{margin:6px 0 0;padding-inline-start:20px}details.gz li{margin:3px 0}
 .ipanel{margin-top:8px;padding-top:6px;border-top:1px dashed var(--line)}.ih{font-weight:600;font-size:13px;margin-top:6px}
 
-.seg{display:flex;border:1.5px solid var(--ok);border-radius:14px;overflow:hidden;margin:12px 0 8px}
-.seg button{flex:1;border:0;border-radius:0;background:var(--card);color:var(--ok);padding:10px 8px}
 
 .ptype[hidden]{display:none}
 .ptype{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px;font-size:14px}
@@ -145,7 +143,7 @@ details.kgrp.kc1>summary,details.kgrp.kc2>summary,details.kgrp.kc0>summary{borde
 body.mode-kayit .w>:not(#kayit){display:none!important}#kayit[hidden]{display:none}body.mode-kayit .w>#kayit:not([hidden]){display:block!important}
 .kayitac{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0 4px;min-height:56px}
 .kayitac svg{width:24px;height:24px;flex:0 0 auto;fill:none;stroke:var(--ok);stroke-width:2;stroke-linejoin:round}.kayitac .kt{display:flex;flex-direction:column;gap:2px}.kayitac .mut{font-size:13px}
-.kseg button{font-size:14px;padding:10px 4px}
+.kseg button{flex:1 1 auto;font-size:14px;padding:8px 6px}
 .krow{display:flex;gap:8px;margin:4px 0 10px}.krow input{flex:1;min-width:0;min-height:44px;font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px}.krow select{min-height:44px;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:0 8px;background:var(--card)}
 button.kkayit{flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:start}.kkayit .koz{font-size:13px;display:flex;align-items:center;flex-wrap:wrap}
 .kform textarea{min-height:60px;font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px}
@@ -236,9 +234,6 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 #profil.mut{color:var(--ink);font-size:16px}#profil p.mut,#profil .how{color:var(--mute);font-size:14px}
 /* Ön yüz (14.10.2026): tek ana iş fotoğraf; galeri ve barkod ikincil; Karşılaştır ve Örnek metin bağlantı. Sonuç: özet kartı, seviyeye göre gruplar, sade kartlar (ayrıntı alt sayfada) */
 h1{font-size:30px;letter-spacing:-.01em}
-.seg{border:0;background:var(--sunk);border-radius:999px;padding:4px;gap:4px}
-.seg button{border-radius:999px;background:transparent;color:var(--mute);min-height:40px;padding:8px}
-.seg button[aria-checked="true"]{background:var(--card);color:var(--ok);box-shadow:0 1px 2px rgba(27,33,30,.12),0 2px 8px rgba(27,33,30,.06)}
 .hero{margin:10px 0 8px}
 label.camera{position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px 12px;padding:14px;border:0;border-radius:20px;background:var(--ok);color:#fff;min-height:0}
 label.camera:focus-within{outline:3px solid var(--ink);outline-offset:3px}

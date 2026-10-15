@@ -64,14 +64,10 @@ details.kdrop[open]>summary::after{transform:rotate(225deg) translateY(-2px)}det
 .foot{margin:28px 0 8px;font-size:14px;color:var(--mute);text-align:center}
 .foot a{display:inline-flex;align-items:center;min-height:44px}
 .auto{font-size:14px;color:var(--mute);background:var(--sunk);border-radius:10px;padding:10px 12px;margin:12px 0}
-/* Tür süzgeci (Etiket Oku'daki Gıda | Kozmetik | Temizlik anahtarıyla aynı görünüm); henüz olmayan türler soluk, altında "Çok yakında" */
-.seg{display:flex;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin:0 0 12px}
-.seg button{flex:1;min-height:48px;border:0;border-radius:0;background:var(--card);color:var(--ok);font-weight:600;padding:6px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
-.seg button+button{border-inline-start:1px solid var(--line)}
+/* Tür süzgeci: görünüm tema.css'te (Etiket Oku'daki anahtarla ortak); henüz olmayan türler soluk, altında "Çok yakında" */
+.seg{margin:0 0 12px}
 
-.seg button[aria-disabled="true"]{color:var(--mute);cursor:default}
-.seg small{font-size:12px;font-weight:400}
-.seg button:focus-visible{outline:3px solid var(--ok);outline-offset:-3px}
+.seg button[aria-disabled="true"]{cursor:default}
 input[type=search]{width:100%;min-height:48px;font:inherit;font-size:17px;padding:10px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
 input[type=search]:focus{outline:3px solid var(--ok);outline-offset:1px}
 .list{margin:8px 0}
