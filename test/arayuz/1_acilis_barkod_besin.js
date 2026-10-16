@@ -279,6 +279,13 @@ module.exports=async({br,B,opt,ok,server})=>{
         window.matchMedia=()=>({matches:true});b.click();await new Promise(r=>setTimeout(r,100));const y=window.scrollY;document.body.style.minHeight='';
         return {once,sonra,y,ad:b.getAttribute('aria-label')}});
       ok(yk.once===true&&yk.sonra===false&&yk.y===0&&yk.ad==='Yukarı çık','yukarı çık düğmesi: '+JSON.stringify(yk));
+      // Alt menü: yarı saydam; aşağı kayınca küçülür (yazılar gizlenir), yukarı kayınca ve başta tam boy
+      const am=await p.evaluate(async()=>{const m=document.querySelector('.tabbar');document.body.style.minHeight='6000px';
+        const bekle=()=>new Promise(r=>setTimeout(r,350));const boy=()=>Math.round(m.getBoundingClientRect().height);
+        window.scrollTo(0,0);await bekle();const bas=boy();window.scrollTo(0,1500);await bekle();const asagi=m.classList.contains('kucuk'),kucukBoy=boy();
+        window.scrollTo(0,1000);await bekle();const yukari=m.classList.contains('kucuk');window.scrollTo(0,0);await bekle();document.body.style.minHeight='';
+        const st=getComputedStyle(m);return {bas,asagi,kucukBoy,yukari,zemin:st.backgroundColor,bulanik:(st.backdropFilter||st.webkitBackdropFilter||'').includes('blur')}});
+      ok(am.asagi&&!am.yukari&&am.kucukBoy<am.bas&&am.bulanik&&/rgba\(255, 255, 255, 0\.7/.test(am.zemin),'alt menü saydam ve küçülür: '+JSON.stringify(am));
       await p.evaluate(()=>closeCompare());
       await p.evaluate(()=>localStorage.removeItem('kayitli'));
     }

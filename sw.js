@@ -1,7 +1,7 @@
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar (CORE) ve önbellek adı (CACHE): gen_sw.py üretir
 // <uretilen gen_sw.py>
 // Elle düzenlenmez: python3 uret.py (gen_sw.py) yazar. CACHE dosya içeriklerinin özeti; CORE kurulumda önbelleğe alınanlar.
-const CACHE = "tagsis-8c961e666171";
+const CACHE = "tagsis-d3edfaba6ed3";
 const CORE = [
   "./",
   "index.html",
@@ -20,6 +20,7 @@ const CORE = [
   "js/giris_liste.js",
   "js/dil.js",
   "js/yukari.js",
+  "js/alt_menu.js",
   "js/arayuz_liste.js",
   "css/ocr.css",
   "js/giris_ocr.js",
