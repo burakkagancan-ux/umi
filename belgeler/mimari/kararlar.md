@@ -36,7 +36,7 @@ CLAUDE.md'den taşındı (15.10.2026, U-07 9. adım; metin aynı). Bu alana doku
 - Yapay OCR hatası testi (tek harf karışması): kozmetik %92 -> %98, gıda %74 -> %88; yeni yanlış eşleşme yok. Kalan zayıflık: iki harfi bozulmuş adlar, 4 harften kısa sözcükler (süt, palm).
 
 ## Gelişim alanları (bilerek sonraya bırakılan genişletmeler)
-- Birlikte dikkat: 22 kural. Adaylar: sorbat + benzoat gıdada (AB 1333/2008 Ek II dipnot metni doğrulanamadı), karagenan E407/E407a ortak ADI, sorbitan esterleri E491–495.
+- Birlikte dikkat: 25 kural (16.10.2026: adaylar eklendi). Sorbat + benzoat gıdada 'toplam' kuralı (iki sorbat ya da iki benzoat da sayılır, çünkü Ek II sınırı dördünün toplamına uygulanır); dipnot metni legislation.gov.uk'teki 31.12.2020 metninden doğrulandı. E203 bilerek dışarıda (AB 2018'de izni kaldırdı). Karagenan E407 + E407a ve sorbitan esterleri E491–495 EFSA ortak ADI'sinden.
 - Endokrin: Fransa ANSES listesi (12.10.2023, 128 madde) yalnızca ücretli kaynakta adlarıyla var; edlists.org ve Légifrance bu ortamdan erişilemiyor; ECHA aday listesi tablosu özetleyici araçla güvenilir okunamadı (yalnızca ikinci kaynakla doğrulananlar eklendi). CLP ED HH 1/2 uyumlaştırılmış sınıflandırması almış madde henüz bulunamadı. SIN List bilerek atlandı (yazılı izin).
 - Komedojenite: 21 madde (04.10.2026). Fulton 1989 tablosunda 3 alanlar (bütil stearat, desil oleat, miristik asit, sorbitan oleat, gliseril stearat SE, buğday tohumu gliseridi) bilerek eklenmedi; ikinci bir kaynakla 4–5 doğrulanırsa eklenebilir. PEG-16 lanolin (Solulan 16) INCI karşılığı belirsiz. Yeni 12 satırın notu taranmış tablodan okundu (inceleme=1).
 - AB Eylül 2026 taslağı yayımlanınca `ab_taslak` kayıtları kozmetik_guncellemeler.tsv'ye gerçek değişiklik olarak taşınmalı.

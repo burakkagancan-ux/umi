@@ -1,6 +1,6 @@
 {
  "version": "0.1.0",
- "last_updated": "2026-10-04",
+ "last_updated": "2026-10-16",
  "meta": {
   "description": "Birlikte bulunduğunda ayrıca dikkat gerektiren madde eşleşmeleri. cift: iki grubun her birinden en az biri; toplam: aynı gruptan en az 'min' farklı madde.",
   "note": "Metinler olasılık bildirir; miktar etiketten bilinmez. Her kural resmi bir kaynağa dayanır."
@@ -275,6 +275,76 @@
    "text": "AB katkı tüzüğüne göre propil gallat, TBHQ ve BHA birlikte kullanılırsa her birinin miktarı orantılı olarak azaltılmalıdır; üst sınır toplama uygulanır.",
    "sources": [
     "https://eur-lex.europa.eu/eli/reg/2018/1481/oj"
+   ]
+  },
+  {
+   "id": "sorbat_benzoat",
+   "mode": "gida",
+   "type": "toplam",
+   "level": "yellow",
+   "min": 2,
+   "title": "Birlikte Dikkat: Birden fazla sorbat ya da benzoat",
+   "groups": [
+    {
+     "label": "Sorbat / benzoat",
+     "ids": [
+      "E200",
+      "E202",
+      "E210",
+      "E211",
+      "E212",
+      "E213"
+     ]
+    }
+   ],
+   "text": "AB katkı tüzüğü birçok gıda grubunda sorbik asit, sorbatlar, benzoik asit ve benzoatlar için tek bir üst sınır koyar: bu koruyucular tek başına ya da birlikte eklenebilir, sınır toplama uygulanır ve serbest asit cinsinden hesaplanır.",
+   "sources": [
+    "https://www.legislation.gov.uk/eur/2008/1333/annex/II/table/34/group/1/2020-12-31"
+   ]
+  },
+  {
+   "id": "karagenan",
+   "mode": "gida",
+   "type": "toplam",
+   "level": "yellow",
+   "min": 2,
+   "title": "Birlikte Dikkat: Karagenan + işlenmiş Eucheuma yosunu",
+   "groups": [
+    {
+     "label": "Karagenan",
+     "ids": [
+      "E407",
+      "E407a"
+     ]
+    }
+   ],
+   "text": "EFSA 2018'de karagenan (E 407) ve işlenmiş Eucheuma yosunu (E 407a) için ortak bir günlük alım sınırı belirledi: 75 mg/kg vücut ağırlığı. Verilerdeki belirsizlikler nedeniyle sınırı geçici saydı. Sınır ikisinin toplamı içindir.",
+   "sources": [
+    "https://www.efsa.europa.eu/en/efsajournal/pub/5238"
+   ]
+  },
+  {
+   "id": "sorbitan",
+   "mode": "gida",
+   "type": "toplam",
+   "level": "yellow",
+   "min": 2,
+   "title": "Birlikte Dikkat: Birden fazla sorbitan esteri",
+   "groups": [
+    {
+     "label": "Sorbitan esteri",
+     "ids": [
+      "E491",
+      "E492",
+      "E493",
+      "E494",
+      "E495"
+     ]
+    }
+   ],
+   "text": "EFSA 2017'de sorbitan esterleri (E 491–495) için ortak bir günlük alım sınırı belirledi: sorbitan cinsinden 10 mg/kg vücut ağırlığı. Hiçbir yaş grubunda alımın bu sınırı aşmadığını bildirdi. Sınır tüm sorbitan esterlerinin toplamı içindir.",
+   "sources": [
+    "https://www.efsa.europa.eu/en/efsajournal/pub/4788"
    ]
   },
   {

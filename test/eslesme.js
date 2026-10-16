@@ -9,7 +9,7 @@ const food=t=>C.findCombos(R,'gida',C.comboItemsFood(L.analyze(t,idx),idx)).map(
 const koz=t=>C.findCombos(R,'koz',C.comboItemsK(KL.analyzeK(t,K,{}))).map(c=>c.rule.id).sort();
 const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b.slice().sort());
 // Veri
-ok(R.length===22,'kural sayısı '+R.length);
+ok(R.length===25,'kural sayısı '+R.length);
 R.forEach(r=>{ok(r.sources&&r.sources.length&&r.sources.every(u=>/^https:\/\//.test(u)),r.id+' kaynak');ok(!/tehlikeli|zehir|dönüşüyor/i.test(r.text+r.title),r.id+' abartılı dil');});
 // Gıda
 let x;
@@ -45,6 +45,14 @@ x=koz("Aqua, Benzoic Acid, Sodium Benzoate, Potassium Sorbate, Sorbic Acid");ok(
 x=koz("Aqua, Cetrimonium Chloride, Behentrimonium Chloride");ok(x.includes('kuaterner'),'kuaterner '+x);
 x=koz("Aqua, Retinol, Retinyl Palmitate");ok(x.includes('a_vitamini'),'A vitamini '+x);
 x=koz("Aqua, Sodium Sulfite, Sodium Metabisulfite");ok(x.includes('kozmetik_sulfit'),'kozmetik sülfit '+x);
+// 16.10.2026 genişletme
+x=food("Sos: su, koruyucular (potasyum sorbat, sodyum benzoat)");ok(eq(x,['sorbat_benzoat']),'sorbat+benzoat '+x);
+x=food("Peynir, koruyucu (sorbik asit, potasyum sorbat)");ok(eq(x,['sorbat_benzoat']),'iki sorbat '+x);
+x=food("Su, askorbik asit, potasyum sorbat, sodyum benzoat");ok(eq(x,['benzen','sorbat_benzoat']),'sorbat+benzoat+C '+x);
+x=food("Tatlı: süt, şeker, kıvam artırıcı (karagenan, E407a)");ok(eq(x,['karagenan']),'karagenan '+x);
+x=food("Tatlı: süt, şeker, kıvam artırıcı (karagenan)");ok(eq(x,[]),'tek karagenan '+x);
+x=food("Maya: Saccharomyces cerevisiae, emülgatör (sorbitan monostearat, E492)");ok(eq(x,['sorbitan']),'sorbitan '+x);
+x=food("Maya: Saccharomyces cerevisiae, emülgatör (sorbitan monostearat)");ok(eq(x,[]),'tek sorbitan '+x);
 // Gıda kuralı kozmetikte çalışmaz
 ok(eq(koz("Aqua, Sodium Benzoate, Ascorbic Acid"),[]),'gıda kuralı kozmetikte');
 console.log(n+' eşleşme denetimi, '+fail+' hata');process.exit(fail?1:0);
