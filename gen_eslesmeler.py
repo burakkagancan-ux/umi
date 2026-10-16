@@ -16,7 +16,7 @@ import json, os, re
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "data", "eslesmeler.json")
 VERSION = "0.1.0"
-LAST_UPDATED = "2026-10-04"
+LAST_UPDATED = "2026-10-16"
 
 FDA_BENZ = "https://www.fda.gov/food/process-contaminants-food/questions-and-answers-occurrence-benzene-soft-drinks-and-other-beverages"
 HC_BENZ = "https://www.canada.ca/en/health-canada/services/food-nutrition/food-safety/chemical-contaminants/food-processing-induced-chemicals/benzene.html"
@@ -33,6 +33,9 @@ NIT_OP = "https://efsa.europa.eu/en/efsajournal/pub/4786"
 PS = "https://www.legislation.gov.uk/eur/2020/356"
 GAL = "https://eur-lex.europa.eu/eli/reg/2018/1481/oj"
 VITA = "https://eur-lex.europa.eu/eli/reg/2024/996/oj"
+SORB_BENZ = "https://www.legislation.gov.uk/eur/2008/1333/annex/II/table/34/group/1/2020-12-31"
+CARR = "https://www.efsa.europa.eu/en/efsajournal/pub/5238"
+SORBITAN = "https://www.efsa.europa.eu/en/efsajournal/pub/4788"
 
 
 def food_rules(edb):
@@ -91,6 +94,22 @@ def food_rules(edb):
          "groups": [{"label": "Propil gallat, TBHQ, BHA", "ids": ["E310", "E319", "E320"]}],
          "text": "AB katkı tüzüğüne göre propil gallat, TBHQ ve BHA birlikte kullanılırsa her birinin miktarı orantılı olarak azaltılmalıdır; üst sınır toplama uygulanır.",
          "sources": [GAL]},
+        # 16.10.2026 genişletme
+        {"id": "sorbat_benzoat", "mode": "gida", "type": "toplam", "level": "yellow", "min": 2,
+         "title": "Birlikte Dikkat: Birden fazla sorbat ya da benzoat",
+         "groups": [{"label": "Sorbat / benzoat", "ids": ["E200", "E202", "E210", "E211", "E212", "E213"]}],
+         "text": "AB katkı tüzüğü birçok gıda grubunda sorbik asit, sorbatlar, benzoik asit ve benzoatlar için tek bir üst sınır koyar: bu koruyucular tek başına ya da birlikte eklenebilir, sınır toplama uygulanır ve serbest asit cinsinden hesaplanır.",
+         "sources": [SORB_BENZ]},
+        {"id": "karagenan", "mode": "gida", "type": "toplam", "level": "yellow", "min": 2,
+         "title": "Birlikte Dikkat: Karagenan + işlenmiş Eucheuma yosunu",
+         "groups": [{"label": "Karagenan", "ids": ["E407", "E407a"]}],
+         "text": "EFSA 2018'de karagenan (E 407) ve işlenmiş Eucheuma yosunu (E 407a) için ortak bir günlük alım sınırı belirledi: 75 mg/kg vücut ağırlığı. Verilerdeki belirsizlikler nedeniyle sınırı geçici saydı. Sınır ikisinin toplamı içindir.",
+         "sources": [CARR]},
+        {"id": "sorbitan", "mode": "gida", "type": "toplam", "level": "yellow", "min": 2,
+         "title": "Birlikte Dikkat: Birden fazla sorbitan esteri",
+         "groups": [{"label": "Sorbitan esteri", "ids": ["E491", "E492", "E493", "E494", "E495"]}],
+         "text": "EFSA 2017'de sorbitan esterleri (E 491–495) için ortak bir günlük alım sınırı belirledi: sorbitan cinsinden 10 mg/kg vücut ağırlığı. Hiçbir yaş grubunda alımın bu sınırı aşmadığını bildirdi. Sınır tüm sorbitan esterlerinin toplamı içindir.",
+         "sources": [SORBITAN]},
     ]
 
 
