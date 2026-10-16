@@ -1,4 +1,4 @@
-{"meta":{"lang": "en", "generated": "2026-10-16", "count": 4811},
+{"meta":{"lang": "en", "generated": "2026-10-16", "count": 4810},
 "t":{
 "111-76-2.name":"2-Butoxyethanol",
 "1310-58-3.name":"Potassium Hydroxide",
@@ -548,7 +548,6 @@
 "kaynak.ebb93137cd":"European Commission (EUR-Lex, consolidated text)",
 "kaynak.f905bfdded":"Ministry of Health of Türkiye, General Directorate of Public Health",
 "koz.eff.miktar":"The classification applies to the pure substance; cosmetics use it diluted, so the effect in a product depends on its concentration.",
-"koz.eval":"The colour follows the same rule as the cosmetics result in Label Reader: the annexes of the EU Cosmetics Regulation and the monitored lists. Labels do not state concentrations, so the amount in a product is unknown. 'No specific warning' is not an endorsement.",
 "koz.pw.ed":"On the EU priority list of potential endocrine disruptors (substances suspected of affecting the hormone system). The list is not a verdict.",
 "koz.pw.koku":"Fragrance allergen: in the EU it must be named in the ingredient list above a set level; look for its name on the label.",
 "koz.reg.yok":"Not in the annexes of the EU Cosmetics Regulation (prohibited, restricted and permitted lists); there is no limit or labelling rule specific to this substance. The general safety assessment rule applies to every product.",

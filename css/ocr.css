@@ -150,11 +150,10 @@ button.kkayit{flex-direction:column;align-items:flex-start;gap:4px;width:100%;te
 .kyedek{margin-top:20px;border-top:1px solid var(--line);padding-top:6px}
 body.mode-ekle .w>:not(#ekle){display:none!important}#ekle[hidden]{display:none}body.mode-ekle .w>#ekle:not([hidden]){display:block!important}
 .ekitem{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:0 0 6px;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px}.ekdurum{display:flex;flex-wrap:wrap;gap:4px}.chip.ekok{background:var(--yesilbg);border-color:#C7DACF;color:var(--yesil);font-weight:600}.chip.ekbek{background:var(--sunk);color:var(--mute)}
-body.mode-ekle .rozetsimge{display:none}
-body.mode-topluluk .w>:not(#topluluk){display:none!important}#topluluk[hidden]{display:none}body.mode-topluluk .w>#topluluk:not([hidden]){display:block!important}body.mode-topluluk .rozetsimge{display:none}
+body.mode-topluluk .w>:not(#topluluk){display:none!important}#topluluk[hidden]{display:none}body.mode-topluluk .w>#topluluk:not([hidden]){display:block!important}
 .tphedef .tpsay{font-weight:600}#topluluk .seg{margin:6px 0 10px}.tpitem .kin{font-variant-numeric:tabular-nums}.tpitem button{margin-top:4px}
 body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:none}body.mode-rozet .w>#rozet:not([hidden]){display:block!important}
-.w{position:relative}.rozetsimge{position:absolute;top:14px;inset-inline-end:16px}body.mode-profil .rozetsimge{display:none}
+.w{position:relative}
 .cvm{display:inline-block;font-size:11px;font-weight:600;line-height:1.5;color:var(--mute);background:var(--sunk);border-radius:999px;padding:0 7px;margin-inline-start:2px;vertical-align:1px;white-space:nowrap;font-style:normal}
 /* Profilim (14.10.2026): kısayol kutuları 2×2, bölümler (Sizin için uyarılar, Kişisel bilgiler, Ayarlar, Hakkında), liste satırları */
 .kisayol{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}

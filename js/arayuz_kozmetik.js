@@ -22,7 +22,6 @@ function setMode(m,save,tasi){
   $("karsla").hidden=!KARS_AYAR.acik;
   $("camtxt").textContent=t("foto.kamera_"+(m==="koz"?"koz":m==="tem"?"tem":"gida"));
   if(save)depoYazMetin("tur",m);
-  if(typeof rozetSimgeGuncelle==="function")rozetSimgeGuncelle();   // üstteki simge seçili türün rozeti
   ST.textContent=STMSG[m]||t((m==="koz"?"koz":m==="tem"?"tem":"gida")+".yukleniyor");
   if(m==="koz")loadK().then(function(){if($("metin").value.trim())run()},function(){});
   else if(m==="tem")loadT().then(function(){if($("metin").value.trim())run()},function(){});

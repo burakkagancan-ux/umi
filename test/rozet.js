@@ -1,7 +1,7 @@
 // Rozetler (G-01): eşikler ve "hepsi" kademesi, ad anahtarları, sayım ve tekilleştirme, kutlama bir kez, yedek birleştirme, simge, paylaşım kartı,
 // tanım dosyası ve metinler. Çalıştır: node test/rozet.js
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
-Object.assign(globalThis,require('./yukle.js'));global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetBaglam,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,ROZET_STIL,kayitYedek,kayitGeriYukle,t};
+Object.assign(globalThis,require('./yukle.js'));global.Z={rozetBos,rozetNorm,rozetIz,rozetEsikler,rozetAdAnahtar,rozetSira,rozetDurumu,rozetEkle,rozetYeni,rozetGoruldu,rozetToplam,rozetBirlestir,rozetBosMu,rozetSunucuYaz,rozetSvg,rozetKartCiz,ROZET_AYAR,ROZET_ISARET,ROZET_STIL,kayitYedek,kayitGeriYukle,t};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const def=JSON.parse(fs.readFileSync(path.join(R,'data/rozetler.json'),'utf8'));
 const ans=JSON.parse(fs.readFileSync(path.join(R,'data/ansiklopedi.json'),'utf8'));
@@ -38,7 +38,7 @@ ok(!Z.rozetEkle(d,'okur','GIDA','x').eklendi&&!Z.rozetEkle(d,'okur','gida','').e
 const once=JSON.stringify(d);Z.rozetEkle(d,'okur','gida','E999');ok(JSON.stringify(d)===once,'durum yerinde değişmez');
 let r=Z.rozetDurumu(def,d,'okur','gida');
 ok(r.kademe===2&&r.ad==='rozet.okur.k2'&&r.sonraki===25&&r.sonrakiAd==='rozet.okur.k3'&&Math.abs(r.ilerleme-2/15)<1e-9,'12 sayfa: 2. kademe, sonraki 25: '+JSON.stringify(r));
-ok(Z.rozetDurumu(def,Z.rozetBos(),'okur','gida').kademe===0&&!Z.rozetBaglam(def,Z.rozetBos(),'okur','gida'),'hiç rozet yoksa bağlam simgesi yok');
+ok(Z.rozetDurumu(def,Z.rozetBos(),'okur','gida').kademe===0,'hiç rozet yoksa kademe 0');
 ok(Z.rozetDurumu(def,d,'avci','gida').hazir&&Z.rozetDurumu(def,d,'avci','gida').n===0,'ürün ailesi hazır, sunucu yanıtı yoksa 0');
 ok(!Z.rozetEkle(d,'oncu','gida','1').eklendi,'ürün ailesi cihazda sayılmaz');
 {let s1=Z.rozetSunucuYaz(d,{eklenen:{gida:5},avci:{gida:12,koz:1},oncu:{gida:3},dogrulayici:{gida:'x',KOZ:4,tem:-1}},1000);

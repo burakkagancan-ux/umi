@@ -1,7 +1,6 @@
 /* Arayüz: rozetler (YOL_HARITASI.md G-01). Saf mantık js/rozet.js, tanımlar data/rozetler.json, metinler rozet.*.
    İki sayfada yüklenir (ocr.html, ansiklopedi.html); sayfaya özgü yardımcılara (el, $, openSheet) dayanmaz.
    - Sayım: rozetSay(aile, tür, öğe) → yeni kademe varsa kutlama kartı (bir kez; sayfaya satır içi kart, açılır pencere değil)
-   - Ekranın üstündeki küçük simge: o bağlamın en yüksek kademesi (rozetSimgeGuncelle), dokununca Rozetlerim
    - Rozetlerim ekranı (yalnızca ocr.html: #rozet, ocr.html#rozetler) ve rozet paylaşım kartı (ürün ve kişisel bilgi yok) */
 var ROZET_DEF=null,ROZET_DEF_SOZ=null,ROZET_SUZ="gida";
 function rzEl(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
@@ -24,7 +23,6 @@ function rozetSay(aile,tur,oge,goster){
     var d=s.d,y=rozetYeni(def,d,aile,tur);
     if(y)d=rozetGoruldu(d,aile,tur,y.kademe);
     if(!rozetStore(d))return null;   // saklanamıyorsa (gizli sekme) kutlama da yok: bir sonraki açılışta yeniden kutlanmasın
-    rozetSimgeGuncelle();
     if(y&&goster)goster(rozetKutlama(y));
     return y;
   }).catch(function(){return null});
@@ -77,18 +75,6 @@ function rozetKartGorsel(r){
   });
 }
 var PAY_HF_R='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF_R='"Figtree",system-ui,sans-serif';
-
-/* ---------- Ekranın üstündeki küçük simge: bağlamın en yüksek kademesi ----------
-   Sayfa bağlamı window.ROZET_BAGLAM işleviyle verir: {aile, tur} (ansiklopedi: okur + gıda süzgeci; Etiket Oku: dedektif + seçili tür) */
-function rozetSimgeGuncelle(){
-  var b=document.getElementById("rozetsimge");if(!b||typeof ROZET_BAGLAM!=="function")return;
-  rozetDefYukle().then(function(def){
-    var c=ROZET_BAGLAM(),r=c?rozetBaglam(def,rozetLoad(),c.aile,c.tur):null;
-    b.textContent="";b.hidden=!r;if(!r)return;
-    b.appendChild(rozetSvgEl(r.aile,r.sira,true));
-    b.setAttribute("aria-label",t("rozet.simge_aria",{ad:t(r.ad),aile:rozetAileAdi(r)}));b.title=t(r.ad);
-  },function(){b.hidden=true});
-}
 
 /* ---------- Rozetlerim (ocr.html) ---------- */
 function rozetProfil(){

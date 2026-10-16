@@ -237,8 +237,6 @@ def kozmetik_kayitlari(T, official, tem):
         T["cat." + code], T["cat." + code + ".what"] = ad, ne
     T["profile.koku"], T["profile.astim"] = "Koku alerjisi", "Astım / solunum hassasiyeti"
     T["region.DK"], T["region.FR"], T["region.ASEAN"] = "Danimarka", "Fransa", "ASEAN"
-    T["koz.eval"] = ("Renk, Etiket Oku'daki kozmetik sonucuyla aynı kurala göre verilir: AB kozmetik yönetmeliğinin ekleri ve izlenen listeler. "
-                     "Oranlar etikette yazmadığı için üründeki miktar bilinmez. 'Özel uyarı yok' bir onay değildir.")
     T["koz.reg.yok"] = ("AB kozmetik yönetmeliğinin eklerinde (yasak, kısıtlı ve izinli listeler) yer almıyor; bu maddeye özgü bir sınır ya da etiket kuralı yok. "
                         "Her ürün için genel güvenlik değerlendirmesi kuralı geçerlidir.")
     T["koz.eff.miktar"] = "Sınıf saf madde içindir; kozmetikte seyreltik kullanıldığından üründeki etki orana göre değişir."
@@ -361,7 +359,7 @@ def kozmetik_kayitlari(T, official, tem):
         recs.append({
             "id": rid, "slug": slugify(inci), "names": {"primary": rid + ".name", "aliases": aliases},
             "category": k["kategori"], "product_types": ["cosmetic"], "risk_level": KOZ_RISK[duzey], "review": "curated",
-            "evidence_level": "strong" if ents else "moderate", "summary": rid + ".summary", "evaluation": "koz.eval",
+            "evidence_level": "strong" if ents else "moderate", "summary": rid + ".summary", "evaluation": None,
             "content": {"what_it_does": rid + ".what", "found_in": ["%s.found.%d" % (rid, n) for n in range(len(k["nerede"]))], "in_the_body": None},
             "effects": effs, "agency_note": rid + ".agn",
             "diet_flags": {"vegan": vegan, "source": "animal" if vegan == "no" else "unknown", "gluten": "unknown"},

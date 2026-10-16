@@ -73,8 +73,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     // Rozet (G-01): bulunan ilk barkod gıda Etiket Dedektifi'nin ilk kademesi; kutlama kartı sonucun üstünde, üstte küçük simge
     await p.waitForSelector('#sonuc .rozetkut',{timeout:5000}).catch(()=>{});
     ok(/Yeni rozet/.test(await p.textContent('#sonuc .rozetkut').catch(()=>''))&&/Gözlemci/.test(await p.textContent('#sonuc .rozetkut').catch(()=>'')),'ilk barkod: "Gözlemci" kutlama kartı');
-    ok(await p.isVisible('#rozetsimge')&&/Gözlemci/.test(await p.getAttribute('#rozetsimge','aria-label')),'Etiket Oku üstünde gıda Etiket Dedektifi simgesi');
-    await p.click('#m-koz');ok(await p.isHidden('#rozetsimge'),'kozmetikte rozet yok: simge gizli');await p.click('#m-gida');
+    ok(!(await p.$('#rozetsimge')),'Etiket Oku üstünde rozet simgesi yok (16.10.2026, kullanıcı kararı)');
     await p.click('#barkodb');await p.waitForSelector('#sheet:not([hidden]) .belle input');
     await p.fill('#sheet .belle input',yok);await p.click('#sheet .belle button');
     await p.waitForFunction(()=>/henüz veritabanında yok/.test((document.querySelector('#sonuc .bkaynak')||{}).textContent||''),null,{timeout:15000});

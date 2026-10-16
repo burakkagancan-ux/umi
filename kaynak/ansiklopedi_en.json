@@ -19041,10 +19041,6 @@
    "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
    "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
   },
-  "koz.eval": {
-   "s": "The colour follows the same rule as the cosmetics result in Label Reader: the annexes of the EU Cosmetics Regulation and the monitored lists. Labels do not state concentrations, so the amount in a product is unknown. 'No specific warning' is not an endorsement.",
-   "tr": "Renk, Etiket Oku'daki kozmetik sonucuyla aynı kurala göre verilir: AB kozmetik yönetmeliğinin ekleri ve izlenen listeler. Oranlar etikette yazmadığı için üründeki miktar bilinmez. 'Özel uyarı yok' bir onay değildir."
-  },
   "koz.reg.yok": {
    "s": "Not in the annexes of the EU Cosmetics Regulation (prohibited, restricted and permitted lists); there is no limit or labelling rule specific to this substance. The general safety assessment rule applies to every product.",
    "tr": "AB kozmetik yönetmeliğinin eklerinde (yasak, kısıtlı ve izinli listeler) yer almıyor; bu maddeye özgü bir sınır ya da etiket kuralı yok. Her ürün için genel güvenlik değerlendirmesi kuralı geçerlidir."
