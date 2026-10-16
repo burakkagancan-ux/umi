@@ -77,6 +77,10 @@ module.exports=async({br,B,opt,ok,server})=>{
   // Profil > Kaydedilen Ürünlerim
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#kayitbar .kayitac');
   ok(/4 ürün/.test(await p.textContent('#kayitbar')),'profilde kayıt sayısı: '+(await p.textContent('#kayitbar')));
+  // Kısayol kutusu küçük; adet simgenin yanında (aynı satırda, sağında), ad altında
+  const ks=await p.$eval('#kayitbar .kayitac',k=>{const r=e=>k.querySelector(e).getBoundingClientRect(),i=r('svg'),s=r('.say'),a=r('b');
+    return {yan:Math.abs((s.top+s.bottom)/2-(i.top+i.bottom)/2)<4&&s.left>i.right,alt:a.top>=i.bottom,boy:Math.round(k.getBoundingClientRect().height)}});
+  ok(ks.yan&&ks.alt&&ks.boy<100,'Kaydedilen kutusu: adet simgenin yanında, küçük: '+JSON.stringify(ks));
   await p.click('#kayitbar .kayitac');await p.waitForSelector('#kayit:not([hidden]) .kkayit');
   ok(await p.$$eval('#kayit .kkayit',e=>e.length)===4,'liste 4 kayıt');
   ok(/Tümü \(4\).*Gıda \(2\).*Kozmetik \(1\).*Temizlik \(1\)/.test(await p.textContent('#kayit .kseg')),'süzgeç sayıları');

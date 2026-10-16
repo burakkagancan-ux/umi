@@ -158,9 +158,14 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 /* Profilim (14.10.2026): kısayol kutuları 2×2, bölümler (Sizin için uyarılar, Kişisel bilgiler, Ayarlar, Hakkında), liste satırları */
 .kisayol{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}
 .kisayol>div:empty{display:none}
-.kisayol .kayitac{flex-direction:column;align-items:flex-start;gap:10px;height:100%;margin:0;padding:14px;border:0;border-radius:20px;background:var(--sunk);min-height:112px}
-.kisayol .kayitac>svg,.kisayol .kayitac>.rzs{width:40px;height:40px;padding:9px;border-radius:12px;background:var(--card);box-sizing:border-box}
-.kisayol .kayitac .kt b,.kisayol .kayitac .kt{font-size:15px}
+/* Kısayol kutuları küçük (16.10.2026, kullanıcı isteği: "yazıları küçült, adetleri simgelerin yanına al"): üst satırda simge + adet (.say, kalın) ya da
+   adedi olmayan kutunun açıklaması (en fazla iki satır), altında ad; dört kutu aynı boyda. .kt display:contents: ad ve adet DOM'da sırasıyla kalır
+   (ekran okuyucu "Kaydedilen Ürünlerim, 3 ürün" okur) */
+.kisayol .kayitac{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;align-content:start;gap:8px;height:100%;margin:0;padding:11px 12px;border:0;border-radius:16px;background:var(--sunk);min-height:0}
+.kisayol .kayitac>svg,.kisayol .kayitac>.rzs{width:32px;height:32px;padding:7px;border-radius:10px;background:var(--card);box-sizing:border-box}
+.kisayol .kayitac .kt{display:contents}.kisayol .kayitac .kt>b{grid-column:1/-1;font-size:13.5px;line-height:1.25}
+.kisayol .kayitac .kt>.mut{grid-row:1;grid-column:2;font-size:11.5px;line-height:1.25;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.kisayol .kayitac .kt>.say{font-size:13px;font-weight:600;color:var(--c,var(--ink));font-variant-numeric:tabular-nums}
 .pbol{margin:24px 0 0}.pbol>h2{font-size:19px;margin:0 4px}.pbol>p.mut{margin:2px 4px 8px}.pbol>h2+div{margin-top:8px}
 .plist{border:1px solid var(--line);border-radius:20px;overflow:hidden}
 .plist>*{border-top:1px solid var(--sunk)}.plist>*:first-child{border-top:0}
@@ -202,7 +207,7 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .kisayol .kayitac{background:var(--b,var(--sunk));box-shadow:inset 0 0 0 1px rgba(27,33,30,.04)}
 .kisayol .kayitac>svg{stroke:#fff;background:var(--c,var(--ok));box-shadow:0 2px 6px rgba(27,33,30,.15)}
 .kisayol .kayitac>.rzs{background:#fff;box-shadow:0 2px 6px rgba(27,33,30,.12)}
-.kisayol .kayitac .kt b,.kisayol .kayitac .kt>:first-child{color:var(--c,var(--ink))}
+.kisayol .kayitac .kt>b{color:var(--c,var(--ink))}
 .pb-uy{--c:var(--c-uy);--b:var(--b-uy)}.pb-ki{--c:var(--c-ki);--b:var(--b-ki)}.pb-ay{--c:var(--c-ay);--b:var(--b-ay)}.pb-hk{--c:var(--c-hk);--b:var(--b-hk)}
 .pbol>h2{display:flex;align-items:center;gap:10px}
 .pbic{display:inline-flex;align-items:center;justify-content:center;flex:none;width:32px;height:32px;border-radius:10px;background:var(--b)}

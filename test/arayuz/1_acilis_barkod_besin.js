@@ -284,8 +284,8 @@ module.exports=async({br,B,opt,ok,server})=>{
         const bekle=()=>new Promise(r=>setTimeout(r,350));const boy=()=>Math.round(m.getBoundingClientRect().height);
         window.scrollTo(0,0);await bekle();const bas=boy();window.scrollTo(0,1500);await bekle();const asagi=m.classList.contains('kucuk'),kucukBoy=boy();
         window.scrollTo(0,1000);await bekle();const yukari=m.classList.contains('kucuk');window.scrollTo(0,0);await bekle();document.body.style.minHeight='';
-        const st=getComputedStyle(m);return {bas,asagi,kucukBoy,yukari,zemin:st.backgroundColor,bulanik:(st.backdropFilter||st.webkitBackdropFilter||'').includes('blur')}});
-      ok(am.asagi&&!am.yukari&&am.kucukBoy<am.bas&&am.bulanik&&/rgba\(255, 255, 255, 0\.7/.test(am.zemin),'alt menü saydam ve küçülür: '+JSON.stringify(am));
+        const st=getComputedStyle(m),r=m.getBoundingClientRect();return {yuzen:r.left>=8&&innerWidth-r.right>=8&&innerHeight-r.bottom>=8&&parseFloat(st.borderTopLeftRadius)>=16,bas,asagi,kucukBoy,yukari,zemin:st.backgroundColor,bulanik:(st.backdropFilter||st.webkitBackdropFilter||'').includes('blur')}});
+      ok(am.yuzen&&am.asagi&&!am.yukari&&am.kucukBoy<am.bas&&am.bulanik&&/rgba\(255, 255, 255, 0\.7/.test(am.zemin),'alt menü yüzen, saydam ve küçülür: '+JSON.stringify(am));
       await p.evaluate(()=>closeCompare());
       await p.evaluate(()=>localStorage.removeItem('kayitli'));
     }
