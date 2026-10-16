@@ -216,4 +216,27 @@ module.exports=async({br,B,opt,ok,server})=>{
   ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');
   ok(!errs.length,'ansiklopedi konsol hatası: '+errs.join(' | '));errs.length=0;
   await ctx.close();
+  // 4c) Ölçüm (A-03): gönderilen yalnızca olay adı; eski cihaz yeni sayılmaz; Ayarlar'dan ve tarayıcının izlenme karşıtı ayarıyla kapanır
+  {
+    const isaret=gpc=>{window.__olcum=[];navigator.sendBeacon=function(u){if(/\/olcum\?/.test(u))window.__olcum.push(u.split('?')[1]);return true};if(gpc)Object.defineProperty(navigator,'globalPrivacyControl',{get:()=>true})};
+    const ac=async(pg)=>{await pg.goto(B+'ocr.html');await pg.waitForFunction(ACILIS,null,{timeout:15000});return pg.evaluate(()=>({g:window.__olcum,d:JSON.parse(localStorage.getItem('olcum')||'null')}))};
+    let c2=await br.newContext(opt),e2=[],q=await newPage(c2);watch(q,e2);await q.addInitScript(isaret,false);
+    let r=await ac(q);const bugun=new Date().toISOString().slice(0,10);
+    ok(r.g.join()==='o=n,o=a'&&r.d&&r.d.ilk===bugun&&!r.d.eski,'ölçüm: ilk açılışta yeni + açan, cihazda yalnızca ilk gün: '+JSON.stringify(r));
+    r=await ac(q);ok(r.g.length===0,'ölçüm: aynı gün yeniden açılış sayılmaz: '+r.g.join());
+    await q.evaluate(()=>olcumTarama('f',MODE));
+    ok((await q.evaluate(()=>window.__olcum)).join()==='o=t&k=f&m=gida','ölçüm: tarama yalnızca kaynak ve tür');
+    // Ayarlar: kapatınca hiçbir şey gönderilmez
+    await q.goto(B+'ocr.html#profil');await q.waitForSelector('#olcumsec');await q.selectOption('#olcumsec','kapali');
+    await q.evaluate(()=>{const d=JSON.parse(localStorage.getItem('olcum'));d.son='2000-01-01';localStorage.setItem('olcum',JSON.stringify(d))});
+    r=await ac(q);await q.evaluate(()=>olcumTarama('b','koz'));
+    ok(r.d.kapali===true&&(await q.evaluate(()=>window.__olcum)).length===0,'ölçüm: Ayarlar\'dan kapatınca gönderilmez');
+    // Ölçümden önce kullanılan cihaz: yalnızca açan sayılır
+    await q.evaluate(()=>{localStorage.removeItem('olcum');localStorage.setItem('taramalar',JSON.stringify([{id:'h1',t:1,mode:'gida',name:'Tarama 1',text:'Şeker'}]))});
+    r=await ac(q);ok(r.g.join()==='o=a'&&r.d.eski===true,'ölçüm: eski cihaz yeni sayılmaz: '+JSON.stringify(r));
+    ok(!e2.length,'ölçüm konsol hatası: '+e2.join(' | '));await c2.close();
+    // Global Privacy Control açık: hiçbir şey gönderilmez, cihaza da yazılmaz
+    c2=await br.newContext(opt);q=await newPage(c2);await q.addInitScript(isaret,true);
+    r=await ac(q);ok(r.g.length===0&&r.d===null,'ölçüm: Global Privacy Control açıkken sayılmaz: '+JSON.stringify(r));await c2.close();
+  }
 };

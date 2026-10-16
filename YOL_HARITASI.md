@@ -66,7 +66,6 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 |---|---|---|---|---|---|
 | A-01 | Telefon testleri ve sonuçlara göre ayar | 👤 + Claude | — | Kullanıcının bulduğu her sorun PR'la kapanır | 🔄 👤 |
 | A-02 | Besin değeri tablosu (şeker, yağ, doymuş yağ, tuz; 100 g başına; NHS/AB eşikleri; puansız renkli gösterim). Adımlar: (1) barkod → Open Food Facts besin değerleri ✅ 13.10.2026; (2) etiket metninden tablo ayrıştırıcı + tutarlılık denetimi ✅ 13.10.2026 (js/besin.js, test/besin.js; denetimi geçmeyen değer "şüpheli", renk gösterilmez, kullanıcıya sorulur); (3) ekran: dört satır renkli, eşik kaynağı, düzeltilebilir değerler, "tabloyu da ekle" düğmesi ✅ 13.10.2026 (eşikler Birleşik Krallık FoP 2016 Ek 3; js/arayuz_besin.js); (3b) tablo kayıtlı ürüne (kaynağıyla saklanır, yedekle gider), karşılaştırmaya (dört satır; karar değişmez) ve paylaşım kartına (yalnızca renk gösterilebilen tablo) ✅ 14.10.2026; (4) gerçek etiket setiyle ölçüm ✅ 15.10.2026 (34 Türk etiketi, test/veri/besin_etiketler.json, test/olcum_besin.js; yanlış renk 5 → 0, CI denetler; kalan: okuma oranı, bkz. TEKNIK_BORC.md) | Claude + 👤 | — | Etiketteki tablo okunur, eşik kaynakları görünür, testli; gerçek etiket setinde hiç yanlış renk güvenle gösterilmez | ✅ 15.10.2026 |
-| A-03 | Gizlilik dostu ölçüm: günlük tarama, mod, paylaşım, 7 gün sonra geri dönüş (kişisel veri ve metin yok; Worker KV) | Claude | — | Kişisel veri gönderilmez, KVKK notu güncellenir | ⬜ |
 | A-04 | Fotoğraf okuma kalitesi: iki sütunlu etiket, kavisli ambalaj, otomatik kırpma önerisi (galeriden yükleme eklendi, #90) | Claude | — | Gerçek etiket setinde ölçülen iyileşme | 🔄 |
 | A-05 | Helal katmanı ("kaynağı belirsiz, sertifikaya bakın"; hüküm vermez) | Claude | — | Kaynaklı, yalnızca bilgi; MENA pazarının ön koşulu | ⬜ |
 | A-06 | Aylık mevzuat izleme (EUR-Lex, Resmî Gazete; CosIng zaten var) | Claude | — | Değişiklik varsa otomatik issue ya da PR | ⬜ |
@@ -113,7 +112,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | E-02 | Herkese açık değişiklik kaydı: her değerlendirme değişikliği tarihi ve kaynağıyla (ör. E553b sarı oldu, IARC 2025) | Claude | O-05 ✅ | Veri değişikliklerinden otomatik üretilir | 🔄 veri ve zorunlu kayıt hazır (O-05, 13.10.2026); kullanıcıya gösterilen sayfa ve çevirisi yok |
 | E-03 | Düzeltme süreci: "Hata bildir" → yanıt süresi hedefi → değişiklik kaydı | Claude + 👤 | E-02 | Süreç yöntem sayfasında yazılı | ⬜ |
 | E-04 | Bilim danışma kurulu (gıda bilimi, toksikoloji, dermatoloji) | 👤 | — | En az bir danışman; adları yöntem sayfasında | ⬜ 👤 |
-| E-05 | Hukuki görüş (KVKK/GDPR, Google Vision, "zararlı" dili, ürün adı geçen paylaşım, Bakanlık listesi gösterimi). **Tetik:** mağazaya çıkış, ilk ücretli özellik ya da ilk yurtdışı pazar; hangisi önce gelirse | 👤 | Tetik | Görüş alındı, gereken değişiklikler PR'la yapıldı | ⏸ 👤 |
+| E-05 | Hukuki görüş (KVKK/GDPR, Google Vision, "zararlı" dili, ürün adı geçen paylaşım, Bakanlık listesi gösterimi, varsayılan açık ve kapatılabilir anonim kullanım sayımı A-03). **Tetik:** mağazaya çıkış, ilk ücretli özellik ya da ilk yurtdışı pazar; hangisi önce gelirse | 👤 | Tetik | Görüş alındı, gereken değişiklikler PR'la yapıldı | ⏸ 👤 |
 | E-06 | Gizlilik politikası ve kullanım koşulları, çok dilli | Claude + 👤 | E-05 | Mağaza zorunluluğu | ⬜ |
 
 ### Faz F: Pazarlar
@@ -163,7 +162,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
    - C-05'ten hemen sonra: ~~O-22 katkıcı kimliği~~ ✅ 12.10.2026 → ~~G-01 rozetler~~ ✅ → ~~G-02 katkı ilerlemesi~~ ✅ 14.10.2026 → ~~G-04 topluluk hedefleri~~ ✅ 14.10.2026. G-03 ödülü D-01 kararını bekler.
 2. A-02 besin değeri tablosu
 3. C-01 👤 hesaplar → C-02 Android → C-04 cihaz içi okuma → **C-08 sayaç ve sınır denetimi**
-4. A-03 ölçüm
+4. ~~A-03 ölçüm~~ ✅ 16.10.2026 (sonuçlar /yonetim › Ölçüm)
 5. B-05 ülke katmanı, B-03 İngilizce ana içerik
 6. D-01 👤 gelir kararı → D-02
 7. E-05 tetik gelince hukuki görüş → F-01 Türkiye lansmanı → F-03
@@ -176,7 +175,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 
 | Faz | İzlenecek |
 |---|---|
-| A–C | Günlük tarama, mod dağılımı, paylaşım oranı, 7 ve 30 gün sonra geri dönen kullanıcı oranı, okuma başarısı (tanınma oranı) |
+| A–C | Günlük tarama, mod dağılımı, paylaşım oranı, 7 ve 30 gün sonra geri dönen kullanıcı oranı (A-03 ✅: /yonetim › Ölçüm), okuma başarısı (tanınma oranı) |
 | D | Premium'a geçiş oranı (kıyas: Yuka Fransa %0,3, ABD %2), kullanıcı başına gelir, iptal oranı |
 | E | Hata bildirimi sayısı ve çözülme süresi, değerlendirme değişikliği sayısı |
 | F | Ülke ve dil başına kullanıcı, mağaza puanı, arama motorundan gelen trafik |

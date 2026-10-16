@@ -49,9 +49,15 @@
 //
 // Paylaşım sayacı: POST /sayac?t=s|d (gövdesiz) günlük toplamı bir artırır (s: paylaşım menüsü, d: indirme).
 //   Ürün, metin, IP ya da kişisel bilgi saklanmaz; anahtar yalnızca "g:YYYY-AA-GG:t". GET /sayac son 60 günün toplamlarını döndürür.
+//
+// Ölçüm (A-03, 16.10.2026): POST /olcum?o=a|n|t|d7|d30[&k=f|b|y&m=gida|koz|tem][&ilk=YYYY-AA-GG] (gövdesiz) D1 `olcum` tablosunda
+//   (gun, ad) satırını bir artırır: a günlük açan cihaz, n yeni cihaz, t:<kaynak>:<tür> tarama, d7/d30 geri dönüş (gun = ilk kullanım günü).
+//   Kimlik, ürün, metin, barkod ve IP yazılmaz; bilinmeyen değer 400 (js/olcum.js olcumAnahtar). Okuma yalnızca yönetim sayfasından.
+//   KV yerine D1: ücretsiz katmanda KV günde 1.000, D1 100.000 yazma; UPSERT eşzamanlı istekte de sayıyı kaybetmez.
 
 import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, sozcukler, toplulukSay, urunSec } from "./barkod.js";
-import { YONETIM_CSP, YONETIM_CSS, YONETIM_HTML, YONETIM_JS, yonetimApi, yonetimYetki } from "./yonetim.js";
+import { YONETIM_CSP, YONETIM_CSS, YONETIM_HTML, YONETIM_JS, sayacGunler, yonetimApi, yonetimYetki } from "./yonetim.js";
+import { olcumAnahtar } from "../../js/olcum.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -85,14 +91,7 @@ function reply(env, origin, status, obj, extra) {
 async function sayac(request, env, allowed, R) {
   if (request.method === "GET") {
     if (!env.SAYAC) return R(200, { gunler: {}, not: "Sayaç bağlı değil." });
-    const list = await env.SAYAC.list({ prefix: "g:" });
-    const keys = list.keys.map((k) => k.name).sort().slice(-120);
-    const gunler = {};
-    for (const k of keys) {
-      const [, gun, t] = k.split(":");
-      (gunler[gun] = gunler[gun] || {})[t] = Number(await env.SAYAC.get(k)) || 0;
-    }
-    return R(200, { gunler });
+    return R(200, { gunler: await sayacGunler(env.SAYAC) });
   }
   if (request.method !== "POST") return R(405, { error: "Yalnızca POST isteği kabul edilir." });
   if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
@@ -106,6 +105,21 @@ async function sayac(request, env, allowed, R) {
   const key = "g:" + new Date().toISOString().slice(0, 10) + ":" + t;
   const n = Number(await env.SAYAC.get(key)) || 0;   // yaklaşık sayım: aynı anda gelen iki istek tek sayılabilir
   await env.SAYAC.put(key, String(n + 1));
+  return new Response(null, { status: 204 });
+}
+
+async function olcum(request, env, allowed, R) {
+  if (request.method !== "POST") return R(405, { error: "Yalnızca POST isteği kabul edilir." });
+  if (!allowed) return R(403, { error: "Bu adresten istek kabul edilmiyor." });
+  if (env.SAYAC_LIMIT) {   // paylaşım sayacıyla aynı sınır, ayrı anahtar (IP saklanmaz, yalnızca sınırın anahtarı)
+    const { success } = await env.SAYAC_LIMIT.limit({ key: "olcum:" + (request.headers.get("CF-Connecting-IP") || "bilinmiyor") });
+    if (!success) return new Response(null, { status: 429 });
+  }
+  const a = olcumAnahtar(new URL(request.url).searchParams, Date.now());
+  if (!a) return R(400, { error: "Geçersiz ölçüm." });
+  if (!env.URUNLER) return new Response(null, { status: 204 });
+  const db = await d1(env);
+  await db.prepare("INSERT INTO olcum (gun, ad, n) VALUES (?, ?, 1) ON CONFLICT (gun, ad) DO UPDATE SET n = n + 1").bind(a.gun, a.ad).run();
   return new Response(null, { status: 204 });
 }
 
@@ -167,6 +181,8 @@ async function d1(env) {
       // A-02: barkoda bağlı besin tablosu (besin: JSON {b, lt, birim}); kişisel veri yok, kim yalnızca aynı kişinin satırını yenilemek için
       env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS besin (id INTEGER PRIMARY KEY AUTOINCREMENT, kod TEXT NOT NULL, besin TEXT NOT NULL, t INTEGER NOT NULL, kim TEXT)"),
       env.URUNLER.prepare("CREATE INDEX IF NOT EXISTS besin_kod ON besin (kod, t DESC)"),
+      // A-03: günlük ölçüm toplamları (gun "YYYY-AA-GG", ad "a"|"n"|"t:f:gida"…|"d7"|"d30"); kimlik ve içerik yok
+      env.URUNLER.prepare("CREATE TABLE IF NOT EXISTS olcum (gun TEXT NOT NULL, ad TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (gun, ad))"),
     ]);
     // O-22 öncesi oluşmuş tabloya kim sütunu (eski satırlarda boş kalır). Sütun zaten varsa SQLite hata verir; yok sayılır.
     try { await env.URUNLER.prepare("ALTER TABLE katki ADD COLUMN kim TEXT").run(); } catch (e) { if (!/duplicate column/i.test(e && e.message)) kayit("d1_alter", e && e.message); }
@@ -362,6 +378,7 @@ async function isle(request, env) {
   const R = (status, obj, extra) => reply(env, origin, status, obj, extra);
   const yol = new URL(request.url).pathname;
   if (yol === "/sayac") return sayac(request, env, allowed, R);
+  if (yol === "/olcum") return olcum(request, env, allowed, R);
   if (/^\/(off|urun|besin|katki|aranan|topluluk)(\/|$)/.test(yol)) return barkod(request, env, allowed, R, yol);
   if (yol === "/yonetim" || yol.startsWith("/yonetim/")) return yonetim(request, env, yol);
 

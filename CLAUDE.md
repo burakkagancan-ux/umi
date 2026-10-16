@@ -33,7 +33,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 
 ## Dosya haritası
 - Sayfalar: ocr.html (Etiket Oku), ansiklopedi.html, index.html (Liste). Stil: fonts/ansiklopedi.css → tema.css → css/<sayfa>.css.
-- js/ saf mantık (ES modülü, testli): ceviri, ortak, gida, kozmetik, temizlik, eslesme, degerlendirme (ortak ürün modeli), profil_kart, karsilastir(_ayar), paylas(_ayar), kayit, besin, barkod, rozet, topluluk, ansiklopedi. Sayfa girişleri giris_*.js + kopru.js.
+- js/ saf mantık (ES modülü, testli): ceviri, ortak, gida, kozmetik, temizlik, eslesme, degerlendirme (ortak ürün modeli), profil_kart, karsilastir(_ayar), paylas(_ayar), kayit, besin, barkod, rozet, topluluk, ansiklopedi, olcum. Sayfa girişleri giris_*.js + kopru.js.
 - js/ arayüz (klasik betik, `defer`, sayfadaki sırayla): depo.js (cihaz deposu, ilk), veri_surum.js, dil.js, yukari.js, arayuz_ortak/profil/sonuc.js, arayuz_<alan>.js.
 - worker/: Cloudflare Worker (OCR, barkod, D1, yönetim); ortak hesapları js/'ten içe aktarır.
 - kaynak/: elle yazılan veri (TSV/JSON) → gen_*.py → data/ (üretilir, elle düzenlenmez). sw.js'in CORE/CACHE'i gen_sw.py ile üretilir. kaynak/simge/: uygulama simgesinin SVG kaynağı (gen_simge.js).
