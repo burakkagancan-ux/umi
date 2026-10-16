@@ -148,7 +148,7 @@ details.kgrp.kc1>summary,details.kgrp.kc2>summary,details.kgrp.kc0>summary{borde
 .racts{display:flex;gap:8px}.resbar .kayitb svg{fill:none}.resbar .kayitb.on svg{fill:currentColor}
 body.mode-kayit .w>:not(#kayit){display:none!important}#kayit[hidden]{display:none}body.mode-kayit .w>#kayit:not([hidden]){display:block!important}
 .kayitac{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0 4px;min-height:56px}
-.kayitac svg{width:24px;height:24px;flex:0 0 auto;fill:none;stroke:var(--ok);stroke-width:2;stroke-linejoin:round}.kayitac .kt{display:flex;flex-direction:column;gap:2px}.kayitac .mut{font-size:13px}
+.kayitac>svg{width:24px;height:24px;flex:0 0 auto;fill:none;stroke:var(--ok);stroke-width:2;stroke-linejoin:round}.kayitac .kt{display:flex;flex-direction:column;gap:2px}.kayitac .mut{font-size:13px}
 .kseg button{flex:1 1 auto;font-size:14px;padding:8px 6px}
 .krow{display:flex;gap:8px;margin:4px 0 10px}.krow input{flex:1;min-width:0;min-height:44px;font:inherit;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px}.krow select{min-height:44px;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:0 8px;background:var(--card)}
 button.kkayit{flex-direction:column;align-items:flex-start;gap:4px;width:100%;text-align:start}.kkayit .koz{font-size:13px;display:flex;align-items:center;flex-wrap:wrap}
@@ -213,6 +213,8 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .kisayol .kayitac{background:var(--b,var(--sunk));box-shadow:inset 0 0 0 1px rgba(27,33,30,.04)}
 .kisayol .kayitac>svg{stroke:var(--onok);background:var(--c,var(--ok));box-shadow:0 2px 6px rgba(27,33,30,.15)}
 .kisayol .kayitac>.rzs{background:var(--card);box-shadow:0 2px 6px rgba(27,33,30,.12)}
+/* Rozet simgesi kutunun içinde ortalı (17.10.2026): iç SVG kutuyu doldurur, satır boşluğu bırakmaz */
+.kisayol .kayitac>.rzs svg{display:block;width:100%;height:100%}
 .kisayol .kayitac .kt>b{color:var(--c,var(--ink))}
 .pb-uy{--c:var(--c-uy);--b:var(--b-uy)}.pb-ki{--c:var(--c-ki);--b:var(--b-ki)}.pb-ay{--c:var(--c-ay);--b:var(--b-ay)}.pb-hk{--c:var(--c-hk);--b:var(--b-hk)}
 .pbol>h2{display:flex;align-items:center;gap:10px}
