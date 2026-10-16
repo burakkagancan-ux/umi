@@ -293,7 +293,10 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 #sonuc>*{animation:belir .28s ease-out both}
 #sonuc>:nth-child(2){animation-delay:.04s}#sonuc>:nth-child(3){animation-delay:.08s}#sonuc>:nth-child(4){animation-delay:.12s}#sonuc>:nth-child(n+5){animation-delay:.16s}
 .oz-serit{transform-origin:left center;animation:dol .6s .2s cubic-bezier(.2,.7,.2,1) both}[dir="rtl"] .oz-serit{transform-origin:right center}
-.sheet:not([hidden]) .sheet-pn{animation:yuksel .24s cubic-bezier(.2,.8,.2,1)}.sheet:not([hidden]) .sheet-bg{animation:karar .2s ease-out}
+.sheet:not([hidden]) .sheet-pn{animation:yuksel .24s cubic-bezier(.2,.8,.2,1)}
+/* Barkod tanınınca (17.10.2026, küçük hareket detayları): görüntü bir an yeşil çerçeveyle hafifçe içe göçer, sonra alt sayfa kapanır (js/arayuz_barkod.js) */
+@keyframes bul{50%{transform:scale(.98)}}
+.bsheet.bulundu .bvid{outline:3px solid var(--ok);outline-offset:-3px;animation:bul .22s ease-out}.sheet:not([hidden]) .sheet-bg{animation:karar .2s ease-out}
 /* Koyu tema (17.10.2026; belirteçler tema.css'te, <html data-tema="koyu"> js/tema.js'ten): bu dosyada sabit yazılmış renklerin koyu karşılıkları. Risk simgeleri (iki renkli SVG) parlaklığı ters çevrilip
    rengi geri döndürülerek açık tona geçer (koyu yeşil daire açık yeşil, beyaz işaret koyu); şekil ve anlam aynı. */
 [data-tema="koyu"] .res>.t::before,[data-tema="koyu"] .res>.hd>.t::before,[data-tema="koyu"] .ic{filter:invert(1) hue-rotate(180deg)}

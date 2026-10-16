@@ -141,7 +141,7 @@ function kayitSuzKaydet(){depoYaz("kayit_suz",{mode:KAYIT_SUZ.mode,sira:KAYIT_SU
 function kayitKapat(){document.body.classList.remove("mode-kayit");$("kayit").hidden=true;window.scrollTo(0,0)}
 /* Liste satırı: ad, tür, tarih, özet; dokununca işlemler */
 function kayitSatir(k){
-  var b=el("button","kitem kkayit");b.type="button";
+  var b=el("button","kitem kkayit");b.type="button";b.setAttribute("data-k",k.id);
   b.appendChild(el("span","kin",k.name));
   var m=el("span","kis");var tc=el("span","chip turr",t(KAYIT_TUR[k.mode]));tc.setAttribute("data-tur",k.mode);m.appendChild(tc);m.appendChild(document.createTextNode(" "+kayitTarih(k.u||k.t)));b.appendChild(m);
   var oz=el("span","koz");
@@ -168,7 +168,11 @@ function kayitIslem(k,ret){
   btn(t("kayit.islem.duzenle"),"alt",function(){closeSheet();kayitSonuc(k,"duzenle")});
   btn(t("kayit.islem.sil"),"alt kclr",function(){
     if(!confirm(t("kayit.islem.sil_onay",{ad:k.name})))return;
-    kayitStore(kayitLoad().filter(function(x){return x.id!==k.id}));closeSheet();kayitProfil();kayitAc();
+    kayitStore(kayitLoad().filter(function(x){return x.id!==k.id}));closeSheet();
+    // Satır listede görünüyorsa küçülüp kaybolur, alttakiler yukarı gelir, sonra liste yeniden çizilir (js/hareket.js)
+    var sat=[].filter.call(document.querySelectorAll(".kkayit"),function(x){return x.getAttribute("data-k")===String(k.id)})[0];
+    function yenile(){kayitProfil();kayitAc()}
+    if(sat&&typeof hareketCik==="function")hareketCik(sat,yenile);else yenile();
   });
   openSheet(k.name,t(KAYIT_TUR[k.mode])+" · "+kayitTarih(k.u||k.t),body,ret);
 }

@@ -152,7 +152,7 @@ module.exports=async({br,B,opt,ok,server})=>{
       ok(/\br\b/.test(k)&&/kivi: Kiwi/.test(k),'kozmetik: etikette "Kiwi" yazılmış, "Kivi" eklenmiş: sözlük karşılığıyla bulunur: '+k.slice(0,200));
       await p.goto(B+'ocr.html#profil');await p.waitForSelector('#profil .pozsil',{state:'attached'});
       await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
-      await p.click('#profil .pozsil[aria-label="kivi silinsin"]');
+      await p.click('#profil .pozsil[aria-label="kivi silinsin"]');await p.waitForFunction(()=>document.querySelectorAll('#profil .pozc').length===1);   // hap küçülüp kaybolur
       ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('profil')).alOzel.join()==='kakao'&&document.querySelectorAll('#profil .pozc').length===1),'elle alerjen silinir');
       await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.removeItem('tur')});
     }
