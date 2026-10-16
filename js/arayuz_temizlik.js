@@ -57,7 +57,7 @@ function hzCard(x){
 }
 function tSummaryCard(S,A){
   var d=el("div","res sumbox");d.appendChild(el("div","t",t("ortak.ozet")));
-  function row(label,val,cls){var r=el("div","srow");r.appendChild(el("span","sl",label));r.appendChild(el("span","sv"+(cls?" "+cls:""),val));d.appendChild(r)}
+  function row(label,val,cls){ozetSatir(d,label,val,cls)}
   function lst(a){return a.length?t("ortak.say_liste",{n:a.length,l:a.join(", ")}):t("ortak.bulunamadi")}
   var n=A.hazards.length;
   row(t("tem.ozet.ifade"),n?t(S.info.length?"tem.ozet.ifade_say_bilgi":"tem.ozet.ifade_say",{n:n,r:S.red.length,y:S.yellow.length,i:S.info.length}):t("ortak.bulunamadi"),S.red.length?"r":S.yellow.length?"y":"");

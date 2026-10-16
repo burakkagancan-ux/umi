@@ -8,6 +8,14 @@ function LBL(i){return t(LBL_K[i])}
 function degBaglam(){return {idx:IDX,K:typeof KIDX!=="undefined"?KIDX:null,T:typeof TIDX!=="undefined"?TIDX:null,ptype:typeof PTYPE!=="undefined"?PTYPE:""}}
 function $(i){return document.getElementById(i)}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+/* Özet kartının satırı (gıda, kozmetik, temizlik; 17.10.2026): üstte ad, altında değer (telefonda dar iki sütun 4-5 satıra kırılıyordu). Değerin düzeyi
+   (r/o uyarı, y dikkat) adın önünde sonuç kartlarındaki renk + şekil simgesiyle; ekran okuyucuya düzeyin adı metin olarak. Değer metni yazı renginde, kalın. */
+function ozetSatir(d,label,val,cls){
+  var r=el("div","srow"+(cls?" "+cls:"")),l=el("span","sl");
+  if(cls){var lv=cls==="y"?"y":"r",ic=el("span","ic "+lv);ic.setAttribute("aria-hidden","true");l.appendChild(ic);l.appendChild(el("span","vh",t(lv==="y"?"risk.dikkat":"risk.uyari")+": "))}
+  l.appendChild(document.createTextNode(label));r.appendChild(l);
+  var v=el("span","sv"+(cls?" "+cls:""));if(typeof val==="string")v.textContent=val;else v.appendChild(val);r.appendChild(v);d.appendChild(r);
+}
 /* Veri metni öğesi: seçili dilde çevirisi yoksa metin kendi dilinde (lang) gösterilir, yanına küçük "henüz çevrilmedi" işareti eklenir (js/ceviri.js veriMetin) */
 function vEl(tag,cls,tr,anahtar,resmi){var r=veriMetin(tr,anahtar,resmi);return vIsaret(el(tag,cls,r.s),r)}
 function vIsaret(e,r){if(!r||!r.cevrilmedi)return e;e.lang=r.kod;var m=el("span","cvm",t("veri.cevrilmedi"));m.title=t("veri.cevrilmedi_aria");e.appendChild(document.createTextNode(" "));e.appendChild(m);return e}

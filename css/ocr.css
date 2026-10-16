@@ -39,8 +39,12 @@ textarea{width:100%;min-height:140px;font:14px/1.4 ui-monospace,monospace;paddin
 .sum{font-family:var(--hf);font-weight:700;margin:10px 0}#st{font-size:14px;color:var(--mute)}
 .ln{font-size:14px;margin-top:4px}.nt{color:var(--mute);font-style:italic;margin-bottom:14px}.upfnote{font-style:italic}
 details#okunan{margin:20px 0 8px}details#okunan summary{font-size:18px;font-weight:700;cursor:pointer}details.sec{margin:20px 0 8px}details.sec>summary{font-size:18px;font-weight:700;cursor:pointer}details#okunan textarea{margin-top:8px}
-.sumbox{border-inline-start-color:var(--ok)}.srow{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}.srow:first-of-type{border-top:0}
-.sl{flex:0 0 38%;color:var(--mute)}.sv{flex:1;min-width:0}.sv.r{color:var(--hi);font-weight:600}.sv.y{color:var(--yel);font-weight:600}
+.sumbox{border-inline-start-color:var(--ok)}/* Özet satırı (ozetSatir, 17.10.2026): telefonda ad üstte (küçük, soluk; düzeyi varsa önünde simge), değer altta; geniş ekranda iki sütun. Düzeyli değer kalın, yazı renginde
+   (renk simgede; eskiden bütün değer turuncu/amber yazılıyordu, uzun listede okunmuyordu) */
+.srow{display:grid;grid-template-columns:1fr;gap:2px;padding:9px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.4}.srow:first-of-type{border-top:0}
+.sl{display:flex;align-items:center;gap:6px;color:var(--mute);font-size:13px;font-weight:600}.sl .ic{width:15px;height:15px;margin:0;vertical-align:0}
+.sv{min-width:0;color:var(--ink)}.sv.r,.sv.y,.sv.o{font-weight:600}
+@media (min-width:560px){.srow{grid-template-columns:38% 1fr;gap:10px}.sl{align-items:flex-start;font-size:14px}}
 /* Besin değeri tablosu (js/arayuz_besin.js): renk yalnızca düzey etiketiyle birlikte (yalnız renge dayanmaz) */
 .btab{margin:6px 0}.brow{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:14px}.brow:first-child{border-top:0}
 .bad{flex:1;min-width:0}.bdeg{font-variant-numeric:tabular-nums;font-weight:600}.bdz{flex:none;min-width:64px;text-align:center;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600}
@@ -76,7 +80,7 @@ details.gz{font-size:13px;color:var(--mute);margin:0 0 10px}details.gz summary{c
 .ptype{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px;font-size:14px}
 .ptype button{font-size:14px;font-weight:600;min-height:44px;padding:5px 14px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line)}
 .ptype button[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}
-.res.o{border-inline-start-color:var(--hi);background:var(--hibg)}.sv.o{color:var(--hi);font-weight:600}
+.res.o{border-inline-start-color:var(--hi);background:var(--hibg)}
 .klist{font-size:14px;margin:6px 0}.klist li{margin:3px 0}.klist .fn{color:var(--mute)}.klist a.ansl{color:var(--ok)}
 .suggest{border-inline-start-color:var(--ok)}.suggest button{margin-top:8px}
 /* Risk: renk + şekil. Daire+tik = uyarı yok, üçgen = dikkat, daire+ünlem = uyarı (koyu turuncu); kırmızı yalnızca profile özel uyarıda */
@@ -102,7 +106,9 @@ body.mode-kars .w>:not(#kars){display:none!important}#kars[hidden]{display:none}
 .ic.g{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%231F4D3A'/%3E%3Cpath d='M7 12.5l3.2 3.2L17 9' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}.ic.y{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5L23 21.5H1z' fill='%238A5A00'/%3E%3Cpath d='M12 9v6' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='18.2' r='1.4' fill='%23fff'/%3E%3C/svg%3E")}.ic.r{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23A4470B'/%3E%3Cpath d='M12 6.5v7' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='17.2' r='1.5' fill='%23fff'/%3E%3C/svg%3E")}
 .ic.u{border:2px dashed var(--notr);border-radius:50%}
 .ic.n{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%238A8F8B'/%3E%3Cpath d='M7.5 12h9' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")}
-.resbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:4px 0 10px;padding:6px 0 8px;border-bottom:1px solid var(--line)}
+/* Kaydet / Paylaş çubuğu (17.10.2026, kullanıcı isteği): sonuçta aşağı kayarken ekranın üstünde kalır; zemin alt menü gibi yarı saydam (bulanıklaştırma yoksa düz) */
+.resbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:4px -16px 10px;padding:calc(6px + env(safe-area-inset-top,0px)) 16px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:15;background:var(--bg)}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.resbar{background:var(--cam);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}}
 .resbar .pay{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px}
 .resbar .pay svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .paypre{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:4px auto 12px}.paypre.uzun{width:auto;max-width:100%;max-height:62vh}.paywrap{max-height:62vh;overflow-y:auto;border-radius:12px;margin:0 0 12px}.paywrap .paypre{margin:0 auto}.paypre.cokuzun{width:100%;height:auto}.payseg{margin:0 0 10px}
