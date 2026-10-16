@@ -1,4 +1,4 @@
-{"meta":{"lang": "en", "generated": "2026-10-15", "count": 4807},
+{"meta":{"lang": "en", "generated": "2026-10-16", "count": 4811},
 "t":{
 "111-76-2.name":"2-Butoxyethanol",
 "1310-58-3.name":"Potassium Hydroxide",
@@ -537,6 +537,7 @@
 "kaynak.bf97e36fdd":"Ministry of Agriculture and Forestry",
 "kaynak.c6ca866aa6":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 1 (category 01 Dairy products; text as of 31.12.2020)",
 "kaynak.ca4afcabce":"EU priority list of potential endocrine disruptors (group A)",
+"kaynak.cf59741be9":"Ministry of Trade (Türkiye)",
 "kaynak.d00d120b25":"EFSA (press release, 29.09.2004; EFSA Journal 2004, 83)",
 "kaynak.d7bb8500ca":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 2 (text as of 31.12.2020)",
 "kaynak.da91046cfe":"European Commission (legislation.gov.uk copy)",
@@ -551,6 +552,8 @@
 "koz.pw.ed":"On the EU priority list of potential endocrine disruptors (substances suspected of affecting the hormone system). The list is not a verdict.",
 "koz.pw.koku":"Fragrance allergen: in the EU it must be named in the ingredient list above a set level; look for its name on the label.",
 "koz.reg.yok":"Not in the annexes of the EU Cosmetics Regulation (prohibited, restricted and permitted lists); there is no limit or labelling rule specific to this substance. The general safety assessment rule applies to every product.",
+"koz.tr.farkli":"Türkiye: In Türkiye, this substance is not on the list of prohibited substances (Annex II) of the Turkish Cosmetic Products Regulation; this EU ban has not been transposed into Turkish law. In Türkiye, the use limits in Annex III (1a, 1b) apply to boric acid and borates.",
+"koz.tr.yok":"Türkiye: This EU amendment has not yet been published in Türkiye (as of 07.10.2026; the latest amendment on mevzuat.gov.tr is Official Gazette (RG) 05.03.2024). Turkish legislation usually follows the EU months later.",
 "profile.allergen_celery":"Celery allergy",
 "profile.allergen_crustacean":"Crustacean allergy",
 "profile.allergen_egg":"Egg allergy",

@@ -145,7 +145,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 
 | Kimlik | İş | Durum |
 |---|---|---|
-| U-01 | Kozmetik ansiklopedisi (en yaygın ~300 madde; önce İngilizce, B-03). 15.10.2026 (ilk parti): 32 madde yayında, Türkçe + İngilizce (kimlik INCI; renk ve kurum satırları Etiket Oku'daki kozmetik verisinden, AB 1223/2009 ekleri ve izlenen listeler); tür seçicide Kozmetik açık. Kalan: madde sayısını ~300'e çıkarmak, SCCS görüşlerinin madde madde okunması, sonuç ekranından bağlantı | ◐ |
+| U-01 | Kozmetik ansiklopedisi (en yaygın ~300 madde; önce İngilizce, B-03). 15.10.2026 (ilk parti): 32 madde yayında, Türkçe + İngilizce (kimlik INCI; renk ve kurum satırları Etiket Oku'daki kozmetik verisinden, AB 1223/2009 ekleri ve izlenen listeler); tür seçicide Kozmetik açık. 16.10.2026: sonuç ekranından ansiklopediye bağlantı, Türkiye ek durumu ayrı satır, CosIng bağlantısı maddenin kendi sayfası. Kalan: madde sayısını ~300'e çıkarmak, SCCS görüşlerinin madde madde okunması | ◐ |
 | U-02 | Temizlik ansiklopedisi (~30 madde). 15.10.2026: 30 madde yayında (kimlik CAS; tehlike sınıfı ECHA CHEM, CLP Ek VI ya da kayıt yaptıranların ortak bildirimi); tür seçicide Temizlik açık. 15.10.2026 (2. adım): İngilizce metinler ve sonuç ekranındaki maddeden ansiklopediye bağlantı yapıldı. Kalan: SEA Ek-6 karşılaştırması, madde sayısını artırmak | ◐ |
 | U-03 | Temizlik: AB 2026/405 dijital ürün pasaportu hazırlığı (QR'dan içerik listesi okuma; 23.09.2029'dan itibaren zorunlu) | ⬜ |
 | U-05 | Kozmetik PFAS bayrağının ad düzeyine indirilmesi (TEKNIK_BORC.md) | ⬜ |

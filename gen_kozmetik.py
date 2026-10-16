@@ -24,7 +24,7 @@ from collections import defaultdict
 VERSION = "0.2.0"
 LAST_UPDATED = "2026-10-03"
 HERE = os.path.dirname(os.path.abspath(__file__))
-from uretec_ortak import kaynak_json, kaynak_tsv   # ortak yardımcılar (uretec_ortak.py)
+from uretec_ortak import kaynak_json, kaynak_tsv, koz_kimlik   # ortak yardımcılar (uretec_ortak.py)
 
 
 OUT = os.path.join(HERE, "data", "kozmetik.json")
@@ -638,6 +638,16 @@ def build_aliases(inci_names, reg_names):
     return out
 
 
+def ans_baglari(known):
+    """Sonuç ekranından ansiklopediye bağlantı: INCI adı → kozmetik ansiklopedisi kimliği (kaynak/ansiklopedi_kozmetik.json,
+    kimlik INCI). Sonuç ekranı maddeyi CosIng'deki INCI adıyla tanır; ad listede yoksa üretim durur."""
+    o = {}
+    for r in kaynak_json("ansiklopedi_kozmetik.json")["kayitlar"]:
+        assert r["inci"] in known, "INCI listesinde yok: " + r["inci"]
+        o[r["inci"]] = koz_kimlik(r["inci"])
+    return o
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cosing", default=os.environ.get("COSING_DIR", COSING_DIR))
@@ -689,6 +699,7 @@ def main():
         },
         "entries": lst,
         "watch": watch,
+        "ans": ans_baglari({a for e in lst for a in e["inci"]} | {r["inci_name"] for r in ing}),
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:

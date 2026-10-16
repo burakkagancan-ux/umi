@@ -17,6 +17,11 @@ def kaynak_tsv(ad):
         return [ln.rstrip("\n").split("\t") for ln in f if ln.strip() and not ln.startswith("#")]
 
 
+def koz_kimlik(inci):
+    """Kozmetik ansiklopedisi kaydının kimliği INCI adıdır; dosya adı ve URL için boşluk yerine alt çizgi (INCI'de tire geçer: BENZOPHENONE-3)."""
+    return inci.replace(" ", "_")
+
+
 def oku_json(yol):
     """Depo köküne göre (ya da mutlak) yoldaki JSON dosyası"""
     with open(os.path.join(HERE, yol), encoding="utf-8") as f:

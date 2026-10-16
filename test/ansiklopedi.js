@@ -158,7 +158,10 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
   ok(r.regulatory.filter(g=>/\.reg\.\d+$/.test(g.detail)).length===ents.length,id+' her AB ek kaydı bir kurum satırı');
   ok(ents.length||r.regulatory.some(g=>g.status==='not_listed'),id+' ekte yoksa "listede yok" satırı');
   r.regulatory.filter(g=>/\.reg\.\d+$|^koz\.reg\.yok$/.test(g.detail)).forEach(g=>ok(/CELEX:3\d{4}R\d{4}$/.test(g.source_url),id+' EUR-Lex bağlantısı: '+g.source_url));
-  ok(r.sources.some(s=>s.official&&s.url==='https://ec.europa.eu/growth/tools-databases/cosing/'),id+' CosIng kaynağı');
+  ok(r.sources.some(s=>s.official&&/^https:\/\/ec\.europa\.eu\/growth\/tools-databases\/cosing\/details\/\d+$/.test(s.url)),id+' CosIng kaynağı maddenin kendi sayfası');
+  const trs=[...new Set(ents.flatMap(e=>[e.tr].concat((e.updates||[]).map(u=>u.tr))).filter(Boolean))];
+  ok(r.regulatory.filter(g=>g.region==='TR'&&/^koz\.tr\./.test(g.detail)).map(g=>g.detail).join()===trs.map(x=>'koz.tr.'+x).join(),id+' Türkiye satırı yalnızca ek durumu varsa: '+trs);
+  ok(KI.ans[k.inci]===id,id+' sonuç ekranından bağlantı (kozmetik.json ans)');
   ok(r.effects.length>0&&r.related_ids.length>0,id+' etki ve benzer madde');
   ok(r.slug===ansSlug(k.inci),id+' slug INCI adından');
  });
@@ -166,6 +169,8 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
  ok(first('phenoxyethanol')==='PHENOXYETHANOL'&&ansSearch(IX,'SODIUM LAURETH SULFATE',2).some(r=>r.id==='SODIUM_LAURETH_SULFATE')&&ansSearch(IX,'oksibenzon',3).some(r=>r.id==='BENZOPHENONE-3')&&ansSearch(IX,'shea',3).some(r=>r.id==='BUTYROSPERMUM_PARKII_BUTTER'),'kozmetik araması (INCI, Türkçe ad, halk adı)');
  ok(ansSearch(IX,'limonen',5).some(r=>r.id==='LIMONENE')&&ansSearch(IX,'limonen',5).some(r=>r.id==='5989-27-5'),'aynı madde kozmetik ve temizlikte ayrı sayfa');
  ok(pw('LIMONENE',{al:[],koku:true})==='koku'&&pw('PROPYLPARABEN',{al:[],baby:true})==='baby'&&pw('BENZOPHENONE-3',{al:[],preg:true})==='preg'&&pw('GLYCERIN',{al:[],koku:true,preg:true})==='','kozmetik profil uyarıları (koku, bebek, endokrin listesi)');
+  ok(by.RETINOL.regulatory.some(g=>g.region==='TR'&&g.status==='concern'&&g.detail==='koz.tr.taslak'),'retinol: Türkiye taslak satırı');
+ ok(Object.keys(KI.ans).length===K.length,'ans yalnızca ansiklopedideki kozmetik maddeleri');
  ok(by.SODIUM_LAURETH_SULFATE.effects.some(x=>x.text==='tem.h.H318'&&x.amount==='koz.eff.miktar'),'SLES: saf maddenin ECHA sınıfı etki satırı');
  RK.forEach(r=>ok(!r.production,r.id+' üretim yolu alanı yok'));
 }

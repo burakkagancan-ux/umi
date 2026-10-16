@@ -65,6 +65,11 @@ function k3When(w,kind){
   if(kind!=="ban")return t("koz.k3.tarih",{d:d});
   return w.date>today?t("koz.k3.yasak_olacak",{d:d}):t("koz.k3.yasak_beri",{d:d});
 }
+/* Kozmetik ansiklopedisine bağlantı: INCI adı ansiklopedide varsa (KIDX.ans, kimlik INCI) bağlantı, yoksa null. Metin temizliktekiyle aynı. */
+function kAnsBag(name,cls,txt){
+  var id=KIDX.ans[name];if(!id)return null;
+  var a=el("a",cls,txt);a.href="ansiklopedi.html?id="+encodeURIComponent(id);return a;
+}
 function kCard(r){
   var d=el("div","res "+KCLS[r.level]),top=el("div","hd");
   top.appendChild(el("div","t",r.name));
@@ -103,6 +108,7 @@ function kCard(r){
       if(w.needs_review)pn.appendChild(el("div","how",t("koz.kart.bilgi_dogrulanmadi")));
     });
   }
+  var ab=kAnsBag(r.name,"ans",t("tem.ansiklopedi"));if(ab)pn.appendChild(ab);
   d.appendChild(pn);
   b.onclick=function(){pn.hidden=!pn.hidden;b.setAttribute("aria-expanded",pn.hidden?"false":"true");b.classList.toggle("on",!pn.hidden)};
   return d;
@@ -178,6 +184,7 @@ function renderK(res){
     if(r.how==="benzer")li.appendChild(el("span","fn",t("koz.okunan",{l:r.raw})));
     else if(norm(r.raw).indexOf(norm(r.name))<0)li.appendChild(el("span","fn",t("koz.etikette",{l:r.raw})));
     if(r.may)li.appendChild(el("span","fn",t("koz.icerebilir")));
+    var al=kAnsBag(r.name,"ansl",t("tem.ansiklopedi_kisa"));if(al){li.appendChild(el("span","fn"," · "));li.appendChild(al)}
     kChips(r).forEach(function(c){li.appendChild(el("span","chip",c))});
     ol.appendChild(li);
   });

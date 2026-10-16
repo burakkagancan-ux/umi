@@ -25,7 +25,7 @@ export function buildKIndex(kdb,kinci){
   map.forEach(function(s,k){var b=k[0]+k.length;(byFirst[b]=byFirst[b]||[]).push(k);if(k.length>7){b=k[1]+(k.length-1);(bySecond[b]=bySecond[b]||[]).push(k)}});
   var nos=new Map();map.forEach(function(s,k){if(k.indexOf(" ")>-1)nos.set(k.replace(/ /g,""),k)});
   var m=kdb.meta||{};
-  return {map:map,nos:nos,byFirst:byFirst,bySecond:bySecond,flagLevels:m.inci_flag_levels||{},flagReasons:m.inci_flag_reasons||{},flags:m.flags||{},watchLists:m.watch_lists||{},trText:m.tr_text||{}};
+  return {map:map,nos:nos,byFirst:byFirst,bySecond:bySecond,flagLevels:m.inci_flag_levels||{},flagReasons:m.inci_flag_reasons||{},flags:m.flags||{},watchLists:m.watch_lists||{},trText:m.tr_text||{},ans:kdb.ans||{}};
 }
 /* Metin kozmetik etiketine benziyor mu? (Gıda seçiliyken öneri göstermek için) */
 export function looksCosmetic(text){
