@@ -50,6 +50,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.
 - Neyin test edildiği / edilemediği her seferinde açıkça söylenir. Telefon testlerini kullanıcı yapar.
 - Değişiklikler `claude/...` dalında yapılır, PR açılır; kullanıcı GitHub'da "Merge pull request" der.
+- Kullanıcıya "birleştirin" denmiş bir PR'a yeni iş eklenmez: yeni istek güncel main'den açılan yeni dala ve yeni PR'a gider (kullanıcı o arada birleştirmiş olabilir). İstisnada itmeden önce ve sonra `gh pr view <no> --json state` bakılır; MERGED ise commit'in main'de olup olmadığı `git merge-base --is-ancestor <commit> origin/main` ile denetlenir.
 
 ## Vizyon ve ilkeler (kullanıcı kararı, 08.10.2026)
 - Amaç: para kazanan, küresel bir uygulama (hedef onlarca dil, olası 60). Türkiye ilk pazar, son değil.
