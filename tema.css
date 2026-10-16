@@ -13,8 +13,15 @@ h1,h2,h3{font-family:var(--hf);font-weight:700;line-height:1.2}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-.tabbar a{flex:1;max-width:240px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px 7px;font-size:12px;font-weight:600;color:var(--mute);text-decoration:none}
-.tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Yarı saydam alt menü, aşağı kayınca küçülür (16.10.2026, kullanıcı isteği: Instagram'daki gibi). Saydamlık yalnızca bulanıklaştırma destekleniyorsa:
+   bulanıksız yarı saydam zeminde arkadaki yazı simgelerle karışır. Küçülme js/alt_menu.js'in koyduğu .kucuk sınıfıyla; yazılar opacity ile gizlenir
+   (display:none değil), ekran okuyucu okumayı sürdürür. */
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.tabbar{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border-top-color:rgba(27,33,30,.08)}}
+.tabbar a{flex:1;max-width:240px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px 7px;font-size:12px;font-weight:600;color:var(--mute);text-decoration:none;transition:min-height .22s ease,padding .22s ease}
+.tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:width .22s ease,height .22s ease}
+.tabbar a span{max-height:18px;overflow:hidden;transition:opacity .18s ease,max-height .22s ease}
+.tabbar.kucuk a{min-height:40px;padding:4px}.tabbar.kucuk a svg{width:22px;height:22px}.tabbar.kucuk a span{opacity:0;max-height:0}
+@media (prefers-reduced-motion:reduce){.tabbar a,.tabbar a svg,.tabbar a span{transition:none}}
 .tabbar a[aria-current="page"]{color:var(--ok)}
 .tabbar a[data-tab="liste"]{display:none}   /* Liste şimdilik menüde yok (12.10.2026, kullanıcı kararı); sayfa ve veri güncellemesi çalışmaya devam eder. Geri açınca: html[data-ulke="TR"] ... {display:flex} (js/dil.js) */
 /* Rozetler (js/arayuz_rozet.js; ocr.html ve ansiklopedi.html): madalya simgesi, kutlama kartı, Rozetlerim aile kartları, ekranın üstündeki küçük simge */
