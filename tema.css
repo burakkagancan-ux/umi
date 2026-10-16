@@ -12,12 +12,14 @@ a{color:var(--ok);font-weight:600}
 h1,h2,h3{font-family:var(--hf);font-weight:700;line-height:1.2}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Yüzen alt menü (16.10.2026, kullanıcı isteği: "yüzen bir şey olsa daha güzel olur"): ekranın kenarlarından 12 px, altından 10 px (+ çentik payı) içeride,
+   yuvarlak köşeli ve gölgeli bir hap; geniş ekranda en fazla 440 px, ortada. Sayfanın alt boşluğu (body padding-bottom) ve Yukarı çık düğmesi (js/yukari.js) buna göre. */
+.tabbar{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:20;max-width:440px;margin:0 auto;display:flex;justify-content:center;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 1px 3px rgba(27,33,30,.08),0 8px 24px rgba(27,33,30,.12);overflow:hidden}
 /* Yarı saydam alt menü, aşağı kayınca küçülür (16.10.2026, kullanıcı isteği: Instagram'daki gibi). Saydamlık yalnızca bulanıklaştırma destekleniyorsa:
    bulanıksız yarı saydam zeminde arkadaki yazı simgelerle karışır. Küçülme js/alt_menu.js'in koyduğu .kucuk sınıfıyla; yazılar opacity ile gizlenir
    (display:none değil), ekran okuyucu okumayı sürdürür. */
-@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.tabbar{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border-top-color:rgba(27,33,30,.08)}}
-.tabbar a{flex:1;max-width:240px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px 7px;font-size:12px;font-weight:600;color:var(--mute);text-decoration:none;transition:min-height .22s ease,padding .22s ease}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.tabbar{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border-color:rgba(27,33,30,.08)}}
+.tabbar a{flex:1;max-width:240px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:7px 4px 6px;font-size:11.5px;font-weight:600;color:var(--mute);text-decoration:none;transition:min-height .22s ease,padding .22s ease}
 .tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:width .22s ease,height .22s ease}
 .tabbar a span{max-height:18px;overflow:hidden;transition:opacity .18s ease,max-height .22s ease}
 .tabbar.kucuk a{min-height:40px;padding:4px}.tabbar.kucuk a svg{width:22px;height:22px}.tabbar.kucuk a span{opacity:0;max-height:0}
@@ -54,4 +56,4 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .seg button{flex:1;min-width:0;min-height:40px;margin:0;padding:8px;border:0;border-radius:999px;background:transparent;color:var(--mute);font:inherit;font-weight:600;line-height:1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
 .seg button[aria-checked="true"]{background:var(--ok);color:var(--bg);box-shadow:0 1px 2px rgba(27,33,30,.12),0 2px 8px rgba(27,33,30,.06)}
 .seg small{font-size:12px;font-weight:400}
-body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}

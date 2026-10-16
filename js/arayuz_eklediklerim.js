@@ -36,7 +36,7 @@ function ekleProfil(){
   var b=el("button","kayitac");b.type="button";
   b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6v12M7 6v12M10 6v12M14 6v12M16 6v12M20 6v12"/></svg>';
   var s=el("span","kt");s.appendChild(el("b",null,t("ekle.baslik")));
-  var n=EKLE_SON?EKLE_SON.urunler.length:null;s.appendChild(el("span","mut",n==null?t("ekle.alt"):t("ekle.urun_say",{n:n})));b.appendChild(s);
+  var n=EKLE_SON?EKLE_SON.urunler.length:null;s.appendChild(el("span",n==null?"mut":"mut say",n==null?t("ekle.alt"):t("ekle.urun_say",{n:n})));b.appendChild(s);
   b.onclick=function(){location.hash="#eklediklerim"};box.appendChild(b);
 }
 /* ---------- Eklediklerim ekranı ---------- */

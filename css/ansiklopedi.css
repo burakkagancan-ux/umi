@@ -1,6 +1,6 @@
 /* Ansiklopedi (ansiklopedi.html): arama, liste, madde sayfası, sekmeler. Sayfaya özgü stil; ortak belirteçler ve alt menü tema.css, yazı tipleri fonts/ansiklopedi.css.
    15.10.2026'ya kadar sayfanın içinde <style> olarak duruyordu (U-07 8. adım: aynı yerde, aynı sırayla bağlantı; kural değişmedi). */
-body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+body{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 h1,h2,h3{margin:0}
 button{font:inherit;cursor:pointer}
 /* Başlık Etiket Oku ve Profilim'deki gibi: sola yaslı büyük başlık, çizgisiz, kaymaz; geri düğmesi yok (15.10.2026 kullanıcı isteği; geri için alt menü ve tarayıcı) */

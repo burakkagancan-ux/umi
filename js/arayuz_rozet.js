@@ -83,7 +83,7 @@ function rozetProfil(){
     box.textContent="";
     var n=rozetToplam(def,rozetLoad()),b=rzEl("button","kayitac rozetac");b.type="button";
     b.appendChild(rozetSvgEl("okur",1,n>0));
-    var s=rzEl("span","kt");s.appendChild(rzEl("b",null,t("rozet.baslik")));s.appendChild(rzEl("span","mut",n?t("rozet.say",{n:n}):t("rozet.henuz_yok")));b.appendChild(s);
+    var s=rzEl("span","kt");s.appendChild(rzEl("b",null,t("rozet.baslik")));s.appendChild(rzEl("span","mut say",n?t("rozet.say",{n:n}):t("rozet.henuz_yok")));b.appendChild(s);
     b.onclick=function(){location.hash="#rozetler"};box.appendChild(b);
   },function(){});
 }

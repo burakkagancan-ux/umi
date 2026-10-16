@@ -74,7 +74,7 @@ function kayitProfil(){
   var box=$("kayitbar");if(!box)return;box.textContent="";
   var n=kayitLoad().length,b=el("button","kayitac");b.type="button";
   b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>';
-  var s=el("span","kt");s.appendChild(el("b",null,t("kayit.baslik")));s.appendChild(el("span","mut",n?t("kayit.urun_say",{n:n}):t("kayit.henuz_yok")));b.appendChild(s);
+  var s=el("span","kt");s.appendChild(el("b",null,t("kayit.baslik")));s.appendChild(el("span","mut say",n?t("kayit.urun_say",{n:n}):t("kayit.henuz_yok")));b.appendChild(s);
   b.onclick=function(){kayitAc()};box.appendChild(b);
 }
 
