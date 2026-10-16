@@ -134,7 +134,7 @@ export function payWrap(text,maxW,maxLines,measure){
 }
 /* ---------- Çizim ---------- */
 export var PAY_RENK={bg:"#FFFFFF",card:"#FFFFFF",line:"#E3E5E3",ok:"#2741C8",okbg:"#E8ECFB",ink:"#1B211E",mute:"#5A615C",amb:"#8A5A00",ambbg:"#FFF3D1",hi:"#A4470B",hibg:"#FCE9DA",red:"#B3261E",redbg:"#FBE9E7",sunk:"#EEE9DD",bant2:"#D4DCFA",notr:"#8A8F8B"};
-export var PAY_HF='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF='"Figtree",system-ui,sans-serif';
+export var PAY_HF='"Manrope",system-ui,sans-serif',PAY_BF='"Manrope",system-ui,sans-serif';
 /* Dil dosyasında yazı tipi tanımlıysa (i18n/diller.json "yazi": Latin dışı alfabe) kartta da o kullanılır */
 export function payYazi(hf){var y=typeof DIL!=="undefined"&&DIL.yazi;return hf?(y&&y.baslik)||PAY_HF:(y&&y.govde)||PAY_BF}
 export function payRR(x,X,Y,W,H,r){x.beginPath();x.moveTo(X+r,Y);x.lineTo(X+W-r,Y);x.quadraticCurveTo(X+W,Y,X+W,Y+r);x.lineTo(X+W,Y+H-r);x.quadraticCurveTo(X+W,Y+H,X+W-r,Y+H);x.lineTo(X+r,Y+H);x.quadraticCurveTo(X,Y+H,X,Y+H-r);x.lineTo(X,Y+r);x.quadraticCurveTo(X,Y,X+r,Y);x.closePath()}

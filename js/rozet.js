@@ -205,7 +205,7 @@ export function rozetSvg(simge,sira,kazanildi){
    Çizilen metinler sırayla döner (test için). */
 export var ROZET_KART={w:1080,h:1920,pad:90,bant:120,madalya:560};
 export function rozetKartCiz(x,M,cfg,madalya,logo,yazi){
-  var L=ROZET_KART,W=L.w,H=L.h,P=L.pad,out=[],hf=(yazi&&yazi.baslik)||'"Bricolage Grotesque",system-ui,sans-serif',bf=(yazi&&yazi.govde)||'"Figtree",system-ui,sans-serif';
+  var L=ROZET_KART,W=L.w,H=L.h,P=L.pad,out=[],hf=(yazi&&yazi.baslik)||'"Manrope",system-ui,sans-serif',bf=(yazi&&yazi.govde)||'"Manrope",system-ui,sans-serif';
   var rtl=!!(yazi&&yazi.rtl);
   function font(w,px,h){x.font=w+" "+px+"px "+(h?hf:bf)}
   function txt(s,X,Y,c,al){x.fillStyle=c;x.textAlign=al||"center";x.fillText(s,X,Y);out.push(s)}
