@@ -91,6 +91,10 @@ module.exports=async({br,B,opt,ok,server})=>{
     await p.click('#rozet .kback');await p.waitForFunction(()=>location.hash==='#profil'&&!document.body.classList.contains('mode-rozet'));
     // 3 gıda rozeti + yukarıda açılan temizlik ve kozmetik sayfalarının Okur rozetleri (15.10.2026)
     ok(/5 rozet/.test(await p.textContent('#rozetbar')),'Profilim: "Rozetlerim · 5 rozet": '+await p.textContent('#rozetbar'));
+    // Rozet simgesi kutusunun içinde ortalı (17.10.2026: .kayitac svg kuralı iç SVG'yi 24px yapıp sağa-aşağı taşırıyordu)
+    {const k=await p.evaluate(()=>{const a=document.querySelector('#rozetbar .rzs').getBoundingClientRect(),b=document.querySelector('#rozetbar .rzs svg').getBoundingClientRect();
+      return {dx:Math.abs((a.left+a.right)-(b.left+b.right))/2,dy:Math.abs((a.top+a.bottom)-(b.top+b.bottom))/2,w:b.width,aw:a.width}});
+    ok(k.aw>0&&k.dx<0.6&&k.dy<0.6&&k.w<k.aw,'Profilim: rozet simgesi kutusunda ortalı '+JSON.stringify(k));}
     ok(await p.evaluate(()=>JSON.parse(kayitYedek([],0,'',rozetLoad())).rozetler.okur.gida.length===10),'rozetler yedek dosyasına girer');
     // G-02: ürün rozetleri ve Eklediklerim sunucudan (POST /katki {kim}); kimlik gövdede, yanıt sayıları ve listeyi verir
     {
