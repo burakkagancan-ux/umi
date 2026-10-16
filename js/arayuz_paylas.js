@@ -71,7 +71,7 @@ function payOpen(ret){
     var text=payText(M),file=null;
     try{file=new File([blob],t("pay.dosya_adi"),{type:"image/png"})}catch(e){}
     if(file&&navigator.canShare&&navigator.share&&navigator.canShare({files:[file]})){
-      navigator.share({files:[file],text:text,title:M.name}).then(function(){payCount("s");st.textContent=t("pay.paylasildi")},function(e){if(!e||e.name!=="AbortError")payFallback(blob,text,st)});
+      navigator.share({files:[file],text:text,title:M.name}).then(function(){payCount("s");st.textContent=t("pay.paylasildi");if(typeof hareketTamam==="function")hareketTamam(go)},function(e){if(!e||e.name!=="AbortError")payFallback(blob,text,st)});
     }else payFallback(blob,text,st);
   };
   openSheet(t("pay.baslik"),null,body,ret);

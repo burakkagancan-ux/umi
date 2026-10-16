@@ -12,6 +12,7 @@ function ozetKart(tur,ranks){
   var alt=[];if(c[3]&&c[2])alt.push(t("ozet.say.dikkat",{n:c[2]}));if(c[1])alt.push(t("ozet.say.dogrulanmadi",{n:c[1]}));if(c[0]&&(c[3]||c[2]))alt.push(t("ozet.say.yok",{n:c[0]}));
   if(alt.length)d.appendChild(el("div","oz-alt",alt.join(" · ")));
   if(ranks.length){var sr=el("div","oz-serit");sr.setAttribute("aria-hidden","true");ranks.slice().sort(function(x,y){return y-x}).forEach(function(k){sr.appendChild(el("span",CLS[k]))});d.appendChild(sr)}
+  if(typeof hareketSay==="function")hareketSay(d);   // sayılar sıfırdan sayar (js/hareket.js)
   return d;
 }
 /* Kilo girilmemişse günlük sınır notu sayfada bir kez (her kartta tekrar etmez) */

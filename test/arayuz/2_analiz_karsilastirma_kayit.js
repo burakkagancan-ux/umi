@@ -122,7 +122,8 @@ module.exports=async({br,B,opt,ok,server})=>{
   await p.fill('#sheet .kform input','Deterjan E');await p.click('#sheet .kform button:not(.alt)');
   ok(await p.evaluate(()=>kayitLoad().some(x=>x.name==='Deterjan E')&&kayitLoad().length===4),'yeniden adlandırma, kayıt sayısı aynı');
   const yedek=await p.evaluate(()=>kayitYedek(kayitLoad()));
-  await p.evaluate(()=>kayitAc());await p.click('#kayit .kseg button[data-m="tem"]');await p.click('#kayit .kkayit');await p.click('#sheet .kpick button.kclr');
+  await p.evaluate(()=>kayitAc());await p.click('#kayit .kseg button[data-m="tem"]');const sid=await p.getAttribute('#kayit .kkayit','data-k');await p.click('#kayit .kkayit');await p.click('#sheet .kpick button.kclr');
+  await p.waitForFunction(id=>!document.querySelector('#kayit .kkayit[data-k="'+id+'"]'),sid);   // satır küçülüp kaybolduktan sonra liste yeniden çizilir (js/hareket.js)
   ok(await p.evaluate(()=>kayitLoad().length)===3,'silme');
   // Yedekten geri yükleme (dosya seçimi)
   await p.setInputFiles('#kyedekdosya',{name:'y.json',mimeType:'application/json',buffer:Buffer.from(yedek)});await p.waitForTimeout(400);

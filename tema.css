@@ -74,4 +74,25 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 button,.btn,label.camera{transition:transform .12s ease}
 button:not(:disabled):active,.btn:active,label.camera:active{transform:scale(.97)}
 details[open]>:not(summary){animation:ac .2s ease-out}
-@media (prefers-reduced-motion:reduce){*,::before,::after{animation:none!important}button,.btn,label.camera{transition:none}button:not(:disabled):active,.btn:active,label.camera:active{transform:none}}
+/* Küçük hareket detayları (17.10.2026, kullanıcı isteği: "ufak gözüken ama güzel detaylar"; sınıfları js/hareket.js ve js/alt_menu.js koyar): seçilen
+   hap ya da düğme bir an büyüyüp yerine oturur (.pop), Kaydet'in çevresinde kısa bir halka (.halka), iş bitince düğmenin başında ✓ (.tamam), seçili
+   sekmenin üstünde kayan işaret ve zıplayan simge, yeni rozet büyüyüp parlayarak gelir, sayfalar arası yumuşak geçiş (desteklemeyen tarayıcıda olduğu
+   gibi). Yalnızca transform ve opacity; dokunuş yanıtı 250 ms'yi geçmez (kutlama ve sayma biraz uzun). Hareket hiçbir zaman risk anlamı taşımaz. */
+:root{--h-kisa:.18s;--h-orta:.25s;--h-yay:cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{40%{transform:scale(1.06)}}
+@keyframes halka{from{opacity:.6;transform:scale(.6)}to{opacity:0;transform:scale(1.45)}}
+@keyframes zipla{35%{transform:translateY(-4px)}70%{transform:translateY(1px)}}
+@keyframes rozetgel{from{opacity:0;transform:scale(.5) rotate(-14deg)}70%{opacity:1;transform:scale(1.06) rotate(2deg)}}
+@keyframes parla{from{opacity:.8;transform:scale(.6)}to{opacity:0;transform:scale(1.7)}}
+.pop{animation:pop var(--h-kisa) var(--h-yay)}
+.halka{position:relative}.halka::after{content:"";position:absolute;inset:0;border-radius:999px;border:2px solid var(--ok);pointer-events:none;animation:halka .45s ease-out forwards}
+.tamam::before{content:"\2713\00a0";display:inline-block;animation:pop var(--h-kisa) var(--h-yay)}
+.tabbar a svg.zipla{animation:zipla .3s ease-out}
+.sekme-isaret{position:absolute;top:0;left:-10px;width:20px;height:3px;border-radius:0 0 3px 3px;background:var(--ok);pointer-events:none}
+.sekme-isaret.kay{transition:transform var(--h-orta) cubic-bezier(.3,.7,.3,1)}
+.rozetkut .rzs.buyuk{position:relative;animation:rozetgel .5s cubic-bezier(.2,.8,.3,1) both}
+.rozetkut .rzs.buyuk::after{content:"";position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ok) 30%,transparent),transparent 70%);pointer-events:none;animation:parla .7s .15s ease-out both}
+@view-transition{navigation:auto}
+.tabbar{view-transition-name:tabbar}   /* menü sayfa geçişinde yerinde durur, yalnızca içerik geçer */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.2s}
+@media (prefers-reduced-motion:reduce){*,::before,::after{animation:none!important}button,.btn,label.camera{transition:none}button:not(:disabled):active,.btn:active,label.camera:active{transform:none}.sekme-isaret.kay{transition:none}.rozetkut .rzs.buyuk::after{display:none}@view-transition{navigation:none}}
