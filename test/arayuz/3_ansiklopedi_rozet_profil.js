@@ -56,6 +56,18 @@ module.exports=async({br,B,opt,ok,server})=>{
       const k2=await p.evaluate(()=>({kod:document.querySelector('#ana .ecode').textContent,ad:document.querySelector('#ana h2.name').textContent,quick:!!document.querySelector('#ana .quick'),
         tur:document.querySelector('#ana .turr').getAttribute('data-tur'),metin:document.getElementById('ana').textContent}));
       ok(k2.kod==='SODIUM LAURETH SULFATE'&&/SLES/.test(k2.ad)&&!k2.quick&&k2.tur==='koz'&&/H318/.test(k2.metin),'SLES kozmetik sayfası: INCI adı, tür etiketi, ECHA satırı: '+JSON.stringify(k2).slice(0,300));
+      // Türkiye ek durumu ayrı satır, CosIng bağlantısı maddenin kendi sayfası (16.10.2026)
+      await p.goto(B+'ansiklopedi.html?id=RETINOL');await p.waitForSelector('#ana .risk');
+      const k3=await p.evaluate(()=>({metin:document.getElementById('ana').textContent,cosing:[...document.querySelectorAll('#ana a')].map(a=>a.href).filter(h=>/cosing/.test(h))}));
+      ok(/Türkiye/.test(k3.metin)&&/Eylül 2026 yönetmelik taslağında/.test(k3.metin)&&k3.cosing.length&&k3.cosing.every(h=>/\/cosing\/details\/\d+$/.test(h)),'retinol: Türkiye satırı, CosIng madde sayfası: '+JSON.stringify(k3.cosing));
+      // Sonuç ekranından ansiklopediye (16.10.2026): dikkat kartının ayrıntısında düğme, tüm içerik listesinde bağlantı; ansiklopedide olmayan maddede yok
+      await p.goto(B+'ocr.html');await p.waitForSelector('#m-koz');await p.click('#m-koz');
+      await p.evaluate(()=>{document.getElementById('metin').value='Aqua, Retinol, Phenoxyethanol';run()});
+      await p.waitForFunction(()=>document.querySelector('#sonuc .klist a.ansl'),null,{timeout:5000}).catch(()=>{});
+      const k4=await p.evaluate(()=>({liste:[...document.querySelectorAll('#sonuc .klist a.ansl')].map(a=>a.getAttribute('href')),
+        kart:[...document.querySelectorAll('#sonuc .res .ipanel a.ans')].map(a=>a.getAttribute('href'))}));
+      ok(k4.liste.join()==='ansiklopedi.html?id=RETINOL,ansiklopedi.html?id=PHENOXYETHANOL'&&k4.kart.includes('ansiklopedi.html?id=RETINOL'),'kozmetik sonucundan ansiklopediye: '+JSON.stringify(k4));
+      await p.click('#m-gida');
       await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#tur-koz');await p.click('#tur-gida');await p.waitForSelector('#ana .okfil');
     }
     // Kaydettiklerim açılır liste (14.10.2026): kapalı başlar, sayı başlıkta, süzgeç değişince açık kalır

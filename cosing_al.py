@@ -10,7 +10,8 @@ Kullanım:
 
 Yazılanlar:
   kaynak/cosing/annex.II.csv ... annex.VI.csv  AB 1223/2009 Ek II-VI (gen_kozmetik.py'nin HEADERS sütunları)
-  kaynak/cosing/ingredients.csv                INCI listesi; inci_name, restriction, functions sütunları
+  kaynak/cosing/ingredients.csv                INCI listesi; inci_name, restriction, functions, substance_id sütunları
+                                               (substance_id: CosIng'deki madde sayfasının kimliği, .../cosing/details/<id>)
   kaynak/cosing/ingredients_eski.csv           CosIng'den sonradan çıkarılan INCI adları (eski etiketlerde
                                                hâlâ görülebilir; tanınmaya devam etsin diye saklanır, hiç silinmez)
   kaynak/cosing/surum.txt                      kaynak, indirme tarihi ve CosIng'deki en son yayın tarihi
@@ -26,7 +27,7 @@ LIMIT = 10000   # bir sorguda sayfalanabilen en fazla kayıt
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "kaynak", "cosing")
 ANNEXES = ["II", "III", "IV", "V", "VI"]
-ING_COLS = ["inci_name", "restriction", "functions"]
+ING_COLS = ["inci_name", "restriction", "functions", "substance_id"]   # substance_id: CosIng madde sayfası (cosing/details/<id>)
 # gen_kozmetik.py HEADERS ile aynı sıra
 COLS = {
     "II": ["reference_number", "inn", "cas_number", "ec_number", "regulation", "other_regulations", "sccs_opinions",
@@ -163,7 +164,7 @@ def main():
     for m in ing:
         n = v(m, "inciName")
         if n:
-            new[n] = [n, v(m, "cosmeticRestriction", ", "), ", ".join(m.get("functionName") or [])]
+            new[n] = [n, v(m, "cosmeticRestriction", ", "), ", ".join(m.get("functionName") or []), v(m, "substanceId")]
     # Önceki listede olup CosIng'den çıkarılan adlar ingredients_eski.csv'de birikir
     csv.field_size_limit(10 ** 9)
     old = {}
@@ -173,7 +174,7 @@ def main():
             for r in csv.DictReader(open(p, encoding="utf-8")):
                 n = r["inci_name"].strip()
                 if n and n not in new:
-                    old[n] = [n, r["restriction"], r["functions"]]   # ek bağlantısı korunur (ör. SAFROLE -> II/360)
+                    old[n] = [n, r["restriction"], r["functions"], r.get("substance_id", "")]   # ek bağlantısı korunur (ör. SAFROLE -> II/360)
     for fn, data in (("ingredients.csv", new), ("ingredients_eski.csv", old)):
         with open(os.path.join(OUT, fn), "w", encoding="utf-8", newline="") as f:
             w = csv.writer(f, lineterminator="\n")

@@ -19228,6 +19228,22 @@
   "kaynak.1d46d7c690": {
    "s": "Denmark",
    "tr": "Danimarka"
+  },
+  "kaynak.17b3ebcc94": {
+   "s": "Cosmetic Products Regulation of Türkiye (Official Gazette of Türkiye, 08.05.2023, No 32184, repeated issue)",
+   "tr": "Kozmetik Ürünler Yönetmeliği (Resmî Gazete 08.05.2023, 32184 mükerrer)"
+  },
+  "koz.tr.farkli": {
+   "s": "Türkiye: In Türkiye, this substance is not on the list of prohibited substances (Annex II) of the Turkish Cosmetic Products Regulation; this EU ban has not been transposed into Turkish law. In Türkiye, the use limits in Annex III (1a, 1b) apply to boric acid and borates.",
+   "tr": "Türkiye: Bu madde Türkiye Kozmetik Ürünler Yönetmeliği'nin yasaklı maddeler listesinde (Ek II) yer almıyor; AB'deki bu yasak Türkiye'ye aktarılmadı. Borik asit ve boratlar için Türkiye'de Ek III'teki (1a, 1b) kullanım sınırları geçerli."
+  },
+  "koz.tr.yok": {
+   "s": "Türkiye: This EU amendment has not yet been published in Türkiye (as of 07.10.2026; the latest amendment on mevzuat.gov.tr is Official Gazette (RG) 05.03.2024). Turkish legislation usually follows the EU months later.",
+   "tr": "Türkiye: Bu AB değişikliği Türkiye'de henüz yayımlanmadı (07.10.2026 itibarıyla; mevzuat.gov.tr'deki son değişiklik RG 05.03.2024). Türk mevzuatı AB'yi genellikle aylar sonra izler."
+  },
+  "koz.tr.taslak": {
+   "s": "Türkiye: This EU amendment is not yet in force in Türkiye; similar provisions appear in the Ministry of Trade's September 2026 draft regulation.",
+   "tr": "Türkiye: Bu AB değişikliği henüz yürürlükte değil; benzer hükümler Ticaret Bakanlığı'nın Eylül 2026 yönetmelik taslağında yer alıyor."
   }
  }
 }

@@ -1,4 +1,4 @@
-{"meta":{"lang": "tr", "generated": "2026-10-15", "count": 5493},
+{"meta":{"lang": "tr", "generated": "2026-10-16", "count": 5497},
 "t":{
 "111-76-2.name":"2-Bütoksietanol",
 "1310-58-3.name":"Potasyum Hidroksit",
@@ -672,6 +672,7 @@
 "kaynak.cab93f90da":"Citric acid and its calcium, potassium and sodium salts (WHO Food Additives Series 5)",
 "kaynak.cb3e39a0be":"Regulation (EC) 2009/1223",
 "kaynak.cddf2dfb8c":"WHO/FAO JECFA (IPCS INCHEM; FAS 40A,B,C)",
+"kaynak.cf59741be9":"Ticaret Bakanlığı",
 "kaynak.d00d120b25":"EFSA (basın duyurusu, 29.09.2004; EFSA Journal 2004, 83)",
 "kaynak.d207976622":"JECFA Evaluations: Adipic acid",
 "kaynak.d25ea6528c":"Re-evaluation of calcium silicate (E 552), magnesium silicate (E 553a(i)), magnesium trisilicate (E 553a(ii)) and talc (E 553b) as food additives",
@@ -720,6 +721,8 @@
 "koz.pw.ed":"AB'nin olası endokrin bozucu (hormon sistemini etkileyebileceği şüphesi olan) maddeler öncelik listesinde. Liste bir hüküm değildir.",
 "koz.pw.koku":"Koku alerjeni: AB'de belirli oranı aşınca içerik listesinde adıyla yazılır; etikette adını arayın.",
 "koz.reg.yok":"AB kozmetik yönetmeliğinin eklerinde (yasak, kısıtlı ve izinli listeler) yer almıyor; bu maddeye özgü bir sınır ya da etiket kuralı yok. Her ürün için genel güvenlik değerlendirmesi kuralı geçerlidir.",
+"koz.tr.farkli":"Türkiye: Bu madde Türkiye Kozmetik Ürünler Yönetmeliği'nin yasaklı maddeler listesinde (Ek II) yer almıyor; AB'deki bu yasak Türkiye'ye aktarılmadı. Borik asit ve boratlar için Türkiye'de Ek III'teki (1a, 1b) kullanım sınırları geçerli.",
+"koz.tr.yok":"Türkiye: Bu AB değişikliği Türkiye'de henüz yayımlanmadı (07.10.2026 itibarıyla; mevzuat.gov.tr'deki son değişiklik RG 05.03.2024). Türk mevzuatı AB'yi genellikle aylar sonra izler.",
 "profile.allergen_celery":"Kereviz alerjisi",
 "profile.allergen_crustacean":"Kabuklular alerjisi",
 "profile.allergen_egg":"Yumurta alerjisi",

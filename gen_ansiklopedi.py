@@ -10,6 +10,7 @@ data/ansiklopedi/tr/<kimlik>.json (yalnızca o sayfanın Türkçe metinleri). Sa
 gen_e_kodlari.py ve gen_e_aciklama.py'den SONRA çalıştırılır. Elle incelenmemiş E kodlarının sayfası otomatik oluşturulur
 (review: "auto"); bunlarda kanıt düzeyi ve son inceleme tarihi boştur.
 """
+import csv
 import datetime
 import hashlib
 import json
@@ -45,6 +46,7 @@ UI = {
     "eff.doctor": "Bir şikâyetiniz varsa hekiminize danışın. Bu liste teşhis ya da tedavi önerisi değildir.",
 }
 EFF_LEVELS = ("resmi", "bildirildi", "tutarsiz", "hayvan", "asim", "belirsiz", "yok")
+from uretec_ortak import koz_kimlik   # kozmetik kaydı kimliği (sonuç ekranındaki bağlantıyla aynı, gen_kozmetik.py ans)
 from gen_e_kodlari import TGK_2024, TGK_2024_ESDEGER   # Türkiye güncel izinli liste (kaynak/tgk_ek2_2024.tsv)
 
 EU_STATUS = {"banned": ("banned", "AB'de gıda katkısı olarak yasak."), "withdrawn": ("withdrawn", "AB'de izni geri çekildi."),
@@ -192,17 +194,18 @@ def temizlik_kayitlari(T, official):
 KOZ_SIRA = {"info": 0, "yellow": 1, "orange": 2, "red": 3}
 KOZ_RISK = {"info": "green", "yellow": "amber", "orange": "red", "red": "red"}
 COSING = "https://ec.europa.eu/growth/tools-databases/cosing/"
+COSING_MADDE = COSING + "details/%s"   # maddenin CosIng sayfası; kimlik kaynak/cosing/ingredients.csv substance_id (cosing_al.py)
+# Türkiye ek durumu (kozmetik.json e.tr / updates[].tr, gen_kozmetik.py TR_BY_REG / TR_BY_ID): durum ve metin anahtarı.
+# Metin kozmetik.json meta.tr_text'ten (Etiket Oku'daki kartla aynı cümle). Dayanak Kozmetik Ürünler Yönetmeliği (RG 08.05.2023).
+KOZ_TR = {"farkli": "restricted", "yok": "not_listed", "taslak": "concern"}
+KOZ_TR_YON = {"title": "Kozmetik Ürünler Yönetmeliği (Resmî Gazete 08.05.2023, 32184 mükerrer)", "publisher": "Ticaret Bakanlığı", "year": 2023,
+              "url": "https://www.resmigazete.gov.tr/eskiler/2023/05/20230508M1-1-1.pdf", "official": True}
 # İzlenen listeler (kozmetik.json meta.watch_lists): kurum, bölge; durum listenin türünden (kind)
 KOZ_LISTE = {"ab_ed_a": ("European Commission", "EU"), "ab_ed_b": ("European Commission", "EU"), "ab_reach": ("European Commission", "EU"),
              "ab_taslak": ("European Commission", "EU"), "eu_svhc_ed": ("European Chemicals Agency (ECHA)", "EU"), "ca": ("California", "US-CA"),
              "ca_sinir": ("California", "US-CA"), "asean": ("ASEAN", "ASEAN"), "dk": ("Danimarka", "DK"), "fr": ("ANSES", "FR"),
              "tr_taslak": ("Ticaret Bakanlığı", "TR")}
 KOZ_KIND = {"ban": "banned", "limit": "restricted", "eu": "restricted", "child": "restricted", "ed": "concern", "tr": "concern", "comedo": "reviewed"}
-
-
-def koz_kimlik(inci):
-    """Kozmetik kaydının kimliği INCI adıdır; dosya adı ve URL için boşluk yerine alt çizgi (INCI'de tire geçer: BENZOPHENONE-3)."""
-    return inci.replace(" ", "_")
 
 
 def eurlex_celex(reg):
@@ -223,8 +226,12 @@ def kozmetik_kayitlari(T, official, tem):
     TEM = {x["id"]: x for x in TK["kayitlar"]}
     temr = {r["id"]: r for r in tem}
     INCI = {x[0]: x for x in kinci["items"]}
+    csv.field_size_limit(10 ** 9)
+    SID = {r["inci_name"]: r["substance_id"] for r in csv.DictReader(open(os.path.join(HERE, "kaynak", "cosing", "ingredients.csv"), encoding="utf-8"))}
     M = kdb["meta"]
     WL, FLV = M["watch_lists"], M.get("inci_flag_levels", {})
+    for d, x in M.get("tr_text", {}).items():
+        T["koz.tr." + d] = x
     SRC = K["kaynaklar"]
     for code, (ad, ne) in K["kategoriler"].items():
         T["cat." + code], T["cat." + code + ".what"] = ad, ne
@@ -255,7 +262,8 @@ def kozmetik_kayitlari(T, official, tem):
         T[rid + ".summary"], T[rid + ".what"], T[rid + ".agn"] = k["ozet"], k["ne"], k["not"]
         for n, x in enumerate(k["nerede"]):
             T["%s.found.%d" % (rid, n)] = x
-        srcs = [{"title": "CosIng: %s" % inci, "publisher": "European Commission", "year": 2026, "url": COSING, "official": True}]
+        cosing = COSING_MADDE % SID[inci] if SID.get(inci) else COSING   # kimliği bulunamayan (2 ad) arama sayfasına gider
+        srcs = [{"title": "CosIng: %s" % inci, "publisher": "European Commission", "year": 2026, "url": cosing, "official": True}]
         regs = []
         for n, e in enumerate(ents):
             yil, url = eurlex_celex(e.get("regulation") or "(EC) 2009/1223")
@@ -283,6 +291,11 @@ def kozmetik_kayitlari(T, official, tem):
                 srcs.append({"title": "Regulation %s amending Regulation (EC) No 1223/2009 on cosmetic products" % e["regulation"] if yil != 2009 else
                              "Regulation (EC) No 1223/2009 on cosmetic products", "publisher": "European Parliament and Council" if yil == 2009 else "European Commission",
                              "year": yil, "url": url, "official": True})
+        trs = sorted({x for e in ents for x in [e.get("tr")] + [u.get("tr") for u in e.get("updates", [])] if x})
+        for d in trs:   # Türkiye satırı yalnızca AB'den farklıysa; yoksa Türk ekleri AB ile aynı (TEKNIK_BORC.md Kozmetik)
+            regs.append({"agency": "Ticaret Bakanlığı", "region": "TR", "status": KOZ_TR[d], "detail": "koz.tr." + d, "year": 2023, "source_url": KOZ_TR_YON["url"]})
+        if trs:
+            srcs.append(dict(KOZ_TR_YON))
         if not ents:
             yil, url = eurlex_celex("(EC) 2009/1223")
             regs.append({"agency": "European Commission", "region": "EU", "status": "not_listed", "detail": "koz.reg.yok", "year": yil, "source_url": url})
@@ -308,7 +321,7 @@ def kozmetik_kayitlari(T, official, tem):
                 return {"label": KOZ_LISTE.get(w["list"], ("AB",))[0], "year": int(w["date"][:4]) if re.match(r"\d{4}", w.get("date") or "") else 2026,
                         "url": w["source"], "title": WL[w["list"]]["label"]}
             if key == "cosing":
-                return {"label": "CosIng", "year": 2026, "url": COSING, "title": "CosIng: " + inci}
+                return {"label": "CosIng", "year": 2026, "url": cosing, "title": "CosIng: " + inci}
             s = SRC[key]
             if s["url"] not in [x["url"] for x in srcs]:
                 srcs.append(dict(s))
