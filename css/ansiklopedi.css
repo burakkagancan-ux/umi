@@ -97,4 +97,4 @@ details.gdrop>summary .gdag{display:flex;width:64px;height:6px;border-radius:999
 .gdag span{display:block;height:100%;min-width:5px;border-radius:999px}.gdag .r{background:var(--hi)}.gdag .y{background:var(--ambc)}.gdag .g{background:var(--yesil)}.gdag .n{background:var(--bos)}
 details.gdrop>summary:has(.gdag)::after{margin-inline-start:10px}
 /* Koyu tema (17.10.2026; belirteçler tema.css'te): iki renkli risk simgeleri css/ocr.css'teki gibi açık tona çevrilir */
-@media (prefers-color-scheme:dark){.risk .ico,.mini{filter:invert(1) hue-rotate(180deg)}}
+[data-tema="koyu"] .risk .ico,[data-tema="koyu"] .mini{filter:invert(1) hue-rotate(180deg)}

@@ -65,7 +65,7 @@ function buildProfile(){
     bmiRow.appendChild(bb);
   }
   updBmi();
-  // Ayarlar: dil, ülke, barkodlu ürün katkısı (satırda ad solda, seçim sağda)
+  // Ayarlar: dil, ülke, görünüm, barkodlu ürün katkısı (satırda ad solda, seçim sağda)
   // Dil: seçim localStorage "dil"de; sayfa o dilde yeniden yüklenir (i18n/diller.json'daki her dil kendi adıyla)
   var dl=el("label","pn"),ds=document.createElement("select");ds.id="dilsec";ds.setAttribute("aria-label",t("profil.dil"));
   Object.keys(DIL.bilgi).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=DIL.bilgi[k].ad;op.lang=k;if(k===DIL.kod)op.selected=true;ds.appendChild(op)});
@@ -76,6 +76,11 @@ function buildProfile(){
   [""].concat(ULKELER.slice().sort(function(a,b){return t("ulke.ad."+a.toLowerCase()).localeCompare(t("ulke.ad."+b.toLowerCase()),DIL.kod)})).forEach(function(k){var op=document.createElement("option");op.value=k;op.textContent=t(k?"ulke.ad."+k.toLowerCase():"ulke.secilmedi");if(k===ulke())op.selected=true;us.appendChild(op)});
   us.onchange=function(){depoYazMetin("ulke",us.value);ulkeIsaretle(ulke());if(LAST.length||$("metin").value.trim())run()};
   ul.appendChild(el("span",null,t("profil.ulke")));ul.appendChild(us);ay.appendChild(ul);
+  // Görünüm: telefona göre, açık ya da koyu (js/tema.js; seçim cihaz deposunda "tema", hemen uygulanır)
+  var tl=el("label","pn"),ts=document.createElement("select");ts.id="temasec";ts.setAttribute("aria-label",t("profil.tema"));
+  [["","profil.tema.telefon"],["acik","profil.tema.acik"],["koyu","profil.tema.koyu"]].forEach(function(x){var op=document.createElement("option");op.value=x[0];op.textContent=t(x[1]);if(x[0]===temaSecim())op.selected=true;ts.appendChild(op)});
+  ts.onchange=function(){temaSec(ts.value)};
+  tl.appendChild(el("span",null,t("profil.tema")));tl.appendChild(ts);ay.appendChild(tl);
   if(typeof barkodAyarKutusu==="function")ay.appendChild(barkodAyarKutusu());   // barkodlu ürün katkısı tercihi
   if(typeof olcumAyarKutusu==="function")ay.appendChild(olcumAyarKutusu());       // anonim kullanım sayımı (A-03)
   ay.parentNode.appendChild(el("div","how",t("profil.dil_not")+" "+t("profil.ulke_not")));

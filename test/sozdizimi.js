@@ -27,10 +27,13 @@ function sayfaDosyalari(f){const h=fs.readFileSync(path.join(R,f),'utf8'),o=new 
 // Her js dosyası bir sayfada (doğrudan ya da bir modülün içe aktarmasıyla) yüklenir ve sw.js CORE listesinde bulunur
 {const yuklu=new Set();SAYFALAR.forEach(f=>sayfaDosyalari(f).forEach(x=>yuklu.add(x)));const sw=fs.readFileSync(path.join(R,'sw.js'),'utf8');
  for(const f of js){if(!yuklu.has(f)){fail++;console.log('HATA','hiçbir sayfa js/'+f+' yüklemiyor')}if(sw.indexOf('"js/'+f+'"')<0){fail++;console.log('HATA','sw.js CORE listesinde js/'+f+' yok (python3 uret.py)')}}}
+// Çizimden önce <head>'de defer'siz çalışan betikler (17.10.2026: tema seçimi açılışta yanlış renk görünmesin; js/tema.js). Yalnızca kendi
+// aralarındaki adları kullanırlar, köprülenen (modül) adlarına dokunmazlar. Başka betik buraya eklenmez: sayfanın çizimini geciktirir.
+const ERKEN=new Set(['depo.js','tema.js']);
 // Modül değilken modül sözdizimi kullanan sayfa betiği: <script type="module"> olmadan yüklenen dosyada import/export olamaz
 for(const f of SAYFALAR){const h=fs.readFileSync(path.join(R,f),'utf8');
   for(const m of h.matchAll(/<script\b([^>]*)\bsrc="js\/([^"]+)"/g)){const tip=/type="module"/.test(m[1]);if(kod[m[2]]&&modulMu(kod[m[2]])!==tip){fail++;console.log('HATA',f,'js/'+m[2],tip?'type="module" ama dosya modül değil':'modül dosyası type="module" olmadan yükleniyor')}
-    if(!tip&&!/\bdefer\b/.test(m[1])){fail++;console.log('HATA',f,'js/'+m[2],'klasik betik defer olmadan: modül girişinden önce çalışır, köprülenen adları göremez')}}}
+    if(!tip&&!/\bdefer\b/.test(m[1])&&!(ERKEN.has(m[2])&&h.indexOf(m[0])<h.indexOf('</head>'))){fail++;console.log('HATA',f,'js/'+m[2],'klasik betik defer olmadan: modül girişinden önce çalışır, köprülenen adları göremez')}}}
 // Global ad çakışması (YOL_HARITASI.md O-15): bir sayfanın klasik betikleri tek global alanı paylaşır; iki dosyada aynı üst düzey
 // var/function adı sessizce birbirinin üstüne yazar (sonraki kazanır), let/const/class çakışması sayfayı açılışta kırar.
 // Modüllerin dışa aktardıkları köprüyle (js/kopru.js) window'a bağlanır; klasik betikte aynı ad da çakışmadır (köprülenen ada yazmak hata verir).

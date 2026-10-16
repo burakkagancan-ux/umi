@@ -18,6 +18,7 @@ var VERI_ANAHTAR={
   dil:"yazi",ulke:"yazi",tur:"yazi",ktip:"yazi",pay_boyut:"yazi",
   barkod_katki:"yazi",katkici:"yazi",   // barkod katkı izni ve katkıcı kimliği (O-22)
   ans_tur:"yazi",   // ansiklopedide seçili tür (gida/tem)
+  tema:"yazi",      // görünüm seçimi: acik | koyu; yoksa telefona göre (js/tema.js)
   olcum:"nesne"     // ölçüm durumu: ilk kullanım günü, son sayılan gün, kapalı mı (A-03, js/olcum.js); yedeğe girmez
 };
 /* Göç adımları: VERI_GOC[n] verisi n-1 sürümünde olan depoyu n sürümüne getirir. depo: {getItem, setItem, removeItem} */
