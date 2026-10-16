@@ -16,7 +16,7 @@ var RICON={
 /* Sonuç ekranıyla aynı kural: yeşil onay yalnızca "doğal" üretim yolunda; diğer uyarısız maddeler nötr (gri) */
 function notr(r){return r.risk_level==="green"&&!(r.production&&r.production.class==="dogal")}
 function rico(r){return RICON[notr(r)?"notr":r.risk_level]}
-var PWICON='<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.5" fill="#fff"/>';
+var PWICON='<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 6.5v7" style="stroke:var(--card)" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.5" style="fill:var(--card)"/>';   // koyu temada da okunur: işaret kart renginde
 function tarih(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?dilTarih(Date.UTC(+m[1],m[2]-1,+m[3],12),"gun"):""}
 function prof(){return depoJson("profil",null)}
 function marks(){return depoDizi("yerimleri")}
@@ -51,7 +51,7 @@ function showRecord(r){
   // Profil uyarısı: yalnızca kullanıcının seçtiği hassasiyetle eşleşirse
   ansProfileWarnings(r,prof()).forEach(function(w){
     var d=h("section","pw "+w.severity);d.setAttribute("role","note");
-    var tt=h("div","t");var ic=svg(PWICON);ic.style.color=w.severity==="high"?"#B3261E":"#8A5A00";tt.appendChild(ic);
+    var tt=h("div","t");var ic=svg(PWICON);ic.style.color=w.severity==="high"?"var(--red)":"var(--amb)";tt.appendChild(ic);
     tt.appendChild(document.createTextNode(t("ans.profil_eslesti",{ad:at("profile."+w.profile)||w.profile})));d.appendChild(tt);
     d.appendChild(h("p",null,at(w.text)));box.appendChild(d);
   });
@@ -213,7 +213,7 @@ function showSearch(){
     if(!L.length)out.appendChild(h("p","mut",t("ans.sonuc_yok")));
     sira.forEach(function(c){
       var gd=h("details","gdrop");gd.open=!!GACIK[c];gd.ontoggle=function(){GACIK[c]=gd.open};
-      var hd=h("summary");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));gd.appendChild(hd);
+      var hd=h("summary");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));if(!ARISK)gDagilim(hd,G[c]);gd.appendChild(hd);
       var gl=h("div","grpl");G[c].forEach(function(r){gl.appendChild(rowFor(r,oku,true))});gd.appendChild(gl);out.appendChild(gd);
     });
     out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.filter(function(r){return ansTur(r)===AOKU}).length})));
@@ -222,6 +222,15 @@ function showSearch(){
   var q0=new URLSearchParams(location.search).get("q");if(q0)inp.value=q0;
   draw();
   footer(box,null);
+}
+
+/* Grup başlığındaki renk dağılımı şeridi: uyarı, dikkat, doğal (yeşil), diğer uyarısız (gri); sayılar ekran okuyucuya metin olarak */
+function gDagilim(hd,L){
+  var s={r:0,y:0,g:0,n:0};L.forEach(function(r){s[r.risk_level==="red"?"r":r.risk_level==="amber"?"y":notr(r)?"n":"g"]++});
+  var d=h("span","gdag");d.setAttribute("aria-hidden","true");
+  ["r","y","g","n"].forEach(function(k){if(s[k]){var e=h("span",k);e.style.flex=String(s[k]);d.appendChild(e)}});
+  hd.appendChild(d);
+  hd.appendChild(h("span","vh",[[s.r,"risk.uyari"],[s.y,"risk.dikkat"],[s.g+s.n,"risk.yok"]].filter(function(x){return x[0]}).map(function(x){return t(x[1])+" "+dilSayi(x[0])}).join(", ")));
 }
 
 /* ---------- Açılış ---------- */

@@ -54,7 +54,7 @@ module.exports=async({br,B,opt,ok,server})=>{
   ok(/What does it do\?/.test(await p.textContent('#ana .panel'))&&(await p.textContent('#tab-otorite'))==='Authorities','ansiklopedi sekmeleri İngilizce');
   {const k=await anahtarVar();ok(!k,'ansiklopedi: çıplak anahtar: '+k)}
   await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');
-  ok((await p.getAttribute('#ara','placeholder')).startsWith('Name, E number or CAS')&&/^All 333$/.test(await p.textContent('#ana .rfil.tum')),'ansiklopedi arama ve süzgeç İngilizce');
+  ok((await p.getAttribute('#ara','placeholder')).startsWith('Search name, E number or CAS')&&/^All 333$/.test(await p.textContent('#ana .rfil.tum')),'ansiklopedi arama ve süzgeç İngilizce');
   await p.goto(B+'index.html');await p.waitForFunction(()=>/listed/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok(await p.getAttribute('html','lang')==='en'&&/Adulteration List/.test(await p.textContent('h1'))&&(await p.textContent('#il option'))==='All provinces','Liste İngilizce');
   ok((await p.textContent('.tabbar a[data-tab="oku"]'))==='Read Label','alt menü İngilizce');
