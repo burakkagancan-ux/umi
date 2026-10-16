@@ -36,7 +36,7 @@ module.exports=async({br,B,opt,ok,server})=>{
   // 1b2) Ayrı okuma düğmesi yok: fotoğraf seçilince kendiliğinden okunur; çerçeve değişince yeniden okunur ve aynı kayıt güncellenir
   {
   let istek=0;
-  const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
+  const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&u.pathname==='/';   // yalnızca OCR (ölçüm /olcum ve sayaç ayrı yol)
   await p.route(ocrYol,r=>{istek++;r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:istek===1?'Şeker, E330, E621':'Şeker, E330'})})});
   ok(!(await p.$('#oku')),'Analiz Et düğmesi yok');
   await p.click('#m-gida');const n0=await p.evaluate(()=>histLoad().length);
@@ -101,7 +101,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     gonderilen=null;await p.click('#sonuc .bkaynak .row button:not(.alt)');
     for(let i=0;i<20&&!gonderilen;i++)await p.waitForTimeout(100);
     const TAB='Besin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
-    const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&!/\/(urun|besin|aranan)/.test(u.href);
+    const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&u.pathname==='/';
     let besinG=[],urunN=1;
     await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:TAB})}));
     await p.route(/workers\.dev\/besin$/,r=>{besinG.push(r.request().postDataJSON());r.fulfill({status:201,contentType:'application/json',body:'{"tamam":true}'})});
@@ -172,7 +172,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     }
     // Tablo fotoğrafı: okunan metin sona eklenir, yeni tarama açılmaz
     {
-      const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr);
+      const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&u.pathname==='/';   // yalnızca OCR (ölçüm /olcum ve sayaç ayrı yol)
       await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:'Besin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g'})}));
       const n0=await p.evaluate(()=>histLoad().length);
       // Kaydedilmiş ürüne tablo eklenince kayıt yeni metne taşınır (ikinci kayıt açılmaz)

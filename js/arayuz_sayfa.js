@@ -16,6 +16,7 @@ DIL_HAZIR.then(function(){
   ekleProfil();window.addEventListener("hashchange",ekleHash);ekleHash();
   ekleSunucu(EKLE_AYAR.tazeSn,rozetGoster);   // ürün rozetleri: sunucudaki doğrulanmış sayım (G-02)
   toplulukProfil();window.addEventListener("hashchange",toplulukHash);toplulukHash();   // ortak hedef ve eksik ürünler (G-04)
+  olcumAc();   // A-03: günlük açan cihaz, yeni cihaz, geri dönüş (js/arayuz_olcum.js)
 });
 /* Rozetler (js/arayuz_rozet.js): Etiket Oku'nun bağlamı seçili türün Etiket Dedektifi rozeti; kutlama kartı sonucun üstüne */
 function ROZET_BAGLAM(){return {aile:"dedektif",tur:MODE}}
@@ -118,7 +119,7 @@ function fotoOku(){
     var ek=besinEkMetin(n,tx);
     if(ek!=null){besinEkUygula(ek);$("metin").value=ek;HSCAN=false;HOCR=true;OKU.okundu=true;ST.textContent=besinEkMesaj(ek,msj);run();return}
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
-    if(HSCAN&&tx.trim())rozetSay("dedektif",MODE,"f:"+rozetIz(tx),rozetGoster);   // aynı fotoğrafın yeniden okunması (çerçeve) sayılmaz
+    if(HSCAN&&tx.trim()){rozetSay("dedektif",MODE,"f:"+rozetIz(tx),rozetGoster);olcumTarama("f",MODE)}   // aynı fotoğrafın yeniden okunması (çerçeve) sayılmaz
     if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();
   }
   function hata(m){if(gecerli())ST.textContent=m}

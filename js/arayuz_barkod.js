@@ -62,10 +62,12 @@ function barkodGoster(kod,r){
   $("metin").value=m.s;HSCAN=HOCR=true;
   ST.textContent=t("barkod.bulundu",{kod:kod});
   rozetSay("dedektif",r.tur,"b:"+kod,rozetGoster);   // aynı barkod bir kez sayılır
+  olcumTarama("b",r.tur);
   run();
 }
 function barkodYok(kod,r){
   BARKOD={kod:kod,r:null,ad:r?barkodAd(r):"",metin:null,t:Date.now(),foto:false,katki:false};
+  olcumTarama("y");
   fotoTemizle();
   if(r&&r.tur&&r.tur!==MODE){$("metin").value="";setMode(r.tur,true)}
   $("metin").value="";

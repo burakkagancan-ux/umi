@@ -12,7 +12,9 @@
 //   POST /yonetim/api/sil               {tablo: "katki"|"besin", id} tek satır · {kim} o kimliğin bütün katkıları ve tabloları ·
 //                                       {tablo: "aranan", kod} aranan listesinden çıkar. İçerik silinince topluluk sayaçları
 //                                       (toplam) silinir, ilk GET /topluluk'ta baştan sayılır.
+//   GET  /yonetim/api/olcum             A-03 ölçümü: son 60 günün günlük toplamları (D1 olcum + paylaşım sayacı KV) ve son 7 günün özeti
 import { barkodGecerli, besinGrupla, grupla } from "./barkod.js";
+import { OLCUM_AYAR, olcumGun, olcumOzet } from "../../js/olcum.js";
 
 export const YONETIM_ANAHTAR_EN_AZ = 32;   // daha kısa anahtar kabul edilmez (yönetim kapalı kalır)
 const SAYFA_BOY = 50;
@@ -77,9 +79,26 @@ async function satirlar(db, kosul, ...args) {
   return [k || [], b || []];
 }
 
+/* Paylaşım sayacı (KV "g:YYYY-AA-GG:s|d") → {gun: {s, d}}; son 60 gün (GET /sayac ve ölçüm görünümü) */
+export async function sayacGunler(kv) {
+  const list = await kv.list({ prefix: "g:" });
+  const keys = list.keys.map((k) => k.name).sort().slice(-120);
+  const gunler = {};
+  for (const k of keys) {
+    const [, gun, t] = k.split(":");
+    (gunler[gun] = gunler[gun] || {})[t] = Number(await kv.get(k)) || 0;
+  }
+  return gunler;
+}
+
 export async function yonetimApi(request, env, db, yol, R) {
   const p = yol.split("/").filter(Boolean).slice(2);   // ["yonetim", "api", ...]
   const url = new URL(request.url);
+  if (request.method === "GET" && p[0] === "olcum" && p.length === 1) {
+    const simdi = Date.now(), ilk = olcumGun(simdi - (OLCUM_AYAR.gunSay - 1) * 864e5);
+    const { results } = await db.prepare("SELECT gun, ad, n FROM olcum WHERE gun >= ?").bind(ilk).all();
+    return R(200, olcumOzet(results || [], env.SAYAC ? await sayacGunler(env.SAYAC) : {}, simdi));
+  }
   if (request.method === "GET" && p[0] === "liste" && p.length === 1) {
     const gor = url.searchParams.get("gor") || "son";
     const sayfa = Math.max(0, Math.min(1000, parseInt(url.searchParams.get("sayfa") || "0", 10) || 0));
@@ -147,7 +166,7 @@ export const YONETIM_HTML = `<!doctype html>
 </section>
 <section id="ana" hidden>
   <nav id="sekmeler">
-    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button>
+    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button><button data-gor="olcum">Ölçüm</button>
   </nav>
   <div class="ara"><input id="ara" placeholder="Barkod ya da katkıcı kimliği" autocomplete="off"><button id="ara_b">Aç</button></div>
   <p id="msj" class="msj"></p>
@@ -222,6 +241,7 @@ function urunTablo(l){
 }
 function sayfaDugme(j,f){var d=el("div","dugmeler");if(j.sayfa>0){var g=el("button","alt","← Önceki");g.onclick=function(){f(j.sayfa-1)};d.appendChild(g)}if(j.devam){var s=el("button","alt","Sonraki →");s.onclick=function(){f(j.sayfa+1)};d.appendChild(s)}return d}
 function liste(g,s){
+  if(g==="olcum")return olcum();
   GOR=g;SAYFA=s;sekme(g);msj("Yükleniyor…");
   return api("/liste?gor="+g+"&sayfa="+s).then(function(j){
     var d=$("icerik");d.textContent="";msj("");
@@ -282,6 +302,34 @@ function kim(k){
     b.onclick=function(){sil("Bu katkıcının "+(j.katki+j.besin)+" katkısı ve tablosu silinsin mi? Geri alınamaz. Yalnızca kötü niyetli katkıcı için.",{kim:k},function(){return kim(k)})};
     d.appendChild(b);
     if(j.urunler.length)d.appendChild(urunTablo(j.urunler));
+  }).catch(hata);
+}
+// Ölçüm (A-03): günlük toplamlar; kimlik yok. Geri dönüş oranı = o gün ilk kez açan cihazlardan 7–13 (30–59) gün sonra yeniden açanlar.
+function yuzde(a,b){return b?String(Math.round(a/b*1000)/10).replace(".",",")+" %":"—"}
+function oranMetin(o){return o?yuzde(o.oran,1)+" ("+o.yeni+" yeni cihaz, "+o.gun+" gün)":"henüz yok (pencere kapanmadı)"}
+function olcum(){
+  GOR="olcum";SAYFA=0;sekme("olcum");msj("Yükleniyor…");
+  return api("/olcum").then(function(j){
+    var d=$("icerik"),o=j.ozet,tt=o.tur.gida+o.tur.koz+o.tur.tem;d.textContent="";msj("");
+    d.appendChild(el("p","kucuk","Günler UTC. Kimlik, ürün, metin ve barkod sayılmaz; yalnızca günlük toplamlar. Ayarlardan kapatan ve tarayıcısında izlenme karşıtı ayar açık olan kullanıcılar sayılmaz."));
+    d.appendChild(el("h2",null,"Son 7 Gün"));
+    var ul=el("ul");
+    [["Açan cihaz (günlük toplam)",o.aktif],["Yeni cihaz",o.yeni],["Tarama",o.tarama+" (fotoğraf "+o.kaynak.f+", barkod "+o.kaynak.b+", barkod bulunamadı "+o.kaynak.y+")"],
+     ["Tür dağılımı","Gıda "+yuzde(o.tur.gida,tt)+" · Kozmetik "+yuzde(o.tur.koz,tt)+" · Temizlik "+yuzde(o.tur.tem,tt)],
+     ["Paylaşım",o.paylasim+" (taramaya oranı "+yuzde(o.paylasim,o.tarama)+")"],
+     ["7. günde geri dönen",oranMetin(o.d7)],["30. günde geri dönen",oranMetin(o.d30)]].forEach(function(x){var li=el("li");li.appendChild(el("b",null,x[0]+": "));li.appendChild(document.createTextNode(String(x[1])));ul.appendChild(li)});
+    d.appendChild(ul);
+    d.appendChild(el("h2",null,"Gün Gün"));
+    var tb=el("table"),h=el("tr");["Gün","Açan","Yeni","Tarama","Gıda / Koz. / Tem.","Foto / Barkod / Yok","Paylaşım","7. Gün","30. Gün"].forEach(function(x,i){h.appendChild(el("th",i===4||i===5?"gizle":null,x))});tb.appendChild(h);
+    j.gunler.forEach(function(g){
+      var r=el("tr");
+      r.appendChild(el("td","kod",g.gun));r.appendChild(el("td",null,g.aktif));r.appendChild(el("td",null,g.yeni));r.appendChild(el("td",null,g.tarama));
+      r.appendChild(el("td","gizle",g.tur.gida+" / "+g.tur.koz+" / "+g.tur.tem));r.appendChild(el("td","gizle",g.kaynak.f+" / "+g.kaynak.b+" / "+g.kaynak.y));
+      r.appendChild(el("td",null,g.paylasim));
+      [["d7","acik7"],["d30","acik30"]].forEach(function(a){r.appendChild(el("td",g[a[1]]?"kucuk":null,g.yeni||g[a[0]]?g[a[0]]+" ("+yuzde(g[a[0]],g.yeni)+")"+(g[a[1]]?" sürüyor":""):"—"))});
+      tb.appendChild(r);
+    });
+    var w=el("div","tablo");w.appendChild(tb);d.appendChild(w);
   }).catch(hata);
 }
 goster();

@@ -7,6 +7,7 @@ YOL_HARITASI.md'den taşındı (15.10.2026, U-07 9. adım; satırlar aynı). Sı
 | Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
 |---|---|---|---|---|---|
 | A-07 | Ön yüz yenilemesi (kullanıcı isteği 14.10.2026; taslak claude.ai Artifact): krem yerine beyaz zemin; Etiket Oku'da tek ana fotoğraf kartı; sonuçta özet kartı (sayılar, puan yok), seviyeye göre gruplu sade kartlar, ayrıntı alt sayfada; Profilim bölümlü düzen; ansiklopedide renk süzgeci ve işlev grupları, tür süzgeci kozmetik/temizlik gelene kadar gizli; arayüzde "Hassasiyetlerim" yerine "Profilim" | Claude | — | TR + EN; tarayıcı testi geçer | ✅ 14.10.2026 |
+| A-03 | Gizlilik dostu ölçüm: günlük açan cihaz, yeni cihaz, tarama (tür: gıda/kozmetik/temizlik; kaynak: fotoğraf/barkod/barkod bulunamadı), paylaşım (mevcut /sayac), 7 ve 30 gün sonra geri dönüş (ilk kullanımdan 7–13 ve 30–59. gün; kimliksiz: cihaz yalnızca ilk kullanım gününü gönderir). Kişisel veri, ürün, metin, barkod, IP yok; Worker POST /olcum → D1 `olcum` (gün, ad, sayı); KV yerine D1 (ücretsiz katmanda KV günde 1.000 yazma, D1 100.000; UPSERT eşzamanlı istekte sayı kaybetmez). Okuma yalnızca /yonetim › Ölçüm. Profilim › Ayarlar › Anonim Kullanım Sayımı ile kapanır; Global Privacy Control / Do Not Track açıksa hiç sayılmaz. Ölçümden önceki kullanıcılar "yeni" sayılmaz. Gizlilik notu gizlilik.6 | Claude | — | Kişisel veri gönderilmez, KVKK notu güncellenir | ✅ 16.10.2026 |
 
 ### Faz B: Küresel altyapı
 
