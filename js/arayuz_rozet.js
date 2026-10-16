@@ -74,7 +74,7 @@ function rozetKartGorsel(r){
     return new Promise(function(ok){cv.toBlob(function(b){ok(b)},"image/png")});
   });
 }
-var PAY_HF_R='"Bricolage Grotesque",system-ui,sans-serif',PAY_BF_R='"Figtree",system-ui,sans-serif';
+var PAY_HF_R='"Manrope",system-ui,sans-serif',PAY_BF_R='"Manrope",system-ui,sans-serif';
 
 /* ---------- Rozetlerim (ocr.html) ---------- */
 function rozetProfil(){

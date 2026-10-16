@@ -1,7 +1,7 @@
 // Uygulamanın çevrimdışı da açılabilmesi için ilk kurulumda önbelleğe alınan dosyalar (CORE) ve önbellek adı (CACHE): gen_sw.py üretir
 // <uretilen gen_sw.py>
 // Elle düzenlenmez: python3 uret.py (gen_sw.py) yazar. CACHE dosya içeriklerinin özeti; CORE kurulumda önbelleğe alınanlar.
-const CACHE = "tagsis-2b2c4c2574c2";
+const CACHE = "tagsis-d4941bc1371b";
 const CORE = [
   "./",
   "index.html",
@@ -62,12 +62,8 @@ const CORE = [
   "js/profil_kart.js",
   "js/olcum.js",
   "js/ansiklopedi.js",
-  "fonts/bricolage-grotesque-latin-ext-700-normal.woff2",
-  "fonts/bricolage-grotesque-latin-700-normal.woff2",
-  "fonts/figtree-latin-ext-400-normal.woff2",
-  "fonts/figtree-latin-400-normal.woff2",
-  "fonts/figtree-latin-ext-600-normal.woff2",
-  "fonts/figtree-latin-600-normal.woff2",
+  "fonts/manrope-latin-ext-wght-normal.woff2",
+  "fonts/manrope-latin-wght-normal.woff2",
   "icon-512.png",
   "icon-maskable-512.png",
   "data/ansiklopedi.json",
