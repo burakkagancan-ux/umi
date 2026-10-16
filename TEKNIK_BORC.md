@@ -15,7 +15,7 @@ Kapanan maddeler aynı başlıklarla belgeler/arsiv/teknik_borc_kapanan.md'de (1
 
 ## 5. Kozmetik K3 (kaynak/kozmetik_k3.tsv) — KAPANDI (07.10.2026)
 - **AB endokrin listesi:** Komisyon sayfasında (07.10.2026) B grubu için yeni veri çağrısı yok; 28 madde değişmedi. Taslak tüzük B grubundan 4 maddeyi kapsıyor.
-- Kalan `inceleme=1` satırlar ikincil kaynaklı listeler: Danimarka (resmi duyuru bulunamadı), Fransa ANSES (Légifrance metni okunmadı), komedojenite (Fulton 1989 taranmış tablo), Türkiye taslağı (resmi metin yok).
+- Kalan `inceleme=1` satırlar ikincil kaynaklı listeler: Danimarka (resmi duyuru bulunamadı), komedojenite (Fulton 1989 taranmış tablo; 16.10.2026'da sınırdaki 6 madde için ikinci kaynak yine bulunamadı), Türkiye taslağı (resmi metin yok).
 
 ## Ansiklopedi: eksik bilgiler (05.10.2026)
 Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikte ansiklopedi sayfası yok. Aşağıdakiler bilerek sonraya bırakıldı; sayılar `data/ansiklopedi.json`, `data/e_kodlari.json`, `data/kozmetik.json`, `data/temizlik.json`'dan 05.10.2026'da sayıldı.

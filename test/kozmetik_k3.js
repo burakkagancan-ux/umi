@@ -46,6 +46,9 @@ const cases=[
  ["Aqua, 4-Methylbenzylidene Camphor, Dibutyl Phthalate",{"4-METHYLBENZYLIDENE CAMPHOR":["red",["ab_ed_a","eu_svhc_ed","fr"]],"DIBUTYL PHTHALATE":["red",["ca","eu_svhc_ed","fr"]]},s=>s.ed.length===2],
  ["Aqua, Butylparaben, Benzophenone-1, Resorcinol",{"BUTYLPARABEN":["yellow",["ab_ed_b","ab_taslak","dk","eu_svhc_ed","fr"]],"BENZOPHENONE-1":["yellow",["ab_ed_b","ab_taslak"]],"RESORCINOL":["yellow",["ab_ed_a","eu_svhc_ed"]]},
   s=>s.ed.length===3&&s.child.length===1&&s.ban.length===0],
+ // 16.10.2026: Fransa kararnamesinin Tablo A'sı (resmi metin); 3-benziliden kafur AB'de yasak, kırmızı kalır
+ ["Aqua, Nonoxynol-9, Octoxynol-9, 3-Benzylidene Camphor, Tris(Nonylphenyl)Phosphite",
+  {"NONOXYNOL-9":["yellow",["fr"]],"OCTOXYNOL-9":["yellow",["fr"]],"3-BENZYLIDENE CAMPHOR":["red",["fr"]],"TRIS(NONYLPHENYL)PHOSPHITE":["yellow",["fr"]]},s=>s.ed.length===4],
  // Komedojenite: bilgi notu, renk değiştirmez; ABD yazımıyla da bulunur
  ["Aqua, Isopropyl Myristate, Cocos Nucifera (Coconut) Oil, Theobroma Cacao Seed Butter, Glycerin",
   {"ISOPROPYL MYRISTATE":["info",["komedo"]],"COCOS NUCIFERA OIL":["info",["komedo"]],"THEOBROMA CACAO SEED BUTTER":["info",["komedo"]],"GLYCERIN":["info",[]]},
@@ -78,7 +81,11 @@ ok(kdb.entries.filter(e=>e.annex==='II'&&!e.tr&&!(e.updates||[]).some(u=>u.tr)).
 const mbc=kdb.watch.find(w=>w.list==='ab_ed_a'&&w.inci.includes('4-METHYLBENZYLIDENE CAMPHOR'));ok(mbc&&/yasakland/.test(mbc.note_tr||''),'4-MBC durum notu');
 ['eu_svhc_ed','ab_taslak','dk','fr'].forEach(l=>ok(WL[l]&&WL[l].level==='yellow','yeni liste sarı: '+l));
 ok(WL.fr.kind==='ed'&&WL.eu_svhc_ed.kind==='ed'&&WL.dk.kind==='child','liste türleri');
-ok(kdb.meta.known_gaps.some(g=>/Fransa ANSES/.test(g)),'gelişim alanı notu');
+ok(kdb.meta.known_gaps.some(g=>/Fransa listesi/.test(g)),'gelişim alanı notu');
+// 16.10.2026: Fransa listesi resmi metinle (28.09.2023 kararnamesi) karşılaştırıldı; ikincil kaynaklı satır kalmadı
+const FR=kdb.watch.filter(w=>w.list==='fr');
+ok(FR.length===12&&FR.every(w=>!w.needs_review&&/aida\.ineris\.fr/.test(w.source)),'fr 12 satır, hepsi resmi metinden');
+ok(FR.some(w=>w.inci.includes('NONOXYNOL-9'))&&FR.some(w=>w.inci.includes('OCTOXYNOL-9')),'fr nonoksinol/oktoksinol grubu');
 ok(WL.komedo&&WL.komedo.level==='info'&&WL.komedo.kind==='comedo','komedo listesi bilgi düzeyinde');
 ok(kdb.watch.filter(w=>w.list==='komedo').length===21,'komedo 21 madde');
 ok(kdb.meta.known_gaps.some(g=>/Komedojenite/.test(g)),'komedojenite gelişim notu');

@@ -688,7 +688,7 @@ def main():
                 "Türkiye Eylül 2026 taslağının resmi metni bulunamadı (TİTCK görüş platformunda yok); bilgiler basın haberlerinden.",
                 "K3: ChemSec SIN List eklenmedi (verinin uygulamada yeniden kullanımı için ChemSec'ten yazılı izin gerekiyor).",
                 "K3: Kanada Hotlist, Çin, Japonya, Kore, Brezilya ve ABD'nin diğer eyalet yasakları (ör. Washington) eklenmedi.",
-                "Endokrin: Fransa ANSES listesinin tam metni (Légifrance) ve edlists.org listeleri eklenmedi; yalnızca ikincil kaynaklarda adı geçen Fransa maddeleri var.",
+                "Endokrin: Fransa listesi (28.09.2023 kararnamesi, 128 madde) resmi metinle karşılaştırıldı; yalnızca kozmetikte INCI adı olan maddeler eklendi (sanayi fenolleri, mankozeb ve INCI adı olmayan disikloheksil ftalat yok; D3 vitamini besin öğesi olarak ayrı tabloda, eklenmedi). edlists.org listeleri eklenmedi.",
                 "Endokrin: AB CLP ED HH 1/2 sınıflandırması almış maddeler henüz taranmadı.",
                 "Komedojenite: Fulton 1989'da 4–5 bulunan 20 madde + metinde anılan 1 (izostearil neopentanoat, tabloda 3). Tek kaynak; tablo metni taranmış sayfadan okunduğu için yeni 12 satır inceleme=1. 3 alan sınırdakiler (bütil stearat, desil oleat, miristik asit, sorbitan oleat, gliseril stearat SE) eklenmedi; PEG-16 lanolin (Solulan 16) INCI karşılığı belirsiz.",
             ],
