@@ -10,6 +10,14 @@ module.exports=async({br,B,opt,ok,server})=>{
     await sample(p,m);
     ok(await p.$$eval('#sonuc .res',e=>e.length)>2,m+': sonuç kartları');
     ok(await p.isVisible('#sonuc .resbar .pay'),m+': paylaş düğmesi');
+    // Özet satırı (17.10.2026): telefonda ad değerin üstünde; düzeyli satırda adın önünde simge ve ekran okuyucu için düzey adı; değer yazı renginde
+    {const o=await p.evaluate(()=>{const r=[...document.querySelectorAll('#sonuc .sumbox .srow')],d=r.find(x=>x.querySelector('.sl .ic'));
+      const l=r[0].querySelector('.sl').getBoundingClientRect(),v=r[0].querySelector('.sv').getBoundingClientRect();
+      return {n:r.length,ust:l.bottom<=v.top+1,ic:!!d,vh:d?d.querySelector('.sl .vh').textContent:'',renk:d?getComputedStyle(d.querySelector('.sv')).color===getComputedStyle(document.body).color:false}});
+     ok(o.n>=3&&o.ust&&o.ic&&/^(Uyarı|Dikkat): $/.test(o.vh)&&o.renk,m+': özet satırı düzeni: '+JSON.stringify(o))}
+    // Kaydet / Paylaş çubuğu aşağı kayınca ekranın üstünde kalır
+    {await p.evaluate(()=>window.scrollTo(0,document.querySelector('#sonuc').getBoundingClientRect().top+scrollY+900));await p.waitForTimeout(100);
+     const t=await p.evaluate(()=>document.querySelector('#sonuc .resbar').getBoundingClientRect().top);ok(t>=-1&&t<5,m+': Kaydet/Paylaş çubuğu üstte kalıyor ('+t+')')}
   }
   ok(!errs.length,'örnek analiz konsol hatası: '+errs.join(' | '));errs.length=0;
 

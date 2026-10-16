@@ -114,7 +114,7 @@ function kCard(r){
 }
 function kSummaryCard(S){
   var d=el("div","res sumbox");d.appendChild(el("div","t",t("ortak.ozet")));
-  function row(label,val,cls){var r=el("div","srow");r.appendChild(el("span","sl",label));r.appendChild(el("span","sv"+(cls?" "+cls:""),val));d.appendChild(r)}
+  function row(label,val,cls){ozetSatir(d,label,val,cls)}
   function lst(a){return a.length?t("ortak.say_liste",{n:a.length,l:a.join(", ")}):t("ortak.bulunamadi")}
   row(t("koz.ozet.bilesen"),t("koz.ozet.tanindi",{f:S.found,n:S.total})+(S.unknown.length?t("koz.ozet.taninmadi",{n:S.unknown.length}):""));
   row(t("koz.seviye.red"),lst(S.euBan),S.euBan.length?"r":"");

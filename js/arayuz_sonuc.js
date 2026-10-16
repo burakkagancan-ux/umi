@@ -26,7 +26,7 @@ function gruplu(box,list,rank,kart){
 }
 function summaryCard(S,res){
   var d=el("div","res sumbox");d.appendChild(el("div","t",t("ortak.ozet")));
-  function row(label,val,cls){var r=el("div","srow");r.appendChild(el("span","sl",label));var v=el("span","sv"+(cls?" "+cls:""));if(typeof val==="string")v.textContent=val;else v.appendChild(val);r.appendChild(v);d.appendChild(r)}
+  function row(label,val,cls){ozetSatir(d,label,val,cls)}
   var E=res.filter(function(r){return !r.isB&&!r.neg}),cnt=[0,0,0,0];E.forEach(function(r){cnt[r.rank]++});
   row(t("gida.ozet.katki"),E.length?t(cnt[1]?"gida.ozet.katki_say_dog":"gida.ozet.katki_say",{n:E.length,u:cnt[3],d:cnt[2],v:cnt[1]}):t("ortak.bulunamadi"),cnt[3]?"r":cnt[2]?"y":"");
   if(S.sugar.length){
