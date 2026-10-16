@@ -5,15 +5,16 @@
 --hf:"Manrope",system-ui,sans-serif;--bf:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
 --tgida:#6A3FB8;--tgidabg:#F1EBFA;--tkoz:#A3307A;--tkozbg:#F9E9F3;--ttem:#00717D;--ttembg:#E1F2F3;
 --warn:var(--hi);--warnbg:var(--hibg);--yel:var(--amb);--yelbg:var(--ambbg);--unbg:var(--sunk);
---onok:#fff;--okline:#C9D2F5;--notr:#8A8F8B;--ambc:#D9A42B;--bos:#B9BDB9;--cam:rgba(255,255,255,.72);--camline:rgba(27,33,30,.08);color-scheme:light dark}
-/* Koyu tema (17.10.2026, kullanıcı isteği; 04.10.2026'daki görünüm yenilemesinde kaldırılmıştı): telefonun koyu modu açıksa kendiliğinden. Aynı belirteçlerin koyu karşılıkları;
+--onok:#fff;--okline:#C9D2F5;--notr:#8A8F8B;--ambc:#D9A42B;--bos:#B9BDB9;--cam:rgba(255,255,255,.72);--camline:rgba(27,33,30,.08);color-scheme:light}
+/* Koyu tema (17.10.2026, kullanıcı isteği; 04.10.2026'daki görünüm yenilemesinde kaldırılmıştı): <html data-tema="koyu"> iken; js/tema.js koyar
+   (Profilim > Ayarlar > Görünüm: telefona göre, açık ya da koyu). Aynı belirteçlerin koyu karşılıkları;
    sayfa dosyalarında sabit yazılmış renklerin koyu karşılığı o dosyanın sonundaki koyu tema bloğunda. Ana renk ve tür renkleri koyu zeminde açık tonda, üstlerindeki yazı koyu (--onok);
    risk renkleri aynı anlamda kalır (turuncu uyarı, amber dikkat, yeşil, gri), yalnızca açık tona geçer. Paylaşım ve rozet kartı görseli (canvas) her zaman açık kalır.
    Yeni renk sabit yazılmaz: belirteç kullanılır ya da koyu karşılığı bu bloğa/sayfanın koyu bloğuna eklenir (tarayıcı testi 5. grup koyu temada okunmayan yazıyı yakalar). */
-@media (prefers-color-scheme:dark){:root{--bg:#0F1211;--card:#181C1A;--line:#2E3431;--ok:#93A6FF;--ink:#E6E9E7;--mute:#A2A9A4;
+:root[data-tema="koyu"]{color-scheme:dark;--bg:#0F1211;--card:#181C1A;--line:#2E3431;--ok:#93A6FF;--ink:#E6E9E7;--mute:#A2A9A4;
 --amb:#E9B949;--ambbg:#2F260E;--hi:#FF9E66;--hibg:#36200F;--red:#FF8A80;--redbg:#3B1A18;--okbg:#1D2546;--yesil:#7CC9A0;--yesilbg:#14261D;--sunk:#222725;
 --tgida:#BBA2F5;--tgidabg:#2A1F45;--tkoz:#F09ACB;--tkozbg:#3A1830;--ttem:#62CCD6;--ttembg:#0E2C2F;
---onok:#0D1433;--okline:#34407A;--notr:#8F9590;--ambc:#E0B045;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camline:rgba(255,255,255,.08)}}
+--onok:#0D1433;--okline:#34407A;--notr:#8F9590;--ambc:#E0B045;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camline:rgba(255,255,255,.08)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--bf)}

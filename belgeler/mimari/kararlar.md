@@ -43,7 +43,7 @@ CLAUDE.md'den taşındı (15.10.2026, U-07 9. adım; metin aynı). Bu alana doku
 
 - Temizlik: çamaşır kapsülü/çocuk uyarıları, mikroorganizmalı temizleyiciler, P (önlem) ifadeleri, EUH208 içindeki madde adını ayrıca gösterme, AB 2026/405 Ek V (2029 öncesi mevzuat izlemesine).
 
-- Ön yüz (17.10.2026, kullanıcı "kenara yaz, düşüneyim" dedi; koyu tema, Gıda rengi, hareket ve ansiklopedi şeridi yapıldı): (a) Etiket Oku'nun boş alt yarısına son taramalar (küçük kartlar: tür, renk şeridi; dokununca sonuç), "Okunan Metin" başlığındaki çıplak ▶ yerine diğer başlıklardaki ok, "İyi fotoğraf için" kutuları birkaç taramadan sonra gizlenir; (b) Özet tablosu ve yapışkan Kaydet/Paylaş 17.10.2026'da yapıldı; (c) tarama sürerken sonucun gri iskeleti; (d) koyu temayı elle seçme (Profilim > Ayarlar: Sistem/Açık/Koyu).
+- Ön yüz (17.10.2026, kullanıcı "kenara yaz, düşüneyim" dedi; koyu tema, Gıda rengi, hareket ve ansiklopedi şeridi yapıldı): (a) Etiket Oku'nun boş alt yarısına son taramalar (küçük kartlar: tür, renk şeridi; dokununca sonuç), "Okunan Metin" başlığındaki çıplak ▶ yerine diğer başlıklardaki ok, "İyi fotoğraf için" kutuları birkaç taramadan sonra gizlenir; (b) Özet tablosu ve yapışkan Kaydet/Paylaş 17.10.2026'da yapıldı; (c) tarama sürerken sonucun gri iskeleti; (d) koyu temayı elle seçme 17.10.2026'da yapıldı (Profilim > Ayarlar > Görünüm).
 
 - Teknik borç: TEKNIK_BORC.md; ansiklopedi eksikleri (gıda tamam; AB konsolide metin karşılaştırması açık; kozmetik ve temizlik sayfası yok) "Ansiklopedi: eksik bilgiler" bölümünde (06.10.2026).
 

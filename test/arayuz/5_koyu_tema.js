@@ -48,6 +48,25 @@ module.exports=async({br,B,opt,ok})=>{
   await p.evaluate(()=>document.querySelector('#ana .gdrop').open=true);
   await denetle('Ansiklopedi listesi');
   for(const id of ['E322','E250','E211']){await p.goto(B+'ansiklopedi.html?id='+id);await p.waitForSelector('#ana .risk');await denetle('Ansiklopedi '+id)}
+  // Elle seçim (Profilim > Ayarlar > Görünüm): telefon koyuyken "Açık" seçilince açık zemin, seçim yeniden açılışta da geçerli
+  const zemin=()=>p.evaluate(()=>[document.documentElement.dataset.tema,getComputedStyle(document.body).backgroundColor,document.querySelector('meta[name="theme-color"]').content]);
+  await p.goto(B+'ocr.html#profil');await p.waitForSelector('#temasec');
+  ok(await p.$eval('#temasec',s=>s.value)==='','görünüm: varsayılan telefona göre');
+  await p.selectOption('#temasec','acik');
+  let z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(255, 255, 255)'&&z[2]==='#2741c8','görünüm: telefon koyuyken Açık seçilince açık: '+z);
+  await p.goto(B+'ansiklopedi.html');z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(255, 255, 255)','görünüm: seçim başka sayfada da geçerli: '+z);
+  await p.goto(B+'ocr.html#profil');await p.waitForSelector('#temasec');await p.selectOption('#temasec','');
+  z=await zemin();ok(z[0]==='koyu','görünüm: telefona göreye dönünce yeniden koyu: '+z);
   ok(!errs.length,'koyu tema: konsol hatası yok: '+errs.join(' | '));
   await ctx.close();
+  // Telefon açıkken "Koyu" seçimi: koyu zemin, açılışta (betik çalışmadan önce değil, ilk çizimde) koyu
+  const ctx2=await br.newContext({...opt,colorScheme:'light',reducedMotion:'reduce'}),errs2=[],p2=await newPage(ctx2);watch(p2,errs2);
+  await p2.goto(B+'ocr.html');await p2.waitForFunction(ACILIS,null,{timeout:15000});
+  ok(await p2.evaluate(()=>document.documentElement.dataset.tema)==='acik','görünüm: telefon açıkken telefona göre açık');
+  await p2.evaluate(()=>localStorage.setItem('tema','koyu'));
+  await p2.goto(B+'ocr.html');await p2.waitForFunction(ACILIS,null,{timeout:15000});
+  z=await p2.evaluate(()=>[document.documentElement.dataset.tema,getComputedStyle(document.body).backgroundColor,document.querySelector('meta[name="theme-color"][media*="light"]').content]);
+  ok(z[0]==='koyu'&&z[1]==='rgb(15, 18, 17)'&&z[2]==='#0F1211','görünüm: telefon açıkken Koyu seçimi koyu: '+z);
+  ok(!errs2.length,'görünüm: konsol hatası yok: '+errs2.join(' | '));
+  await ctx2.close();
 };

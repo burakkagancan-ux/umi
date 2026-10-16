@@ -292,16 +292,14 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 #sonuc>:nth-child(2){animation-delay:.04s}#sonuc>:nth-child(3){animation-delay:.08s}#sonuc>:nth-child(4){animation-delay:.12s}#sonuc>:nth-child(n+5){animation-delay:.16s}
 .oz-serit{transform-origin:left center;animation:dol .6s .2s cubic-bezier(.2,.7,.2,1) both}[dir="rtl"] .oz-serit{transform-origin:right center}
 .sheet:not([hidden]) .sheet-pn{animation:yuksel .24s cubic-bezier(.2,.8,.2,1)}.sheet:not([hidden]) .sheet-bg{animation:karar .2s ease-out}
-/* Koyu tema (17.10.2026; belirteçler tema.css'te): bu dosyada sabit yazılmış renklerin koyu karşılıkları. Risk simgeleri (iki renkli SVG) parlaklığı ters çevrilip
+/* Koyu tema (17.10.2026; belirteçler tema.css'te, <html data-tema="koyu"> js/tema.js'ten): bu dosyada sabit yazılmış renklerin koyu karşılıkları. Risk simgeleri (iki renkli SVG) parlaklığı ters çevrilip
    rengi geri döndürülerek açık tona geçer (koyu yeşil daire açık yeşil, beyaz işaret koyu); şekil ve anlam aynı. */
-@media (prefers-color-scheme:dark){
-.res>.t::before,.res>.hd>.t::before,.ic{filter:invert(1) hue-rotate(180deg)}
-.chip.uret{background:var(--sunk);border-color:var(--line);color:var(--mute)}
-#kars{--k1:#8FB3E8;--k1b:#17243A;--k2:#C2A8EE;--k2b:#261D3A}#kars .kc0{--kc:var(--mute)}
-.res.kdec.g,.chip.ekok{border-color:#2A4636}
-.res.prof.r{border-color:#5A2A26}.res.prof.y{border-color:#4A3C14}
-#pd{--c-kay:#7CC9A0;--b-kay:#14261D;--c-roz:#C2A8EE;--b-roz:#261D3A;--c-ekl:#6FCBD2;--b-ekl:#0F2A2C;--c-top:#8FB3E8;--b-top:#17243A;--c-uy:#EE9CC9;--b-uy:#36182B;--c-ki:#8FB3E8;--b-ki:#17243A;--c-ay:#6FCBD2;--b-ay:#0F2A2C;--c-hk:#A2A9A4;--b-hk:#222725}
-.bkif{background:var(--okbg);color:var(--ok)}
-label.camera .camic{background:rgba(13,20,51,.10)}
-label.camera .cambtn{background:var(--onok)}
-}
+[data-tema="koyu"] .res>.t::before,[data-tema="koyu"] .res>.hd>.t::before,[data-tema="koyu"] .ic{filter:invert(1) hue-rotate(180deg)}
+[data-tema="koyu"] .chip.uret{background:var(--sunk);border-color:var(--line);color:var(--mute)}
+[data-tema="koyu"] #kars{--k1:#8FB3E8;--k1b:#17243A;--k2:#C2A8EE;--k2b:#261D3A}[data-tema="koyu"] #kars .kc0{--kc:var(--mute)}
+[data-tema="koyu"] .res.kdec.g,[data-tema="koyu"] .chip.ekok{border-color:#2A4636}
+[data-tema="koyu"] .res.prof.r{border-color:#5A2A26}[data-tema="koyu"] .res.prof.y{border-color:#4A3C14}
+[data-tema="koyu"] #pd{--c-kay:#7CC9A0;--b-kay:#14261D;--c-roz:#C2A8EE;--b-roz:#261D3A;--c-ekl:#6FCBD2;--b-ekl:#0F2A2C;--c-top:#8FB3E8;--b-top:#17243A;--c-uy:#EE9CC9;--b-uy:#36182B;--c-ki:#8FB3E8;--b-ki:#17243A;--c-ay:#6FCBD2;--b-ay:#0F2A2C;--c-hk:#A2A9A4;--b-hk:#222725}
+[data-tema="koyu"] .bkif{background:var(--okbg);color:var(--ok)}
+[data-tema="koyu"] label.camera .camic{background:rgba(13,20,51,.10)}
+[data-tema="koyu"] label.camera .cambtn{background:var(--onok)}
