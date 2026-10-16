@@ -204,7 +204,7 @@ module.exports=async({br,B,opt,ok,server})=>{
   await p.fill('#ara','sitrik asit');await p.waitForFunction(()=>document.querySelectorAll('#ana a.row .turr').length>=2,null,{timeout:5000}).catch(()=>{});
   {const r=await p.$$eval('#ana a.row .turr',e=>e.map(x=>x.dataset.tur+'|'+x.textContent+'|'+getComputedStyle(x).color));
    ok(r.some(x=>x.startsWith('gida|Gıda|'))&&r.some(x=>x.startsWith('tem|Temizlik|'))&&new Set(r.map(x=>x.split('|')[2])).size>=2,'tür etiketi: '+r.slice(0,4).join(', '));
-   const s=await p.$eval('#tur-gida',b=>[b.dataset.tur,getComputedStyle(b).backgroundColor]);ok(s[0]==='gida'&&s[1]==='rgb(74, 68, 176)','tür sekmesi rengi: '+s.join(' '))}
+   const s=await p.$eval('#tur-gida',b=>[b.dataset.tur,getComputedStyle(b).backgroundColor]);ok(s[0]==='gida'&&s[1]==='rgb(106, 63, 184)','tür sekmesi rengi: '+s.join(' '))}
   await p.fill('#ara','');await p.waitForSelector('#ana .rfil');
   // Tür süzgeci (14.10.2026, kullanıcı kararı): ikinci tür gelince görünür (temizlik 15.10.2026); renk süzgeci ve işlev başlıkları var
   {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana details.gdrop').length,acik:document.querySelectorAll('#ana details.gdrop[open]').length}));
