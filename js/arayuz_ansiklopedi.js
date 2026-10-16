@@ -30,7 +30,6 @@ function ansTur(r){return ATUR[r.product_types[0]]||"gida"}
 function kod(r){return r.id.replace(/_/g," ")}
 /* Tür etiketi (tema.css .turr): arama sonucunda adı aynı olan gıda ve temizlik maddesi renkle ve adla ayrılır */
 function turEtiket(r){var e=h("span","turr",t("kayit.tur."+ansTur(r)));e.setAttribute("data-tur",ansTur(r));return e}
-function ROZET_BAGLAM(){return {aile:"okur",tur:AOKU}}
 function okunan(){var d=rozetLoad(),o={};Object.keys(d.okur).forEach(function(k){d.okur[k].forEach(function(id){o[id]=1})});return o}
 
 /* ---------- Madde sayfası ---------- */
@@ -245,7 +244,6 @@ function ansSayfa(r){
     dilOnbellege([p]);for(var k in v[1])AT[k]=v[1][k];return v[0];
   });
 }
-DIL_HAZIR.then(rozetSimgeGuncelle);
 Promise.all([aGet("data/ansiklopedi.json"),DIL_HAZIR.then(ansMetin)]).then(function(v){
   AD=v[0];AT=v[1];AD.records.forEach(function(r){ABY[r.id]=r});AIDX=ansIndex(AD.records,AT);
   var sp=new URLSearchParams(location.search),m=sp.get("m"),id=sp.get("id"),r=null;

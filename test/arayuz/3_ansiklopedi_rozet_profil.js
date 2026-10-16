@@ -19,9 +19,9 @@ module.exports=async({br,B,opt,ok,server})=>{
   {const s=await p.textContent('#ana');ok(/Lesitinler/.test(s)&&!/Lecithins/.test(s),'ansiklopedi Türkçe metin: '+s.slice(0,80))}
   // Rozet (G-01): açılan her farklı sayfa gıda Okuru'na sayılır; ilk sayfada kutlama, sonra yalnızca yeni kademede
   {
-    const o=await p.evaluate(()=>({n:rozetLoad().okur.gida.length,g:rozetLoad().gor['okur.gida'],kut:!!document.querySelector('#ana .rozetkut'),simge:document.getElementById('rozetsimge').getAttribute('aria-label')}));
+    const o=await p.evaluate(()=>({n:rozetLoad().okur.gida.length,g:rozetLoad().gor['okur.gida'],kut:!!document.querySelector('#ana .rozetkut'),simge:!!document.getElementById('rozetsimge')}));
     ok(o.n===6&&o.g===1&&!o.kut,'ansiklopedi: 6 farklı sayfa sayıldı, aynı sayfa bir kez, kutlama yalnızca ilkinde: '+JSON.stringify(o));
-    ok(/Meraklı/.test(o.simge||''),'ansiklopedi üstünde gıda Okuru simgesi: '+o.simge);
+    ok(!o.simge,'ansiklopedi üstünde rozet simgesi yok (16.10.2026, kullanıcı kararı)');
     await p.evaluate(()=>localStorage.setItem('rozetler',JSON.stringify({v:1,okur:{gida:'E100,E101,E102,E104,E110,E120,E122,E123,E124'.split(',')},dedektif:rozetLoad().dedektif,gor:{'okur.gida':1,'dedektif.gida':1}})));
     await p.goto(B+'ansiklopedi.html?id=E127');await p.waitForSelector('#ana .risk');await p.waitForSelector('#ana .rozetkut',{timeout:5000}).catch(()=>{});
     ok(/Okur/.test(await p.textContent('#ana .rozetkut').catch(()=>''))&&/10 farklı ansiklopedi sayfası/.test(await p.textContent('#ana .rozetkut').catch(()=>'')),'10. sayfa: "Okur" kademesi kutlanır');

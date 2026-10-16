@@ -83,7 +83,6 @@ export function rozetYeni(def,d,aile,tur){
 }
 export function rozetGoruldu(d,aile,tur,kademe){d=rozetNorm(d);var k=aile+"."+tur;if(kademe>(d.gor[k]||0))d.gor[k]=kademe;return d}
 /* Bağlamın en yüksek kademesi (ekranın üstündeki küçük simge); hiç rozet yoksa null */
-export function rozetBaglam(def,d,aile,tur){var r=rozetDurumu(def,d,aile,tur);return r.hazir&&r.kademe?r:null}
 /* Toplam kazanılmış rozet (her ailenin her türündeki kademe sayısı) */
 export function rozetToplam(def,d){
   var n=0;(def.aileler||[]).forEach(function(a){def.turler.forEach(function(tur){n+=rozetDurumu(def,d,a.id,tur).kademe})});return n;

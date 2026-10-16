@@ -11,15 +11,14 @@ DIL_HAZIR.then(function(){
   setMode(MODE,false);
   window.addEventListener("hashchange",tabSync);tabSync();
   kayitProfil();
-  rozetProfil();rozetSimgeGuncelle();
+  rozetProfil();
   window.addEventListener("hashchange",rozetHash);rozetHash();
   ekleProfil();window.addEventListener("hashchange",ekleHash);ekleHash();
   ekleSunucu(EKLE_AYAR.tazeSn,rozetGoster);   // ürün rozetleri: sunucudaki doğrulanmış sayım (G-02)
   toplulukProfil();window.addEventListener("hashchange",toplulukHash);toplulukHash();   // ortak hedef ve eksik ürünler (G-04)
   olcumAc();   // A-03: günlük açan cihaz, yeni cihaz, geri dönüş (js/arayuz_olcum.js)
 });
-/* Rozetler (js/arayuz_rozet.js): Etiket Oku'nun bağlamı seçili türün Etiket Dedektifi rozeti; kutlama kartı sonucun üstüne */
-function ROZET_BAGLAM(){return {aile:"dedektif",tur:MODE}}
+/* Rozetler (js/arayuz_rozet.js): kutlama kartı sonucun üstüne */
 var ROZET_BEKLE=null;
 function rozetGoster(c){if($("sonuc").querySelector(".resbar"))sonucUst(c);else ROZET_BEKLE=c}
 function rozetSonra(){if(ROZET_BEKLE&&$("sonuc").querySelector(".resbar")){sonucUst(ROZET_BEKLE);ROZET_BEKLE=null}}

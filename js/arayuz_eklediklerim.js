@@ -15,7 +15,7 @@ function ekleSunucu(tazeSn,goster,liste){
       var d=rozetSunucuYaz(rozetLoad(),j,Date.now()),yeni=[];
       ROZET_SUNUCU.forEach(function(a){def.turler.forEach(function(tur){var y=rozetYeni(def,d,a,tur);if(y){yeni.push(y);d=rozetGoruldu(d,a,tur,y.kademe)}})});
       if(!rozetStore(d))return j;
-      rozetSimgeGuncelle();rozetProfil();
+      rozetProfil();
       // Birden çok yeni kademe (ör. ilk eşitlemede) tek kartta: en yükseği gösterilir, ötekiler sayıyla
       if(goster&&yeni.length){
         yeni.sort(function(a,b){return b.sira-a.sira});

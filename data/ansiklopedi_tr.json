@@ -1,4 +1,4 @@
-{"meta":{"lang": "tr", "generated": "2026-10-16", "count": 5497},
+{"meta":{"lang": "tr", "generated": "2026-10-16", "count": 5496},
 "t":{
 "111-76-2.name":"2-Bütoksietanol",
 "1310-58-3.name":"Potasyum Hidroksit",
@@ -717,7 +717,6 @@
 "kaynak.fc590e98b7":"Re-evaluation of oxygen (E 948) and hydrogen (E 949) as food additives",
 "kaynak.fd9781bd3d":"WHO/FAO JECFA (IPCS INCHEM; TRS 648-JECFA 23/31)",
 "koz.eff.miktar":"Sınıf saf madde içindir; kozmetikte seyreltik kullanıldığından üründeki etki orana göre değişir.",
-"koz.eval":"Renk, Etiket Oku'daki kozmetik sonucuyla aynı kurala göre verilir: AB kozmetik yönetmeliğinin ekleri ve izlenen listeler. Oranlar etikette yazmadığı için üründeki miktar bilinmez. 'Özel uyarı yok' bir onay değildir.",
 "koz.pw.ed":"AB'nin olası endokrin bozucu (hormon sistemini etkileyebileceği şüphesi olan) maddeler öncelik listesinde. Liste bir hüküm değildir.",
 "koz.pw.koku":"Koku alerjeni: AB'de belirli oranı aşınca içerik listesinde adıyla yazılır; etikette adını arayın.",
 "koz.reg.yok":"AB kozmetik yönetmeliğinin eklerinde (yasak, kısıtlı ve izinli listeler) yer almıyor; bu maddeye özgü bir sınır ya da etiket kuralı yok. Her ürün için genel güvenlik değerlendirmesi kuralı geçerlidir.",
