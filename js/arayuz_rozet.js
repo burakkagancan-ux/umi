@@ -55,7 +55,7 @@ function rozetPaylasHazirla(r,btn,st){
     var text=t("rozet.paylas_metin",{ad:t(r.ad),aciklama:rozetAciklama(r)}),file=null;
     try{file=new File([blob],t("rozet.dosya_adi"),{type:"image/png"})}catch(e){}
     if(file&&navigator.canShare&&navigator.share&&navigator.canShare({files:[file]})){
-      navigator.share({files:[file],text:text,title:t(r.ad)}).then(function(){st.textContent=t("pay.paylasildi")},function(e){if(!e||e.name!=="AbortError")rozetIndir(blob,st)});
+      navigator.share({files:[file],text:text,title:t(r.ad)}).then(function(){st.textContent=t("pay.paylasildi");if(typeof hareketTamam==="function")hareketTamam(btn)},function(e){if(!e||e.name!=="AbortError")rozetIndir(blob,st)});
     }else rozetIndir(blob,st);
   };
 }

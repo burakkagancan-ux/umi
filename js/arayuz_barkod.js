@@ -295,6 +295,8 @@ function barkodAc(ret){
   var ara=el("button",null,t("barkod.ara"));ara.type="submit";f.appendChild(inp);f.appendChild(ara);body.appendChild(f);
   body.appendChild(el("div","how",t("barkod.not")));
   function bitti(kod){barkodDur();closeSheet();barkodIsle(kod)}
+  // Kamerada tanınınca görüntü bir an yeşil çerçeveyle göçer (css/ocr.css), sonra kapanır; arada alt sayfa kapatıldıysa (akış durdu) bir şey yapılmaz
+  function bulundu(kod){if(typeof hareketAz==="function"&&hareketAz()){bitti(kod);return}body.classList.add("bulundu");setTimeout(function(){if(BARKOD_AKIS)bitti(kod)},220)}
   f.onsubmit=function(e){e.preventDefault();var k=barkodTemiz(inp.value);if(!barkodGecerli(k)){st.textContent=t("barkod.gecersiz",{kod:k});inp.focus();return}bitti(k)};
   var coz=null;
   fi.onchange=function(){
@@ -316,7 +318,7 @@ function barkodAc(ret){
         (function tara(){
           if(!BARKOD_AKIS)return;
           c(vid).then(function(k){
-            if(k&&barkodGecerli(k)){try{if(navigator.vibrate)navigator.vibrate(60)}catch(e){}bitti(k);return}
+            if(k&&barkodGecerli(k)){try{if(navigator.vibrate)navigator.vibrate(60)}catch(e){}bulundu(k);return}
             BARKOD_DONGU=setTimeout(tara,250);
           });
         })();

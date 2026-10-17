@@ -123,7 +123,7 @@ function ozelAlerjenKutusu(degisti){
     ls.textContent="";
     PROF.alOzel.forEach(function(ad){
       var g=ozelGoster(ad,DIL.kod),c=el("span","chip pozc",g),x=el("button","pozsil","×");x.type="button";x.setAttribute("aria-label",t("profil.ozel.sil",{ad:g}));
-      x.onclick=function(){PROF.alOzel=PROF.alOzel.filter(function(y){return y!==ad});ciz();degisti()};
+      x.onclick=function(){PROF.alOzel=PROF.alOzel.filter(function(y){return y!==ad});degisti();if(typeof hareketCik==="function")hareketCik(c,ciz);else ciz()};
       c.appendChild(x);ls.appendChild(c)});
     var yok=PROF.alOzel.filter(function(ad){return !ozelKayit(ad)});sz.textContent=yok.length?t("profil.ozel.sozluksuz",{l:yok.join(", ")}):"";
     var dolu=PROF.alOzel.length>=OZEL_EN_COK;i.disabled=b.disabled=dolu;uy.textContent=dolu?t("profil.ozel.cok",{n:OZEL_EN_COK}):"";
