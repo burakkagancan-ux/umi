@@ -96,7 +96,7 @@ function buildProfile(){
 var BKI=[{k:"zayif",ust:18.5,renk:"#3B7DD8"},{k:"normal",ust:25,renk:"#2E8B57"},{k:"fazla",ust:30,renk:"#D98E04"},{k:"obez",ust:Infinity,renk:"#C2410C"}];
 function bkiDilim(v){for(var i=0;i<BKI.length;i++)if(v<BKI[i].ust)return BKI[i];return BKI[BKI.length-1]}
 /* BKİ bilgi sayfası (14.10.2026, kullanıcı isteği: düz uyarı kutusu karışık görünüyordu): formül kutusu, girilmişse kişinin değeri,
-   renkli dilim satırları (kişinin dilimi vurgulu), not ve kaynak */
+   renkli dilim satırları (kişinin dilimi vurgulu), not ve kaynak. 19.10.2026, kullanıcı isteği: alt sayfa çok büyüktü; ortada küçük yüzen pencere */
 function bkiSayfa(ret){
   var b=el("div","bkis"),v=PROF.boy&&PROF.kilo?PROF.kilo/Math.pow(PROF.boy/100,2):null,dv=v!=null?bkiDilim(v):null;
   b.appendChild(el("div","bkif",t("profil.bki.formul")));
@@ -109,7 +109,7 @@ function bkiSayfa(ret){
   b.appendChild(ls);
   b.appendChild(el("p","bkin",t("profil.bki.not")));
   b.appendChild(el("p","mut",t("profil.bki.kaynak")));
-  openSheet(t("profil.bki.baslik"),null,b,ret);
+  openSheet(t("profil.bki.baslik"),null,b,ret,"yuzen");
 }
 /* Listede olmayan alerjen: kullanıcı adını yazar, eklediklerini görür ve siler (PROF.alOzel; etiket metninde ozelAraHepsi ile aranır).
    Etikette yazılan ad seçili dilde gösterilir (ozelGoster); sözlükte olmayan adlar yazıldığı gibi kalır ve altta ayrıca belirtilir. */

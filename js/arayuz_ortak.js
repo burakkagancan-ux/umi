@@ -46,10 +46,11 @@ function loadDb(i){
 }
 
 /* ---------- Alt sayfa ---------- */
-/* Alt sayfa: başlık, durum satırı ve içerik; kapatınca odak açan düğmeye döner */
+/* Alt sayfa: başlık, durum satırı ve içerik; kapatınca odak açan düğmeye döner.
+   cls verilirse (ör. "yuzen") sayfaya eklenir; her açılışta sıfırlanır */
 var SHEET_RET=null;
-function openSheet(title,how,body,ret){
-  $("sheet-t").textContent=title;var sb=$("sheet-b");sb.textContent="";
+function openSheet(title,how,body,ret,cls){
+  $("sheet").className="sheet"+(cls?" "+cls:"");$("sheet-t").textContent=title;var sb=$("sheet-b");sb.textContent="";
   if(how)sb.appendChild(el("div","how",how));sb.appendChild(body);
   SHEET_RET=ret||null;$("sheet").hidden=false;document.body.style.overflow="hidden";$("sheet-x").focus();
 }

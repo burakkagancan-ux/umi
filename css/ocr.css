@@ -241,6 +241,17 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .bkir.on{background:color-mix(in srgb,var(--c) 18%,var(--card));box-shadow:0 0 0 2px var(--c) inset}
 .bkit{font-size:12px;font-weight:600;color:#fff;background:var(--c);border-radius:999px;padding:2px 8px}
 .bkin{margin:0;font-style:italic;color:var(--mute)}.bkis p.mut{margin:0;font-size:14px}
+/* Yüzen pencere (19.10.2026, kullanıcı isteği: BKİ alt sayfası çok büyüktü): ortada, dört köşesi yuvarlak, dar; içerik sıkılaştırılır */
+.sheet.yuzen{align-items:center;padding:16px}
+.sheet.yuzen .sheet-pn{max-width:360px;max-height:min(70vh,560px);border-radius:20px;padding:4px 14px 14px;box-shadow:0 1px 3px rgba(27,33,30,.1),0 12px 32px rgba(27,33,30,.22)}
+.sheet.yuzen .sheet-hd{top:-4px;padding:6px 0}.sheet.yuzen .sheet-hd .t{font-size:16px}.sheet.yuzen .sheet-x{width:40px;height:40px;font-size:20px}
+.sheet.yuzen:not([hidden]) .sheet-pn{animation:yuzbelir .2s cubic-bezier(.2,.8,.2,1)}
+@keyframes yuzbelir{from{transform:scale(.94);opacity:0}}
+.yuzen .bkis{gap:8px;font-size:14px;line-height:1.4}
+.yuzen .bkif{font-size:15px;padding:8px 10px;border-radius:12px}
+.yuzen .bkiv{padding:8px 12px;border-radius:12px}.yuzen .bkiv b{font-size:15px}
+.yuzen .bkil{gap:4px}.yuzen .bkir{min-height:36px;padding:4px 12px;border-radius:10px;gap:8px}
+.yuzen .bkid{width:10px;height:10px}.yuzen .bkis p.mut{font-size:12.5px}
 .pset>.pn select{color:var(--c-ay);font-weight:600}
 .pcihaz{text-align:center;margin:18px 0 0}
 #profil.mut{color:var(--ink);font-size:16px}#profil p.mut,#profil .how{color:var(--mute);font-size:14px}
@@ -306,5 +317,6 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 [data-tema="koyu"] .res.prof.r{border-color:#5A2A26}[data-tema="koyu"] .res.prof.y{border-color:#4A3C14}
 [data-tema="koyu"] #pd{--c-kay:#7CC9A0;--b-kay:#14261D;--c-roz:#C2A8EE;--b-roz:#261D3A;--c-ekl:#6FCBD2;--b-ekl:#0F2A2C;--c-top:#8FB3E8;--b-top:#17243A;--c-uy:#EE9CC9;--b-uy:#36182B;--c-ki:#8FB3E8;--b-ki:#17243A;--c-ay:#6FCBD2;--b-ay:#0F2A2C;--c-hk:#A2A9A4;--b-hk:#222725}
 [data-tema="koyu"] .bkif{background:var(--okbg);color:var(--ok)}
+[data-tema="koyu"] .sheet.yuzen .sheet-pn{border:1px solid var(--line)}
 [data-tema="koyu"] label.camera .camic{background:rgba(13,20,51,.10)}
 [data-tema="koyu"] label.camera .cambtn{background:var(--onok)}
