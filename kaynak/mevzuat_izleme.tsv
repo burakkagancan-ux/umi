@@ -1,0 +1,14 @@
+# Aylık mevzuat izlemesi (A-06): uygulamanın dayandığı AB metinleri ve EUR-Lex'te en son görülen konsolide sürüm tarihi.
+# mevzuat_izle.py her metnin en yeni konsolide sürümünü EUR-Lex'in CELLAR SPARQL uç noktasından alır; buradakinden yeniyse
+# .github/workflows/mevzuat.yml tek bir sorun (issue) açar. Bu dosyayı iş akışı DEĞİŞTİRMEZ: değişiklik okunup veriye
+# işlendikten (gerekirse O-05 değişiklik kaydı yazıldıktan) sonra tarih elle güncellenir.
+# Sütunlar: celex (temel metin, 3YYYY[RLD]NNNN)<TAB>ad<TAB>son konsolide sürüm (YYYY-MM-DD; boşsa henüz konsolide sürüm yok)<TAB>uygulamada nerede kullanılıyor
+# Not: EUR-Lex, uygulama tarihi gelecekte olan konsolide sürümleri de yayımlar (ör. CLP 2027-01-01); tarih o sürümün uygulama tarihidir.
+32008R1333	AB 1333/2008 gıda katkı maddeleri	2026-08-18	gıda E kodları (eu_status, kullanım koşulları), ansiklopedi
+32012R0231	AB 231/2012 katkı maddesi spesifikasyonları	2026-08-18	üretim yolu doğrulaması (e_uretim.tsv), ansiklopedi
+32011R1169	AB 1169/2011 gıda bilgisinin tüketiciye sunulması	2025-04-01	alerjenler (Ek II), besin değeri tablosu (Ek XV), İngilizce eş anlamlılar
+32006R1924	AB 1924/2006 beslenme ve sağlık beyanları	2014-12-13	besin değeri tablosunda "düşük" eşikleri (js/besin.js)
+32009R1223	AB 1223/2009 kozmetik ürünler	2026-05-18	kozmetik ekleri (CosIng ayrıca aylık cosing.yml ile izleniyor)
+32008R1272	AB 1272/2008 CLP sınıflandırma, etiketleme, ambalajlama	2027-01-01	temizlik H/EUH/P ifadeleri, temizlik ansiklopedisi (Ek VI)
+32004R0648	AB 648/2004 deterjanlar	2015-06-01	deterjan içerik grupları ve bantları (Ek VII), fosfor sınırı (259/2012 ile)
+32026R0405	AB 2026/405 yeni deterjan tüzüğü (uygulama 2029)	2026-03-02	temizlik (Ek V henüz okunamadı; 2029 öncesi izlenir)
