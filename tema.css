@@ -11,12 +11,14 @@
    sayfa dosyalarında sabit yazılmış renklerin koyu karşılığı o dosyanın sonundaki koyu tema bloğunda. Ana renk ve tür renkleri koyu zeminde açık tonda, üstlerindeki yazı koyu (--onok);
    risk renkleri aynı anlamda kalır (turuncu uyarı, amber dikkat, yeşil, gri), yalnızca açık tona geçer.
    Şerit ve nokta dolguları (yazı değil) --hic ile --ambc: koyu temada yazı rengi --hi (#FF9E66) ile --ambc aynı parlaklıktaydı (1,01:1, renk körlüğünde ayırt edilmiyor);
-   --hic daha koyu ve doygun, --ambc'ye karşı 1,9:1, kart zeminine karşı 4,5:1 (19.10.2026). Paylaşım ve rozet kartı görseli (canvas) her zaman açık kalır.
+   --hic daha koyu ve doygun, --ambc'ye karşı 1,9:1, kart zeminine karşı 4,5:1 (19.10.2026). Dikkat ile yeşil de aynı parlaklıktaydı (#E0B045/#7CC9A0, 1,02:1):
+   --ambc daha açık sarı (#EFC64E), --yesil biraz koyu (#61B48A), aralarında ve yeşil ile --hic arasında 1,53:1; --ambc 9 px nokta olarak "açık zemin" sınırının (göreli parlaklık 0,6) altında (19.10.2026; tarayıcı testi 5. grup her risk dolgusu çiftini
+   parlaklık ya da renk körlüğü benzetimiyle ölçer). Paylaşım ve rozet kartı görseli (canvas) her zaman açık kalır.
    Yeni renk sabit yazılmaz: belirteç kullanılır ya da koyu karşılığı bu bloğa/sayfanın koyu bloğuna eklenir (tarayıcı testi 5. grup koyu temada okunmayan yazıyı yakalar). */
 :root[data-tema="koyu"]{color-scheme:dark;--bg:#0F1211;--card:#181C1A;--line:#2E3431;--ok:#93A6FF;--ink:#E6E9E7;--mute:#A2A9A4;
---amb:#E9B949;--ambbg:#2F260E;--hi:#FF9E66;--hibg:#36200F;--red:#FF8A80;--redbg:#3B1A18;--okbg:#1D2546;--yesil:#7CC9A0;--yesilbg:#14261D;--sunk:#222725;
+--amb:#E9B949;--ambbg:#2F260E;--hi:#FF9E66;--hibg:#36200F;--red:#FF8A80;--redbg:#3B1A18;--okbg:#1D2546;--yesil:#61B48A;--yesilbg:#14261D;--sunk:#222725;
 --tgida:#BBA2F5;--tgidabg:#2A1F45;--tkoz:#F09ACB;--tkozbg:#3A1830;--ttem:#62CCD6;--ttembg:#0E2C2F;
---onok:#0D1433;--okline:#34407A;--notr:#8F9590;--hic:#E0552B;--ambc:#E0B045;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camline:rgba(255,255,255,.08)}
+--onok:#0D1433;--okline:#34407A;--notr:#8F9590;--hic:#E0552B;--ambc:#EFC64E;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camline:rgba(255,255,255,.08)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--bf)}

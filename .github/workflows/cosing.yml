@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: "0 6 1 * *"
   workflow_dispatch:
+    inputs:
+      zorla:
+        description: "Ad düşüşü korumasını atla (CosIng adları gerçekten çıkardıysa; cosing_al.py --zorla)"
+        type: boolean
+        default: false
 permissions:
   contents: write
   pull-requests: write
@@ -23,7 +28,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: python cosing_al.py
+      # İndirmede mevcut INCI adlarının %0,5'inden fazlası yoksa betik bir kez daha indirir; birleşimde de yoksa
+      # dosya yazmadan sıfır olmayan kodla çıkar: iş kırmızı olur, sonraki adımlar (PR) çalışmaz. Düşen ad
+      # örnekleri bu adımın günlüğünde. Bilinçli değişiklikse iş elle "zorla" seçilerek yeniden çalıştırılır.
+      - name: CosIng indir
+        run: python cosing_al.py ${{ inputs.zorla && '--zorla' || '' }}
       - name: Değişiklik var mı
         id: fark
         # surum.txt indirme tarihini taşıdığı için her ay değişir; karşılaştırmaya alınmaz
