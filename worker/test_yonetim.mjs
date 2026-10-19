@@ -122,16 +122,52 @@ const w = (await import("./src/index.js?yonetim")).default;
   r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "besin", id: sil1 } });
   ok(r.s === 200 && r.j.silindi === 1 && env.URUNLER.db.prepare("SELECT COUNT(*) AS n FROM besin").get().n === 2, "tek tablo silinir", r.j);
   ok(env.URUNLER.db.prepare("SELECT COUNT(*) AS n FROM toplam").get().n > 0, "besin tablosu silmek sayaçlara dokunmaz");
-  // Bir kişinin bütün katkıları silinir; çelişki kalkar; sayaçlar baştan sayılır
+  const db = env.URUNLER.db, sayac = () => Object.fromEntries(db.prepare("SELECT ad, n FROM toplam WHERE ad != 'kurulum'").all().map((x) => [x.ad, x.n]));
+  const ilkSayac = sayac();
+  // Bir kişinin bütün katkıları silinir; çelişki kalkar; sayaçlara yalnızca fark uygulanır (kurulum ve diğer sayaçlar yerinde)
   r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { kim: C } });
-  ok(r.j.silindi === 2 && !env.URUNLER.db.prepare("SELECT 1 FROM katki WHERE kim = ?").get(C), "katkıcının bütün katkıları silinir", r.j);
-  ok(env.URUNLER.db.prepare("SELECT COUNT(*) AS n FROM toplam").get().n === 0, "içerik silinince sayaçlar sıfırlanır");
+  ok(r.j.silindi === 2 && Number.isInteger(r.j.islem) && !db.prepare("SELECT 1 FROM katki WHERE kim = ?").get(C), "katkıcının bütün katkıları silinir", r.j);
+  const islemC = r.j.islem;
+  ok(db.prepare("SELECT 1 FROM toplam WHERE ad = 'kurulum'").get() && sayac()["urun:gida"] === 1 && !sayac()["urun:koz"] && sayac()["dogrulanan:gida"] === 1, "silme sayaçları silmez; K2 (yalnızca C'nin) ürün sayısından düşer", sayac());
+  ok(db.prepare("SELECT COUNT(*) AS n FROM silinen WHERE islem = ?").get(islemC).n === 2, "silinen satırlar saklanır");
   r = await cagir(w, env, "/topluluk", { anahtar: null, origin: ORIGIN });
-  ok(r.j.sayilar.urun.gida === 1 && !r.j.sayilar.urun.koz && r.j.sayilar.dogrulanan.gida === 1, "sayaçlar baştan sayıldı", r.j.sayilar);
+  ok(r.j.sayilar.urun.gida === 1 && !r.j.sayilar.urun.koz && r.j.sayilar.dogrulanan.gida === 1, "topluluk sayıları doğru", r.j.sayilar);
   r = await cagir(w, env, "/yonetim/api/liste?gor=celiski");
   ok(!r.j.urunler.length, "çelişki kalmadı");
+  // Doğrulayan katkıyı silmek doğrulanan sayısını düşürür
+  const bId = db.prepare("SELECT id FROM katki WHERE kim = ?").get(B).id;
+  r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "katki", id: bId } });
+  ok(r.j.silindi === 1 && sayac()["urun:gida"] === 1 && sayac()["dogrulanan:gida"] === 0, "doğrulayan katkı silinince doğrulanan 1 → 0", sayac());
+  const islemB = r.j.islem;
   r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "aranan", kod: "5449000000996" } });
   ok(r.j.silindi === 1 && !(await cagir(w, env, "/yonetim/api/liste?gor=aranan")).j.aranan.length, "aranan listesinden çıkarılır");
+  const islemA = r.j.islem;
+  r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "katki", id: 99999 } });
+  ok(r.s === 200 && r.j.silindi === 0 && r.j.islem === null, "olmayan satır: işlem yazılmaz", r.j);
+  // İşlem Kaydı ve geri alma
+  r = await cagir(w, env, "/yonetim/api/islem");
+  ok(r.s === 200 && r.j.islemler.map((x) => x.id).join() === [islemA, islemB, islemC, 1].join() && r.j.islemler.slice(0, 3).every((x) => x.geriAlinabilir) && r.j.islemler[2].ayrinti.kim === C && r.j.islemler[2].ayrinti.n === 2, "işlem kaydı yeniden eskiye", r.j.islemler);
+  r = await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: islemB } });
+  ok(r.s === 200 && r.j.geri === 1 && db.prepare("SELECT id FROM katki WHERE kim = ?").get(B).id === bId && sayac()["dogrulanan:gida"] === 1, "geri alma: satır aynı numarayla döner, doğrulanan yeniden 1", [r.j, sayac()]);
+  ok((await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: islemB } })).s === 409, "aynı işlem iki kez geri alınmaz");
+  r = await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: islemC } });
+  ok(r.j.geri === 2 && db.prepare("SELECT COUNT(*) AS n FROM katki WHERE kim = ?").get(C).n === 2, "katkıcının iki içerik katkısı geri döner (besin tablosu önceki ayrı silmede)", r.j);
+  ok(JSON.stringify(sayac()) === JSON.stringify(ilkSayac), "bütün geri almalardan sonra sayaçlar silmeden önceki gibi", [sayac(), ilkSayac]);
+  ok((await cagir(w, env, "/yonetim/api/liste?gor=celiski")).j.urunler.length === 1, "çelişki geri geldi");
+  await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: islemA } });
+  ok((await cagir(w, env, "/yonetim/api/liste?gor=aranan")).j.aranan[0].n === 1, "aranan kaydı geri döner");
+  r = await cagir(w, env, "/yonetim/api/islem");
+  ok(r.j.islemler.slice(0, 3).every((x) => x.geri && !x.geriAlinabilir), "geri alınan işlemler işaretli");
+  for (const b of [{}, { islem: "1" }, { islem: 0 }]) ok((await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: b })).s === 400, "geçersiz geri alma 400: " + JSON.stringify(b));
+  ok((await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: 4242 } })).s === 404, "olmayan işlem 404");
+  // 90 gün sonra silinen satırlar kalıcı silinir; geri alınamaz
+  r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "katki", id: bId } });
+  const eski = r.j.islem;
+  SIMDI += 91 * 864e5;
+  await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "aranan", kod: "5449000000996" } });
+  ok((await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: eski } })).s === 410, "90 günden eski silme geri alınamaz (410)");
+  ok(!(await cagir(w, env, "/yonetim/api/islem")).j.islemler.find((x) => x.id === eski).geriAlinabilir, "süresi dolan işlem geri alınamaz görünür");
+  ok((await cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: 1 }, anahtar: "y".repeat(40) })).s === 401, "anahtarsız geri alma 401");
   for (const b of [{ tablo: "katki" }, { tablo: "katki", id: "1 OR 1=1" }, { tablo: "x", id: 1 }, { kim: "1" }, { tablo: "aranan", kod: "123" }, {}])
     ok((await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: b })).s === 400, "geçersiz silme 400: " + JSON.stringify(b));
   ok((await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "katki", id: 1 }, anahtar: "y".repeat(40) })).s === 401, "anahtarsız silme 401");

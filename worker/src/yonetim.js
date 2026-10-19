@@ -10,16 +10,22 @@
 //   GET  /yonetim/api/urun/:barkod      bir barkodun bütün içerik katkıları ve besin tabloları, grup ve gösterilen grup bilgisiyle
 //   GET  /yonetim/api/kim/:kimlik       bir katkıcı kimliğinin bütün katkıları (kötü niyetli katkıcıyı bulmak için)
 //   POST /yonetim/api/sil               {tablo: "katki"|"besin", id} tek satır · {kim} o kimliğin bütün katkıları ve tabloları ·
-//                                       {tablo: "aranan", kod} aranan listesinden çıkar. İçerik silinince topluluk sayaçları
-//                                       (toplam) silinir, ilk GET /topluluk'ta baştan sayılır.
+//                                       {tablo: "aranan", kod} aranan listesinden çıkar. Silinen satırlar `silinen` tablosuna taşınır
+//                                       (SILINEN_OMUR_GUN gün), her silme `islem` tablosuna yazılır; topluluk sayaçlarına yalnızca
+//                                       etkilenen barkodların farkı uygulanır (eskiden bütün sayaçlar silinip baştan sayılıyordu).
+//   GET  /yonetim/api/islem?sayfa=N     İşlem Kaydı: silmeler, kaç satır, geri alındı mı
+//   POST /yonetim/api/geri              {islem} o silmeyi geri alır (satırlar aynı numarayla geri yazılır, sayaçlara fark uygulanır)
 //   GET  /yonetim/api/olcum             A-03 ölçümü: son 60 günün günlük toplamları (D1 olcum + paylaşım sayacı KV) ve son 7 günün özeti
-import { barkodGecerli, besinGrupla, grupla } from "./barkod.js";
+import { barkodGecerli, besinGrupla, grupla, toplamFark, urunSec } from "./barkod.js";
 import { OLCUM_AYAR, olcumGun, olcumOzet } from "../../js/olcum.js";
 
 export const YONETIM_ANAHTAR_EN_AZ = 32;   // daha kısa anahtar kabul edilmez (yönetim kapalı kalır)
 const SAYFA_BOY = 50;
 const CELISKI_TARA = 1000;                 // çelişen barkodlar en son katkı alan bu kadar barkod içinde aranır
 const KATKICI_RE = /^[0-9a-f]{32}$/;
+const SILINEN_OMUR_GUN = 90;               // silinen satırlar bu kadar gün geri alınabilir, sonra kalıcı silinir
+// Geri yazılırken yalnızca bu sütunlar kabul edilir (silinen.satir JSON'undan; tablo adı da yalnızca bu listeden)
+const SUTUNLAR = { katki: ["id", "kod", "tur", "dil", "metin", "t", "kim", "iz"], besin: ["id", "kod", "besin", "t", "kim", "iz"], aranan: ["kod", "tur", "n", "ilk", "son"] };
 
 // Sabit süreli karşılaştırma: iki değerin SHA-256 özeti karşılaştırılır (uzunluk ve ilk farklı harf zamanlamadan anlaşılmaz)
 async function ozet(s) { return new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(String(s)))); }
@@ -55,8 +61,8 @@ export function yonetimOzet(kod, katki, besin) {
 export function yonetimUrun(kod, katki, besin, aranan) {
   const kg = kGrupla(katki), bg = besinGrupla(besin);
   const kSat = [], bSat = [];
-  kg.forEach((g, i) => g.s.forEach((s) => kSat.push({ id: s.id, tur: s.tur, dil: s.dil || "", metin: s.metin, t: s.t, kim: s.kim || "", grup: i, dogrulandi: g.dogrulandi })));
-  bg.forEach((g, i) => g.s.forEach((s) => bSat.push({ id: s.id, besin: s.v, t: s.t, kim: s.kim || "", grup: i, dogrulandi: g.dogrulandi })));
+  kg.forEach((g, i) => g.s.forEach((s) => kSat.push({ id: s.id, tur: s.tur, dil: s.dil || "", metin: s.metin, t: s.t, kim: s.kim || "", iz: s.iz || "", grup: i, dogrulandi: g.dogrulandi })));
+  bg.forEach((g, i) => g.s.forEach((s) => bSat.push({ id: s.id, besin: s.v, t: s.t, kim: s.kim || "", iz: s.iz || "", grup: i, dogrulandi: g.dogrulandi })));
   const t = (a, b) => (a.grup - b.grup) || (b.t - a.t);
   return { kod, ozet: yonetimOzet(kod, katki, besin), katki: kSat.sort(t), besin: bSat.sort(t), aranan: aranan || null };
 }
@@ -73,10 +79,73 @@ function ozetler(katki, besin) {
 const SON_KODLAR = "SELECT kod FROM (SELECT kod, t FROM katki UNION ALL SELECT kod, t FROM besin) GROUP BY kod ORDER BY MAX(t) DESC LIMIT ? OFFSET ?";
 async function satirlar(db, kosul, ...args) {
   const [{ results: k }, { results: b }] = await Promise.all([
-    db.prepare("SELECT id, kod, tur, dil, metin, t, kim FROM katki WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
-    db.prepare("SELECT id, kod, besin, t, kim FROM besin WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
+    db.prepare("SELECT id, kod, tur, dil, metin, t, kim, iz FROM katki WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
+    db.prepare("SELECT id, kod, besin, t, kim, iz FROM besin WHERE " + kosul + " ORDER BY t DESC").bind(...args).all(),
   ]);
   return [k || [], b || []];
+}
+
+// Topluluk sayaçlarına fark uygular ([[ad, ±n]]; aynı ad toplanır, en çok 6 sorgu). Sayaç sıfırın altına inmez.
+export async function toplamUygula(db, fark) {
+  const m = new Map();
+  for (const [ad, n] of fark) m.set(ad, (m.get(ad) || 0) + n);
+  for (const [ad, n] of m) if (n)
+    await db.prepare("INSERT INTO toplam (ad, n) VALUES (?, MAX(0, ?)) ON CONFLICT(ad) DO UPDATE SET n = MAX(0, n + ?)").bind(ad, n, n).run();
+}
+// Barkodların içerik katkıları (tek sorgu; D1'in istek başına sorgu sınırı yüzünden barkod başına sorgu yok) → Map(kod → satırlar)
+async function kodSatirlari(db, kodlar) {
+  const m = new Map(kodlar.map((k) => [k, []]));
+  if (!kodlar.length) return m;
+  const { results } = await db.prepare("SELECT id, kod, tur, dil, metin, t, kim, iz FROM katki WHERE kod IN (SELECT value FROM json_each(?)) ORDER BY t DESC").bind(JSON.stringify(kodlar)).all();
+  for (const r of results || []) m.get(r.kod).push(r);
+  return m;
+}
+// Silmeden ya da geri almadan önceki ve sonraki satırlardan barkod başına sayaç farkı
+function satirFark(once, sonraFn) {
+  const f = [];
+  for (const [kod, l] of once) f.push(...toplamFark(urunSec(l), urunSec(sonraFn(kod, l))));
+  return f;
+}
+// Silme: seçilen satırlar silinen tablosuna taşınır ve islem'e yazılır; hepsi tek toplu yazımda (yarıda kalmaz).
+// secim: [[tablo, koşul, ...bağlar]]. Döner {n, islem}.
+async function silVeKaydet(db, ne, ayrinti, secim) {
+  const satirlar = [];
+  for (const [tablo, kosul, ...args] of secim) {
+    const { results } = await db.prepare("SELECT " + SUTUNLAR[tablo].join(", ") + " FROM " + tablo + " WHERE " + kosul).bind(...args).all();
+    for (const r of results || []) satirlar.push([tablo, r]);
+  }
+  if (!satirlar.length) return { n: 0 };
+  const kodlar = [...new Set(satirlar.filter(([t]) => t === "katki").map(([, r]) => r.kod))];
+  const once = await kodSatirlari(db, kodlar), silinen = new Set(satirlar.filter(([t]) => t === "katki").map(([, r]) => r.id));
+  const t = Date.now(), son = await db.prepare("SELECT COALESCE(MAX(id), 0) + 1 AS id FROM islem").first(), id = son.id;
+  const ozet = { ...ayrinti, n: satirlar.length, kodlar: [...new Set(satirlar.map(([, r]) => r.kod))].slice(0, 20) };
+  await db.batch([
+    db.prepare("INSERT INTO islem (id, t, ne, ayrinti) VALUES (?, ?, ?, ?)").bind(id, t, ne, JSON.stringify(ozet)),
+    ...satirlar.map(([tablo, r]) => db.prepare("INSERT INTO silinen (islem, tablo, satir, t) VALUES (?, ?, ?, ?)").bind(id, tablo, JSON.stringify(r), t)),
+    ...secim.map(([tablo, kosul, ...args]) => db.prepare("DELETE FROM " + tablo + " WHERE " + kosul).bind(...args)),
+    db.prepare("DELETE FROM silinen WHERE t < ?").bind(t - SILINEN_OMUR_GUN * 864e5),
+  ]);
+  await toplamUygula(db, satirFark(once, (kod, l) => l.filter((r) => !silinen.has(r.id))));
+  return { n: satirlar.length, islem: id };
+}
+async function geriAl(db, id, R) {
+  const is = await db.prepare("SELECT id, geri FROM islem WHERE id = ?").bind(id).first();
+  if (!is) return R(404, { error: "İşlem bulunamadı." });
+  if (is.geri) return R(409, { error: "Bu işlem zaten geri alındı." });
+  const { results } = await db.prepare("SELECT tablo, satir FROM silinen WHERE islem = ?").bind(id).all();
+  if (!results || !results.length) return R(410, { error: SILINEN_OMUR_GUN + " günden eski; satırlar kalıcı silindi." });
+  const satirlar = results.filter((r) => SUTUNLAR[r.tablo]).map((r) => [r.tablo, JSON.parse(r.satir)]);
+  const geriK = satirlar.filter(([t]) => t === "katki").map(([, r]) => r);
+  const once = await kodSatirlari(db, [...new Set(geriK.map((r) => r.kod))]);
+  await db.batch([
+    // INSERT OR IGNORE: aynı numara (id) ya da aranan listesinde o arada yeniden eklenmiş barkod varsa olan kalır
+    ...satirlar.map(([tablo, r]) => { const s = SUTUNLAR[tablo];
+      return db.prepare("INSERT OR IGNORE INTO " + tablo + " (" + s.join(", ") + ") VALUES (" + s.map(() => "?").join(", ") + ")").bind(...s.map((k) => r[k] ?? null)); }),
+    db.prepare("DELETE FROM silinen WHERE islem = ?").bind(id),
+    db.prepare("UPDATE islem SET geri = ? WHERE id = ?").bind(Date.now(), id),
+  ]);
+  await toplamUygula(db, satirFark(once, (kod, l) => [...l.filter((r) => !geriK.some((g) => g.id === r.id)), ...geriK.filter((g) => g.kod === kod)].sort((a, b) => b.t - a.t)));
+  return R(200, { geri: satirlar.length });
 }
 
 /* Paylaşım sayacı (KV "g:YYYY-AA-GG:s|d") → {gun: {s, d}}; son 60 gün (GET /sayac ve ölçüm görünümü) */
@@ -130,21 +199,27 @@ export async function yonetimApi(request, env, db, yol, R) {
   if (request.method === "POST" && p[0] === "sil" && p.length === 1) {
     let j;
     try { const raw = await request.text(); if (raw.length > 500) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
-    let n = 0, icerik = false;
-    if (j && (j.tablo === "katki" || j.tablo === "besin") && Number.isInteger(j.id) && j.id > 0) {
-      const r = await db.prepare("DELETE FROM " + j.tablo + " WHERE id = ?").bind(j.id).run();
-      n = (r.meta && r.meta.changes) || 0; icerik = j.tablo === "katki";
-    } else if (j && j.tablo === "aranan" && barkodGecerli(String(j.kod || ""))) {
-      const r = await db.prepare("DELETE FROM aranan WHERE kod = ?").bind(String(j.kod)).run();
-      n = (r.meta && r.meta.changes) || 0;
-    } else if (j && !j.tablo && KATKICI_RE.test(String(j.kim || ""))) {
-      const a = await db.prepare("DELETE FROM katki WHERE kim = ?").bind(j.kim).run();
-      const b = await db.prepare("DELETE FROM besin WHERE kim = ?").bind(j.kim).run();
-      n = ((a.meta && a.meta.changes) || 0) + ((b.meta && b.meta.changes) || 0); icerik = true;
-    } else return R(400, { error: "Geçersiz silme isteği." });
-    // Ürün ve doğrulanan sayıları değişmiş olabilir: sayaçlar baştan sayılsın (topluluk.js toplulukKur "kurulum" satırı yoksa sayar)
-    if (icerik && n) await db.prepare("DELETE FROM toplam").run();
-    return R(200, { silindi: n });
+    let r;
+    if (j && (j.tablo === "katki" || j.tablo === "besin") && Number.isInteger(j.id) && j.id > 0)
+      r = await silVeKaydet(db, "satir", { tablo: j.tablo, id: j.id }, [[j.tablo, "id = ?", j.id]]);
+    else if (j && j.tablo === "aranan" && barkodGecerli(String(j.kod || "")))
+      r = await silVeKaydet(db, "aranan", { kod: String(j.kod) }, [["aranan", "kod = ?", String(j.kod)]]);
+    else if (j && !j.tablo && KATKICI_RE.test(String(j.kim || "")))
+      r = await silVeKaydet(db, "katkici", { kim: j.kim }, [["katki", "kim = ?", j.kim], ["besin", "kim = ?", j.kim]]);
+    else return R(400, { error: "Geçersiz silme isteği." });
+    return R(200, { silindi: r.n, islem: r.islem || null });
+  }
+  if (request.method === "POST" && p[0] === "geri" && p.length === 1) {
+    let j;
+    try { const raw = await request.text(); if (raw.length > 200) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
+    if (!j || !Number.isInteger(j.islem) || j.islem < 1) return R(400, { error: "Geçersiz işlem." });
+    return geriAl(db, j.islem, R);
+  }
+  if (request.method === "GET" && p[0] === "islem" && p.length === 1) {
+    const sayfa = Math.max(0, Math.min(1000, parseInt(url.searchParams.get("sayfa") || "0", 10) || 0));
+    const { results } = await db.prepare("SELECT id, t, ne, ayrinti, geri, (SELECT COUNT(*) FROM silinen WHERE silinen.islem = islem.id) AS kalan FROM islem ORDER BY id DESC LIMIT ? OFFSET ?").bind(SAYFA_BOY, sayfa * SAYFA_BOY).all();
+    const islemler = (results || []).map((r) => ({ id: r.id, t: r.t, ne: r.ne, ayrinti: JSON.parse(r.ayrinti), geri: r.geri || null, geriAlinabilir: !r.geri && r.kalan > 0 }));
+    return R(200, { sayfa, islemler, devam: islemler.length === SAYFA_BOY, omur: SILINEN_OMUR_GUN });
   }
   return R(404, { error: "Bulunamadı." });
 }
@@ -166,7 +241,7 @@ export const YONETIM_HTML = `<!doctype html>
 </section>
 <section id="ana" hidden>
   <nav id="sekmeler">
-    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button><button data-gor="olcum">Ölçüm</button>
+    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button><button data-gor="olcum">Ölçüm</button><button data-gor="islem">İşlem Kaydı</button>
   </nav>
   <div class="ara"><input id="ara" placeholder="Barkod ya da katkıcı kimliği" autocomplete="off"><button id="ara_b">Aç</button></div>
   <p id="msj" class="msj"></p>
@@ -205,6 +280,7 @@ function $(i){return document.getElementById(i)}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=String(txt);return e}
 function tarih(t){return t?new Date(t).toLocaleString("tr-TR",{dateStyle:"medium",timeStyle:"short"}):"—"}
 function kimKisa(k){return k?k.slice(0,8)+"…":"(kimliksiz)"}
+function izKisa(z){return z?" · ağ "+z.slice(0,6):""}   // aynı barkodda aynı ağ izi = büyük olasılıkla aynı kişi
 var TUR={gida:"Gıda",koz:"Kozmetik",tem:"Temizlik"};
 var ALAN=[["kcal","Enerji (kcal)"],["yag","Yağ"],["doymus","Doymuş Yağ"],["karb","Karbonhidrat"],["seker","Şekerler"],["lif","Lif"],["protein","Protein"],["tuz","Tuz"]];
 function msj(s,hata){var m=$("msj");m.textContent=s||"";m.className="msj"+(hata?" hata":"")}
@@ -242,6 +318,7 @@ function urunTablo(l){
 function sayfaDugme(j,f){var d=el("div","dugmeler");if(j.sayfa>0){var g=el("button","alt","← Önceki");g.onclick=function(){f(j.sayfa-1)};d.appendChild(g)}if(j.devam){var s=el("button","alt","Sonraki →");s.onclick=function(){f(j.sayfa+1)};d.appendChild(s)}return d}
 function liste(g,s){
   if(g==="olcum")return olcum();
+  if(g==="islem")return islem(s);
   GOR=g;SAYFA=s;sekme(g);msj("Yükleniyor…");
   return api("/liste?gor="+g+"&sayfa="+s).then(function(j){
     var d=$("icerik");d.textContent="";msj("");
@@ -249,7 +326,7 @@ function liste(g,s){
       if(!j.aranan.length){d.appendChild(el("p",null,"Aranan listesi boş."));return}
       var tb=el("table"),h=el("tr");["Barkod","Tür","Arama","Son Arama",""].forEach(function(x){h.appendChild(el("th",null,x))});tb.appendChild(h);
       j.aranan.forEach(function(o){var r=el("tr");r.appendChild(el("td","kod",o.kod));r.appendChild(el("td",null,TUR[o.tur]||o.tur));r.appendChild(el("td",null,o.n));r.appendChild(el("td","kucuk",tarih(o.son)));
-        var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı? (Kötüye kullanılan barkod için.)"))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("aranan",SAYFA)}).catch(hata)};c.appendChild(b);r.appendChild(c);tb.appendChild(r)});
+        var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı? (Kötüye kullanılan barkod için.)"+GERI))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("aranan",SAYFA)}).catch(hata)};c.appendChild(b);r.appendChild(c);tb.appendChild(r)});
       var w=el("div","tablo");w.appendChild(tb);d.appendChild(w);d.appendChild(sayfaDugme(j,function(n){liste("aranan",n)}));return;
     }
     if(g==="celiski")d.appendChild(el("p","kucuk","Son "+j.tarama+" barkod içinde birbirine uymayan içerik ya da besin tablosu olanlar. Uygulama en kalabalık ve doğrulanmış grubu gösterir; yanlış grubu silin."));
@@ -257,7 +334,8 @@ function liste(g,s){
     d.appendChild(urunTablo(j.urunler));d.appendChild(sayfaDugme(j,function(n){liste(g,n)}));
   }).catch(hata);
 }
-function sil(soru,govde,sonra){if(!confirm(soru))return;api("/sil",govde).then(function(j){return Promise.resolve(sonra()).then(function(){msj(j.silindi+" satır silindi.")})}).catch(hata)}
+var GERI=" İşlem Kaydı'ndan geri alınabilir.";
+function sil(soru,govde,sonra){if(!confirm(soru))return;api("/sil",govde).then(function(j){return Promise.resolve(sonra()).then(function(){msj(j.silindi+" satır silindi."+(j.silindi?GERI:""))})}).catch(hata)}
 function besinTablo(b){
   var tb=el("table");ALAN.forEach(function(a){var v=b.b[a[0]];if(v==null)return;var r=el("tr");r.appendChild(el("td",null,a[1]));r.appendChild(el("td",null,(b.lt&&b.lt[a[0]]?"< ":"")+String(Math.round(v*100)/100).replace(".",",")+(a[0]==="kcal"?"":" g")));tb.appendChild(r)});
   return tb;
@@ -268,14 +346,14 @@ function urun(kod){
     var d=$("icerik");d.textContent="";msj("");
     var geri=el("button","alt","← Listeye Dön");geri.onclick=function(){liste(GOR,SAYFA)};d.appendChild(geri);
     var h=el("h2");h.appendChild(el("span","kod",kod));if(j.ozet.celiski)h.appendChild(el("span","rozet uyari","çelişki"));d.appendChild(h);
-    if(j.aranan){var p=el("p","kucuk","Aranan listesinde: "+j.aranan.n+" arama, son "+tarih(j.aranan.son)+" ");var ab=el("button","sil","Listeden Çıkar");ab.onclick=function(){sil(kod+" aranan listesinden çıkarılsın mı?",{tablo:"aranan",kod:kod},function(){return urun(kod)})};p.appendChild(ab);d.appendChild(p)}
+    if(j.aranan){var p=el("p","kucuk","Aranan listesinde: "+j.aranan.n+" arama, son "+tarih(j.aranan.son)+" ");var ab=el("button","sil","Listeden Çıkar");ab.onclick=function(){sil(kod+" aranan listesinden çıkarılsın mı?"+GERI,{tablo:"aranan",kod:kod},function(){return urun(kod)})};p.appendChild(ab);d.appendChild(p)}
     d.appendChild(el("h2",null,"İçerik Katkıları ("+j.katki.length+")"));
     if(!j.katki.length)d.appendChild(el("p","kucuk","İçerik katkısı yok."));
     j.katki.forEach(function(s){
       var k=el("div","kart g"+s.grup),m=el("div","kucuk");
-      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · "+(TUR[s.tur]||s.tur)+(s.dil?" · "+s.dil:"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim);
+      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · "+(TUR[s.tur]||s.tur)+(s.dil?" · "+s.dil:"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim)+izKisa(s.iz);
       k.appendChild(m);k.appendChild(el("div","metin",s.metin));
-      var dg=el("div","dugmeler"),b=el("button","sil","Bu Katkıyı Sil");b.onclick=function(){sil("Bu içerik katkısı silinsin mi? Geri alınamaz.",{tablo:"katki",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
+      var dg=el("div","dugmeler"),b=el("button","sil","Bu Katkıyı Sil");b.onclick=function(){sil("Bu içerik katkısı silinsin mi?"+GERI,{tablo:"katki",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
       if(s.kim){var kb=el("button","alt","Katkıcının Bütün Katkıları");kb.onclick=function(){kim(s.kim)};dg.appendChild(kb)}
       k.appendChild(dg);d.appendChild(k);
     });
@@ -283,9 +361,9 @@ function urun(kod){
     if(!j.besin.length)d.appendChild(el("p","kucuk","Besin tablosu yok."));
     j.besin.forEach(function(s){
       var k=el("div","kart g"+s.grup),m=el("div","kucuk");
-      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · 100 "+(s.besin.birim||"?")+" başına"+(s.besin.por?" · porsiyondan çevrildi ("+s.besin.por.m+" "+s.besin.por.u+")":"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim);
+      m.textContent="Grup "+(s.grup+1)+(s.grup===0?" (uygulamada gösterilen)":"")+(s.dogrulandi?" · doğrulanmış grup":"")+" · 100 "+(s.besin.birim||"?")+" başına"+(s.besin.por?" · porsiyondan çevrildi ("+s.besin.por.m+" "+s.besin.por.u+")":"")+" · "+tarih(s.t)+" · katkıcı "+kimKisa(s.kim)+izKisa(s.iz);
       k.appendChild(m);k.appendChild(besinTablo(s.besin));
-      var dg=el("div","dugmeler"),b=el("button","sil","Bu Tabloyu Sil");b.onclick=function(){sil("Bu besin tablosu silinsin mi? Geri alınamaz.",{tablo:"besin",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
+      var dg=el("div","dugmeler"),b=el("button","sil","Bu Tabloyu Sil");b.onclick=function(){sil("Bu besin tablosu silinsin mi?"+GERI,{tablo:"besin",id:s.id},function(){return urun(kod)})};dg.appendChild(b);
       if(s.kim){var kb=el("button","alt","Katkıcının Bütün Katkıları");kb.onclick=function(){kim(s.kim)};dg.appendChild(kb)}
       k.appendChild(dg);d.appendChild(k);
     });
@@ -299,9 +377,32 @@ function kim(k){
     d.appendChild(el("h2",null,"Katkıcı "+kimKisa(k)));
     d.appendChild(el("p",null,j.katki+" içerik katkısı, "+j.besin+" besin tablosu. Aşağıda katkı yaptığı barkodlar (başkalarının katkılarıyla birlikte)."));
     var b=el("button","sil","Bu Katkıcının Bütün Katkılarını Sil");
-    b.onclick=function(){sil("Bu katkıcının "+(j.katki+j.besin)+" katkısı ve tablosu silinsin mi? Geri alınamaz. Yalnızca kötü niyetli katkıcı için.",{kim:k},function(){return kim(k)})};
+    b.onclick=function(){sil("Bu katkıcının "+(j.katki+j.besin)+" katkısı ve tablosu silinsin mi? Yalnızca kötü niyetli katkıcı için."+GERI,{kim:k},function(){return kim(k)})};
     d.appendChild(b);
     if(j.urunler.length)d.appendChild(urunTablo(j.urunler));
+  }).catch(hata);
+}
+// İşlem Kaydı: silmeler ve geri almalar. Silinen satırlar belli bir süre saklanır; "Geri Al" onları aynı numarayla geri yazar.
+var NE={satir:"Tek satır silindi",katkici:"Katkıcının bütün katkıları silindi",aranan:"Aranan listesinden çıkarıldı"};
+function islem(s){
+  GOR="islem";SAYFA=s;sekme("islem");msj("Yükleniyor…");
+  return api("/islem?sayfa="+s).then(function(j){
+    var d=$("icerik");d.textContent="";msj("");
+    d.appendChild(el("p","kucuk","Silinen satırlar "+j.omur+" gün saklanır ve geri alınabilir; sonra kalıcı silinir."));
+    if(!j.islemler.length){d.appendChild(el("p",null,"Henüz işlem yok."));return}
+    var tb=el("table"),h=el("tr");["Zaman","İşlem","Ayrıntı",""].forEach(function(x,i){h.appendChild(el("th",i===2?"gizle":null,x))});tb.appendChild(h);
+    j.islemler.forEach(function(o){
+      var r=el("tr"),a=o.ayrinti||{};
+      r.appendChild(el("td","kucuk",tarih(o.t)));
+      r.appendChild(el("td",null,(NE[o.ne]||o.ne)+" ("+a.n+" satır)"));
+      r.appendChild(el("td","gizle kucuk",(a.tablo?a.tablo+" ":"")+(a.kim?"katkıcı "+kimKisa(a.kim)+" ":"")+(a.kodlar||[]).join(", ")));
+      var c=el("td");
+      if(o.geri)c.appendChild(el("span","rozet ok","geri alındı "+tarih(o.geri)));
+      else if(o.geriAlinabilir){var b=el("button","alt","Geri Al");b.onclick=function(){if(confirm("Bu işlem geri alınsın mı? Silinen satırlar geri yazılır."))api("/geri",{islem:o.id}).then(function(x){return islem(SAYFA).then(function(){msj(x.geri+" satır geri yazıldı.")})}).catch(hata)};c.appendChild(b)}
+      else c.appendChild(el("span","kucuk","süresi doldu"));
+      r.appendChild(c);tb.appendChild(r);
+    });
+    var w=el("div","tablo");w.appendChild(tb);d.appendChild(w);d.appendChild(sayfaDugme(j,islem));
   }).catch(hata);
 }
 // Ölçüm (A-03): günlük toplamlar; kimlik yok. Geri dönüş oranı = o gün ilk kez açan cihazlardan 7–13 (30–59) gün sonra yeniden açanlar.

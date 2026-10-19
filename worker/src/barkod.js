@@ -9,9 +9,17 @@ export const KATKI_ARALIK_MS = 10 * 60_000;   // doğrulama: iki benzer katkı a
 
 
 // Katkılar benzerliğe göre gruplanır (aynı tür, grubun ilk katkısına benzerlik ≥ BENZERLIK; satırlar yeniden eskiye sıralı gelir).
-// Grubun içinde en az KATKI_ARALIK_MS arayla gelmiş iki katkı varsa doğrulanmış. Aynı katkıcı kimliğinden (kim) gelen iki katkı
-// birbirini doğrulamaz; kimliği olmayan (O-22 öncesi) katkılar ayrı kişi sayılır.
-function dogrulayanCift(a, b) { return Math.abs(a.t - b.t) >= KATKI_ARALIK_MS && !(a.kim && a.kim === b.kim); }
+// Grubun içinde en az KATKI_ARALIK_MS arayla gelmiş, farklı kişiden iki katkı varsa doğrulanmış (ayniKisi).
+// Katkıcı kimliğini (kim) cihaz kendisi üretir: tek başına "farklı kişi"yi kanıtlamaz (yeni rastgele kimlik herkesin elinde).
+// Bu yüzden iz de karşılaştırılır: IP ve barkoddan gizli anahtarla türetilen kısa özet (index.js katkiIz; IP saklanmaz,
+// barkoda özgü olduğu için iki barkodun katkısı birbirine bağlanamaz).
+export const KIMLIKSIZ_SON = Date.UTC(2026, 9, 20);   // bundan önceki kimliksiz katkılar (O-22 öncesi ve iz yokken) ayrı kişi sayılır
+export function ayniKisi(a, b) {
+  if (a.kim && a.kim === b.kim) return true;
+  if (a.iz && b.iz) return a.iz === b.iz;
+  return !a.kim && !b.kim && a.t >= KIMLIKSIZ_SON && b.t >= KIMLIKSIZ_SON;   // iz yoksa yeni kimliksiz katkılar tek kişi
+}
+function dogrulayanCift(a, b) { return Math.abs(a.t - b.t) >= KATKI_ARALIK_MS && !ayniKisi(a, b); }
 export function grupla(satirlar) {
   const gruplar = [];
   for (const s of satirlar) {
@@ -59,8 +67,8 @@ export function katkiOzet(satirlar, kim) {
   return { ...say, urunler: urunler.slice(0, EKLEDIKLERIM_EN_COK) };
 }
 
-// Topluluk (G-04): içeriği eklenen ve doğrulanan ürün sayıları. POST /urun her katkıda barkodun önceki ve sonraki durumunu karşılaştırır;
-// sayaçlar yalnızca durum değişince artar (doğrulama geri alınmaz: katkı silinmez, urunSec doğrulanmış grubu öne alır).
+// Topluluk (G-04): içeriği eklenen ve doğrulanan ürün sayıları. POST /urun ve yönetimde silme/geri alma barkodun önceki ve sonraki
+// durumunu karşılaştırır, sayaçlara yalnızca fark uygulanır (toplamFark). Bu işlev ilk kurulumda bütün katkılardan sayar.
 // satirlar: katkiOzet ile aynı biçim, bütün barkodlar. Döner: {urun: {tür: n}, dogrulanan: {tür: n}} (tür: barkodun en iyi grubunun türü).
 export function toplulukSay(satirlar) {
   const kodlar = new Map(), o = { urun: {}, dogrulanan: {} };
@@ -73,6 +81,14 @@ export function toplulukSay(satirlar) {
   return o;
 }
 
+// Bir barkodun durumu değişince (katkı eklendi, değiştirildi, silindi, geri alındı) topluluk sayaçlarındaki fark.
+// once/sonra: urunSec sonucu. Döner [[ad, ±1], …] ("urun:<tür>", "dogrulanan:<tür>").
+export function toplamFark(once, sonra) {
+  const f = new Map(), ekle = (ad, n) => f.set(ad, (f.get(ad) || 0) + n);
+  if (once && once.bulundu) { ekle("urun:" + once.tur, -1); if (once.dogrulandi) ekle("dogrulanan:" + once.tur, -1); }
+  if (sonra && sonra.bulundu) { ekle("urun:" + sonra.tur, 1); if (sonra.dogrulandi) ekle("dogrulanan:" + sonra.tur, 1); }
+  return [...f].filter(([, n]) => n);
+}
 
 // Topluluk besin tablosu (A-02): kullanıcı etiketteki tabloyu okutup (açık izniyle) barkoda bağlar. İçerik katkısından ayrı saklanır:
 // tablo içerik metnine bağlı değildir, içeriği OFF'tan gelen ya da hiç olmayan barkoda da eklenebilir. Gelen değer burada yalnızca
@@ -112,14 +128,14 @@ export function besinUyumlu(a, b) {
   }
   return n >= BESIN_UYUM.enAz;
 }
-// satirlar: {besin (JSON metni), t, kim, id?} yeniden eskiye; geçersiz satır atlanır. Döner [{ilk, s: [{v, t, kim, id}], dogrulandi, son}].
+// satirlar: {besin (JSON metni), t, kim, iz?, id?} yeniden eskiye; geçersiz satır atlanır. Döner [{ilk, s: [{v, t, kim, id}], dogrulandi, son}].
 export function besinGrupla(satirlar) {
   const gruplar = [];
   for (const r of satirlar || []) {
     let v = null;
     try { v = besinKatki(JSON.parse(r.besin)); } catch {}
     if (!v) continue;
-    const s = { v, t: r.t, kim: r.kim || null, id: r.id };
+    const s = { v, t: r.t, kim: r.kim || null, iz: r.iz || null, id: r.id };
     const g = gruplar.find((x) => besinUyumlu(x.ilk.v, v));
     if (g) g.s.push(s); else gruplar.push({ ilk: s, s: [s] });
   }

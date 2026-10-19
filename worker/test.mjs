@@ -1,6 +1,7 @@
 // Worker'ın yerel testi: node worker/test.mjs  (Vision ve rate limit taklit edilir)
 import w from "./src/index.js";
-import { urunSec, barkodGecerli, katkiOzet, KATKI_ARALIK_MS } from "./src/barkod.js";
+import { urunSec, barkodGecerli, katkiOzet, KATKI_ARALIK_MS, KIMLIKSIZ_SON, ayniKisi, toplamFark } from "./src/barkod.js";
+import { agOnek } from "./src/index.js";
 const ORIGIN = "https://burakkagancan-ux.github.io";
 let calls = 0, visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: { text: "Aqua, Glycerin" } }] } });
 globalThis.fetch = async (url, opt) => { calls++; const v = visionReply(url, opt); return new Response(JSON.stringify(v.body), { status: v.status }); };
@@ -59,7 +60,7 @@ const d1 = (eskiTablo) => { const rows = [], sqls = []; let ddl = 0;
     async run() { sqls.push(sql);
       if (/^ALTER/.test(sql)) { if (!eskiTablo) throw new Error("duplicate column name: kim"); return {}; }
       if (!/^INSERT INTO katki/.test(sql)) return {};
-      const [kod, tur, dil, metin, t, kim] = this.args; rows.push({ kod, tur, dil, metin, t, kim }); return {}; } });
+      const [kod, tur, dil, metin, t, kim, iz] = this.args; rows.push({ kod, tur, dil, metin, t, kim, iz }); return {}; } });
   return { rows, sqls, get ddl() { return ddl; }, prepare: st, batch: async (l) => { ddl += l.length; return []; } }; };
 const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz, emülgatör (soya lesitini), kabartıcı (sodyum bikarbonat).";
 { visionReply = offYanit({ "world.openfoodfacts.org/8690504025207": { code: "8690504025207", product_name_tr: "Bitter Çikolata", brands: "Ülker,X", lang: "tr", ingredients_text_tr: "Kakao kitlesi, şeker", ingredients_text: "Kakao kitlesi, şeker", last_modified_t: 1700000000,
@@ -86,9 +87,9 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   await t("urun: kısa metin", post({ kod: "8690504025207", tur: "gida", dil: "tr", metin: "su" }), e, 400);
   await t("urun: katkı kaydedildi", post({ kod: "8690504025207", tur: "gida", dil: "tr", metin: metinA }), e, 201);
   const r = e.URUNLER.rows[0];
-  if (!r || Object.keys(r).sort().join() !== "dil,kim,kod,metin,t,tur" || r.kim !== null) { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman, katkıcı olmalı (IP yok); kimliksiz katkıda kim boş", r); }
+  if (!r || Object.keys(r).sort().join() !== "dil,iz,kim,kod,metin,t,tur" || r.kim !== null || r.iz !== null) { fail++; console.log("HATA urun: satırda yalnızca kod, tür, dil, metin, zaman, katkıcı, iz olmalı (IP yok); kimliksiz katkıda kim, KATKI_TUZ yokken iz boş", r); }
   await t("urun: tek katkı doğrulanmamış", breq("/urun/8690504025207"), e, 200, (j) => j.bulundu && !j.dogrulandi && j.sayi === 1 && j.tur === "gida");
-  if (e.URUNLER.ddl !== 9 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
+  if (e.URUNLER.ddl !== 11 || !e.URUNLER.sqls.some((q) => /CREATE INDEX IF NOT EXISTS katki_kim/.test(q))) { fail++; console.log("HATA urun: tablo ve indeksler otomatik oluşmalı (CREATE IF NOT EXISTS)"); }
   // Katkıcı kimliği (O-22)
   const kim = "0123456789abcdef0123456789abcdef";
   await t("urun: geçersiz katkıcı kimliği", post({ kod: "4006381333931", tur: "gida", dil: "tr", metin: metinA, kim: "ali@ornek.com" }), e, 400);
@@ -109,6 +110,28 @@ const metinA = "İçindekiler: buğday unu, şeker, palm yağı, kakao tozu, tuz
   const ayni = urunSec([k(A, T0), k(A, T0 + KATKI_ARALIK_MS)]), farkli = urunSec([k(A, T0), k(B, T0 + KATKI_ARALIK_MS)]);
   const eski = urunSec([k(null, T0), k(A, T0 + KATKI_ARALIK_MS)]), uc = urunSec([k(A, T0), k(A, T0 + KATKI_ARALIK_MS), k(B, T0 + 1000)]);
   if (ayni.dogrulandi || !farkli.dogrulandi || !eski.dogrulandi || uc.dogrulandi || "kim" in farkli) { fail++; console.log("HATA urunSec katkıcı kuralı", ayni, farkli, eski, uc); } else console.log("ok   urunSec: aynı katkıcı kendini doğrulamaz");
+  // Aynı kişi (ayniKisi): kimlik cihazda üretildiği için iz de karşılaştırılır; iz yoksa yeni kimliksiz katkılar tek kişi
+  const Y = KIMLIKSIZ_SON + 1000, s = (kim, iz, t = Y) => ({ kim, iz, t });
+  const kurallar = [
+    [ayniKisi(s(A, "1"), s(B, "1")), true, "farklı kimlik, aynı iz: aynı kişi"],
+    [ayniKisi(s(A, "1"), s(A, "2")), true, "aynı kimlik, farklı iz: aynı kişi"],
+    [ayniKisi(s(A, "1"), s(B, "2")), false, "farklı kimlik ve iz: farklı kişi"],
+    [ayniKisi(s(null, "1"), s(null, "2")), false, "kimliksiz ama farklı iz: farklı kişi"],
+    [ayniKisi(s(null, null), s(null, null)), true, "iz yok, yeni kimliksiz iki katkı: tek kişi"],
+    [ayniKisi(s(null, null, T0), s(null, null, T0 + 1)), false, "iz yok, eski (O-22 öncesi) kimliksiz katkılar: ayrı kişi"],
+    [ayniKisi(s(null, null), s(A, null)), false, "kimliksiz ile kimlikli: farklı kişi"],
+    [ayniKisi(s(A, "1"), s(B, null)), false, "bir tarafta iz yoksa kimliğe bakılır"],
+  ];
+  for (const [g, b, m] of kurallar) if (g !== b) { fail++; console.log("HATA ayniKisi:", m); } else console.log("ok   ayniKisi:", m);
+  const tf = (o, n) => JSON.stringify(toplamFark(o, n));
+  if (tf({ bulundu: false }, { bulundu: true, tur: "gida", dogrulandi: false }) !== '[["urun:gida",1]]'
+    || tf({ bulundu: true, tur: "gida", dogrulandi: true }, { bulundu: true, tur: "gida", dogrulandi: false }) !== '[["dogrulanan:gida",-1]]'
+    || tf({ bulundu: true, tur: "gida", dogrulandi: true }, { bulundu: false }) !== '[["urun:gida",-1],["dogrulanan:gida",-1]]'
+    || tf({ bulundu: true, tur: "gida", dogrulandi: false }, { bulundu: true, tur: "koz", dogrulandi: false }) !== '[["urun:gida",-1],["urun:koz",1]]'
+    || tf({ bulundu: true, tur: "gida", dogrulandi: true }, { bulundu: true, tur: "gida", dogrulandi: true }) !== "[]") { fail++; console.log("HATA toplamFark"); } else console.log("ok   toplamFark: ekleme, doğrulamanın düşmesi, silme, tür değişimi, değişmeyen");
+  const ag = [["1.2.3.4", "1.2.3.4"], ["2a02:4780:a:c0de::1", "2a02:4780:a:c0de::/64"], ["2A02:4780:000A:C0DE:1:2:3:4", "2a02:4780:a:c0de::/64"], ["2a02::5", "2a02:0:0:0::/64"], ["::1", "0:0:0:0::/64"]];
+  for (const [g, b] of ag) if (agOnek(g) !== b) { fail++; console.log("HATA agOnek", g, agOnek(g), b); }
+  console.log("ok   agOnek: IPv4 aynen, IPv6 ilk 64 bit");
   if (!barkodGecerli("8690504025207") || barkodGecerli("8690504025208") || !barkodGecerli("012345678905") || !barkodGecerli("01234565")) { fail++; console.log("HATA barkodGecerli"); } }
 // Eklediklerim ve ürün rozetleri (G-02): POST /katki {kim}
 { const e = env(); e.URUNLER = d1(); const A = "a".repeat(32), B = "b".repeat(32), C = "c".repeat(32), T0 = 1_700_000_000_000, M = KATKI_ARALIK_MS;
