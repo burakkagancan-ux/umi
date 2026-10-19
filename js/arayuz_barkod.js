@@ -316,7 +316,7 @@ function barkodZxYukle(){
   BARKOD_ZX=new Promise(function(ok,no){var s=document.createElement("script");s.src="js/vendor/zxing-0.21.3.min.js";s.onload=function(){ok(window.ZXing)};s.onerror=no;document.head.appendChild(s)});
   return BARKOD_ZX;
 }
-/* Çözücü: kaynak (video, resim ya da tuval) → barkod metni ya da null */
+/* Çözücü: (kaynak: video, resim ya da tuval; tum: bütün yönler bir seferde, fotoğraf için) → barkod metni ya da null */
 function barkodCozucu(){
   if("BarcodeDetector" in window){
     return Promise.resolve(BarcodeDetector.getSupportedFormats?BarcodeDetector.getSupportedFormats():["ean_13"]).then(function(f){
@@ -328,18 +328,36 @@ function barkodCozucu(){
   }
   return barkodZxCozucu();
 }
+/* ZXing çizgi barkodu yalnızca yataya yakınken (±30°) okur: kare döndürülerek denenir. Canlı kamerada her karede bir yön (yatay ve dik
+   daha sık), fotoğrafta hepsi. ZXing'in kendi 90° denemesi kapalı (kare başına tek geçiş). decodeWithState: decode(bm) ipuçlarını siler,
+   TRY_HARDER düşer ve yalnızca görüntünün ortasındaki birkaç satır taranır (barkod ortada ve yatay değilse okunmuyordu). */
+var BARKOD_YON=[0,90,45,0,90,135];
 function barkodZxCozucu(){
   return barkodZxYukle().then(function(Z){
     var h=new Map(),F=Z.BarcodeFormat;h.set(Z.DecodeHintType.POSSIBLE_FORMATS,[F.EAN_13,F.EAN_8,F.UPC_A,F.UPC_E]);h.set(Z.DecodeHintType.TRY_HARDER,true);
     var rd=new Z.MultiFormatReader();rd.setHints(h);
-    var cv=document.createElement("canvas"),x=cv.getContext("2d",{willReadFrequently:true});
-    return function(src){
+    var cv=document.createElement("canvas"),x=cv.getContext("2d",{willReadFrequently:true}),n=0;
+    function dene(src,w,hh,a){
+      var sc=Math.min(1,1280/Math.max(w,hh)),W=w*sc,H=hh*sc,r=a*Math.PI/180,c=Math.abs(Math.cos(r)),s=Math.abs(Math.sin(r));
+      cv.width=Math.round(W*c+H*s);cv.height=Math.round(W*s+H*c);
+      if(a){x.fillStyle="#fff";x.fillRect(0,0,cv.width,cv.height);x.save();x.translate(cv.width/2,cv.height/2);x.rotate(r);x.drawImage(src,-W/2,-H/2,W,H);x.restore()}
+      else x.drawImage(src,0,0,cv.width,cv.height);
+      try{var ls=new Z.HTMLCanvasElementLuminanceSource(cv);ls.isRotateSupported=function(){return false};
+        return rd.decodeWithState(new Z.BinaryBitmap(new Z.HybridBinarizer(ls))).getText()}
+      catch(e){return null}
+    }
+    return function(src,tum){
       var w=src.videoWidth||src.naturalWidth||src.width,hh=src.videoHeight||src.naturalHeight||src.height;if(!w||!hh)return Promise.resolve(null);
-      var sc=Math.min(1,1280/Math.max(w,hh));cv.width=Math.round(w*sc);cv.height=Math.round(hh*sc);x.drawImage(src,0,0,cv.width,cv.height);
-      try{var bm=new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(cv)));return Promise.resolve(rd.decode(bm).getText())}
-      catch(e){return Promise.resolve(null)}
+      if(!tum)return Promise.resolve(dene(src,w,hh,BARKOD_YON[n++%BARKOD_YON.length]));
+      for(var i=0,k=null;i<4&&!k;i++)k=dene(src,w,hh,[0,90,45,135][i]);
+      return Promise.resolve(k);
     };
   });
+}
+/* Destekleyen tarayıcıda (çoğu Android) sürekli odak: yakın tutulan barkod bulanık kalmasın. iOS Safari yok sayar. */
+function barkodOdak(s){
+  try{var tr=s.getVideoTracks()[0],k=tr&&tr.getCapabilities&&tr.getCapabilities();
+    if(k&&k.focusMode&&k.focusMode.indexOf("continuous")>-1)tr.applyConstraints({advanced:[{focusMode:"continuous"}]}).catch(function(){})}catch(e){}
 }
 /* isle: okunan barkodla ne yapılacağı (verilmezse barkodIsle: ürünü bul ve göster) */
 function barkodAc(ret,isle){
@@ -361,7 +379,7 @@ function barkodAc(ret,isle){
   var coz=null;
   fi.onchange=function(){
     var fl0=fi.files[0];if(!fl0)return;var im=new Image();st.textContent=t("barkod.foto_okunuyor");
-    im.onload=function(){(coz||barkodCozucu()).then(function(c){coz=coz||Promise.resolve(c);return c(im)}).then(function(k){
+    im.onload=function(){(coz||barkodCozucu()).then(function(c){coz=coz||Promise.resolve(c);return c(im,true)}).then(function(k){
       URL.revokeObjectURL(im.src);if(k&&barkodGecerli(k))bitti(k);else st.textContent=t("barkod.fotoda_yok")}).catch(function(){st.textContent=t("barkod.fotoda_yok")})};
     im.src=URL.createObjectURL(fl0);fi.value="";
   };
@@ -369,7 +387,7 @@ function barkodAc(ret,isle){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){st.textContent=t("barkod.kamera_yok");vid.hidden=true;return}
   navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",width:{ideal:1280},height:{ideal:720}},audio:false}).then(function(s){
     if($("sheet").hidden){s.getTracks().forEach(function(tr){tr.stop()});return}
-    BARKOD_AKIS=s;vid.srcObject=s;return vid.play().then(function(){
+    BARKOD_AKIS=s;vid.srcObject=s;barkodOdak(s);return vid.play().then(function(){
       st.textContent=t("barkod.kamera_hazir");
       return barkodCozucu().then(function(c){
         coz=Promise.resolve(c);
@@ -377,7 +395,7 @@ function barkodAc(ret,isle){
           if(!BARKOD_AKIS)return;
           c(vid).then(function(k){
             if(k&&barkodGecerli(k)){try{if(navigator.vibrate)navigator.vibrate(60)}catch(e){}bulundu(k);return}
-            BARKOD_DONGU=setTimeout(tara,250);
+            BARKOD_DONGU=setTimeout(tara,100);   // çözme kendisi kare başına ~30-200 ms; bekleme işlemciyi biraz dinlendirir
           });
         })();
       });
