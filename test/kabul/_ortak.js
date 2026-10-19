@@ -1,0 +1,22 @@
+// Kabul testlerinin ortak yardımcısı. Kabul testi uygulamanın içine bakmaz (kabul_denetle.py 4. kural): öğeleri rolüyle,
+// görünen metniyle, aria etiketiyle bulur; sayfayı kullanıcı gibi açar. Dış servisler (OCR Worker, barkod, sayaç) testte
+// kapalıdır; bir test onların yanıtını taklit etmek isterse p.route ile kendi yanıtını verir (ağ sınırı dış yüzdür).
+const external=u=>!/^http:\/\/localhost:/.test(u);
+
+// Sayfayı açar; sayfa hatalarını ve konsol hatalarını errs dizisine toplar. Döner: {p, errs}
+async function ac(ctx,adres){
+  const p=await ctx.newPage(),errs=[];
+  p.on('pageerror',e=>errs.push(e.message));
+  p.on('console',m=>{if(m.type()==='error'&&!/Failed to load resource|ERR_|net::/.test(m.text()))errs.push(m.text())});
+  await p.route('**/*',r=>external(r.request().url())?r.abort():r.continue());
+  await p.goto(adres);
+  await p.waitForLoadState('networkidle');
+  return {p,errs};
+}
+
+// Görünür mü (bekleyerek); bulunamazsa false döner, testi durdurmaz
+async function gorunur(loc,ms){
+  try{await loc.first().waitFor({state:'visible',timeout:ms||5000});return true}catch(e){return false}
+}
+
+module.exports={ac,gorunur};

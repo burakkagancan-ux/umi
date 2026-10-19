@@ -37,18 +37,20 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 - js/ arayüz (klasik betik, `defer`, sayfadaki sırayla; yalnızca depo.js ve tema.js <head>'de defer'siz): depo.js (cihaz deposu, ilk), tema.js (açık/koyu), veri_surum.js, dil.js, yukari.js, alt_menu.js, hareket.js (küçük hareket detayları), arayuz_ortak/profil/sonuc.js, arayuz_<alan>.js.
 - worker/: Cloudflare Worker (OCR, barkod, D1, yönetim); ortak hesapları js/'ten içe aktarır.
 - kaynak/: elle yazılan veri (TSV/JSON) → gen_*.py → data/ (üretilir, elle düzenlenmez). sw.js'in CORE/CACHE'i gen_sw.py ile üretilir. kaynak/simge/: uygulama simgesinin SVG kaynağı (gen_simge.js).
-- test/: birim testleri, test/arayuz/ (tarayıcı grupları), test/veri/ (etiket setleri, altın çıktı).
+- test/: birim testleri, test/arayuz/ (tarayıcı grupları), test/kabul/ (kabul testleri; kodu görmeyen ajan yazar), test/veri/ (etiket setleri, altın çıktı).
 
 ## Komutlar
 - `python3 uret.py`: bütün veri üreteçleri + sw.js (veri ya da kod değişince; CI `--denetle` ile denetler).
 - `node test/hepsi.js [süzgeç]`: bütün birim testleri (~2 sn). `node test/altin.js`: davranış birebir aynı mı (bilerek değişince `--guncelle`, PR'da nedeniyle).
 - `node test/arayuz.js [grup]`: tarayıcı testi (~11 sn; Playwright 1.47.2).
 - `node gen_simge.js`: uygulama simgeleri (kaynak/simge/*.svg → kökteki PNG'ler; simge değişince, ardından `python3 uret.py`).
-- Ölçümler (CI'da değil): `node test/olcum_besin.js`, `node test/olcum_ingilizce.js`, `node test/olcum_turkce.js`.
+- `node test/arayuz.js kabul`: yalnızca kabul testleri. `python3 kabul_denetle.py origin/main`: PR'daki commit'ler yazan/sınayan ayrımına uyuyor mu (CI).
+- Ölçümler (CI'da değil): `node test/olcum_mutasyon.js <dosya>` (testler hata yakalıyor mu), `node test/olcum_besin.js`, `node test/olcum_ingilizce.js`, `node test/olcum_turkce.js`.
 
 ## Roller ve dil
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.
 - Neyin test edildiği / edilemediği her seferinde açıkça söylenir. Telefon testlerini kullanıcı yapar.
+- **Yazan ile sınayan ayrı (20.10.2026, kullanıcı kararı):** kullanıcıya görünen ya da Worker davranışını değiştiren her işte kabul testini kodu görmeyen ayrı bir ajan koddan önce yazar (test/kabul/), PR'dan önce ayrı bir ajan (Reality Checker) değişikliği kırmaya çalışır, bulduğu her hata gerileme testine döner. Kodu yazan kabul testine dokunmaz. Süreç, ajan istemi ve CI kuralları (kabul_denetle.py): belgeler/mimari/testler.md "Yazan ile sınayanın ayrımı".
 - Test ile commit/push/PR aynı zincirde çalıştırılmaz (`test | tail && git commit` hatayı gizler; zorunluysa `set -o pipefail`); PR'daki test sayıları çalıştırma çıktısından alınır. Test yazma kuralları: belgeler/mimari/testler.md.
 - Değişiklikler `claude/...` dalında yapılır, PR açılır; kullanıcı GitHub'da "Merge pull request" der.
 - Kullanıcıya "birleştirin" denmiş bir PR'a yeni iş eklenmez: yeni istek güncel main'den açılan yeni dala ve yeni PR'a gider (kullanıcı o arada birleştirmiş olabilir). İstisnada itmeden önce ve sonra `gh pr view <no> --json state` bakılır; MERGED ise commit'in main'de olup olmadığı `git merge-base --is-ancestor <commit> origin/main` ile denetlenir.
