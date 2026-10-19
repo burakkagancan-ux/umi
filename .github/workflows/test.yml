@@ -33,6 +33,20 @@ jobs:
           s=$(( $(date +%s) - BASLA )); echo "Süre: $((s/60)) dk $((s%60)) sn" >> "$GITHUB_STEP_SUMMARY"
           if [ "$s" -gt 480 ]; then echo "::warning::Bu iş $((s/60)) dakika sürdü (sınır 15). Testleri bölüp paralel çalıştırma zamanı (YOL_HARITASI.md O-16)."; fi
 
+  # Yazan ile sınayanın ayrımı (kabul_denetle.py): PR'daki commit'ler sırayla okunur; kabul testi (test/kabul/) koddan ayrı
+  # ve önce gelir, koddan sonra gerekçesiz değişmez, kullanıcıya görünen değişiklikte bulunur. Yalnızca PR'da (commit geçmişi gerekir).
+  kabul:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Kabul testi ayrımı
+        run: python3 kabul_denetle.py "origin/${{ github.base_ref }}"
+
   # Arayüz: sayfalar gerçek tarayıcıda (Chromium) açılıp tıklanır; üç modda analiz, karşılaştırma, ansiklopedi, çevrimdışı açılış.
   arayuz:
     runs-on: ubuntu-latest
