@@ -1,5 +1,6 @@
 // Arayüz testi, 7. grup: önyüz değerlendirmesinin dört önceliği (19.10.2026).
 // a) Barkod alt sayfası hangi yoldan kapanırsa kapansın (×, arka plan, Esc, üstüne başka sayfa) kamera durur. Kamera, testte tuvalden üretilen sahte akışla taklit edilir.
+//    a2) ZXing çözücüsü (iOS yolu) barkodu kenarda, dik ve çapraz da okur.
 // b) Sonuç kutusundaki başlıklar gri değil, yazı renginde (#sonuc boş-durum sınıfı .mut'u taşıyor).
 // c) Uyarı ve dikkat şeridi dolguları (--hic, --ambc) açık ve koyu temada parlaklıkça ayrışır (en az 1,5:1); şeritler bu belirteçleri kullanır.
 // d) Tesseract.js açılışta yüklenmez, dış adrese istek gitmez.
@@ -39,6 +40,25 @@ module.exports=async({br,B,opt,ok})=>{
   }
   // Kapatma yolu bir kez değiştirildikten sonra sıradan bir alt sayfa kapanışı barkodu yeniden durdurmaya çalışmaz (iç geri çağrı bir kez)
   ok(await p.evaluate(()=>SHEET_KAPAN===null),'kapanınca işlevi sayfa kapanınca temizlenir');
+  // a2) ZXing çözücüsü (iOS yolu) barkodu karenin ortasında ve yatay olmasa da okur: köşede, dik ve çapraz çizilmiş EAN-13.
+  // Canlı kamerada bir yön döngüsü (6 kare) içinde, fotoğrafta tek çağrıda.
+  const zx=await p.evaluate(async()=>{
+    const L=['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+    const G=L.map(b=>[...b].map(c=>c==='0'?'1':'0').reverse().join('')),Rr=L.map(b=>[...b].map(c=>c==='0'?'1':'0').join(''));
+    const P=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+    const kod='8690504012344',d=[...kod].map(Number);let bit='101';
+    for(let i=1;i<7;i++)bit+=(P[d[0]][i-1]==='L'?L:G)[d[i]];bit+='01010';for(let i=7;i<13;i++)bit+=Rr[d[i]];bit+='101';
+    const sahne=(aci,dx,dy)=>{const c=document.createElement('canvas');c.width=1280;c.height=720;const x=c.getContext('2d'),m=3,bw=(bit.length+20)*m,bh=bw*.6;
+      x.fillStyle='#b9a27f';x.fillRect(0,0,1280,720);x.translate(640+dx,360+dy);x.rotate(aci*Math.PI/180);x.fillStyle='#fff';x.fillRect(-bw/2,-bh/2,bw,bh);x.fillStyle='#000';
+      for(let i=0;i<bit.length;i++)if(bit[i]==='1'){let j=i;while(bit[j+1]==='1')j++;x.fillRect(-bw/2+(10+i)*m,-bh/2+4*m,(j-i+1)*m,bh-8*m);i=j}
+      return c};
+    const c=await barkodZxCozucu(),o={};
+    for(const [ad,aci,dx,dy] of [['köşede yatay',0,-300,-235],['kenarda dik',90,520,0],['çapraz',135,0,0]]){
+      const s=sahne(aci,dx,dy);let k=null;for(let i=0;i<6&&!k;i++)k=await c(s);o[ad]=k===kod}
+    o['fotoğraf çapraz']=await c(sahne(45,200,0),true)===kod;
+    return o;
+  });
+  ok(Object.values(zx).every(Boolean),'ZXing barkodu konum ve yönden bağımsız okur: '+JSON.stringify(zx));
 
   // b) Sonuç başlıkları yazı renginde
   await sample(p,'gida');
