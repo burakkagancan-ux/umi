@@ -21,3 +21,22 @@ CLAUDE.md'den taşındı (15.10.2026, U-07 9. adım; metin aynı). Bu alana doku
 - `node test/olcum.js` (16.10.2026, A-03): açılış olayları (yeni, aynı gün, geri dönüş pencereleri, eski/bozuk/ileri tarihli durum, kapalı), sorgu yalnızca olay alanları, Worker'ın kabul ettiği ve reddettiği değerler, yönetim özeti (geri dönüş oranı yalnızca penceresi kapanmış günlerden). `node worker/test_olcum.mjs`: gerçek SQLite'ta UPSERT, tabloda yalnızca gün/ad/sayı, fazladan alan saklanmaz, köken ve IP sınırı, yönetim görünümü ve paylaşım sayacı. Tarayıcı 3. grup 4c: ilk açılışta yalnızca o=n, o=a; aynı gün sayılmaz; Ayarlar'dan kapanır; eski cihaz yeni sayılmaz; Global Privacy Control açıkken hiçbir şey gönderilmez ve yazılmaz. Arayüz testlerinde OCR taklidi yalnızca Worker'ın kök yolunu yakalar (ölçüm ve sayaç istekleri ayrı yol).
 - `node test/besin.js` (13.10.2026): besin değeri tablosu (bkz. Besin değeri tablosu bölümü; 3. adımdan beri eşikler, düzey sınırları, renk kuralı, elle düzeltme kaydı; O-23'ten beri ABD ve Kanada etiketi, yuvarlama payı, porsiyon süzgecinin Worker ile eşitliği). Tarayıcı testi: kart, (i), tablosuz metin, tablo fotoğrafı ekleme, şüpheli tablo + düzeltme formu, düzeltmenin geri gelmesi, İngilizce manifest.
 - `node test/ansiklopedi.js` 7. bölüm (15.10.2026, kozmetik ansiklopedisi): kimlik dosya adına uygun, INCI dizinde var, renk Etiket Oku'daki kResult düzeyiyle aynı, her AB ek kaydı bir kurum satırı (EUR-Lex), CosIng kaynağı, arama (INCI, Türkçe ad, halk adı; aynı ad iki türde ayrı sayfa), profil uyarıları (koku, bebek, endokrin listesi), SLES'te ECHA sınıf satırı. Tarayıcı testi 3. grupta kozmetik turu (tür seçici, INCI adı boşluklu, tür etiketi).
+
+## Test yazma kuralları (19.10.2026)
+Yukarıdaki "bilerek bozularak yakaladığı denendi" notlarının dayandığı kurallar. Yeni test yazarken ve test sonucunu yayına bağlarken uyulur.
+
+### Arayüz testi gerçek yolu sürer
+- Kullanıcının bildirdiği her akış için en az bir denetim gerçek düğmelerden geçer: tıklama, `filechooser`, yönlendirilmiş (route) ağ yanıtı. Telefona özgü olaylar (sekmenin yeniden yüklenmesi, arka plana alınma) `reload` ile taklit edilir.
+- İç işlevi doğrudan çağırmak (ör. `barkodFoto(); run()`) yalnızca aynı yolun gerçek bir denetimi zaten varsa kısayoldur: işlevi doğrular, işleve giden yolu değil (PR #195: eşleşme yeniden yüklemede ve "hiçbir şey tanınmadı" dalında kopuyordu, ikisi de atlanan adımlardaydı).
+- Her kapatma/iptal yolu (×, arka plan, Esc, geri) ayrı bir denetimle sürülür; birinin doğru olması ötekileri kanıtlamaz (barkod alt sayfası Esc ile kapanınca kamera açık kalıyordu; 7. grup).
+
+### Gerileme testi bozularak sınanır
+- Her gerileme testi, düzeltme bilerek geri alınarak çalıştırılır; test düşmüyorsa hiçbir şey kanıtlamıyordur.
+- Girdi, eski kodun da başarılı olduğu bölgenin dışından seçilir (PR #198: "köşedeki" barkod eski `decode`'un taradığı ±~300 px içinde kaldı ve test geçti; kenara çekilince kırıldı).
+- Eşzamanlılık testi iki isteği kritik bölgenin hemen önündeki bir engelde (Promise/bariyer) bekletir ve ikisinin de oraya ulaştığını doğrular (ör. sayaç === 2); yalnızca `Promise.all` ile göndermek sıralı akışı sınar (PR #197, worker/test_yonetim.mjs 3b).
+- Taklit, gerçek altyapının sıralama garantisini kopyalar (D1 toplu yazımı tek işlemdir, işlemler sırayla işlenir); bekletme işlemin içinde değil önünde olur.
+
+### Test sonucu ile yayın ayrı adımdır
+- Test ile commit/push/PR aynı komut zincirinde çalıştırılmaz: test ayrı çalıştırılır, çıktısı okunur, sonra yayına geçilir. Zincir zorunluysa `set -o pipefail`.
+- Test çıktısı `| tail` ile kesilip `&&` ile bağlanmaz: boru hattının çıkış kodu `tail`'inkidir, hata zinciri durdurmaz (PR #193 "2 hata" ile açıldı).
+- PR açıklamasındaki test sayıları çalıştırma çıktısından alınır; önceden yazılmaz.
