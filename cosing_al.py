@@ -7,6 +7,12 @@ sayfasının kullandığı api.tech.ec.europa.eu search-api, veri tabanı GROWTH
 Kullanım:
   python3 cosing_al.py                  # servisten indirir, kaynak/cosing/ altına yazar
   python3 cosing_al.py --ham <klasör>   # ham yanıtları (JSON) ayrıca bu klasöre kaydeder
+  python3 cosing_al.py --zorla          # ad düşüşü korumasını atlar (bilinçli büyük değişiklik için)
+
+İndirme koruması (19.10.2026): servis bazen INCI kayıtlarının bir kısmını döndürmüyor (16.10.2026: 33.656 yerine
+33.240). Mevcut ingredients.csv'deki adların %0,5'inden fazlası indirmede yoksa INCI listesi bir kez daha indirilir ve
+iki indirmenin birleşimi kullanılır (aynı ad iki indirmede farklıysa ikincisi). Birleşimde de düşüş eşiği aşıyorsa
+hiçbir dosya yazılmadan 3 çıkış koduyla durulur ve düşen adlardan örnekler basılır.
 
 Yazılanlar:
   kaynak/cosing/annex.II.csv ... annex.VI.csv  AB 1223/2009 Ek II-VI (gen_kozmetik.py'nin HEADERS sütunları)
@@ -27,6 +33,8 @@ LIMIT = 10000   # bir sorguda sayfalanabilen en fazla kayıt
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "kaynak", "cosing")
 ANNEXES = ["II", "III", "IV", "V", "VI"]
+DUSUS_ESIGI = 0.005   # mevcut listedeki adların en çok bu oranı bir indirmede düşebilir (fazlası: yeniden indir / dur)
+DUR_KODU = 3
 ING_COLS = ["inci_name", "restriction", "functions", "substance_id"]   # substance_id: CosIng madde sayfası (cosing/details/<id>)
 # gen_kozmetik.py HEADERS ile aynı sıra
 COLS = {
@@ -118,11 +126,67 @@ def ref_key(row):
     return (int(m.group(1)), m.group(2)) if m else (99999, row[0])
 
 
-def main():
+def mevcut_adlar():
+    """kaynak/cosing/ingredients.csv'deki güncel INCI adları (dosya yoksa boş küme: ilk indirme)."""
+    p = os.path.join(OUT, "ingredients.csv")
+    if not os.path.exists(p):
+        return set()
+    csv.field_size_limit(10 ** 9)
+    return {r["inci_name"].strip() for r in csv.DictReader(open(p, encoding="utf-8")) if r["inci_name"].strip()}
+
+
+def dusenler(onceki, ing):
+    """Önceki listede olup bu indirmede bulunmayan adlar."""
+    return onceki - {v(m, "inciName") for m in ing}
+
+
+def esigi_asiyor(onceki, dusen):
+    return bool(onceki) and len(dusen) > DUSUS_ESIGI * len(onceki)
+
+
+def birlestir(ing1, ing2):
+    """İki indirmenin birleşimi; aynı ad iki indirmede varsa ikincisinin kaydı (adsız kayıtlar reference ile)."""
+    out = {}
+    for m in ing1 + ing2:
+        out[v(m, "inciName") or ("ref", (m.get("reference") or [""])[0])] = m
+    return list(out.values())
+
+
+def korumali_ingredient(onceki, zorla=False):
+    """INCI listesini indirir; düşüş eşiği aşılırsa bir kez daha indirip birleştirir. Birleşimde de aşılıyorsa
+    (ve --zorla yoksa) None döndürür; çağıran hiçbir dosya yazmadan durur."""
+    ing = fetch("ingredient")
+    dusen = dusenler(onceki, ing)
+    if not esigi_asiyor(onceki, dusen):
+        return ing
+    print("UYARI: mevcut %d addan %d'i indirmede yok (eşik %%%.1f); INCI listesi bir kez daha indiriliyor"
+          % (len(onceki), len(dusen), DUSUS_ESIGI * 100))
+    ing = birlestir(ing, fetch("ingredient"))
+    dusen = dusenler(onceki, ing)
+    if not esigi_asiyor(onceki, dusen):
+        print("İki indirmenin birleşimi yeterli: %d ad düştü" % len(dusen))
+        return ing
+    ornek = sorted(dusen)[:20]
+    print("DUR: iki indirmenin birleşiminde de mevcut %d addan %d'i yok (%%%.2f > %%%.1f). Hiçbir dosya yazılmadı.\n"
+          "Düşen adlardan örnekler: %s\n"
+          "Değişiklik bilinçliyse (CosIng gerçekten bu adları çıkardıysa): python3 cosing_al.py --zorla"
+          % (len(onceki), len(dusen), 100.0 * len(dusen) / len(onceki), DUSUS_ESIGI * 100, ", ".join(ornek)),
+          file=sys.stderr)
+    if zorla:
+        print("--zorla verildi: düşüş kabul ediliyor", file=sys.stderr)
+        return ing
+    return None
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--ham", help="ham JSON yanıtlarının kaydedileceği klasör")
-    a = ap.parse_args()
-    ing, sub = fetch("ingredient"), fetch("substance")
+    ap.add_argument("--zorla", action="store_true", help="ad düşüşü korumasını atla (bilinçli büyük değişiklik)")
+    a = ap.parse_args(argv)
+    ing = korumali_ingredient(mevcut_adlar(), a.zorla)
+    if ing is None:
+        return DUR_KODU
+    sub = fetch("substance")
     if a.ham:
         os.makedirs(a.ham, exist_ok=True)
         json.dump(ing, open(os.path.join(a.ham, "ingredient.json"), "w"))
