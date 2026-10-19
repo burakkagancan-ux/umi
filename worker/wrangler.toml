@@ -42,6 +42,11 @@ namespace_id = "1002"
 # değer en az 32 karakterlik rastgele bir metin (ör. parola yöneticisinin ürettiği). Tanımlı değilse yönetim kapalıdır.
 # Burada yazılmaz (depo herkese açık).
 
+# Katkı izi (19.10.2026, kullanıcı kararı): Settings > Variables and Secrets > Add > Type: Secret, Name: KATKI_TUZ, değer en az
+# 32 karakterlik rastgele bir metin (YONETIM_ANAHTARI'ndan farklı). Aynı ağdan gelen katkıların birbirini doğrulamasını önler
+# (src/index.js katkiIz). Tanımlı değilse iz yazılmaz, yalnızca katkıcı kimliği karşılaştırılır. Değiştirilirse eski izler
+# yenileriyle eşleşmez (o barkodlarda bir süre koruma zayıflar); gerekmedikçe değiştirilmez.
+
 # Paylaşım sayacı için IP başına dakikada en fazla 10 istek
 [[ratelimits]]
 name = "SAYAC_LIMIT"
