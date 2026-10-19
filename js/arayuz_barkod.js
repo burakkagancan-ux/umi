@@ -365,9 +365,7 @@ function barkodAc(ret,isle){
       URL.revokeObjectURL(im.src);if(k&&barkodGecerli(k))bitti(k);else st.textContent=t("barkod.fotoda_yok")}).catch(function(){st.textContent=t("barkod.fotoda_yok")})};
     im.src=URL.createObjectURL(fl0);fi.value="";
   };
-  openSheet(t("barkod.baslik"),null,body,ret);
-  var kapat=$("sheet-x").onclick;$("sheet-x").onclick=function(){barkodDur();$("sheet-x").onclick=kapat;kapat()};
-  $("sheet-bg").onclick=$("sheet-x").onclick;
+  openSheet(t("barkod.baslik"),null,body,ret,null,barkodDur);
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){st.textContent=t("barkod.kamera_yok");vid.hidden=true;return}
   navigator.mediaDevices.getUserMedia({video:{facingMode:"environment",width:{ideal:1280},height:{ideal:720}},audio:false}).then(function(s){
     if($("sheet").hidden){s.getTracks().forEach(function(tr){tr.stop()});return}

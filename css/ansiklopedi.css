@@ -82,7 +82,7 @@ input[type=search]{border-radius:16px}
 .fils{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;margin:4px -2px 0;scrollbar-width:none}
 .fils .okfil,.fils .rfil{flex:none;display:inline-flex;align-items:center;gap:7px;margin:0;white-space:nowrap}
 .fils .rfil .n{font-weight:500;opacity:.8}
-.fils .dot{width:9px;height:9px;border-radius:50%}.rfil.red .dot{background:var(--hi)}.rfil.amber .dot{background:var(--ambc)}.rfil.green .dot{background:var(--yesil)}
+.fils .dot{width:9px;height:9px;border-radius:50%}.rfil.red .dot{background:var(--hic)}.rfil.amber .dot{background:var(--ambc)}.rfil.green .dot{background:var(--yesil)}
 .fils .rfil[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--onok)}
 details.gdrop{border-top:1px solid var(--line)}details.gdrop:last-of-type{border-bottom:1px solid var(--line)}
 details.gdrop>summary{font-family:var(--hf);font-size:18px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 4px}details.gdrop>summary::-webkit-details-marker{display:none}
@@ -94,7 +94,7 @@ details.gdrop[open]>summary::after{transform:rotate(225deg) translateY(-2px)}det
 /* İşlev grubunun renk dağılımı (17.10.2026, kullanıcı isteği): grup başlığında kaç maddenin uyarı, dikkat, özel uyarı yok (doğal: yeşil, diğerleri gri) olduğu ince bir şeritte,
    sonuç ekranındaki özet şeridiyle aynı renk sırası. Renk süzgeci seçiliyken gösterilmez (hepsi aynı renk olurdu). Sayılar ekran okuyucuya metin olarak (.vh) verilir. */
 details.gdrop>summary .gdag{display:flex;width:64px;height:6px;border-radius:999px;overflow:hidden;gap:2px;flex:none}
-.gdag span{display:block;height:100%;min-width:5px;border-radius:999px}.gdag .r{background:var(--hi)}.gdag .y{background:var(--ambc)}.gdag .g{background:var(--yesil)}.gdag .n{background:var(--bos)}
+.gdag span{display:block;height:100%;min-width:5px;border-radius:999px}.gdag .r{background:var(--hic)}.gdag .y{background:var(--ambc)}.gdag .g{background:var(--yesil)}.gdag .n{background:var(--bos)}
 /* Sayı her başlıkta aynı yerde (19.10.2026): başlık kalan genişliği alır, sayı oktan önce sabit genişlikte, sağa yaslı */
 details.kdrop>summary>span:first-child,details.gdrop>summary>span:first-child{flex:1;min-width:0}
 details.kdrop>summary>.n,details.gdrop>summary>.n{flex:none;min-width:3ch;text-align:end;font-variant-numeric:tabular-nums}

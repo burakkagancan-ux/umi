@@ -254,7 +254,9 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .yuzen .bkid{width:10px;height:10px}.yuzen .bkis p.mut{font-size:12.5px}
 .pset>.pn select{color:var(--c-ay);font-weight:600}
 .pcihaz{text-align:center;margin:18px 0 0}
-#profil.mut{color:var(--ink);font-size:16px}#profil p.mut,#profil .how{color:var(--mute);font-size:14px}
+#profil.mut{color:var(--ink);font-size:16px}
+/* Sonuç kutusu boş-durum sınıfını (.mut, ocr.html) sonuç gelince de taşıyor: renk mirası grileştirmesin, başlıklar yazı renginde (19.10.2026, önyüz değerlendirmesi). Yazı boyu bilerek değişmedi */
+#sonuc.mut{color:var(--ink)}#profil p.mut,#profil .how{color:var(--mute);font-size:14px}
 /* Ön yüz (14.10.2026): tek ana iş fotoğraf; galeri ve barkod ikincil; Karşılaştır ve Örnek metin bağlantı. Sonuç: özet kartı, seviyeye göre gruplar, sade kartlar (ayrıntı alt sayfada) */
 h1{font-size:30px;letter-spacing:-.01em}
 .hero{margin:10px 0 8px}
@@ -282,7 +284,7 @@ body.sonuclu .ipucu,body:not(.sonuclu) #sonuch,body:not(.sonuclu) #sonuc{display
 .oz-ust{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .oz-b{font-family:var(--hf);font-weight:700;font-size:28px;line-height:1.1;margin:4px 0 2px}.oz-b.r{color:var(--hi)}.oz-b.y{color:var(--amb)}.oz-b.g{color:var(--yesil)}
 .oz-alt{color:var(--mute);font-size:15px}
-.oz-serit{display:flex;gap:3px;height:10px;margin-top:14px}.oz-serit span{flex:1;border-radius:999px;background:var(--bos)}.oz-serit .r{background:var(--hi)}.oz-serit .y{background:var(--ambc)}.oz-serit .g{background:var(--yesil)}
+.oz-serit{display:flex;gap:3px;height:10px;margin-top:14px}.oz-serit span{flex:1;border-radius:999px;background:var(--bos)}.oz-serit .r{background:var(--hic)}.oz-serit .y{background:var(--ambc)}.oz-serit .g{background:var(--yesil)}
 .res{border-radius:16px;border-inline-start-width:1px}
 .res.r,.res.y,.res.o,.res.u,.res.g{background:var(--card);border-inline-start-color:var(--line)}
 .res.prof.r{background:var(--redbg);border-color:#F1CBC6}.res.prof.y{background:var(--ambbg);border-color:#EED9A0}

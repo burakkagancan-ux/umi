@@ -47,14 +47,17 @@ function loadDb(i){
 
 /* ---------- Alt sayfa ---------- */
 /* Alt sayfa: başlık, durum satırı ve içerik; kapatınca odak açan düğmeye döner.
-   cls verilirse (ör. "yuzen") sayfaya eklenir; her açılışta sıfırlanır */
-var SHEET_RET=null;
-function openSheet(title,how,body,ret,cls){
+   cls verilirse (ör. "yuzen") sayfaya eklenir; her açılışta sıfırlanır.
+   kapaninca verilirse sayfa hangi yoldan kapanırsa kapansın (×, arka plan, Esc, üstüne başka sayfa açılması) bir kez çağrılır (barkod: kamerayı durdurur) */
+var SHEET_RET=null,SHEET_KAPAN=null;
+function sheetTemizle(){var k=SHEET_KAPAN;SHEET_KAPAN=null;if(k)k()}
+function openSheet(title,how,body,ret,cls,kapaninca){
+  sheetTemizle();SHEET_KAPAN=kapaninca||null;
   $("sheet").className="sheet"+(cls?" "+cls:"");$("sheet-t").textContent=title;var sb=$("sheet-b");sb.textContent="";
   if(how)sb.appendChild(el("div","how",how));sb.appendChild(body);
   SHEET_RET=ret||null;$("sheet").hidden=false;document.body.style.overflow="hidden";$("sheet-x").focus();
 }
-function closeSheet(){if($("sheet").hidden)return;$("sheet").hidden=true;document.body.style.overflow="";if(SHEET_RET)SHEET_RET.focus()}
+function closeSheet(){if($("sheet").hidden)return;sheetTemizle();$("sheet").hidden=true;document.body.style.overflow="";if(SHEET_RET)SHEET_RET.focus()}
 $("sheet-x").onclick=closeSheet;$("sheet-bg").onclick=closeSheet;
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet()});
 /* ---------- Kart ---------- */

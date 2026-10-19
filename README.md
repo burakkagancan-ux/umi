@@ -33,7 +33,7 @@ Düz HTML/JS; derleme adımı yoktur.
 | `data/` | Üretilmiş JSON verisi (uygulama bunu okur) |
 | `kaynak/` | Elle yazılan kaynak veri (JSON/TSV) |
 | `gen_*.py` | `kaynak/` → `data/` üreteçleri |
-| `worker/` | OCR için Cloudflare Worker (Google Cloud Vision; erişilemezse Tesseract.js yedeği) |
+| `worker/` | OCR için Cloudflare Worker (Google Cloud Vision; Tesseract.js yalnızca Worker adresi boşsa) |
 | `test/` | Testler |
 | `sw.js`, `manifest.webmanifest` | PWA |
 

@@ -10,7 +10,7 @@ Gıda, kozmetik ve temizlik ürünlerinin etiketindeki içerik listesini fotoğr
 - Site: https://burakkagancan-ux.github.io/umi/ (GitHub Pages, `main` dalından)
 - Depo: https://github.com/burakkagancan-ux/umi
 - Sayfalar: Liste (`index.html`), Etiket Oku (`ocr.html`; Gıda / Kozmetik / Temizlik modu), Ansiklopedi (`ansiklopedi.html`), Profilim.
-- OCR: `ocr.html` → Cloudflare Worker (`worker/`) → Google Cloud Vision; Worker'a ulaşılamazsa Tesseract.js.
+- OCR: `ocr.html` → Cloudflare Worker (`worker/`) → Google Cloud Vision; Tesseract.js yalnızca `OCR_URL` boşsa, ilk okumada yüklenir (Worker hatasında yedeğe düşülmez).
 - Gelir modeli henüz seçilmedi (YOL_HARITASI.md D-01).
 
 ## 2. Ürün kuralları (değişmez)

@@ -108,7 +108,6 @@ var OKU={n:0,mesgul:false,bekle:false,okundu:false,zam:null};
 function okuIste(ms){clearTimeout(OKU.zam);OKU.zam=setTimeout(fotoOku,ms)}
 function fotoOku(){
   var im=$("pre");if(!im.getAttribute("src")||!im.naturalWidth)return;
-  if(!OCR_URL&&!window.Tesseract){ST.textContent=t("ocr.bilesen_yok");return}
   if(OKU.mesgul){OKU.bekle=true;return}
   var n=OKU.n,t0=Date.now();OKU.mesgul=true;ST.textContent=t("ocr.hazirlaniyor");
   function gecerli(){return n===OKU.n&&!OKU.bekle}
@@ -134,10 +133,22 @@ function fotoOku(){
     .catch(function(e){hata(t(e.srv?"ocr.hata":"ocr.hata_internet",{m:e.message}))}).then(bitti);
     return;
   }
-  Tesseract.createWorker("tur+eng",1,{logger:function(m){if(m.status&&gecerli())ST.textContent=m.status+(m.progress?" %"+Math.round(m.progress*100):"")}}).then(function(w){
-    return w.recognize(cv).then(function(r){
-      yaz(r.data.text,t("ocr.tamam",{sn:dilSayi((Date.now()-t0)/1000,1,true)}));
-      return w.terminate();
-    });
-  }).catch(function(e){hata(t("ocr.hata",{m:e&&e.message?e.message:e}))}).then(bitti);
+  tesseractYukle().then(function(){
+    return Tesseract.createWorker("tur+eng",1,{logger:function(m){if(m.status&&gecerli())ST.textContent=m.status+(m.progress?" %"+Math.round(m.progress*100):"")}}).then(function(w){
+      return w.recognize(cv).then(function(r){
+        yaz(r.data.text,t("ocr.tamam",{sn:dilSayi((Date.now()-t0)/1000,1,true)}));
+        return w.terminate();
+      });
+    }).catch(function(e){hata(t("ocr.hata",{m:e&&e.message?e.message:e}))});
+  },function(){hata(t("ocr.bilesen_yok"))}).then(bitti);
+}
+/* Tesseract.js yalnızca OCR_URL boşsa ve ilk okumada yüklenir (19.10.2026: önceden her açılışta jsDelivr'den iniyordu, OCR_URL dolu olduğu için hiç kullanılmıyordu).
+   Sürüm sabit + SRI; sürüm yükseltilirse integrity yeniden hesaplanır */
+var TESS_YUK=null;
+function tesseractYukle(){
+  if(window.Tesseract)return Promise.resolve();
+  if(!TESS_YUK)TESS_YUK=new Promise(function(ok,no){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+    s.integrity="sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F";s.crossOrigin="anonymous";
+    s.onload=function(){ok()};s.onerror=function(){TESS_YUK=null;no()};document.head.appendChild(s)});
+  return TESS_YUK;
 }
