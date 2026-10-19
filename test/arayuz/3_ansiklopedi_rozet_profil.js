@@ -75,7 +75,11 @@ module.exports=async({br,B,opt,ok,server})=>{
     const kd0=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,bas:d.querySelector('summary').textContent,satir:d.querySelectorAll('a.row').length}});
     await p.click('#ana details.kdrop>summary');await p.click('#ana .rfil.red');
     const kd1=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,gor:d.querySelector('a.row').offsetHeight>0}});
-    await p.click('#ana .rfil.tum');await p.evaluate(()=>localStorage.removeItem('yerimleri'));
+    await p.click('#ana .rfil.tum');
+    // Seçili sekmenin kayıtları (19.10.2026): gıda kayıtları temizlik sekmesinde görünmez
+    await p.click('#tur-tem');const kdt=await p.evaluate(()=>document.querySelectorAll('#ana details.kdrop').length);await p.click('#tur-gida');
+    ok(kdt===0,'Kaydettiklerim yalnızca seçili türün kayıtları: temizlik sekmesinde '+kdt+' liste');
+    await p.evaluate(()=>localStorage.removeItem('yerimleri'));
     ok(!kd0.acik&&/^Kaydettiklerim2$/.test(kd0.bas)&&kd0.satir===2&&kd1.acik&&kd1.gor,'Kaydettiklerim açılır liste: '+JSON.stringify([kd0,kd1]));
     // Rozetlerim (Profilim altında): aileler, ilerleme, kademeler, yakında olanlar, paylaşım
     await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet:not([hidden]) .rzaile');
@@ -221,8 +225,12 @@ module.exports=async({br,B,opt,ok,server})=>{
   // Tür süzgeci (14.10.2026, kullanıcı kararı): ikinci tür gelince görünür (temizlik 15.10.2026); renk süzgeci ve işlev başlıkları var
   {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana details.gdrop').length,acik:document.querySelectorAll('#ana details.gdrop[open]').length}));
    ok(s.seg===1&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5&&s.acik===0,'ansiklopedi: tür süzgeci (Gıda seçili), renk süzgeci ve kapalı açılır gruplar: '+JSON.stringify(s));
+   // Grup sayıları başlık uzunluğundan bağımsız aynı sütunda (19.10.2026): sağ kenarlar eşit
+   const sag=async()=>p.$$eval('#ana details.gdrop>summary>.n',e=>[...new Set(e.map(x=>Math.round(x.getBoundingClientRect().right)))]);
+   const s0=await sag();ok(s0.length===1,'grup sayıları sabit sütunda: '+s0.join());
    await p.click('#ana .rfil.red');const r=await p.evaluate(()=>{document.querySelectorAll('#ana details.gdrop').forEach(d=>d.open=true);return [...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent)});
-   ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');await p.click('#ana .rfil.tum')}
+   ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');
+   {const s1=await sag();ok(s1.length===1&&s1[0]===s0[0],'renk süzgecinde de sayılar aynı sütunda: '+s1.join()+' / '+s0.join())}await p.click('#ana .rfil.tum')}
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
   await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');

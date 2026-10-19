@@ -187,8 +187,8 @@ function showSearch(){
       out.appendChild(h("p","mut",res.length?t("ans.sonuc",{n:res.length,s:res.length+(res.length===40?"+":"")}):t("ans.sonuc_yok")));
       res.forEach(function(r){out.appendChild(rowFor(r,oku))});return;
     }
-    var m=marks().map(function(x){return ABY[x]}).filter(Boolean);
-    // Kaydettiklerim açılır liste: kapalı başlar, açık/kapalı durumu sayfa içinde süzgeç değişince korunur
+    var m=marks().map(function(x){return ABY[x]}).filter(function(r){return r&&ansTur(r)===AOKU});
+    // Kaydettiklerim açılır liste: yalnızca seçili türün kayıtları (19.10.2026 kullanıcı isteği); kapalı başlar, açık/kapalı durumu sayfa içinde süzgeç değişince korunur
     if(m.length){
       var kd=h("details","kdrop");kd.open=KACIK;kd.ontoggle=function(){KACIK=kd.open};
       var ks=h("summary");ks.appendChild(h("span",null,t("ans.kaydettiklerim")));ks.appendChild(h("span","n",dilSayi(m.length)));kd.appendChild(ks);
@@ -206,14 +206,15 @@ function showSearch(){
     });
     var fb=h("button","okfil",t("rozet.okumadiklarim",{n:kalan.length}));fb.type="button";fb.setAttribute("aria-pressed",String(OKUMADIK));
     fb.onclick=function(){OKUMADIK=!OKUMADIK;draw()};fr.appendChild(fb);out.appendChild(fr);
-    // İşleve göre açılır gruplar (en kalabalık önce; kapalı başlar, açık/kapalı durumu süzgeç değişince korunur)
+    // İşleve göre açılır gruplar (en kalabalık önce; kapalı başlar, açık/kapalı durumu süzgeç değişince korunur).
+    // Sayı başlık uzunluğundan bağımsız, oktan hemen önce sabit sütunda (19.10.2026 kullanıcı isteği): başlık, renk şeridi, sayı, ok
     var L=(OKUMADIK?kalan:cur).filter(function(r){return !ARISK||r.risk_level===ARISK}),G={},sira=[];
     L.forEach(function(r){if(!G[r.category]){G[r.category]=[];sira.push(r.category)}G[r.category].push(r)});
     sira.sort(function(a,b){return G[b].length-G[a].length});
     if(!L.length)out.appendChild(h("p","mut",t("ans.sonuc_yok")));
     sira.forEach(function(c){
       var gd=h("details","gdrop");gd.open=!!GACIK[c];gd.ontoggle=function(){GACIK[c]=gd.open};
-      var hd=h("summary");hd.appendChild(h("span",null,at("cat."+c)));hd.appendChild(h("span","n",dilSayi(G[c].length)));if(!ARISK)gDagilim(hd,G[c]);gd.appendChild(hd);
+      var hd=h("summary");hd.appendChild(h("span",null,at("cat."+c)));if(!ARISK)gDagilim(hd,G[c]);hd.appendChild(h("span","n",dilSayi(G[c].length)));gd.appendChild(hd);
       var gl=h("div","grpl");G[c].forEach(function(r){gl.appendChild(rowFor(r,oku,true))});gd.appendChild(gl);out.appendChild(gd);
     });
     out.appendChild(h("p","mut",t("ans.toplam",{n:AD.records.filter(function(r){return ansTur(r)===AOKU}).length})));
