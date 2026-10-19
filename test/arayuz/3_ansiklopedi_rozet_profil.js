@@ -154,6 +154,14 @@ module.exports=async({br,B,opt,ok,server})=>{
       await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
       await p.click('#profil .pozsil[aria-label="kivi silinsin"]');await p.waitForFunction(()=>document.querySelectorAll('#profil .pozc').length===1);   // hap küçülüp kaybolur
       ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('profil')).alOzel.join()==='kakao'&&document.querySelectorAll('#profil .pozc').length===1),'elle alerjen silinir');
+      // BKİ bilgisi yüzen küçük pencerede (19.10.2026, kullanıcı isteği): ortada, dört kenardan boşluklu, köşeler yuvarlak; diğer alt sayfalar etkilenmez
+      await p.click('#profil .bmi button.info');await p.waitForSelector('#sheet:not([hidden]) .bkis');
+      const bk=await p.evaluate(()=>{const n=document.querySelector('#sheet .sheet-pn'),r=n.getBoundingClientRect(),st=getComputedStyle(n);
+        return {sinif:document.getElementById('sheet').className,gen:Math.round(r.width),sol:Math.round(r.left),sag:Math.round(innerWidth-r.right),alt:Math.round(innerHeight-r.bottom),kose:parseFloat(st.borderBottomLeftRadius)}});
+      ok(bk.sinif==='sheet yuzen'&&bk.gen<=360&&bk.sol>=16&&bk.sag>=16&&bk.alt>=16&&bk.kose>=16,'BKİ yüzen pencere: '+JSON.stringify(bk));
+      await p.click('#sheet-x');await p.evaluate(()=>openSheet('x',null,document.createElement('div')));
+      ok(await p.evaluate(()=>document.getElementById('sheet').className==='sheet'),'sonraki alt sayfa yüzen sınıfını taşımaz');
+      await p.evaluate(()=>closeSheet());
       await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.removeItem('tur')});
     }
     // G-04: Topluluk ekranı (ortak hedef + eksik ürünler, GET /topluluk) ve içerik bulunamayan barkodun bir kez bildirilmesi (POST /aranan)
