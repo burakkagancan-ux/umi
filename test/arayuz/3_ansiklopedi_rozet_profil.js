@@ -75,7 +75,11 @@ module.exports=async({br,B,opt,ok,server})=>{
     const kd0=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,bas:d.querySelector('summary').textContent,satir:d.querySelectorAll('a.row').length}});
     await p.click('#ana details.kdrop>summary');await p.click('#ana .rfil.red');
     const kd1=await p.evaluate(()=>{const d=document.querySelector('#ana details.kdrop');return {acik:d.open,gor:d.querySelector('a.row').offsetHeight>0}});
-    await p.click('#ana .rfil.tum');await p.evaluate(()=>localStorage.removeItem('yerimleri'));
+    await p.click('#ana .rfil.tum');
+    // Seçili sekmenin kayıtları (19.10.2026): gıda kayıtları temizlik sekmesinde görünmez
+    await p.click('#tur-tem');const kdt=await p.evaluate(()=>document.querySelectorAll('#ana details.kdrop').length);await p.click('#tur-gida');
+    ok(kdt===0,'Kaydettiklerim yalnızca seçili türün kayıtları: temizlik sekmesinde '+kdt+' liste');
+    await p.evaluate(()=>localStorage.removeItem('yerimleri'));
     ok(!kd0.acik&&/^Kaydettiklerim2$/.test(kd0.bas)&&kd0.satir===2&&kd1.acik&&kd1.gor,'Kaydettiklerim açılır liste: '+JSON.stringify([kd0,kd1]));
     // Rozetlerim (Profilim altında): aileler, ilerleme, kademeler, yakında olanlar, paylaşım
     await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet:not([hidden]) .rzaile');
@@ -154,6 +158,14 @@ module.exports=async({br,B,opt,ok,server})=>{
       await p.evaluate(()=>{document.querySelector('#profil .pozel').closest('details').open=true});
       await p.click('#profil .pozsil[aria-label="kivi silinsin"]');await p.waitForFunction(()=>document.querySelectorAll('#profil .pozc').length===1);   // hap küçülüp kaybolur
       ok(await p.evaluate(()=>JSON.parse(localStorage.getItem('profil')).alOzel.join()==='kakao'&&document.querySelectorAll('#profil .pozc').length===1),'elle alerjen silinir');
+      // BKİ bilgisi yüzen küçük pencerede (19.10.2026, kullanıcı isteği): ortada, dört kenardan boşluklu, köşeler yuvarlak; diğer alt sayfalar etkilenmez
+      await p.click('#profil .bmi button.info');await p.waitForSelector('#sheet:not([hidden]) .bkis');
+      const bk=await p.evaluate(()=>{const n=document.querySelector('#sheet .sheet-pn'),r=n.getBoundingClientRect(),st=getComputedStyle(n);
+        return {sinif:document.getElementById('sheet').className,gen:Math.round(r.width),sol:Math.round(r.left),sag:Math.round(innerWidth-r.right),alt:Math.round(innerHeight-r.bottom),kose:parseFloat(st.borderBottomLeftRadius)}});
+      ok(bk.sinif==='sheet yuzen'&&bk.gen<=360&&bk.sol>=16&&bk.sag>=16&&bk.alt>=16&&bk.kose>=16,'BKİ yüzen pencere: '+JSON.stringify(bk));
+      await p.click('#sheet-x');await p.evaluate(()=>openSheet('x',null,document.createElement('div')));
+      ok(await p.evaluate(()=>document.getElementById('sheet').className==='sheet'),'sonraki alt sayfa yüzen sınıfını taşımaz');
+      await p.evaluate(()=>closeSheet());
       await p.evaluate(()=>{localStorage.setItem('profil',JSON.stringify({al:[]}));localStorage.removeItem('tur')});
     }
     // G-04: Topluluk ekranı (ortak hedef + eksik ürünler, GET /topluluk) ve içerik bulunamayan barkodun bir kez bildirilmesi (POST /aranan)
@@ -213,8 +225,12 @@ module.exports=async({br,B,opt,ok,server})=>{
   // Tür süzgeci (14.10.2026, kullanıcı kararı): ikinci tür gelince görünür (temizlik 15.10.2026); renk süzgeci ve işlev başlıkları var
   {const s=await p.evaluate(()=>({seg:document.querySelectorAll('#ana .seg').length,fil:[...document.querySelectorAll('#ana .rfil')].map(x=>x.textContent),grp:document.querySelectorAll('#ana details.gdrop').length,acik:document.querySelectorAll('#ana details.gdrop[open]').length}));
    ok(s.seg===1&&s.fil.length===4&&/^Tümü 333/.test(s.fil[0])&&s.grp>5&&s.acik===0,'ansiklopedi: tür süzgeci (Gıda seçili), renk süzgeci ve kapalı açılır gruplar: '+JSON.stringify(s));
+   // Grup sayıları başlık uzunluğundan bağımsız aynı sütunda (19.10.2026): sağ kenarlar eşit
+   const sag=async()=>p.$$eval('#ana details.gdrop>summary>.n',e=>[...new Set(e.map(x=>Math.round(x.getBoundingClientRect().right)))]);
+   const s0=await sag();ok(s0.length===1,'grup sayıları sabit sütunda: '+s0.join());
    await p.click('#ana .rfil.red');const r=await p.evaluate(()=>{document.querySelectorAll('#ana details.gdrop').forEach(d=>d.open=true);return [...document.querySelectorAll('#ana a.row .rk')].map(x=>x.textContent)});
-   ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');await p.click('#ana .rfil.tum')}
+   ok(r.length===36&&r.every(x=>/Uyarı$/.test(x)),'renk süzgeci: yalnızca uyarılı 36 madde');
+   {const s1=await sag();ok(s1.length===1&&s1[0]===s0[0],'renk süzgecinde de sayılar aynı sütunda: '+s1.join()+' / '+s0.join())}await p.click('#ana .rfil.tum')}
   // Liste (Türkiye): Türkçe açılış, sayaç ve süzgeç metinleri
   await p.goto(B+'index.html');await p.waitForFunction(()=>/Listelendi/.test((document.getElementById('count')||{}).textContent||''),null,{timeout:10000});
   ok((await p.textContent('h1'))==='Taklit/Tağşiş Listesi'&&(await p.textContent('#il option'))==='Tüm iller','Liste Türkçe açılış');
