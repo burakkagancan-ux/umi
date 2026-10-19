@@ -11,8 +11,10 @@ function d1() {
   const st = (sql) => ({ args: [], bind(...a) { this.args = a; return this; },
     async all() { return { results: db.prepare(sql).all(...this.args) }; },
     async first() { return db.prepare(sql).get(...this.args) ?? null; },
-    async run() { const r = db.prepare(sql).run(...this.args); return { meta: { changes: Number(r.changes) } }; } });
-  return { db, prepare: st, batch: async (l) => { for (const s of l) await s.run(); return []; } };
+    async run() { const r = db.prepare(sql).run(...this.args); return { meta: { changes: Number(r.changes) } }; },
+    batchRun() { const q = db.prepare(sql); if (/RETURNING/.test(sql)) return { results: q.all(...this.args), meta: {} }; const r = q.run(...this.args); return { results: [], meta: { changes: Number(r.changes) } }; } });
+  // D1 batch: tek işlem, araya başka yazım girmez (eşzamanlı istekler sırayla); biri hata verirse hepsi geri alınır; her deyimin sonucu döner
+  return { db, prepare: st, batch: async (l) => { db.exec("BEGIN"); try { const r = []; for (const s of l) r.push(s.batchRun()); db.exec("COMMIT"); return r; } catch (e) { db.exec("ROLLBACK"); throw e; } } };
 }
 // Rate limit taklidi: anahtar başına dakikada n
 const lim = (n) => { const m = new Map(); return { m, limit: async ({ key }) => { m.set(key, (m.get(key) || 0) + 1); return { success: m.get(key) <= n }; } }; };

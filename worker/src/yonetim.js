@@ -85,12 +85,16 @@ async function satirlar(db, kosul, ...args) {
   return [k || [], b || []];
 }
 
-// Topluluk sayaçlarına fark uygular ([[ad, ±n]]; aynı ad toplanır, en çok 6 sorgu). Sayaç sıfırın altına inmez.
-export async function toplamUygula(db, fark) {
+// Topluluk sayaçlarına fark ([[ad, ±n]]; aynı ad toplanır, en çok 6 deyim). Sayaç sıfırın altına inmez. toplamDeyimler deyimleri
+// döndürür (bir toplu yazıma eklensin diye); kosul verilirse her deyim yalnızca o SQL koşulu doğruyken yazar.
+export function toplamDeyimler(db, fark, kosul, ...kArgs) {
   const m = new Map();
   for (const [ad, n] of fark) m.set(ad, (m.get(ad) || 0) + n);
-  for (const [ad, n] of m) if (n)
-    await db.prepare("INSERT INTO toplam (ad, n) VALUES (?, MAX(0, ?)) ON CONFLICT(ad) DO UPDATE SET n = MAX(0, n + ?)").bind(ad, n, n).run();
+  return [...m].filter(([, n]) => n).map(([ad, n]) =>
+    db.prepare("INSERT INTO toplam (ad, n) SELECT ?, MAX(0, ?) WHERE " + (kosul || "1") + " ON CONFLICT(ad) DO UPDATE SET n = MAX(0, n + ?)").bind(ad, n, ...kArgs, n));
+}
+export async function toplamUygula(db, fark) {
+  for (const d of toplamDeyimler(db, fark)) await d.run();
 }
 // Barkodların içerik katkıları (tek sorgu; D1'in istek başına sorgu sınırı yüzünden barkod başına sorgu yok) → Map(kod → satırlar)
 async function kodSatirlari(db, kodlar) {
@@ -106,46 +110,61 @@ function satirFark(once, sonraFn) {
   for (const [kod, l] of once) f.push(...toplamFark(urunSec(l), urunSec(sonraFn(kod, l))));
   return f;
 }
-// Silme: seçilen satırlar silinen tablosuna taşınır ve islem'e yazılır; hepsi tek toplu yazımda (yarıda kalmaz).
-// secim: [[tablo, koşul, ...bağlar]]. Döner {n, islem}.
+// Satırı belirleyen sütun (aranan'da numara yok, barkod tektir)
+const ANAHTAR = { katki: "id", besin: "id", aranan: "kod" };
+const jsonNesne = (tablo) => "json_object(" + SUTUNLAR[tablo].map((c) => "'" + c + "', " + c).join(", ") + ")";
+// Silme: seçilen satırlar okunur; işlem kaydı, silinen tablosuna kopya, silme ve sayaç farkı tek toplu yazımda (D1 batch tek işlemdir:
+// yarıda kalmaz). Kopya ve silme okunan satırların anahtarlarıyla yapılır (okuma ile yazma arasında gelen yeni satır silinmez) ve tablo
+// başına tek deyimdir: sorgu sayısı satır sayısından bağımsız (D1 istek başına sorgu sınırı). secim: [[tablo, koşul, ...bağlar]].
 async function silVeKaydet(db, ne, ayrinti, secim) {
-  const satirlar = [];
+  const anahtarlar = [], kodlar = new Set(), katkiKod = new Set(), silinen = new Set();
   for (const [tablo, kosul, ...args] of secim) {
-    const { results } = await db.prepare("SELECT " + SUTUNLAR[tablo].join(", ") + " FROM " + tablo + " WHERE " + kosul).bind(...args).all();
-    for (const r of results || []) satirlar.push([tablo, r]);
+    const { results } = await db.prepare("SELECT " + ANAHTAR[tablo] + " AS a, kod FROM " + tablo + " WHERE " + kosul).bind(...args).all();
+    const l = results || [];
+    if (l.length) anahtarlar.push([tablo, l.map((r) => r.a)]);
+    for (const r of l) { kodlar.add(r.kod); if (tablo === "katki") { katkiKod.add(r.kod); silinen.add(r.a); } }
   }
-  if (!satirlar.length) return { n: 0 };
-  const kodlar = [...new Set(satirlar.filter(([t]) => t === "katki").map(([, r]) => r.kod))];
-  const once = await kodSatirlari(db, kodlar), silinen = new Set(satirlar.filter(([t]) => t === "katki").map(([, r]) => r.id));
-  const t = Date.now(), son = await db.prepare("SELECT COALESCE(MAX(id), 0) + 1 AS id FROM islem").first(), id = son.id;
-  const ozet = { ...ayrinti, n: satirlar.length, kodlar: [...new Set(satirlar.map(([, r]) => r.kod))].slice(0, 20) };
-  await db.batch([
-    db.prepare("INSERT INTO islem (id, t, ne, ayrinti) VALUES (?, ?, ?, ?)").bind(id, t, ne, JSON.stringify(ozet)),
-    ...satirlar.map(([tablo, r]) => db.prepare("INSERT INTO silinen (islem, tablo, satir, t) VALUES (?, ?, ?, ?)").bind(id, tablo, JSON.stringify(r), t)),
-    ...secim.map(([tablo, kosul, ...args]) => db.prepare("DELETE FROM " + tablo + " WHERE " + kosul).bind(...args)),
+  const n = anahtarlar.reduce((a, [, l]) => a + l.length, 0);
+  if (!n) return { n: 0 };
+  const once = await kodSatirlari(db, [...katkiKod]);
+  const t = Date.now(), ozet = { ...ayrinti, n, kodlar: [...kodlar].slice(0, 20) };
+  const r = await db.batch([
+    db.prepare("INSERT INTO islem (t, ne, ayrinti) VALUES (?, ?, ?) RETURNING id").bind(t, ne, JSON.stringify(ozet)),
+    ...anahtarlar.flatMap(([tablo, l]) => {
+      const k = ANAHTAR[tablo] + " IN (SELECT value FROM json_each(?))", js = JSON.stringify(l);
+      return [
+        db.prepare("INSERT INTO silinen (islem, tablo, satir, t) SELECT (SELECT MAX(id) FROM islem), ?, " + jsonNesne(tablo) + ", ? FROM " + tablo + " WHERE " + k).bind(tablo, t, js),
+        db.prepare("DELETE FROM " + tablo + " WHERE " + k).bind(js),
+      ];
+    }),
+    ...toplamDeyimler(db, satirFark(once, (kod, l) => l.filter((x) => !silinen.has(x.id)))),
     db.prepare("DELETE FROM silinen WHERE t < ?").bind(t - SILINEN_OMUR_GUN * 864e5),
   ]);
-  await toplamUygula(db, satirFark(once, (kod, l) => l.filter((r) => !silinen.has(r.id))));
-  return { n: satirlar.length, islem: id };
+  return { n, islem: r[0].results[0].id };
 }
+// Geri alma: önce işlem "geri alındı" diye işaretlenir (yalnızca henüz işaretlenmemişse); satırların geri yazılması ve sayaç farkı aynı
+// toplu yazımda yalnızca bu işaret bu isteğin damgasını taşıyorsa yapılır. Aynı anda gelen iki Geri Al'dan yalnızca biri yazar.
 async function geriAl(db, id, R) {
   const is = await db.prepare("SELECT id, geri FROM islem WHERE id = ?").bind(id).first();
   if (!is) return R(404, { error: "İşlem bulunamadı." });
   if (is.geri) return R(409, { error: "Bu işlem zaten geri alındı." });
   const { results } = await db.prepare("SELECT tablo, satir FROM silinen WHERE islem = ?").bind(id).all();
   if (!results || !results.length) return R(410, { error: SILINEN_OMUR_GUN + " günden eski; satırlar kalıcı silindi." });
-  const satirlar = results.filter((r) => SUTUNLAR[r.tablo]).map((r) => [r.tablo, JSON.parse(r.satir)]);
-  const geriK = satirlar.filter(([t]) => t === "katki").map(([, r]) => r);
+  const geriK = results.filter((r) => r.tablo === "katki").map((r) => JSON.parse(r.satir));
   const once = await kodSatirlari(db, [...new Set(geriK.map((r) => r.kod))]);
-  await db.batch([
+  const damga = Date.now() * 1000 + Math.floor(Math.random() * 1000), bizim = "EXISTS (SELECT 1 FROM islem WHERE id = ? AND geri = ?)";
+  const tablolar = [...new Set(results.map((r) => r.tablo))].filter((t) => SUTUNLAR[t]);
+  const r = await db.batch([
+    db.prepare("UPDATE islem SET geri = ? WHERE id = ? AND geri IS NULL").bind(damga, id),
     // INSERT OR IGNORE: aynı numara (id) ya da aranan listesinde o arada yeniden eklenmiş barkod varsa olan kalır
-    ...satirlar.map(([tablo, r]) => { const s = SUTUNLAR[tablo];
-      return db.prepare("INSERT OR IGNORE INTO " + tablo + " (" + s.join(", ") + ") VALUES (" + s.map(() => "?").join(", ") + ")").bind(...s.map((k) => r[k] ?? null)); }),
-    db.prepare("DELETE FROM silinen WHERE islem = ?").bind(id),
-    db.prepare("UPDATE islem SET geri = ? WHERE id = ?").bind(Date.now(), id),
+    ...tablolar.map((tablo) => db.prepare("INSERT OR IGNORE INTO " + tablo + " (" + SUTUNLAR[tablo].join(", ") + ") SELECT " +
+      SUTUNLAR[tablo].map((c) => "json_extract(satir, '$." + c + "')").join(", ") + " FROM silinen WHERE islem = ? AND tablo = ? AND " + bizim).bind(id, tablo, id, damga)),
+    ...toplamDeyimler(db, satirFark(once, (kod, l) => [...l.filter((x) => !geriK.some((g) => g.id === x.id)), ...geriK.filter((g) => g.kod === kod)].sort((a, b) => b.t - a.t)), bizim, id, damga),
+    db.prepare("DELETE FROM silinen WHERE islem = ? AND " + bizim).bind(id, id, damga),
   ]);
-  await toplamUygula(db, satirFark(once, (kod, l) => [...l.filter((r) => !geriK.some((g) => g.id === r.id)), ...geriK.filter((g) => g.kod === kod)].sort((a, b) => b.t - a.t)));
-  return R(200, { geri: satirlar.length });
+  const deg = r[0] && r[0].meta ? r[0].meta.changes : 1;
+  if (!deg) return R(409, { error: "Bu işlem zaten geri alındı." });
+  return R(200, { geri: results.length });
 }
 
 /* Paylaşım sayacı (KV "g:YYYY-AA-GG:s|d") → {gun: {s, d}}; son 60 gün (GET /sayac ve ölçüm görünümü) */
@@ -218,7 +237,7 @@ export async function yonetimApi(request, env, db, yol, R) {
   if (request.method === "GET" && p[0] === "islem" && p.length === 1) {
     const sayfa = Math.max(0, Math.min(1000, parseInt(url.searchParams.get("sayfa") || "0", 10) || 0));
     const { results } = await db.prepare("SELECT id, t, ne, ayrinti, geri, (SELECT COUNT(*) FROM silinen WHERE silinen.islem = islem.id) AS kalan FROM islem ORDER BY id DESC LIMIT ? OFFSET ?").bind(SAYFA_BOY, sayfa * SAYFA_BOY).all();
-    const islemler = (results || []).map((r) => ({ id: r.id, t: r.t, ne: r.ne, ayrinti: JSON.parse(r.ayrinti), geri: r.geri || null, geriAlinabilir: !r.geri && r.kalan > 0 }));
+    const islemler = (results || []).map((r) => ({ id: r.id, t: r.t, ne: r.ne, ayrinti: JSON.parse(r.ayrinti), geri: r.geri ? Math.floor(r.geri / 1000) : null, geriAlinabilir: !r.geri && r.kalan > 0 }));
     return R(200, { sayfa, islemler, devam: islemler.length === SAYFA_BOY, omur: SILINEN_OMUR_GUN });
   }
   return R(404, { error: "Bulunamadı." });

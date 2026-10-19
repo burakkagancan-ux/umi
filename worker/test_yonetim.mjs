@@ -12,8 +12,10 @@ function d1() {
   const st = (sql) => ({ args: [], bind(...a) { this.args = a; return this; },
     async all() { return { results: db.prepare(sql).all(...this.args) }; },
     async first() { return db.prepare(sql).get(...this.args) ?? null; },
-    async run() { const r = db.prepare(sql).run(...this.args); return { meta: { changes: Number(r.changes) } }; } });
-  return { db, prepare: st, batch: async (l) => { for (const s of l) await s.run(); return []; } };
+    async run() { const r = db.prepare(sql).run(...this.args); return { meta: { changes: Number(r.changes) } }; },
+    batchRun() { const q = db.prepare(sql); if (/RETURNING/.test(sql)) return { results: q.all(...this.args), meta: {} }; const r = q.run(...this.args); return { results: [], meta: { changes: Number(r.changes) } }; } });
+  // D1 batch: tek işlem, araya başka yazım girmez (eşzamanlı istekler sırayla); biri hata verirse hepsi geri alınır; her deyimin sonucu döner
+  return { db, prepare: st, batch: async (l) => { db.exec("BEGIN"); try { const r = []; for (const s of l) r.push(s.batchRun()); db.exec("COMMIT"); return r; } catch (e) { db.exec("ROLLBACK"); throw e; } } };
 }
 let SIMDI = 1_800_000_000_000;
 Date.now = () => SIMDI;
@@ -172,6 +174,38 @@ const w = (await import("./src/index.js?yonetim")).default;
     ok((await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: b })).s === 400, "geçersiz silme 400: " + JSON.stringify(b));
   ok((await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { tablo: "katki", id: 1 }, anahtar: "y".repeat(40) })).s === 401, "anahtarsız silme 401");
   ok((await cagir(w, env, "/yonetim/api/sil")).s === 404, "GET /sil yok");
+}
+// 3b) Büyük katkıcı: sorgu sayısı satır sayısından bağımsız; aynı anda iki Geri Al tek kez yazar; okuma ile silme arasında gelen satır silinmez
+{
+  const w = (await import("./src/index.js?yonetim-buyuk")).default;
+  const env = { ALLOWED_ORIGIN: ORIGIN, URUNLER: d1(), YONETIM_ANAHTARI: ANAHTAR };
+  const db = env.URUNLER.db;
+  await cagir(w, env, "/topluluk", { anahtar: null });   // tablolar ve kurulum
+  const ekle = db.prepare("INSERT INTO katki (kod, tur, dil, metin, t, kim) VALUES (?, 'gida', 'tr', ?, ?, ?)");
+  for (let i = 0; i < 120; i++) { ekle.run(String(20000000 + i), metinA, SIMDI, A); ekle.run(String(20000000 + i), metinA, SIMDI + KATKI_ARALIK_MS, B); }
+  db.prepare("INSERT OR REPLACE INTO toplam (ad, n) VALUES ('urun:gida', 120), ('dogrulanan:gida', 120)").run();
+  const sayac = () => Object.fromEntries(db.prepare("SELECT ad, n FROM toplam WHERE ad != 'kurulum'").all().map((x) => [x.ad, x.n]));
+  let deyim = 0; const asilP = env.URUNLER.prepare, asilB = env.URUNLER.batch;
+  env.URUNLER.prepare = (sql) => { deyim++; return asilP(sql); };
+  let r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { kim: B } });
+  ok(r.j.silindi === 120 && deyim <= 20, "120 satırlık katkıcı silmesi az sayıda deyimle (D1 istek başına 50 sınırı)", deyim);
+  ok(sayac()["urun:gida"] === 120 && sayac()["dogrulanan:gida"] === 0, "120 barkodun doğrulaması düşer", sayac());
+  deyim = 0; let bekleyen = 0, birak;
+  const ikisi = new Promise((x) => { birak = x; });
+  env.URUNLER.batch = async (l) => { if (++bekleyen === 2) birak(); await ikisi; return asilB(l); };   // iki istek de ilk denetimi geçip toplu yazıma ulaşsın
+  const [g1, g2] = await Promise.all([cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: r.j.islem } }), cagir(w, env, "/yonetim/api/geri", { method: "POST", body: { islem: r.j.islem } })]);
+  env.URUNLER.batch = asilB;
+  ok(bekleyen === 2 && [g1.s, g2.s].sort().join() === "200,409" && deyim <= 30, "aynı anda iki Geri Al (ikisi de toplu yazıma ulaşır): biri yazar, öteki 409; az deyim", [g1.s, g2.s, deyim]);
+  ok(db.prepare("SELECT COUNT(*) AS n FROM katki WHERE kim = ?").get(B).n === 120 && sayac()["dogrulanan:gida"] === 120, "geri alma bir kez uygulanır (satır ve sayaç)", sayac());
+  // Okuma ile toplu yazım arasında aynı kimlikten yeni katkı gelir: silinmez (silme okunan numaralarla)
+  env.URUNLER.batch = async (l) => { env.URUNLER.batch = asilB; ekle.run("12345670", "Su, sodyum lauril eter sülfat, parfüm", SIMDI, B); return asilB(l); };
+  r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { kim: B } });
+  ok(r.j.silindi === 120 && db.prepare("SELECT COUNT(*) AS n FROM katki WHERE kim = ?").get(B).n === 1, "okumadan sonra gelen katkı silinmez", r.j);
+  // Toplu yazım yarıda kalırsa hiçbir şey değişmez
+  env.URUNLER.batch = async (l) => { env.URUNLER.batch = asilB; return asilB([...l.slice(0, -1), asilP("INSERT INTO yok_boyle_tablo VALUES (1)")]); };
+  const onceSay = db.prepare("SELECT COUNT(*) AS n FROM katki").get().n, onceIs = db.prepare("SELECT COUNT(*) AS n FROM islem").get().n;
+  r = await cagir(w, env, "/yonetim/api/sil", { method: "POST", body: { kim: A } });
+  ok(r.s === 500 && db.prepare("SELECT COUNT(*) AS n FROM katki").get().n === onceSay && db.prepare("SELECT COUNT(*) AS n FROM islem").get().n === onceIs, "yarıda kalan silme hiçbir şey yazmaz", r.s);
 }
 // 4) Özet saf işlev: yalnızca besin tablosu olan barkod gıda sayılır
 ok(yonetimOzet(K1, [], [{ besin: JSON.stringify(tablo), t: 1, kim: A }]).tur === "gida", "içeriksiz, tablolu barkod gıda");
