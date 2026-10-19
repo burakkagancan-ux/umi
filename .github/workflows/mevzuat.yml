@@ -1,0 +1,43 @@
+name: Mevzuat izleme
+# Ayda bir (A-06) uygulamanın dayandığı AB metinlerinin EUR-Lex'teki en yeni konsolide sürümüne (kaynak/mevzuat_izleme.tsv)
+# ve temizlik ansiklopedisindeki 30 maddenin ECHA CLP Ek VI sınıfına bakar. Değişiklik varsa o ay için tek bir sorun açar
+# (aynı ay için açık sorun varsa yenisini açmaz). Veriyi değiştirmez. Ağ ya da yanıt hatasında iş kırmızı olur, sorun açılmaz.
+on:
+  schedule:
+    - cron: "0 7 2 * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: mevzuat-izleme
+  cancel-in-progress: false
+jobs:
+  mevzuat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Denetle
+        id: denetim
+        # çıkış 0 = değişiklik yok, 1 = değişiklik var, 2 = ağ/yanıt hatası (iş burada kırmızı olur)
+        run: |
+          kod=0; python mevzuat_izle.py --rapor rapor.md || kod=$?
+          if [ "$kod" -ge 2 ]; then exit 1; fi
+          echo "fark=$kod" >> "$GITHUB_OUTPUT"
+          if [ -f rapor.md ]; then cat rapor.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Sorun aç
+        if: steps.denetim.outputs.fark == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          baslik="Mevzuat izleme: değişiklik var ($(date +%Y-%m))"
+          no=$(gh issue list --state open --search "in:title \"$baslik\"" --json number,title --jq ".[] | select(.title == \"$baslik\") | .number" | head -1)
+          if [ -n "$no" ]; then
+            echo "Bu ay için sorun zaten açık: #$no"
+          else
+            gh issue create --title "$baslik" --body-file rapor.md
+          fi
