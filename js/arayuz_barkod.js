@@ -2,6 +2,8 @@
    Akış: barkod (kamera, barkodun fotoğrafı ya da elle) → uygulamadaki Open Food Facts verisi ve kendi veritabanımız → OFF canlı sorgu
    → bulunursa içerik kutuya yazılır ve bugünkü analiz çalışır, üstte kaynak kartı ("etiket farklı olabilir", "fotoğrafla doğrula");
    bulunamazsa içerik listesinin fotoğrafı istenir ve okunan metin, kullanıcının açık izniyle barkodla birlikte kaydedilir.
+   Bekleyen barkod sessionStorage'da da tutulur: telefon kamerayı açarken sayfayı yeniden yüklerse eşleşme kaybolmasın.
+   Ters sıra (isteğe bağlı): önce içerik fotoğrafı okunur, sonuçtaki "Barkodu okut ve eşleştir" ile barkod sonradan bağlanır.
    Besin tablosu (A-02, isteğe bağlı): barkodun ekranındaki metne tablonun fotoğrafı eklenince (js/arayuz_besin.js) okunan değerler de
    açık izinle barkoda bağlanır (Worker POST /besin); içerik katkısından ayrıdır, içeriği bulunmuş ürüne de eklenebilir.
    Kamera: tarayıcının BarcodeDetector'ı; yoksa (iOS Safari) js/vendor/zxing (yalnızca gerekince yüklenir). */
@@ -10,6 +12,8 @@ var BARKOD=null;                 // {kod, r: bulunan sonuç ya da null, metin: k
                                  //  cevap/besinCevap: "evet"|"hayir", besinGitti: gönderilen tablo (aynısı yeniden gitmez)}
 var BARKOD_OFF=null;             // data/barkod_off.json (ilk barkodda yüklenir)
 var BARKOD_FOTO_SURE=10*60000;   // barkoddan sonra en çok bu süre içinde okunan etiket fotoğrafı o barkodla ilişkilendirilir
+var BARKOD_FOTO_METIN=null;      // son okunan içerik fotoğrafının metni ("Barkodu okut ve eşleştir" yalnızca ona sunulur)
+var BARKOD_BEKLE="barkod_bekleyen";   // sessionStorage: bulunamayan barkod {kod, ad, tur, t}, fotoğraf gelene kadar
 function barkodSira(){return [DIL.kod,"tr","en"].filter(function(x,i,a){return a.indexOf(x)===i})}
 function barkodWorker(yol,opt){
   if(!OCR_URL)return Promise.resolve(null);
@@ -37,26 +41,30 @@ function barkodOffCanli(kod){
     return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null,besin:j.besin||null};
   });
 }
-/* Barkod bulundu: sırayla ara, sonucu göster */
-function barkodIsle(ham){
-  var kod=barkodNorm(ham);
-  if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
-  ST.textContent=t("barkod.araniyor",{kod:kod});
+/* Barkodu sırayla arar → bulunan sonuç (içeriksiz olabilir: r.icerikYok) ya da null */
+function barkodAra(kod){
   var sira=barkodSira(),s={};
-  Promise.all([barkodOffYukle().then(function(v){s.off=barkodOffBul(v,kod)}),barkodUrun(kod).then(function(u){s.urun=u})]).then(function(){
+  return Promise.all([barkodOffYukle().then(function(v){s.off=barkodOffBul(v,kod)}),barkodUrun(kod).then(function(u){s.urun=u})]).then(function(){
     var r=barkodSec(s,sira);
     if(r&&!r.icerikYok)return r;
     return barkodOffCanli(kod).then(function(c){s.offCanli=c;return barkodSec(s,sira)});
   }).then(function(r){
     if(r&&r.ad&&!r.icerikYok&&s.off&&s.off.ad&&!r.ad){r.ad=s.off.ad;r.marka=s.off.marka}
-    if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r);
+    return r;
   });
+}
+/* Barkod bulundu: sırayla ara, sonucu göster */
+function barkodIsle(ham){
+  var kod=barkodNorm(ham);
+  if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
+  ST.textContent=t("barkod.araniyor",{kod:kod});
+  barkodAra(kod).then(function(r){if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r)});
 }
 function barkodAd(r){return r&&r.ad?((r.marka&&r.ad.toLocaleLowerCase(DIL.yerel).indexOf(r.marka.toLocaleLowerCase(DIL.yerel))<0?r.marka+" ":"")+r.ad):""}
 function barkodGoster(kod,r){
   var m=barkodMetin(r.metin,barkodSira());
   BARKOD={kod:kod,r:r,metin:m.s,dil:m.dil,t:Date.now(),foto:false,katki:false,ad:false};
-  fotoTemizle();
+  barkodBekleSil();fotoTemizle();
   $("metin").value="";HMOD=null;
   if(r.tur!==MODE)setMode(r.tur,true);
   $("metin").value=m.s;HSCAN=HOCR=true;
@@ -67,9 +75,14 @@ function barkodGoster(kod,r){
 }
 function barkodYok(kod,r){
   BARKOD={kod:kod,r:null,ad:r?barkodAd(r):"",metin:null,t:Date.now(),foto:false,katki:false};
+  barkodBekleYaz();
   olcumTarama("y");
   fotoTemizle();
   if(r&&r.tur&&r.tur!==MODE){$("metin").value="";setMode(r.tur,true)}
+  barkodYokKart(kod,(r&&r.tur)||MODE,true);
+}
+/* "Henüz veritabanında yok" kartı; bildir: eksik ürünler listesine bildirilir (sayfa yeniden açılınca bir daha bildirilmez) */
+function barkodYokKart(kod,tur,bildir){
   $("metin").value="";
   var box=$("sonuc");box.textContent="";
   var d=el("div","res u bkaynak");
@@ -81,14 +94,26 @@ function barkodYok(kod,r){
   row.appendChild(b);row.appendChild(g);d.appendChild(row);box.appendChild(d);
   ST.textContent=t("barkod.yok_durum",{kod:kod});
   // Topluluk (G-04): eksik ürünler listesi için bir kez bildirilir; başkaları da aradıysa söylenir
-  arananBildir(kod,(r&&r.tur)||MODE,function(n){if(BARKOD&&BARKOD.kod===kod&&d.isConnected)d.insertBefore(el("div","how",t("topluluk.yok_arandi",{n:n,s:dilSayi(n)})),row)});
+  if(bildir)arananBildir(kod,tur,function(n){if(BARKOD&&BARKOD.kod===kod&&d.isConnected)d.insertBefore(el("div","how",t("topluluk.yok_arandi",{n:n,s:dilSayi(n)})),row)});
 }
 /* Etiket fotoğrafı okundu (js/arayuz_sayfa.js çağırır): barkoddan sonra süre içindeyse o barkodla ilişkilenir */
 function barkodFoto(){
+  BARKOD_FOTO_METIN=$("metin").value.trim();barkodBekleSil();
   if(!BARKOD)return;
   if(Date.now()-BARKOD.t>BARKOD_FOTO_SURE){BARKOD=null;return}
   BARKOD.foto=true;BARKOD.katki=false;
   ["icerik","ek","soru","cevap","besinSoru","besinCevap","besinGitti"].forEach(function(k){BARKOD[k]=null});   // yeni içerik fotoğrafı: baştan
+}
+/* Bekleyen (bulunamayan) barkod oturum deposunda: kamera açılırken sayfa yeniden yüklenirse barkodGeriAl geri getirir */
+function barkodBekleYaz(){try{sessionStorage.setItem(BARKOD_BEKLE,JSON.stringify({kod:BARKOD.kod,ad:BARKOD.ad,tur:MODE,t:BARKOD.t}))}catch(e){}}
+function barkodBekleSil(){try{sessionStorage.removeItem(BARKOD_BEKLE)}catch(e){}}
+function barkodGeriAl(){   // açılışta, dil ve mod hazır olunca (js/arayuz_sayfa.js)
+  if(!BARKOD_AYAR.acik||!$("barkodb"))return;
+  var b=null;try{b=JSON.parse(sessionStorage.getItem(BARKOD_BEKLE)||"null")}catch(e){}
+  if(!b||!barkodGecerli(b.kod)||!(Date.now()-b.t<BARKOD_FOTO_SURE)||BARKOD||$("metin").value.trim()){barkodBekleSil();return}
+  BARKOD={kod:b.kod,r:null,ad:String(b.ad||""),metin:null,t:b.t,foto:false,katki:false};
+  if(b.tur&&b.tur!==MODE&&["gida","koz","tem"].indexOf(b.tur)>-1)setMode(b.tur,true);
+  barkodYokKart(b.kod,MODE,false);
 }
 /* Metin barkodun ekranındaki metin mi: bulunan içerik (fotoğrafsız), fotoğraftan okunan içerik ya da tablosu eklenmiş hali */
 function barkodEkranda(tx){
@@ -101,7 +126,12 @@ function barkodBesinEk(eski,ek){
 }
 /* Her analizden sonra (run) çağrılır: kaynak kartı, geçmişte ürün adı, katkı önerisi */
 function barkodSonra(){
-  if(!BARKOD||!$("sonuc").querySelector(".resbar"))return;
+  if(!$("sonuc").querySelector(".resbar")){
+    // Fotoğrafta hiçbir şey tanınmadı: eşleşme bekliyor, nedeni ve çaresi söylenir (çerçeve değişince yeniden okunur)
+    if(BARKOD&&BARKOD.foto&&$("metin").value.trim()&&OCR_URL)$("sonuc").appendChild(el("div","res u bkaynak how",t("barkod.uygun_degil",{kod:BARKOD.kod})));
+    return;
+  }
+  if(!BARKOD){barkodEslestirOner();return}
   var tx=$("metin").value.trim(),ek=!!BARKOD.ek&&tx===BARKOD.ek;
   if(BARKOD.metin&&!BARKOD.foto&&(ek||tx===BARKOD.metin.trim())){
     sonucUst(barkodKaynakKart());
@@ -112,11 +142,38 @@ function barkodSonra(){
   if(BARKOD.foto&&tx){
     if(!ek){BARKOD.icerik=tx;BARKOD.ek=null}
     if(BARKOD.ad&&!BARKOD.adVerildi){BARKOD.adVerildi=true;barkodGecmisAdi(BARKOD.ad)}
+    if(BARKOD.sonradan)sonucUst(el("div","res u bkaynak how",t("barkod.eslesti",{kod:BARKOD.kod})));
     barkodKatki();
     barkodBesinKatki();
     return;
   }
   BARKOD=null;   // metin elle başka bir şeye çevrildi: barkodla ilişki biter
+  barkodEslestirOner();
+}
+/* Ters sıra: içerik fotoğrafı okunmuş, barkod yok → sonuçta "Barkodu okut ve eşleştir" (yalnızca içerik listesine benzeyen metinde) */
+function barkodEslestirOner(){
+  var tx=$("metin").value.trim();
+  if(!BARKOD_AYAR.acik||!OCR_URL||!$("barkodb")||!tx||tx!==BARKOD_FOTO_METIN||!barkodUygun(tx))return;
+  var d=el("div","res u bkaynak beslestir");
+  d.appendChild(el("div","how",t("barkod.eslestir_metin")));
+  var b=el("button","alt",t("barkod.eslestir"));b.type="button";
+  b.onclick=function(){barkodAc(b,function(ham){barkodEslestir(ham,tx,d)})};
+  d.appendChild(b);sonucUst(d);
+}
+/* Okutulan barkod ekrandaki (fotoğraftan okunmuş) içerikle eşleşir: içerik fotoğraftan kalır, barkoddan yalnızca ürün adı alınır */
+function barkodEslestir(ham,tx,kart){
+  var kod=barkodNorm(ham);
+  if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
+  if($("metin").value.trim()!==tx){barkodIsle(kod);return}   // arada metin değişti: olağan barkod akışı
+  var B=BARKOD={kod:kod,r:null,ad:"",metin:null,t:Date.now(),foto:true,katki:false,sonradan:true};
+  if(kart)kart.remove();
+  ST.textContent=t("barkod.araniyor",{kod:kod});
+  barkodAra(kod).then(function(r){
+    if(B!==BARKOD)return;
+    B.ad=r?barkodAd(r):"";
+    ST.textContent=t("barkod.eslesti",{kod:kod});
+    barkodSonra();
+  });
 }
 function barkodGecmisAdi(ad){
   if(!ad||!HCUR)return;
@@ -168,10 +225,12 @@ function barkodGonder(B,tx){
 /* İçerik katkısı önerisi (fotoğraftan okunan içerik için bir kez). Sonuç yeniden çizilince (ör. tablo eklendi) yanıtlanmamış soru yerinde kalır. */
 function barkodKatki(){
   var B=BARKOD,tx=B.icerik;
-  if(B.katki){if(B.soru&&!B.soru.isConnected)sonucUst(B.soru);return}
-  B.katki=true;
+  if(B.katki){if(B.soru&&!B.soru.isConnected)sonucUst(B.soru);else if(B.uygunDegil&&!B.uygunDegil.isConnected)sonucUst(B.uygunDegil);return}
+  B.katki=true;B.uygunDegil=null;
   var iz=barkodIzin();
-  if(iz==="hayir"||!OCR_URL||!barkodUygun(tx))return;
+  if(iz==="hayir"||!OCR_URL)return;
+  // İçerik listesine benzemiyorsa (ör. bütün paket okundu) sessizce düşmesin: nedeni ve çaresi söylenir
+  if(!barkodUygun(tx)){B.uygunDegil=el("div","res u bkaynak how",t("barkod.uygun_degil",{kod:B.kod}));sonucUst(B.uygunDegil);return}
   if(iz==="evet"){barkodGonder(B,tx);B.cevap="evet";sonucUst(el("div","res u bkaynak how",t("barkod.katki_gitti",{kod:B.kod})));return}
   var d=el("div","res u bkaynak");
   d.appendChild(el("div","t",t("barkod.katki_soru")));
@@ -282,7 +341,8 @@ function barkodZxCozucu(){
     };
   });
 }
-function barkodAc(ret){
+/* isle: okunan barkodla ne yapılacağı (verilmezse barkodIsle: ürünü bul ve göster) */
+function barkodAc(ret,isle){
   var body=el("div","bsheet"),vid=document.createElement("video");vid.setAttribute("playsinline","");vid.muted=true;vid.className="bvid";
   var st=el("div","how",t("barkod.kamera_aciliyor"));
   body.appendChild(vid);body.appendChild(st);
@@ -294,7 +354,7 @@ function barkodAc(ret){
   var inp=document.createElement("input");inp.type="text";inp.inputMode="numeric";inp.autocomplete="off";inp.maxLength=14;inp.setAttribute("aria-label",t("barkod.elle"));inp.placeholder=t("barkod.elle");
   var ara=el("button",null,t("barkod.ara"));ara.type="submit";f.appendChild(inp);f.appendChild(ara);body.appendChild(f);
   body.appendChild(el("div","how",t("barkod.not")));
-  function bitti(kod){barkodDur();closeSheet();barkodIsle(kod)}
+  function bitti(kod){barkodDur();closeSheet();(isle||barkodIsle)(kod)}
   // Kamerada tanınınca görüntü bir an yeşil çerçeveyle göçer (css/ocr.css), sonra kapanır; arada alt sayfa kapatıldıysa (akış durdu) bir şey yapılmaz
   function bulundu(kod){if(typeof hareketAz==="function"&&hareketAz()){bitti(kod);return}body.classList.add("bulundu");setTimeout(function(){if(BARKOD_AKIS)bitti(kod)},220)}
   f.onsubmit=function(e){e.preventDefault();var k=barkodTemiz(inp.value);if(!barkodGecerli(k)){st.textContent=t("barkod.gecersiz",{kod:k});inp.focus();return}bitti(k)};
