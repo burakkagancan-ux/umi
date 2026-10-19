@@ -9,6 +9,7 @@ DIL_HAZIR.then(function(){
   besinYukle();
   loadDb(0);
   setMode(MODE,false);
+  if(typeof barkodGeriAl==="function")barkodGeriAl();   // kamera açılırken sayfa yeniden yüklendiyse bulunamayan barkod geri gelir
   window.addEventListener("hashchange",tabSync);tabSync();
   kayitProfil();
   rozetProfil();

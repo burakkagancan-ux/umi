@@ -128,6 +128,32 @@ module.exports=async({br,B,opt,ok,server})=>{
     await p.evaluate(()=>fotoTemizle());
     await p.unroute(/workers\.dev\/urun$/);
     await p.evaluate(()=>{BARKOD=null;document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
+    // Gerçek düğmelerle (19.10.2026): bulunamayan barkod → sayfa yeniden yüklenir (telefon kamerayı açarken) → kart ve eşleşme geri gelir;
+    // içerik listesine benzemeyen metinde nedeni söylenir; ters sıra: önce fotoğraf, sonra "Barkodu okut ve eşleştir"
+    let okunan=ICERIK;
+    const ara=r=>r.fulfill({status:200,contentType:'application/json',body:'{"bulundu":false}'});
+    await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({text:okunan})}));
+    await p.route(/workers\.dev\/(urun|off)\/\d+$/,ara);
+    const barkodYaz=async()=>{await p.waitForSelector('#sheet:not([hidden]) .belle input');await p.fill('#sheet .belle input',yok);await p.click('#sheet .belle button')};
+    const soruVar=()=>p.waitForFunction(()=>/başka kullanıcılar için kaydedelim/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).then(()=>true,()=>false);
+    await p.click('#barkodb');await barkodYaz();await p.waitForSelector('#sonuc .bkaynak button');
+    await p.reload();await p.waitForFunction(()=>/henüz veritabanında yok/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).catch(()=>{});
+    ok(await p.evaluate(k=>BARKOD&&BARKOD.kod===k,yok),'yeniden yüklenince bulunamayan barkod ve kartı geri gelir');
+    {const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.click('#sonuc .bkaynak button:not(.alt)')]);await fc.setFiles(path.join(R,'icon-192.png'))}
+    ok(await soruVar()&&await p.evaluate(()=>sessionStorage.getItem('barkod_bekleyen')===null),'yeniden yüklemeden sonra çekilen içerik fotoğrafı barkodla eşleşir');
+    okunan='MARKA 250 g Üretici: Örnek Gıda A.Ş. İstanbul Tüketici hattı 0850 000 00 00';
+    await p.evaluate(k=>barkodYok(k,null),yok);await p.setInputFiles('#foto',path.join(R,'icon-192.png'));
+    await p.waitForFunction(()=>/içerik listesine benzemiyor/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).catch(()=>{});
+    ok(/içerik listesine benzemiyor/.test(await p.textContent('#sonuc'))&&!/kaydedelim/.test(await p.textContent('#sonuc')),'içerik listesine benzemeyen metin: eşleşme sessizce düşmez, nedeni yazılır');
+    okunan=ICERIK;await p.evaluate(()=>{BARKOD=null;fotoTemizle()});
+    await p.setInputFiles('#dosya',path.join(R,'icon-192.png'));await p.waitForSelector('#sonuc .beslestir button',{timeout:8000}).catch(()=>{});
+    ok(!!await p.$('#sonuc .beslestir button'),'önce fotoğraf: sonuçta "Barkodu okut ve eşleştir"');
+    await p.click('#sonuc .beslestir button');await barkodYaz();
+    ok(await soruVar()&&/barkoduyla eşleştirildi/.test(await p.textContent('#sonuc'))&&!await p.$('#sonuc .beslestir')&&(await p.inputValue('#metin')).trim()===ICERIK,'sonra barkod: içerik fotoğraftan kalır, barkodla eşleşir, kaydetme sorulur');
+    await p.evaluate(()=>{BARKOD=null});await p.click('#ornek');await p.waitForTimeout(300);
+    ok(!await p.$('#sonuc .beslestir'),'örnek metinde eşleştirme düğmesi çıkmaz');
+    await p.unroute(ocrYol);await p.unroute(/workers\.dev\/(urun|off)\/\d+$/);
+    await p.evaluate(()=>{BARKOD=null;fotoTemizle();document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
   }
 
   // 1d) Besin değeri tablosu (A-02): tablolu metinde dört satır renkli; tablosuzda "tablonun fotoğrafını ekle"; şüphede renk yok,
