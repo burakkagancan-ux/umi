@@ -49,6 +49,104 @@
    "year": 2016,
    "url": "https://ec.europa.eu/health/scientific_committees/consumer_safety/docs/sccs_o_195.pdf",
    "official": true
+  },
+  "sccp_benzoat": {
+   "title": "Opinion on Benzoic Acid and Sodium Benzoate (SCCP/0891/05)",
+   "publisher": "Scientific Committee on Consumer Products (SCCP)",
+   "year": 2005,
+   "url": "https://ec.europa.eu/health/ph_risk/committees/04_sccp/docs/sccp_o_015.pdf",
+   "official": true
+  },
+  "cir_ehg": {
+   "title": "Safety Assessment of Alkyl Glyceryl Ethers As Used in Cosmetics (Int J Toxicol 2013;32(5 Suppl):5S-21S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2013,
+   "url": "https://www.cir-safety.org/sites/default/files/ethylh122011finalx.pdf",
+   "official": false
+  },
+  "cir_capb": {
+   "title": "Final Report of the Safety Assessment of Cocamidopropyl Betaine and Related Ingredients (Int J Toxicol 2012;31(4 Suppl):77S-111S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2012,
+   "url": "https://doi.org/10.1177/1091581812447202",
+   "official": false
+  },
+  "cir_pg": {
+   "title": "Safety Assessment of Propylene Glycol, Tripropylene Glycol, and PPGs (Int J Toxicol 2012;31(5 Suppl):245S-260S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2012,
+   "url": "https://doi.org/10.1177/1091581812461381",
+   "official": false
+  },
+  "cir_edta": {
+   "title": "Final Report on the Safety Assessment of EDTA and Its Salts (Int J Toxicol 2002;21 Suppl 2:95-142)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2002,
+   "url": "https://doi.org/10.1080/10915810290096522",
+   "official": false
+  },
+  "cir_gliserin": {
+   "title": "Safety Assessment of Glycerin as Used in Cosmetics (Int J Toxicol 2019;38(3 suppl):6S-22S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2019,
+   "url": "https://doi.org/10.1177/1091581819883820",
+   "official": false
+  },
+  "cir_hyaluronat": {
+   "title": "Final Report of the Safety Assessment of Hyaluronic Acid, Potassium Hyaluronate, and Sodium Hyaluronate (Int J Toxicol 2009;28(4 Suppl):5-67)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2009,
+   "url": "https://doi.org/10.1177/1091581809337738",
+   "official": false
+  },
+  "cir_pantenol": {
+   "title": "Safety Assessment of Panthenol, Pantothenic Acid, and Derivatives as Used in Cosmetics (Int J Toxicol 2022;41(3 suppl):77-128)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2022,
+   "url": "https://doi.org/10.1177/10915818221124809",
+   "official": false
+  },
+  "cir_niasinamid": {
+   "title": "Final Report of the Safety Assessment of Niacinamide and Niacin (Int J Toxicol 2005;24 Suppl 5:1-31)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2005,
+   "url": "https://doi.org/10.1080/10915810500434183",
+   "official": false
+  },
+  "cir_dimetikon": {
+   "title": "Final Report on the Safety Assessment of Dimethicone and Related Ingredients (Int J Toxicol 2003;22 Suppl 2:11-35)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2003,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/14555417/",
+   "official": false
+  },
+  "cir_setearil": {
+   "title": "Final Report on the Safety Assessment of Cetearyl Alcohol and Related Fatty Alcohols (J Am Coll Toxicol 1988;7(3):359-413)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 1988,
+   "url": "https://doi.org/10.3109/10915818809023137",
+   "official": false
+  },
+  "cir_shea": {
+   "title": "Safety Assessment of Butyrospermum Parkii (Shea)-Derived Ingredients as Used in Cosmetics (Int J Toxicol 2024;43(1 suppl):82S-95S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2024,
+   "url": "https://doi.org/10.1177/10915818231224230",
+   "official": false
+  },
+  "cir_tokoferol": {
+   "title": "Safety Assessment of Tocopherols and Tocotrienols as Used in Cosmetics (Int J Toxicol 2018;37(2 suppl):61S-94S)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2018,
+   "url": "https://doi.org/10.1177/1091581818794455",
+   "official": false
+  },
+  "cir_ksantan": {
+   "title": "Safety Assessment of Microbial Polysaccharide Gums as Used in Cosmetics (Int J Toxicol 2016)",
+   "publisher": "Cosmetic Ingredient Review (CIR)",
+   "year": 2016,
+   "url": "https://doi.org/10.1177/1091581816651606",
+   "official": false
   }
  },
  "kayitlar": [
@@ -169,9 +267,9 @@
    "not": "AB'de asit cinsinden durulanan ürünlerde en fazla %2,5, ağız bakım ürünlerinde %1,7, durulanmayan ürünlerde %0,5 kullanılabilir (Ek V, giriş 1). Gıdada E211 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de yönetmelikteki sınırlar dışında bu maddeye özgü bir sağlık uyarısı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "reg:V/1"
+     "duzey": "bildirildi",
+     "metin": "Deride bazı kişilerde bağışıklık sistemi aracılığı olmadan ani kızarıklık ve kabarma bildirilmiştir; sık kurdeşen ya da astımı olanlarda belirtilerin ortaya çıktığı ya da arttığı görülmüştür. SCCP koruyucu olarak durulanan ürünlerde %2,5'e, ağız bakımında %1,7'ye, durulanmayan ürünlerde %0,5'e kadar kullanımı güvenli buldu.",
+     "kaynak": "sccp_benzoat"
     }
    ],
    "profil": [],
@@ -179,7 +277,7 @@
     "E211",
     "PHENOXYETHANOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "METHYLISOTHIAZOLINONE",
@@ -229,16 +327,16 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "bildirildi",
+     "metin": "Nadiren, kremden sonra alerjik temas egzaması olguları bildirilmiştir. CIR bugünkü kullanım oranlarında güvenli buldu.",
+     "kaynak": "cir_ehg"
     }
    ],
    "profil": [],
    "ilgili": [
     "PHENOXYETHANOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "SODIUM LAURETH SULFATE",
@@ -314,9 +412,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "bildirildi",
+     "metin": "Üretimden kalan DMAPA ve amidoamin kalıntıları temas alerjisine yol açabilir. CIR, alerji yapmayacak biçimde formüle edildiğinde güvenli buldu.",
+     "kaynak": "cir_capb"
     }
    ],
    "profil": [],
@@ -324,7 +422,7 @@
     "SODIUM LAURETH SULFATE",
     "SODIUM LAURYL SULFATE"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "GLYCERIN",
@@ -346,9 +444,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E422 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2019).",
+     "kaynak": "cir_gliserin"
     }
    ],
    "profil": [],
@@ -357,7 +455,7 @@
     "PROPYLENE GLYCOL",
     "SODIUM HYALURONATE"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "PROPYLENE GLYCOL",
@@ -377,9 +475,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E1520 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "bildirildi",
+     "metin": "Bazı kişilerde ciltte tahrişe yol açabilir; kullanım oranlarında alerji yapmadığı klinik çalışmalarda görüldü. CIR, tahriş etmeyecek biçimde formüle edildiğinde güvenli buldu.",
+     "kaynak": "cir_pg"
     }
    ],
    "profil": [],
@@ -387,7 +485,7 @@
     "E1520",
     "GLYCERIN"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "SODIUM HYALURONATE",
@@ -409,9 +507,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2009; %2'ye kadar).",
+     "kaynak": "cir_hyaluronat"
     }
    ],
    "profil": [],
@@ -419,7 +517,7 @@
     "GLYCERIN",
     "PANTHENOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "PANTHENOL",
@@ -443,9 +541,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2022).",
+     "kaynak": "cir_pantenol"
     }
    ],
    "profil": [],
@@ -453,7 +551,7 @@
     "SODIUM HYALURONATE",
     "NIACINAMIDE"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "NIACINAMIDE",
@@ -475,9 +573,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2005); klinik testlerde önemli bir tahriş, alerji ya da ışığa duyarlılık görülmedi.",
+     "kaynak": "cir_niasinamid"
     }
    ],
    "profil": [],
@@ -485,7 +583,7 @@
     "PANTHENOL",
     "RETINOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "DIMETHICONE",
@@ -506,9 +604,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E900 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2003).",
+     "kaynak": "cir_dimetikon"
     }
    ],
    "profil": [],
@@ -516,7 +614,7 @@
     "E900",
     "CYCLOPENTASILOXANE"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "CYCLOPENTASILOXANE",
@@ -573,9 +671,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 1988).",
+     "kaynak": "cir_setearil"
     }
    ],
    "profil": [],
@@ -583,7 +681,7 @@
     "XANTHAN GUM",
     "BUTYROSPERMUM PARKII BUTTER"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "PARAFFINUM LIQUIDUM",
@@ -638,9 +736,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2024); CIR, alerji yapmayacak biçimde formüle edilmesini koşul koydu.",
+     "kaynak": "cir_shea"
     }
    ],
    "profil": [],
@@ -648,7 +746,7 @@
     "PARAFFINUM LIQUIDUM",
     "CETEARYL ALCOHOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "BENZOPHENONE-3",
@@ -931,9 +1029,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E307 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2018).",
+     "kaynak": "cir_tokoferol"
     }
    ],
    "profil": [],
@@ -941,7 +1039,7 @@
     "E307",
     "BUTYROSPERMUM PARKII BUTTER"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "LIMONENE",
@@ -1024,9 +1122,9 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok. Gıdada E415 olarak geçer.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2016).",
+     "kaynak": "cir_ksantan"
     }
    ],
    "profil": [],
@@ -1034,7 +1132,7 @@
     "E415",
     "CETEARYL ALCOHOL"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   },
   {
    "inci": "DISODIUM EDTA",
@@ -1055,16 +1153,16 @@
    "not": "AB kozmetik yönetmeliğinin eklerinde yer almıyor; özel bir sınır ya da etiket kuralı yok.",
    "etkiler": [
     {
-     "duzey": "belirsiz",
-     "metin": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı.",
-     "kaynak": "cosing"
+     "duzey": "yok",
+     "metin": "Normal kullanımda bilinen bir yan etki yok (CIR, 2002). Başka maddelerin deriden geçişini artırabileceği not edilmiştir.",
+     "kaynak": "cir_edta"
     }
    ],
    "profil": [],
    "ilgili": [
     "64-02-8"
    ],
-   "inceleme": "2026-10-15"
+   "inceleme": "2026-10-20"
   }
  ]
 }

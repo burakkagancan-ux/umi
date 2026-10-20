@@ -120,5 +120,7 @@ E220 E221 E222 E223 E224 E226 E227 E228	bildirildi	Ağızdan alındıktan sonra 
 E420	bildirildi	İshal bildirilmiştir	Yetişkinler	Günde 50 g'ın üzerinde; iki seferde alınan günde 25 g'da görülmedi	jecfa_mono_e420
 E421	bildirildi	Laksatif etki ve ishal bildirilmiştir	Yetişkinler	Laksatif etki tek seferde 10–20 g'dan itibaren; 40 g ve üzerinde çoğu zaman ishal	jecfa_mono_e421
 E953	bildirildi	Gaz ve ishal bildirilmiştir; gaz düzenli alımda birkaç gün içinde azalabilir	Yetişkin ve çocuklar	Tek seferde 20 g genellikle ishalsiz; 40 g'da çocukların yaklaşık %10'unda hafif ishal	jecfa_mono_e953
+E964	bildirildi	Laksatif etki bildirilmiştir (hidrojene glukoz şuruplarıyla; polyglycitol şurubu aynı bileşenlerden, farklı oranda oluşur)	Yetişkinler, diyabetliler dahil	Günde 30–50 g'da	jecfa_mono_hgs
+E965	bildirildi	İshal bildirilmiştir	Yetişkinler	Günde 50 g'da gönüllülerin %15'inde, 60 g'da %30'unda (3 gün); yemekle günde 35 g'da 10 gün boyunca dışkıda anlamlı değişiklik görülmedi	jecfa_mono_hgs
 E966	bildirildi	İshal bildirilmiştir	Yetişkinler	Tek seferde 50 g'da görüldü, 24 g'da görülmedi	jecfa_mono_e966
 E967	bildirildi	Gaz, ara sıra karın ağrısı ve geçici ishal bildirilmiştir	7–16 yaş arası çocuklar	Gaz günde 45 g'dan itibaren; geçici ishal günde 65–80 g'da	jecfa_mono_e967
