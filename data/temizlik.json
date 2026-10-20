@@ -2120,10 +2120,10 @@
   },
   {
    "code": "P210",
-   "tr": "Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez.",
+   "tr": "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez.",
    "en": "Keep away from heat, hot surfaces, sparks, open flames and other ignition sources. No smoking.",
    "alt": [
-    "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez."
+    "Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez."
    ]
   },
   {
@@ -2136,9 +2136,10 @@
   },
   {
    "code": "P251",
-   "tr": "Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.",
+   "tr": "Kullanımdan sonra bile delmeyin veya yakmayın.",
    "en": "Do not pierce or burn, even after use.",
    "alt": [
+    "Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.",
     "Delmeyin veya yakmayın, kullandıktan sonra bile."
    ]
   },
@@ -2162,9 +2163,10 @@
   },
   {
    "code": "P263",
-   "tr": "Hamilelikte/anne sütü verirken temastan kaçının.",
+   "tr": "Hamilelikte ve anne sütü verirken temastan kaçının.",
    "en": "Avoid contact during pregnancy and while nursing.",
    "alt": [
+    "Hamilelikte/anne sütü verirken temastan kaçının.",
     "Gebelik sırasında ve emzirirken temastan kaçının."
    ]
   },
@@ -2216,28 +2218,31 @@
   },
   {
    "code": "P301+P330+P331",
-   "tr": "YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
+   "tr": "YUTULDUĞUNDA: Ağzı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
    "en": "IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.",
    "aid": true,
    "alt": [
+    "YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
     "YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN."
    ]
   },
   {
    "code": "P302+P352",
-   "tr": "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
+   "tr": "CİLT İLE TEMAS HALİNDE İSE: Bol su ile yıkayın.",
    "en": "IF ON SKIN: Wash with plenty of water.",
    "aid": true,
    "alt": [
+    "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
     "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın."
    ]
   },
   {
    "code": "P303+P361+P353",
-   "tr": "DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.",
+   "tr": "CİLT (veya saç) ÜZERİNDE İSE: Bütün kirlenmiş giysileri hemen çıkarın. Cildi su ile durulayın.",
    "en": "IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.",
    "aid": true,
    "alt": [
+    "DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.",
     "CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın."
    ]
   },
@@ -2252,10 +2257,11 @@
   },
   {
    "code": "P305+P351+P338",
-   "tr": "GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.",
+   "tr": "GÖZLERDE İSE: Birkaç dakika su ile dikkatlice durulayın. Kontakt lens varsa ve kolaysa çıkartın. Durulamaya devam edin.",
    "en": "IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.",
    "aid": true,
    "alt": [
+    "GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.",
     "GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin."
    ]
   },
@@ -2365,9 +2371,10 @@
   },
   {
    "code": "P410+P412",
-   "tr": "Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.",
+   "tr": "Güneş ışığından koruyun. 50 °C/122 °F'yi aşan sıcaklıklara maruz bırakmayın.",
    "en": "Protect from sunlight. Do not expose to temperatures exceeding 50 °C/122 °F.",
    "alt": [
+    "Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.",
     "Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın."
    ]
   },
