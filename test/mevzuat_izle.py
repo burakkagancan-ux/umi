@@ -64,18 +64,53 @@ bak("firma, liste boş: fark yok", M.echa_farki(firma, {"items": []}) is None)
 bak("firma maddesine uyumlaştırılmış sınıf geldi", "artık" in (M.echa_farki(firma, {"items": [oge]}) or ""))
 hata_verir("ECHA yanıtında items yok", lambda: M.echa_farki(har, {"hata": 1}))
 
+# firma: öne çıkan sanayi bildirimi (sınıflar ve oran)
+fc = firma["clp"]
+def bildirim(yuzde=fc["yuzde"], one=True, kaynak="REACH Joint"):
+    return {"items": [{"classificationId": "9", "isProminentFlag": False, "substanceNotificationPercentage": 5.0},
+                      {"classificationId": "1", "isProminentFlag": one, "dataSource": kaynak, "substanceNotificationPercentage": yuzde}]}
+def sinif_getir(siniflar):
+    def g(url, zaman=0):
+        bak("ayrıntı öne çıkan bildirimden", url.endswith("/classification/1"))
+        return {"items": [{"hazardClassAndCategoryCode": x} for x in siniflar]}
+    return g
+bak("firma, aynı: fark yok", M.firma_farki(firma, bildirim(), sinif_getir(fc["siniflar"])) is None)
+bak("firma, sıra farklı: fark yok", M.firma_farki(firma, bildirim(), sinif_getir(list(reversed(fc["siniflar"])))) is None)
+bak("firma, küçük oran kayması: fark yok", M.firma_farki(firma, bildirim(fc["yuzde"] + 0.04), sinif_getir(fc["siniflar"])) is None)
+bak("firma, oran eşik kadar kaydı", "oran" in (M.firma_farki(firma, bildirim(fc["yuzde"] - M.ORAN_ESIK), sinif_getir(fc["siniflar"])) or ""))
+bak("firma, yeni sınıf", "Carc. 2" in (M.firma_farki(firma, bildirim(), sinif_getir(fc["siniflar"] + ["Carc. 2"])) or ""))
+bak("firma, sınıf kalktı", "→ yok" in (M.firma_farki(firma, bildirim(), sinif_getir([])) or "") or not fc["siniflar"])
+bak("firma, fark metninde kaynak", "CLP Submission" in (M.firma_farki(firma, bildirim(kaynak="CLP Submission"), sinif_getir(["Carc. 2"])) or ""))
+bak("firma, öne çıkan bildirim yok", "öne çıkan" in (M.firma_farki(firma, bildirim(one=False), sinif_getir([])) or ""))
+hata_verir("bildirim yanıtında items yok", lambda: M.firma_farki(firma, {"x": 1}, sinif_getir([])))
+hata_verir("bildirimde oran yok", lambda: M.firma_farki(firma, {"items": [{"classificationId": "1", "isProminentFlag": True}]}, sinif_getir([])))
+
 # echa_farklari taklit getiriciyle bütün liste (ağsız): her madde kendi kaydıyla aynı → fark yok
 M.time.sleep = lambda s: None
-def taklit(url, zaman=0):
-    k = next(k for k in kayitlar if ("/%s/" % k["echa"]) in url)
-    c = k["clp"]
-    if c["tur"] == "firma":
-        return {"items": []}
-    return {"items": [{"indexNumber": c["index"], "atpCodeName": c["atp"], "celexNumber": c["celex"], "effectiveDate": c["tarih"]}]}
+def taklit_ile(kayitlar):
+    def taklit(url, zaman=0):
+        if "/industry/classification/" in url:
+            k = next(k for k in kayitlar if url.endswith("/" + k["echa"]))
+            return {"items": [{"hazardClassAndCategoryCode": x} for x in k["clp"]["siniflar"]]}
+        k = next(k for k in kayitlar if ("/%s/" % k["echa"]) in url)
+        c = k["clp"]
+        if "/industry/" in url:
+            return {"items": [{"classificationId": k["echa"], "isProminentFlag": True, "dataSource": "REACH Joint",
+                               "substanceNotificationPercentage": c["yuzde"]}]}
+        if c["tur"] == "firma":
+            return {"items": []}
+        return {"items": [{"indexNumber": c["index"], "atpCodeName": c["atp"], "celexNumber": c["celex"], "effectiveDate": c["tarih"]}]}
+    return taklit
+taklit = taklit_ile(kayitlar)
 bak("30 madde taklit yanıtla: fark yok", M.echa_farklari(kayitlar, taklit) == [])
 bozuk = copy.deepcopy(kayitlar)
 bozuk[0]["clp"]["atp"] = "ATP00"
 bak("30 madde, biri farklı: tek fark", len(M.echa_farklari(bozuk, taklit)) == 1)
+oranli = copy.deepcopy(kayitlar)
+i = next(i for i, k in enumerate(oranli) if k["clp"]["tur"] == "firma")
+oranli[i]["clp"]["yuzde"] += 10
+f2 = M.echa_farklari(oranli, taklit_ile(kayitlar))
+bak("30 madde, bir firma oranı kaydı: tek fark", len(f2) == 1 and f2[0]["cas"] == oranli[i]["id"] and "oran" in f2[0]["fark"])
 
 # --- rapor
 r = M.rapor(f, [{"cas": "1-1-1", "ad": "X", "echa": "100.0", "fark": "dizin d: a → b"}], "2099-01")
