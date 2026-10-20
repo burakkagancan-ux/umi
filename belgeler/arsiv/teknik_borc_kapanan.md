@@ -127,3 +127,7 @@ Alt maddeler:
 
 ## Temizlik: REACH ortak bildirim oranı izlenmiyordu (19.10.2026) — KAPANDI (20.10.2026)
 - A-06 aylık izlemesi yalnızca uyumlaştırılmış sınıfı (CLP Ek VI) denetliyordu; 'firma' maddelerinin `yuzde` ve `siniflar` alanı ECHA'da değişse fark edilmezdi. mevzuat_izle.py `firma_farki`: öne çıkan sanayi bildiriminin sınıfları ve oranı (eşik 1 puan); ilk gerçek çalıştırmada 8 maddede fark yok.
+
+## Temizlik: SEA'nın 2013 sonrası değişiklikleri okunmamıştı (12.10.2026) — KAPANDI (20.10.2026)
+- SEA Yönetmeliği 2013'ten beri yalnızca RG 10.12.2020, 31330 Mük. ile değişti (mevzuat.gov.tr 19108; Bakanlık cygm.csb.gov.tr yönetmelikler sayfasında da tek konsolide kayıt). Ekler (mevzuat.gov.tr/MevzuatMetin/yonetmelik/7.5.19108-Ek.doc; Resmî Gazete'deki ek PDF'i taranmış, metin katmanı yok) okundu. kaynak/temizlik_ifadeler.tsv'deki 108 H/EUH ifadesinin 93'ü birebir; H250 ("yol açar"), H350i ("Soluma ile"), H420 ("halk sağlığına") 2020 metnine göre düzeltildi, eski yazımlar etikette tanınmaya devam ediyor. EUH018 yalnızca eğik çizgi boşluğu, EUH206 bilinçli sapma (klor). Açık kalanlar TEKNIK_BORC.md'de (EUH211/212/380–451, P ifadeleri, Ek-6 farklarının gösterilmesi).
+- Not: Türk resmi siteleri (resmigazete.gov.tr, mevzuat.gov.tr, webdosya.csb.gov.tr) User-Agent'sız istekte zaman aşımına düşüyor; tarayıcı User-Agent'ıyla 200. Büyük .doc eklerinde macOS textutil sessizce eksik metin verdi (603-014-00-0 ilk taramada 'yok' göründü).
