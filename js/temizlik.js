@@ -97,7 +97,8 @@ export function tPhrases(text,T,list){
   });
   cands.sort(function(a,b){return b.len-a.len||a.d-b.d});
   var acc=[];
-  cands.forEach(function(c){if(acc.some(function(a){return c.s<a.e&&a.s<c.e}))return;acc.push(c)});
+  // Uzun ifade önce kazanır; aynı kodun daha yakın yazımı (ör. eski resmi yazım birebir) çakışıyorsa benzerlik ondan alınır
+  cands.forEach(function(c){var o=acc.filter(function(a){return c.s<a.e&&a.s<c.e});if(o.length){o.forEach(function(a){if(c.d<a.d&&c.codes.join()===a.codes.join())a.d=c.d});return}acc.push(c)});
   return acc;
 }
 /* Gruplar ve bantlar için sadeleştirilmiş metin: Türkçe harfler eşlenir, nokta cümle sonu "|" olur, %<>- korunur */

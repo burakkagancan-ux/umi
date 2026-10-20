@@ -4,6 +4,9 @@
 # TR metinleri: H için SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-3'e dayalı liste (CRAD). EUH014–EUH210 ve EUH401: SEA Ek-3 İkinci ve
 # Üçüncü Bölüm'ün resmi metni (Resmî Gazete PDF'i, taranmış; 12.10.2026'da okundu). Tek sapma EUH206: resmi metindeki "(klorür)"
 # yerine klor (AB: chlorine). EUH211, EUH212, EUH380–EUH451 SEA'nın 2013 metninde yok; çeviri (needs_review).
+# 20.10.2026: SEA'nın tek değişikliği (RG 10.12.2020, 31330 Mük.; ekler mevzuat.gov.tr 7.5.19108-Ek.doc) ile karşılaştırıldı: 108 ifadenin
+# 93'ü birebir aynı; H250, H350i, H420 2020 metnine göre düzeltildi (eski yazım tanınmaya devam eder). EUH211/212 ve EUH380–451
+# 2020 metninde de yok (Türkiye CLP'nin 2023 tehlike sınıflarını almadı); çeviri olarak kalır.
 H200	yellow	fiziksel	Kararsız patlayıcı.	Unstable explosive.	
 H201	yellow	fiziksel	Patlayıcı; kütlesel patlama zararı.	Explosive; mass explosion hazard.	
 H202	yellow	fiziksel	Patlayıcı; ciddi yansıtım zararı.	Explosive; severe projection hazard.	
@@ -24,7 +27,7 @@ H231	yellow	fiziksel	Yüksek basınçta ve/veya sıcaklıkta, hava olmadığınd
 H240	yellow	fiziksel	Isıtma patlamaya yol açabilir.	Heating may cause an explosion.	
 H241	yellow	fiziksel	Isıtma yangına veya patlamaya yol açabilir.	Heating may cause a fire or explosion.	
 H242	yellow	fiziksel	Isıtma yangına yol açabilir.	Heating may cause a fire.	
-H250	yellow	fiziksel	Hava ile temas ettiğinde ani yangınlara yol açabilir.	Catches fire spontaneously if exposed to air.	
+H250	yellow	fiziksel	Hava ile temas ettiğinde ani yangınlara yol açar.	Catches fire spontaneously if exposed to air.		Hava ile temas ettiğinde ani yangınlara yol açabilir.
 H251	yellow	fiziksel	Kendiliğinden ısınır; alev alabilir.	Self-heating: may catch fire.	
 H252	yellow	fiziksel	Büyük miktarlarda kendiliğinden ısınır; yangına yol açabilir.	Self-heating in large quantities; may catch fire.	
 H260	yellow	fiziksel	Su ile temas ettiğinde kendiliğinden tutuşabilen alevlenir gazlar yayar.	In contact with water releases flammable gases which may ignite spontaneously.	
@@ -56,7 +59,7 @@ H336	yellow	solunum	Rehavete veya baş dönmesine yol açabilir.	May cause drows
 H340	red	cmr	Genetik hasara yol açabilir.	May cause genetic defects.	
 H341	red	cmr	Genetik hasara yol açma şüphesi var.	Suspected of causing genetic defects.	
 H350	red	cmr	Kansere yol açabilir.	May cause cancer.	
-H350i	red	cmr	Solunması halinde kansere yol açabilir.	May cause cancer by inhalation.	
+H350i	red	cmr	Soluma ile kansere yol açabilir.	May cause cancer by inhalation.		Solunması halinde kansere yol açabilir.
 H351	red	cmr	Kansere yol açma şüphesi var.	Suspected of causing cancer.	
 H360	red	cmr	Doğmamış çocukta hasara yol açabilir veya üremeye zarar verebilir.	May damage fertility or the unborn child.	
 H360F	red	cmr	Üremeye zarar verebilir.	May damage fertility.	
@@ -78,7 +81,7 @@ H410	yellow	cevre	Sucul ortamda uzun süre kalıcı, çok toksik etki.	Very toxi
 H411	yellow	cevre	Sucul ortamda uzun süre kalıcı, toksik etki.	Toxic to aquatic life with long lasting effects.	Suda yaşayan canlılar için zehirli ve etkisi uzun süreli.
 H412	yellow	cevre	Sucul ortamda uzun süre kalıcı, zararlı etki.	Harmful to aquatic life with long lasting effects.	Suda yaşayan canlılar için zararlı ve etkisi uzun süreli.
 H413	yellow	cevre	Sucul ortamda uzun süre kalıcı, zararlı etki yapabilir.	May cause long lasting harmful effects to aquatic life.	Suda yaşayan canlılarda uzun süreli zararlı etki yapabilir.
-H420	yellow	cevre	Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir.	Harms public health and the environment by destroying ozone in the upper atmosphere.	
+H420	yellow	cevre	Atmosferin üst katmanındaki ozon tabakasını tahrip ederek halk sağlığına ve çevreye zarar verir.	Harms public health and the environment by destroying ozone in the upper atmosphere.		Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir.
 # EK zararlılık ifadeleri (EUH)
 EUH014	yellow	fiziksel	Su ile şiddetli tepkime verir.	Reacts violently with water.		Su ile şiddetli reaksiyona girer.
 EUH018	yellow	fiziksel	Kullanım sırasında alevlenen/patlayan buhar-hava karışımı oluşturabilir.	In use may form flammable/explosive vapour-air mixture.		Kullanım sırasında alevlenir/patlayıcı buhar-hava karışımı oluşturabilir.

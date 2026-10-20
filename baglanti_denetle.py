@@ -12,16 +12,20 @@ Sınıflar:
   şüpheli   403, 429, 5xx, zaman aşımı, bağlantı hatası. Çoğu sitenin bot engeli (EUR-Lex, Wiley/EFSA Journal);
             elle bakılır, kendiliğinden kırık sayılmaz.
   sağlam    2xx/3xx (yönlendirmeler izlenir).
+Kırık bağlantının yanına Wayback Machine'deki son sağlam kopyası (200) yazılır (CDX API; yalnızca kırıklar için sorulur):
+düzeltirken yeni adres bulunamazsa arşiv bağlantısı kullanılabilir. Arşiv sorgusu başarısızsa denetim sürer.
 Çıkış kodu: kırık varsa 1, yoksa 0.
 """
 import argparse, concurrent.futures, glob, json, os, re, socket, ssl, sys, time
-import urllib.error, urllib.request
+import urllib.error, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 URL_RE = re.compile(r'https?://[^\s"<>\\]+')
 UA = "Mozilla/5.0 (tagsis kaynak denetimi; https://github.com/burakkagancan-ux/umi)"
 ZAMAN = 30
 KIRIK_KOD = {404, 410}
+# Wayback'in 'available' uç noktası sık 429 verir (20.10.2026); CDX API'si son 200 kopyayı döndürür
+CDX = "https://web.archive.org/cdx/search/cdx?%s"
 try:  # python.org kurulumunda sistem sertifikaları yok; certifi varsa onu kullan
     import certifi
     SSL = ssl.create_default_context(cafile=certifi.where())
@@ -77,6 +81,34 @@ def ac(url):
                 continue
             return None, type(e).__name__
     return None, "yanıt yok"
+
+
+def getir_json(url):
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=ZAMAN, context=SSL) as r:
+        return json.load(r)
+
+
+def arsiv(url, getirici=getir_json):
+    """Wayback'teki son sağlam (200) kopyanın adresi; kopya yoksa "", sorgu başarısızsa None."""
+    adres = re.sub(r"^https?://", "", url)
+    try:
+        satirlar = getirici(CDX % urllib.parse.urlencode(
+            {"url": adres, "limit": "-1", "output": "json", "filter": "statuscode:200"}))
+        if not isinstance(satirlar, list):
+            return None
+        if len(satirlar) < 2:
+            return ""
+        bas, son = satirlar[0], satirlar[-1]
+        return "https://web.archive.org/web/%s/%s" % (son[bas.index("timestamp")], son[bas.index("original")])
+    except Exception:
+        return None
+
+
+def arsiv_metni(a):
+    if a is None:
+        return "arşiv sorgulanamadı"
+    return "arşiv: " + a if a else "arşivde kopya yok"
 
 
 def sinif(kod, hata):
@@ -144,9 +176,11 @@ def main():
         else:
             for u, kod, hata, _ in liste:
                 nerede = yer[u]
-                satir.append("- %s — %s — %s%s" % (u, kod or hata, nerede[0],
-                                                   " (+%d yer)" % (len(nerede) - 1) if len(nerede) > 1 else ""))
-                print("KIRIK", kod or hata, u)
+                ar = arsiv_metni(arsiv(u))
+                satir.append("- %s — %s — %s%s — %s" % (u, kod or hata, nerede[0],
+                                                        " (+%d yer)" % (len(nerede) - 1) if len(nerede) > 1 else "", ar))
+                print("KIRIK", kod or hata, u, "|", ar)
+                time.sleep(BEKLE)
         satir.append("")
     if a.rapor:
         with open(a.rapor, "w", encoding="utf-8") as fh:
