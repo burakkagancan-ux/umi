@@ -37,34 +37,13 @@ Ansiklopedi yalnızca E kodlarını kapsıyor (333 sayfa). Temizlik ve kozmetikt
 - Ansiklopedi sayfası yok. `temizlik.json`: 8 madde notu (`subs`: MIT/CMIT/BIT/OIT, sodyum hipoklorit, asit, amonyak, enzimler), 22 içerik grubu, 98 temizliğe özgü eş anlamlı. Notu olmayan yaygın maddeler (LAS, SLES, STPP, perkarbonat, kostik soda, butil glikol, DDAC, zeolit, EDTA, sitrik asit…) yalnızca "tanınan madde" olarak CosIng işleviyle listeleniyor; açıklama yok.
 - H/EUH/P ifadelerinin Türkçesi — KAPANDI (12.10.2026): SEA Yönetmeliği'nin Resmî Gazete'deki asıl metni (RG 11.12.2013, 28848 Mük., 20131211M1-1.pdf, 1.668 sayfa taranmış görüntü) indirildi; Ek-3 İkinci/Üçüncü Bölüm (EUH, s. 158–159) ve Ek-4 (P, s. 160–190) okundu. 23 EUH ve 39 P ifadesinin Türkçesi resmi metin oldu; eski çeviri "diğer yazım" olarak tanınmaya devam ediyor. EUH206'da resmi metnin "(klorür)" yazımı yerine klor bırakıldı (AB: chlorine). 20.10.2026: SEA'nın 2013'ten beri tek değişikliği (RG 10.12.2020, 31330 Mük.; mevzuat.gov.tr MevzuatNo 19108 'değiştiren yönetmelikler' listesinde tek satır) ekleriyle okundu; H/EUH ifadelerinin 93/108'i aynı, H250/H350i/H420 düzeltildi (arşivde). Açık: EUH211, EUH212 ve EUH380–EUH451 2020 metninde de yok; Türkiye AB'nin 2023 tehlike sınıflarını (endokrin bozucu, PBT, PMT) almadı, bu ifadeler çeviri olarak kalır ve Türkiye bunları alınca resmi metne çevrilir. P ifadeleri de 2020 metniyle karşılaştırıldı, sekizi resmi metne çevrildi (arşivde).
 - Ansiklopedi sayfaları — İLK ADIM KAPANDI (15.10.2026): 30 madde (kaynak/ansiklopedi_temizlik.json, kimlik CAS). Tehlike sınıfları ECHA CHEM API'sinden (CLP Ek VI; 8 maddede uyumlaştırılmış sınıf yok, REACH kayıt yaptıranlarının ortak bildirimi ve oranı yazılı), kullanım bilgisi PubChem'deki HSDB/Haz-Map satırlarından (resmi sayılmadı). ~~(1) İngilizce metinler~~ KAPANDI (15.10.2026): 307 metin kaynak/ansiklopedi_en.json'da (elle; CLP sınıf satırları ve H ifadeleri resmi İngilizce metinden); kaynak başlıkları zaten özgün dilinde. ~~(2) Sonuç ekranından bağlantı~~ KAPANDI (15.10.2026): madde notu kartının ayrıntısında "Ansiklopedide oku", tanınan maddeler listesinde "ansiklopedi" bağlantısı (data/temizlik.json `ans`: INCI adı → CAS; 30 bağlantı, 29 madde; Sülfamik Asit INCI dizininde olmadığı için bağlanmıyor). Açık kalanlar: ~~(3) Türkiye SEA Ek-6 karşılaştırması~~ KAPANDI (20.10.2026, arşivde): 5 maddede Türkiye satırı; kalan: SEA değişirse izlenmiyor (mevzuat.gov.tr MevzuatNo 19108 'değiştiren yönetmelikler' listesi otomatik izleme adayı), Türkiye satırı da elle (`ulke.TR`), (4) ECHA verisi elle alındı; sınıflar değişirse kendiliğinden güncellenmez. 19.10.2026'dan beri aylık mevzuat izlemesi (A-06, mevzuat_izle.py) uyumlaştırılmış sınıfın dizin/ATP/CELEX/yürürlük tarihi değişince ya da 'firma' maddesine Ek VI sınıfı gelince sorun açıyor; güncelleme hâlâ elle (clp alanı ve İngilizce satırlar). 'firma' maddelerinin öne çıkan bildirimi (sınıflar ve oran) 20.10.2026'dan beri aynı izlemede.
-
-- İçerik grubu yanlış pozitifi (20.10.2026, bozma turunda görüldü): önlem ifadesi P302+P352'nin 2013 yazımı ("Bol sabun ve su ile yıkayın") etikette geçince "sabun" içerik grubu (648/2004 Ek VII) bulunmuş sayılıyor. Gruplar aranmadan önce tanınan H/P ifadelerinin metni çıkarılmalı. Kullanıcıya görünen davranış değiştiği için kabul testli iş; test/temizlik.js'deki `{sabun:null}` beklentisi o zaman `{}` olur.
+- İçerik grubu yanlış pozitifinin kalanı (20.10.2026, bozma turunda görüldü; 20.10.2026'dan beri tanınan H/P ifadelerinin metni grup aramasından çıkarılıyor, arşivde): (1) aynı ifade etikette iki kez geçerse tPhrases ifade başına tek eşleşme döndürdüğü için yalnızca biri maskeleniyor, ikincisindeki "sabun" grup sayılıyor; (2) veride olmayan yazımlar maskelenmiyor: CLP'nin eski İngilizcesi "IF ON SKIN: Wash with plenty of soap and water." (ATP öncesi; resmi metinden doğrulanıp `alt`'a eklenmeli), başlıksız "Bol sabun ve su ile yıkayın.", "Bol sabun ve suyla yıkayın.".
 
 ## Çok dil: eksikler (08.10.2026)
 Altyapı ve İngilizce arayüz tamam (belgeler/mimari/cok_dil.md "Çok dil"). Bilerek bırakılanlar:
 
 ### Ana ekrana eklenen uygulama (manifest) — KAPANDI (13.10.2026)
 - Uygulama adı, açıklaması ve kısayolları dile göre: `python3 gen_manifest.py` i18n/<dil>.json'daki manifest.* (ve sayfa.baslik, nav.ansiklopedi) anahtarlarından manifest.webmanifest (Türkçe) ve i18n/manifest/<dil>.webmanifest üretir; js/dil.js bağlantıyı seçili dile çevirir. Liste menüden kalktığı için başlangıç sayfası ocr.html, ikinci kısayol Ansiklopedi; kimlik (id) değişmedi. Ad 15.10.2026'da "Umi" oldu (O-02, kullanıcı kararı; manifest.ad, manifest.kisa_ad). Paylaşım kartındaki ad da O-02 ile.
-
-Eski not (08.10.2026): (İngilizcede Türkçe + "not yet translated" işaretiyle görünür)
-Sayılar data/ ve i18n/veri/en.json'dan 08.10.2026'da sayıldı. Ansiklopedi hariç toplam 1.164 metin.
-
-| Metin | Sayı |
-|---|---|
-| E kodu gerekçesi (elle yazılmış; 206 ortak şablon arayüz anahtarıyla çevrili) | 127 |
-| E kodu üretim yolu notu (uretim.n) | 333 |
-| E kodu kısa açıklaması (e_aciklama) | 333 |
-| E kodu Türkiye notu (tgk_note; ülke katmanı) | 13 |
-| ADI notu | 19 |
-| Bileşen notu | 38 |
-| Birlikte dikkat kuralları (başlık, metin, grup adı) | 70 |
-| Kozmetik notu ve değişiklik notu (note_tr) | 70 |
-| K3 liste açıklaması ve madde notu | 13 + 76 |
-| Kozmetik Türkiye durumu (tr_text; ülke katmanı) | 3 |
-| Temizlik ifade notu, içerik grubu açıklaması, madde notu, karıştırma/kapsül metni | 37 + 22 + 8 + 2 |
-| Ansiklopedi (data/ansiklopedi_en.json yok) | 4.038 |
-
-Çevrilenler (i18n/veri/en.json, 380): alerjen adları (AB 1169/2011 Ek II), katkı işlev sınıfları (AB 1333/2008 Ek I), CosIng işlev adları (85, resmi), deterjan içerik grupları ve yüzde bantları (AB 648/2004 Ek VII), 115 bileşen adı, gıda ve kozmetik bayrak etiketleri, K3 liste adları ve çipleri, ADI ekleri, K3 dayanakları. Resmi metinden doğrudan: CLP H/EUH/P ifadeleri (veride `en`), E kodu adları (`name_en`; kaynağı FAIA envanteri, AB 1333/2008 Ek II metniyle tek tek karşılaştırılmadı), INCI adları. Kozmetik AB gerekçelerinin 2.009'u da kalıptan (koz.gerekce.*) İngilizce.
 
 ### Çevrilmeyen sayfalar — KAPANDI (12.10.2026)
 - ansiklopedi.html arayüzü (`ans.*` anahtarları) ve index.html (Liste; `ulke.tr.liste.*`, kod js/arayuz_liste.js'e taşındı) iki dilde; alt menü üç sayfada çevrili. Bakanlık verisinde firma, ürün ve yer adları çevrilmez; ürün grubu ve uygunsuzluk türü 12.10.2026'dan beri çevrili (İngilizcede başlık altındaki not buna göre). test/ceviri.js üç sayfayı da denetler; tarayıcı testinde İngilizce ansiklopedi ve Liste turu. Ansiklopedide inceleme tarihi artık dile göre ("8 Ekim 2026" / "8 October 2026"; önce 08.10.2026).
