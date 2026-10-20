@@ -167,12 +167,14 @@ export function tInci(text,K,T){
   });
   return out;
 }
-/* Bulunan ifadelerin (tPhrases: norm sözcük sırası s..e) metindeki yeri cümle sınırıyla değiştirilir; low() uzunluğu korur, norm'un sözcükleri low metnindeki [a-z0-9]+ dizileridir */
+/* Bulunan ifadelerin (tPhrases: norm sözcük sırası s..e) metindeki yeri cümle sınırıyla değiştirilir; norm'un sözcükleri low metnindeki [a-z0-9]+ dizileridir.
+   H ve P aralıkları çakışabilir (EUH202 P102'yi içerir): sözcükler işaretlenir, ardışık örtülü sözcükler tek geçişte tek sınıra döner */
 export function tMaske(text,spans){
-  var L=low(String(text||"")),tk=[],re=/[a-z0-9]+/g,m;
+  var L=low(String(text||"")),tk=[],re=/[a-z0-9]+/g,m,ort=[],out="",son=0;
   while((m=re.exec(L)))tk.push([m.index,m.index+m[0].length]);
-  spans.slice().sort(function(a,b){return b.s-a.s}).forEach(function(p){L=L.slice(0,tk[p.s][0])+" . "+L.slice(tk[p.e-1][1])});
-  return L;
+  spans.forEach(function(p){for(var i=p.s;i<p.e;i++)ort[i]=1});
+  for(var i=0;i<tk.length;i++){if(!ort[i])continue;var j=i;while(ort[j+1])j++;out+=L.slice(son,tk[i][0])+" . ";son=tk[j][1];i=j}
+  return out+L.slice(son);
 }
 export function analyzeT(text,T,K){
   var N=tPrep(text),hz={},order=[];
