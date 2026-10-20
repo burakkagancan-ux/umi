@@ -1,5 +1,5 @@
 {
- "_aciklama": "Temizlik ansiklopedisi (14.10.2026): yaygın 30 temizlik maddesi. Kimlik CAS numarası. Tehlike sınıfları ECHA CHEM'den (CLP Ek VI uyumlaştırılmış sınıflandırma; yoksa REACH kayıt yaptıranlarının ortak bildirimi, clp.tur='firma'), 15.10.2026'da API'den alındı ve elle değiştirilmez. Renk gen_ansiklopedi.py'de H/EUH kodlarının temizlik verisindeki düzeyinden hesaplanır (sonuç ekranıyla aynı kural). Kullanım bilgisi (ne işe yarar, nerede bulunur) PubChem'deki HSDB/Haz-Map kullanım satırlarından. Metinlerde korku dili yok; sınıfın saf madde için olduğu her kayıtta belirtilir. ulke.<kod> (20.10.2026): ülkenin sınıflandırma listesi AB'den farklıysa o ülkenin satırı (TR: SEA Yönetmeliği Ek-6, RG 10.12.2020 konsolide metni; sınıf adları AB kısaltmasıyla, Türkçe kısaltmadan eşlendi); yok=true listede hiç yok. 22 uyumlaştırılmış maddenin 17'si SEA'da AB ile aynı, onlarda satır yok.",
+ "_aciklama": "Temizlik ansiklopedisi (14.10.2026): yaygın 30 temizlik maddesi. Kimlik CAS numarası. Tehlike sınıfları ECHA CHEM'den (CLP Ek VI uyumlaştırılmış sınıflandırma; yoksa REACH kayıt yaptıranlarının ortak bildirimi, clp.tur='firma'; clp.bildirim = ECHA'nın öne çıkan bildiriminin dataSource değeri: 'REACH Joint' ortak bildirim, 'CLP Submission' firmaların CLP bildirimi, 20.10.2026), 15.10.2026'da API'den alındı ve elle değiştirilmez. Renk gen_ansiklopedi.py'de H/EUH kodlarının temizlik verisindeki düzeyinden hesaplanır (sonuç ekranıyla aynı kural). Kullanım bilgisi (ne işe yarar, nerede bulunur) PubChem'deki HSDB/Haz-Map kullanım satırlarından. Metinlerde korku dili yok; sınıfın saf madde için olduğu her kayıtta belirtilir. ulke.<kod> (20.10.2026): ülkenin sınıflandırma listesi AB'den farklıysa o ülkenin satırı (TR: SEA Yönetmeliği Ek-6, RG 10.12.2020 konsolide metni; sınıf adları AB kısaltmasıyla, Türkçe kısaltmadan eşlendi); yok=true listede hiç yok. 22 uyumlaştırılmış maddenin 17'si SEA'da AB ile aynı, onlarda satır yok.",
  "kategoriler": {
   "tem_yuzey": [
    "Yüzey Aktif Madde",
@@ -551,6 +551,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 41.63,
     "siniflar": [
      "Ox. Sol. 2",
@@ -642,6 +643,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 98.99,
     "siniflar": [],
     "h": []
@@ -726,6 +728,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 37.3,
     "siniflar": [],
     "h": []
@@ -761,6 +764,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 100.0,
     "siniflar": [],
     "h": []
@@ -840,6 +844,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "CLP Submission",
     "yuzde": 66.1,
     "siniflar": [],
     "h": []
@@ -878,6 +883,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 51.74,
     "siniflar": [
      "Acute Tox. 4 (Oral)",
@@ -924,6 +930,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 50.68,
     "siniflar": [
      "Skin Irrit. 2",
@@ -967,6 +974,7 @@
    "inceleme": "2026-10-15",
    "clp": {
     "tur": "firma",
+    "bildirim": "REACH Joint",
     "yuzde": 29.04,
     "siniflar": [
      "Acute Tox. 4 (Oral)",

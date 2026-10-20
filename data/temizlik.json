@@ -192,8 +192,11 @@
    "code": "H250",
    "level": "yellow",
    "group": "fiziksel",
-   "tr": "Hava ile temas ettiğinde ani yangınlara yol açabilir.",
-   "en": "Catches fire spontaneously if exposed to air."
+   "tr": "Hava ile temas ettiğinde ani yangınlara yol açar.",
+   "en": "Catches fire spontaneously if exposed to air.",
+   "alt": [
+    "Hava ile temas ettiğinde ani yangınlara yol açabilir."
+   ]
   },
   {
    "code": "H251",
@@ -432,8 +435,11 @@
    "code": "H350i",
    "level": "red",
    "group": "cmr",
-   "tr": "Solunması halinde kansere yol açabilir.",
-   "en": "May cause cancer by inhalation."
+   "tr": "Soluma ile kansere yol açabilir.",
+   "en": "May cause cancer by inhalation.",
+   "alt": [
+    "Solunması halinde kansere yol açabilir."
+   ]
   },
   {
    "code": "H351",
@@ -594,8 +600,11 @@
    "code": "H420",
    "level": "yellow",
    "group": "cevre",
-   "tr": "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir.",
-   "en": "Harms public health and the environment by destroying ozone in the upper atmosphere."
+   "tr": "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek halk sağlığına ve çevreye zarar verir.",
+   "en": "Harms public health and the environment by destroying ozone in the upper atmosphere.",
+   "alt": [
+    "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir."
+   ]
   },
   {
    "code": "EUH014",
@@ -2120,10 +2129,10 @@
   },
   {
    "code": "P210",
-   "tr": "Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez.",
+   "tr": "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez.",
    "en": "Keep away from heat, hot surfaces, sparks, open flames and other ignition sources. No smoking.",
    "alt": [
-    "Isıdan, sıcak yüzeylerden, kıvılcımdan, açık alevden ve diğer tutuşturucu kaynaklardan uzak tutun. Sigara içilmez."
+    "Isıdan/kıvılcımdan/alevden/sıcak yüzeylerden uzak tutun. Sigara içilmez."
    ]
   },
   {
@@ -2131,14 +2140,16 @@
    "tr": "Aleve veya diğer ateş kaynaklarına doğru püskürtmeyin.",
    "en": "Do not spray on an open flame or other ignition source.",
    "alt": [
-    "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin."
+    "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin.",
+    "Açık aleve veya diğer tutuşturucu kaynaklara doğru püskürtmeyin."
    ]
   },
   {
    "code": "P251",
-   "tr": "Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.",
+   "tr": "Kullanımdan sonra bile delmeyin veya yakmayın.",
    "en": "Do not pierce or burn, even after use.",
    "alt": [
+    "Basınçlı kap: Kullanımdan sonra bile delmeyin veya yakmayın.",
     "Delmeyin veya yakmayın, kullandıktan sonra bile."
    ]
   },
@@ -2162,9 +2173,10 @@
   },
   {
    "code": "P263",
-   "tr": "Hamilelikte/anne sütü verirken temastan kaçının.",
+   "tr": "Hamilelikte ve anne sütü verirken temastan kaçının.",
    "en": "Avoid contact during pregnancy and while nursing.",
    "alt": [
+    "Hamilelikte/anne sütü verirken temastan kaçının.",
     "Gebelik sırasında ve emzirirken temastan kaçının."
    ]
   },
@@ -2202,7 +2214,8 @@
    "en": "IF SWALLOWED: Immediately call a POISON CENTER/doctor.",
    "aid": true,
    "alt": [
-    "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın."
+    "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.",
+    "YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru arayın."
    ]
   },
   {
@@ -2211,33 +2224,39 @@
    "en": "IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.",
    "aid": true,
    "alt": [
-    "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+    "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+    "YUTULDUĞUNDA: Kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."
    ]
   },
   {
    "code": "P301+P330+P331",
-   "tr": "YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
+   "tr": "YUTULDUĞUNDA: Ağzı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
    "en": "IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.",
    "aid": true,
    "alt": [
+    "YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN.",
     "YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN."
    ]
   },
   {
    "code": "P302+P352",
-   "tr": "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
+   "tr": "CİLT İLE TEMAS HALİNDE İSE: Bol su ile yıkayın.",
    "en": "IF ON SKIN: Wash with plenty of water.",
    "aid": true,
    "alt": [
-    "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın."
+    "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
+    "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın.",
+    "CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın.",
+    "CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın."
    ]
   },
   {
    "code": "P303+P361+P353",
-   "tr": "DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.",
+   "tr": "CİLT (veya saç) ÜZERİNDE İSE: Bütün kirlenmiş giysileri hemen çıkarın. Cildi su ile durulayın.",
    "en": "IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.",
    "aid": true,
    "alt": [
+    "DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın.",
     "CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın."
    ]
   },
@@ -2252,10 +2271,11 @@
   },
   {
    "code": "P305+P351+P338",
-   "tr": "GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.",
+   "tr": "GÖZLERDE İSE: Birkaç dakika su ile dikkatlice durulayın. Kontakt lens varsa ve kolaysa çıkartın. Durulamaya devam edin.",
    "en": "IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.",
    "aid": true,
    "alt": [
+    "GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin.",
     "GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin."
    ]
   },
@@ -2283,7 +2303,8 @@
    "en": "Call a POISON CENTER/doctor if you feel unwell.",
    "aid": true,
    "alt": [
-    "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+    "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+    "Kendinizi iyi hissetmezseniz, ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."
    ]
   },
   {
@@ -2365,9 +2386,10 @@
   },
   {
    "code": "P410+P412",
-   "tr": "Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.",
+   "tr": "Güneş ışığından koruyun. 50 °C/122 °F'yi aşan sıcaklıklara maruz bırakmayın.",
    "en": "Protect from sunlight. Do not expose to temperatures exceeding 50 °C/122 °F.",
    "alt": [
+    "Güneş ışığından koruyun. 50 °C/122 °F aşan sıcaklıklara maruz bırakmayın.",
     "Güneş ışığından koruyun. 50 °C üzerindeki sıcaklıklara maruz bırakmayın."
    ]
   },

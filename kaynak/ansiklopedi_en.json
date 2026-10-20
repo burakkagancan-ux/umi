@@ -15333,6 +15333,18 @@
    "s": "Everyone",
    "tr": "Herkes"
   },
+  "E964.eff.1.a": {
+   "s": "At 30–50 g per day",
+   "tr": "Günde 30–50 g'da"
+  },
+  "E964.eff.1.t": {
+   "s": "Laxative effect has been reported (with hydrogenated glucose syrups; polyglycitol syrup consists of the same components in different proportions)",
+   "tr": "Laksatif etki bildirilmiştir (hidrojene glukoz şuruplarıyla; polyglycitol şurubu aynı bileşenlerden, farklı oranda oluşur)"
+  },
+  "E964.eff.1.w": {
+   "s": "Adults, including people with diabetes",
+   "tr": "Yetişkinler, diyabetliler dahil"
+  },
   "E964.eval": {
    "s": "Polyol (sugar alcohol): in the EU, the warning “excessive consumption may produce laxative effects” is mandatory on products containing more than 10% added polyols; avoided in sensitive gut (FODMAP) diets.",
    "tr": "Poliol (şeker alkolü): %10'dan fazla ilave poliol içeren ürünlerde AB'de “aşırı tüketimi laksatif etki yapabilir” uyarısı zorunludur; hassas bağırsak (FODMAP) diyetinde kaçınılır."
@@ -15380,6 +15392,18 @@
   "E965.eff.0.w": {
    "s": "Everyone",
    "tr": "Herkes"
+  },
+  "E965.eff.1.a": {
+   "s": "At 50 g per day in 15% of volunteers and at 60 g in 30% (3 days); 35 g per day with meals for 10 days caused no significant change in stools",
+   "tr": "Günde 50 g'da gönüllülerin %15'inde, 60 g'da %30'unda (3 gün); yemekle günde 35 g'da 10 gün boyunca dışkıda anlamlı değişiklik görülmedi"
+  },
+  "E965.eff.1.t": {
+   "s": "Diarrhoea has been reported",
+   "tr": "İshal bildirilmiştir"
+  },
+  "E965.eff.1.w": {
+   "s": "Adults",
+   "tr": "Yetişkinler"
   },
   "E965.eval": {
    "s": "Polyol (sugar alcohol): in the EU, the warning “excessive consumption may produce laxative effects” is mandatory on products containing more than 10% added polyols; avoided in sensitive gut (FODMAP) diets.",
@@ -16998,8 +17022,8 @@
    "tr": "Trisodyum MGDA"
   },
   "164462-16-2.reg.clp": {
-   "s": "No EU harmonised classification. Registrants' joint notification (66.1% of notifications): not classified.",
-   "tr": "AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %66,1'i): sınıflandırılmamış."
+   "s": "No EU harmonised classification. Companies' CLP notification (66.1% of notifications): not classified.",
+   "tr": "AB'de uyumlaştırılmış sınıflandırması yok. Firmaların CLP bildirimi (bildirimlerin %66,1'i): sınıflandırılmamış."
   },
   "164462-16-2.summary": {
    "s": "A metal-binding (chelating) agent; used instead of phosphate and EDTA.",
@@ -17853,6 +17877,10 @@
    "s": "Not in any EU hazard class (registrants' joint notification).",
    "tr": "AB'de bir tehlike sınıfına girmiyor (kayıt yaptıranların ortak bildirimi)."
   },
+  "tem.eff.yok_clp": {
+   "s": "Not in any EU hazard class (companies' CLP notification).",
+   "tr": "AB'de bir tehlike sınıfına girmiyor (firmaların CLP bildirimi)."
+  },
   "tem.eval": {
    "s": "The colour follows the most serious of the substance's EU hazard classes (the same rule as the cleaning result screen). The classification applies to the pure substance; the product's own hazard statements are on its label.",
    "tr": "Renk, maddenin AB tehlike sınıflarının en ciddisine göre verilir (temizlik sonuç ekranıyla aynı kural). Sınıf saf madde içindir; ürünün kendi tehlike ifadeleri etiketinde yazılır."
@@ -18174,8 +18202,8 @@
    "tr": "Krem ve losyonlar"
   },
   "SODIUM_BENZOATE.eff.0": {
-   "s": "Apart from the regulatory limits there is no substance-specific health warning in the EU. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de yönetmelikteki sınırlar dışında bu maddeye özgü bir sağlık uyarısı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "Immediate non-immunological skin reactions (redness, wheals) have been reported in some people; in people with frequent urticaria or asthma, symptoms appeared or worsened. The SCCP considered use up to 2.5% in rinse-off products, 1.7% in oral-care products and 0.5% in leave-on products safe.",
+   "tr": "Deride bazı kişilerde bağışıklık sistemi aracılığı olmadan ani kızarıklık ve kabarma bildirilmiştir; sık kurdeşen ya da astımı olanlarda belirtilerin ortaya çıktığı ya da arttığı görülmüştür. SCCP koruyucu olarak durulanan ürünlerde %2,5'e, ağız bakımında %1,7'ye, durulanmayan ürünlerde %0,5'e kadar kullanımı güvenli buldu."
   },
   "METHYLISOTHIAZOLINONE.name": {
    "s": "Methylisothiazolinone (MIT)",
@@ -18234,8 +18262,8 @@
    "tr": "Islak mendiller"
   },
   "ETHYLHEXYLGLYCERIN.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "Rare cases of allergic contact dermatitis after using creams have been reported. CIR found it safe at current use concentrations.",
+   "tr": "Nadiren, kremden sonra alerjik temas egzaması olguları bildirilmiştir. CIR bugünkü kullanım oranlarında güvenli buldu."
   },
   "SODIUM_LAURETH_SULFATE.name": {
    "s": "Sodium Laureth Sulfate (SLES)",
@@ -18322,8 +18350,8 @@
    "tr": "Yüz temizleyicileri"
   },
   "COCAMIDOPROPYL_BETAINE.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "Residues from manufacturing (DMAPA and amidoamine) may cause contact allergy. CIR found it safe when formulated to be non-sensitising.",
+   "tr": "Üretimden kalan DMAPA ve amidoamin kalıntıları temas alerjisine yol açabilir. CIR, alerji yapmayacak biçimde formüle edildiğinde güvenli buldu."
   },
   "GLYCERIN.name": {
    "s": "Glycerin",
@@ -18354,8 +18382,8 @@
    "tr": "Diş macunları"
   },
   "GLYCERIN.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2019).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2019)."
   },
   "PROPYLENE_GLYCOL.name": {
    "s": "Propylene Glycol",
@@ -18386,8 +18414,8 @@
    "tr": "Deodorantlar"
   },
   "PROPYLENE_GLYCOL.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "May irritate the skin in some people; clinical studies showed no sensitisation at use concentrations. CIR found it safe when formulated to be non-irritating.",
+   "tr": "Bazı kişilerde ciltte tahrişe yol açabilir; kullanım oranlarında alerji yapmadığı klinik çalışmalarda görüldü. CIR, tahriş etmeyecek biçimde formüle edildiğinde güvenli buldu."
   },
   "SODIUM_HYALURONATE.name": {
    "s": "Sodium Hyaluronate",
@@ -18418,8 +18446,8 @@
    "tr": "Göz çevresi kremleri"
   },
   "SODIUM_HYALURONATE.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2009; up to 2%).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2009; %2'ye kadar)."
   },
   "PANTHENOL.name": {
    "s": "Panthenol (Provitamin B5)",
@@ -18450,8 +18478,8 @@
    "tr": "Nemlendiriciler"
   },
   "PANTHENOL.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2022).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2022)."
   },
   "NIACINAMIDE.name": {
    "s": "Niacinamide (Vitamin B3)",
@@ -18482,8 +18510,8 @@
    "tr": "Leke ve gözenek karşıtı ürünler"
   },
   "NIACINAMIDE.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2005); clinical tests showed no significant irritation, sensitisation or photosensitisation.",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2005); klinik testlerde önemli bir tahriş, alerji ya da ışığa duyarlılık görülmedi."
   },
   "DIMETHICONE.name": {
    "s": "Dimethicone",
@@ -18514,8 +18542,8 @@
    "tr": "Nemlendiriciler"
   },
   "DIMETHICONE.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2003).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2003)."
   },
   "CYCLOPENTASILOXANE.name": {
    "s": "Cyclopentasiloxane (D5)",
@@ -18578,8 +18606,8 @@
    "tr": "Saç kremleri"
   },
   "CETEARYL_ALCOHOL.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 1988).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 1988)."
   },
   "PARAFFINUM_LIQUIDUM.name": {
    "s": "Liquid Paraffin (Mineral Oil)",
@@ -18642,8 +18670,8 @@
    "tr": "Saç maskeleri"
   },
   "BUTYROSPERMUM_PARKII_BUTTER.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2024); CIR's conclusion requires formulation to be non-sensitising.",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2024); CIR, alerji yapmayacak biçimde formüle edilmesini koşul koydu."
   },
   "BENZOPHENONE-3.name": {
    "s": "Benzophenone-3 (Oxybenzone)",
@@ -18930,8 +18958,8 @@
    "tr": "Güneş kremleri"
   },
   "TOCOPHEROL.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2018).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2018)."
   },
   "LIMONENE.name": {
    "s": "Limonene",
@@ -19026,8 +19054,8 @@
    "tr": "Diş macunları"
   },
   "XANTHAN_GUM.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2016).",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2016)."
   },
   "DISODIUM_EDTA.name": {
    "s": "Disodium EDTA",
@@ -19058,8 +19086,8 @@
    "tr": "Sıvı sabunlar"
   },
   "DISODIUM_EDTA.eff.0": {
-   "s": "In the EU there is no health warning or usage limit specific to this substance. No substance-level scientific assessment has been read for this entry yet.",
-   "tr": "AB'de bu maddeye özgü sağlık uyarısı ya da kullanım sınırı yok. Bu kayıtta madde düzeyinde bir bilimsel değerlendirme henüz okunmadı."
+   "s": "No known side effect in normal use (CIR, 2002). It has been noted that it may increase the skin penetration of other substances.",
+   "tr": "Normal kullanımda bilinen bir yan etki yok (CIR, 2002). Başka maddelerin deriden geçişini artırabileceği not edilmiştir."
   },
   "koz.reg.yok": {
    "s": "Not in the annexes of the EU Cosmetics Regulation (prohibited, restricted and permitted lists); there is no limit or labelling rule specific to this substance. The general safety assessment rule applies to every product.",
