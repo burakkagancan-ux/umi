@@ -43,8 +43,10 @@ const cases=[
      ["P312","Kendinizi iyi hissetmezseniz, ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."],
      ["P301+P312","YUTULDUĞUNDA: Kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."],
      ["P301+P310","YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru arayın."],
-     ["P302+P352","CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın.",{sabun:null}]].map(([c,m,g])=>["Su ile şiddetli tepkime verir. "+m,['EUH014'],g||{},(A)=>A.prec.some(x=>x.code===c)]),
- // {sabun:null}: önlem ifadesindeki "sabun" içerik grubu sayılıyor; bilinen yanlış pozitif (TEKNIK_BORC Temizlik), düzelince {} olur
+     ["P302+P352","CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın."],
+     ["P302+P352","DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın."],
+     ["P302+P352","İçindekiler: %5'ten az sabun, parfüm. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",{sabun:'b5',parfum:null}]].map(([c,m,g])=>["Su ile şiddetli tepkime verir. "+m,['EUH014'],g||{},(A)=>A.prec.some(x=>x.code===c)]),
+ // Önlem ifadesindeki "sabun" içerik grubu sayılmaz (20.10.2026); içerik listesindeki sabun kaybolmaz
  // Bant grubun arkasında
  ["Anyonik yüzey aktif maddeler %15-30, noniyonik yüzey aktif maddeler %5'ten az, sabun.",[],{anyonik:'b15_30',noniyonik:'b5',sabun:null}],
  ["Fosfat içermez. %5-15 anyonik yüzey aktif madde.",[],{fosfat:'neg',anyonik:'b5_15'}],

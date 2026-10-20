@@ -167,13 +167,22 @@ export function tInci(text,K,T){
   });
   return out;
 }
+/* Bulunan ifadelerin (tPhrases: norm sözcük sırası s..e) metindeki yeri cümle sınırıyla değiştirilir; low() uzunluğu korur, norm'un sözcükleri low metnindeki [a-z0-9]+ dizileridir */
+export function tMaske(text,spans){
+  var L=low(String(text||"")),tk=[],re=/[a-z0-9]+/g,m;
+  while((m=re.exec(L)))tk.push([m.index,m.index+m[0].length]);
+  spans.slice().sort(function(a,b){return b.s-a.s}).forEach(function(p){L=L.slice(0,tk[p.s][0])+" . "+L.slice(tk[p.e-1][1])});
+  return L;
+}
 export function analyzeT(text,T,K){
   var N=tPrep(text),hz={},order=[];
   function add(code,how){var h=T.byCode[code];if(!h)return;if(!hz[code]){hz[code]={code:code,h:h,how:[]};order.push(code)}if(hz[code].how.indexOf(how)<0)hz[code].how.push(how)}
   tCodes(text,T).forEach(function(c){add(c,"kod")});
-  tPhrases(text,T).forEach(function(p){p.codes.forEach(function(c){add(c,p.d?"benzer":"metin")})});
+  var hzP=tPhrases(text,T),pP=tPhrases(text,T,T.pphrases);
+  hzP.forEach(function(p){p.codes.forEach(function(c){add(c,p.d?"benzer":"metin")})});
   var hazards=order.map(function(c){return hz[c]});
-  var groups=tGroups(N,T);
+  // İçerik grupları tanınan tehlike/önlem ifadelerinin metninde aranmaz: P302+P352'nin 2013 yazımı "Bol sabun ve su ile yıkayın" sabun grubu değildir
+  var groups=tGroups(tPrep(tMaske(text,hzP.concat(pP))),T);
   var subs=[],seenS={};
   function addSub(s,how){if(seenS[s.id])return;seenS[s.id]=1;subs.push({s:s,how:how})}
   T.subs.forEach(function(S){S.rx.some(function(r){r.lastIndex=0;return r.test(N)})&&addSub(S.s,"isim")});
@@ -182,7 +191,7 @@ export function analyzeT(text,T,K){
   var pr={},po=[];
   function addP(c,how){if(!T.pByCode[c])return;if(!pr[c]){pr[c]={code:c,p:T.pByCode[c],how:[]};po.push(c)}if(pr[c].how.indexOf(how)<0)pr[c].how.push(how)}
   tPCodes(text,T).forEach(function(c){addP(c,"kod")});
-  tPhrases(text,T,T.pphrases).forEach(function(p){p.codes.forEach(function(c){addP(c,p.d?"benzer":"metin")})});
+  pP.forEach(function(p){p.codes.forEach(function(c){addP(c,p.d?"benzer":"metin")})});
   // Birleşik ifade bulunduysa parçaları ayrıca gösterilmez (P305+P351+P338 varsa P338 yok)
   var prec=po.map(function(c){return pr[c]}).filter(function(x){return !po.some(function(o){return o!==x.code&&o.indexOf("+")>-1&&o.split("+").indexOf(x.code)>-1})});
   var capsule=!!(T.cap&&T.cap.rx.some(function(r){r.lastIndex=0;return r.test(N)})&&/camasir|laundry/.test(N));
