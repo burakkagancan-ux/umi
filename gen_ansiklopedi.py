@@ -111,7 +111,10 @@ def temizlik_kayitlari(T, official):
         T["cat." + code], T["cat." + code + ".what"] = ad, ne
     T["profile.koku"], T["profile.astim"] = "Koku alerjisi", "Astım / solunum hassasiyeti"
     T["tem.eff.miktar"] = "Sınıf saf ya da derişik madde içindir; üründeki etki orana göre değişir ve etiketteki tehlike ifadelerinde yazılır."
+    # 'firma' maddelerinde sınıfın geldiği ECHA bildirimi: clp.bildirim = ECHA'nın dataSource değeri (öne çıkan bildirim)
+    BILDIRIM = {"REACH Joint": ("Kayıt yaptıranların ortak bildirimi", "tem.eff.yok"), "CLP Submission": ("Firmaların CLP bildirimi", "tem.eff.yok_clp")}
     T["tem.eff.yok"] = "AB'de bir tehlike sınıfına girmiyor (kayıt yaptıranların ortak bildirimi)."
+    T["tem.eff.yok_clp"] = "AB'de bir tehlike sınıfına girmiyor (firmaların CLP bildirimi)."
     T["tem.eval"] = "Renk, maddenin AB tehlike sınıflarının en ciddisine göre verilir (temizlik sonuç ekranıyla aynı kural). Sınıf saf madde içindir; ürünün kendi tehlike ifadeleri etiketinde yazılır."
     recs, ids = [], set(x["id"] for x in K["kayitlar"])
     for k in K["kayitlar"]:
@@ -138,9 +141,12 @@ def temizlik_kayitlari(T, official):
                                   "year": yil, "url": eurlex, "official": True}]
             ef_src = {"label": "ECHA", "year": yil, "url": echa, "title": ad_echa}
         else:
+            if c.get("bildirim") not in BILDIRIM:
+                raise SystemExit(rid + ": clp.bildirim bilinmiyor: %r (beklenen: %s)" % (c.get("bildirim"), ", ".join(BILDIRIM)))
+            bildirim, yok_anahtar = BILDIRIM[c["bildirim"]]
             yuzde = ("%.1f" % c["yuzde"]).replace(".", ",")
-            T[rid + ".reg.clp"] = ("AB'de uyumlaştırılmış sınıflandırması yok. Kayıt yaptıranların ortak bildirimi (bildirimlerin %%%s'i): %s." % (
-                yuzde, ", ".join(c["siniflar"]) if c["siniflar"] else "sınıflandırılmamış"))
+            T[rid + ".reg.clp"] = ("AB'de uyumlaştırılmış sınıflandırması yok. %s (bildirimlerin %%%s'i): %s." % (
+                bildirim, yuzde, ", ".join(c["siniflar"]) if c["siniflar"] else "sınıflandırılmamış"))
             regs = [{"agency": "ECHA", "region": "EU", "status": "classified" if c["siniflar"] else "reviewed", "detail": rid + ".reg.clp", "year": 2026, "source_url": echa}]
             srcs = [kaynak_echa]
             ef_src = {"label": "ECHA", "year": 2026, "url": echa, "title": ad_echa}
@@ -148,7 +154,7 @@ def temizlik_kayitlari(T, official):
         for x in kodlar:
             T["tem.h." + x] = "%s %s" % (x, HZ[x]["tr"])
         if not effs:
-            effs = [{"level": "yok", "text": "tem.eff.yok", "who": None, "amount": None, "source": dict(ef_src)}]
+            effs = [{"level": "yok", "text": yok_anahtar if c["tur"] == "firma" else "tem.eff.yok", "who": None, "amount": None, "source": dict(ef_src)}]
         # Deterjan etiketinde adıyla yazılma ve fosfor sınırı (AB 648/2004 Ek VII, 259/2012)
         if k["kategori"] in ("tem_koruyucu", "tem_enzim", "tem_dezenfektan", "tem_koku"):
             T[rid + ".reg.det"] = {"tem_koruyucu": "Deterjan etiketinde oranı ne olursa olsun koruyucu olarak adıyla (INCI) yazılır.",

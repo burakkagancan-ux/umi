@@ -124,3 +124,7 @@ Alt maddeler:
 
 ## Temizlik: REACH ortak bildirim oranı izlenmiyordu (19.10.2026) — KAPANDI (20.10.2026)
 - A-06 aylık izlemesi yalnızca uyumlaştırılmış sınıfı (CLP Ek VI) denetliyordu; 'firma' maddelerinin `yuzde` ve `siniflar` alanı ECHA'da değişse fark edilmezdi. mevzuat_izle.py `firma_farki`: öne çıkan sanayi bildiriminin sınıfları ve oranı (eşik 1 puan); ilk gerçek çalıştırmada 8 maddede fark yok.
+
+## Temizlik: 'firma' maddesinin bildirim türü yanlış yazılıyordu (20.10.2026) — KAPANDI (20.10.2026)
+Metin doğruluğu (20.10.2026): 'firma' maddelerinin ansiklopedi satırı "kayıt yaptıranların ortak bildirimi" diyor (gen_ansiklopedi.py `tem.eff.yok`, `.reg.clp`); 164462-16-2'nin öne çıkan bildirimi REACH ortak bildirimi değil, `CLP Submission` (tek firma bildirimi). Kullanıcıya görünen metin değiştiği için kabul testli ayrı iş: `clp` alanına bildirim türü eklenip metin türe göre seçilir.
+- KAPANDI: kaynak/ansiklopedi_temizlik.json 'firma' kayıtlarına `clp.bildirim` (ECHA dataSource; 7 madde REACH Joint, 164462-16-2 CLP Submission, 20.10.2026'da API'den). gen_ansiklopedi.py metni türe göre seçer ("Firmaların CLP bildirimi", tem.eff.yok_clp; İngilizcesi "Companies' CLP notification"); mevzuat_izle.py firma_farki tür değişince de fark sayar (test/mevzuat_izle.py). Kabul testi test/kabul/firma_bildirim_turu.js (kodu görmeyen ajan yazdı).

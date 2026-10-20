@@ -145,7 +145,7 @@ def echa_farki(kayit, yanit):
 
 
 def firma_farki(kayit, liste, getirici):
-    """'firma' maddesinin `clp` alanı (siniflar, yuzde) ile ECHA'nın öne çıkan sanayi bildirimi → fark metni ya da None"""
+    """'firma' maddesinin `clp` alanı (bildirim, siniflar, yuzde) ile ECHA'nın öne çıkan sanayi bildirimi → fark metni ya da None"""
     c = kayit["clp"]
     try:
         one = [o for o in liste["items"] if o.get("isProminentFlag")]
@@ -160,6 +160,8 @@ def firma_farki(kayit, liste, getirici):
     except (KeyError, TypeError, ValueError):
         raise AgHatasi("ECHA bildirim ayrıntısı okunamadı (%s)" % kayit["id"])
     fark = []
+    if o.get("dataSource") != c.get("bildirim"):   # ansiklopedi metni bildirim türüne göre yazılıyor (ortak / firmaların CLP bildirimi)
+        fark.append("bildirim türü %s → %s" % (c.get("bildirim"), o.get("dataSource")))
     if sorted(siniflar) != sorted(c["siniflar"]):
         fark.append("sınıflar %s → %s" % (", ".join(c["siniflar"]) or "yok", ", ".join(siniflar) or "yok"))
     if abs(yuzde - c["yuzde"]) >= ORAN_ESIK:
