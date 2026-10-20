@@ -124,3 +124,6 @@ Alt maddeler:
 
 ## Gıda: E964 ve E965 belirtilerinde insan eşiği yoktu (13.10.2026) — KAPANDI (20.10.2026)
 - FAS 32 (maltitol) ve FAS 42 (polyglycitol şurubu) monograflarında insanda ishal eşiği yoktu. Eski hidrojene glukoz şurupları monografı (WHO FAS 20, 1985, `jecfa_mono_hgs`) insan çalışmalarını veriyor: HGS günde 30–50 g'da laksatif (sağlıklı ve diyabetli); maltitol günde 50 g'da gönüllülerin %15'inde, 60 g'da %30'unda ishal (Nikken 1982), yemekle günde 35 g 10 gün dışkıda anlamlı değişiklik yok (Zunft 1983). FAS 42: polyglycitol şurubu maltitol şurubuyla aynı bileşenler, farklı oran; bu yüzden E964 satırı HGS verisine dayanıyor ve bunu metinde söylüyor.
+
+## Temizlik: REACH ortak bildirim oranı izlenmiyordu (19.10.2026) — KAPANDI (20.10.2026)
+- A-06 aylık izlemesi yalnızca uyumlaştırılmış sınıfı (CLP Ek VI) denetliyordu; 'firma' maddelerinin `yuzde` ve `siniflar` alanı ECHA'da değişse fark edilmezdi. mevzuat_izle.py `firma_farki`: öne çıkan sanayi bildiriminin sınıfları ve oranı (eşik 1 puan); ilk gerçek çalıştırmada 8 maddede fark yok.
