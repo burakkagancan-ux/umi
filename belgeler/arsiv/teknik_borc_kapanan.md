@@ -124,3 +124,7 @@ Alt maddeler:
 
 ## Temizlik: REACH ortak bildirim oranı izlenmiyordu (19.10.2026) — KAPANDI (20.10.2026)
 - A-06 aylık izlemesi yalnızca uyumlaştırılmış sınıfı (CLP Ek VI) denetliyordu; 'firma' maddelerinin `yuzde` ve `siniflar` alanı ECHA'da değişse fark edilmezdi. mevzuat_izle.py `firma_farki`: öne çıkan sanayi bildiriminin sınıfları ve oranı (eşik 1 puan); ilk gerçek çalıştırmada 8 maddede fark yok.
+
+## Temizlik: Türkiye SEA Ek-6 farkı ansiklopedide gösterilmiyordu (15.10.2026) — KAPANDI (20.10.2026)
+- 22 uyumlaştırılmış maddenin SEA Ek-6 satırı (mevzuat.gov.tr konsolide ek metni, 2020 değişikliğiyle) AB'nin bugünkü satırıyla karşılaştırıldı. 17'si aynı (hidroklorik asitte ilk okumada gaz satırı yakalanmıştı; asit satırı 017-002-01-X aynı). Farklı 5: BIT (SEA'da Acute Tox. 2 inhalasyon ve Aquatic Chronic 1 yok, Skin Sens. 1), 2-bütoksietanol (SEA'da ATP18 öncesi: Acute Tox. 4 inhalasyon ve dermal), sitrik asit (SEA'da yok; AB ATP17), d-limonen (SEA'da yalnızca eski 601-029-00-7 toplu satırı: Asp. Tox. 1 yok, Aquatic Chronic 1), CMIT/MIT (SEA'da EUH071 yok). 'firma' maddelerinin 8'i SEA'da da yok (AB ile aynı).
+- Ansiklopedide bu beş maddeye Türkiye kurum satırı eklendi (kaynak/ansiklopedi_temizlik.json `ulke.TR`, gen_ansiklopedi.py TEM_ULKE; fark üreteçte hesaplanıyor). Kabul testi kodu görmeyen ajandan, birim denetimi test/ansiklopedi.js.

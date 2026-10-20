@@ -99,6 +99,11 @@ def read_effects(path):
 TEM_DUZEY = {"red": "red", "yellow": "amber", "info": "green"}
 
 
+# Temizlik maddelerinin ülke sınıflandırma listeleri (kaynak/ansiklopedi_temizlik.json kayıtlarında `ulke`)
+TEM_ULKE = {"TR": {"kurum": "Çevre, Şehircilik ve İklim Değişikliği Bakanlığı", "kaynak": "sea", "yil": 2020,
+                   "liste": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020)"}}
+
+
 def temizlik_kayitlari(T, official):
     """Temizlik ansiklopedisi (kaynak/ansiklopedi_temizlik.json, kimlik CAS). Tehlike sınıfları ECHA CHEM'den alınmış CLP verisi;
     renk sınıfın H/EUH kodlarının temizlik verisindeki (data/temizlik.json) en yüksek düzeyi: sonuç ekranıyla aynı kural.
@@ -163,6 +168,28 @@ def temizlik_kayitlari(T, official):
             regs.append({"agency": "European Parliament and Council", "region": "EU", "status": "restricted", "detail": rid + ".reg.p",
                          "year": 2012, "source_url": SRC["fosfor259"]["url"]})
             k["ek_kaynak"] = k["ek_kaynak"] + ["fosfor259"]
+        # Ülke satırı (B-05'e hazırlık): ülkenin sınıflandırma listesi AB'den farklıysa `ulke.<kod>`; fark AB satırından hesaplanır
+        for ul, u in sorted(k.get("ulke", {}).items()):
+            if ul not in TEM_ULKE or c["tur"] != "harmonize":
+                raise SystemExit(rid + ": ulke.%s bilinmiyor ya da madde AB'de uyumlaştırılmış değil" % ul)
+            m = TEM_ULKE[ul]
+            if u.get("yok"):
+                T["%s.reg.ulke.%s" % (rid, ul)] = "%s listesinde yok; AB bu sınıflandırmayı %s ile ekledi (%s)." % (m["liste"], c["atp"], ", ".join(c["siniflar"]))
+            else:
+                ab = c["siniflar"] + c.get("euh", [])
+                bu = u["siniflar"] + u.get("euh", [])
+                fark = []
+                if [x for x in ab if x not in bu]:
+                    fark.append("AB'de olup burada olmayan: " + ", ".join(x for x in ab if x not in bu))
+                if [x for x in bu if x not in ab]:
+                    fark.append("burada olup AB'de olmayan: " + ", ".join(x for x in bu if x not in ab))
+                if not fark:
+                    raise SystemExit(rid + ": ulke.%s AB ile aynı; satır yalnızca fark varsa yazılır" % ul)
+                T["%s.reg.ulke.%s" % (rid, ul)] = "%s, dizin no %s: %s. AB'den farkı: %s." % (m["liste"], u["index"], ", ".join(bu), "; ".join(fark))
+            regs.append({"agency": m["kurum"], "region": ul, "status": "not_listed" if u.get("yok") else "classified",
+                         "detail": "%s.reg.ulke.%s" % (rid, ul), "year": m["yil"], "source_url": SRC[m["kaynak"]]["url"]})
+            if m["kaynak"] not in k["ek_kaynak"]:
+                k["ek_kaynak"] = k["ek_kaynak"] + [m["kaynak"]]
         for s in k["ek_kaynak"]:
             srcs.append(dict(SRC[s]))
         if k.get("pubchem"):
