@@ -2131,7 +2131,8 @@
    "tr": "Aleve veya diğer ateş kaynaklarına doğru püskürtmeyin.",
    "en": "Do not spray on an open flame or other ignition source.",
    "alt": [
-    "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin."
+    "Açık aleve veya diğer tutuşturucu kaynaklara püskürtmeyin.",
+    "Açık aleve veya diğer tutuşturucu kaynaklara doğru püskürtmeyin."
    ]
   },
   {
@@ -2204,7 +2205,8 @@
    "en": "IF SWALLOWED: Immediately call a POISON CENTER/doctor.",
    "aid": true,
    "alt": [
-    "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın."
+    "YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın.",
+    "YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru arayın."
    ]
   },
   {
@@ -2213,7 +2215,8 @@
    "en": "IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.",
    "aid": true,
    "alt": [
-    "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+    "YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+    "YUTULDUĞUNDA: Kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."
    ]
   },
   {
@@ -2233,7 +2236,9 @@
    "aid": true,
    "alt": [
     "DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",
-    "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın."
+    "CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın.",
+    "CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın.",
+    "CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın."
    ]
   },
   {
@@ -2289,7 +2294,8 @@
    "en": "Call a POISON CENTER/doctor if you feel unwell.",
    "aid": true,
    "alt": [
-    "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın."
+    "Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın.",
+    "Kendinizi iyi hissetmezseniz, ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın."
    ]
   },
   {
