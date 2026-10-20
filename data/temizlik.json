@@ -192,8 +192,11 @@
    "code": "H250",
    "level": "yellow",
    "group": "fiziksel",
-   "tr": "Hava ile temas ettiğinde ani yangınlara yol açabilir.",
-   "en": "Catches fire spontaneously if exposed to air."
+   "tr": "Hava ile temas ettiğinde ani yangınlara yol açar.",
+   "en": "Catches fire spontaneously if exposed to air.",
+   "alt": [
+    "Hava ile temas ettiğinde ani yangınlara yol açabilir."
+   ]
   },
   {
    "code": "H251",
@@ -432,8 +435,11 @@
    "code": "H350i",
    "level": "red",
    "group": "cmr",
-   "tr": "Solunması halinde kansere yol açabilir.",
-   "en": "May cause cancer by inhalation."
+   "tr": "Soluma ile kansere yol açabilir.",
+   "en": "May cause cancer by inhalation.",
+   "alt": [
+    "Solunması halinde kansere yol açabilir."
+   ]
   },
   {
    "code": "H351",
@@ -594,8 +600,11 @@
    "code": "H420",
    "level": "yellow",
    "group": "cevre",
-   "tr": "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir.",
-   "en": "Harms public health and the environment by destroying ozone in the upper atmosphere."
+   "tr": "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek halk sağlığına ve çevreye zarar verir.",
+   "en": "Harms public health and the environment by destroying ozone in the upper atmosphere.",
+   "alt": [
+    "Atmosferin üst katmanındaki ozon tabakasını tahrip ederek kamu sağlığına ve çevreye zarar verir."
+   ]
   },
   {
    "code": "EUH014",

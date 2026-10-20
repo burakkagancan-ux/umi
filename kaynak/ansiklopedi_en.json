@@ -15333,6 +15333,18 @@
    "s": "Everyone",
    "tr": "Herkes"
   },
+  "E964.eff.1.a": {
+   "s": "At 30–50 g per day",
+   "tr": "Günde 30–50 g'da"
+  },
+  "E964.eff.1.t": {
+   "s": "Laxative effect has been reported (with hydrogenated glucose syrups; polyglycitol syrup consists of the same components in different proportions)",
+   "tr": "Laksatif etki bildirilmiştir (hidrojene glukoz şuruplarıyla; polyglycitol şurubu aynı bileşenlerden, farklı oranda oluşur)"
+  },
+  "E964.eff.1.w": {
+   "s": "Adults, including people with diabetes",
+   "tr": "Yetişkinler, diyabetliler dahil"
+  },
   "E964.eval": {
    "s": "Polyol (sugar alcohol): in the EU, the warning “excessive consumption may produce laxative effects” is mandatory on products containing more than 10% added polyols; avoided in sensitive gut (FODMAP) diets.",
    "tr": "Poliol (şeker alkolü): %10'dan fazla ilave poliol içeren ürünlerde AB'de “aşırı tüketimi laksatif etki yapabilir” uyarısı zorunludur; hassas bağırsak (FODMAP) diyetinde kaçınılır."
@@ -15380,6 +15392,18 @@
   "E965.eff.0.w": {
    "s": "Everyone",
    "tr": "Herkes"
+  },
+  "E965.eff.1.a": {
+   "s": "At 50 g per day in 15% of volunteers and at 60 g in 30% (3 days); 35 g per day with meals for 10 days caused no significant change in stools",
+   "tr": "Günde 50 g'da gönüllülerin %15'inde, 60 g'da %30'unda (3 gün); yemekle günde 35 g'da 10 gün boyunca dışkıda anlamlı değişiklik görülmedi"
+  },
+  "E965.eff.1.t": {
+   "s": "Diarrhoea has been reported",
+   "tr": "İshal bildirilmiştir"
+  },
+  "E965.eff.1.w": {
+   "s": "Adults",
+   "tr": "Yetişkinler"
   },
   "E965.eval": {
    "s": "Polyol (sugar alcohol): in the EU, the warning “excessive consumption may produce laxative effects” is mandatory on products containing more than 10% added polyols; avoided in sensitive gut (FODMAP) diets.",
