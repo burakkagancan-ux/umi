@@ -9,6 +9,8 @@ Aylık mevzuat izlemesi (A-06): uygulamanın dayandığı kaynaklarda yeni bir d
            C&L envanteri servisi; maddeyi ilk alırken kullanılanla aynı veri). Dizin no, ATP, CELEX ya da yürürlük
            tarihi değiştiyse, kayıt kalktıysa ya da sınıfı olmayan ('firma') maddeye uyumlaştırılmış sınıf geldiyse fark.
            H kodlarının kendisi ayrıca karşılaştırılmaz: Ek VI'daki her değişiklik yeni bir ATP (CELEX) ile gelir.
+           'firma' maddelerinde ayrıca öne çıkan sanayi bildirimi (çoğu REACH ortak bildirimi): sınıf listesi değiştiyse ya da
+           bildirim oranı (`yuzde`) ORAN_ESIK puandan çok kaydıysa fark (küçük kayma her ay olur, sorun açtırmaz).
 
 Resmî Gazete izlenmez (makine okunur akış yok; belgeler/mimari/veri_uretimi.md "Mevzuat izleme").
 
@@ -25,6 +27,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 UA = "Mozilla/5.0 (tagsis mevzuat izleme; https://github.com/burakkagancan-ux/umi)"
 SPARQL = "https://publications.europa.eu/webapi/rdf/sparql"
 ECHA = "https://chem.echa.europa.eu/api-cnl-inventory/harmonized/%s/classifications"
+ECHA_FIRMA = "https://chem.echa.europa.eu/api-cnl-inventory/industry/%s/classifications"   # ECHA kimliği → bildirimler ve oranları
+ECHA_FIRMA_SINIF = "https://chem.echa.europa.eu/api-cnl-inventory/industry/classification/%s"  # classificationId → sınıflar
+ORAN_ESIK = 1.0  # puan; ansiklopedi oranı tek ondalıkla gösterir, aylık kayma (ör. SLS 29,04 → 29,08) bunun altında
 EURLEX = "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:%s"
 CELEX_RE = re.compile(r"^3(\d{4}[RLD]\d{4})$")
 try:  # python.org kurulumunda sistem sertifikaları yok; certifi varsa onu kullan
@@ -139,10 +144,37 @@ def echa_farki(kayit, yanit):
     return None
 
 
+def firma_farki(kayit, liste, getirici):
+    """'firma' maddesinin `clp` alanı (siniflar, yuzde) ile ECHA'nın öne çıkan sanayi bildirimi → fark metni ya da None"""
+    c = kayit["clp"]
+    try:
+        one = [o for o in liste["items"] if o.get("isProminentFlag")]
+    except (KeyError, TypeError):
+        raise AgHatasi("ECHA bildirim yanıtında items yok (%s)" % kayit["id"])
+    if not one:
+        return "öne çıkan bildirim yok (%d bildirim)" % len(liste["items"])
+    o = one[0]
+    try:
+        siniflar = [d["hazardClassAndCategoryCode"] for d in getirici(ECHA_FIRMA_SINIF % o["classificationId"], zaman=60)["items"]]
+        yuzde = float(o["substanceNotificationPercentage"])
+    except (KeyError, TypeError, ValueError):
+        raise AgHatasi("ECHA bildirim ayrıntısı okunamadı (%s)" % kayit["id"])
+    fark = []
+    if sorted(siniflar) != sorted(c["siniflar"]):
+        fark.append("sınıflar %s → %s" % (", ".join(c["siniflar"]) or "yok", ", ".join(siniflar) or "yok"))
+    if abs(yuzde - c["yuzde"]) >= ORAN_ESIK:
+        fark.append("oran %%%s → %%%s" % (c["yuzde"], yuzde))
+    if fark:
+        return "öne çıkan bildirim (%s): %s" % (o.get("dataSource"), "; ".join(fark))
+    return None
+
+
 def echa_farklari(kayitlar, getirici=getir):
     out = []
     for k in kayitlar:
         f = echa_farki(k, getirici(ECHA % k["echa"], zaman=60))
+        if not f and k["clp"]["tur"] == "firma":
+            f = firma_farki(k, getirici(ECHA_FIRMA % k["echa"], zaman=60), getirici)
         if f:
             out.append({"cas": k["id"], "ad": k["ad"], "echa": k["echa"], "fark": f})
         time.sleep(0.3)
@@ -161,10 +193,10 @@ def rapor(ef, cf, ay):
               "`kaynak/degisiklik_kaydi.tsv`'ye yaz (O-05). Sonra `kaynak/mevzuat_izleme.tsv`'deki tarihi yeni tarihle değiştir. "
               "Kozmetikte (1223/2009) CosIng iş akışı ayrıca PR açar.", ""]
     if cf:
-        s += ["## ECHA: CLP Ek VI uyumlaştırılmış sınıf değişti (temizlik ansiklopedisi)", "", "| Madde (CAS) | Değişiklik | ECHA |", "|---|---|---|"]
+        s += ["## ECHA: sınıflandırma değişti (temizlik ansiklopedisi)", "", "| Madde (CAS) | Değişiklik | ECHA |", "|---|---|---|"]
         s += ["| %s (%s) | %s | https://chem.echa.europa.eu/%s/overview |" % (f["ad"], f["cas"], f["fark"], f["echa"]) for f in cf]
         s += ["", "**Ne yapılmalı:** maddenin ECHA sayfasındaki yeni sınıfları ve H/EUH kodlarını `kaynak/ansiklopedi_temizlik.json` "
-              "`clp` alanına işle, İngilizce satırları (`kaynak/ansiklopedi_en.json`) yenile, `python3 uret.py`; renk değişirse O-05 kaydı. "
+              "`clp` alanına işle (sanayi bildirimindeyse `siniflar`, `h`, `yuzde`), İngilizce satırları (`kaynak/ansiklopedi_en.json`) yenile, `python3 uret.py`; renk değişirse O-05 kaydı. "
               "Türkiye SEA Ek-6'nın bu ATP'yi alıp almadığını ayrıca belirt (TEKNIK_BORC Temizlik (3)).", ""]
     s += ["Resmî Gazete otomatik izlenmiyor; elle bakılır (belgeler/mimari/veri_uretimi.md)."]
     return "\n".join(s) + "\n"
