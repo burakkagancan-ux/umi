@@ -34,6 +34,10 @@ const cases=[
   ['H319','H412'],{anyonik:'b5_15',noniyonik:'b5',fosfonat:'b5',enzim:null,parfum:null,koruyucu:null},(A,S)=>S.pres.includes('PHENOXYETHANOL')],
  // OCR bozulması: eksik harf, ş->s
  ["Ciddi göz hasarina yol acar. Cilt tahrisine yol açr.",['H318','H315'],{},(A)=>A.hazards.every(x=>x.how.includes('benzer')||x.how.includes('metin'))],
+ // Birebir yazım "benzer" sayılmaz: daha uzun bir diğer yazım (EUH206 "(klorür)", P263 2020 metni) çakışınca da (20.10.2026)
+ ["EUH206 Dikkat! Diğer ürünlerle birlikte kullanmayın. Tehlikeli gazlar açığa çıkarabilir (klor).",['EUH206'],{},(A)=>A.hazards[0].how.includes('metin')&&!A.hazards[0].how.includes('benzer')],
+ ["Su ile şiddetli tepkime verir. Hamilelikte/anne sütü verirken temastan kaçının.",['EUH014'],{},(A)=>{var p=A.prec.find(x=>x.code==='P263');return p&&p.how.join()==='metin'}],
+ ["Su ile şiddetli tepkime verir. Hamilelikte ve anne sütü verirken temastan kaçınm.",['EUH014'],{},(A)=>{var p=A.prec.find(x=>x.code==='P263');return p&&p.how.join()==='benzer'}],
  // Bant grubun arkasında
  ["Anyonik yüzey aktif maddeler %15-30, noniyonik yüzey aktif maddeler %5'ten az, sabun.",[],{anyonik:'b15_30',noniyonik:'b5',sabun:null}],
  ["Fosfat içermez. %5-15 anyonik yüzey aktif madde.",[],{fosfat:'neg',anyonik:'b5_15'}],
