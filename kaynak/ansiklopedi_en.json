@@ -16742,8 +16742,8 @@
    "tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 603-014-00-0 (ATP18): Acute Tox. 3 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Irrit. 2."
   },
   "111-76-2.reg.ulke.TR": {
-   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 603-014-00-0: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal), Acute Tox. 4 (Oral), Eye Irrit. 2, Skin Irrit. 2. Difference from the EU: in the EU but not here: Acute Tox. 3 (Inhalation); here but not in the EU: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal).",
-   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 603-014-00-0: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal), Acute Tox. 4 (Oral), Eye Irrit. 2, Skin Irrit. 2. AB'den farkı: AB'de olup burada olmayan: Acute Tox. 3 (Inhalation); burada olup AB'de olmayan: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal)."
+   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 603-014-00-0: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal), Acute Tox. 4 (Oral), Eye Irrit. 2, Skin Irrit. 2. Difference from the EU: different category: Acute Tox. (Inhalation) EU 3 / here 4; only here: Acute Tox. 4 (Dermal).",
+   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 603-014-00-0: Acute Tox. 4 (Inhalation), Acute Tox. 4 (Dermal), Acute Tox. 4 (Oral), Eye Irrit. 2, Skin Irrit. 2. AB'den farkı: kategori farklı: Acute Tox. (Inhalation) AB'de 3 / burada 4; yalnızca burada: Acute Tox. 4 (Dermal)."
   },
   "111-76-2.summary": {
    "s": "A solvent from the glycol ether group.",
@@ -17038,8 +17038,8 @@
    "tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 613-088-00-6 (ATP21): Acute Tox. 2 (Inhalation), Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1."
   },
   "2634-33-5.reg.ulke.TR": {
-   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 613-088-00-6: Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1, Aquatic Acute 1. Difference from the EU: in the EU but not here: Acute Tox. 2 (Inhalation), Skin Sens. 1A, Aquatic Chronic 1; here but not in the EU: Skin Sens. 1.",
-   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 613-088-00-6: Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1, Aquatic Acute 1. AB'den farkı: AB'de olup burada olmayan: Acute Tox. 2 (Inhalation), Skin Sens. 1A, Aquatic Chronic 1; burada olup AB'de olmayan: Skin Sens. 1."
+   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 613-088-00-6: Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1, Aquatic Acute 1. Difference from the EU: different category: Skin Sens. EU 1A / here 1; only in the EU: Acute Tox. 2 (Inhalation), Aquatic Chronic 1.",
+   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 613-088-00-6: Acute Tox. 4 (Oral), Skin Irrit. 2, Eye Dam. 1, Skin Sens. 1, Aquatic Acute 1. AB'den farkı: kategori farklı: Skin Sens. AB'de 1A / burada 1; yalnızca AB'de: Acute Tox. 2 (Inhalation), Aquatic Chronic 1."
   },
   "2634-33-5.reg.det": {
    "s": "Must be listed by name (INCI) on the detergent label as a preservative, whatever its concentration.",
@@ -17186,8 +17186,8 @@
    "tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 613-167-00-5 (ATP13): Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Ek etiket ifadesi: EUH071."
   },
   "55965-84-9.reg.ulke.TR": {
-   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 613-167-00-5: Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Difference from the EU: in the EU but not here: EUH071.",
-   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 613-167-00-5: Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. AB'den farkı: AB'de olup burada olmayan: EUH071."
+   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 613-167-00-5: Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. Difference from the EU: only in the EU: EUH071.",
+   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 613-167-00-5: Acute Tox. 2 (Inhalation), Acute Tox. 2 (Dermal), Acute Tox. 3 (Oral), Skin Corr. 1C, Eye Dam. 1, Skin Sens. 1A, Aquatic Acute 1, Aquatic Chronic 1. AB'den farkı: yalnızca AB'de: EUH071."
   },
   "55965-84-9.reg.det": {
    "s": "Must be listed by name (INCI) on the detergent label as a preservative, whatever its concentration.",
@@ -17230,8 +17230,8 @@
    "tr": "AB'nin bağlayıcı (uyumlaştırılmış) sınıflandırması, CLP Ek VI dizin no 601-096-00-2 (ATP17): Flam. Liq. 3, Asp. Tox. 1, Skin Irrit. 2, Skin Sens. 1B, Aquatic Acute 1, Aquatic Chronic 3."
   },
   "5989-27-5.reg.ulke.TR": {
-   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 601-029-00-7: Flam. Liq. 3, Skin Irrit. 2, Skin Sens. 1, Aquatic Acute 1, Aquatic Chronic 1. Difference from the EU: in the EU but not here: Asp. Tox. 1, Skin Sens. 1B, Aquatic Chronic 3; here but not in the EU: Skin Sens. 1, Aquatic Chronic 1.",
-   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 601-029-00-7: Flam. Liq. 3, Skin Irrit. 2, Skin Sens. 1, Aquatic Acute 1, Aquatic Chronic 1. AB'den farkı: AB'de olup burada olmayan: Asp. Tox. 1, Skin Sens. 1B, Aquatic Chronic 3; burada olup AB'de olmayan: Skin Sens. 1, Aquatic Chronic 1."
+   "s": "Türkiye SEA Regulation Annex 6 (Official Gazette 10.12.2020), index no 601-029-00-7: Flam. Liq. 3, Skin Irrit. 2, Skin Sens. 1, Aquatic Acute 1, Aquatic Chronic 1. Difference from the EU: different category: Skin Sens. EU 1B / here 1, Aquatic Chronic EU 3 / here 1; only in the EU: Asp. Tox. 1.",
+   "tr": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020), dizin no 601-029-00-7: Flam. Liq. 3, Skin Irrit. 2, Skin Sens. 1, Aquatic Acute 1, Aquatic Chronic 1. AB'den farkı: kategori farklı: Skin Sens. AB'de 1B / burada 1, Aquatic Chronic AB'de 3 / burada 1; yalnızca AB'de: Asp. Tox. 1."
   },
   "5989-27-5.reg.det": {
    "s": "Fragrance allergen: in a detergent, it must be named on the label above 0.01%.",
