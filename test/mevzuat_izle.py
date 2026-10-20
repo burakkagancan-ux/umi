@@ -66,7 +66,7 @@ hata_verir("ECHA yanıtında items yok", lambda: M.echa_farki(har, {"hata": 1}))
 
 # firma: öne çıkan sanayi bildirimi (sınıflar ve oran)
 fc = firma["clp"]
-def bildirim(yuzde=fc["yuzde"], one=True, kaynak="REACH Joint"):
+def bildirim(yuzde=fc["yuzde"], one=True, kaynak=fc["bildirim"]):
     return {"items": [{"classificationId": "9", "isProminentFlag": False, "substanceNotificationPercentage": 5.0},
                       {"classificationId": "1", "isProminentFlag": one, "dataSource": kaynak, "substanceNotificationPercentage": yuzde}]}
 def sinif_getir(siniflar):
@@ -81,6 +81,8 @@ bak("firma, oran eşik kadar kaydı", "oran" in (M.firma_farki(firma, bildirim(f
 bak("firma, yeni sınıf", "Carc. 2" in (M.firma_farki(firma, bildirim(), sinif_getir(fc["siniflar"] + ["Carc. 2"])) or ""))
 bak("firma, sınıf kalktı", "→ yok" in (M.firma_farki(firma, bildirim(), sinif_getir([])) or "") or not fc["siniflar"])
 bak("firma, fark metninde kaynak", "CLP Submission" in (M.firma_farki(firma, bildirim(kaynak="CLP Submission"), sinif_getir(["Carc. 2"])) or ""))
+baska = "CLP Submission" if fc["bildirim"] == "REACH Joint" else "REACH Joint"
+bak("firma, bildirim türü değişti (sınıf ve oran aynı)", "bildirim türü" in (M.firma_farki(firma, bildirim(kaynak=baska), sinif_getir(fc["siniflar"])) or ""))
 bak("firma, öne çıkan bildirim yok", "öne çıkan" in (M.firma_farki(firma, bildirim(one=False), sinif_getir([])) or ""))
 hata_verir("bildirim yanıtında items yok", lambda: M.firma_farki(firma, {"x": 1}, sinif_getir([])))
 hata_verir("bildirimde oran yok", lambda: M.firma_farki(firma, {"items": [{"classificationId": "1", "isProminentFlag": True}]}, sinif_getir([])))
@@ -95,7 +97,7 @@ def taklit_ile(kayitlar):
         k = next(k for k in kayitlar if ("/%s/" % k["echa"]) in url)
         c = k["clp"]
         if "/industry/" in url:
-            return {"items": [{"classificationId": k["echa"], "isProminentFlag": True, "dataSource": "REACH Joint",
+            return {"items": [{"classificationId": k["echa"], "isProminentFlag": True, "dataSource": c["bildirim"],
                                "substanceNotificationPercentage": c["yuzde"]}]}
         if c["tur"] == "firma":
             return {"items": []}
