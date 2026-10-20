@@ -2787,6 +2787,13 @@
    "url": "https://inchem.org/documents/jecfa/jecmono/v20je14.htm",
    "official": true
   },
+  "jecfa_mono_hgs": {
+   "title": "Hydrogenated Glucose Syrups (WHO Food Additives Series 20)",
+   "publisher": "WHO/FAO JECFA (IPCS INCHEM)",
+   "year": 1985,
+   "url": "https://inchem.org/documents/jecfa/jecmono/v20je13.htm",
+   "official": true
+  },
   "jecfa_mono_e966": {
    "title": "Lactitol (WHO Food Additives Series 18)",
    "publisher": "WHO/FAO JECFA (IPCS INCHEM)",

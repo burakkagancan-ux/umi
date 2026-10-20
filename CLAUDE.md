@@ -27,6 +27,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 | [Besin değeri tablosu](belgeler/mimari/besin.md) | A-02: ayrıştırıcı, denetim, eşikler, porsiyon, ölçüm, topluluk tablosu |
 | [Testler](belgeler/mimari/testler.md) | test komutları ve her testin denetledikleri, altın çıktı, tarayıcı testi, CI |
 | [Kararlar, sınırlamalar, gelişim alanları](belgeler/mimari/kararlar.md) | kullanıcı kararları (tam metin), bilinen sınırlamalar, eş anlamlı ölçümü, gelişim alanları, araştırma belgeleri |
+| belgeler/rakipler/ | rakip incelemeleri (Lupa: lupa.md); rakiple ilgili iş planlarken ya da §8 rakip izlemede |
 | YOL_HARITASI.md | iş planı: fazlar, iş kimlikleri, sıra (§4), kararlar (§6), öngörülen engeller (§9) |
 | TEKNIK_BORC.md | açık teknik borç; kapananlar belgeler/arsiv/teknik_borc_kapanan.md |
 | i18n/sozluk.md | terim sözlüğü ve başlık yazımı (arayüz metni yazarken) |
