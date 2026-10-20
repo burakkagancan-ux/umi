@@ -1,4 +1,4 @@
-{"meta":{"lang": "en", "generated": "2026-10-20", "count": 4816},
+{"meta":{"lang": "en", "generated": "2026-10-20", "count": 4824},
 "t":{
 "111-76-2.name":"2-Butoxyethanol",
 "1310-58-3.name":"Potassium Hydroxide",
@@ -498,6 +498,7 @@
 "flag.vegan_suspect.0":"It may be of plant or animal origin; if the label does not state the source, you can ask the manufacturer.",
 "kaynak.046882bfae":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 12 (categories 14.1.4–14.2.7; text as of 31.12.2020)",
 "kaynak.06d945942a":"EU",
+"kaynak.0819efbeb6":"Ministry of Environment, Urbanisation and Climate Change (Türkiye)",
 "kaynak.0cad4d7706":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 6 (text as of 31.12.2020)",
 "kaynak.15f4fe3a20":"Regulation (EC) No 1333/2008, Annex II Part C – definitions of groups of food additives (text as of 31.12.2020)",
 "kaynak.1bf0066e62":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 13 (including category 16 Desserts; text as of 31.12.2020)",
@@ -521,6 +522,7 @@
 "kaynak.7c9a49de65":"Cargill (manufacturer summary)",
 "kaynak.7ecf6c59a8":"European Commission (Official Journal of the EU)",
 "kaynak.80e72f3c3a":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 10 (categories 12.5–13.1.3; text as of 31.12.2020)",
+"kaynak.84f1be04fe":"Regulation on the Classification, Labelling and Packaging of Substances and Mixtures of Türkiye (SEA), Annex 6 (Official Gazette of Türkiye, 11.12.2013, No 28848, repeated issue; amended 10.12.2020, No 31330, repeated issue)",
 "kaynak.8535bd20bf":"legislation.gov.uk (EU text, version of 31.12.2020)",
 "kaynak.89228562d4":"European Commission (FAOLEX copy)",
 "kaynak.8a148127ac":"Regulation (EC) No 1333/2008, Annex II Part E, Table 34 group 5 (categories 05.2–05.4; text as of 31.12.2020)",

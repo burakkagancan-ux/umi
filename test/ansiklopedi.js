@@ -137,6 +137,10 @@ ok(pw('E211',{al:[],salt:true})==='salt','sodyum benzoat → tuz kısıtlaması'
   ok(r.risk_level===RM2[en],k.id+' renk H kodlarıyla uyuşmuyor: '+r.risk_level);
   ok(r.effects.length===Math.max(1,kod.length)&&r.effects.every(x=>x.level===(kod.length?'resmi':'yok')),k.id+' her H kodu bir etki satırı');
   ok(r.sources.some(s=>s.official&&/^https:\/\/chem\.echa\.europa\.eu\/100\.\d{3}\.\d{3}\/overview$/.test(s.url)),k.id+' ECHA CHEM kaynağı');
+  // Ülke satırı (20.10.2026): yalnızca `ulke` verisi olan maddede, AB satırı da kalır; renk ülkeye göre değişmez (yukarıdaki denetim)
+  const tr=r.regulatory.filter(g=>g.region==='TR');
+  ok(k.ulke&&k.ulke.TR?tr.length===1&&tr[0].status===(k.ulke.TR.yok?'not_listed':'classified')&&/mevzuat\.gov\.tr\/mevzuat\?MevzuatNo=19108/.test(tr[0].source_url)&&r.regulatory.some(g=>g.region==='EU'):tr.length===0,k.id+' Türkiye satırı yalnızca SEA farkında');
+  if(k.ulke&&k.ulke.TR&&!k.ulke.TR.yok)ok(k.ulke.TR.h.length===k.ulke.TR.siniflar.length&&k.ulke.TR.h.every(c=>HZ[c])&&JSON.stringify(k.ulke.TR.siniflar)!==JSON.stringify(k.clp.siniflar)||(k.ulke.TR.euh||[]).join()!==(k.clp.euh||[]).join(),k.id+' Türkiye satırı: sınıf başına H kodu, AB ile aynı değil');
   if(k.clp.tur==='harmonize')ok(r.regulatory.some(g=>g.status==='classified'&&/CELEX:3\d{4}R\d{4}$/.test(g.source_url))&&r.evidence_level==='strong',k.id+' uyumlaştırılmış sınıf EUR-Lex bağlantısıyla');
   else ok(/uyumlaştırılmış sınıflandırması yok/.test(T[r.regulatory[0].detail])&&r.evidence_level==='moderate',k.id+' firma sınıflandırması olduğu yazılı');
   ok(r.related_ids.length>0&&r.agency_note,k.id+' benzer maddeler ve not');

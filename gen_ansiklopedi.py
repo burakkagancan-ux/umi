@@ -99,6 +99,27 @@ def read_effects(path):
 TEM_DUZEY = {"red": "red", "yellow": "amber", "info": "green"}
 
 
+# Temizlik maddelerinin ülke sınıflandırma listeleri (kaynak/ansiklopedi_temizlik.json kayıtlarında `ulke`)
+TEM_ULKE = {"TR": {"kurum": "Çevre, Şehircilik ve İklim Değişikliği Bakanlığı", "kaynak": "sea", "yil": 2020,
+                   "liste": "Türkiye SEA Yönetmeliği Ek-6 (RG 10.12.2020)"}}
+
+
+def sinif_farki(ab, bu):
+    """İki CLP sınıf listesinin farkı (AB ile ülke): aynı sınıf ve yol kategoride ayrılıyorsa "AB'de 3, burada 4" diye yazılır,
+    yalnızca birinde olan sınıf ayrıca. Asgari sınıflandırma işareti (*) karşılaştırmaya girmez. Fark yoksa boş dize."""
+    def ayir(x):
+        m = re.fullmatch(r"(.+?) (\d[A-Za-z]?)( \(.+\))?\*?", x.strip())
+        return (m.group(1) + (m.group(3) or ""), m.group(2)) if m else (x.strip().rstrip("*"), "")
+    A, B = dict(map(ayir, ab)), dict(map(ayir, bu))
+    kat = ["%s AB'de %s / burada %s" % (s, A[s], B[s]) for s in A if s in B and A[s] != B[s]]
+    def ad(s, d):
+        return re.sub(r"( \(.+\))$", " " + d[s] + r"\1", s) if d[s] and "(" in s else (s + " " + d[s]).strip()
+    yalniz_ab = [ad(s, A) for s in A if s not in B]
+    yalniz_bu = [ad(s, B) for s in B if s not in A]
+    return "; ".join(([("kategori farklı: " + ", ".join(kat))] if kat else []) + ([("yalnızca AB'de: " + ", ".join(yalniz_ab))] if yalniz_ab else [])
+                     + ([("yalnızca burada: " + ", ".join(yalniz_bu))] if yalniz_bu else []))
+
+
 def temizlik_kayitlari(T, official):
     """Temizlik ansiklopedisi (kaynak/ansiklopedi_temizlik.json, kimlik CAS). Tehlike sınıfları ECHA CHEM'den alınmış CLP verisi;
     renk sınıfın H/EUH kodlarının temizlik verisindeki (data/temizlik.json) en yüksek düzeyi: sonuç ekranıyla aynı kural.
@@ -169,6 +190,25 @@ def temizlik_kayitlari(T, official):
             regs.append({"agency": "European Parliament and Council", "region": "EU", "status": "restricted", "detail": rid + ".reg.p",
                          "year": 2012, "source_url": SRC["fosfor259"]["url"]})
             k["ek_kaynak"] = k["ek_kaynak"] + ["fosfor259"]
+        # Ülke satırı (B-05'e hazırlık): ülkenin sınıflandırma listesi AB'den farklıysa `ulke.<kod>`; fark AB satırından hesaplanır
+        for ul, u in sorted(k.get("ulke", {}).items()):
+            if ul not in TEM_ULKE or c["tur"] != "harmonize":
+                raise SystemExit(rid + ": ulke.%s bilinmiyor ya da madde AB'de uyumlaştırılmış değil" % ul)
+            m = TEM_ULKE[ul]
+            if u.get("yok"):
+                T["%s.reg.ulke.%s" % (rid, ul)] = "%s listesinde yok; AB bu sınıflandırmayı %s ile ekledi (%s)." % (m["liste"], c["atp"], ", ".join(c["siniflar"]))
+            else:
+                eksik = [x for x in ("index", "siniflar", "h") if not u.get(x)]
+                if eksik or len(u["h"]) != len(u["siniflar"]) or [x for x in u["h"] + u.get("euh", []) if x not in HZ]:
+                    raise SystemExit(rid + ": ulke.%s eksik ya da tutarsız (index, siniflar, sınıf başına bir h; temizlik verisinde olan kodlar): %s" % (ul, eksik or u))
+                fark = sinif_farki(c["siniflar"] + c.get("euh", []), u["siniflar"] + u.get("euh", []))
+                if not fark:
+                    raise SystemExit(rid + ": ulke.%s AB ile aynı; satır yalnızca fark varsa yazılır" % ul)
+                T["%s.reg.ulke.%s" % (rid, ul)] = "%s, dizin no %s: %s. AB'den farkı: %s." % (m["liste"], u["index"], ", ".join(u["siniflar"] + u.get("euh", [])), fark)
+            regs.append({"agency": m["kurum"], "region": ul, "status": "not_listed" if u.get("yok") else "classified",
+                         "detail": "%s.reg.ulke.%s" % (rid, ul), "year": m["yil"], "source_url": SRC[m["kaynak"]]["url"]})
+            if m["kaynak"] not in k["ek_kaynak"]:
+                k["ek_kaynak"] = k["ek_kaynak"] + [m["kaynak"]]
         for s in k["ek_kaynak"]:
             srcs.append(dict(SRC[s]))
         if k.get("pubchem"):
