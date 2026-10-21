@@ -31,13 +31,21 @@ window.onerror=function(m,src,l){ST.textContent=t("ortak.sayfa_hatasi",{m:m,l:l}
 /* ---------- Veri yükleme ---------- */
 var PATHS=["data/e_kodlari.json","e_kodlari.json"];
 var COMBO=null;getJson("data/eslesmeler.json").then(function(j){COMBO=j.rules}).catch(function(){COMBO=null});
+/* Ülke mevzuat katmanı (B-05, js/ulke.js): seçili ülkenin özellikleri ve katkı durumları. Ülke koşulu kodda yazılmaz, ulkeOz ile sorulur. */
+var ULKE_VERI=null,ULKE_HAZIR=getJson("data/ulke.json").then(function(j){
+  ULKE_VERI=j;if(ULKE_GEC&&typeof run==="function"&&$("metin").value.trim())run();   // gıda listesi beklemeden açıldıysa sonuç ülke satırlarıyla yeniden çizilir
+},function(){ULKE_VERI=null}),ULKE_GEC=false;
+/* Gıda listesi ülke verisini en çok 3 sn bekler (askıda kalan tek dosya ana listeyi kilitlemesin; bozma turu 21.10.2026) */
+function ulkeBekle(){return Promise.race([ULKE_HAZIR,new Promise(function(r){setTimeout(function(){ULKE_GEC=!ULKE_VERI;r()},3000)})])}
+function ulkeK(){return ulkeKatman(ULKE_VERI,ulke())}
+function ulkeOz(ad){return ulkeOzellik(ulkeK(),ad)}
 function getJson(p){return fetch(p,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(t("ortak.dosya_yok",{p:p}));return r.json()})}
 function loadDb(i){
   if(i>=PATHS.length){var msg=t("gida.liste_yok");setSt("gida",msg);$("sonuc").textContent=msg;return}
   getJson(PATHS[i]).then(function(j){
     DB=j;FLAGS=(j.meta&&j.meta.flags)||{};
     return Promise.all([getJson("data/bilesenler.json").then(function(b){BDB=b},function(){BDB=null}),
-      getJson("data/alerjen_sozluk.json").then(ozelSozlukKur,function(){})]);   // sözlük yoksa elle eklenen ad yalnızca yazıldığı gibi aranır
+      getJson("data/alerjen_sozluk.json").then(ozelSozlukKur,function(){}),ulkeBekle()]);   // sözlük yoksa elle eklenen ad yalnızca yazıldığı gibi aranır
   }).then(function(){
     IDX=buildIndex(DB,BDB);
     setSt("gida",BDB?t("gida.yuklendi",{n:DB.ingredients.length,b:BDB.items.length}):t("gida.yuklendi_bilesensiz",{n:DB.ingredients.length}),true);
