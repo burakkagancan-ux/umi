@@ -117,12 +117,12 @@ export var TBANDS=[
   ["b30",/%\s?30\s(?:ve\s|veya\s)?(?:uzeri|ustu|fazla)|(?:>|≥)\s?%?\s?30|30\s?%\s(?:and|or)\s(?:over|more|above)|%\s?30\s?\+/g],
   ["b5",/%\s?5\s(?:ten\s|den\s|in\s)?(?:az|asagi|altinda|dusuk)|(?:<|≤)\s?%?\s?5(?![0-9])|less than 5\s?%|(?:^|[^0-9])5\s?%\s(?:ten\s|den\s)?az/g]
 ];
-/* N'de s..e aralığındaki sabun bir yıkama talimatının parçası mı: cümlede (| arası) yıka/wash/rinse ve sabunun hemen yanında su/water ya da "bol"/"plenty of" */
-export function tYikama(N,s,e){
-  var cb=N.lastIndexOf("|",s)+1,ce=N.indexOf("|",e),cum=N.slice(cb,ce<0?N.length:ce);
-  if(!/(?:^|[^a-z])(?:yika|wash|rinse)/.test(cum))return false;
-  return /(?:^|[^a-z])(?:bol|su ve|plenty of|water and)\s$/.test(N.slice(cb,s))||/^\s(?:ve|and)\s(?:su|suyla|suyu|water)(?![a-z])/.test(N.slice(e));
-}
+/* N'de s..e aralığındaki sabun bir yıkama talimatının parçası mı. Sabunla çekimli fiil arasında yalnızca talimat sözcükleri olabilir:
+   "bol sabun ve su ile yıkayın", "sabun ve ılık su ile temizleyin" (fiil arkada); "wash (off) with plenty of soap", "rinse with water and soap" (fiil önde).
+   Ad biçimleri (yıkama deterjanı, washing, dishwashing, rinse aid) ve araya giren madde adları talimat sayılmaz (bozma turu, 21.10.2026) */
+var TYIK_TR=/^(?:\s(?:ve|ile|bol|ilik|sicak|soguk|akan|su|suyla|iyice)){0,4}\s(?:yi(?:-\s?)?kayin|durulayin|temizleyin|yikanmali)(?:iz|dir)?(?![a-z])/;
+var TYIK_EN=/(?:^|[^a-z])(?:wash|rinse|clean)(?:\s(?:off|with|plenty|of|and|water|warm|lukewarm|cold|running|mild|skin|hands|the|affected|area|thoroughly|gently|immediately))*\s$/;
+export function tYikama(N,s,e){return TYIK_TR.test(N.slice(e))||TYIK_EN.test(N.slice(Math.max(0,s-120),s))}
 export function tGroups(N,T){
   var bands=[],hits=[],m;
   TBANDS.forEach(function(b){b[1].lastIndex=0;while((m=b[1].exec(N))){var s=m.index+(/^[^%<>≤≥0-9l]/.test(m[0])?1:0);if(!bands.some(function(x){return s<x.e&&x.s<m.index+m[0].length}))bands.push({b:b[0],s:s,e:m.index+m[0].length})}});
@@ -132,7 +132,7 @@ export function tGroups(N,T){
     if(x)e+=x[0].length;
     if(G.g.id==="koruyucu"&&/(?:goz|yuz)\s$/.test(N.slice(Math.max(0,s-5),s)))continue;
     // Yıkama talimatı (başlıksız ya da veride olmayan yazımıyla P302+P352): "bol sabun ve su(yla)", "su ve sabun ile", "plenty of soap and water".
-    // Yalnızca aynı cümlede yıkama fiili varsa: içerik listesindeki "su ve sabun", "soap and water softener" grup kalır (bozma turu, 21.10.2026)
+    // İçerik listesindeki "su ve sabun", "soap and water softener" grup kalır (tYikama)
     if(G.g.id==="sabun"&&tYikama(N,s,e))continue;
     hits.push({id:G.g.id,g:G.g,s:s,e:e})}})});
   hits.sort(function(a,b){return a.s-b.s});
