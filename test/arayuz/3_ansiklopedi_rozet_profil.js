@@ -125,7 +125,8 @@ module.exports=async({br,B,opt,ok,server})=>{
       ok(!istek,'açılışta taze sayım varsa istek yok');
       await p.evaluate(()=>{localStorage.removeItem('katkici');const d=rozetLoad();delete d.sunucu;localStorage.setItem('rozetler',JSON.stringify(d))});
       await p.goto(B+'ocr.html#profil');await p.reload();await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX);await p.waitForTimeout(600);
-      ok(!istek&&(await p.textContent('#eklebar'))==='','kimlik yoksa istek yok ve Eklediklerim düğmesi yok');
+      // 22.10.2026 (kullanıcı isteği): kimlik yoksa da düğme görünür, altyazısı "Henüz ürün eklemediniz"; sunucuya istek yine yok
+      ok(!istek&&/Henüz ürün eklemediniz/.test(await p.textContent('#eklebar')),'kimlik yoksa istek yok, Eklediklerim düğmesi "Henüz ürün eklemediniz" altyazısıyla: '+await p.textContent('#eklebar'));
       await p.unroute(/workers\.dev\/katki$/);
     }
     // Profilim › Alerjenler: listede olmayan alerjeni yazarak ekleme, liste, yineleme engeli, silme; gıda ve kozmetik sonucunda kart

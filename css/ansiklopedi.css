@@ -88,7 +88,7 @@ details.gdrop{border-top:1px solid var(--line)}details.gdrop:last-of-type{border
 details.gdrop>summary{font-family:var(--hf);font-size:18px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 4px}details.gdrop>summary::-webkit-details-marker{display:none}
 details.gdrop>summary .n{font:500 14px var(--bf);color:var(--mute)}details.gdrop>summary::after{content:"";margin-inline-start:10px;width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg) translateY(-3px);transition:transform .15s}
 details.gdrop[open]>summary::after{transform:rotate(225deg) translateY(-2px)}details.gdrop[open]>.grpl{margin-bottom:12px}
-.grpl{border:1px solid var(--line);border-radius:20px;overflow:hidden;margin:0 0 4px}
+.grpl{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--card);margin:0 0 4px}
 .grpl .row{border:0;border-radius:0;margin:0;border-top:1px solid var(--sunk)}.grpl .row:first-child{border-top:0}
 .row .rn{font-size:16px}.row .rk{margin-top:1px}
 /* İşlev grubunun renk dağılımı (17.10.2026, kullanıcı isteği): grup başlığında kaç maddenin uyarı, dikkat, özel uyarı yok (doğal: yeşil, diğerleri gri) olduğu ince bir şeritte,

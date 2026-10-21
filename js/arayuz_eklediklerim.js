@@ -29,14 +29,14 @@ function ekleSunucu(tazeSn,goster,liste){
 }
 var EKLE_SON=null;   // son yanıt (bu sayfa açıkken)
 
-/* ---------- Profilim: "Eklediklerim" düğmesi (yalnızca bu cihazdan ürün eklendiyse) ---------- */
+/* ---------- Profilim: "Eklediklerim" düğmesi (22.10.2026, kullanıcı isteği: hiç ekleme yoksa da görünür, altyazı "Henüz ürün eklemediniz") ---------- */
 function ekleProfil(){
   var box=$("eklebar");if(!box)return;box.textContent="";
-  if(!katkiciGecerli(katkiciAl()))return;
   var b=el("button","kayitac");b.type="button";
   b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6v12M7 6v12M10 6v12M14 6v12M16 6v12M20 6v12"/></svg>';
   var s=el("span","kt");s.appendChild(el("b",null,t("ekle.baslik")));
-  var n=EKLE_SON?EKLE_SON.urunler.length:null;s.appendChild(el("span",n==null?"mut":"mut say",n==null?t("ekle.alt"):t("ekle.urun_say",{n:n})));b.appendChild(s);
+  var n=!katkiciGecerli(katkiciAl())?0:EKLE_SON?EKLE_SON.urunler.length:null;
+  s.appendChild(el("span",n?"mut say":"mut",n==null?t("ekle.alt"):n?t("ekle.urun_say",{n:n}):t("ekle.alt_bos")));b.appendChild(s);
   b.onclick=function(){location.hash="#eklediklerim"};box.appendChild(b);
 }
 /* ---------- Eklediklerim ekranı ---------- */
@@ -47,17 +47,33 @@ function ekleAc(){
   box.appendChild(el("p","how",t("ekle.not")));
   var ul=el("div","klistk");ul.appendChild(el("p","mut",t("ortak.yukleniyor")));box.appendChild(ul);
   document.body.classList.add("mode-ekle");box.hidden=false;window.scrollTo(0,0);bk.focus();
-  if(!katkiciGecerli(katkiciAl())){ul.textContent="";ul.appendChild(el("p","mut",t("ekle.bos")));return}
+  if(!katkiciGecerli(katkiciAl())){ekleBos(ul);return}
   ekleSunucu(EKLE_AYAR.ekranTazeSn,function(c){box.insertBefore(c,ul)},true).then(function(j){
     if(!document.body.classList.contains("mode-ekle"))return;
     ul.textContent="";
     if(!j){ul.appendChild(el("p","mut",t("ekle.ulasilamadi")));return}
-    if(!j.urunler.length){ul.appendChild(el("p","mut",t("ekle.bos")));return}
-    var say=0;j.urunler.forEach(function(u){if(u.dogrulandi)say++});
+    if(!j.urunler.length){ekleBos(ul);return}
+    var say=0,oncu=0;j.urunler.forEach(function(u){if(u.dogrulandi)say++;if(u.oncu)oncu++});
     ul.appendChild(el("p","mut",t("ekle.ozet",{n:j.urunler.length,d:say})));
+    ul.appendChild(ekleKazanim(j.urunler.length,say,oncu));
     j.urunler.forEach(function(u){ul.appendChild(ekleSatir(u))});
     ekleProfil();
   });
+}
+/* Hiç ürün yok: ne olduğu, nasıl ekleneceği ve eklemenin kullanıcıya ve herkese kazandırdıkları */
+function ekleBos(ul){
+  ul.textContent="";
+  ul.appendChild(el("p","mut",t("ekle.bos")));ul.appendChild(el("p","how",t("ekle.nasil")));
+  var k=el("div","ekkaz");k.appendChild(el("h3",null,t("ekle.kaz_bos_baslik")));
+  k.appendChild(el("p",null,t("ekle.kaz_bos_siz")));k.appendChild(el("p",null,t("ekle.kaz_bos_herkes")));
+  ul.appendChild(k);
+}
+/* Kazanımlar: n eklenen, d doğrulanan, o Öncü olunan ürün (sunucu yanıtından; tahmin yok) */
+function ekleKazanim(n,d,o){
+  var k=el("div","ekkaz");k.appendChild(el("h3",null,t("ekle.kaz_baslik")));
+  k.appendChild(el("p",null,!d?t("ekle.kaz_siz_0"):o?t("ekle.kaz_siz_n_oncu",{n:d,o:t("ekle.kaz_oncu_n",{n:o})}):t("ekle.kaz_siz_n",{n:d})));
+  k.appendChild(el("p",null,d?t("ekle.kaz_herkes_n",{n:n,d:t("ekle.kaz_dog_n",{n:d})}):t("ekle.kaz_herkes_n0",{n:n})));
+  return k;
 }
 function ekleSatir(u){
   var c=el("div","kitem ekitem");
