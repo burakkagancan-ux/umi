@@ -57,9 +57,9 @@ def alt(r, i):
     return [x.strip() for x in r[i].split(" | ") if x.strip()] if len(r) > i else []
 
 
-# Önlem ifadeleri (P): kaynak/temizlik_onlemler.tsv [kod, TR, EN, ilk_yardim 1/0, diğer yazımlar]
+# Önlem ifadeleri (P): kaynak/temizlik_onlemler.tsv [kod, TR, EN, ilk_yardim 1/0, diğer yazımlar, yalnızca maske]
 # TR: SEA Ek-4'ün resmi metni (12.10.2026: 2013 metni; 20.10.2026: 2020 değişikliğiyle karşılaştırıldı).
-PREC = [[r[0], r[1], r[2], int(r[3]), alt(r, 4)] for r in kaynak_tsv("temizlik_onlemler.tsv")]
+PREC = [[r[0], r[1], r[2], int(r[3]), alt(r, 4), alt(r, 5)] for r in kaynak_tsv("temizlik_onlemler.tsv")]
 
 # Sıvı çamaşır deterjanı kapsülleri: CLP Ek II 3.3 (AB 1297/2014 ile eklendi)
 CAPSULE = {
@@ -155,12 +155,14 @@ def main():
             e["alt"] = a
         hz.append(e)
     prec = []
-    for code, tr, en, aid, a in PREC:
+    for code, tr, en, aid, a, mk in PREC:
         e = {"code": code, "tr": tr, "en": en}
         if aid:
             e["aid"] = True
         if a:
             e["alt"] = a
+        if mk:
+            e["maske"] = mk
         prec.append(e)
     for c in HCOMB:
         for x in c[0]:

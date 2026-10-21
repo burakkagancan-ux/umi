@@ -6,19 +6,19 @@ import {lev, low, norm} from "./ortak.js";
 /* tdb: temizlik.json. Zararlılık ifadeleri hem koddan (H318, EUH208) hem metinden (Türkçe/İngilizce) bulunur. */
 export function tVariants(p){var out=[p];if(p.indexOf("yol acabilir")>-1){out.push(p.replace(/yol acabilir/g,"neden olabilir"));out.push(p.replace(/yol acabilir/g,"yol acar"))}if(p.indexOf("yol acar")>-1)out.push(p.replace(/yol acar/g,"neden olur"));return out}
 export function buildTIndex(tdb){
-  var byCode={},phrases=[],pByCode={},pphrases=[];
+  var byCode={},phrases=[],pByCode={},pphrases=[],mphrases=[];
   // Varyant ("yol açar") başka bir ifadenin asıl metnine denk gelirse eklenmez (H371 -> H370 olmasın)
   var prim={};tdb.hazards.concat(tdb.combos||[],tdb.precautions||[]).forEach(function(h){prim[norm(h.tr)]=1});
   function addPh(list,txt,codes){tVariants(norm(txt)).forEach(function(p,i){if(p.length>=8&&!(i&&prim[p]))list.push({p:p,tk:p.split(" "),codes:codes})})}
   tdb.hazards.forEach(function(h){byCode[h.code]=h;addPh(phrases,h.tr,[h.code]);addPh(phrases,h.en,[h.code]);(h.alt||[]).forEach(function(a){addPh(phrases,a,[h.code])})});
   (tdb.combos||[]).forEach(function(c){addPh(phrases,c.tr,c.codes);addPh(phrases,c.en,c.codes)});
-  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code]);(q.alt||[]).forEach(function(a){addPh(pphrases,a,[q.code])})});
+  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code]);(q.alt||[]).forEach(function(a){addPh(pphrases,a,[q.code])});(q.maske||[]).forEach(function(a){addPh(mphrases,a,[q.code])})});
   function rx(a){return a.map(function(s){return new RegExp(s,"g")})}
   var groups=tdb.groups.map(function(g){return {g:g,rx:rx(g.pat)}});
   var subs=tdb.subs.map(function(s){return {s:s,rx:rx(s.pat||[])}});
   var subByInci={};tdb.subs.forEach(function(s){s.inci.forEach(function(a){subByInci[a]=s})});
   var cap=tdb.capsule?{rx:rx(tdb.capsule.pat),d:tdb.capsule}:null;
-  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
+  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,mphrases:mphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
 }
 /* Temizlik eş anlamlıları (kaynak/temizlik_esanlamlilar.tsv) kozmetik dizinindeki INCI kayıtlarına bağlanır; ilk kullanımda kurulur */
 export function tAliasMap(T,K){
@@ -117,12 +117,6 @@ export var TBANDS=[
   ["b30",/%\s?30\s(?:ve\s|veya\s)?(?:uzeri|ustu|fazla)|(?:>|≥)\s?%?\s?30|30\s?%\s(?:and|or)\s(?:over|more|above)|%\s?30\s?\+/g],
   ["b5",/%\s?5\s(?:ten\s|den\s|in\s)?(?:az|asagi|altinda|dusuk)|(?:<|≤)\s?%?\s?5(?![0-9])|less than 5\s?%|(?:^|[^0-9])5\s?%\s(?:ten\s|den\s)?az/g]
 ];
-/* N'de s..e aralığındaki sabun bir yıkama talimatının parçası mı. Sabunla çekimli fiil arasında yalnızca talimat sözcükleri olabilir:
-   "bol sabun ve su ile yıkayın", "sabun ve ılık su ile temizleyin" (fiil arkada); "wash (off) with plenty of soap", "rinse with water and soap" (fiil önde).
-   Ad biçimleri (yıkama deterjanı, washing, dishwashing, rinse aid) ve araya giren madde adları talimat sayılmaz (bozma turu, 21.10.2026) */
-var TYIK_TR=/^(?:\s(?:ve|ile|bol|ilik|sicak|soguk|akan|su|suyla|iyice)){0,4}\s(?:yi(?:-\s?)?kayin|durulayin|temizleyin|yikanmali)(?:iz|dir)?(?![a-z])/;
-var TYIK_EN=/(?:^|[^a-z])(?:wash|rinse|clean)(?:\s(?:off|with|plenty|of|and|water|warm|lukewarm|cold|running|mild|skin|hands|the|affected|area|thoroughly|gently|immediately))*\s$/;
-export function tYikama(N,s,e){return TYIK_TR.test(N.slice(e))||TYIK_EN.test(N.slice(Math.max(0,s-120),s))}
 export function tGroups(N,T){
   var bands=[],hits=[],m;
   TBANDS.forEach(function(b){b[1].lastIndex=0;while((m=b[1].exec(N))){var s=m.index+(/^[^%<>≤≥0-9l]/.test(m[0])?1:0);if(!bands.some(function(x){return s<x.e&&x.s<m.index+m[0].length}))bands.push({b:b[0],s:s,e:m.index+m[0].length})}});
@@ -131,9 +125,6 @@ export function tGroups(N,T){
     var s=m.index+(/^[^a-z]/.test(m[0])?1:0),e=m.index+m[0].length,x=/^\s(?:madde(?:ler|leri|si)?|surfactants?)(?![a-z])/.exec(N.slice(e));
     if(x)e+=x[0].length;
     if(G.g.id==="koruyucu"&&/(?:goz|yuz)\s$/.test(N.slice(Math.max(0,s-5),s)))continue;
-    // Yıkama talimatı (başlıksız ya da veride olmayan yazımıyla P302+P352): "bol sabun ve su(yla)", "su ve sabun ile", "plenty of soap and water".
-    // İçerik listesindeki "su ve sabun", "soap and water softener" grup kalır (tYikama)
-    if(G.g.id==="sabun"&&tYikama(N,s,e))continue;
     hits.push({id:G.g.id,g:G.g,s:s,e:e})}})});
   hits.sort(function(a,b){return a.s-b.s});
   hits=hits.filter(function(h,i){return !hits.some(function(o,j){return j!==i&&o.s<=h.s&&o.e>=h.e&&(o.e-o.s)>(h.e-h.s)})});
@@ -201,7 +192,8 @@ export function analyzeT(text,T,K){
   hzP.forEach(function(p){p.codes.forEach(function(c){add(c,p.d?"benzer":"metin")})});
   var hazards=order.map(function(c){return hz[c]});
   // İçerik grupları tanınan tehlike/önlem ifadelerinin metninde aranmaz: P302+P352'nin 2013 yazımı "Bol sabun ve su ile yıkayın" sabun grubu değildir
-  var groups=tGroups(tPrep(tMaske(text,hzP.hepsi.concat(pP.hepsi))),T);
+  // Resmi olmayan başlıksız yazımlar ("Bol sabun ve su ile yıkayın.", veride `maske`) yalnızca maskelenir, ifade olarak listelenmez
+  var groups=tGroups(tPrep(tMaske(text,hzP.hepsi.concat(pP.hepsi,tPhrases(text,T,T.mphrases,true).hepsi))),T);
   var subs=[],seenS={};
   function addSub(s,how){if(seenS[s.id])return;seenS[s.id]=1;subs.push({s:s,how:how})}
   T.subs.forEach(function(S){S.rx.some(function(r){r.lastIndex=0;return r.test(N)})&&addSub(S.s,"isim")});
