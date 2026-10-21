@@ -41,7 +41,7 @@ def main():
             for i in ids:
                 # alt türü listede olan ana kod da listede sayılır (E150 → E150a…; E101 (i))
                 var = i in liste or any(x.startswith(i) and not x[len(i):len(i) + 1].isdigit() for x in liste)
-                d = "izinli" if var else kt["listede_yoksa"]
+                d = "izinli" if var else (kt["listede_yoksa"] if by[i].get("eu_status") != "not_an_additive_in_eu" else None)
                 if d:
                     kayit[i] = [d]
         if "tablo" in kt:
@@ -52,7 +52,7 @@ def main():
                 en_, tr_ = (r[3] if len(r) > 3 else "").strip(), (r[4] if len(r) > 4 else "").strip()
                 kayit[r[0]] = [r[1], "", {"tr": tr_, "en": en_} if tr_ or en_ else ""]
         for i, (d, n_tr, n_en) in kt.get("istisna", {}).items():
-            kayit[i] = [d, "", {"tr": n_tr, "en": n_en}]
+            kayit[i] = [d, "", {"tr": n_tr, "en": n_en} if n_tr or n_en else ""]
         if kt.get("ad_not") == "e_kodlari":
             for i, v in kayit.items():
                 x = by[i]
@@ -71,6 +71,11 @@ def main():
     with open(CIKTI, "w", encoding="utf-8") as f:
         json.dump(veri, f, ensure_ascii=False, separators=(",", ":"))
         f.write("\n")
+    # Arayüz özellikleri (oz) kodla birlikte gelen küçük üretilmiş modülde de durur: data/ulke.json gelmese ya da geç gelse de
+    # ülkeye özgü kartlar (zehir hattı, marka listesi) kaybolmaz (B-05 bozma turu). Elle düzenlenmez.
+    with open(os.path.join(HERE, "js", "ulke_oz.js"), "w", encoding="utf-8") as f:
+        f.write("/* gen_ulke.py ile kaynak/ulke/ulkeler.json'dan üretilir; elle düzenlenmez. Ülkelerin arayüz özellikleri (B-05). */\n")
+        f.write("export var ULKE_OZ=" + json.dumps({c: v["oz"] for c, v in u.items()}, ensure_ascii=False, sort_keys=True) + ";\n")
     print("data/ulke.json:", ", ".join("%s %d katkı" % (c, len(v["k"])) for c, v in u.items()))
 
 

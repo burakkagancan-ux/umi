@@ -33,16 +33,17 @@ E160a	izinli	73.95	beta-Carotene
 E160b	izinli	73.30	Annatto extract	
 E160c	izinli	73.340	Paprika (73.340), paprika oleoresin (73.345)	
 E160d	izinli	73.585	Tomato lycopene extract; tomato lycopene concentrate	
-E160e	izinli	73.90	beta-Apo-8'-carotenal	
+E160e	izinli	73.90	beta-Apo-8'-carotenal: max 15 mg per pound of solid or semisolid food or per pint of liquid food	En çok 15 mg / pound (katı) ya da pint (sıvı)
 E160f	izinli_degil		Ethyl ester of beta-apo-8'-carotenoic acid: not listed	İzinli listede yok
 E161b	izinli_degil	73.295	Lutein: tagetes meal and extract (73.295) are listed only for chicken feed	Lutein: kadife çiçeği unu ve özütü (73.295) yalnızca tavuk yeminde izinli
-E161g	izinli	73.75	Canthaxanthin	
+E161g	izinli	73.75	Canthaxanthin: max 30 mg per pound of solid or semisolid food or per pint of liquid food	En çok 30 mg / pound (katı) ya da pint (sıvı)
 E162	izinli	73.40	Dehydrated beets (beet powder)	
 E163	izinli	73.169	Grape color extract (73.169, non-beverage food), grape skin extract (73.170), fruit and vegetable juice (73.250, 73.260)	
-E170	izinli	73.70	Calcium carbonate	
+E170	kisitli	73.70	Calcium carbonate: dietary supplement tablets and capsules, soft and hard candies and mints, inks on the surface of chewing gum	Kalsiyum karbonat: takviye tablet ve kapsülleri, sert ve yumuşak şeker, nane şekeri, sakız yüzeyindeki mürekkep
 E171	izinli	73.575	Titanium dioxide: foods generally, max 1% by weight	Titanyum dioksit: gıdalarda genel olarak, en çok %1 (ağırlıkça)
-E172	kisitli	73.200	Synthetic iron oxide: sausage casings (max 0.10%); soft and hard candy, mints, chewing gum	Sentetik demir oksit: sucuk kılıfında (en çok %0,10); sert ve yumuşak şeker, nane şekeri, sakızda
+E172	kisitli	73.200	Synthetic iron oxide: sausage casings (max 0.10%); soft and hard candy, mints, chewing gum; dietary supplements	Sentetik demir oksit: sucuk kılıfında (en çok %0,10); sert ve yumuşak şeker, nane şekeri, sakızda; besin takviyelerinde
 E173	izinli_degil		Aluminium: not listed for food	Gıdada izinli listede yok
 E174	izinli_degil		Silver: not listed for food	Gıdada izinli listede yok
+E180	izinli_degil		Litholrubine BK: not listed	İzinli listede yok
 E175	izinli_degil		Gold: not listed for food	Gıdada izinli listede yok
 E952	izinli_degil	21 CFR 189.135	Cyclamate and its salts: prohibited from use in human food (1970)	Siklamat ve tuzları: gıdada kullanımı yasak (1970)
