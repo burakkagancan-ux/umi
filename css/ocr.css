@@ -322,3 +322,8 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 [data-tema="koyu"] .sheet.yuzen .sheet-pn{border:1px solid var(--line)}
 [data-tema="koyu"] label.camera .camic{background:rgba(13,20,51,.10)}
 [data-tema="koyu"] label.camera .cambtn{background:var(--onok)}
+/* Yöntem sayfasına bağlantı (E-01): sonuç kartlarının altında ve Profilim › Hakkında listesinde (öteki satırlarla aynı boy) */
+.yontem-bag{display:inline-block;margin-top:8px;font-size:14px;color:var(--ok);min-height:24px}
+.plist>a.pbag{display:flex;align-items:center;min-height:58px;padding:0 16px;background:var(--card);color:var(--ink);font-size:16px;font-weight:600;text-decoration:none}
+.plist>a.pbag .ok{margin-inline-start:auto;color:var(--mute);font-size:20px}
+.yontem-bag:focus-visible,.plist>a.pbag:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
