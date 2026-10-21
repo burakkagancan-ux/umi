@@ -20,4 +20,5 @@ import * as profil_kart from "./profil_kart.js";
 import * as olcum from "./olcum.js";
 import * as ulkeK from "./ulke.js";
 import * as aylik from "./aylik.js";
-kopru(ceviri, ortak, gida, kozmetik, eslesme, degerlendirme, temizlik, karsilastir_ayar, karsilastir, paylas_ayar, paylas, kayit, besin, barkod, topluluk, rozet, profil_kart, olcum, ulkeK, aylik);
+import * as foto from "./foto.js";
+kopru(ceviri, ortak, gida, kozmetik, eslesme, degerlendirme, temizlik, karsilastir_ayar, karsilastir, paylas_ayar, paylas, kayit, besin, barkod, topluluk, rozet, profil_kart, olcum, ulkeK, foto, aylik);

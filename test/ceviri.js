@@ -114,7 +114,8 @@ const ISTISNA={
   'js/kozmetik.js':['ingrédients'],   // etiket başlığı sözcükleri (düzenli ifade dışındaki dizge)
   'js/arayuz_temizlik.js':['Saç boyası','Saç bakımı','Cilt bakımı','Ağız bakımı','Tırnak bakımı','Bronzlaştırıcı','Kepek önleyici'],   // TFUNC_SKIP: kozmetik_inci.json işlev değerleri
   'js/paylas_ayar.js':['Umi'],   // uygulamanın adı (marka; çevrilmez)
-  'js/dil.js':['Türkçe'],   // diller.json yüklenemezse yedek: dilin kendi adı
+  'js/dil.js':['Türkçe'],
+  'js/foto.js':['içindekiler','i̇çindekiler','bileşenler','összetevők','üretici','imalatçı','ithalatçı','üretim','dağıtıcı','tüketici','saklayınız','menşei','hazırlanışı','hazırlama','kullanım'],   // etiket başlığı ve bölüm sözcükleri (etiket dilinde aranır; arayüz metni değil)   // diller.json yüklenemezse yedek: dilin kendi adı
 };
 for(const [f,src] of Object.entries(kaynak)){
   if(f==='js/ansiklopedi.js')continue;   // ansValidate: veri doğrulama hata iletileri (üreteç ve test için; kullanıcıya görünmez)
