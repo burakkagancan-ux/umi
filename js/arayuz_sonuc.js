@@ -221,6 +221,7 @@ function render(res,br){
     var seen={};B.forEach(function(r){var it=IDX.byId[r.ids[0]];if(seen[it.id])return;seen[it.id]=1;var l=el("div","ln");l.appendChild(el("b",null,itAd(it)));if(it.note){var rn=veriMetin(it.note,"b."+it.id+".not");l.appendChild(document.createTextNode(": "+rn.s));vIsaret(l,rn)}bd.appendChild(l)});
   }
   box.appendChild(el("div","how it",t("gida.alt_not")));
+  box.appendChild(yontemBag());
   payBar(box,{mode:"gida",text:$("metin").value});
 }
 /* Analiz; ardından barkod kaynağı/katkı kartı (js/arayuz_barkod.js) */
@@ -247,6 +248,6 @@ function runIc(){
   else if(looksCosmetic(tx))sonucUst(suggestCard());
 }
 // Metin elle düzeltildiğinde sonuç kendiliğinden güncellenir (yazmayı bitirmesi beklenir)
-var RUN_T=null;$("metin").addEventListener("input",function(){HMOD=null;clearTimeout(RUN_T);RUN_T=setTimeout(run,600)});
+var RUN_T=null;$("metin").addEventListener("input",function(){HMOD=null;HGOR=null;clearTimeout(RUN_T);RUN_T=setTimeout(run,600)});
 /* "Örnek metin dene": etiket metni örnekleri dil dosyasında (ornek.gida/koz/tem); her dil kendi pazarındaki gibi bir etiket yazabilir */
 $("ornek").onclick=function(){HSCAN=HOCR=true;fotoTemizle();$("metin").value=t("ornek."+(MODE==="koz"?"koz":MODE==="tem"?"tem":"gida"));run()};

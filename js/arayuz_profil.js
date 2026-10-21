@@ -89,6 +89,7 @@ function buildProfile(){
   SORUMLULUK.forEach(function(k){sr.appendChild(el("p",null,t(k)))});hk.appendChild(sr);
   var gk=document.createElement("details");gk.className="pdrop gzp";gk.appendChild(el("summary","pt",t("gizlilik.baslik")));
   var gl=document.createElement("ul");["gizlilik.1","gizlilik.2","gizlilik.3","gizlilik.4","gizlilik.5","gizlilik.6"].forEach(function(k){gl.appendChild(el("li",null,t(k)))});gk.appendChild(gl);hk.appendChild(gk);
+  var yb=yontemBag("pbag","yontem.baslik"),yo=el("span","ok","›");yo.setAttribute("aria-hidden","true");yb.appendChild(yo);hk.appendChild(yb);   // E-01: renk ölçütleri, kaynak sırası, neyi yapmadığımız
   box.appendChild(el("p","mut pcihaz",t("profil.cihazda")));
   updProfSum();
 }

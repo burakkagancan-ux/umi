@@ -1,9 +1,15 @@
-/* Arayüz: aynı türden (gıda, kozmetik ya da temizlik) iki ürünü karşılaştırma ve tarama geçmişi (localStorage "taramalar"). Saf mantık js/karsilastir.js, ayarlar js/karsilastir_ayar.js. */
+/* Arayüz: aynı türden (gıda, kozmetik ya da temizlik) iki ürünü karşılaştırma ve tarama geçmişi (localStorage "taramalar" {id,t,mode,name,text,oz}; Etiket Oku'daki Son Okutulanlar da bunu gösterir, js/arayuz_son.js). Saf mantık js/karsilastir.js, ayarlar js/karsilastir_ayar.js. */
 var HCUR=null,HSCAN=true,HOCR=false,CMP_IDS=null;   // HCUR: ekrandaki taramanın kaydı; HSCAN: sonraki analiz yeni kayıt açar; HOCR: metin fotoğraftan/örnekten geldi
 // Mod değişince kutudaki metin yeni modda yeniden analiz edilir. HMOD: "gor" sekmeyle geçiş (geçmişe yazılmaz, tarama kendi türünde kalır),
 // "tasi" öneri kartıyla geçiş ("Kozmetik olarak analiz et": ekrandaki tarama yeni türe taşınır). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır.
 var HMOD=null;
-function histLoad(){return depoDizi("taramalar")}
+/* HGOR: ekranda yeniden gösterilen kayıt {mode, text} (Son Okutulanlar, kayıtlı ürün, sekmeyle tür değişimi). Aynı tür + metin analizleri geçmişe ve aylık özete
+   yazılmaz; yalnızca ilk histSave'i değil, veri yüklenince gelen ikinci run'ı da kapsar (bozma turu 21.10.2026: HMOD tek kullanımlıktı, bekleyen
+   loadK().then(run) "elle düzeltme" sayılıp kaydı başa taşıyor, aylık özete yazıyordu). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır. */
+var HGOR=null;
+/* Geçersiz kayıtlar (bozuk veri, eski sürüm) okurken atılır: tek bozuk kayıt açılışı ve geçmişi kullanan her işi durdurmasın (bozma turu 21.10.2026) */
+function histLoad(){return depoDizi("taramalar").filter(histGecerli)}
+function histGecerli(x){return !!x&&typeof x==="object"&&typeof x.id==="string"&&typeof x.text==="string"&&typeof x.t==="number"&&isFinite(x.t)&&(x.name==null||typeof x.name==="string")}
 function histStore(a){depoYaz("taramalar",a)}
 /* Kayıtlı ürünler de karşılaştırılabilir: kimlik geçmişte yoksa kayıtlarda aranır (js/arayuz_kayit.js) */
 function histGet(id){return histLoad().filter(function(x){return x.id===id})[0]||(typeof kayitGet==="function"?kayitGet(id):null)}
@@ -16,19 +22,31 @@ function histSave(text,mode){
   var tx=(text||"").trim(),a=histLoad(),scan=HSCAN,hm=HMOD;
   if(!tx)return;
   HSCAN=false;HOCR=false;HMOD=null;
-  if(!scan&&hm==="gor")return;
+  if(scan)HGOR=null;
+  if(!scan&&hm==="gor"){HGOR={mode:mode,text:tx};return}
+  if(!scan&&HGOR&&HGOR.mode===mode&&HGOR.text===tx)return;
   if(!scan&&hm==="tasi"&&HCUR){   // ekrandaki tarama yeni türe taşınır; o türde aynı metin varsa eski kayıt silinir
     var mv=a.filter(function(x){return x.id===HCUR})[0],dup=a.filter(function(x){return x.mode===mode&&x.text===tx})[0];
-    if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);return}
-    if(mv){mv.mode=mode;mv.text=tx;histStore(a);return}
+    if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);
+      if(typeof aylikSilYaz==="function")aylikSilYaz(mv.id);histAylik(dup.id,tx,histUrun(mode,tx));return}
+    if(mv){var Pm=histUrun(mode,tx);mv.mode=mode;mv.text=tx;mv.oz=Pm?kayitOzet(Pm):null;histStore(a);histAylik(mv.id,tx,Pm);return}
   }
   var same=a.filter(function(x){return x.mode===mode&&x.text===tx})[0],cur=!scan&&HCUR?a.filter(function(x){return x.id===HCUR&&x.mode===mode})[0]:null,e;
   if(same)e=same;
   else if(cur){e=cur;e.text=tx}
   else e={id:"h"+Date.now(),t:Date.now(),mode:mode,name:histName(a),text:tx};
+  var P=histUrun(mode,tx);
+  e.oz=P?kayitOzet(P):e.oz||null;
   a=histAdd(a.filter(function(x){return x.id!==e.id}),e,KARS_AYAR.gecmisBoyut);
   histStore(a);HCUR=e.id;
+  histAylik(e.id,tx,P);
 }
+/* Ekrandaki ürünün modeli (js/degerlendirme.js); oz: uyarı/dikkat özeti (js/kayit.js kayitOzet; Son Okutulanlar listesi veri yüklemeden gösterir).
+   Veri yüklü değilse null */
+function histUrun(mode,tx){try{return karsReady(mode)?karsProduct({mode:mode,text:tx,name:""}):null}catch(e){return null}}
+/* Aylık Özetim (U-09, js/arayuz_aylik.js): "Örnek metin dene"nin metni (yüklü her dilde, değiştirilmemiş) sayılmaz; değiştirilince kullanıcının metni sayılır */
+function histAylik(id,tx,P){if(typeof aylikTaramaYaz==="function"&&!histOrnek(tx))aylikTaramaYaz(id,P)}
+function histOrnek(tx){for(var k in DIL.sozluk){var s=DIL.sozluk[k]||{};if(["gida","koz","tem"].some(function(m){return (s["ornek."+m]||"").trim()===tx}))return true}return false}
 /* Türe göre karşılaştırma özeti; liste yüklenmemişse null */
 var KARS_TUR={gida:"gida",koz:"koz",tem:"tem"};   // çeviri anahtarı ekleri (kars.az_*, kars.yukleniyor_*, kars.baslik_*)
 function karsReady(mode){return degHazir(mode,degBaglam())}
@@ -60,7 +78,7 @@ function karsOpen(pre,ret){
   go.onclick=function(){if(sel.length!==2)return;var p=sel.slice();closeSheet();showCompare(p[0],p[1])};
   body.appendChild(go);
   var cl=el("button","alt kclr",t("kars.temizle"));cl.type="button";
-  cl.onclick=function(){histStore([]);HCUR=null;closeSheet();ST.textContent=t("kars.silindi")};
+  cl.onclick=function(){histStore([]);HCUR=null;closeSheet();ST.textContent=t("kars.silindi");if(typeof sonCiz==="function")sonCiz()};
   body.appendChild(cl);
   body.appendChild(el("div","how",t("kars.gizlilik",{n:KARS_AYAR.gecmisBoyut})));
   upd();
