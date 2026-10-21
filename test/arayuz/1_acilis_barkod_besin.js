@@ -319,6 +319,46 @@ module.exports=async({br,B,opt,ok,server})=>{
     await sample(p,'koz');ok(!await p.$('#sonuc .besin'),'kozmetikte besin kartı yok');
     await p.click('#m-gida');
   }
+  // 1e) A-08 bozma turu (21.10.2026): ürün tipi barkod kategorisinden gelince (1) içeriksiz barkod + fotoğrafta ilk çizimde, (2) barkod
+  // beklerken sayfa yeniden yüklenince, (3) elle düzeltilip kaydedilen ürün yeniden açılınca renk geri gelmez
+  {
+    const kahve='8690515514066',vanilin='8690629252106';   // OFF: Jacobs (en:coffees, içerik yok), Şekerli Vanilin (en:spices, içerikli)
+    const TABLO='Besin değerleri 100 g için\nEnerji 1490 kJ / 357 kcal\nYağ 0,5 g\nDoymuş yağ 0,2 g\nKarbonhidrat 80 g\nŞekerler 3 g\nProtein 8 g\nTuz 0,1 g';
+    const kart=()=>p.evaluate(()=>{const k=document.querySelector('#sonuc .res.besin');return k?k.innerText:''});
+    const duzeyli=t=>/\n(Düşük|Orta|Yüksek)(\n|$)/.test(t);
+    await p.route(/workers\.dev\/(urun|off)\/\d+$/,r=>r.fulfill({status:200,contentType:'application/json',body:'{"bulundu":false}'}));
+    await p.evaluate(()=>{BARKOD=null;fotoTemizle();document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
+    await p.evaluate(k=>barkodIsle(k),kahve);
+    await p.waitForFunction(()=>BARKOD&&BARKOD.kat&&BARKOD.kat.length,null,{timeout:8000}).catch(()=>{});
+    await p.evaluate(m=>{document.getElementById('metin').value=m;HSCAN=HOCR=true;barkodFoto();run()},'Jacobs Monarch\n'+TABLO);
+    let k1=await kart();
+    ok(/kuru ürün/.test(k1)&&!duzeyli(k1),'içeriksiz barkod (kategori kahve) + fotoğraf: ilk çizimde istisna, düzey yok: '+k1.replace(/\n/g,' ⏎ '));
+    await p.evaluate(()=>{BARKOD=null;fotoTemizle();document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
+    await p.evaluate(k=>barkodIsle(k),kahve);await p.waitForFunction(()=>BARKOD&&BARKOD.kat&&BARKOD.kat.length,null,{timeout:8000}).catch(()=>{});
+    await p.reload();await p.waitForFunction(()=>typeof BARKOD!=='undefined'&&BARKOD,null,{timeout:8000}).catch(()=>{});
+    ok(await p.evaluate(()=>!!(BARKOD&&BARKOD.kat&&BARKOD.kat.indexOf('en:coffees')>=0)),'barkod beklerken yeniden yüklenince kategori korunur');
+    await p.waitForFunction(()=>typeof IDX!=='undefined'&&IDX&&typeof run==='function',null,{timeout:15000}).catch(()=>{});
+    await p.evaluate(m=>{document.getElementById('metin').value=m;HSCAN=HOCR=true;barkodFoto();run()},'Jacobs Monarch\n'+TABLO);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .res.besin'),null,{timeout:8000}).catch(()=>{});
+    k1=await kart();ok(/kuru ürün/.test(k1)&&!duzeyli(k1),'yeniden yüklemeden sonra fotoğraf: istisna görünür: '+k1.replace(/\n/g,' ⏎ '));
+    // Elle düzeltilip kaydedilen istisna ürünü: yeniden açılınca düzey yok, karşılaştırma/paylaşım özeti yok
+    await p.evaluate(()=>{BARKOD=null;fotoTemizle();document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
+    await p.evaluate(k=>barkodIsle(k),vanilin);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .res.besin'),null,{timeout:8000}).catch(()=>{});
+    const tx=(await p.inputValue('#metin')).trim();
+    ok(/renk gösterilmez/.test(await kart()),'vanilin barkodu: istisna (kategori)');
+    await p.evaluate(t=>{besinElleKaydet(t,{b:{kcal:385,yag:0,doymus:0,karb:96,seker:96,lif:0,protein:0,tuz:0},lt:{},birim:'g'});run()},tx);
+    await p.waitForSelector('#sonuc .resbar .kayitb');await p.click('#sonuc .resbar .kayitb');
+    await p.fill('#sheet .kform input','Vanilin');await p.click('#sheet .kform button:not(.alt)');
+    await p.reload();await p.waitForFunction(()=>typeof BESIN_SOZ!=='undefined'&&typeof run==='function'&&typeof IDX!=='undefined'&&IDX,null,{timeout:15000}).catch(()=>{});
+    await p.evaluate(t=>{BARKOD=null;document.getElementById('metin').value=t;HSCAN=HOCR=true;run()},tx);
+    await p.waitForFunction(()=>document.querySelector('#sonuc .res.besin'),null,{timeout:8000}).catch(()=>{});
+    k1=await kart();
+    ok(/renk gösterilmez/.test(k1)&&!duzeyli(k1),'elle düzeltilip kaydedilen istisna ürünü yeniden açılınca düzey yok: '+k1.replace(/\n/g,' ⏎ '));
+    ok(await p.evaluate(t=>besinOzet(besinKaynak(t).k)===null,tx),'kayıtlı istisna ürününde karşılaştırma/paylaşım özeti yok');
+    await p.unroute(/workers\.dev\/(urun|off)\/\d+$/);
+    await p.evaluate(()=>{BARKOD=null;fotoTemizle();localStorage.removeItem('besin_elle');localStorage.removeItem('kayitli');document.getElementById('metin').value='';document.getElementById('sonuc').textContent=''});
+  }
   ok(!errs.length,'1. grup konsol hatası: '+errs.join(' | '));
   await ctx.close();
 };

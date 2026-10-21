@@ -5,10 +5,12 @@ Kaynak: kaynak/off/urunler.json (off_al.py; Open Food Facts, Open Beauty Facts, 
 Lisans: Open Database License (ODbL) 1.0. Atıf uygulamada her gösterimde yapılır. Bu dosya kullanıcı katkısı veritabanımızla
 (Worker D1) birleştirilmez.
 
-Biçim (küçük olsun diye dizi): {"meta": {...}, "u": {"<barkod>": [db, ad, marka, son_degisiklik_sn, {dil: içerik metni}, besin?]}}
+Biçim (küçük olsun diye dizi): {"meta": {...}, "u": {"<barkod>": [db, ad, marka, son_degisiklik_sn, {dil: içerik metni}, besin?, kat?]}}
 db: food | beauty | products (uygulamada gıda | kozmetik | temizlik). İçerik metni yoksa {} (ürün adı bilinir, içerik için fotoğraf istenir).
 besin (A-02, yalnızca değeri olan üründe): [kcal, yag, doymus, karb, seker, lif, protein, tuz, birim], 100 g ya da 100 ml başına;
 değer yoksa null, birim "g" | "ml" | "" (bilinmiyor). Tutarlılık uygulamada denetlenir (js/besin.js besinDenetle).
+kat (A-08): OFF kategori etiketlerinden yalnızca kaynak/besin_istisna.json'da geçenler (renk gösterilmeyen ürün tipi; js/besin.js
+besinIstisnaBul). Yalnızca bir tipin etiketi varsa yazılır (hariç etiketler de onunla); besin yoksa 6. öğe null olur.
 Çalıştır: python3 gen_barkod.py
 """
 import json, os
@@ -16,12 +18,17 @@ import json, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 BESIN_ALAN = ["kcal", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz"]   # js/besin.js BESIN_ALAN ile aynı sıra
 KAYNAK = os.path.join(HERE, "kaynak", "off", "urunler.json")
+ISTISNA = os.path.join(HERE, "kaynak", "besin_istisna.json")
 CIKTI = os.path.join(HERE, "data", "barkod_off.json")
 
 
 def main():
     with open(KAYNAK, encoding="utf-8") as f:
         k = json.load(f)
+    with open(ISTISNA, encoding="utf-8") as f:
+        tipler = json.load(f)["tip"]
+    olumlu = {e for t in tipler for e in t.get("etiket", [])}
+    gerekli = olumlu | {e for t in tipler for e in t.get("haric_etiket", [])}
     u = {}
     for p in k["urunler"]:
         kod = str(p["kod"]).strip()
@@ -32,6 +39,11 @@ def main():
         b = p.get("besin")
         if b and any(b.get(k) is not None for k in BESIN_ALAN):
             u[kod].append([b.get(k) for k in BESIN_ALAN] + [b.get("birim") or ""])
+        kat = sorted(e for e in p.get("kat", []) if e in gerekli)
+        if any(e in olumlu for e in kat):
+            if len(u[kod]) == 5:
+                u[kod].append(None)
+            u[kod].append(kat)
     veri = {
         "meta": {
             "surum": k["surum"],
@@ -40,7 +52,7 @@ def main():
             "atif": k["atif"],
             "sayi": len(u),
             "icerikli": sum(1 for v in u.values() if v[4]),
-            "besinli": sum(1 for v in u.values() if len(v) > 5),
+            "besinli": sum(1 for v in u.values() if len(v) > 5 and v[5] is not None),
             "besin_alan": BESIN_ALAN + ["birim"],
             "aciklama": "Barkod -> [db, ad, marka, son değişiklik (sn), {dil: içerik metni}, besin?]; besin: besin_alan sırasıyla 100 g / 100 ml başına (Open Food Facts). gen_barkod.py ile kaynak/off/urunler.json'dan üretilir; elle düzenlenmez.",
         },

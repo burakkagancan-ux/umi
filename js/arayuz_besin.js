@@ -16,6 +16,21 @@ function besinElleYaz(a){return depoYaz("besin_elle",a)}
    Sıra: bu cihazda elle düzeltilen → kayıtlı üründe saklanan elle değerler (başka cihaz, yedek) → okunan metindeki tablo → barkoddan OFF
    → kayıtlı üründe saklanan diğer değerler (kayıt barkodsuz açıldığında OFF değerleri). kayitsiz: kayıtta saklananlar sayılmaz (kaydı yenilerken). */
 function besinKaynak(tx,kayitsiz){
+  var K=besinKaynakDeger(tx,kayitsiz);if(!K)return null;
+  // A-08: renk gösterilmeyen ürün tipi. Barkodun ekranındaki metinse OFF kategorisi ve ürün adı da kullanılır; bulunamazsa kayıtta saklanan tip
+  var bk=typeof barkodBesinBag==="function"?barkodBesinBag(tx):null,r=bk&&bk.r;
+  var T=besinIstisnaBul({kat:(r&&r.kat)||(bk&&bk.kat)||[],ad:r?barkodAd(r):(bk&&bk.ad)||"",metin:tx,birim:K.k.birim},BESIN_SOZ);
+  if(!T&&K.k.tip)T=besinIstisnaKimlik(K.k.tip);
+  if(!T&&!kayitsiz){var kb=besinKayitli(tx);if(kb&&kb.tip)T=besinIstisnaKimlik(kb.tip)}   // elle düzeltilen kayıtlı ürün: tip kayıtta
+  var k={};for(var a in K.k)k[a]=K.k[a];
+  if(T)k.tip=T.id;else delete k.tip;
+  K.k=k;K.istisna=T;return K;
+}
+function besinIstisnaKimlik(id){
+  var I=BESIN_SOZ&&BESIN_SOZ.istisna,x=I&&I.tip.filter(function(y){return y.id===id})[0];
+  return x?{id:x.id,not:x.not,kaynak:x.kaynak,madde:x.madde,yol:"kayit"}:null;
+}
+function besinKaynakDeger(tx,kayitsiz){
   var okunan=BESIN_SOZ?besinAyristir(tx,BESIN_SOZ):null;
   var e=besinElleBul(besinElleListe(),besinMetinAnahtar("gida",tx));
   if(e)return {k:{b:e.b,lt:e.lt||{},birim:e.birim,sorun:[],onay:true},kaynak:"elle",t:e.t,okunan:okunan};
@@ -30,12 +45,13 @@ function besinKayitli(tx){
   if(typeof kayitFind!=="function")return null;
   var k=kayitFind(kayitLoad(),"gida",tx);return k&&k.besin?besinKayitNorm(k.besin):null;
 }
-function besinKayittan(bs,okunan){return {k:{b:bs.b,lt:bs.lt,birim:bs.birim,sorun:bs.sorun,onay:bs.onay,por:bs.por||null},kaynak:bs.kaynak,t:bs.t,okunan:okunan,kayit:true}}
+function besinKayittan(bs,okunan){return {k:{b:bs.b,lt:bs.lt,birim:bs.birim,sorun:bs.sorun,onay:bs.onay,por:bs.por||null,tip:bs.tip||""},kaynak:bs.kaynak,t:bs.t,okunan:okunan,kayit:true}}
 /* Metin kayıtlı bir gıdaysa saklanan tabloyu ekrandaki kaynakla yeniler (elle düzeltme ya da düzeltmeyi geri alma sonrası) */
 function besinKayitYenile(tx){
   if(typeof kayitLoad!=="function")return;
   var a=kayitLoad(),k=kayitFind(a,"gida",tx);if(!k)return;
   var bs=besinKayitKopya(besinKaynak(tx,true));
+  if(bs&&!bs.tip&&k.besin&&k.besin.tip)bs.tip=k.besin.tip;   // ürün tipi değerlerden değil üründen gelir: elle düzeltmede kaybolmaz (A-08)
   if(bs)k.besin=bs;else if(k.besin&&k.besin.kaynak==="elle")delete k.besin;else return;
   kayitStore(a);
 }
@@ -72,6 +88,11 @@ function besinKart(tx){
     var row=el("div","row");
     ["g","ml"].forEach(function(b){var x=el("button","alt",t("besin.birim_"+b));x.type="button";x.onclick=function(){besinElleKaydet(tx,{b:K.k.b,lt:K.k.lt,birim:b});d.replaceWith(besinKart(tx))};row.appendChild(x)});
     d.appendChild(row);
+  }
+  if(K.istisna){   // A-08: renk gösterilmeyen ürün tipi, nedeni ve kaynağı
+    var I=K.istisna;
+    d.appendChild(el("div","ln bistisna",I.not==="kuru"?t("besin.istisna.kuru"):I.not==="bebek"?t("besin.istisna.bebek"):t("besin.istisna.genel",{tip:t("besin.tip."+I.id)})));
+    if(!I.not)d.appendChild(el("div","how",t("besin.istisna.kaynak")));
   }
   var eksik=G.satir.filter(function(s){return s.v==null}).map(function(s){return t("besin.alan."+s.alan)});
   if(eksik.length)d.appendChild(el("div","how",t("besin.eksik",{l:eksik.join(", ")})));

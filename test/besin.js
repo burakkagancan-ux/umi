@@ -2,7 +2,7 @@
 // etiket metninden tablo ayrıştırma (satır satır, hücre hücre, sütun sütun okunmuş OCR; porsiyon/%RI sütunu; diller; içerik listesiyle aynı metin).
 // Çalıştır: node test/besin.js
 const fs=require('fs'),path=require('path'),{execFileSync}=require('child_process');
-Object.assign(globalThis,require('./yukle.js'));global.B={besinPorNorm,besinPorsiyonPayi,besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet};
+Object.assign(globalThis,require('./yukle.js'));global.B={besinPorNorm,besinPorsiyonPayi,besinDuzey,besinGorunum,besinMetinAnahtar,besinElleEkle,besinElleBul,BESIN_ESIK,besinOff,besinBirim,besinDiziden,besinDenetle,besinAyristir,besinSozluk,besinNorm,besinParcala,barkodOffBul,barkodSec,BESIN_ALAN,besinKayitNorm,besinKayitKopya,besinOzet,besinIstisnaBul,besinIcerikOgeleri,barkodOffKayit};
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const veri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8'));
 const S=B.besinSozluk(veri);
@@ -72,7 +72,7 @@ ok(!B.barkodSec({urun},['tr']).besin,'OFF yoksa besin yok');
   ok(s2.besinDogrulandi===false&&B.barkodSec({off:{...r,besin:null},urun:{...top,besinDogrulandi:true}},['tr']).besinDogrulandi===true,'topluluk tablosunun doğrulanma durumu taşınır (O-26)');
 }
 const offVeri=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8'));
-const bes=Object.values(offVeri.u).filter(x=>x.length>5);
+const bes=Object.values(offVeri.u).filter(x=>x.length>5&&x[5]!==null);
 ok(!bes.length||j(offVeri.meta.besin_alan)===j([...B.BESIN_ALAN,'birim']),'barkod_off.json besin sırası js/besin.js ile aynı');
 ok(bes.every(x=>x[5].length===9&&['g','ml',''].includes(x[5][8])),'barkod_off.json besin dizileri 9 öğe');
 if(bes.length){
@@ -325,6 +325,59 @@ Potassium 450 mg 10 %`;
   r=bul('IMG_3954');ok(r&&r.sorun.includes('sutun_sira'),'adlar alt alta, değerler son satırda: şüpheli '+j(r&&r.sorun));
   r=ay('Enerji ve Besin Öğeleri 1 porsiyon için 100 g için\nYağ 4,3 g 17,2 g\nDoymuş yağ 0,4 g 1,7 g\nŞekerler 2,0 g 7,8 g\nTuz 0,4 g 1,6 g');
   ok(r&&r.sorun.includes('sutun_belirsiz')&&r.durum==='suphe','porsiyon gramı yoksa 100 g sütunu doğrulanamaz: şüpheli '+j(r&&r.sorun));
+}
+// 7) Renk gösterilmeyen ürün tipleri (A-08; kaynak/besin_istisna.json, AB 1169/2011 Ek V = TGK Etiketleme Ek-14, bebek AB 609/2013)
+{
+  const S=B.besinSozluk(JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','besin.json'),'utf8')));
+  const tip=(g)=>{const r=B.besinIstisnaBul(g,S);return r?r.id:null};
+  ok(S.istisna&&S.istisna.tip.length>=7,'data/besin.json istisna tipleri yüklü');
+  // İçerik listesinden: bütün öğeler o tipin adları (dolgu sözcükleri ve yüzdeler atılır)
+  [['İçindekiler: Kimyon, karabiber, pul biber.','baharat'],['İÇİNDEKİLER: KİMYON','baharat'],['Ingredients: ground cinnamon.','baharat'],
+   ['Ingredients: Cumin, black pepper, chilli flakes.','baharat'],['İçindekiler: Öğütülmüş karabiber (%100).','baharat'],
+   ['İÇİNDEKİLER: İyotlu tuz (potasyum iyodat).','tuz'],['İçindekiler: Tuz, topaklanmayı önleyici (E535).','tuz'],
+   ['İçindekiler: Üzüm sirkesi (asitlik %4).','sirke'],['İçindekiler: Elma sirkesi, su.','sirke'],
+   ['İçindekiler: Siyah çay.','cay'],['İçindekiler: Siyah çay, bergamot aroması.','cay'],['İçindekiler: %100 Arabica kahve.','kahve'],
+   ['İçindekiler: Tatlandırıcılar (sorbitol, ksilitol), sakız mayası, aroma.','sakiz'],['Ingredients: sweeteners, gum base, flavourings.','sakiz'],
+   ['6. aydan itibaren. İçindekiler: pirinç unu.','bebek'],['From 6 months. Ingredients: rice.','bebek'],['Devam formülü. İçindekiler: süt.','bebek'],
+   ['paprika','baharat'],['Siyah çay','cay'],   // barkoddaki içerik metni (başlıksız)
+   ['İçerik: Pul biber.','baharat'],['Malzemeler: kimyon, kekik.','baharat'],['İçindekiler: Kim-\nyon, karabiber.','baharat'],['İçindekiler: Sodyum klorür.','tuz'],
+   ['İçindekiler: Tuz, topaklanmayı önleyici (E 535).','tuz'],['İçindekiler: %100 Arabica kahve çekirdekleri.','kahve'],['İçindekiler: Yeşil çay, limon aroması.','cay']
+  ].forEach(([m,b])=>ok(tip({metin:m,birim:'g'})===b,'tip '+b+': '+m+' → '+tip({metin:m,birim:'g'})));
+  // Olumsuz: tip sayılmaz, bugünkü davranış (karışık içerik, başka bileşen, bal uyarısı, boş)
+  ['İçindekiler: Domates, şeker, sirke, tuz, baharat.','İçindekiler: Yer fıstığı, tuz.','İçindekiler: Su, kahve, şeker, süt tozu.',
+   'İçindekiler: Kahve, şeker.','Çiçek balı. 1 yaşından küçük bebeklere verilmemelidir.','Ingredients: Black pepper, salt.','İçindekiler: Soğan.',
+   'İçindekiler: Kimyon, 50 g','','İçindekiler: Su.','Ingredients: water, flavouring.','İçindekiler: Bebek bisküvisi değildir, buğday unu, şeker.','İçindekiler: Sakız tadında şeker, glikoz şurubu.',
+   // bozma turu (21.10.2026): sucuğun başlıksız metni ilk cümlesiyle baharat sayılıyordu; olumsuz bebek cümleleri; tuzda çeşni E kodu; oyuncak/bal ayı
+   'Baharat karışımı. Dana eti ve yağı.','Bebek maması olarak kullanılmaz. İçindekiler: peynir altı suyu tozu.','Not to be used as infant formula. Ingredients: whey.',
+   'Bebek maması yerine kullanılmaz.','36 aydan itibaren. Küçük parçalar içerir.','Bal 12 aydan itibaren tüketilebilir.','İçindekiler: Tuz, E621.'
+  ].forEach(m=>ok(tip({metin:m,birim:'g'})===null,'tip yok: '+m+' → '+tip({metin:m,birim:'g'})));
+  // Kategori (OFF): gerçek barkod kayıtları (data/barkod_off.json) ve hariç etiket / adda hariç sözcük / sıvı
+  const U=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8')).u;
+  const kayit=k=>{const r=B.barkodOffKayit(k,U[k]);const b=r&&r.besin;return {kat:r?r.kat:[],ad:r?r.ad:'',metin:r?Object.values(r.metin)[0]||'':'',birim:b?b.birim:''}};
+  [['8699118059905','baharat'],['8697447040519','kahve'],['8682287820094','kahve'],['8690105000436','cay'],['4009900531221','sakiz'],['8690770322215','maya']]
+    .forEach(([k,b])=>ok(U[k]&&tip(kayit(k))===b,'gerçek barkod '+k+' ('+(U[k]&&U[k][1])+') → '+b+': '+tip(kayit(k))));
+  [['8680181084857','sucuk (içerik metni "Baharat karışımı. Dana eti ve yağı.")'],['8691573007194','salça (OFF\'ta baharat kategorisinde, adda "salçası")'],['8693440010849','soğuk kahve (adda "soğuk")'],['8690508601841','ketçap']]
+    .forEach(([k,n])=>ok(U[k]&&tip(kayit(k))===null,'gerçek barkod '+k+' '+n+': tip yok → '+tip(kayit(k))));
+  ok(tip({kat:['en:coffees','en:coffee-drinks'],ad:'Kahve'})===null,'hariç etiket (kahve içeceği) tipi kaldırır');
+  ok(tip({kat:['en:teas'],ad:'Çay',birim:'ml'})===null&&tip({kat:['en:teas'],ad:'Çay',birim:'g'})==='cay','100 ml değerinde (içecek) kuru çay notu yok');
+  ok(tip({kat:['en:teas'],ad:'Çay',birim:''})===null&&tip({metin:'İçindekiler: Siyah çay.'})===null,'birim bilinmiyorsa kuru çay/kahve tipi yok: önce birim sorulur (bozma turu)');
+  [['en:spices','Baharatlı Ketçap'],['en:spices','Domates Çorbası'],['en:spices','Tavuk Bulyon'],['en:spices','Baharatlı Cips'],['en:coffees','Ice Coffee'],['en:coffees','Coffee Creamer'],
+   ['en:teas','Peach Tea Drink'],['en:teas','Granül Çay Limonlu']].forEach(([k,a])=>ok(tip({kat:[k],ad:a,birim:'g'})===null,'kategoride hariç ad: '+a+' → '+tip({kat:[k],ad:a,birim:'g'})));
+  ok(tip({kat:['en:coffees'],metin:'Kahve, şeker'})===null,'kategori kahve ama içerikte şeker: tip yok (Ek V 7-8: başka bileşen yok)');
+  ok(tip({kat:['en:herbal-teas'],ad:'Bebek Rezene Çayı',metin:'4. aydan itibaren'})==='bebek','bebek işareti çay kategorisinden önce gelir');
+  // Gösterim: tip varsa düzey yok, renk yok, birim sorulmaz; özet (karşılaştırma, paylaşım kartı) yok; kayıtla taşınır
+  const k={b:{kcal:330,yag:15,doymus:2,karb:40,seker:8,lif:10,protein:12,tuz:0.1},lt:{},birim:'g',sorun:[]};
+  let G=B.besinGorunum({...k,tip:'baharat'});
+  ok(G.renk===false&&G.tip==='baharat'&&G.satir.every(s=>s.duzey===null)&&G.satir.find(s=>s.alan==='yag').v===15,'tip: değerler kalır, düzey yok '+j(G.satir));
+  ok(B.besinGorunum(k).renk===true&&!('tip' in B.besinGorunum(k)),'tip yoksa bugünkü davranış');
+  ok(B.besinGorunum({...k,birim:'',tip:'tuz'}).neden==='','tip varken birim sorulmaz');
+  ok(B.besinOzet({...k,tip:'baharat'})===null&&B.besinOzet(k)!==null,'tipte karşılaştırma ve paylaşım özeti yok');
+  const kk=B.besinKayitNorm({...k,kaynak:'etiket',tip:'cay'});ok(kk&&kk.tip==='cay','kayıt tipi taşır');
+  ok(!('tip' in B.besinKayitNorm({...k,tip:'<script>'}))&&!('tip' in B.besinKayitNorm({...k,tip:7})),'kayıtta geçersiz tip atılır');
+  ok(B.besinKayitKopya({k:{...k,tip:'sirke'},kaynak:'etiket',t:1}).tip==='sirke','ekrandaki tip kayda kopyalanır');
+  // Gerçek etiket seti (34 Türk etiketi): hiçbiri istisna tipi değil, renkler değişmez
+  const E=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_etiketler.json'),'utf8')).etiketler;
+  ok(E.every(e=>tip({metin:e.metin})===null),'gerçek etiket setinde istisna tipi yok: '+E.filter(e=>tip({metin:e.metin})).map(e=>e.id));
 }
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

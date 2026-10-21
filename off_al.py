@@ -10,6 +10,7 @@ Kaynaklar (lisans: Open Database License (ODbL) 1.0, içerik: Database Contents 
 
 Kullanım:
   python3 off_al.py            # indirir, kaynak/off/urunler.json yazar
+  python3 off_al.py --kategori # yalnızca gıda kategorilerini yeniler (A-08 ürün tipi; birkaç dakika)
 Sonra: python3 gen_barkod.py
 
 Kurallar: kendine özgü User-Agent; arama sorguları arasında 6,5 sn (OFF arama sınırı dakikada 10). 429, 401, 403 ve 503 yanıtında
@@ -35,7 +36,7 @@ DBS = [   # (kısa ad, alan adı)
     ("beauty", "world.openbeautyfacts.org"),
     ("products", "world.openproductsfacts.org"),
 ]
-ALAN = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity"
+ALAN = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity,categories_tags"
 DILLER = ["tr", "en", "de", "fr", "nl", "ar", "ru", "es", "it"]   # içerik metni alınan diller (ürünün kendi dili ayrıca)
 
 
@@ -78,7 +79,7 @@ def ara_food():
     out, sayfa = [], 1
     while True:
         q = urllib.parse.urlencode({"q": 'countries_tags:"en:turkey"', "page_size": 100, "page": sayfa,
-                                    "fields": "code,product_name,brands,lang,last_modified_t,ingredients_n,nutriments,quantity"})
+                                    "fields": "code,product_name,brands,lang,last_modified_t,ingredients_n,nutriments,quantity,categories_tags"})
         j = get("https://search.openfoodfacts.org/search?" + q)
         out += j.get("hits", [])
         if sayfa >= j.get("page_count", 0):
@@ -155,6 +156,41 @@ def besin_al(p):
     return b
 
 
+def kategoriler(p):
+    """OFF kategori etiketleri (categories_tags; A-08 ürün tipi için). Liste değilse boş."""
+    k = p.get("categories_tags")
+    return [str(x) for x in k if isinstance(x, str)][:60] if isinstance(k, list) else []
+
+
+def kategori_ekle():
+    """Yalnızca kategorileri yeniler (A-08; tam indirme ~1 saat sürdüğü için): arama servisinden code + categories_tags,
+    mevcut kaynak/off/urunler.json'daki gıda ürünlerine yazılır. Başka alan değişmez."""
+    yol = os.path.join(OUT, "urunler.json")
+    with open(yol, encoding="utf-8") as f:
+        veri = json.load(f)
+    kat, sayfa = {}, 1
+    while True:
+        q = urllib.parse.urlencode({"q": 'countries_tags:"en:turkey"', "page_size": 100, "page": sayfa, "fields": "code,categories_tags"})
+        j = get("https://search.openfoodfacts.org/search?" + q)
+        for h in j.get("hits", []):
+            kat[str(h.get("code", ""))] = kategoriler(h)
+        if sayfa >= j.get("page_count", 0):
+            break
+        sayfa += 1
+        time.sleep(BEKLE)
+    n = 0
+    for u in veri["urunler"]:
+        if u.get("db") == "food" and u["kod"] in kat:
+            u.pop("kat", None)
+            if kat[u["kod"]]:
+                u["kat"] = kat[u["kod"]]
+                n += 1
+    with open(yol, "w", encoding="utf-8") as f:
+        json.dump(veri, f, ensure_ascii=False, indent=0, sort_keys=True)
+        f.write("\n")
+    print("kategori:", len(kat), "barkod alındı,", n, "gıda ürününe yazıldı", file=sys.stderr)
+
+
 def cevir(p, kod=""):
     metin = {}
     for d in DILLER:
@@ -172,7 +208,7 @@ def cevir(p, kod=""):
         p["product_name"] = ""
     if isinstance(marka, list):
         marka = ", ".join(marka)
-    return {
+    u = {
         "kod": str(p.get("code") or kod),
         "ad": (p.get("product_name_tr") or p.get("product_name") or p.get("product_name_en") or "").strip(),
         "marka": marka.split(",")[0].strip(),
@@ -181,6 +217,9 @@ def cevir(p, kod=""):
         "t": sayi(p.get("last_modified_t")),
         "besin": besin_al(p),
     }
+    if kategoriler(p):
+        u["kat"] = kategoriler(p)
+    return u
 
 
 def indir(db, alan):
@@ -208,7 +247,7 @@ def indir(db, alan):
                 m = h.get("brands") or ""
                 u = cevir({"code": h["code"], "product_name": h.get("product_name") or "", "brands": m if isinstance(m, str) else ",".join(m),
                            "lang": h.get("lang") or "", "last_modified_t": sayi(h.get("last_modified_t")),
-                           "nutriments": h.get("nutriments"), "quantity": h.get("quantity")}, h["code"])
+                           "nutriments": h.get("nutriments"), "quantity": h.get("quantity"), "categories_tags": h.get("categories_tags")}, h["code"])
             liste.append(u)
             if i % 200 == 0:
                 print("  ", db, i, "/", len(hits), file=sys.stderr)
@@ -260,4 +299,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    kategori_ekle() if "--kategori" in sys.argv[1:] else main()
