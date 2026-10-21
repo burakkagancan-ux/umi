@@ -1,0 +1,73 @@
+{
+  "aciklama": "B-05 ülke mevzuat katmanı. Her ülke aynı modelde: oz (arayüz özellikleri: o ülkeye özgü kart ve satırlar; değer true ya da çeviri anahtarı), katki (gıda katkı maddelerinin o ülkedeki durumu: liste dosyası + istisnalar). gen_ulke.py data/ulke.json üretir; js/ulke.js okur. Kodda ülke adı geçmez: yeni ülke = buraya bir kayıt + kaynak dosyası. AB temel çizgidir (e_kodlari.json eu_status); ülke satırı seçili ülke için öne çıkarılır. oz.katki_not olan ülkede (kendi notu var) durum satırı yazılmaz; öteki ülkelerde durum AB'den farklıysa, kısıtlıysa, iptalse, belirsizse ya da kaynak notu varsa satır gösterilir.",
+  "durumlar": [
+    "izinli",
+    "kisitli",
+    "izinli_degil",
+    "iptal",
+    "belirsiz"
+  ],
+  "kaynaklar": {
+    "tgk_2024": {
+      "ad": "Türk Gıda Kodeksi Gıda Katkı Maddeleri Yönetmeliği (RG 13.10.2023, 32338 Mük.); Bakanlık kılavuzu Ek 1 (Ekim 2024)",
+      "kisa": "TGK, 2023",
+      "url": "https://www.baib.gov.tr/files/downloads/PageFiles/711bec37-caa1-ef11-a946-000c29511bae/Files/ek-1.pdf",
+      "okundu": "2026-10-09"
+    },
+    "gb_fsa": {
+      "ad": "Food Standards Agency, Approved additives and E numbers (GOV.UK)",
+      "kisa": "FSA, 2026",
+      "url": "https://www.gov.uk/government/publications/approved-additives-and-e-numbers/approved-additives-and-e-numbers",
+      "okundu": "2026-10-21"
+    },
+    "us_cfr": {
+      "ad": "21 CFR Part 73 ve 74, Subpart A (gıda renklendiricileri); 21 CFR 189 (gıdada yasak maddeler)",
+      "kisa": "21 CFR",
+      "url": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-73/subpart-A",
+      "okundu": "2026-10-21"
+    }
+  },
+  "ulkeler": {
+    "TR": {
+      "oz": {
+        "marka_listesi": true,
+        "zehir_hatti": true,
+        "kozmetik_durum": true,
+        "kozmetik_uyum": "ulke.tr.koz_uyum",
+        "katki_ad": "ulke.tr.tgk_adi",
+        "katki_not": "ulke.tr.etiket",
+        "izin_dogrulanmadi": "ulke.tr.izin_dogrulanmadi",
+        "ad_dil": "tr"
+      },
+      "katki": {
+        "kaynak": "tgk_2024",
+        "liste": "kaynak/tgk_ek2_2024.tsv",
+        "listede_yoksa": "izinli_degil",
+        "ad_not": "e_kodlari"
+      }
+    },
+    "GB": {
+      "oz": {},
+      "katki": {
+        "kaynak": "gb_fsa",
+        "liste": "kaynak/ulke/gb_katki.tsv",
+        "listede_yoksa": "izinli_degil",
+        "istisna": {
+          "E431": [
+            "belirsiz",
+            "AB listesinde var, GOV.UK listesinde yok; Büyük Britanya'daki durumu ayrıca doğrulanmadı",
+            "On the EU list but not on the GOV.UK list; its status in Great Britain has not been verified separately"
+          ]
+        }
+      }
+    },
+    "US": {
+      "oz": {},
+      "katki": {
+        "kaynak": "us_cfr",
+        "tablo": "kaynak/ulke/us_renk.tsv",
+        "listede_yoksa": null
+      }
+    }
+  }
+}

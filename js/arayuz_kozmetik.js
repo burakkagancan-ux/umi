@@ -92,7 +92,7 @@ function kCard(r){
     if(cond)pn.appendChild(el("div","how",t("koz.kart.ab_kosulu",{l:cond})));
     pn.appendChild(el("div","how",t("koz.kart.kaynak",{r:e.regulation||"(EC) 1223/2009"})+(e.applies_from?t("koz.kart.uygulama",{d:e.applies_from}):"")));
     var trs=[e.tr].concat((e.updates||[]).map(function(u){return u.tr})).filter(Boolean)[0];   // AB değişikliğinin Türkiye'deki durumu
-    if(trs&&KIDX.trText[trs]&&ulke()==="TR")pn.appendChild(vEl("div","how",KIDX.trText[trs],"k.tr_durum."+trs));   // Türkiye'deki durum (ülke katmanı)
+    if(trs&&KIDX.trText[trs]&&ulkeOz("kozmetik_durum"))pn.appendChild(vEl("div","how",KIDX.trText[trs],"k.tr_durum."+trs));   // Türkiye'deki durum (ülke katmanı)
     if(e.needs_review)pn.appendChild(el("div","how",t("koz.kart.kayit_dogrulanmadi")));
   });
   r.iflags.forEach(function(f){line(t("koz.kart.degerlendirme"),veriMetin(KIDX.flagReasons[f],"k.bayrak_neden."+f))});
@@ -195,6 +195,6 @@ function renderK(res){
     tb.appendChild(dx);
   }
   if(S.parfum)box.appendChild(el("div","ln nt",t("koz.parfum_not")));
-  box.appendChild(el("div","how it",t("koz.alt_not",{tr:ulke()==="TR"?t("ulke.tr.koz_uyum"):""})));
+  box.appendChild(el("div","how it",t("koz.alt_not",{tr:ulkeOz("kozmetik_uyum")?t(ulkeOz("kozmetik_uyum")):""})));
   payBar(box,{mode:"koz",res:res,S:S});
 }

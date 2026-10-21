@@ -2,7 +2,7 @@
 /* ---------- Temizlik modu ---------- */
 var TDB=null,TIDX=null,TLOAD=null;
 /* Zehir danışma hattı: Türkiye seçiliyse UZEM 114; ülke seçilmediyse genel acil durum notu (başka ülkenin numarası gösterilmez) */
-function zehirHatti(){return ulke()==="TR"&&TIDX.uzem?veriS(TIDX.uzem,"t.uzem"):t("ulke.yok.zehir")}
+function zehirHatti(){return ulkeOz("zehir_hatti")&&TIDX.uzem?veriS(TIDX.uzem,"t.uzem"):t("ulke.yok.zehir")}   // zehir danışma hattı verisi bugün yalnızca bir ülke için (temizlik.json uzem)
 function loadT(){
   if(TIDX&&KIDX)return Promise.resolve(TIDX);
   if(TLOAD)return TLOAD;

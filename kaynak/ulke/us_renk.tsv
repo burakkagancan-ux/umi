@@ -1,0 +1,48 @@
+# ABD: gıda renklendiricileri (color additives), 21 CFR 73 Subpart A (sertifikadan muaf) ve 74 Subpart A (sertifikalı FD&C), eCFR 19.10.2026 sürümü.
+# Kaynak: https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-73/subpart-A ve .../part-74/subpart-A (21.10.2026'da bölüm listesi ve
+# "Uses and restrictions" fıkraları okundu). Listede olmayan renklendirici ABD'de gıdada renklendirici olarak kullanılamaz (FD&C Act 721).
+# Yalnızca renklendiriciler (E1xx) ve açık yasaklar; öteki katkıların ABD durumu (GRAS, 21 CFR 172/184) bu katmanda değerlendirilmedi.
+# Sütunlar: E kodu, durum (izinli | kisitli | izinli_degil | iptal), CFR bölümü ya da dayanak, not (İngilizce, kaynaktaki ifade), Türkçe not (boşsa yalnızca durum)
+E100	izinli	73.600	Turmeric (73.600), turmeric oleoresin (73.615)	
+E101	izinli	73.450	Riboflavin	
+E102	izinli	74.705	FD&C Yellow No. 5	
+E104	izinli_degil		Quinoline yellow: not listed for food (D&C Yellow No. 10 is for drugs and cosmetics only)	ABD'de gıdada renklendirici olarak izinli listede yok (D&C Yellow No. 10 yalnızca ilaç ve kozmetikte)
+E110	izinli	74.706	FD&C Yellow No. 6	
+E120	izinli	73.100	Cochineal extract; carmine	
+E122	izinli_degil		Azorubine: not listed	İzinli listede yok
+E123	izinli_degil		Amaranth (FD&C Red No. 2): delisted 1976	FD&C Red No. 2 olarak 1976'da listeden çıkarıldı
+E124	izinli_degil		Ponceau 4R: not listed	İzinli listede yok
+E127	iptal	74.303	FD&C Red No. 3: authorisation for food revoked 15 Jan 2025, effective 15 Jan 2027 (still listed in 74.303 until then)	FD&C Red No. 3: gıdada izni 15.01.2025'te iptal edildi, iptal 15.01.2027'de yürürlüğe girer (o tarihe kadar 74.303'te listede)
+E128	izinli_degil		Red 2G: not listed	İzinli listede yok
+E129	izinli	74.340	FD&C Red No. 40	
+E131	izinli_degil		Patent blue V: not listed	İzinli listede yok
+E132	izinli	74.102	FD&C Blue No. 2	
+E133	izinli	74.101	FD&C Blue No. 1	
+E140	izinli_degil		Chlorophylls: not listed as a food color additive	Gıda renklendiricisi olarak listede yok
+E141	kisitli	73.125	Sodium copper chlorophyllin: only in citrus-based dry beverage mixes, max 0.2% of the dry mix	Sodyum bakır klorofilin: yalnızca narenciye bazlı kuru içecek karışımlarında, kuru karışımın en çok %0,2'si
+E142	izinli_degil		Green S: not listed	İzinli listede yok
+E150a	izinli	73.85	Caramel	
+E150b	izinli	73.85	Caramel	
+E150c	izinli	73.85	Caramel	
+E150d	izinli	73.85	Caramel	
+E151	izinli_degil		Brilliant black BN: not listed	İzinli listede yok
+E153	izinli_degil		Vegetable carbon: not listed	İzinli listede yok
+E154	izinli_degil		Brown FK: not listed	İzinli listede yok
+E155	izinli_degil		Brown HT: not listed	İzinli listede yok
+E160a	izinli	73.95	beta-Carotene	
+E160b	izinli	73.30	Annatto extract	
+E160c	izinli	73.340	Paprika (73.340), paprika oleoresin (73.345)	
+E160d	izinli	73.585	Tomato lycopene extract; tomato lycopene concentrate	
+E160e	izinli	73.90	beta-Apo-8'-carotenal	
+E160f	izinli_degil		Ethyl ester of beta-apo-8'-carotenoic acid: not listed	İzinli listede yok
+E161b	izinli_degil	73.295	Lutein: tagetes meal and extract (73.295) are listed only for chicken feed	Lutein: kadife çiçeği unu ve özütü (73.295) yalnızca tavuk yeminde izinli
+E161g	izinli	73.75	Canthaxanthin	
+E162	izinli	73.40	Dehydrated beets (beet powder)	
+E163	izinli	73.169	Grape color extract (73.169, non-beverage food), grape skin extract (73.170), fruit and vegetable juice (73.250, 73.260)	
+E170	izinli	73.70	Calcium carbonate	
+E171	izinli	73.575	Titanium dioxide: foods generally, max 1% by weight	Titanyum dioksit: gıdalarda genel olarak, en çok %1 (ağırlıkça)
+E172	kisitli	73.200	Synthetic iron oxide: sausage casings (max 0.10%); soft and hard candy, mints, chewing gum	Sentetik demir oksit: sucuk kılıfında (en çok %0,10); sert ve yumuşak şeker, nane şekeri, sakızda
+E173	izinli_degil		Aluminium: not listed for food	Gıdada izinli listede yok
+E174	izinli_degil		Silver: not listed for food	Gıdada izinli listede yok
+E175	izinli_degil		Gold: not listed for food	Gıdada izinli listede yok
+E952	izinli_degil	21 CFR 189.135	Cyclamate and its salts: prohibited from use in human food (1970)	Siklamat ve tuzları: gıdada kullanımı yasak (1970)
