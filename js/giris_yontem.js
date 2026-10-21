@@ -2,3 +2,4 @@
 import {kopru} from "./kopru.js";
 import * as ceviri from "./ceviri.js";
 kopru(ceviri);
+try{if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}   // ilk kez doğrudan açılınca da internetsiz çalışsın
