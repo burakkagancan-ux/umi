@@ -52,6 +52,9 @@ function loadDb(i){
     IDX=buildIndex(DB,BDB);
     setSt("gida",BDB?t("gida.yuklendi",{n:DB.ingredients.length,b:BDB.items.length}):t("gida.yuklendi_bilesensiz",{n:DB.ingredients.length}),true);
     buildProfile();
+    // Liste gelmeden analiz istendiyse (metin kutusu doluyken açılış, Son Okutulanlar'dan erken dokunuş) "henüz yüklenmedi" yazısı takılı kalmasın
+    if(MODE==="gida"&&$("metin").value.trim())run();
+    if(typeof sonCiz==="function"&&!document.body.classList.contains("sonuclu"))sonCiz();   // eski kayıtların özeti artık hesaplanabilir
   }).catch(function(){if(!DB)loadDb(i+1)});
 }
 
@@ -65,9 +68,12 @@ function openSheet(title,how,body,ret,cls,kapaninca){
   sheetTemizle();SHEET_KAPAN=kapaninca||null;
   $("sheet").className="sheet"+(cls?" "+cls:"");$("sheet-t").textContent=title;var sb=$("sheet-b");sb.textContent="";
   if(how)sb.appendChild(el("div","how",how));sb.appendChild(body);
-  SHEET_RET=ret||null;$("sheet").hidden=false;document.body.style.overflow="hidden";$("sheet-x").focus();
+  SHEET_RET=ret||null;$("sheet").hidden=false;sheetArka(true);document.body.style.overflow="hidden";$("sheet-x").focus();
 }
-function closeSheet(){if($("sheet").hidden)return;sheetTemizle();$("sheet").hidden=true;document.body.style.overflow="";if(SHEET_RET)SHEET_RET.focus()}
+function closeSheet(){if($("sheet").hidden)return;sheetTemizle();$("sheet").hidden=true;sheetArka(false);document.body.style.overflow="";if(SHEET_RET)SHEET_RET.focus()}
+/* Alt sayfa açıkken arkadaki sayfa (aria-modal) erişilemez: ekran okuyucu ve klavye yalnızca alt sayfada gezer (21.10.2026; Son Okutulanlar
+   listesi alt sayfanın arkasında kalıyordu) */
+function sheetArka(on){document.querySelectorAll("body>.w,body>nav.tabbar").forEach(function(x){x.inert=on;if(on)x.setAttribute("aria-hidden","true");else x.removeAttribute("aria-hidden")})}
 $("sheet-x").onclick=closeSheet;$("sheet-bg").onclick=closeSheet;
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet()});
 /* ---------- Kart ---------- */

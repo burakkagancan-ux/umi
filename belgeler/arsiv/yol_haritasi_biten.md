@@ -35,6 +35,7 @@ YOL_HARITASI.md'den taşındı (15.10.2026, U-07 9. adım; satırlar aynı). Sı
 
 | Kimlik | İş | Durum |
 |---|---|---|
+| U-09 | **Aylık özet (20.10.2026, Lupa karşılaştırmasından; Lupa'da "Özetim").** Profilim'de ay ay: taranan ürün sayısı (türe göre), uyarılı/dikkatli/özel uyarısız sonuç dağılımı, en sık karşılaşılan uyarılı maddeler (ansiklopedi bağlantısıyla), katkılar ve rozetler. Puan yok; yalnızca cihazdaki tarama geçmişinden, sunucuya bir şey gitmez. Ucuz önlem: tarama geçmişinde türün ve en yüksek seviyenin saklandığı denetlenir (yoksa O-06 göç adımıyla eklenir) | ✅ 21.10.2026: Profilim › Aylık Özetim (js/aylik.js, js/arayuz_aylik.js). Ayrı cihaz kaydı "aylik" (tarama geçmişi 20 kayıtla kesildiği ve silinebildiği için ondan hesaplanmaz); ürün tarama kimliğiyle ayda bir, "Örnek metin dene" sayılmaz; katkılar bu cihazdan gönderilen barkodlar, rozetler kazanıldığı ay. Ucuz önlem yapıldı: tarama geçmişi artık uyarı/dikkat özetini (`oz`) saklar; tür zaten vardı. Kabul testi test/kabul/aylik_ozet.js |
 | U-04 | Gıda ansiklopedisi açıkları: AB konsolide metin karşılaştırması, TGK 2023 (TEKNIK_BORC.md). 15.10.2026: konsolide metinle karşılaştırıldı, çelişki yok; vegan, üretim yolu ve TGK 2023 kaynakla netleşmeyen hâliyle kapatıldı (kullanıcı kararı; ayrıntı belgeler/arsiv/teknik_borc_kapanan.md "Gıda (E kodları)") | ✅ 15.10.2026 |
 
 ### 9.2 Yakın (4. dilden, 2. ülkeden ya da mağazadan önce)

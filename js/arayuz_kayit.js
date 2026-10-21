@@ -182,7 +182,7 @@ function kayitSonuc(k,sonra){
   kayitKapat();
   if(location.hash==="#profil"){history.replaceState(null,"",location.pathname+location.search);$("pd").open=false;tabSync()}
   if(CMP_IDS)closeCompare();
-  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";fotoTemizle();if(sonra)PAY_SRC=null;
+  KAYIT_ACILAN=k.id;$("metin").value=k.text;HSCAN=false;HMOD="gor";HGOR={mode:k.mode,text:(k.text||"").trim()};fotoTemizle();if(sonra)PAY_SRC=null;
   if(MODE!==k.mode)setMode(k.mode,true);else run();
   if(sonra){var sec=sonra==="paylas"?"#sonuc .resbar .pay:not(.kayitb)":"#sonuc .resbar .kayitb";
     var w=setInterval(function(){var b=PAY_SRC&&PAY_SRC.mode===k.mode&&document.querySelector(sec);if(b){clearInterval(w);b.click()}},100);setTimeout(function(){clearInterval(w)},8000)}

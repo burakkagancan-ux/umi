@@ -13,7 +13,7 @@ function ekleSunucu(tazeSn,goster,liste){
     EKLE_SON=j;
     return rozetDefYukle().then(function(def){
       var d=rozetSunucuYaz(rozetLoad(),j,Date.now()),yeni=[];
-      ROZET_SUNUCU.forEach(function(a){def.turler.forEach(function(tur){var y=rozetYeni(def,d,a,tur);if(y){yeni.push(y);d=rozetGoruldu(d,a,tur,y.kademe)}})});
+      ROZET_SUNUCU.forEach(function(a){def.turler.forEach(function(tur){var y=rozetYeni(def,d,a,tur);if(y){yeni.push(y);d=rozetGoruldu(d,a,tur,y.kademe);if(typeof aylikRozetYaz==="function")aylikRozetYaz(y)}})});
       if(!rozetStore(d))return j;
       rozetProfil();
       // Birden çok yeni kademe (ör. ilk eşitlemede) tek kartta: en yükseği gösterilir, ötekiler sayıyla

@@ -9,6 +9,7 @@ DIL_HAZIR.then(function(){
   besinYukle();
   loadDb(0);
   setMode(MODE,false);
+  sonCiz();   // Son Okutulanlar (js/arayuz_son.js); sonuç gelince gizlenir (css/ocr.css body.sonuclu)
   if(typeof barkodGeriAl==="function")barkodGeriAl();   // kamera açılırken sayfa yeniden yüklendiyse bulunamayan barkod geri gelir
   window.addEventListener("hashchange",tabSync);tabSync();
   kayitProfil();
@@ -17,6 +18,7 @@ DIL_HAZIR.then(function(){
   ekleProfil();window.addEventListener("hashchange",ekleHash);ekleHash();
   ekleSunucu(EKLE_AYAR.tazeSn,rozetGoster);   // ürün rozetleri: sunucudaki doğrulanmış sayım (G-02)
   toplulukProfil();window.addEventListener("hashchange",toplulukHash);toplulukHash();   // ortak hedef ve eksik ürünler (G-04)
+  aylikProfil();window.addEventListener("hashchange",aylikHash);aylikHash();   // Aylık Özetim (U-09, js/arayuz_aylik.js)
   olcumAc();   // A-03: günlük açan cihaz, yeni cihaz, geri dönüş (js/arayuz_olcum.js)
 });
 /* Rozetler (js/arayuz_rozet.js): kutlama kartı sonucun üstüne */
@@ -26,7 +28,7 @@ function rozetSonra(){if(ROZET_BEKLE&&$("sonuc").querySelector(".resbar")){sonuc
 
 /* ---------- Alt menü: "Profil" sekmesi bu sayfadaki profil bölümünü açar ---------- */
 function tabSync(){
-  var prof=/^#(profil|rozetler|eklediklerim|topluluk)$/.test(location.hash);
+  var prof=/^#(profil|rozetler|eklediklerim|topluluk|aylik)$/.test(location.hash);
   document.querySelectorAll(".tabbar a").forEach(function(a){if(a.getAttribute("data-tab")===(prof?"profil":"oku"))a.setAttribute("aria-current","page");else if(a.getAttribute("data-tab")!=="liste")a.removeAttribute("aria-current")});
   document.body.classList.toggle("mode-profil",prof);
   document.querySelector("h1").textContent=t(prof?"profil.baslik":"sayfa.baslik");

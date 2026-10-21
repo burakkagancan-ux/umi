@@ -19,6 +19,7 @@ var VERI_ANAHTAR={
   barkod_katki:"yazi",katkici:"yazi",   // barkod katkı izni ve katkıcı kimliği (O-22)
   ans_tur:"yazi",   // ansiklopedide seçili tür (gida/tem)
   tema:"yazi",      // görünüm seçimi: acik | koyu; yoksa telefona göre (js/tema.js)
+  aylik:"nesne",    // aylık özet: ay ay taranan ürünler, katkılar, rozetler (U-09, js/aylik.js; kendi şema sürümü "v": AYLIK_SURUM, aylikNorm okurken doğrular)
   olcum:"nesne"     // ölçüm durumu: ilk kullanım günü, son sayılan gün, kapalı mı (A-03, js/olcum.js); yedeğe girmez
 };
 /* Göç adımları: VERI_GOC[n] verisi n-1 sürümünde olan depoyu n sürümüne getirir. depo: {getItem, setItem, removeItem} */

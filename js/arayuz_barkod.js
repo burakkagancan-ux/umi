@@ -229,7 +229,8 @@ function katkiciKimlik(){
 }
 function barkodDil(tx){return /[ğışĞİŞ]|içindekiler/i.test(tx)?"tr":/\b(ingredients|contains)\b/i.test(tx)?"en":""}
 function barkodGonder(B,tx){
-  return barkodWorker("/urun",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:B.kod,tur:MODE,dil:barkodDil(tx),metin:tx,kim:katkiciKimlik()||undefined})});
+  return barkodWorker("/urun",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:B.kod,tur:MODE,dil:barkodDil(tx),metin:tx,kim:katkiciKimlik()||undefined})})
+    .then(function(j){if(j&&typeof aylikKatkiYaz==="function")aylikKatkiYaz(B.kod);return j});   // Aylık Özetim: bu cihazdan eklenen (U-09)
 }
 /* İçerik katkısı önerisi (fotoğraftan okunan içerik için bir kez). Sonuç yeniden çizilince (ör. tablo eklendi) yanıtlanmamış soru yerinde kalır. */
 function barkodKatki(){

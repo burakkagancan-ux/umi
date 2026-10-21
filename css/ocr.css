@@ -209,7 +209,7 @@ body.mode-rozet .w>:not(#rozet){display:none!important}#rozet[hidden]{display:no
 .plist details.gzp{padding:0 16px;font-size:14px;color:var(--mute)}.plist details.gzp ul{margin:0 0 12px;padding-inline-start:18px}.plist details.gzp li{margin:4px 0}
 /* Profilim renkleri (14.10.2026, kullanıcı isteği: "biraz daha renkli"): her kısayol ve bölüm kendi renginde; risk renkleri (kırmızı, turuncu, sarı) kullanılmaz */
 #pd{--c-kay:#1F4D3A;--b-kay:#E4EFE8;--c-roz:#5A3E8E;--b-roz:#EFE9F8;--c-ekl:#155E63;--b-ekl:#E0F0F0;--c-top:#234A7A;--b-top:#E6EDF8;--c-uy:#8E3B6B;--b-uy:#F7E8F1;--c-ki:#234A7A;--b-ki:#E6EDF8;--c-ay:#155E63;--b-ay:#E0F0F0;--c-hk:#5A615C;--b-hk:#EEF0EE}
-#kayitbar{--c:var(--c-kay);--b:var(--b-kay)}#rozetbar{--c:var(--c-roz);--b:var(--b-roz)}#eklebar{--c:var(--c-ekl);--b:var(--b-ekl)}#toplulukbar{--c:var(--c-top);--b:var(--b-top)}
+#kayitbar{--c:var(--c-kay);--b:var(--b-kay)}#rozetbar{--c:var(--c-roz);--b:var(--b-roz)}#eklebar{--c:var(--c-ekl);--b:var(--b-ekl)}#toplulukbar{--c:var(--c-top);--b:var(--b-top)}#aylikbar{--c:var(--c-ay);--b:var(--b-ay);grid-column:1/-1}
 .kisayol .kayitac{background:var(--b,var(--sunk));box-shadow:inset 0 0 0 1px rgba(27,33,30,.04)}
 .kisayol .kayitac>svg{stroke:var(--onok);background:var(--c,var(--ok));box-shadow:0 2px 6px rgba(27,33,30,.15)}
 .kisayol .kayitac>.rzs{background:var(--card);box-shadow:0 2px 6px rgba(27,33,30,.12)}
@@ -276,7 +276,7 @@ label.camera .cambtn{grid-column:1/-1;display:flex;align-items:center;justify-co
 .ipg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .ipg>div{background:var(--sunk);border-radius:14px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;line-height:1.25;font-weight:500;text-align:center;min-width:0;overflow-wrap:anywhere}
 .ipg svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ok);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-body.sonuclu .ipucu,body:not(.sonuclu) #sonuch,body:not(.sonuclu) #sonuc{display:none}
+body.sonuclu .ipucu,body.sonuclu #son,#son[hidden],body:not(.sonuclu) #sonuch,body:not(.sonuclu) #sonuc{display:none}
 .altbilgi{margin-top:32px;text-align:center}
 .altbilgi button.deneme{min-height:44px;margin:0;padding:0 12px;background:none;border:0;color:var(--mute);font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 
@@ -327,3 +327,10 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 .plist>a.pbag{display:flex;align-items:center;min-height:58px;padding:0 16px;background:var(--card);color:var(--ink);font-size:16px;font-weight:600;text-decoration:none}
 .plist>a.pbag .ok{margin-inline-start:auto;color:var(--mute);font-size:20px}
 .yontem-bag:focus-visible,.plist>a.pbag:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
+/* Son Okutulanlar (js/arayuz_son.js): sonuç yokken fotoğraf ipuçlarının üstünde */
+.son h2{font:700 12px/1.3 var(--bf);text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:14px 0 6px}.son .how{margin-top:2px}
+/* Aylık Özetim (U-09, js/arayuz_aylik.js): Topluluk ekranıyla aynı düzen; ay seçici ortada ay adı, iki yanda önceki/sonraki */
+body.mode-aylik .w>:not(#aylik){display:none!important}#aylik[hidden]{display:none}body.mode-aylik .w>#aylik:not([hidden]){display:block!important}
+.aynav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 12px}.aynav button{min-width:44px;min-height:44px;font-size:22px;line-height:1;padding:0}
+.aynav .ayad{margin:0;font-size:17px;text-align:center;flex:1}
+.aykart{margin:0 0 10px}.aykart .aytur{display:flex;flex-wrap:wrap;gap:6px}.aykart .aydag{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.aykart .aymad{display:flex;align-items:flex-start;gap:6px}.aykart .aymad>a,.aykart .aymad>span:not(.ic):not(.mut){flex:1;min-width:0;overflow-wrap:anywhere}.aykart .aymad .mut{font-size:13px;white-space:nowrap}.aynav .ayad:focus{outline:none}.aynav .ayad:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
