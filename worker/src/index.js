@@ -184,7 +184,7 @@ async function katkiIz(env, request, kod) {
 }
 
 async function offAra(kod) {
-  const f = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity," + OFF_DIL.map((d) => "ingredients_text_" + d).join(",");
+  const f = "code,product_name,product_name_tr,product_name_en,brands,lang,last_modified_t,ingredients_text,nutriments,quantity,categories_tags," + OFF_DIL.map((d) => "ingredients_text_" + d).join(",");
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), OFF_TIMEOUT_MS);
   try {
@@ -205,7 +205,9 @@ async function offAra(kod) {
     let marka = p.brands || ""; if (Array.isArray(marka)) marka = marka.join(",");
     return { bulundu: true, db, ad: String(p.product_name_tr || p.product_name || p.product_name_en || "").slice(0, 200),
       marka: String(marka).split(",")[0].trim().slice(0, 100), t: Number(p.last_modified_t || 0) * 1000, metin,
-      besin: db === "food" ? besinOff(p.nutriments, p.quantity) : null };
+      besin: db === "food" ? besinOff(p.nutriments, p.quantity) : null,
+      // A-08: ürün tipi (renk gösterilmeyen tipler) uygulamada kaynak/besin_istisna.json ile bulunur; burada yalnızca etiketler
+      kat: db === "food" && Array.isArray(p.categories_tags) ? p.categories_tags.filter((x) => typeof x === "string" && x.length <= 80).slice(0, 60) : [] };
   } finally { clearTimeout(timer); }
 }
 

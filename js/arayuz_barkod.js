@@ -38,7 +38,7 @@ function barkodUrun(kod){
 function barkodOffCanli(kod){
   return barkodWorker("/off/"+kod).then(function(j){
     if(!j||!j.bulundu)return null;
-    return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null,besin:j.besin||null};
+    return {kod:kod,kaynak:"off",canli:true,db:j.db,tur:barkodTur(j.db),ad:j.ad||"",marka:j.marka||"",t:j.t||0,metin:j.metin||{},dogrulandi:null,besin:j.besin||null,kat:Array.isArray(j.kat)?j.kat:[]};
   });
 }
 /* Barkodu sırayla arar → bulunan sonuç (içeriksiz olabilir: r.icerikYok) ya da null */
@@ -74,7 +74,7 @@ function barkodGoster(kod,r){
   run();
 }
 function barkodYok(kod,r){
-  BARKOD={kod:kod,r:null,ad:r?barkodAd(r):"",metin:null,t:Date.now(),foto:false,katki:false};
+  BARKOD={kod:kod,r:null,ad:r?barkodAd(r):"",kat:r&&r.kat||[],metin:null,t:Date.now(),foto:false,katki:false};
   barkodBekleYaz();
   olcumTarama("y");
   fotoTemizle();

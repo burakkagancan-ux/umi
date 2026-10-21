@@ -102,7 +102,70 @@ export function besinSozluk(veri){
     var n=k.split(" ").length;if(n>S.enUzun)S.enUzun=n;
     if(!S.ad[k])S.ad[k]=r[0];
   });
+  S.istisna=besinIstisnaHazirla(veri&&veri.istisna);
   return S;
+}
+/* Renk gösterilmeyen ürün tipleri (A-08; kaynak/besin_istisna.json → data/besin.json "istisna"). Az miktarda tüketilen ürünlerde
+   (baharat, tuz, sirke, sakız, kuru çay/kahve; AB 1169/2011 Ek V ve TGK Etiketleme Yönetmeliği Ek-14'teki zorunlu beslenme
+   bildiriminden muaf gıdalar) ve bebek gıdasında (ayrı mevzuat, AB 609/2013) 100 g eşiğine göre düzey yanıltıcıdır.
+   Adlar dilden bağımsız bir küme olarak tutulur (besinNorm); yeni dil ya da ülke = veri satırı. */
+function besinKume(o){var k={};Object.keys(o||{}).forEach(function(d){(o[d]||[]).forEach(function(a){var n=besinNorm(a);if(n)k[n]=1})});return k}
+export function besinIstisnaHazirla(v){
+  if(!v||!Array.isArray(v.tip))return null;
+  var dolgu=besinKume(v.dolgu);
+  return {dolgu:dolgu,yoksay:(v.yoksay_re||[]).map(function(r){return new RegExp(r,"u")}),tip:v.tip.map(function(x){
+    return {id:x.id,not:x.not||"",kaynak:x.kaynak||[],madde:x.madde||null,sivi:x.sivi!==false,etiket:x.etiket||[],haricEtiket:x.haric_etiket||[],
+      haricAd:Object.keys(besinKume(x.haric_ad)),olmaz:Object.keys(besinKume(x.olmaz)),isaret:Object.keys(besinKume(x.isaret)),
+      isaretRe:(x.isaret_re||[]).map(function(r){return new RegExp(r,"u")}),ana:besinKume(x.ana),ek:besinKume(x.ek),eKodu:!!x.ek_e_kodu};
+  })};
+}
+function besinSozcukVar(metin,ifade){return (" "+metin+" ").indexOf(" "+ifade+" ")>=0}
+/* İçerik listesinin öğeleri (besinNorm'dan geçmiş): "İçindekiler:/Ingredients:" başlığından (yoksa metnin başından) ilk cümle sonuna kadar,
+   virgül, noktalı virgül ve parantezle bölünür; yüzde ve sayılar atılır. Başlık her dilde aynı biçimde aranır (harf ve aksan duyarsız). */
+var BESIN_ICERIK_BASLIK=/(icindekiler|bilesenler|ingredients?|zutaten|ingredienti|ingredientes|ingredienten)\s*:?/;
+export function besinIcerikOgeleri(metin){
+  var s=String(metin==null?"":metin),kat="";
+  for(var i=0;i<s.length;i++){var c=s[i].toLowerCase().normalize("NFD")[0];kat+=c&&c.length?c:" "}   // konumları koruyan katlama
+  var m=BESIN_ICERIK_BASLIK.exec(kat),bas=m?m.index+m[0].length:0;
+  var son=s.slice(bas).search(/\.(\s|$)|\n\s*\n/);
+  var parca=(son<0?s.slice(bas):s.slice(bas,bas+son)).slice(0,1500);
+  return parca.split(/[,;()\[\]]/).map(function(x){
+    return besinNorm(x).split(" ").filter(function(w){return w&&!/^%?\d+(?:[.,]\d+)?%?$/.test(w)&&w!=="%"}).join(" ");
+  }).filter(Boolean);
+}
+function besinDolgusuz(o,I){return o.split(" ").filter(function(w){return !I.dolgu[w]}).join(" ")}
+function besinOgeTip(o,T,I){
+  if(I.yoksay.some(function(r){return r.test(o)}))return "bos";
+  var d=besinDolgusuz(o,I);
+  if(T.ana[o]||(d&&T.ana[d]))return "ana";
+  if(T.ek[o]||(d&&T.ek[d])||(T.eKodu&&/^e ?\d{3}[a-z]?$/.test(o)))return "ek";
+  return null;
+}
+/* Ürün tipi. g: {kat: OFF kategori etiketleri, ad: ürün adı, metin: içerik / etiket metni, birim: "g"|"ml"|""}, S: besinSozluk sonucu.
+   Sıra tipten tipe (bebek önce): (1) kategori (hariç etiket ya da adda hariç sözcük yoksa), (2) metinde işaret, (3) içerik listesinin
+   bütün öğeleri o tipin adları ve en az biri ana ad. Tipin "olmaz" bileşeni içerik listesinde öğe olarak geçerse ya da 100 ml'lik (sıvı) değerlerde
+   sivi:false tip sayılmaz. Döner: {id, not, kaynak, madde, yol: "kategori"|"isaret"|"icerik"} ya da null (bugünkü davranış). */
+export function besinIstisnaBul(g,S){
+  var I=S&&S.istisna;if(!I||!g)return null;
+  var kat=Array.isArray(g.kat)?g.kat:[],ad=besinNorm(g.ad),norm=besinNorm(g.metin),ogeler=null;
+  for(var i=0;i<I.tip.length;i++){
+    var T=I.tip[i],yol=null;
+    if(!T.sivi&&g.birim==="ml")continue;
+    if(T.olmaz.length){   // olmaz: içerik listesinde öğe olarak geçen bileşen (hazırlama talimatındaki "şeker ekleyin" sayılmaz)
+      if(!ogeler)ogeler=besinIcerikOgeleri(g.metin);
+      if(ogeler.some(function(o){var d=besinDolgusuz(o,I);return T.olmaz.indexOf(o)>=0||T.olmaz.indexOf(d)>=0}))continue;
+    }
+    if(T.etiket.some(function(x){return kat.indexOf(x)>=0})&&!T.haricEtiket.some(function(x){return kat.indexOf(x)>=0})
+      &&!T.haricAd.some(function(x){return besinSozcukVar(ad,x)}))yol="kategori";
+    else if(T.isaret.some(function(x){return besinSozcukVar(norm,x)||besinSozcukVar(ad,x)})||T.isaretRe.some(function(r){return r.test(norm)||r.test(ad)}))yol="isaret";
+    else if(Object.keys(T.ana).length){
+      if(!ogeler)ogeler=besinIcerikOgeleri(g.metin);
+      var tur=ogeler.map(function(o){return besinOgeTip(o,T,I)});
+      if(tur.length&&tur.indexOf(null)<0&&tur.indexOf("ana")>=0)yol="icerik";
+    }
+    if(yol)return {id:T.id,not:T.not,kaynak:T.kaynak,madde:T.madde,yol:yol};
+  }
+  return null;
 }
 export var BESIN_BIRIM={kcal:"kcal",kj:"kj",g:"g",gr:"g",mg:"mg","µg":"ug",mcg:"ug",ug:"ug",ml:"ml","%":"%"};
 /* Metni parçalara ayırır: sayı (ondalık virgül/nokta, "<" ve bitişik birim), birim, sözcük, satır sonu */
@@ -347,21 +410,25 @@ export function besinDuzey(alan,v,lt,birim,ara){
   return v<=e[0]?"dusuk":v<=e[1]?"orta":"yuksek";
 }
 /* Ekrandaki model. k: {b, lt, birim, sorun (ayrıştırma + denetim), onay (kullanıcı değerleri doğruladı ya da düzeltti), por? (porsiyondan çevrildi)}.
-   Döner: {renk: bool, neden: "suphe"|"birim"|"" , birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik, por: {m, u} | null} ya da null (değer yok).
-   Renk yalnızca: birim biliniyor ve (sorun yok ya da kullanıcı onayladı ve kesin çelişki yok). */
+   k.tip: renk gösterilmeyen ürün tipi (A-08, besinIstisnaBul); varsa düzey yok, birim sorulmaz.
+   Döner: {renk: bool, neden: "suphe"|"birim"|"" , tip?, birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik, por: {m, u} | null} ya da null (değer yok).
+   Renk yalnızca: tip yok, birim biliniyor ve (sorun yok ya da kullanıcı onayladı ve kesin çelişki yok). */
 export function besinGorunum(k){
   if(!k||!k.b)return null;
   var d=besinDenetle(k.b);if(d.durum==="yok")return null;
   var sorun=(k.sorun||[]).slice();d.sorun.forEach(function(s){if(sorun.indexOf(s)<0)sorun.push(s)});
   var kesin=sorun.some(function(s){return BESIN_KESIN.indexOf(s)>=0});
   var birim=k.birim==="ml"||k.birim==="g"?k.birim:"";
-  var neden=kesin||(sorun.length&&!k.onay)?"suphe":!birim?"birim":"";
+  var tip=typeof k.tip==="string"&&k.tip?k.tip:"";   // A-08: renk gösterilmeyen ürün tipi (besinIstisnaBul)
+  var neden=kesin||(sorun.length&&!k.onay)?"suphe":!birim&&!tip?"birim":"";
   var lt=k.lt||{},ara=k.por&&k.por.ara||{};
-  return {
-    renk:!neden,neden:neden,birim:birim,sorun:sorun,eksik:d.eksik,onay:!!k.onay,
+  var G={
+    renk:!neden&&!tip,neden:neden,birim:birim,sorun:sorun,eksik:d.eksik,onay:!!k.onay,
     enerji:besinSayi(k.b.kcal),por:k.por?{m:k.por.m,u:k.por.u}:null,
-    satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden?null:besinDuzey(a,v,lt[a],birim,ara[a])}})
+    satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden||tip?null:besinDuzey(a,v,lt[a],birim,ara[a])}})
   };
+  if(tip)G.tip=tip;
+  return G;
 }
 /* Kullanıcının elle düzelttiği tablo, metne bağlı saklanır (localStorage "besin_elle"): aynı metin yeniden açılınca düzeltme geri gelir.
    Anahtar metnin özeti (djb2); en çok BESIN_ELLE_EN kayıt, en eskisi düşer. */
@@ -397,10 +464,11 @@ export function besinKayitNorm(x){
     onay:x.onay===true,kaynak:BESIN_KAYNAK.indexOf(x.kaynak)>=0?x.kaynak:"etiket"};
   if(typeof x.t==="number"&&isFinite(x.t)&&x.t>0)o.t=x.t;
   var por=besinPorNorm(x.por);if(por)o.por=por;
+  if(typeof x.tip==="string"&&/^[a-z_]{1,20}$/.test(x.tip))o.tip=x.tip;
   return o;
 }
 /* Ekrandaki kaynaktan (besinKaynak: {k, kaynak, t}) saklanacak kopya */
-export function besinKayitKopya(K){return K?besinKayitNorm({b:K.k.b,lt:K.k.lt,birim:K.k.birim,sorun:K.k.sorun,onay:K.k.onay,kaynak:K.kaynak,t:K.t,por:K.k.por}):null}
+export function besinKayitKopya(K){return K?besinKayitNorm({b:K.k.b,lt:K.k.lt,birim:K.k.birim,sorun:K.k.sorun,onay:K.k.onay,kaynak:K.kaynak,t:K.t,por:K.k.por,tip:K.k.tip}):null}
 /* Karşılaştırma ve paylaşım kartı için dört satırın kısa özeti; renk gösterilemiyorsa (şüpheli, birim bilinmiyor) null */
 export function besinOzet(k){
   var G=besinGorunum(k);if(!G||!G.renk)return null;
