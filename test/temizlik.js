@@ -67,6 +67,7 @@ const cases=[
  ["Reacts violently with water. Wash with plenty of soap.",['EUH014'],{}],
  ["Reacts violently with water. Wash skin with soap and water.",['EUH014'],{}],
  ["Su ile şiddetli tepkime verir. Sabun ve su ile yıkayın.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Bol sabun ile yıkayın.",['EUH014'],{}],
  ["İçindekiler: %5'ten az sabun ve suda çözünen polimer.",[],{sabun:'b5'}],
  // Bant grubun arkasında
  ["Anyonik yüzey aktif maddeler %15-30, noniyonik yüzey aktif maddeler %5'ten az, sabun.",[],{anyonik:'b15_30',noniyonik:'b5',sabun:null}],
@@ -144,6 +145,17 @@ ok(tdb.precautions.every(p=>!p.needs_review),'önlem ifadeleri SEA Ek-4 ile kar�
  ok(h.length===2&&h[0].s!==h[1].s,'tPhrases hepsi: iki geçiş '+JSON.stringify(h));
  ok(!/sabun/.test(tMaske(t,r.hepsi)),'tMaske: iki geçiş de maskelendi');
  ok(tPhrases(t,T,T.pphrases).hepsi===undefined,'tPhrases: hepsi istenmezse alan yok');}
+// İçerik listesindeki sabun yıkama talimatı sayılmaz: sözcük sonu, "of", listede "su ve sabun", arkasında başka madde (bozma turu, 21.10.2026; eski kalıpla hepsi düşüyordu)
+["İçindekiler: limon kokusu ve sabun, parfüm.","Lavanta kokusu ve sabun içerir.","Ingredients: rosewater and soap, perfume.","Ingredients: seawater and soap.","Waterproof soap.",
+ "Contains: 5-15% anionic surfactants; less than 5% of: soap, phosphonates, perfume.","Ingredients: less than 5% of soap, perfume.","Contains: blend of soap, perfume.","Ingredients: mix of soap.",
+ "İçindekiler: su ve sabun, parfüm.","İçindekiler: deiyonize su ve sabun, parfüm.","İçindekiler: arıtılmış su ve sabun.","İçindekiler: %5'ten az noniyonik yüzey aktif madde, saf su ve sabun.",
+ "Ingredients: water and soap, perfume.","Ingredients: aqua (water) and soap, perfume.","Ingredients: less than 5% soap and water softener, perfume.","İçindekiler: su, sabun ve su yumuşatıcı.",
+ "İçindekiler: %5'ten az sabun ve su bazlı polimer.","Composition: <5% soap and water-soluble polymers.","Ingredients: 5-15% anionic surfactants, less than 5% soap and water, perfume.",
+ "İÇİNDEKİLER: %5'TEN AZ SABUN VE SU, PARFÜM.","İçindekiler: %5-15 anyonik yüzey aktif madde ve sabun ve su.","Ingredients: 15-30% soap and water.",
+ "İçindekiler: %5'ten az anyonik yüzey aktif madde, bol\nsabun, parfüm.",
+ "İçindekiler: su ve sabun, parfüm. Göze temasında suyla yıkayın.",
+ "Çamaşır yıkama sıvısı. Lavanta kokusu ve sabun içeren yıkama sıvısı.","Çamaşır yıkama deterjanı: %5'ten az sabun ve suda çözünen polimer."
+].forEach(t=>{ok(analyzeT(t,T).groups.some(g=>g.id==='sabun'),'içerik listesindeki sabun kayboldu: '+t);ok(analyzeT('Su ile şiddetli tepkime verir. '+t,T).groups.some(g=>g.id==='sabun'),'EUH014 ile sabun kayboldu: '+t)});
 // analyzeT grupları her geçişi maskelenmiş metinde arar: yapay grup "eldiven", P280 iki kez yazılı
 {const G={g:{id:'deneme',noband:true},rx:[/(?:^|[^a-z])eldiven(?![a-z])/g]},T2=Object.assign({},T,{groups:[G]});
  const t="Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın. Çocukların erişemeyeceği yerde saklayın. Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın.";

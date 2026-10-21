@@ -117,6 +117,12 @@ export var TBANDS=[
   ["b30",/%\s?30\s(?:ve\s|veya\s)?(?:uzeri|ustu|fazla)|(?:>|≥)\s?%?\s?30|30\s?%\s(?:and|or)\s(?:over|more|above)|%\s?30\s?\+/g],
   ["b5",/%\s?5\s(?:ten\s|den\s|in\s)?(?:az|asagi|altinda|dusuk)|(?:<|≤)\s?%?\s?5(?![0-9])|less than 5\s?%|(?:^|[^0-9])5\s?%\s(?:ten\s|den\s)?az/g]
 ];
+/* N'de s..e aralığındaki sabun bir yıkama talimatının parçası mı: cümlede (| arası) yıka/wash/rinse ve sabunun hemen yanında su/water ya da "bol"/"plenty of" */
+export function tYikama(N,s,e){
+  var cb=N.lastIndexOf("|",s)+1,ce=N.indexOf("|",e),cum=N.slice(cb,ce<0?N.length:ce);
+  if(!/(?:^|[^a-z])(?:yika|wash|rinse)/.test(cum))return false;
+  return /(?:^|[^a-z])(?:bol|su ve|plenty of|water and)\s$/.test(N.slice(cb,s))||/^\s(?:ve|and)\s(?:su|suyla|suyu|water)(?![a-z])/.test(N.slice(e));
+}
 export function tGroups(N,T){
   var bands=[],hits=[],m;
   TBANDS.forEach(function(b){b[1].lastIndex=0;while((m=b[1].exec(N))){var s=m.index+(/^[^%<>≤≥0-9l]/.test(m[0])?1:0);if(!bands.some(function(x){return s<x.e&&x.s<m.index+m[0].length}))bands.push({b:b[0],s:s,e:m.index+m[0].length})}});
@@ -125,8 +131,9 @@ export function tGroups(N,T){
     var s=m.index+(/^[^a-z]/.test(m[0])?1:0),e=m.index+m[0].length,x=/^\s(?:madde(?:ler|leri|si)?|surfactants?)(?![a-z])/.exec(N.slice(e));
     if(x)e+=x[0].length;
     if(G.g.id==="koruyucu"&&/(?:goz|yuz)\s$/.test(N.slice(Math.max(0,s-5),s)))continue;
-    // Yıkama talimatı (başlıksız ya da veride olmayan yazımıyla P302+P352): "bol sabun ve su(yla)", "su ve sabun ile", "plenty of soap and water"
-    if(G.g.id==="sabun"&&(/(?:bol|su ve|of|water and)\s$/.test(N.slice(Math.max(0,s-10),s))||/^\s(?:ve|and)\s(?:su|water)(?![a-z])/.test(N.slice(e))))continue;
+    // Yıkama talimatı (başlıksız ya da veride olmayan yazımıyla P302+P352): "bol sabun ve su(yla)", "su ve sabun ile", "plenty of soap and water".
+    // Yalnızca aynı cümlede yıkama fiili varsa: içerik listesindeki "su ve sabun", "soap and water softener" grup kalır (bozma turu, 21.10.2026)
+    if(G.g.id==="sabun"&&tYikama(N,s,e))continue;
     hits.push({id:G.g.id,g:G.g,s:s,e:e})}})});
   hits.sort(function(a,b){return a.s-b.s});
   hits=hits.filter(function(h,i){return !hits.some(function(o,j){return j!==i&&o.s<=h.s&&o.e>=h.e&&(o.e-o.s)>(h.e-h.s)})});
