@@ -62,6 +62,36 @@ import { olcumAnahtar } from "../../js/olcum.js";
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
+const KUTU_EN_COK = 3000;             // istek {kutu: true} ise döndürülen en çok sözcük kutusu (yanıt boyutu sınırı)
+
+// Vision fullTextAnnotation → sözcük kutuları (A-02, besin tablosunu konumdan kurmak için; yalnızca {kutu: true} isteyene).
+// Yalnızca ilk sayfa (fotoğrafta Vision tek sayfa verir). boyut: [genişlik, yükseklik]; kutu_surum: alan eklenirse artar (yeni alan sona).
+// kutu: [[sözcük, x0, y0, x1, y1, x2, y2, x3, y3, blok, satır_sonu], …] Vision'ın okuma sırasıyla; köşeler Vision'daki sırayla
+// (yazının sol üstünden saat yönünde: fotoğraf dönükse x0,y0 → x1,y1 yazının yönüdür); eksik koordinat 0; blok = Vision bloğunun sırası;
+// satır_sonu 1 = sözcükten sonra satır biter (detectedBreak LINE_BREAK / EOL_SURE_SPACE). Bozuk yapı istisna atmaz, o parça atlanır.
+const KUTU_SURUM = 1;
+const dizi = x => (Array.isArray(x) ? x : []);
+const tam = x => { const n = Math.round(Number(x)); return Number.isFinite(n) ? n : 0; };
+export function visionKutular(fta) {
+  const kutu = [], sayfa = (fta && dizi(fta.pages)[0]) || {};
+  let kesik = false;
+  tum: for (const [b, bl] of dizi(sayfa.blocks).entries()) {
+    for (const pa of dizi(bl && bl.paragraphs)) for (const wd of dizi(pa && pa.words)) {
+      const sem = dizi(wd && wd.symbols).filter(x => x && typeof x.text === "string");
+      const yazi = sem.map(x => x.text).join("");
+      if (!yazi) continue;
+      if (kutu.length >= KUTU_EN_COK) { kesik = true; break tum; }
+      const v = dizi(wd.boundingBox && wd.boundingBox.vertices), k = [yazi];
+      for (let i = 0; i < 4; i++) k.push(tam(v[i] && v[i].x), tam(v[i] && v[i].y));
+      const br = (((sem[sem.length - 1].property || {}).detectedBreak) || {}).type;
+      k.push(b, br === "LINE_BREAK" || br === "EOL_SURE_SPACE" ? 1 : 0);
+      kutu.push(k);
+    }
+  }
+  const sonuc = { boyut: [tam(sayfa.width), tam(sayfa.height)], kutu_surum: KUTU_SURUM, kutu };
+  if (kesik) sonuc.kutu_kesik = true;
+  return sonuc;
+}
 
 function origins(env) {
   return (env.ALLOWED_ORIGIN || "").split(",").map((s) => s.trim()).filter(Boolean);
@@ -450,8 +480,8 @@ async function isle(request, env) {
   let raw;
   try { raw = await request.text(); } catch { return R(400, { error: "İstek okunamadı." }); }
   if (raw.length > MAX_BODY) return R(413, { error: "Fotoğraf çok büyük. Daha küçük bir alan seçip tekrar deneyin." });
-  let image;
-  try { image = JSON.parse(raw).image; } catch { return R(400, { error: "Geçersiz istek." }); }
+  let image, kutuIste;
+  try { const g = JSON.parse(raw); image = g.image; kutuIste = g.kutu === true; } catch { return R(400, { error: "Geçersiz istek." }); }
   if (typeof image !== "string" || image.length < 100) return R(400, { error: "Fotoğraf bulunamadı." });
   // Yalnızca JPEG (/9j/), PNG (iVBOR) ve WebP (UklGR) kabul edilir
   if (!/^(\/9j\/|iVBOR|UklGR)/.test(image) || /[^A-Za-z0-9+/=]/.test(image)) {
@@ -486,7 +516,13 @@ async function isle(request, env) {
       kayit("vision_hata", msg);
       return R(502, { error: "OCR hatası: " + String(msg).slice(0, 200) });
     }
-    return R(200, { text: (res.fullTextAnnotation && res.fullTextAnnotation.text) || "" });
+    const text = (res.fullTextAnnotation && res.fullTextAnnotation.text) || "";
+    if (!kutuIste) return R(200, { text });
+    // Kutular yardımcı iş: ne olursa olsun okunan metni düşürmez
+    let kt;
+    try { kt = visionKutular(res.fullTextAnnotation); }
+    catch (e) { kayit("kutu_hata", e && e.message); kt = { kutu_hata: true }; }
+    return R(200, { text, ...kt });
   } catch (e) {
     kayit(e && e.name === "AbortError" ? "vision_zaman_asimi" : "vision_ulasilamadi", e && e.message);
     return R(504, { error: e && e.name === "AbortError" ? "Okuma zaman aşımına uğradı." : "Okuma hizmetine ulaşılamadı." });

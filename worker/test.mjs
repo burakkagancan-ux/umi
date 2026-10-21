@@ -1,7 +1,7 @@
 // Worker'ın yerel testi: node worker/test.mjs  (Vision ve rate limit taklit edilir)
 import w from "./src/index.js";
 import { urunSec, barkodGecerli, katkiOzet, KATKI_ARALIK_MS, KIMLIKSIZ_SON, ayniKisi, toplamFark } from "./src/barkod.js";
-import { agOnek } from "./src/index.js";
+import { agOnek, visionKutular } from "./src/index.js";
 const ORIGIN = "https://burakkagancan-ux.github.io";
 let calls = 0, visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: { text: "Aqua, Glycerin" } }] } });
 globalThis.fetch = async (url, opt) => { calls++; const v = visionReply(url, opt); return new Response(JSON.stringify(v.body), { status: v.status }); };
@@ -18,6 +18,35 @@ async function t(name, r, e, status, check) {
   if (!ok) { fail++; console.log("HATA", name, res.status, txt); } else console.log("ok  ", name, res.status, j.error || j.text || "");
 }
 await t("başarılı okuma", req(JSON.stringify({ image: img })), env(), 200, j => j.text === "Aqua, Glycerin");
+// Sözcük kutuları (A-02): yalnızca {kutu: true} isteyene; istemeyenin yanıtı eskisi gibi yalnızca text
+{ const sem = (y, v, br) => ({ symbols: [...y].map((c, i, a) => ({ text: c, ...(br && i === a.length - 1 ? { property: { detectedBreak: { type: br } } } : {}) })), boundingBox: { vertices: v } });
+  const fta = { text: "Yağ 12,5\ng", pages: [{ width: 1800, height: 1200, blocks: [{ paragraphs: [{ words: [
+    sem("Yağ", [{ x: 10, y: 20 }, { x: 60, y: 20 }, { x: 60, y: 40 }, { x: 10, y: 40 }], "SPACE"),
+    sem("12,5", [{ x: 300, y: 21 }, { y: 21 }, { x: 350, y: 41 }, { x: 300, y: 41 }], "LINE_BREAK"), { symbols: [] } ] }] },
+    { paragraphs: [{ words: [sem("g", [{ x: 5, y: 60 }], "EOL_SURE_SPACE")] }] }] }, { blocks: [{ paragraphs: [{ words: [sem("ikinci", [])] }] }] }] };
+  const eski = visionReply; visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: fta }] } });
+  await t("kutu istenmedi: yalnızca text", req(JSON.stringify({ image: img })), env(), 200, j => j.text === "Yağ 12,5\ng" && Object.keys(j).join() === "text");
+  await t("kutu: \"1\" kutu sayılmaz", req(JSON.stringify({ image: img, kutu: "1" })), env(), 200, j => !("kutu" in j));
+  // ikinci sayfa alınmaz; blok sırası ve satır sonu son iki alanda
+  await t("kutu istendi", req(JSON.stringify({ image: img, kutu: true })), env(), 200, j => j.text === "Yağ 12,5\ng" && JSON.stringify(j.boyut) === "[1800,1200]" && j.kutu_surum === 1
+    && JSON.stringify(j.kutu) === JSON.stringify([["Yağ", 10, 20, 60, 20, 60, 40, 10, 40, 0, 0], ["12,5", 300, 21, 0, 21, 350, 41, 300, 41, 0, 1], ["g", 5, 60, 0, 0, 0, 0, 0, 0, 1, 1]]) && !("kutu_kesik" in j));
+  // Bozma turu H1: bozuk yapı (null öğeler, dizi olmayan alanlar) metni düşürmez, ağ hatası diye kaydedilmez
+  KAYIT.length = 0;
+  visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: { text: "Yağ", pages: [{ width: "1800", height: 3e9, blocks: [null, { paragraphs: [{ words: [null, { symbols: [null, { text: 5 }, { text: "Y" }] }, { symbols: {} }] }, { words: {} }] }] }] } }] } });
+  await t("bozuk kutu yapısı: metin kalır", req(JSON.stringify({ image: img, kutu: true })), env(), 200, j => j.text === "Yağ" && JSON.stringify(j.kutu) === '[["Y",0,0,0,0,0,0,0,0,1,0]]'
+    && JSON.stringify(j.boyut) === "[1800,3000000000]" && !("kutu_hata" in j) && KAYIT.length === 0);
+  visionReply = () => ({ status: 200, body: { responses: [{ fullTextAnnotation: { text: "Yağ", pages: { 0: { width: 5, blocks: [{ paragraphs: [{ words: [sem("x", [])] }] }] } } } }] } });
+  await t("pages dizi değil", req(JSON.stringify({ image: img, kutu: true })), env(), 200, j => j.text === "Yağ" && j.kutu.length === 0 && JSON.stringify(j.boyut) === "[0,0]");
+  visionReply = () => ({ status: 200, body: { responses: [{}] } });
+  await t("kutu istendi, metin yok", req(JSON.stringify({ image: img, kutu: true })), env(), 200, j => j.text === "" && j.kutu.length === 0 && JSON.stringify(j.boyut) === "[0,0]");
+  visionReply = eski;
+  const cok = visionKutular({ pages: [{ width: 1, height: 1, blocks: [{ paragraphs: [{ words: Array.from({ length: 3001 }, () => sem("a", [])) }] }] }] });
+  if (cok.kutu.length !== 3000 || cok.kutu_kesik !== true || cok.kutu[0].length !== 11) { fail++; console.log("HATA kutu sınırı", cok.kutu.length, cok.kutu_kesik); } else console.log("ok   kutu sınırı 3000, kutu_kesik");
+  const tam = visionKutular({ pages: [{ blocks: [{ paragraphs: [{ words: Array.from({ length: 3000 }, () => sem("a", [])) }] }] }] });
+  if (tam.kutu.length !== 3000 || "kutu_kesik" in tam) { fail++; console.log("HATA tam 3000 kesik sayılmamalı"); } else console.log("ok   tam 3000 kesik değil");
+  // Bozma turu H2: 3000 sözcükten sonra gelen boş sözcük bir şey atılmadığı için kesik sayılmaz
+  const bos = visionKutular({ pages: [{ blocks: [{ paragraphs: [{ words: [...Array.from({ length: 3000 }, () => sem("a", [])), { symbols: [] }] }] }] }] });
+  if (bos.kutu.length !== 3000 || "kutu_kesik" in bos) { fail++; console.log("HATA 3000 + boş sözcük kesik sayılmamalı"); } else console.log("ok   3000 + boş sözcük kesik değil"); }
 await t("CORS başlığı", req(JSON.stringify({ image: img })), env(), 200, (j, r) => r.headers.get("Access-Control-Allow-Origin") === ORIGIN);
 await t("ön kontrol (OPTIONS)", req(null, { method: "OPTIONS" }), env(), 204);
 await t("yabancı köken", req(JSON.stringify({ image: img }), { origin: "https://evil.example" }), env(), 403);
