@@ -10,6 +10,7 @@ function ekleSunucu(tazeSn,goster,liste){
   var d0=rozetLoad();if(d0.sunucu&&Date.now()-d0.sunucu.t<tazeSn*1000&&(!liste||EKLE_SON))return Promise.resolve(EKLE_SON);
   return barkodWorker("/katki",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kim:kim})}).then(function(j){
     if(!j||j.devreDisi||!Array.isArray(j.urunler))return null;
+    j.urunler=j.urunler.filter(function(u){return u&&typeof u==="object"});   // bozuk kayıt ekranı boş bırakmasın
     EKLE_SON=j;
     return rozetDefYukle().then(function(def){
       var d=rozetSunucuYaz(rozetLoad(),j,Date.now()),yeni=[];
@@ -35,7 +36,7 @@ function ekleProfil(){
   var b=el("button","kayitac");b.type="button";
   b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6v12M7 6v12M10 6v12M14 6v12M16 6v12M20 6v12"/></svg>';
   var s=el("span","kt");s.appendChild(el("b",null,t("ekle.baslik")));
-  var n=!katkiciGecerli(katkiciAl())?0:EKLE_SON?EKLE_SON.urunler.length:null;
+  var n=!katkiciGecerli(katkiciAl())?0:EKLE_SON?ekleSay(EKLE_SON).n:null;
   s.appendChild(el("span",n?"mut say":"mut",n==null?t("ekle.alt"):n?t("ekle.urun_say",{n:n}):t("ekle.alt_bos")));b.appendChild(s);
   b.onclick=function(){location.hash="#eklediklerim"};box.appendChild(b);
 }
@@ -53,12 +54,20 @@ function ekleAc(){
     ul.textContent="";
     if(!j){ul.appendChild(el("p","mut",t("ekle.ulasilamadi")));return}
     if(!j.urunler.length){ekleBos(ul);return}
-    var say=0,oncu=0;j.urunler.forEach(function(u){if(u.dogrulandi)say++;if(u.oncu)oncu++});
-    ul.appendChild(el("p","mut",t("ekle.ozet",{n:j.urunler.length,d:say})));
-    ul.appendChild(ekleKazanim(j.urunler.length,say,oncu));
+    var S=ekleSay(j);
+    ul.appendChild(el("p","mut",t("ekle.ozet",{n:S.n,d:S.d})));
+    ul.appendChild(ekleKazanim(S.n,S.d,S.o));
     j.urunler.forEach(function(u){ul.appendChild(ekleSatir(u))});
     ekleProfil();
   });
+}
+/* Sayılar: sunucunun tür toplamları (eklenen, avci = doğrulanan, oncu); liste en çok 200 kayıtla kesildiği için satır sayımı
+   yalnızca toplamlar yoksa. Öncü yalnızca doğrulanmış üründe olur: doğrulanandan fazla gösterilmez. */
+function ekleTop(o){var s=0;if(o&&typeof o==="object")for(var k in o){var v=+o[k];if(v>0)s+=v}return s}
+function ekleSay(j){
+  var u=j.urunler,n=ekleTop(j.eklenen),d=ekleTop(j.avci),o=ekleTop(j.oncu);
+  if(!n){n=u.length;d=0;o=0;u.forEach(function(x){if(x.dogrulandi)d++;if(x.oncu&&x.dogrulandi)o++})}
+  return {n:n,d:Math.min(d,n),o:Math.min(o,d,n)};
 }
 /* Hiç ürün yok: ne olduğu, nasıl ekleneceği ve eklemenin kullanıcıya ve herkese kazandırdıkları */
 function ekleBos(ul){

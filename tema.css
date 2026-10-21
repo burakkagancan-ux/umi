@@ -2,11 +2,11 @@
    --ok/--okbg: marka rengi (kobalt, 15.10.2026: düğme, bağlantı, sekme, alt menü). --yesil/--yesilbg: risk düzenindeki yeşil (uyarısız/doğal madde, "bulunamadı" kararı, düşük besin değeri); marka rengi değişse de yeşil kalır. */
 /* Zemin bir tık gri, kartlar beyaz, çizgi belirgin (22.10.2026, kullanıcı seçimi, "göz yormasın"): --bg zemin, --card kart; yüzey (kart, kutu) --bg değil --card kullanır. */
 :root{--bg:#F3F5F3;--card:#FFFFFF;--line:#D3D9D5;--ok:#2741C8;--ink:#1B211E;--mute:#5A615C;
---amb:#8A5A00;--ambbg:#FFF3D1;--hi:#A4470B;--hibg:#FCE9DA;--red:#B3261E;--redbg:#FBE9E7;--okbg:#E8ECFB;--yesil:#1F4D3A;--yesilbg:#E6EFE9;--sunk:#E9ECEA;
+--amb:#8A5A00;--ambbg:#FFF3D1;--hi:#A4470B;--hibg:#FCE9DA;--red:#B3261E;--redbg:#FBE9E7;--okbg:#E8ECFB;--yesil:#1F4D3A;--yesilbg:#E6EFE9;--sunk:#E4E8E5;
 --hf:"Manrope",system-ui,sans-serif;--bf:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
 --tgida:#6A3FB8;--tgidabg:#F1EBFA;--tkoz:#A3307A;--tkozbg:#F9E9F3;--ttem:#00717D;--ttembg:#E1F2F3;
 --warn:var(--hi);--warnbg:var(--hibg);--yel:var(--amb);--yelbg:var(--ambbg);--unbg:var(--sunk);
---onok:#fff;--okline:#C9D2F5;--notr:#8A8F8B;--hic:#A4470B;--ambc:#D9A42B;--bos:#B9BDB9;--cam:rgba(255,255,255,.72);--camline:rgba(27,33,30,.08);color-scheme:light}
+--onok:#fff;--okline:#C9D2F5;--notr:#8A8F8B;--hic:#A4470B;--ambc:#D9A42B;--bos:#B9BDB9;--cam:rgba(255,255,255,.72);--camzemin:rgba(243,245,243,.72);--camline:rgba(27,33,30,.08);color-scheme:light}
 /* Koyu tema (17.10.2026, kullanıcı isteği; 04.10.2026'daki görünüm yenilemesinde kaldırılmıştı): <html data-tema="koyu"> iken; js/tema.js koyar
    (Profilim > Ayarlar > Görünüm: telefona göre, açık ya da koyu). Aynı belirteçlerin koyu karşılıkları;
    sayfa dosyalarında sabit yazılmış renklerin koyu karşılığı o dosyanın sonundaki koyu tema bloğunda. Ana renk ve tür renkleri koyu zeminde açık tonda, üstlerindeki yazı koyu (--onok);
@@ -17,9 +17,9 @@
    parlaklık ya da renk körlüğü benzetimiyle ölçer). Paylaşım ve rozet kartı görseli (canvas) her zaman açık kalır.
    Yeni renk sabit yazılmaz: belirteç kullanılır ya da koyu karşılığı bu bloğa/sayfanın koyu bloğuna eklenir (tarayıcı testi 5. grup koyu temada okunmayan yazıyı yakalar). */
 :root[data-tema="koyu"]{color-scheme:dark;--bg:#0B0E0D;--card:#1A1F1C;--line:#384039;--ok:#93A6FF;--ink:#E6E9E7;--mute:#A2A9A4;
---amb:#E9B949;--ambbg:#2F260E;--hi:#FF9E66;--hibg:#36200F;--red:#FF8A80;--redbg:#3B1A18;--okbg:#1D2546;--yesil:#61B48A;--yesilbg:#14261D;--sunk:#222725;
+--amb:#E9B949;--ambbg:#2F260E;--hi:#FF9E66;--hibg:#36200F;--red:#FF8A80;--redbg:#3B1A18;--okbg:#1D2546;--yesil:#61B48A;--yesilbg:#14261D;--sunk:#262C29;
 --tgida:#BBA2F5;--tgidabg:#2A1F45;--tkoz:#F09ACB;--tkozbg:#3A1830;--ttem:#62CCD6;--ttembg:#0E2C2F;
---onok:#0D1433;--okline:#34407A;--notr:#8F9590;--hic:#E0552B;--ambc:#EFC64E;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camline:rgba(255,255,255,.08)}
+--onok:#0D1433;--okline:#34407A;--notr:#8F9590;--hic:#E0552B;--ambc:#EFC64E;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camzemin:rgba(11,14,13,.72);--camline:rgba(255,255,255,.08)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--bf)}

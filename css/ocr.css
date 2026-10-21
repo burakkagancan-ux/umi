@@ -108,7 +108,7 @@ body.mode-kars .w>:not(#kars){display:none!important}#kars[hidden]{display:none}
 .ic.n{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%238A8F8B'/%3E%3Cpath d='M7.5 12h9' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")}
 /* Kaydet / Paylaş çubuğu (17.10.2026, kullanıcı isteği): sonuçta aşağı kayarken ekranın üstünde kalır; zemin alt menü gibi yarı saydam (bulanıklaştırma yoksa düz) */
 .resbar{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:4px -16px 10px;padding:calc(6px + env(safe-area-inset-top,0px)) 16px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:15;background:var(--bg)}
-@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.resbar{background:var(--cam);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.resbar{background:var(--camzemin);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}}
 .resbar .pay{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 12px}
 .resbar .pay svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .paypre{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:4px auto 12px}.paypre.uzun{width:auto;max-width:100%;max-height:62vh}.paywrap{max-height:62vh;overflow-y:auto;border-radius:12px;margin:0 0 12px}.paywrap .paypre{margin:0 auto}.paypre.cokuzun{width:100%;height:auto}.payseg{margin:0 0 10px}

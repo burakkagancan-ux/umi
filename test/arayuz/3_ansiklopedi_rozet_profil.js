@@ -103,7 +103,8 @@ module.exports=async({br,B,opt,ok,server})=>{
     // G-02: ürün rozetleri ve Eklediklerim sunucudan (POST /katki {kim}); kimlik gövdede, yanıt sayıları ve listeyi verir
     {
       let istek=null;
-      const yanit={eklenen:{gida:3},avci:{gida:10},oncu:{gida:1},dogrulayici:{gida:2},urunler:[
+      // Sayılar tür toplamlarından (eklenen, avci); liste örnek iki kayıt (sunucu en çok 200 kayıt gönderir, toplamlar tamdır)
+      const yanit={eklenen:{gida:12},avci:{gida:10},oncu:{gida:1},dogrulayici:{gida:2},urunler:[
         {kod:'8690504025207',tur:'gida',t:Date.now()-86400000,dogrulandi:true,oncu:true,dogrulayici:false,ozet:'Kakao kitlesi, şeker'},
         {kod:'4006381333931',tur:'gida',t:Date.now()-3600000,dogrulandi:false,oncu:false,dogrulayici:false,ozet:'Su, şeker'}]};
       await p.route(/workers\.dev\/katki$/,r=>{istek={yontem:r.request().method(),url:r.request().url(),govde:r.request().postDataJSON()};r.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:JSON.stringify(yanit)})});
@@ -112,10 +113,10 @@ module.exports=async({br,B,opt,ok,server})=>{
       const kim=await p.evaluate(()=>katkiciAl());
       ok(istek&&istek.yontem==='POST'&&/\/katki$/.test(istek.url)&&istek.govde&&istek.govde.kim===kim&&Object.keys(istek.govde).join()==='kim'&&!istek.url.includes(kim),'istek: POST /katki, yalnızca kimlik ve gövdede: '+JSON.stringify(istek));
       const e1=await p.evaluate(()=>({n:document.querySelectorAll('#ekle .ekitem').length,ilk:document.querySelector('#ekle .ekitem').textContent,ikinci:document.querySelectorAll('#ekle .ekitem')[1].textContent,ozet:document.querySelector('#ekle .klistk>p').textContent,kut:[...document.querySelectorAll('#sonuc .rozetkut, #ekle .rozetkut')].map(x=>x.querySelector('.rza').textContent)}));
-      ok(e1.n===2&&/Doğrulandı/.test(e1.ilk)&&/Öncü/.test(e1.ilk)&&/Doğrulanmayı bekliyor/.test(e1.ikinci)&&/2 ürün eklediniz, 1 tanesi doğrulandı/.test(e1.ozet),'Eklediklerim listesi ve durumlar: '+JSON.stringify(e1));
+      ok(e1.n===2&&/Doğrulandı/.test(e1.ilk)&&/Öncü/.test(e1.ilk)&&/Doğrulanmayı bekliyor/.test(e1.ikinci)&&/12 ürün eklediniz, 10 tanesi doğrulandı/.test(e1.ozet),'Eklediklerim listesi ve durumlar: '+JSON.stringify(e1));
       ok(e1.kut.length===1&&await p.evaluate(()=>/\+2 yeni rozet daha/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İzci/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İlk Adım/.test(document.querySelector('#ekle .rozetkut').textContent)&&/İkinci Göz/.test(document.querySelector('#ekle .rozetkut').textContent)),'sunucudan gelen üç yeni kademe tek kartta kutlanır: '+e1.kut.join(','));
       await p.click('#ekle .kback');await p.waitForFunction(()=>location.hash==='#profil');
-      ok(/Eklediklerim/.test(await p.textContent('#eklebar'))&&/2 ürün/.test(await p.textContent('#eklebar')),'Profilim: Eklediklerim düğmesi');
+      ok(/Eklediklerim/.test(await p.textContent('#eklebar'))&&/12 ürün/.test(await p.textContent('#eklebar')),'Profilim: Eklediklerim düğmesi');
       await p.goto(B+'ocr.html#rozetler');await p.waitForSelector('#rozet .rzaile[data-aile="avci"]');
       await p.click('#rozet .seg button[data-tur="gida"]');   // bu sayfada önceden Kozmetik sekmesi seçilmişti
       const r2=await p.evaluate(()=>({avci:document.querySelector('#rozet .rzaile[data-aile="avci"]').textContent,sek:document.querySelector('#rozet .seg button[aria-checked="true"]').textContent,kut:document.querySelectorAll('#rozet .rozetkut').length}));
@@ -128,6 +129,31 @@ module.exports=async({br,B,opt,ok,server})=>{
       // 22.10.2026 (kullanıcı isteği): kimlik yoksa da düğme görünür, altyazısı "Henüz ürün eklemediniz"; sunucuya istek yine yok
       ok(!istek&&/Henüz ürün eklemediniz/.test(await p.textContent('#eklebar')),'kimlik yoksa istek yok, Eklediklerim düğmesi "Henüz ürün eklemediniz" altyazısıyla: '+await p.textContent('#eklebar'));
       await p.unroute(/workers\.dev\/katki$/);
+    }
+    // Bozma turu (22.10.2026): sayılar listenin satırından değil sunucunun toplamlarından (liste 200'de kesilir); bozuk kayıt (null)
+    // ekranı boş bırakmaz; Öncü doğrulanandan fazla gösterilmez
+    {
+      const L=[null];for(let i=0;i<200;i++)L.push({kod:String(8690000000000+i),tur:i<120?'gida':'koz',t:Date.now()-i*1000,dogrulandi:i<100,oncu:i<3,dogrulayici:false,ozet:'Su'});
+      await p.route(/workers\.dev\/katki$/,r=>r.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:JSON.stringify({eklenen:{gida:150,koz:100},avci:{gida:60,koz:40},oncu:{gida:3},dogrulayici:{},urunler:L})}));
+      await p.evaluate(()=>{localStorage.setItem('katkici','0123456789abcdef0123456789abcdef');const d=rozetLoad();delete d.sunucu;localStorage.setItem('rozetler',JSON.stringify(d))});
+      await p.goto(B+'ocr.html#eklediklerim');await p.waitForSelector('#ekle:not([hidden]) .ekkaz',{timeout:10000}).catch(()=>{});
+      const m=await p.textContent('#ekle');
+      ok(/250 ürün eklediniz, 100 tanesi doğrulandı/.test(m)&&/Siz: 100 ürününüz doğrulandı ve rozetlerinize sayıldı; 3 üründe Öncü oldunuz/.test(m)&&/eklediğiniz 250 ürün/.test(m)&&/doğrulanan 100 ürün/.test(m)&&(await p.$$('#ekle .ekitem')).length===200,'Eklediklerim: 200 kayıtla kesilen listede sayılar toplamlardan, null kayıt atlandı: '+m.slice(0,400));
+      await p.click('#ekle .kback');await p.waitForFunction(()=>location.hash==='#profil');
+      ok(/250 ürün/.test(await p.textContent('#eklebar')),'Profilim: Eklediklerim düğmesi toplamdan (250): '+await p.textContent('#eklebar'));
+      ok(!errs.length,'Eklediklerim bozuk kayıtta konsol hatası yok: '+errs.join(' | '));errs.length=0;
+      // Kaydedilen Ürünlerim (hash'siz) ile Eklediklerim üst üste açılmaz: Eklediklerim → geri → Kaydedilen → ileri
+      await p.click('#eklebar button');await p.waitForFunction(()=>location.hash==='#eklediklerim');
+      await p.goBack();await p.waitForFunction(()=>location.hash==='#profil');
+      await p.click('#kayitbar button');await p.waitForFunction(()=>document.body.classList.contains('mode-kayit'));
+      await p.goForward();await p.waitForFunction(()=>location.hash==='#eklediklerim');await p.waitForTimeout(300);
+      const cl=await p.evaluate(()=>document.body.className);
+      ok(/mode-ekle/.test(cl)&&!/mode-kayit/.test(cl)&&await p.evaluate(()=>document.getElementById('kayit').hidden),'ileri ile açılan Eklediklerim Kaydedilen Ürünlerim\'in üstüne açılmaz: '+cl);
+      await p.goto(B+'ocr.html#profil');await p.click('#kayitbar button');await p.waitForFunction(()=>document.body.classList.contains('mode-kayit'));
+      await p.evaluate(()=>{location.hash='#rozetler'});await p.waitForSelector('#rozet:not([hidden])');
+      ok(!await p.evaluate(()=>document.body.classList.contains('mode-kayit')),'Rozetlerim açılınca Kaydedilen Ürünlerim kapanır');
+      await p.unroute(/workers\.dev\/katki$/);
+      await p.evaluate(()=>{localStorage.removeItem('katkici');const d=rozetLoad();delete d.sunucu;localStorage.setItem('rozetler',JSON.stringify(d))});
     }
     // Profilim › Alerjenler: listede olmayan alerjeni yazarak ekleme, liste, yineleme engeli, silme; gıda ve kozmetik sonucunda kart
     {
