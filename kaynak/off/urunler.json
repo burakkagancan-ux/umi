@@ -27,6 +27,13 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:herbal-teas"
+],
 "kod": "00000198",
 "marka": "Uno",
 "metin": {},
@@ -117,6 +124,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:2003"
+],
 "kod": "00016922",
 "marka": "من",
 "metin": {},
@@ -127,6 +137,9 @@
 "besin": null,
 "db": "food",
 "dil": "aa",
+"kat": [
+"en:iğne-gif-u"
+],
 "kod": "0005366300587",
 "marka": "ciglvk",
 "metin": {
@@ -192,6 +205,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:flakes",
+"en:cereal-flakes",
+"en:rolled-flakes",
+"en:rolled-oats"
+],
 "kod": "0038000200823",
 "marka": "Kellogg's",
 "metin": {
@@ -215,6 +240,18 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:fats",
+"en:spreads",
+"en:plant-based-spreads",
+"en:vegetable-fats",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters"
+],
 "kod": "0042563009137",
 "marka": "Woodstock",
 "metin": {
@@ -237,6 +274,14 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:carbonated-drinks",
+"en:artificially-sweetened-beverages",
+"en:sodas",
+"en:sweetened-beverages"
+],
 "kod": "0049000057997",
 "marka": "The Coca-Cola Company",
 "metin": {
@@ -259,6 +304,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals"
+],
 "kod": "0057245349876",
 "marka": "mom’s",
 "metin": {},
@@ -269,6 +322,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"ar:092222"
+],
 "kod": "00659833",
 "marka": "من تركيا",
 "metin": {
@@ -281,6 +337,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dietary-supplements"
+],
 "kod": "0074312002939",
 "marka": "nature's bounty",
 "metin": {
@@ -303,6 +362,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:cikolata"
+],
 "kod": "0076223000264",
 "marka": "Mondelez",
 "metin": {
@@ -338,6 +400,12 @@
 "besin": null,
 "db": "food",
 "dil": "es",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "00901222",
 "marka": "haribo",
 "metin": {},
@@ -442,6 +510,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces"
+],
 "kod": "04032892",
 "marka": "Bol Bol",
 "metin": {
@@ -474,6 +546,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:vckjcf"
+],
 "kod": "05489664",
 "marka": "",
 "metin": {},
@@ -484,6 +559,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:34"
+],
 "kod": "05584178",
 "marka": "222",
 "metin": {},
@@ -544,6 +622,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:cereal-pastas",
+"en:durum-wheat-pasta"
+],
 "kod": "0655945034919",
 "marka": "Bendo",
 "metin": {
@@ -596,6 +683,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:krema"
+],
 "kod": "0662811441535",
 "marka": "İçim",
 "metin": {
@@ -710,6 +800,14 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:salty-snacks-made-from-potato"
+],
 "kod": "07591068",
 "marka": "Pringles",
 "metin": {
@@ -764,6 +862,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks"
+],
 "kod": "08682125",
 "marka": "WASP",
 "metin": {
@@ -1007,6 +1108,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:food-additives"
+],
 "kod": "0869792879634",
 "marka": "DKZPHARMA",
 "metin": {
@@ -1069,6 +1173,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:peanuts",
+"en:unshelled-peanuts"
+],
 "kod": "08765376",
 "marka": "Züber",
 "metin": {
@@ -1116,6 +1230,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:767"
+],
 "kod": "11511940",
 "marka": "tr",
 "metin": {},
@@ -1158,6 +1275,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals"
+],
 "kod": "12337699",
 "marka": "Kelly's FITNESS Club",
 "metin": {},
@@ -1348,6 +1473,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:hsoshsosh"
+],
 "kod": "15134878",
 "marka": "",
 "metin": {
@@ -1517,6 +1645,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mayonnaises"
+],
 "kod": "18424164",
 "marka": "Tukaş",
 "metin": {
@@ -1570,6 +1703,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars"
+],
 "kod": "2000000024941",
 "marka": "ETİ",
 "metin": {
@@ -1582,6 +1720,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:pure-chocolate"
+],
 "kod": "2000000024942",
 "marka": "Ülker",
 "metin": {},
@@ -1602,6 +1747,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:orange-jelly"
+],
 "kod": "2000000025175",
 "marka": "Eti",
 "metin": {
@@ -1614,6 +1766,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:herbal-teas"
+],
 "kod": "2000000028977",
 "marka": "Doğadan",
 "metin": {
@@ -1626,6 +1785,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:nane-limon"
+],
 "kod": "2000000028978",
 "marka": "Doğadan",
 "metin": {
@@ -1648,6 +1810,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "2000000028980",
 "marka": "Danone",
 "metin": {},
@@ -1668,6 +1834,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:abur-cubur"
+],
 "kod": "2000000043477",
 "marka": "Eti",
 "metin": {
@@ -1691,6 +1860,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "2000000043478",
 "marka": "Saray",
 "metin": {
@@ -1779,6 +1954,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:cips"
+],
 "kod": "2000000043484",
 "marka": "",
 "metin": {},
@@ -1799,6 +1977,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:fruits",
+"en:dried-plant-based-foods",
+"en:apricots",
+"en:dried-fruits",
+"en:dried-apricots"
+],
 "kod": "2000000114730",
 "marka": "Mirsan",
 "metin": {
@@ -1831,6 +2021,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:freeze-dried-foods"
+],
 "kod": "2000000130657",
 "marka": "AgroGora",
 "metin": {},
@@ -1851,6 +2045,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"tr:süt-ve-süt-ürünleri"
+],
 "kod": "2000000134847",
 "marka": "Ülker",
 "metin": {
@@ -1863,6 +2061,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:herbal-teas"
+],
 "kod": "2000000145212",
 "marka": "Ziya Dede",
 "metin": {
@@ -1885,6 +2090,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:chocolate-candies",
+"en:bonbons",
+"en:chocolates",
+"tr:draje"
+],
 "kod": "2000000147428",
 "marka": "Patiswiss",
 "metin": {
@@ -1897,6 +2112,17 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-foods",
+"en:hot-beverages",
+"en:coffees",
+"en:capsules",
+"en:coffee-capsules",
+"en:nespresso-compatible-coffee-capsules",
+"en:plant-based-foods-and-beverages-beverages-plant-based-foods-hot-beverages-coffees-capsules-coffee-capsules"
+],
 "kod": "20225148",
 "marka": "Bellarom",
 "metin": {
@@ -1949,6 +2175,19 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:breakfasts",
+"en:spreads",
+"en:fruits-based-foods",
+"en:plant-based-spreads",
+"en:sweet-spreads",
+"en:fruit-and-vegetable-preserves",
+"en:jams",
+"en:figs-jams"
+],
 "kod": "20709952",
 "marka": "Родна стряха",
 "metin": {
@@ -2044,6 +2283,14 @@
 },
 "db": "food",
 "dil": "nl",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars",
+"en:dietary-supplements",
+"en:bodybuilding-supplements",
+"en:energy-bars"
+],
 "kod": "27032244",
 "marka": "Proformance",
 "metin": {},
@@ -2064,6 +2311,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:chicken-and-its-products",
+"en:poultries",
+"en:chickens",
+"en:chicken-tenderloin"
+],
 "kod": "2831568010549",
 "marka": "Gedik Piliç",
 "metin": {
@@ -2096,6 +2351,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:cheeses-from-the-united-kingdom",
+"en:cheeses-from-england",
+"en:cheddar-cheese"
+],
 "kod": "3073780999557",
 "marka": "La Vache Quirit",
 "metin": {},
@@ -2126,6 +2391,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cheeses-for-kids"
+],
 "kod": "3073781125535",
 "marka": "Kiri",
 "metin": {},
@@ -2146,6 +2418,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:spreads",
+"tr:labne-peyniri"
+],
 "kod": "3073781171587",
 "marka": "",
 "metin": {},
@@ -2166,6 +2442,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mustards",
+"en:groceries"
+],
 "kod": "3158697781737",
 "marka": "Petits Gourmets",
 "metin": {
@@ -2198,6 +2480,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "3256227447723",
 "marka": "U",
 "metin": {
@@ -2220,6 +2508,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"fr:gouters-fourres"
+],
 "kod": "3256227447730",
 "marka": "U",
 "metin": {
@@ -2252,6 +2547,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:doughnuts",
+"en:chocolate-doughnuts"
+],
 "kod": "3276550589938",
 "marka": "Carrefour",
 "metin": {
@@ -2294,6 +2597,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:roasted-peas",
+"en:salty-roasted-peas",
+"en:salty-roasted-chickpeas"
+],
 "kod": "3351226059196",
 "marka": "Çerezya",
 "metin": {
@@ -2326,6 +2636,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:caramels",
+"en:salted-butter-caramels"
+],
 "kod": "3470201015870",
 "marka": "Pinson",
 "metin": {
@@ -2348,6 +2665,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:65930"
+],
 "kod": "356787070052966",
 "marka": "van",
 "metin": {},
@@ -2358,6 +2678,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:non-food-products",
+"en:open-beauty-facts"
+],
 "kod": "3574661531755",
 "marka": "",
 "metin": {},
@@ -2448,6 +2772,16 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:breads",
+"en:pie-dough",
+"en:phyllo-dough"
+],
 "kod": "3760077150219",
 "marka": "Filo Murat",
 "metin": {
@@ -2470,6 +2804,12 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "3800065718134",
 "marka": "Sweet plus",
 "metin": {
@@ -2493,6 +2833,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:sheep-s-milk-cheeses"
+],
 "kod": "3800231230156",
 "marka": "Deniz",
 "metin": {
@@ -2515,6 +2862,13 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:halva",
+"en:sunflower-halva"
+],
 "kod": "3800771011154",
 "marka": "Захарни заводи",
 "metin": {
@@ -2528,6 +2882,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:h"
+],
 "kod": "3838824355740",
 "marka": "r",
 "metin": {},
@@ -2548,6 +2905,13 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:milk-chocolates"
+],
 "kod": "4000415007706",
 "marka": "Schogetten",
 "metin": {
@@ -2570,6 +2934,12 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "4000415025304",
 "marka": "Schogetten",
 "metin": {
@@ -2594,6 +2964,12 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "4000415043100",
 "marka": "Schogetten",
 "metin": {
@@ -2616,6 +2992,15 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:milk-chocolates",
+"en:chocolates-with-extra-fine-milk",
+"de:feinherb"
+],
 "kod": "4000539012105",
 "marka": "Lindt",
 "metin": {
@@ -2649,6 +3034,9 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:syrups"
+],
 "kod": "4008077743352",
 "marka": "Monin",
 "metin": {
@@ -2671,6 +3059,12 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum"
+],
 "kod": "4009900531221",
 "marka": "Orbit",
 "metin": {
@@ -2694,6 +3088,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:cooking-helpers",
+"en:pastry-helpers"
+],
 "kod": "4012625419910",
 "marka": "marmara",
 "metin": {
@@ -2760,6 +3158,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas"
+],
 "kod": "4060800302694",
 "marka": "Pepsi",
 "metin": {
@@ -2845,6 +3248,13 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks",
+"en:coffee-drinks"
+],
 "kod": "4100290025533",
 "marka": "Starbucks",
 "metin": {
@@ -2941,6 +3351,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:seeds",
+"en:legume-seeds",
+"en:pulses",
+"en:mung-beans"
+],
 "kod": "4260065877054",
 "marka": "Dere",
 "metin": {
@@ -2953,6 +3373,9 @@
 "besin": null,
 "db": "food",
 "dil": "de",
+"kat": [
+"de:kaffe"
+],
 "kod": "4260083920107",
 "marka": "Dallmayr- Venedig&Office",
 "metin": {},
@@ -2973,6 +3396,17 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies",
+"en:fats",
+"en:spreads",
+"en:spreadable-fats",
+"en:animal-fats",
+"en:dairy-spreads",
+"en:milkfat",
+"en:butters",
+"en:pasteurized-butters"
+],
 "kod": "4260193513435",
 "marka": "Demka",
 "metin": {
@@ -3008,6 +3442,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars"
+],
 "kod": "4305615908717",
 "marka": "Babydream",
 "metin": {
@@ -3031,6 +3470,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "4316268527071",
 "marka": "SØRENSEN'S",
 "metin": {
@@ -3043,6 +3488,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mustards",
+"en:groceries"
+],
 "kod": "4335896487274",
 "marka": "Exquisit",
 "metin": {
@@ -3146,6 +3597,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:waters",
+"en:spring-waters"
+],
 "kod": "4603934000755",
 "marka": "",
 "metin": {},
@@ -3166,6 +3623,9 @@
 "besin": null,
 "db": "food",
 "dil": "ar",
+"kat": [
+"ar:ورق"
+],
 "kod": "46337511",
 "marka": "0619",
 "metin": {
@@ -3228,6 +3688,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:seafood",
+"en:frozen-foods",
+"en:crustaceans",
+"en:frozen-seafood",
+"en:shrimps",
+"en:frozen-shrimps"
+],
 "kod": "4681170020379",
 "marka": "",
 "metin": {
@@ -3300,6 +3768,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:coffee-drinks"
+],
 "kod": "4710085227037",
 "marka": "",
 "metin": {},
@@ -3430,6 +3903,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:evaporated-milks"
+],
 "kod": "4770209047729",
 "marka": "",
 "metin": {
@@ -3442,6 +3919,14 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas",
+"en:black-teas"
+],
 "kod": "4792242857431",
 "marka": "Ceylon Tea Shop",
 "metin": {},
@@ -3452,6 +3937,14 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:herbal-teas",
+"en:hibiscus"
+],
 "kod": "4820097814610",
 "marka": "Lovare",
 "metin": {},
@@ -3622,6 +4115,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dietary-supplements",
+"en:vitamins"
+],
 "kod": "5021265248667",
 "marka": "",
 "metin": {},
@@ -3682,6 +4179,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:energy-drinks"
+],
 "kod": "5060751214861",
 "marka": "Monster Energy",
 "metin": {
@@ -3694,6 +4195,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:45"
+],
 "kod": "5060751216599",
 "marka": "MONSTER",
 "metin": {},
@@ -3774,6 +4278,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:alcoholic-beverages",
+"en:distilled-beverages",
+"en:hard-liquors",
+"en:eaux-de-vie",
+"en:whisky",
+"en:american-whiskeys"
+],
 "kod": "5099873090183",
 "marka": "Jack Daniel's",
 "metin": {},
@@ -3784,6 +4298,11 @@
 "besin": null,
 "db": "food",
 "dil": "el",
+"kat": [
+"en:beverages",
+"en:waters",
+"en:table-waters"
+],
 "kod": "5200105720109",
 "marka": "νερά Κρήτης",
 "metin": {},
@@ -3864,6 +4383,16 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:seeds",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-seeds",
+"en:roasted-sunflower-seeds",
+"en:shelled-sunflower-seeds",
+"en:roasted-shelled-sunflower-seeds"
+],
 "kod": "5285004200051",
 "marka": "Al-Samir",
 "metin": {
@@ -3886,6 +4415,13 @@
 },
 "db": "food",
 "dil": "nl",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fats",
+"en:vegetable-fats",
+"en:vegetable-oils"
+],
 "kod": "5400101259959",
 "marka": "sélection Carrefour",
 "metin": {},
@@ -3906,6 +4442,17 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:meals",
+"en:vegetables",
+"en:prepared-vegetables",
+"en:carrots",
+"en:grated-carrots"
+],
 "kod": "5400141277715",
 "marka": "",
 "metin": {},
@@ -3946,6 +4493,20 @@
 },
 "db": "food",
 "dil": "nl",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:dairy-substitutes",
+"en:cereals-and-their-products",
+"en:milk-substitutes",
+"en:plant-based-beverages",
+"en:plant-based-milk-alternatives",
+"en:cereal-based-drinks",
+"en:oat-based-drinks"
+],
 "kod": "5411188124689",
 "marka": "Danone Belux nv",
 "metin": {
@@ -4054,6 +4615,10 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks"
+],
 "kod": "5449000003102",
 "marka": "Fanta",
 "metin": {
@@ -4097,6 +4662,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:artificially-sweetened-beverages",
+"en:sodas",
+"en:sweetened-beverages"
+],
 "kod": "5449000012203",
 "marka": "Sprite",
 "metin": {
@@ -4132,6 +4705,14 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas",
+"en:colas",
+"en:sweetened-beverages"
+],
 "kod": "5449000016645",
 "marka": "Coca-Cola",
 "metin": {
@@ -4186,6 +4767,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:fruit-juices-from-concentrate",
+"en:orange-juices",
+"en:orange-juices-from-concentrate"
+],
 "kod": "5449000027313",
 "marka": "Cappy",
 "metin": {
@@ -4228,6 +4820,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"tr:içecek"
+],
 "kod": "5449000043672",
 "marka": "Burn",
 "metin": {},
@@ -4258,6 +4854,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas",
+"en:fruit-sodas",
+"en:sodas-with-exotic-fruits"
+],
 "kod": "5449000089380",
 "marka": "Schweppes",
 "metin": {},
@@ -4338,6 +4945,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:orange-juices",
+"en:peach-based-beverages"
+],
 "kod": "5449000186218",
 "marka": "Cappy",
 "metin": {
@@ -4370,6 +4988,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas"
+],
 "kod": "5449000189318",
 "marka": "Coca-Cola",
 "metin": {},
@@ -4450,6 +5073,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas",
+"en:colas"
+],
 "kod": "5449000228970",
 "marka": "Coca-Cola",
 "metin": {},
@@ -4629,6 +5258,15 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys"
+],
 "kod": "5701116201712",
 "marka": "Christians Grød",
 "metin": {
@@ -4651,6 +5289,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "5701975304203",
 "marka": "",
 "metin": {},
@@ -4701,6 +5348,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks",
+"en:evaporated-milks",
+"en:coffee-drinks",
+"en:coffee-milks"
+],
 "kod": "5711953072024",
 "marka": "Starbucks",
 "metin": {},
@@ -4791,6 +5446,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars",
+"en:cereal-bars",
+"en:chocolate-cereal-bars",
+"en:cereal-bar-with-chocolate-fortified-with-vitamins-and-minerals"
+],
 "kod": "5900020028051",
 "marka": "Nestlé",
 "metin": {},
@@ -4961,6 +5624,18 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:fruits",
+"en:dried-plant-based-foods",
+"en:dried-fruits",
+"en:dates",
+"en:deglet-noor-dates"
+],
 "kod": "6132529380586",
 "marka": "Layanna",
 "metin": {
@@ -5003,6 +5678,14 @@
 },
 "db": "food",
 "dil": "nb",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:culinary-plants",
+"en:grape-leaves",
+"nb:syltede-drueblad"
+],
 "kod": "6223012015334",
 "marka": "Nawras",
 "metin": {
@@ -5036,6 +5719,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mayonnaises"
+],
 "kod": "6281003122034",
 "marka": "",
 "metin": {},
@@ -5056,6 +5744,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:pomegranate-juices",
+"en:squeezed-juices",
+"en:squeezed-pomegranate-juices"
+],
 "kod": "6287018651019",
 "marka": "granti",
 "metin": {
@@ -5088,6 +5787,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:ffffff"
+],
 "kod": "6568449732066",
 "marka": "amerka",
 "metin": {},
@@ -5138,6 +5840,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:20"
+],
 "kod": "6901028159418",
 "marka": "لا انصح به مضر لصحة",
 "metin": {
@@ -5170,6 +5875,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates",
+"en:chocolates-with-pistachios",
+"tr:antep-fıstıklı-çikolata"
+],
 "kod": "69054709",
 "marka": "Eti",
 "metin": {
@@ -5193,6 +5907,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mayonnaises",
+"en:groceries"
+],
 "kod": "6911657931132",
 "marka": "Heinz",
 "metin": {},
@@ -5233,6 +5953,13 @@
 },
 "db": "food",
 "dil": "es",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:crispbreads"
+],
 "kod": "7300400112734",
 "marka": "Barilla Sverige AB",
 "metin": {
@@ -5257,6 +5984,13 @@
 },
 "db": "food",
 "dil": "it",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:crispbreads"
+],
 "kod": "7300400118101",
 "marka": "wasa",
 "metin": {
@@ -5292,6 +6026,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas"
+],
 "kod": "7411909100013",
 "marka": "Ali Baba",
 "metin": {},
@@ -5389,6 +6131,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "7622201818807",
 "marka": "Kent",
 "metin": {
@@ -5451,6 +6199,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum"
+],
 "kod": "7622210393081",
 "marka": "falim",
 "metin": {},
@@ -5485,6 +6239,9 @@
 },
 "db": "food",
 "dil": "ar",
+"kat": [
+"en:milka-oreo-coco"
+],
 "kod": "7622210578266",
 "marka": "milka",
 "metin": {},
@@ -5515,6 +6272,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolates",
+"en:chocolate-biscuits",
+"en:milk-chocolates",
+"en:milk-chocolate-biscuits"
+],
 "kod": "7622210750495",
 "marka": "Milka",
 "metin": {},
@@ -5545,6 +6313,11 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "7707211630486",
 "marka": "Cafe Buendia",
 "metin": {},
@@ -5585,6 +6358,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads",
+"en:chocolate-spreads",
+"en:cocoa-and-hazelnuts-spreads"
+],
 "kod": "8000500225615",
 "marka": "Nutella",
 "metin": {
@@ -5607,6 +6389,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads"
+],
 "kod": "8001505001099",
 "marka": "Rigoni di Asiago",
 "metin": {
@@ -5629,6 +6416,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:seeds",
+"en:cereals-and-their-products",
+"en:cereal-grains",
+"en:rices"
+],
 "kod": "8001860251061",
 "marka": "Riso Scotti",
 "metin": {},
@@ -5649,6 +6445,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages"
+],
 "kod": "8002270306808",
 "marka": "San Pellegrino",
 "metin": {},
@@ -5669,6 +6468,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas",
+"en:beverages-with-orange"
+],
 "kod": "8002270726637",
 "marka": "San Pellegrino",
 "metin": {},
@@ -5689,6 +6497,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:sweet-pastries-and-pies",
+"en:viennoiseries",
+"en:brioches",
+"en:panettone"
+],
 "kod": "8002734101352",
 "marka": "Granducale",
 "metin": {},
@@ -5709,6 +6525,10 @@
 },
 "db": "food",
 "dil": "pl",
+"kat": [
+"en:condiments",
+"en:sauces"
+],
 "kod": "8003288920017",
 "marka": "By Mystafa",
 "metin": {},
@@ -5729,6 +6549,17 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas",
+"en:fruit-sodas",
+"en:lemon-soft-drinks",
+"en:sweetened-beverages"
+],
 "kod": "8003423700023",
 "marka": "Romanella",
 "metin": {
@@ -5773,6 +6604,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:breakfasts",
+"en:spreads",
+"en:sweet-snacks",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads",
+"en:chocolate-spreads",
+"en:cocoa-and-hazelnuts-spreads"
+],
 "kod": "80135876",
 "marka": "Nutella",
 "metin": {
@@ -5817,6 +6659,9 @@
 },
 "db": "food",
 "dil": "it",
+"kat": [
+"en:plant-based-foods-and-beverages"
+],
 "kod": "8018699017911",
 "marka": "Probios",
 "metin": {},
@@ -5837,6 +6682,9 @@
 },
 "db": "food",
 "dil": "it",
+"kat": [
+"en:plant-based-foods-and-beverages"
+],
 "kod": "8018699024636",
 "marka": "Probios",
 "metin": {
@@ -5889,6 +6737,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "80663294",
 "marka": "",
 "metin": {},
@@ -5899,6 +6750,12 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "80728863",
 "marka": "",
 "metin": {},
@@ -5919,6 +6776,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum"
+],
 "kod": "80757092",
 "marka": "Chupa Chups",
 "metin": {
@@ -5971,6 +6834,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "80785545",
 "marka": "Perfetti Van Melle",
 "metin": {
@@ -5983,6 +6852,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum",
+"en:sugar-free-chewing-gum"
+],
 "kod": "80823261",
 "marka": "Vivident",
 "metin": {
@@ -6005,6 +6881,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum",
+"en:sugar-free-chewing-gum"
+],
 "kod": "80826835",
 "marka": "vivident",
 "metin": {
@@ -6120,6 +7003,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum",
+"en:sugar-free-chewing-gum"
+],
 "kod": "80920373",
 "marka": "Vivident",
 "metin": {},
@@ -6150,6 +7040,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mustards",
+"en:yellow-mustards"
+],
 "kod": "8410066134878",
 "marka": "Heinz",
 "metin": {
@@ -6215,6 +7111,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8657520001066",
 "marka": "SAKA",
 "metin": {},
@@ -6225,6 +7125,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:carbonated-waters"
+],
 "kod": "8680014080230",
 "marka": "",
 "metin": {},
@@ -6397,6 +7304,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:prepared-meats",
+"en:sausages",
+"en:beef-sausages"
+],
 "kod": "8680181001885",
 "marka": "Torku",
 "metin": {
@@ -6439,6 +7352,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks"
+],
 "kod": "8680181051347",
 "marka": "Torku",
 "metin": {
@@ -6461,6 +7378,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:bulgarian-cheeses"
+],
 "kod": "8680181055956",
 "marka": "torku",
 "metin": {
@@ -6503,6 +7427,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:beef-and-its-products"
+],
 "kod": "8680181084857",
 "marka": "Torku",
 "metin": {
@@ -6556,6 +7484,9 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies"
+],
 "kod": "8680181111782",
 "marka": "",
 "metin": {},
@@ -6642,6 +7573,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:waters",
+"en:spring-waters"
+],
 "kod": "8680188130076",
 "marka": "",
 "metin": {},
@@ -6662,6 +7599,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:şişelenmiş-içme-suyu"
+],
 "kod": "8680188130151",
 "marka": "ASSU",
 "metin": {},
@@ -6692,6 +7632,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas",
+"en:peach-flavored-iced-teas"
+],
 "kod": "8680205513264",
 "marka": "deran",
 "metin": {
@@ -6714,6 +7660,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:sütlü-buz"
+],
 "kod": "8680244600062",
 "marka": "Migros",
 "metin": {
@@ -6736,6 +7685,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:chocolate-candies",
+"en:bonbons",
+"en:chocolate-covered-chickpeas"
+],
 "kod": "8680244926261",
 "marka": "Miskets Chickpea Snacks",
 "metin": {
@@ -6748,6 +7706,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:atıştırmalık",
+"tr:çikolata"
+],
 "kod": "8680244926308",
 "marka": "",
 "metin": {},
@@ -6830,6 +7792,13 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dietary-supplements",
+"en:bodybuilding-supplements",
+"en:protein-bars",
+"en:healthy-food",
+"en:vegan-bar"
+],
 "kod": "8680643222278",
 "marka": "Uniq2go",
 "metin": {
@@ -6865,6 +7834,9 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:frozen-foods"
+],
 "kod": "8680659351245",
 "marka": "GUNSEVEN",
 "metin": {
@@ -6887,6 +7859,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:cheeses-from-the-united-kingdom",
+"en:cheeses-from-england",
+"en:cheddar-cheese"
+],
 "kod": "8680679340205",
 "marka": "Gonova",
 "metin": {},
@@ -6967,6 +7949,9 @@
 },
 "db": "food",
 "dil": "ru",
+"kat": [
+"fr:de-matieres-grasses"
+],
 "kod": "8680751007385",
 "marka": "Nut master",
 "metin": {
@@ -6990,6 +7975,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads",
+"en:chocolate-spreads",
+"en:cocoa-and-hazelnuts-spreads"
+],
 "kod": "8680751007439",
 "marka": "Migros",
 "metin": {
@@ -7022,6 +8016,17 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:snacks",
+"en:spreads",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters"
+],
 "kod": "8680751007835",
 "marka": "DKC Grup",
 "metin": {},
@@ -7062,6 +8067,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:chocolate-spreads",
+"tr:kakaolu-fındık-ezmesi"
+],
 "kod": "8680751007910",
 "marka": "",
 "metin": {},
@@ -7072,6 +8085,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:gfh"
+],
 "kod": "8680771723005",
 "marka": "12",
 "metin": {},
@@ -7092,6 +8108,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:dried-products",
+"en:pastas",
+"en:dried-products-to-be-rehydrated",
+"en:noodles",
+"en:instant-noodles"
+],
 "kod": "8680908020007",
 "marka": "indomie",
 "metin": {
@@ -7115,6 +8140,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pastas",
+"en:noodles"
+],
 "kod": "8680908020014",
 "marka": "Indomie",
 "metin": {},
@@ -7135,6 +8166,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:noodles"
+],
 "kod": "8680908020021",
 "marka": "indomie",
 "metin": {},
@@ -7155,6 +8194,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pastas",
+"en:noodles",
+"en:chinese-noodles",
+"en:flavoured-dehydrated-asian-noodles"
+],
 "kod": "8680908020083",
 "marka": "indomie",
 "metin": {
@@ -7178,6 +8225,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:dried-products",
+"en:pastas",
+"en:dried-products-to-be-rehydrated",
+"en:noodles",
+"en:instant-noodles"
+],
 "kod": "8680908020113",
 "marka": "indomie",
 "metin": {
@@ -7361,6 +8419,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries"
+],
 "kod": "8681092300036",
 "marka": "İstanbul Sütlü",
 "metin": {
@@ -7395,6 +8458,11 @@
 },
 "db": "food",
 "dil": "ru",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:soy-sauces"
+],
 "kod": "8681144060024",
 "marka": "TARİHİ ODUNPAZARI",
 "metin": {
@@ -7427,6 +8495,13 @@
 },
 "db": "food",
 "dil": "es",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars",
+"en:dietary-supplements",
+"en:bodybuilding-supplements"
+],
 "kod": "8681185086090",
 "marka": "Fellas",
 "metin": {
@@ -7450,6 +8525,19 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:fruits-based-foods",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate"
+],
 "kod": "8681185086618",
 "marka": "Fellas",
 "metin": {
@@ -7492,6 +8580,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:i̇çecek"
+],
 "kod": "8681227060019",
 "marka": "Beyoğlu gazozu",
 "metin": {},
@@ -7512,6 +8603,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum",
+"en:sugar-free-chewing-gum"
+],
 "kod": "8681259500491",
 "marka": "Ceremony Gida",
 "metin": {
@@ -7554,6 +8652,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:desserts",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:sponge-cakes",
+"en:sponge-cake-filled-and-covered-with-chocolate"
+],
 "kod": "8681270412940",
 "marka": "Aldiva",
 "metin": {
@@ -7596,6 +8703,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8681324002837",
 "marka": "Sütaş",
 "metin": {
@@ -7678,6 +8796,15 @@
 },
 "db": "food",
 "dil": "ru",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8681324005883",
 "marka": "Sütaş",
 "metin": {},
@@ -7698,6 +8825,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:qwer-qwer"
+],
 "kod": "8681348002950",
 "marka": "qwer",
 "metin": {},
@@ -7718,6 +8848,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"tr:gazlı-i̇çecek"
+],
 "kod": "8681349030228",
 "marka": "",
 "metin": {},
@@ -7788,6 +8921,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:fıstık-ezmesi"
+],
 "kod": "8681413871115",
 "marka": "FitNut",
 "metin": {
@@ -7820,6 +8956,11 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dietary-supplements",
+"en:bodybuilding-supplements",
+"en:protein-powders"
+],
 "kod": "8681429066758",
 "marka": "BigJoy",
 "metin": {},
@@ -7840,6 +8981,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries"
+],
 "kod": "8681451513817",
 "marka": "Toybox",
 "metin": {
@@ -7862,6 +9008,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "8681451520518",
 "marka": "Toybox",
 "metin": {
@@ -7884,6 +9036,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "8681451520815",
 "marka": "Toybox",
 "metin": {
@@ -7896,6 +9054,10 @@
 "besin": null,
 "db": "food",
 "dil": "it",
+"kat": [
+"en:dairies",
+"en:creams"
+],
 "kod": "8681480338306",
 "marka": "gandola",
 "metin": {},
@@ -7976,6 +9138,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:chicken-and-its-products"
+],
 "kod": "8681594304556",
 "marka": "Besler",
 "metin": {
@@ -7998,6 +9164,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters",
+"tr:fıstık-ezmesi"
+],
 "kod": "8681630310015",
 "marka": "Züber",
 "metin": {},
@@ -8018,6 +9195,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters"
+],
 "kod": "8681630311012",
 "marka": "Züber",
 "metin": {
@@ -8041,6 +9228,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products"
+],
 "kod": "8681630321011",
 "marka": "Züber",
 "metin": {
@@ -8054,6 +9246,14 @@
 "besin": null,
 "db": "food",
 "dil": "es",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:flours",
+"en:nuts-and-their-products",
+"en:nut-flours",
+"en:almond-meal"
+],
 "kod": "8681749104437",
 "marka": "wefood",
 "metin": {
@@ -8066,6 +9266,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:milks"
+],
 "kod": "8681749145102",
 "marka": "UHT SUT",
 "metin": {},
@@ -8106,6 +9310,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:corn-chips"
+],
 "kod": "8681763866847",
 "marka": "Nam Nam Snacks",
 "metin": {
@@ -8211,6 +9423,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:1"
+],
 "kod": "8681980005005",
 "marka": "1",
 "metin": {},
@@ -8311,6 +9526,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:dairy-substitutes",
+"en:milk-substitutes",
+"en:plant-based-creams",
+"en:plant-based-creams-for-cooking",
+"en:coconut-milks-and-creams"
+],
 "kod": "8682009080256",
 "marka": "Fomilk",
 "metin": {
@@ -8333,6 +9557,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:farming-products",
+"en:eggs",
+"en:chicken-eggs",
+"en:cage-chicken-eggs"
+],
 "kod": "8682016200111",
 "marka": "Abalı Çiftliği",
 "metin": {
@@ -8356,6 +9586,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas"
+],
 "kod": "8682022040138",
 "marka": "Mıracle",
 "metin": {
@@ -8398,6 +9635,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8682059395034",
 "marka": "bulak",
 "metin": {},
@@ -8408,6 +9649,21 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:fruits",
+"en:dried-plant-based-foods",
+"en:dried-fruits",
+"en:freeze-dried-foods",
+"en:cherries",
+"en:freeze-dried-plant-based-foods",
+"en:freeze-dried-vegetables"
+],
 "kod": "8682169337993",
 "marka": "Pol's",
 "metin": {
@@ -8430,6 +9686,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods"
+],
 "kod": "8682190853011",
 "marka": "Master Farm",
 "metin": {},
@@ -8440,6 +9700,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çerez"
+],
 "kod": "8682190853837",
 "marka": "",
 "metin": {},
@@ -8560,6 +9823,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"tr:kurabiye"
+],
 "kod": "8682214704916",
 "marka": "Bisto",
 "metin": {
@@ -8602,6 +9872,14 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:fresh-cheeses",
+"en:cottage-cheeses"
+],
 "kod": "8682214706828",
 "marka": "mis",
 "metin": {},
@@ -8636,6 +9914,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:desserts",
+"en:frozen-foods",
+"en:frozen-desserts",
+"en:ice-creams-and-sorbets",
+"en:ice-creams"
+],
 "kod": "8682214707184",
 "marka": "MİS",
 "metin": {
@@ -8688,6 +9973,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8682214708815",
 "marka": "Mis",
 "metin": {
@@ -8710,6 +10001,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:desserts"
+],
 "kod": "8682214709171",
 "marka": "Mis",
 "metin": {},
@@ -8763,6 +10057,19 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:snacks",
+"en:legumes",
+"en:salty-snacks",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:peanuts",
+"en:salted-nuts",
+"en:salted-peanuts"
+],
 "kod": "8682214711761",
 "marka": "Amigo",
 "metin": {
@@ -8886,6 +10193,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8682287820094",
 "marka": "",
 "metin": {},
@@ -8906,6 +10218,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:canned-foods"
+],
 "kod": "8682353237108",
 "marka": "",
 "metin": {},
@@ -8926,6 +10241,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates"
+],
 "kod": "8682392174686",
 "marka": "WEFOOD",
 "metin": {
@@ -8948,6 +10270,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:plant-milk-chocolates"
+],
 "kod": "8682392174716",
 "marka": "Wefood",
 "metin": {
@@ -9001,6 +10330,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8682530000167",
 "marka": "Kellogs",
 "metin": {},
@@ -9021,6 +10359,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:chocolate-cereals",
+"en:diet-chocolate-breakfast-cereals"
+],
 "kod": "8682530000204",
 "marka": "Kellogg's",
 "metin": {
@@ -9066,6 +10414,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals"
+],
 "kod": "8682530221197",
 "marka": "Kellogg's",
 "metin": {
@@ -9108,6 +10464,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters"
+],
 "kod": "8682615100478",
 "marka": "",
 "metin": {
@@ -9140,6 +10506,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:chocolate-spreads"
+],
 "kod": "8682615106098",
 "marka": "TÜRKİYE TARIM KREDİ KOOPERATİFLERİ",
 "metin": {
@@ -9162,6 +10535,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:yulaf-ezmesi"
+],
 "kod": "8682615107293",
 "marka": "Türkiye Tarım Kredi Kooperatifleri",
 "metin": {
@@ -9174,6 +10550,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:muslim"
+],
 "kod": "8682615108221",
 "marka": "20",
 "metin": {},
@@ -9254,6 +10633,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:chocolate-cakes",
+"en:molten-chocolate-cakes"
+],
 "kod": "8682718434944",
 "marka": "woWz",
 "metin": {
@@ -9297,6 +10684,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dietary-supplements",
+"en:bodybuilding-supplements",
+"en:protein-bars"
+],
 "kod": "8682773702323",
 "marka": "Muscle Station",
 "metin": {
@@ -9309,6 +10701,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8682780742404",
 "marka": "safirsu",
 "metin": {},
@@ -9401,6 +10797,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars",
+"en:cereal-bars",
+"en:fruits-cereal-bars"
+],
 "kod": "8682887547612",
 "marka": "MIXMEY",
 "metin": {
@@ -9433,6 +10836,21 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:dairies",
+"en:plant-based-foods",
+"en:dairy-substitutes",
+"en:milk-substitutes",
+"en:nuts-and-their-products",
+"en:plant-based-beverages",
+"en:milks",
+"en:plant-based-milk-alternatives",
+"en:nut-based-drinks",
+"en:almond-based-drinks",
+"tr:vegan-süt"
+],
 "kod": "8682983760014",
 "marka": "nilky",
 "metin": {
@@ -9497,6 +10915,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:glutensız"
+],
 "kod": "8683092520124",
 "marka": "Dr. Gluten",
 "metin": {
@@ -9541,6 +10962,14 @@
 "besin": null,
 "db": "food",
 "dil": "nb",
+"kat": [
+"en:desserts",
+"en:frozen-foods",
+"en:frozen-desserts",
+"en:ice-creams-and-sorbets",
+"en:ice-creams",
+"en:ice-cream-bars"
+],
 "kod": "8683130013540",
 "marka": "Algida",
 "metin": {
@@ -9595,6 +11024,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8683200063017",
 "marka": "Fellas",
 "metin": {
@@ -9608,6 +11046,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "8683280703278",
 "marka": "patiswiss",
 "metin": {},
@@ -9678,6 +11119,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "8683347033553",
 "marka": "Wefood",
 "metin": {
@@ -9701,6 +11145,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "8683347066018",
 "marka": "Almas Baski Ambalaj",
 "metin": {
@@ -9723,6 +11173,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:spreads",
+"en:plant-based-spreads",
+"en:sweet-spreads",
+"en:fruit-and-vegetable-preserves",
+"en:citrus-jams",
+"en:orange-jams"
+],
 "kod": "8683400680700",
 "marka": "Pol's Gurme",
 "metin": {
@@ -9745,6 +11206,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads"
+],
 "kod": "8683417000102",
 "marka": "sarelle",
 "metin": {},
@@ -9765,6 +11231,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:chocolate-spreads"
+],
 "kod": "8683417000126",
 "marka": "SAGRA",
 "metin": {
@@ -9787,6 +11260,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:milk-chocolates"
+],
 "kod": "8683417000140",
 "marka": "Tadelle",
 "metin": {
@@ -9829,6 +11309,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:wafers"
+],
 "kod": "8683417000508",
 "marka": "Gofret",
 "metin": {
@@ -9881,6 +11368,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:30"
+],
 "kod": "8683417001543",
 "marka": "sagra",
 "metin": {},
@@ -9911,6 +11401,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:dried-plant-based-foods",
+"en:dried-fruits",
+"en:dried-figs",
+"tr:kurutulmuş-incir"
+],
 "kod": "8683476142195",
 "marka": "Türkiye Tarım Kredi Kooperatifleri",
 "metin": {
@@ -9953,6 +11454,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:gcx"
+],
 "kod": "8683598480038",
 "marka": "fcci",
 "metin": {
@@ -9997,6 +11501,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spreads",
+"en:plant-based-spreads",
+"en:salted-spreads",
+"en:sauces",
+"en:dips",
+"en:hummus"
+],
 "kod": "8683717057103",
 "marka": "aila foods",
 "metin": {},
@@ -10030,6 +11545,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"tr:food-preservative"
+],
 "kod": "8683752327605",
 "marka": "CB100   KRBN100",
 "metin": {
@@ -10043,6 +11561,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas"
+],
 "kod": "8683789550045",
 "marka": "",
 "metin": {},
@@ -10053,6 +11576,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"nl:granaatappelsauzen",
+"nl:zure-sauzen"
+],
 "kod": "8683907702301",
 "marka": "Enis",
 "metin": {
@@ -10138,6 +11667,12 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:turkish-delight"
+],
 "kod": "8690065480019",
 "marka": "öz can",
 "metin": {},
@@ -10178,6 +11713,10 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dietary-supplements",
+"en:vitamins"
+],
 "kod": "8690088024955",
 "marka": "",
 "metin": {},
@@ -10188,6 +11727,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:canned-foods",
+"en:pickles",
+"en:olive-tree-products",
+"en:plant-based-pickles",
+"en:olives",
+"en:green-olives"
+],
 "kod": "8690100001025",
 "marka": "Cebel",
 "metin": {
@@ -10210,6 +11759,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fats",
+"en:vegetable-fats",
+"en:olive-tree-products",
+"en:vegetable-oils",
+"en:olive-oils",
+"tr:riviera-zeytinyağı"
+],
 "kod": "8690102405067",
 "marka": "Tariş",
 "metin": {
@@ -10232,6 +11791,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pickles",
+"en:olive-tree-products",
+"en:plant-based-pickles",
+"en:olives",
+"tr:salamura"
+],
 "kod": "8690103001893",
 "marka": "Marmarabirlik",
 "metin": {
@@ -10274,6 +11842,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas"
+],
 "kod": "8690105000382",
 "marka": "Caykur",
 "metin": {},
@@ -10294,6 +11869,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas",
+"en:black-teas"
+],
 "kod": "8690105000436",
 "marka": "Çaykur",
 "metin": {
@@ -10307,6 +11890,14 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas",
+"en:black-teas"
+],
 "kod": "8690105000719",
 "marka": "Caykur",
 "metin": {},
@@ -10357,6 +11948,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages"
+],
 "kod": "8690105003857",
 "marka": "Didi",
 "metin": {},
@@ -10627,6 +12221,24 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits-and-crackers",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:biscuits",
+"en:chocolate-candies",
+"en:bars",
+"en:wafers",
+"en:chocolate-biscuits",
+"en:stuffed-wafers",
+"en:candy-chocolate-bars",
+"en:nut-stuffed-wafers",
+"en:chocolate-stuffed-wafers",
+"en:hazelnut-cream-stuffed-wafers"
+],
 "kod": "8690120060170",
 "marka": "Torku",
 "metin": {
@@ -10649,6 +12261,25 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:biscuits-and-cakes",
+"en:chocolate-candies",
+"en:biscuits",
+"en:chocolates",
+"en:chocolate-biscuits",
+"en:milk-chocolates",
+"en:wafers",
+"en:bars-covered-with-chocolate",
+"en:stuffed-wafers",
+"en:chocolate-stuffed-wafers",
+"en:chocolates-with-hazelnuts",
+"en:milk-chocolates-with-hazelnuts"
+],
 "kod": "8690120060187",
 "marka": "Torku",
 "metin": {
@@ -10671,6 +12302,20 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:biscuits-and-cakes",
+"en:chocolate-candies",
+"en:biscuits",
+"en:wafers",
+"en:candy-chocolate-bars",
+"en:stuffed-wafers",
+"en:hazelnut-cream-stuffed-wafers"
+],
 "kod": "8690120060408",
 "marka": "Torku",
 "metin": {
@@ -10723,6 +12368,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:groats",
+"en:wheat-groats",
+"en:bulgur"
+],
 "kod": "8690120073194",
 "marka": "Torku",
 "metin": {
@@ -10745,6 +12399,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:chocolates",
+"en:bars-covered-with-chocolate",
+"en:caramel-chocolate-bars",
+"en:milk-chocolate-bar-with-nougat"
+],
 "kod": "8690120095516",
 "marka": "Torku",
 "metin": {
@@ -10787,6 +12453,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690120138725",
 "marka": "torku",
 "metin": {},
@@ -10807,6 +12479,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:turkish-delight"
+],
 "kod": "8690123815012",
 "marka": "Tadan",
 "metin": {},
@@ -10817,6 +12495,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:naturel-car"
+],
 "kod": "8690131110468",
 "marka": "Dr.C.Tuna",
 "metin": {
@@ -11022,6 +12703,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys",
+"en:flower-honeys"
+],
 "kod": "8690198900538",
 "marka": "KAFKAS",
 "metin": {},
@@ -11052,6 +12743,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:seafood"
+],
 "kod": "8690251481165",
 "marka": "Migros",
 "metin": {},
@@ -11082,6 +12776,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:desserts",
+"en:puddings"
+],
 "kod": "86902656",
 "marka": "Danone",
 "metin": {},
@@ -11144,6 +12842,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:مئكولات"
+],
 "kod": "8690325034112",
 "marka": "",
 "metin": {},
@@ -11434,6 +13135,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:chicken-and-its-products"
+],
 "kod": "8690451704477",
 "marka": "Banvit",
 "metin": {
@@ -11568,6 +13273,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:turkish-delight"
+],
 "kod": "8690478391018",
 "marka": "Uysal",
 "metin": {},
@@ -11638,6 +13349,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504007203",
 "marka": "Ülker",
 "metin": {},
@@ -11678,6 +13395,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "8690504009245",
 "marka": "Ülker",
 "metin": {},
@@ -11718,6 +13441,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits"
+],
 "kod": "8690504010104",
 "marka": "Ülker",
 "metin": {
@@ -11741,6 +13471,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504010203",
 "marka": "Ülker",
 "metin": {
@@ -11784,6 +13520,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits",
+"en:milk-chocolate-biscuits"
+],
 "kod": "8690504011507",
 "marka": "Ülker",
 "metin": {},
@@ -11804,6 +13548,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:biskuvi"
+],
 "kod": "8690504011606",
 "marka": "ÜLKER",
 "metin": {},
@@ -11824,6 +13571,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:sweet-snacks",
+"en:appetizers",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:crackers"
+],
 "kod": "8690504011699",
 "marka": "Ülker",
 "metin": {
@@ -11866,6 +13622,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504012139",
 "marka": "Ülker",
 "metin": {
@@ -11909,6 +13671,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504014201",
 "marka": "Ülker",
 "metin": {},
@@ -11939,6 +13707,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "8690504017301",
 "marka": "Ülker",
 "metin": {
@@ -11962,6 +13733,12 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "8690504018087",
 "marka": "Ülker",
 "metin": {
@@ -12005,6 +13782,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504020295",
 "marka": "Ülker",
 "metin": {},
@@ -12025,6 +13808,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:bars"
+],
 "kod": "8690504020509",
 "marka": "Ülker",
 "metin": {},
@@ -12065,6 +13853,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çikolatalı-gofret"
+],
 "kod": "8690504020639",
 "marka": "Ülker",
 "metin": {
@@ -12087,6 +13878,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çikolota"
+],
 "kod": "8690504023135",
 "marka": "Ülker",
 "metin": {
@@ -12140,6 +13934,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates",
+"en:extra-fine-dark-chocolates"
+],
 "kod": "8690504025207",
 "marka": "ülker",
 "metin": {
@@ -12183,6 +13985,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:candy-chocolate-bars",
+"en:compound-chocolates"
+],
 "kod": "8690504027010",
 "marka": "Ülker",
 "metin": {
@@ -12206,6 +14018,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate",
+"en:milk-chocolate-wafer"
+],
 "kod": "8690504027508",
 "marka": "Ülker",
 "metin": {
@@ -12230,6 +14052,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"tr:çikolata"
+],
 "kod": "8690504028536",
 "marka": "Ülker",
 "metin": {},
@@ -12320,6 +14151,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes"
+],
 "kod": "8690504039723",
 "marka": "ÜLKER",
 "metin": {
@@ -12385,6 +14221,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "8690504057109",
 "marka": "ÜLKER",
 "metin": {
@@ -12407,6 +14246,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504059059",
 "marka": "",
 "metin": {
@@ -12430,6 +14275,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:gingerbreads"
+],
 "kod": "8690504059424",
 "marka": "ÜLKER",
 "metin": {},
@@ -12490,6 +14341,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:fruit-cakes"
+],
 "kod": "8690504063421",
 "marka": "Ülker",
 "metin": {},
@@ -12560,6 +14418,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolates",
+"en:chocolate-biscuits"
+],
 "kod": "8690504065395",
 "marka": "Laviva",
 "metin": {
@@ -12635,6 +14502,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes"
+],
 "kod": "8690504067672",
 "marka": "Ülker",
 "metin": {},
@@ -12805,6 +14678,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes"
+],
 "kod": "8690504079767",
 "marka": "Ülker",
 "metin": {
@@ -12828,6 +14707,16 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:chocolate-cakes",
+"en:brownies",
+"bg:суфле",
+"en:десерт"
+],
 "kod": "8690504081333",
 "marka": "Ülker",
 "metin": {
@@ -12850,6 +14739,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits"
+],
 "kod": "8690504081944",
 "marka": "McVities",
 "metin": {},
@@ -12870,6 +14766,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504082651",
 "marka": "Ülker",
 "metin": {
@@ -12972,6 +14874,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks"
+],
 "kod": "8690504086642",
 "marka": "Ülker",
 "metin": {},
@@ -12992,6 +14898,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504086901",
 "marka": "Ülker",
 "metin": {
@@ -13024,6 +14936,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:25"
+],
 "kod": "8690504089759",
 "marka": "Alpella",
 "metin": {},
@@ -13244,6 +15159,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690504116257",
 "marka": "Ülker",
 "metin": {},
@@ -13344,6 +15265,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits-and-crackers",
+"en:biscuits"
+],
 "kod": "8690504119050",
 "marka": "Hanımeller",
 "metin": {
@@ -13367,6 +15295,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:breakfasts",
+"en:spreads",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:sweet-spreads",
+"en:chocolates",
+"fr:pates-a-tartiner",
+"en:chocolate-spreads"
+],
 "kod": "8690504121336",
 "marka": "Çokokrem",
 "metin": {
@@ -13430,6 +15369,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate"
+],
 "kod": "8690504130697",
 "marka": "Ulker",
 "metin": {},
@@ -13480,6 +15428,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate"
+],
 "kod": "8690504131458",
 "marka": "Ülker",
 "metin": {},
@@ -13540,6 +15497,19 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:biscuits-and-cakes",
+"en:chocolate-candies",
+"en:biscuits",
+"en:wafers",
+"en:bars-covered-with-chocolate",
+"en:chocolate-biscuity-bars"
+],
 "kod": "8690504135913",
 "marka": "Ülker",
 "metin": {
@@ -13563,6 +15533,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolates",
+"en:milk-chocolates",
+"en:caramels"
+],
 "kod": "8690504136330",
 "marka": "Ülker",
 "metin": {},
@@ -13593,6 +15574,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks"
+],
 "kod": "8690504142713",
 "marka": "Ülker",
 "metin": {},
@@ -13623,6 +15608,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690504142959",
 "marka": "Ülker",
 "metin": {
@@ -13646,6 +15637,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690504142973",
 "marka": "Ülker",
 "metin": {
@@ -13720,6 +15717,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate",
+"en:caramel-chocolate-bars"
+],
 "kod": "8690504149965",
 "marka": "Ülker",
 "metin": {
@@ -13763,6 +15770,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates"
+],
 "kod": "8690504153740",
 "marka": "Godiva",
 "metin": {
@@ -13786,6 +15800,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690504156819",
 "marka": "Ülker",
 "metin": {
@@ -13829,6 +15849,12 @@
 },
 "db": "food",
 "dil": "ar",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690504157649",
 "marka": "Ülker",
 "metin": {
@@ -13946,6 +15972,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:puffed-grains",
+"en:puffed-cereals"
+],
 "kod": "8690504270591",
 "marka": "Kellogg's",
 "metin": {
@@ -13988,6 +16024,19 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:flakes",
+"en:cereal-flakes",
+"en:extruded-cereals",
+"en:extruded-flakes",
+"en:corn-flakes"
+],
 "kod": "8690504271994",
 "marka": "Kellogg's",
 "metin": {},
@@ -14008,6 +16057,19 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:flakes",
+"en:cereal-flakes",
+"en:extruded-cereals",
+"en:extruded-flakes",
+"en:mixed-cereal-flakes"
+],
 "kod": "8690504272328",
 "marka": "Kellogg's",
 "metin": {
@@ -14050,6 +16112,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:lactose-free-milk"
+],
 "kod": "8690504410911",
 "marka": "İçim",
 "metin": {
@@ -14083,6 +16150,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:kefir"
+],
 "kod": "8690504429210",
 "marka": "İçim",
 "metin": {},
@@ -14193,6 +16270,9 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages"
+],
 "kod": "8690504512868",
 "marka": "",
 "metin": {},
@@ -14255,6 +16335,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:meals",
+"en:dried-products",
+"en:dried-products-to-be-rehydrated",
+"en:soups",
+"en:dried-meals",
+"en:dehydrated-soups"
+],
 "kod": "8690504641650",
 "marka": "Ülker",
 "metin": {
@@ -14409,6 +16497,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meals",
+"en:nems"
+],
 "kod": "8690506492083",
 "marka": "Arko",
 "metin": {},
@@ -14489,6 +16581,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:tomatoes-and-their-products",
+"en:tomato-pastes"
+],
 "kod": "8690508600431",
 "marka": "Tukaş",
 "metin": {
@@ -14521,6 +16621,9 @@
 "besin": null,
 "db": "food",
 "dil": "ar",
+"kat": [
+"en:halal"
+],
 "kod": "8690508601636",
 "marka": "HALAL",
 "metin": {},
@@ -14581,6 +16684,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:ketchup"
+],
 "kod": "8690508601841",
 "marka": "Tukaş",
 "metin": {
@@ -14644,6 +16753,15 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-foods",
+"en:coffees",
+"en:instant-beverages",
+"en:instant-coffees",
+"en:instant-coffee-without-sugar"
+],
 "kod": "8690515514066",
 "marka": "Jacobs",
 "metin": {},
@@ -14664,6 +16782,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:şekerleme"
+],
 "kod": "8690515599704",
 "marka": "Olips",
 "metin": {
@@ -14686,6 +16807,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:cereal-pastas"
+],
 "kod": "8690516005099",
 "marka": "Piyale",
 "metin": {
@@ -14698,6 +16827,13 @@
 "besin": null,
 "db": "food",
 "dil": "nb",
+"kat": [
+"en:beverages",
+"en:alcoholic-beverages",
+"en:beers",
+"en:lagers",
+"en:pilsners"
+],
 "kod": "8690520011499",
 "marka": "Efes",
 "metin": {},
@@ -14718,6 +16854,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:alcoholic-beverages",
+"en:beers",
+"tr:alkol"
+],
 "kod": "8690520252953",
 "marka": "efes",
 "metin": {},
@@ -14748,6 +16890,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:alcoholic-beverages",
+"en:beers"
+],
 "kod": "8690520541798",
 "marka": "Varim",
 "metin": {
@@ -14780,6 +16927,13 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:chewing-gum",
+"fr:gum"
+],
 "kod": "8690524052122",
 "marka": "falim",
 "metin": {},
@@ -14830,6 +16984,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:draje-sakız",
+"en:tatlandırıcı",
+"en:şekersiz-sakız"
+],
 "kod": "8690524174237",
 "marka": "First",
 "metin": {},
@@ -14913,6 +17072,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "8690526004891",
 "marka": "Eti",
 "metin": {
@@ -15076,6 +17241,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "8690526014388",
 "marka": "Eti",
 "metin": {
@@ -15098,6 +17269,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"tr:gofret",
+"tr:çikolatalı-gofret"
+],
 "kod": "8690526015781",
 "marka": "Eti",
 "metin": {},
@@ -15118,6 +17293,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate",
+"en:caramel-chocolate-bars"
+],
 "kod": "8690526018065",
 "marka": "Eti",
 "metin": {
@@ -15180,6 +17365,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8690526019505",
 "marka": "Eti",
 "metin": {
@@ -15253,6 +17447,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çikolata"
+],
 "kod": "8690526021805",
 "marka": "Eti",
 "metin": {},
@@ -15306,6 +17503,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:no"
+],
 "kod": "8690526024677",
 "marka": "all",
 "metin": {},
@@ -15386,6 +17586,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:sütlü-tatlı"
+],
 "kod": "8690526029733",
 "marka": "Eti",
 "metin": {
@@ -15429,6 +17632,11 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries"
+],
 "kod": "8690526033754",
 "marka": "Eti",
 "metin": {},
@@ -15599,6 +17807,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çikolata"
+],
 "kod": "8690526047515",
 "marka": "Eti",
 "metin": {},
@@ -15659,6 +17870,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526050348",
 "marka": "ETi",
 "metin": {},
@@ -15679,6 +17896,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526051222",
 "marka": "ETİ",
 "metin": {
@@ -15701,6 +17924,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes"
+],
 "kod": "8690526053738",
 "marka": "Eti",
 "metin": {
@@ -15723,6 +17952,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526061092",
 "marka": "Eti",
 "metin": {
@@ -15746,6 +17981,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526061108",
 "marka": "Eti",
 "metin": {},
@@ -15776,6 +18017,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526062983",
 "marka": "ETİ",
 "metin": {
@@ -15808,6 +18055,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits",
+"en:milk-chocolate-biscuits"
+],
 "kod": "8690526063508",
 "marka": "Eti",
 "metin": {
@@ -15891,6 +18146,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:seeds",
+"en:cereals-and-their-products",
+"en:nuts-and-their-products",
+"en:cereal-grains",
+"en:oat"
+],
 "kod": "8690526064680",
 "marka": "Eti",
 "metin": {
@@ -15963,6 +18228,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:chocolates"
+],
 "kod": "8690526067438",
 "marka": "Eti",
 "metin": {
@@ -16006,6 +18280,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"tr:yulaf-ezmesi"
+],
 "kod": "8690526069500",
 "marka": "Eti",
 "metin": {
@@ -16049,6 +18332,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:chocolate-candies",
+"en:bars",
+"en:candy-chocolate-bars"
+],
 "kod": "8690526069920",
 "marka": "eti",
 "metin": {},
@@ -16069,6 +18361,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:sweet-snacks",
+"en:appetizers",
+"en:biscuits-and-cakes",
+"tr:kraker"
+],
 "kod": "8690526070100",
 "marka": "ETI",
 "metin": {},
@@ -16109,6 +18409,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"tr:kremalı-bisküvi"
+],
 "kod": "8690526073446",
 "marka": "Eti",
 "metin": {
@@ -16231,6 +18538,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"tr:limonlu-kek"
+],
 "kod": "8690526083704",
 "marka": "Eti",
 "metin": {
@@ -16244,6 +18558,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes"
+],
 "kod": "8690526083711",
 "marka": "",
 "metin": {},
@@ -16264,6 +18584,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks"
+],
 "kod": "8690526083728",
 "marka": "Eti",
 "metin": {
@@ -16336,6 +18659,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526092232",
 "marka": "ETİ",
 "metin": {},
@@ -16346,6 +18675,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526093543",
 "marka": "Eti",
 "metin": {},
@@ -16366,6 +18701,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:sweet-snacks",
+"en:appetizers",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:crackers",
+"en:wheat-crackers"
+],
 "kod": "8690526094090",
 "marka": "ETI",
 "metin": {},
@@ -16406,6 +18751,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8690526094700",
 "marka": "Eti",
 "metin": {
@@ -16428,6 +18782,13 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates"
+],
 "kod": "8690526095417",
 "marka": "Eti",
 "metin": {
@@ -16472,6 +18833,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:cakes",
+"en:chocolate-cakes",
+"en:brownies"
+],
 "kod": "8690526099033",
 "marka": "Eti",
 "metin": {
@@ -16726,6 +19095,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8690526620343",
 "marka": "ETI",
 "metin": {},
@@ -16746,6 +19121,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits"
+],
 "kod": "8690526643298",
 "marka": "Eti",
 "metin": {},
@@ -17156,6 +19538,19 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meats-and-their-products",
+"en:meat-preparations",
+"en:meats",
+"en:prepared-meats",
+"en:poultries",
+"en:sausages",
+"en:turkey-and-its-products",
+"en:turkeys",
+"en:poultry-sausages",
+"en:turkey-preparations",
+"en:turkey-sausages"
+],
 "kod": "8690527011294",
 "marka": "Pinar",
 "metin": {
@@ -17398,6 +19793,19 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:meat-preparations",
+"en:meats",
+"en:prepared-meats",
+"en:poultries",
+"en:sausages",
+"en:turkey-and-its-products",
+"en:turkeys",
+"en:poultry-sausages",
+"en:turkey-preparations",
+"en:turkey-sausages"
+],
 "kod": "8690527200285",
 "marka": "Pınar",
 "metin": {},
@@ -17578,6 +19986,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:tuzlu-kraker"
+],
 "kod": "8690533034010",
 "marka": "Eti",
 "metin": {
@@ -17652,6 +20063,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits-and-crackers",
+"en:biscuits"
+],
 "kod": "8690533771021",
 "marka": "g900",
 "metin": {},
@@ -17714,6 +20132,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads",
+"en:chocolate-spreads",
+"en:cocoa-and-hazelnuts-spreads"
+],
 "kod": "8690550913411",
 "marka": "Sanset",
 "metin": {
@@ -17737,6 +20164,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks-sweet-snacks-cocoa-and-its-products-chocolates-milk-chocolates-milk-chocolate-bar"
+],
 "kod": "8690550916450",
 "marka": "Pernigotti",
 "metin": {
@@ -17770,6 +20200,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys",
+"en:flower-honeys"
+],
 "kod": "8690551020170",
 "marka": "Seğmen",
 "metin": {},
@@ -17802,6 +20242,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-nectars",
+"en:apricot-nectars"
+],
 "kod": "8690558026229",
 "marka": "Migros",
 "metin": {
@@ -17814,6 +20263,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages"
+],
 "kod": "8690558028360",
 "marka": "Dimes",
 "metin": {},
@@ -18297,6 +20752,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:seafood",
+"en:fishes-and-their-products",
+"en:canned-foods",
+"en:fishes",
+"en:fatty-fishes",
+"en:canned-fishes",
+"en:tunas",
+"en:canned-tunas",
+"en:tunas-in-oil",
+"en:tuna-in-olive-oil"
+],
 "kod": "8690559015192",
 "marka": "Dardanelle",
 "metin": {},
@@ -18439,6 +20906,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pastas"
+],
 "kod": "8690559019084",
 "marka": "Dardanel",
 "metin": {},
@@ -18579,6 +21051,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:seafood",
+"en:fishes-and-their-products",
+"en:canned-foods",
+"en:fishes",
+"en:fatty-fishes",
+"en:canned-fishes",
+"en:tunas",
+"en:canned-tunas",
+"en:tuna-flakes-in-oil"
+],
 "kod": "8690559023067",
 "marka": "Dardanel",
 "metin": {
@@ -18841,6 +21324,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:pasteurized-cheeses"
+],
 "kod": "8690565002988",
 "marka": "Pinar",
 "metin": {
@@ -18904,6 +21395,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690565006832",
 "marka": "Pinar",
 "metin": {},
@@ -19004,6 +21501,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks"
+],
 "kod": "8690565017531",
 "marka": "Pınar",
 "metin": {},
@@ -19024,6 +21527,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:lactose-free-milk"
+],
 "kod": "8690565017555",
 "marka": "Pinar",
 "metin": {
@@ -19047,6 +21555,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8690565017616",
 "marka": "Pinar",
 "metin": {},
@@ -19127,6 +21640,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts",
+"en:lactose-free-yogurts"
+],
 "kod": "8690565018569",
 "marka": "Pınar",
 "metin": {
@@ -19179,6 +21702,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690565021149",
 "marka": "Pınar",
 "metin": {
@@ -19202,6 +21731,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks",
+"en:flavoured-milks",
+"en:strawberry-milks"
+],
 "kod": "8690565022054",
 "marka": "Pınar",
 "metin": {
@@ -19225,6 +21761,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:milks-liquid-and-powder",
+"en:milks",
+"en:chocolates"
+],
 "kod": "8690565022108",
 "marka": "Pinar",
 "metin": {
@@ -19237,6 +21782,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690565022849",
 "marka": "Pınar",
 "metin": {},
@@ -19267,6 +21818,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks"
+],
 "kod": "8690565023594",
 "marka": "Pınar",
 "metin": {},
@@ -19287,6 +21844,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cream-cheeses"
+],
 "kod": "8690565025604",
 "marka": "Pinar",
 "metin": {},
@@ -19457,6 +22021,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas"
+],
 "kod": "8690574000821",
 "marka": "Lipton",
 "metin": {},
@@ -19537,6 +22109,16 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:sweetened-beverages"
+],
 "kod": "8690574102457",
 "marka": "Tropicana",
 "metin": {
@@ -19599,6 +22181,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas"
+],
 "kod": "8690574105786",
 "marka": "Yedigün",
 "metin": {},
@@ -19729,6 +22319,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas",
+"en:fruit-sodas",
+"en:orange-soft-drinks"
+],
 "kod": "8690574800315",
 "marka": "Pepsico",
 "metin": {},
@@ -19749,6 +22349,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas"
+],
 "kod": "8690574802869",
 "marka": "Lipton",
 "metin": {},
@@ -19779,6 +22385,9 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages"
+],
 "kod": "8690574821563",
 "marka": "Pepsi",
 "metin": {},
@@ -19829,6 +22438,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas"
+],
 "kod": "8690574843961",
 "marka": "Lipton",
 "metin": {
@@ -19872,6 +22486,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:vegetables",
+"en:prepared-vegetables",
+"en:aubergines",
+"fr:aubergines-preparees"
+],
 "kod": "8690575047115",
 "marka": "Tamek",
 "metin": {
@@ -19895,6 +22519,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:meals",
+"en:vegetables",
+"en:aubergines",
+"tr:aubergines-farcies"
+],
 "kod": "8690575050320",
 "marka": "Tamek",
 "metin": {
@@ -19918,6 +22552,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:gombos",
+"tr:gombos-en-conserve"
+],
 "kod": "8690575064310",
 "marka": "Tamek",
 "metin": {
@@ -19930,6 +22568,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:sjjdjd"
+],
 "kod": "8690575086114",
 "marka": "ghs",
 "metin": {},
@@ -19970,6 +22611,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces"
+],
 "kod": "8690575171520",
 "marka": "tamek",
 "metin": {},
@@ -20040,6 +22685,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"fr:les-pates"
+],
 "kod": "8690579024938",
 "marka": "Filiz",
 "metin": {
@@ -20143,6 +22796,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:cereal-pastas",
+"en:dry-pastas",
+"en:durum-wheat-pasta",
+"en:dry-durum-wheat-pasta"
+],
 "kod": "8690579975032",
 "marka": "Barilla",
 "metin": {
@@ -20155,6 +22819,12 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:alcoholic-beverages",
+"en:beers"
+],
 "kod": "8690582112400",
 "marka": "",
 "metin": {},
@@ -20165,6 +22835,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:alcoholic-beverages",
+"en:beers",
+"tr:speclal"
+],
 "kod": "8690582122805",
 "marka": "malt",
 "metin": {},
@@ -20195,6 +22871,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:gıda"
+],
 "kod": "8690585331150",
 "marka": "Abdurrahman tatlıcı",
 "metin": {},
@@ -20415,6 +23094,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:frozen-foods",
+"en:frozen-fried-potatoes",
+"en:frozen-deep-fried-french-fries"
+],
 "kod": "8690612415037",
 "marka": "Superfresh",
 "metin": {
@@ -20438,6 +23122,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:frozen-foods",
+"en:frozen-fried-potatoes",
+"en:frozen-french-fries-to-deep-fry"
+],
 "kod": "8690612415204",
 "marka": "Superfresh Foods",
 "metin": {
@@ -20520,6 +23209,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:frozen-foods",
+"en:meals",
+"en:pizzas-pies-and-quiches",
+"en:pizzas",
+"en:frozen-pizzas-and-pies",
+"en:frozen-pizzas"
+],
 "kod": "8690612518233",
 "marka": "Superfresh Foods",
 "metin": {
@@ -20632,6 +23329,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"tr:kaşar",
+"tr:kaşar-peyniri"
+],
 "kod": "8690614012111",
 "marka": "Peysan",
 "metin": {
@@ -20664,6 +23370,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:pasteurized-cheeses"
+],
 "kod": "8690614012425",
 "marka": "Peysan",
 "metin": {
@@ -20756,6 +23469,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:cereals-and-potatoes",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:potato-crisps"
+],
 "kod": "8690624100846",
 "marka": "Ruffles",
 "metin": {
@@ -20779,6 +23503,13 @@
 },
 "db": "food",
 "dil": "ka",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps"
+],
 "kod": "8690624100976",
 "marka": "Lay's",
 "metin": {
@@ -20802,6 +23533,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:cereals-and-potatoes",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:potato-crisps"
+],
 "kod": "8690624101874",
 "marka": "Lay's",
 "metin": {
@@ -20846,6 +23588,18 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:cereals-and-potatoes",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:potato-crisps",
+"en:wavy-potato-crisps"
+],
 "kod": "8690624102376",
 "marka": "",
 "metin": {},
@@ -20896,6 +23650,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps"
+],
 "kod": "8690624103298",
 "marka": "Lay's",
 "metin": {
@@ -20918,6 +23679,13 @@
 },
 "db": "food",
 "dil": "ru",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps"
+],
 "kod": "8690624103434",
 "marka": "Lay's",
 "metin": {},
@@ -20938,6 +23706,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps"
+],
 "kod": "8690624103557",
 "marka": "Lay's",
 "metin": {},
@@ -20958,6 +23733,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks"
+],
 "kod": "8690624103571",
 "marka": "Ruffles",
 "metin": {},
@@ -20978,6 +23756,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps"
+],
 "kod": "8690624103694",
 "marka": "Lay's",
 "metin": {
@@ -21010,6 +23795,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:cereals-and-potatoes",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:potato-crisps"
+],
 "kod": "8690624104639",
 "marka": "Lay's",
 "metin": {
@@ -21078,6 +23874,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:cereals-and-potatoes",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:potato-crisps"
+],
 "kod": "8690624105292",
 "marka": "Lay's",
 "metin": {
@@ -21288,6 +24095,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:corn-chips"
+],
 "kod": "8690624202762",
 "marka": "Doritos",
 "metin": {},
@@ -21640,6 +24455,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:caramels"
+],
 "kod": "8690629151003",
 "marka": "Dr.Oetker",
 "metin": {},
@@ -21660,6 +24481,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:cooking-helpers"
+],
 "kod": "8690629229405",
 "marka": "Dr. Oetker",
 "metin": {
@@ -21682,6 +24506,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:cocoa-and-its-products",
+"en:cocoa-and-chocolate-powders",
+"en:cocoa-powders"
+],
 "kod": "8690629229665",
 "marka": "Dr. Oetker",
 "metin": {},
@@ -21722,6 +24551,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:food-additives",
+"en:baking-powder-or-raising-agent"
+],
 "kod": "8690629252007",
 "marka": "Dr. Oetker",
 "metin": {
@@ -21745,6 +24578,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spices",
+"en:vanilla",
+"tr:şekerli-vanilin"
+],
 "kod": "8690629252106",
 "marka": "Dr. Oetker",
 "metin": {
@@ -21803,6 +24644,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:desserts",
+"en:puddings"
+],
 "kod": "8690629437855",
 "marka": "Dr. Oetker",
 "metin": {
@@ -21845,6 +24690,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:jelly-powder-mix"
+],
 "kod": "8690629444228",
 "marka": "Dr. Oetker",
 "metin": {
@@ -21908,6 +24756,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:turkish-fermented-drink"
+],
 "kod": "8690631501056",
 "marka": "Vefa Bozacısı",
 "metin": {
@@ -21950,6 +24801,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:cofee"
+],
 "kod": "8690632014548",
 "marka": "",
 "metin": {},
@@ -22030,6 +24884,9 @@
 },
 "db": "food",
 "dil": "ru",
+"kat": [
+"ru:çikolata"
+],
 "kod": "8690632018133",
 "marka": "Nestle",
 "metin": {},
@@ -22223,6 +25080,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"tr:mısır-gevreği"
+],
 "kod": "8690632048680",
 "marka": "Nestlé Nesquik",
 "metin": {
@@ -22295,6 +25161,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690632055480",
 "marka": "",
 "metin": {
@@ -22331,6 +25203,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"tr:çikolatalı-gofret"
+],
 "kod": "8690632056753",
 "marka": "Nestlé",
 "metin": {
@@ -22395,6 +25274,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-foods",
+"en:coffees",
+"en:instant-beverages",
+"en:instant-coffees",
+"en:instant-powder-for-coffee-with-milk"
+],
 "kod": "8690632060804",
 "marka": "Starbucks",
 "metin": {
@@ -22498,6 +25386,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:milk-chocolates"
+],
 "kod": "8690632243054",
 "marka": "Nestlé",
 "metin": {
@@ -22863,6 +25758,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates"
+],
 "kod": "8690632994062",
 "marka": "Nestle",
 "metin": {},
@@ -22923,6 +25824,14 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:tomatoes-and-their-products",
+"en:tomato-pastes"
+],
 "kod": "8690635030910",
 "marka": "Tat",
 "metin": {},
@@ -23053,6 +25962,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meals",
+"en:hazır-gıda",
+"en:quick-food"
+],
 "kod": "8690635070664",
 "marka": "tat",
 "metin": {
@@ -23075,6 +25989,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:hazır-gıda",
+"en:meze",
+"en:quick-food"
+],
 "kod": "8690635070695",
 "marka": "tat",
 "metin": {
@@ -23269,6 +26188,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:non-food-products",
+"en:open-beauty-facts"
+],
 "kod": "8690637628856",
 "marka": "",
 "metin": {},
@@ -23329,6 +26252,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces"
+],
 "kod": "8690637805202",
 "marka": "Calve",
 "metin": {},
@@ -23422,6 +26349,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:ketchup",
+"en:groceries"
+],
 "kod": "8690637840821",
 "marka": "Calvé",
 "metin": {},
@@ -23542,6 +26476,13 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:desserts",
+"en:frozen-foods",
+"en:frozen-desserts",
+"en:ice-creams-and-sorbets",
+"en:ice-creams"
+],
 "kod": "8690637860355",
 "marka": "",
 "metin": {},
@@ -23592,6 +26533,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas"
+],
 "kod": "8690637890871",
 "marka": "Lipton",
 "metin": {
@@ -23614,6 +26562,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:desserts",
+"en:frozen-foods",
+"en:frozen-desserts",
+"en:ice-creams-and-sorbets",
+"en:ice-creams",
+"en:ice-cream-in-a-box"
+],
 "kod": "8690637894091",
 "marka": "Algida",
 "metin": {
@@ -23627,6 +26583,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meals",
+"en:pasta-dishes",
+"en:instant-pasta"
+],
 "kod": "8690637896453",
 "marka": "Knorr",
 "metin": {
@@ -23650,6 +26611,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meals",
+"en:pasta-dishes",
+"en:instant-pasta"
+],
 "kod": "8690637896460",
 "marka": "Knorr",
 "metin": {
@@ -23744,6 +26710,9 @@
 },
 "db": "food",
 "dil": "ar",
+"kat": [
+"en:سكريم"
+],
 "kod": "8690637910821",
 "marka": "mini",
 "metin": {
@@ -23806,6 +26775,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:hot-beverages",
+"en:plant-based-beverages",
+"en:teas",
+"en:herbal-teas",
+"en:herbal-teas-in-tea-bags",
+"en:tea-bags"
+],
 "kod": "8690637932434",
 "marka": "Lipton",
 "metin": {
@@ -23948,6 +26927,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:peanut-butters"
+],
 "kod": "8690637964336",
 "marka": "Calvé",
 "metin": {},
@@ -23958,6 +26947,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:ica-cream"
+],
 "kod": "8690637991134",
 "marka": "algida",
 "metin": {},
@@ -24232,6 +27224,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads"
+],
 "kod": "8690698511661",
 "marka": "Uno",
 "metin": {},
@@ -24252,6 +27250,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:sliced-breads"
+],
 "kod": "8690698511678",
 "marka": "uno",
 "metin": {},
@@ -24272,6 +27277,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads"
+],
 "kod": "8690698511692",
 "marka": "Uno",
 "metin": {},
@@ -24312,6 +27323,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:sliced-breads",
+"en:bran-sliced-breads"
+],
 "kod": "8690698512835",
 "marka": "Uno",
 "metin": {
@@ -24414,6 +27433,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:cotton-candy"
+],
 "kod": "8690710137411",
 "marka": "Koska",
 "metin": {
@@ -24436,6 +27461,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:spreads",
+"en:cereals-and-their-products",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:cereal-butters",
+"en:tahini",
+"tr:susam"
+],
 "kod": "8690710141678",
 "marka": "Koska",
 "metin": {
@@ -24590,6 +27627,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas"
+],
 "kod": "8690723393507",
 "marka": "",
 "metin": {},
@@ -24610,6 +27652,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages"
+],
 "kod": "8690723501896",
 "marka": "",
 "metin": {},
@@ -24660,6 +27705,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:boisson"
+],
 "kod": "8690723581201",
 "marka": "Uludağ",
 "metin": {},
@@ -24722,6 +27770,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages"
+],
 "kod": "8690723843507",
 "marka": "Uludağ",
 "metin": {},
@@ -24772,6 +27823,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:atıştırmalık"
+],
 "kod": "8690766009205",
 "marka": "Ülker",
 "metin": {},
@@ -24802,6 +27856,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks"
+],
 "kod": "8690766050252",
 "marka": "Alpella",
 "metin": {},
@@ -24922,6 +27979,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"tr:gofret"
+],
 "kod": "8690766086473",
 "marka": "Ülker",
 "metin": {},
@@ -24942,6 +28002,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:biscuits-and-cakes",
+"en:chocolate-candies",
+"en:biscuits"
+],
 "kod": "8690766087265",
 "marka": "Mcvities",
 "metin": {},
@@ -25042,6 +28111,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:chocolate-candies",
+"en:bars",
+"en:chocolates",
+"en:candy-chocolate-bars",
+"en:caramel-chocolate-bars"
+],
 "kod": "8690766149949",
 "marka": "Ülker",
 "metin": {
@@ -25084,6 +28164,17 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8690767160042",
 "marka": "Sütas",
 "metin": {},
@@ -25269,6 +28360,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690767670923",
 "marka": "sütaş",
 "metin": {},
@@ -25311,6 +28408,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8690767671081",
 "marka": "Sütaş",
 "metin": {},
@@ -25371,6 +28479,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:tam-yağlı-taze-beyaz-peynir"
+],
 "kod": "8690767675089",
 "marka": "Sütaş",
 "metin": {},
@@ -25441,6 +28552,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690767710469",
 "marka": "Sutaski",
 "metin": {},
@@ -25481,6 +28598,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:labaneh",
+"en:labneh",
+"en:strained-yoghurt"
+],
 "kod": "8690767714641",
 "marka": "Sütaş",
 "metin": {
@@ -25624,6 +28750,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cream-cheeses"
+],
 "kod": "8690767717000",
 "marka": "Sütaş",
 "metin": {
@@ -25646,6 +28779,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies"
+],
 "kod": "8690767774874",
 "marka": "Sütaş",
 "metin": {},
@@ -25678,6 +28814,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:food-additives",
+"en:yeast"
+],
 "kod": "8690770322215",
 "marka": "Pakmaya",
 "metin": {
@@ -25740,6 +28882,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods"
+],
 "kod": "8690777432368",
 "marka": "Sera",
 "metin": {},
@@ -25760,6 +28906,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:seeds",
+"en:legume-seeds",
+"en:pulses",
+"en:common-beans",
+"en:white-beans"
+],
 "kod": "8690777513012",
 "marka": "Sera",
 "metin": {},
@@ -25800,6 +28957,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:canned-foods",
+"en:vegetables-based-foods",
+"en:canned-plant-based-foods",
+"en:canned-vegetables"
+],
 "kod": "8690777564007",
 "marka": "Sera",
 "metin": {
@@ -25899,6 +29065,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:çerez"
+],
 "kod": "8690787171066",
 "marka": "Tadım",
 "metin": {},
@@ -25979,6 +29148,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:seeds",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-seeds"
+],
 "kod": "8690787241110",
 "marka": "Tadim",
 "metin": {},
@@ -26019,6 +29195,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:dried-plant-based-foods",
+"en:dried-fruits",
+"en:raisins",
+"en:sultana-raisins"
+],
 "kod": "8690787281048",
 "marka": "Tadım",
 "metin": {
@@ -26071,6 +29258,19 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:salty-snacks",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:roasted-nuts",
+"en:salted-nuts",
+"en:cashew-nuts",
+"en:roasted-cashew-nuts",
+"en:salted-cashews"
+],
 "kod": "8690787311059",
 "marka": "Tadim",
 "metin": {
@@ -26173,6 +29373,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:sweet-snacks",
+"en:nuts-and-their-products",
+"en:bars",
+"en:nut-bars"
+],
 "kod": "8690787511015",
 "marka": "Tadim",
 "metin": {
@@ -26216,6 +29425,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:snacks",
+"en:sweet-snacks",
+"en:nuts-and-their-products",
+"en:bars",
+"en:nut-bars"
+],
 "kod": "8690787561010",
 "marka": "Tadim",
 "metin": {
@@ -26338,6 +29556,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters"
+],
 "kod": "8690793010052",
 "marka": "Erikli",
 "metin": {
@@ -26361,6 +29585,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:carbonated-waters",
+"en:natural-mineral-waters",
+"en:carbonated-natural-mineral-waters",
+"en:mildly-carbonated-natural-mineral-water"
+],
 "kod": "8690793010151",
 "marka": "Erikli",
 "metin": {},
@@ -26433,6 +29668,13 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas"
+],
 "kod": "8690804322891",
 "marka": "Baktat",
 "metin": {
@@ -26515,6 +29757,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:ketchup"
+],
 "kod": "8690804367472",
 "marka": "Suntat",
 "metin": {},
@@ -26575,6 +29823,11 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"de:cig-köfte",
+"de:vegetarische-bulgurspezialität",
+"de:çig-köfte"
+],
 "kod": "8690804372018",
 "marka": "Suntan",
 "metin": {
@@ -26637,6 +29890,9 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"fr:knoblauch-sauce"
+],
 "kod": "8690804378416",
 "marka": "SUNTAT",
 "metin": {
@@ -26819,6 +30075,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:gummi-candies"
+],
 "kod": "8690840179961",
 "marka": "ülker",
 "metin": {},
@@ -26962,6 +30225,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:pasteurized-cheeses"
+],
 "kod": "8690843095480",
 "marka": "Migros",
 "metin": {
@@ -27065,6 +30336,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8690843097194",
 "marka": "Bahçıvan",
 "metin": {},
@@ -27565,6 +30842,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:semi-skimmed-milks"
+],
 "kod": "8690982018944",
 "marka": "xyz",
 "metin": {
@@ -27638,6 +30920,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8690982101424",
 "marka": "Carrefour",
 "metin": {
@@ -27700,6 +30987,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys"
+],
 "kod": "8690998102149",
 "marka": "",
 "metin": {},
@@ -27840,6 +31136,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:tea-based-beverages",
+"en:iced-teas"
+],
 "kod": "8691020675624",
 "marka": "Çaykur",
 "metin": {
@@ -27912,6 +31213,18 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:nuts-and-their-products",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:nut-butters",
+"en:peanut-butters"
+],
 "kod": "8691026060035",
 "marka": "Polmak Gold",
 "metin": {
@@ -27995,6 +31308,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters"
+],
 "kod": "8691058100013",
 "marka": "Sırma",
 "metin": {
@@ -28007,6 +31327,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas",
+"en:lemonade",
+"en:sweetened-beverages"
+],
 "kod": "8691058141832",
 "marka": "Vitaminli",
 "metin": {
@@ -28030,6 +31357,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8691058141948",
 "marka": "Sirmagroup",
 "metin": {},
@@ -28050,6 +31381,10 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8691058141979",
 "marka": "",
 "metin": {},
@@ -28060,6 +31395,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:مشروب-غازي"
+],
 "kod": "8691058142570",
 "marka": "Elma",
 "metin": {},
@@ -28210,6 +31548,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys"
+],
 "kod": "8691070621077",
 "marka": "Koska",
 "metin": {},
@@ -28230,6 +31577,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:desserts"
+],
 "kod": "8691070634701",
 "marka": "Koska",
 "metin": {
@@ -28272,6 +31622,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:gummi-candies",
+"en:gummy-bears"
+],
 "kod": "8691216018891",
 "marka": "Haribo",
 "metin": {
@@ -28326,6 +31684,18 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:carbonated-drinks",
+"en:sodas",
+"en:candies",
+"en:gummi-candies",
+"en:gummy-cola-bottles",
+"en:gummies"
+],
 "kod": "8691216090446",
 "marka": "Haribo",
 "metin": {
@@ -28348,6 +31718,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "8691216097162",
 "marka": "Haribo",
 "metin": {},
@@ -28368,6 +31744,13 @@
 },
 "db": "food",
 "dil": "vi",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:marshmallows"
+],
 "kod": "8691216097193",
 "marka": "Haribo",
 "metin": {
@@ -28440,6 +31823,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"tr:ezine-peyniri"
+],
 "kod": "8691225153521",
 "marka": "Tahsildaroğlu",
 "metin": {
@@ -28582,6 +31972,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fats",
+"en:vegetable-fats",
+"en:olive-tree-products",
+"en:vegetable-oils",
+"en:olive-oils"
+],
 "kod": "8691313570087",
 "marka": "",
 "metin": {},
@@ -28602,6 +32001,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8691314000040",
 "marka": "Bayram",
 "metin": {},
@@ -28622,6 +32032,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8691316520027",
 "marka": "200 ml",
 "metin": {
@@ -28654,6 +32075,17 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8691316520416",
 "marka": "",
 "metin": {},
@@ -29020,6 +32452,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:carbonated-waters",
+"en:natural-mineral-waters",
+"en:carbonated-natural-mineral-waters"
+],
 "kod": "8691381000011",
 "marka": "Beypazarı",
 "metin": {
@@ -29062,6 +32504,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:vegan",
+"en:vegetarian"
+],
 "kod": "8691386507522",
 "marka": "Cinar",
 "metin": {
@@ -29114,6 +32560,11 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas"
+],
 "kod": "8691395160008",
 "marka": "Kınık",
 "metin": {
@@ -29156,6 +32607,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:sodas"
+],
 "kod": "8691395714003",
 "marka": "kınık",
 "metin": {},
@@ -29216,6 +32672,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads"
+],
 "kod": "8691397181056",
 "marka": "İstanbul Halk Ekmek",
 "metin": {
@@ -29339,6 +32801,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:seafood",
+"en:fishes-and-their-products",
+"en:canned-foods",
+"en:fishes",
+"en:fatty-fishes",
+"en:canned-fishes",
+"en:tunas",
+"en:canned-tunas"
+],
 "kod": "8691405653223",
 "marka": "Fide",
 "metin": {
@@ -29562,6 +33034,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:parmesan-cheese"
+],
 "kod": "8691483016026",
 "marka": "alberto di centa",
 "metin": {
@@ -29634,6 +33109,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:n"
+],
 "kod": "8691520103122",
 "marka": "",
 "metin": {},
@@ -29754,6 +33232,13 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spices",
+"en:groceries"
+],
 "kod": "8691573007194",
 "marka": "Burcu",
 "metin": {},
@@ -29797,6 +33282,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:ketchup",
+"en:groceries"
+],
 "kod": "8691573073281",
 "marka": "Burcu",
 "metin": {},
@@ -29899,6 +33391,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:fındık-ezmesi",
+"tr:şekerli-fındık-ezmesi"
+],
 "kod": "8691641080036",
 "marka": "Fiskobirlik",
 "metin": {
@@ -29932,6 +33428,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads"
+],
 "kod": "8691641529016",
 "marka": "Fiskobirlik",
 "metin": {},
@@ -29974,6 +33477,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:زنده-باد"
+],
 "kod": "8691685015070",
 "marka": "قیصار",
 "metin": {},
@@ -30004,6 +33510,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:hard-candies"
+],
 "kod": "8691707003412",
 "marka": "Şölen",
 "metin": {
@@ -30146,6 +33659,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:crackers"
+],
 "kod": "8691707088068",
 "marka": "Greta",
 "metin": {
@@ -30229,6 +33748,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate",
+"en:chocolate-nuts-cookie-bars"
+],
 "kod": "8691707096100",
 "marka": "Şölen",
 "metin": {
@@ -30591,6 +34120,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:desserts",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:pastries",
+"en:baklava"
+],
 "kod": "8691837004266",
 "marka": "Hastel",
 "metin": {},
@@ -30653,6 +34190,19 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:dairy-substitutes",
+"en:cereals-and-their-products",
+"en:milk-substitutes",
+"en:plant-based-beverages",
+"en:plant-based-milk-alternatives",
+"en:cereal-based-drinks",
+"en:amaranth-based-drinks"
+],
 "kod": "8692005190019",
 "marka": "koop",
 "metin": {},
@@ -30673,6 +34223,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:food"
+],
 "kod": "86920131",
 "marka": "Eti",
 "metin": {
@@ -30776,6 +34329,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8692095342183",
 "marka": "SEK",
 "metin": {
@@ -30838,6 +34397,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8692095343517",
 "marka": "Sek",
 "metin": {},
@@ -30958,6 +34526,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8692095345801",
 "marka": "Sek",
 "metin": {},
@@ -30968,6 +34545,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:flours",
+"en:cereal-flours",
+"en:barley-flours"
+],
 "kod": "8692111568979",
 "marka": "tel mask",
 "metin": {
@@ -31010,6 +34596,10 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks"
+],
 "kod": "8692121080010",
 "marka": "Balmar",
 "metin": {
@@ -31042,6 +34632,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:spreads",
+"en:plant-based-spreads",
+"en:sweet-spreads",
+"en:fruit-and-vegetable-preserves",
+"en:jams"
+],
 "kod": "8692134668045",
 "marka": "şifa baba",
 "metin": {},
@@ -31252,6 +34852,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8692388506766",
 "marka": "lokman",
 "metin": {
@@ -31314,6 +34920,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:hot-sauces"
+],
 "kod": "8692405001151",
 "marka": "new King",
 "metin": {},
@@ -31364,6 +34975,11 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:semi-skimmed-milks"
+],
 "kod": "8692462002467",
 "marka": "",
 "metin": {},
@@ -31444,6 +35060,9 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"de:knisternde-zuckerware"
+],
 "kod": "8692544100654",
 "marka": "Hleks",
 "metin": {
@@ -31466,6 +35085,14 @@
 },
 "db": "food",
 "dil": "ro",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"ro:bomboane-acre",
+"ro:bomboane-pocnitoare"
+],
 "kod": "8692544178042",
 "marka": "Hleks",
 "metin": {
@@ -31668,6 +35295,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:carbonated-waters",
+"en:natural-mineral-waters",
+"en:carbonated-natural-mineral-waters"
+],
 "kod": "8692813005055",
 "marka": "Kızılay",
 "metin": {
@@ -31690,6 +35327,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:carbonated-drinks",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:carbonated-waters",
+"en:natural-mineral-waters",
+"en:carbonated-natural-mineral-waters"
+],
 "kod": "8692813005574",
 "marka": "Kızılay",
 "metin": {},
@@ -31770,6 +35418,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:kefir"
+],
 "kod": "8692886310711",
 "marka": "Altınkılıç",
 "metin": {
@@ -31823,6 +35481,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:kefir"
+],
 "kod": "8692886311619",
 "marka": "ALTINKILIÇ",
 "metin": {
@@ -31886,6 +35554,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8692886412040",
 "marka": "Altınkılıç",
 "metin": {},
@@ -31906,6 +35580,16 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fats",
+"en:spreads",
+"en:spreadable-fats",
+"en:animal-fats",
+"en:dairy-spreads",
+"en:milkfat",
+"en:butters"
+],
 "kod": "8692963010091",
 "marka": "Kebir",
 "metin": {
@@ -32088,6 +35772,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks",
+"en:flavoured-milks",
+"en:chocolate-milks"
+],
 "kod": "8692971412122",
 "marka": "İçim",
 "metin": {
@@ -32143,6 +35834,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts",
+"en:lactose-free-yogurts"
+],
 "kod": "8692971421117",
 "marka": "İçim",
 "metin": {},
@@ -32273,6 +35974,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts",
+"en:cow-milk-yogurts"
+],
 "kod": "8692971429519",
 "marka": "İçim",
 "metin": {
@@ -32296,6 +36007,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:cheeses-from-the-united-kingdom",
+"en:cheeses-from-england",
+"en:cheddar-cheese"
+],
 "kod": "8692971430164",
 "marka": "President",
 "metin": {
@@ -32399,6 +36120,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8692971433554",
 "marka": "İçim",
 "metin": {
@@ -32471,6 +36198,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks"
+],
 "kod": "8692971434322",
 "marka": "İçim",
 "metin": {},
@@ -32491,6 +36224,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks"
+],
 "kod": "8692971434346",
 "marka": "İçim",
 "metin": {},
@@ -32511,6 +36250,25 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:dairy-drinks",
+"en:fermented-dairy-desserts",
+"en:fermented-dairy-desserts-with-fruits",
+"en:fermented-drinks",
+"en:yogurts",
+"en:fermented-milk-drinks",
+"en:fruit-yogurts",
+"en:drinkable-yogurts",
+"en:sweetened-beverages",
+"en:yogurts-high-in-protein-on-a-fruit-layer"
+],
 "kod": "8692971434353",
 "marka": "İçim",
 "metin": {},
@@ -32541,6 +36299,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:dairy-drinks"
+],
 "kod": "8692971434513",
 "marka": "İçim",
 "metin": {},
@@ -32561,6 +36325,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:cheeses-from-the-united-kingdom",
+"en:cheeses-from-england",
+"en:cheddar-cheese"
+],
 "kod": "8692971434971",
 "marka": "İçim",
 "metin": {
@@ -32593,6 +36367,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses"
+],
 "kod": "8692971435190",
 "marka": "İçim",
 "metin": {
@@ -32616,6 +36397,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:cow-milks",
+"en:organic-milks"
+],
 "kod": "8692971435367",
 "marka": "İçim",
 "metin": {
@@ -32669,6 +36456,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cow-cheeses",
+"en:cheeses-from-the-united-kingdom",
+"en:cheeses-from-england",
+"en:cheddar-cheese"
+],
 "kod": "8692971435756",
 "marka": "President",
 "metin": {
@@ -32742,6 +36539,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:desserts",
+"en:puddings"
+],
 "kod": "8692971468327",
 "marka": "Daphne",
 "metin": {},
@@ -33032,6 +36833,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:şalgam"
+],
 "kod": "8693354000615",
 "marka": "Doğanay",
 "metin": {
@@ -33114,6 +36918,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:seeds",
+"en:legume-seeds",
+"en:pulses",
+"en:chickpeas"
+],
 "kod": "8693374253589",
 "marka": "Yayla",
 "metin": {
@@ -33157,6 +36971,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:hazır-gıda",
+"en:quick-food"
+],
 "kod": "8693374254364",
 "marka": "Yayla",
 "metin": {
@@ -33179,6 +36997,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:quick-food"
+],
 "kod": "8693374254388",
 "marka": "Yayla",
 "metin": {
@@ -33201,6 +37022,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:meals",
+"en:hazır-gıda"
+],
 "kod": "8693374254401",
 "marka": "Yayla",
 "metin": {
@@ -33223,6 +37050,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:meals",
+"en:hazır-gıda"
+],
 "kod": "8693374254883",
 "marka": "Yayla",
 "metin": {
@@ -33245,6 +37078,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pastas",
+"en:hazır-gıda",
+"en:quick-food"
+],
 "kod": "8693374255293",
 "marka": "Yayla",
 "metin": {
@@ -33308,6 +37148,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:hazır-gıda"
+],
 "kod": "8693374255477",
 "marka": "Yayla",
 "metin": {
@@ -33330,6 +37173,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:hazır-gıda",
+"en:quick-food"
+],
 "kod": "8693374255491",
 "marka": "Yayla",
 "metin": {
@@ -33392,6 +37239,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:hazır-gıda",
+"en:quick-food"
+],
 "kod": "8693374257761",
 "marka": "Yayla",
 "metin": {
@@ -33594,6 +37445,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:dried-meats",
+"en:beef-jerkies"
+],
 "kod": "8693407000463",
 "marka": "Polonez",
 "metin": {
@@ -33739,6 +37596,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8693440010849",
 "marka": "",
 "metin": {},
@@ -33829,6 +37691,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages"
+],
 "kod": "8693593400009",
 "marka": "akmina",
 "metin": {},
@@ -33849,6 +37714,11 @@
 },
 "db": "food",
 "dil": "ar",
+"kat": [
+"en:beverages",
+"en:waters",
+"ar:su"
+],
 "kod": "8693593400498",
 "marka": "Hayat",
 "metin": {
@@ -34244,6 +38114,18 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:fermented-dairy-desserts-with-fruits",
+"en:yogurts",
+"en:fruit-yogurts",
+"en:pear-yogurts"
+],
 "kod": "86940870",
 "marka": "tekel",
 "metin": {
@@ -34306,6 +38188,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:beef-and-its-products",
+"en:meats",
+"en:beef"
+],
 "kod": "8694122096113",
 "marka": "Marque repère",
 "metin": {},
@@ -34406,6 +38294,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:jju"
+],
 "kod": "8694321002304",
 "marka": "jsji",
 "metin": {},
@@ -34536,6 +38427,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:cooking-helpers",
+"en:sauces",
+"en:toppings"
+],
 "kod": "8694587134733",
 "marka": "Kent",
 "metin": {},
@@ -34556,6 +38453,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:dessert-sauces"
+],
 "kod": "8694587138472",
 "marka": "Kent Boringer",
 "metin": {
@@ -34579,6 +38481,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:condiments",
+"en:fruits-based-foods",
+"en:sauces",
+"en:dessert-sauces",
+"en:fruits-coulis"
+],
 "kod": "8694587138496",
 "marka": "Kent Boringer",
 "metin": {
@@ -34661,6 +38573,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:burgundy-style-sauces"
+],
 "kod": "8694603004897",
 "marka": "Benedicta",
 "metin": {},
@@ -34721,6 +38638,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"fr:sauces-crudites"
+],
 "kod": "8694603081935",
 "marka": "Bénédicta",
 "metin": {},
@@ -34801,6 +38723,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:non-alcoholic-beverages"
+],
 "kod": "86947046",
 "marka": "Maltana",
 "metin": {
@@ -34915,6 +38842,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meats-and-their-products",
+"en:meals",
+"en:meals-with-meat"
+],
 "kod": "8694918022920",
 "marka": "ta!da!",
 "metin": {
@@ -34997,6 +38929,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:homogenized-milks",
+"en:uht-milks",
+"en:lactose-free-milk",
+"tr:laktozsuz-süt",
+"tr:semi-skimmed-uht"
+],
 "kod": "8694962009557",
 "marka": "Aynes",
 "metin": {
@@ -35019,6 +38960,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cream-cheeses"
+],
 "kod": "8694962010904",
 "marka": "Tarsüt",
 "metin": {
@@ -35121,6 +39069,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:cow-milks"
+],
 "kod": "8695077000538",
 "marka": "Dost",
 "metin": {},
@@ -35131,6 +39084,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mayonnaises"
+],
 "kod": "8695077000583",
 "marka": "BolBol",
 "metin": {},
@@ -35151,6 +39109,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products"
+],
 "kod": "8695077000743",
 "marka": "Cardella",
 "metin": {},
@@ -35333,6 +39297,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts"
+],
 "kod": "8695077002327",
 "marka": "Simbat",
 "metin": {
@@ -35395,6 +39365,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:unsweetened-beverages",
+"en:apple-juices"
+],
 "kod": "8695077003591",
 "marka": "",
 "metin": {},
@@ -35415,6 +39395,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries"
+],
 "kod": "8695077003843",
 "marka": "Dost",
 "metin": {
@@ -35467,6 +39452,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:halty"
+],
 "kod": "8695077004369",
 "marka": "dost",
 "metin": {},
@@ -35529,6 +39517,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:kendine-iwhndiej-idjdniwoed"
+],
 "kod": "8695077005199",
 "marka": "kdjdue",
 "metin": {},
@@ -35609,6 +39600,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8695077006301",
 "marka": "Aknaz",
 "metin": {
@@ -35632,6 +39629,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks-liquid-and-powder",
+"en:milks",
+"en:cow-milks"
+],
 "kod": "8695077006806",
 "marka": "Dost",
 "metin": {},
@@ -35672,6 +39675,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:kaymak"
+],
 "kod": "8695077007780",
 "marka": "Kerem",
 "metin": {
@@ -35754,6 +39763,17 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:non-alcoholic-beverages",
+"en:unsweetened-beverages",
+"en:apple-juices"
+],
 "kod": "8695077012890",
 "marka": "Osmanoğlu",
 "metin": {
@@ -35816,6 +39836,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:ا"
+],
 "kod": "8695077014597",
 "marka": "ل",
 "metin": {},
@@ -35876,6 +39899,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:fermented-dairy-desserts-with-fruits",
+"en:yogurts",
+"en:fruit-yogurts"
+],
 "kod": "8695077016065",
 "marka": "DOST",
 "metin": {},
@@ -35946,6 +39980,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:pastries",
+"en:tiramisu"
+],
 "kod": "8695077017895",
 "marka": "Ma Sante",
 "metin": {
@@ -35988,6 +40029,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:pastries",
+"en:eclairs",
+"en:chocolate-eclairs"
+],
 "kod": "8695077020413",
 "marka": "peripella",
 "metin": {
@@ -36020,6 +40069,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas"
+],
 "kod": "8695077020833",
 "marka": "daphne",
 "metin": {},
@@ -36060,6 +40116,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks",
+"tr:milch"
+],
 "kod": "8695077022332",
 "marka": "Harras",
 "metin": {
@@ -36134,6 +40195,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"en:bee-products",
+"en:farming-products",
+"en:sweeteners",
+"en:honeys"
+],
 "kod": "8695077025067",
 "marka": "Harras",
 "metin": {},
@@ -36174,6 +40244,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate"
+],
 "kod": "8695077026248",
 "marka": "Harras",
 "metin": {
@@ -36216,6 +40295,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8695077029454",
 "marka": "Harras",
 "metin": {
@@ -36278,6 +40366,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:sliced-breads"
+],
 "kod": "8695077031075",
 "marka": "Harras",
 "metin": {
@@ -36350,6 +40445,18 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8695077041067",
 "marka": "",
 "metin": {
@@ -36362,6 +40469,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:junior"
+],
 "kod": "8695077042064",
 "marka": "Adora",
 "metin": {},
@@ -36402,6 +40512,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"tr:eritme-peyniri",
+"tr:kaşar"
+],
 "kod": "8695077044020",
 "marka": "Aknaz",
 "metin": {
@@ -36445,6 +40563,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fats",
+"en:vegetable-fats",
+"en:vegetable-oils",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-oils"
+],
 "kod": "8695077044198",
 "marka": "Sole",
 "metin": {},
@@ -36465,6 +40592,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:bars-covered-with-chocolate",
+"en:chocolate-nuts-cookie-bars"
+],
 "kod": "8695077046963",
 "marka": "",
 "metin": {},
@@ -36485,6 +40622,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads",
+"en:chocolate-spreads",
+"en:cocoa-and-hazelnuts-spreads",
+"tr:kakaolu-fındıklı-krema"
+],
 "kod": "8695077046994",
 "marka": "Harras",
 "metin": {
@@ -36527,6 +40674,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pickles",
+"en:olive-tree-products",
+"en:plant-based-pickles",
+"en:olives",
+"en:black-olives"
+],
 "kod": "8695077051271",
 "marka": "İnci",
 "metin": {
@@ -36569,6 +40725,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:seeds",
+"en:cereals-and-their-products",
+"en:cereal-grains",
+"en:corn",
+"en:sweet-kernel-corn"
+],
 "kod": "8695077053510",
 "marka": "YURDUM",
 "metin": {
@@ -36591,6 +40757,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:food-additives",
+"tr:kabartma-tozu"
+],
 "kod": "8695077054906",
 "marka": "Destan",
 "metin": {
@@ -36665,6 +40840,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:semi-skimmed-milks"
+],
 "kod": "8695077061096",
 "marka": "Dost",
 "metin": {
@@ -36728,6 +40908,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:shelled-nuts",
+"en:walnuts",
+"en:walnut-kernels"
+],
 "kod": "8695077069528",
 "marka": "",
 "metin": {},
@@ -36748,6 +40937,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:cashew-nuts",
+"tr:çerez"
+],
 "kod": "8695077069542",
 "marka": "Simbat",
 "metin": {
@@ -36790,6 +40987,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:gummi-candies",
+"en:jelly-beans",
+"tr:jelatin",
+"tr:jelibon",
+"tr:yumuşak-şeker"
+],
 "kod": "8695077071576",
 "marka": "Jelly Party",
 "metin": {
@@ -36902,6 +41110,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8695077074614",
 "marka": "kelly's fitness club",
 "metin": {
@@ -36974,6 +41191,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meyve-suyu"
+],
 "kod": "8695077081254",
 "marka": "teatone",
 "metin": {},
@@ -37014,6 +41234,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8695077084323",
 "marka": "",
 "metin": {},
@@ -37034,6 +41260,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits"
+],
 "kod": "8695077084361",
 "marka": "Süsse",
 "metin": {
@@ -37067,6 +41299,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8695077084941",
 "marka": "",
 "metin": {},
@@ -37149,6 +41390,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:chocolates",
+"en:dark-chocolates",
+"en:bitter-cikolata"
+],
 "kod": "8695077086648",
 "marka": "Buono",
 "metin": {
@@ -37174,6 +41423,15 @@
 },
 "db": "food",
 "dil": "bg",
+"kat": [
+"en:meals",
+"en:bulgur-dishes",
+"en:bulgur-balls",
+"en:cig-kofte",
+"en:raw-meatballs",
+"en:ciğ-kofte",
+"en:чий-кюфте"
+],
 "kod": "8695077087126",
 "marka": "Bim",
 "metin": {
@@ -37187,6 +41445,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:temizlik"
+],
 "kod": "8695077088864",
 "marka": "mr.bee",
 "metin": {},
@@ -37217,6 +41478,12 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8695077091741",
 "marka": "",
 "metin": {},
@@ -37237,6 +41504,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:milks-liquid-and-powder",
+"en:milks"
+],
 "kod": "8695077092021",
 "marka": "Dost",
 "metin": {
@@ -37250,6 +41522,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:120"
+],
 "kod": "8695077092069",
 "marka": "studi",
 "metin": {},
@@ -37320,6 +41595,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:seeds",
+"en:legume-seeds",
+"en:pulses",
+"en:lentils"
+],
 "kod": "8695077095718",
 "marka": "saban",
 "metin": {},
@@ -37340,6 +41625,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:salty-snacks",
+"en:appetizers",
+"en:chips-and-fries",
+"en:crisps",
+"en:atıştırmalık",
+"en:cips"
+],
 "kod": "8695077096326",
 "marka": "Patito",
 "metin": {
@@ -37502,6 +41796,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pickles",
+"en:olive-tree-products",
+"en:plant-based-pickles",
+"en:olives",
+"en:green-olives"
+],
 "kod": "8695077101372",
 "marka": "İnci",
 "metin": {
@@ -37544,6 +41847,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8695077102126",
 "marka": "Kelly's",
 "metin": {},
@@ -37564,6 +41876,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8695077102133",
 "marka": "Kelly:s Fitness Club",
 "metin": {
@@ -37658,6 +41979,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:shortbread-biscuit-with-butter"
+],
 "kod": "8695077110848",
 "marka": "PastaMilan",
 "metin": {
@@ -37680,6 +42008,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:baguettes"
+],
 "kod": "8695077111760",
 "marka": "HARRAS",
 "metin": {},
@@ -37700,6 +42035,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:pirinç"
+],
 "kod": "8695077111791",
 "marka": "lezzet-i efsane",
 "metin": {},
@@ -38183,6 +42521,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-nectars",
+"en:cherry-nectars"
+],
 "kod": "8695077302038",
 "marka": "Jucy",
 "metin": {
@@ -38216,6 +42563,12 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts"
+],
 "kod": "8695077508072",
 "marka": "Simbat",
 "metin": {
@@ -38248,6 +42601,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses",
+"en:cream-cheeses"
+],
 "kod": "8695077701145",
 "marka": "aknaz",
 "metin": {
@@ -38260,6 +42620,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:mineraalwaters"
+],
 "kod": "8695188000052",
 "marka": "Kardelen",
 "metin": {},
@@ -38500,6 +42865,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meals",
+"en:soups"
+],
 "kod": "8695789002639",
 "marka": "MAR",
 "metin": {},
@@ -38560,6 +42929,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:luxury-napkin"
+],
 "kod": "8695855051448",
 "marka": "",
 "metin": {},
@@ -38660,6 +43032,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:fruits",
+"en:spanish-fruits",
+"es:cerezas-de-la-montana-de-alicante"
+],
 "kod": "8695876200061",
 "marka": "Peyman",
 "metin": {},
@@ -38770,6 +43151,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:seeds",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-seeds"
+],
 "kod": "8695876201983",
 "marka": "Peyman",
 "metin": {
@@ -39205,6 +43593,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:soy-sauces"
+],
 "kod": "8696207014056",
 "marka": "Carrefour",
 "metin": {
@@ -39217,6 +43610,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8696236110266",
 "marka": "Rioba",
 "metin": {},
@@ -39357,6 +43755,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:mayonnaises",
+"en:ketchup"
+],
 "kod": "8696362500382",
 "marka": "Heinz",
 "metin": {
@@ -39400,6 +43805,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:mayonnaises"
+],
 "kod": "8696362805197",
 "marka": "Heinz",
 "metin": {
@@ -39462,6 +43872,17 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:fermented-dairy-desserts-with-fruits",
+"en:yogurts",
+"en:fruit-yogurts"
+],
 "kod": "8696368011493",
 "marka": "Activia",
 "metin": {},
@@ -39482,6 +43903,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:fermented-dairy-desserts-with-fruits",
+"en:yogurts",
+"en:fruit-yogurts"
+],
 "kod": "8696368011929",
 "marka": "Danone",
 "metin": {
@@ -39554,6 +43986,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:probiyotik-shot"
+],
 "kod": "8696368041698",
 "marka": "Activia",
 "metin": {},
@@ -39707,6 +44142,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-nectars",
+"en:cherry-nectars"
+],
 "kod": "8696368943503",
 "marka": "Danone",
 "metin": {
@@ -39729,6 +44173,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8696368944036",
 "marka": "Dost",
 "metin": {},
@@ -39829,6 +44282,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:chicken-and-its-products",
+"en:poultries",
+"en:chickens",
+"en:chicken-breasts"
+],
 "kod": "8696425016058",
 "marka": "Lezita",
 "metin": {},
@@ -40309,6 +44770,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:fast-food"
+],
 "kod": "8697343111924",
 "marka": "Feast",
 "metin": {
@@ -40581,6 +45045,17 @@
 "besin": null,
 "db": "food",
 "dil": "pl",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:spreads",
+"en:plant-based-spreads",
+"en:sweet-spreads",
+"en:fruit-and-vegetable-preserves",
+"en:jams",
+"en:chili-jams"
+],
 "kod": "8697405860326",
 "marka": "",
 "metin": {
@@ -40626,6 +45101,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods"
+],
 "kod": "8697406276416",
 "marka": "Yonca",
 "metin": {},
@@ -40786,6 +45267,17 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spreads",
+"en:plant-based-spreads",
+"en:salted-spreads",
+"en:sauces",
+"en:ajvar",
+"en:groceries"
+],
 "kod": "8697412872619",
 "marka": "Ahinur",
 "metin": {
@@ -40848,6 +45340,20 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:festive-foods",
+"en:biscuits-and-cakes",
+"en:christmas-foods-and-drinks",
+"en:biscuits",
+"en:christmas-sweets",
+"en:wafers",
+"en:stuffed-wafers",
+"en:almond-creme-filled-wafers",
+"en:vanilla-stuffed-wafers"
+],
 "kod": "8697412877195",
 "marka": "Ahinur",
 "metin": {
@@ -40910,6 +45416,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:corne-biscuit"
+],
 "kod": "8697416465008",
 "marka": "loft",
 "metin": {
@@ -41083,6 +45592,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:halva"
+],
 "kod": "8697425041071",
 "marka": "Uğurlu",
 "metin": {},
@@ -41267,6 +45782,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8697429330058",
 "marka": "Dogal kaynak suyu",
 "metin": {},
@@ -41287,6 +45806,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas",
+"en:dry-pastas"
+],
 "kod": "8697430885486",
 "marka": "",
 "metin": {},
@@ -41307,6 +45834,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:pastas"
+],
 "kod": "8697430885493",
 "marka": "ARBELLA",
 "metin": {
@@ -41390,6 +45922,10 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8697432340037",
 "marka": "Sırmakeş",
 "metin": {
@@ -41412,6 +45948,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters",
+"tr:doğal-kaynak-suyu"
+],
 "kod": "8697432370027",
 "marka": "Doğal Su Gıda San. Tic. Ltd. Sti.",
 "metin": {},
@@ -41582,6 +46123,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:confectioner"
+],
 "kod": "8697436110865",
 "marka": "ARMELLA",
 "metin": {},
@@ -41682,6 +46230,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:halva"
+],
 "kod": "8697436526673",
 "marka": "Ciloglu",
 "metin": {
@@ -41704,6 +46258,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies",
+"en:marshmallows"
+],
 "kod": "8697436527205",
 "marka": "",
 "metin": {},
@@ -41764,6 +46325,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:fruits-based-foods",
+"en:dried-products",
+"en:dried-plant-based-foods",
+"en:dried-fruits",
+"en:dried-figs"
+],
 "kod": "8697436558391",
 "marka": "Ciloglu",
 "metin": {},
@@ -41966,6 +46537,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:seeds",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-seeds"
+],
 "kod": "8697440652832",
 "marka": "nefis",
 "metin": {
@@ -41978,6 +46556,14 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:vegetables",
+"en:endives"
+],
 "kod": "8697441340455",
 "marka": "starstories",
 "metin": {},
@@ -41998,6 +46584,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:turkish-delight"
+],
 "kod": "8697442963530",
 "marka": "SultanatE",
 "metin": {
@@ -42040,6 +46632,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8697447040519",
 "marka": "Kahve Dünyası",
 "metin": {
@@ -42212,6 +46809,14 @@
 "besin": null,
 "db": "food",
 "dil": "hr",
+"kat": [
+"en:snacks",
+"en:desserts",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:pastries",
+"en:baklava"
+],
 "kod": "8697451010225",
 "marka": "haci bozan oguhhari",
 "metin": {
@@ -42255,6 +46860,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:seafood",
+"en:fishes-and-their-products",
+"en:fishes"
+],
 "kod": "8697457057118",
 "marka": "",
 "metin": {},
@@ -42335,6 +46945,9 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:juice"
+],
 "kod": "8697462700047",
 "marka": "Netto",
 "metin": {},
@@ -42528,6 +47141,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:prepared-meats",
+"en:cured-sausages",
+"en:salami",
+"en:beef-salami"
+],
 "kod": "8697471721019",
 "marka": "Namet - Dana Macar Salam",
 "metin": {},
@@ -42558,6 +47179,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:meats-and-their-products",
+"en:prepared-meats",
+"en:cured-sausages",
+"en:salami"
+],
 "kod": "8697471723181",
 "marka": "Namet",
 "metin": {},
@@ -42608,6 +47235,19 @@
 },
 "db": "food",
 "dil": "nl",
+"kat": [
+"en:meats-and-their-products",
+"en:meat-preparations",
+"en:meats",
+"en:prepared-meats",
+"en:poultries",
+"en:sausages",
+"en:turkey-and-its-products",
+"en:turkeys",
+"en:poultry-sausages",
+"en:turkey-preparations",
+"en:turkey-sausages"
+],
 "kod": "8697471724379",
 "marka": "Namet",
 "metin": {
@@ -42692,6 +47332,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:prepared-meats",
+"en:fermented-sausage"
+],
 "kod": "8697471727219",
 "marka": "Namet",
 "metin": {
@@ -42744,6 +47390,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters"
+],
 "kod": "8697502200797",
 "marka": "desni",
 "metin": {},
@@ -42964,6 +47614,10 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:dietary-supplements",
+"en:vitamins"
+],
 "kod": "8697595871898",
 "marka": "",
 "metin": {},
@@ -42994,6 +47648,19 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:petits-suisses",
+"en:fruits-flavoured-fat-fresh-cream-cheese",
+"en:petit-suisse-fortified-with-calcium-and-vitamin-d",
+"en:2-3-fat-petit-suisse",
+"en:2-3-fat-petit-suisse-fruits-flavoured-fortified-with-calcium-and-vitamin-d"
+],
 "kod": "8697669840227",
 "marka": "Seyydler şekerleme",
 "metin": {
@@ -43006,6 +47673,22 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:snacks",
+"en:desserts",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:petits-suisses",
+"en:fruits-flavoured-fat-fresh-cream-cheese",
+"en:petit-suisse-fortified-with-calcium-and-vitamin-d",
+"en:2-3-fat-petit-suisse",
+"en:2-3-fat-petit-suisse-fruits-flavoured-fortified-with-calcium-and-vitamin-d"
+],
 "kod": "8697669840229",
 "marka": "Seyydler sekerleme",
 "metin": {
@@ -43028,6 +47711,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters",
+"en:spring-waters",
+"en:drinking-water"
+],
 "kod": "8697681460036",
 "marka": "Asya",
 "metin": {
@@ -43250,6 +47939,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"tr:kuru-üzüm",
+"tr:çerez",
+"tr:üzüm"
+],
 "kod": "8697742721076",
 "marka": "Temel",
 "metin": {},
@@ -43714,6 +48410,18 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:spreads",
+"en:nuts-and-their-products",
+"en:plant-based-spreads",
+"en:oilseed-purees",
+"en:legume-butters",
+"en:nut-butters",
+"en:peanut-butters"
+],
 "kod": "8698518423941",
 "marka": "Cityfarm",
 "metin": {},
@@ -43724,6 +48432,9 @@
 "besin": null,
 "db": "food",
 "dil": "aa",
+"kat": [
+"en:حلويات"
+],
 "kod": "8698529302723",
 "marka": "Helvacik",
 "metin": {
@@ -44229,6 +48940,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:bakery-products"
+],
 "kod": "8698823995423",
 "marka": "Nimet",
 "metin": {},
@@ -44249,6 +48967,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:flatbreads",
+"en:white-breads",
+"en:wheat-breads",
+"en:wheat-flatbreads"
+],
 "kod": "8698823997380",
 "marka": "Ekmek Dünyası",
 "metin": {
@@ -44271,6 +48999,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:flatbreads",
+"en:white-breads",
+"en:wheat-breads",
+"en:wheat-flatbreads"
+],
 "kod": "8698823997533",
 "marka": "Nimet",
 "metin": {
@@ -44417,6 +49155,17 @@
 },
 "db": "food",
 "dil": "nb",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:legumes-and-their-products",
+"en:legumes",
+"en:seeds",
+"en:legume-seeds",
+"en:pulses",
+"en:lentils",
+"nb:linser"
+],
 "kod": "8698995511766",
 "marka": "Nawras",
 "metin": {
@@ -44479,6 +49228,14 @@
 },
 "db": "food",
 "dil": "de",
+"kat": [
+"en:beverages",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:natural-mineral-waters",
+"en:non-carbonated-natural-mineral-waters"
+],
 "kod": "8699004570026",
 "marka": "Uludag; Dincsu",
 "metin": {
@@ -44541,6 +49298,12 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages"
+],
 "kod": "8699036670046",
 "marka": "Kilikya",
 "metin": {
@@ -44623,6 +49386,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:milks",
+"en:skimmed-milks"
+],
 "kod": "8699118000556",
 "marka": "Birşah",
 "metin": {
@@ -44646,6 +49414,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:seeds",
+"en:sunflower-seeds-and-their-products",
+"en:sunflower-seeds",
+"en:unshelled-sunflower-seeds"
+],
 "kod": "8699118002482",
 "marka": "Çerezya",
 "metin": {},
@@ -44686,6 +49462,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts",
+"en:plain-fermented-dairy-desserts",
+"en:plain-yogurts"
+],
 "kod": "8699118005896",
 "marka": "Birşah",
 "metin": {
@@ -44698,6 +49485,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pastas"
+],
 "kod": "8699118006312",
 "marka": "dorbi",
 "metin": {
@@ -44803,6 +49597,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:flatbreads",
+"en:white-breads",
+"en:wheat-breads",
+"en:wheat-flatbreads"
+],
 "kod": "8699118009191",
 "marka": "Nimet",
 "metin": {
@@ -44885,6 +49689,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:20-adet"
+],
 "kod": "8699118011903",
 "marka": "Mest",
 "metin": {
@@ -44937,6 +49744,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"en:sliced-breads"
+],
 "kod": "8699118014072",
 "marka": "Nimet",
 "metin": {},
@@ -44957,6 +49771,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:pie-dough",
+"en:shortcrust-pastry",
+"en:baked-shortcrust-pastry-with-vegetable-oil"
+],
 "kod": "8699118014614",
 "marka": "Nimet",
 "metin": {
@@ -44979,6 +49802,13 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:breakfasts",
+"en:spreads",
+"en:sweet-spreads",
+"fr:pates-a-tartiner",
+"en:hazelnut-spreads"
+],
 "kod": "8699118014713",
 "marka": "findux",
 "metin": {
@@ -45012,6 +49842,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8699118017738",
 "marka": "birşah",
 "metin": {},
@@ -45062,6 +49901,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts"
+],
 "kod": "8699118022244",
 "marka": "Çerezya",
 "metin": {
@@ -45227,6 +50072,15 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts"
+],
 "kod": "8699118029731",
 "marka": "Birşa",
 "metin": {},
@@ -45247,6 +50101,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:seeds",
+"en:cereals-and-their-products",
+"en:cereal-grains",
+"en:corn",
+"en:corn-grain"
+],
 "kod": "8699118031499",
 "marka": "çokça (a101)",
 "metin": {
@@ -45299,6 +50163,9 @@
 "besin": null,
 "db": "food",
 "dil": "ar",
+"kat": [
+"ar:ndedog"
+],
 "kod": "8699118033523",
 "marka": "dod",
 "metin": {},
@@ -45493,6 +50360,11 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products"
+],
 "kod": "8699118042624",
 "marka": "Birşah",
 "metin": {
@@ -45648,6 +50520,15 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:cereals-and-potatoes",
+"en:cereals-and-their-products",
+"en:breakfast-cereals",
+"en:mueslis"
+],
 "kod": "8699118045038",
 "marka": "Burch",
 "metin": {},
@@ -45668,6 +50549,9 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies"
+],
 "kod": "8699118045977",
 "marka": "Birşah",
 "metin": {
@@ -45710,6 +50594,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fruits-and-vegetables-based-foods",
+"en:vegetables-based-foods",
+"en:tomatoes-and-their-products",
+"en:tomato-pastes"
+],
 "kod": "8699118048084",
 "marka": "Çokça",
 "metin": {
@@ -45816,6 +50708,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:roasted-nuts"
+],
 "kod": "8699118050421",
 "marka": "Çerezya",
 "metin": {
@@ -45958,6 +50857,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:cheeses"
+],
 "kod": "8699118059592",
 "marka": "Ahir",
 "metin": {
@@ -45980,6 +50885,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spices",
+"en:paprika"
+],
 "kod": "8699118059905",
 "marka": "Diyar Baharat",
 "metin": {
@@ -46002,6 +50914,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:condiments",
+"en:spices"
+],
 "kod": "8699118059981",
 "marka": "Diyar",
 "metin": {
@@ -46406,6 +51324,14 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuits",
+"en:chocolate-biscuits",
+"en:biskuvi"
+],
 "kod": "8699141056025",
 "marka": "Şölen",
 "metin": {
@@ -46428,6 +51354,12 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:biscuits-and-cakes",
+"en:biscuit-with-chocolate-covering"
+],
 "kod": "8699141057053",
 "marka": "Biscolata",
 "metin": {},
@@ -46588,6 +51520,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:chocolate-candies",
+"en:bars",
+"en:candy-chocolate-bars"
+],
 "kod": "8699141059699",
 "marka": "",
 "metin": {},
@@ -46638,6 +51579,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:halva",
+"en:sesame-halva"
+],
 "kod": "8699158520069",
 "marka": "",
 "metin": {
@@ -46653,6 +51601,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:farming-products",
+"en:eggs"
+],
 "kod": "8699182522404",
 "marka": "green apple organik",
 "metin": {},
@@ -46743,6 +51695,13 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:roasted-nuts"
+],
 "kod": "8699216870587",
 "marka": "tmo",
 "metin": {},
@@ -46783,6 +51742,14 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:desserts",
+"en:frozen-foods",
+"en:frozen-desserts",
+"en:ice-creams-and-sorbets",
+"en:ice-creams",
+"en:ice-cream-in-a-box"
+],
 "kod": "8699266270832",
 "marka": "Karpedo",
 "metin": {
@@ -46805,6 +51772,16 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:cocoa-and-its-products",
+"en:confectioneries",
+"en:bars",
+"en:chocolate-candies",
+"en:chocolates",
+"en:bars-covered-with-chocolate"
+],
 "kod": "8699270013418",
 "marka": "KAHVE DUNYASI",
 "metin": {},
@@ -46959,6 +51936,16 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:vegetable-based-foods-and-beverages",
+"en:juices-and-nectars",
+"en:vegetable-based-beverages",
+"en:vegetable-juices"
+],
 "kod": "8699362000074",
 "marka": "",
 "metin": {},
@@ -46969,6 +51956,10 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:non-food-products",
+"en:open-beauty-facts"
+],
 "kod": "8699367127851",
 "marka": "",
 "metin": {},
@@ -46989,6 +51980,11 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:farming-products",
+"en:eggs",
+"en:chicken-eggs"
+],
 "kod": "8699383750019",
 "marka": "MNS",
 "metin": {
@@ -47061,6 +52057,11 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:coffees"
+],
 "kod": "8699415431923",
 "marka": "mahbuba",
 "metin": {},
@@ -47211,6 +52212,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:nuts-and-their-products",
+"en:nuts",
+"en:pistachios"
+],
 "kod": "8699495576958",
 "marka": "Antepsan Keyifçe",
 "metin": {
@@ -47425,6 +52433,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:cereals-and-potatoes",
+"en:breads",
+"tr:tortilla-lavaş"
+],
 "kod": "8699847071780",
 "marka": "",
 "metin": {},
@@ -47495,6 +52510,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:vücut-spreyi"
+],
 "kod": "8699863456905",
 "marka": "bee beauty",
 "metin": {},
@@ -47515,6 +52533,9 @@
 "besin": null,
 "db": "food",
 "dil": "fa",
+"kat": [
+"en:jerur7rhr-rur8rjrjr-jjduuhurjr-djfnffjdurismsvrvrunelnrudr"
+],
 "kod": "8699878420038",
 "marka": "0905349752328",
 "metin": {},
@@ -47525,6 +52546,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:yyd"
+],
 "kod": "8699878420748",
 "marka": "monster",
 "metin": {},
@@ -47575,6 +52599,9 @@
 "besin": null,
 "db": "food",
 "dil": "fr",
+"kat": [
+"fr:cosmetique"
+],
 "kod": "8699943340247",
 "marka": "Agarta",
 "metin": {},
@@ -47605,6 +52632,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran"
+],
 "kod": "8699952501059",
 "marka": "Komagene",
 "metin": {
@@ -47667,6 +52705,9 @@
 "besin": null,
 "db": "food",
 "dil": "en",
+"kat": [
+"en:skin-care"
+],
 "kod": "8710447474426",
 "marka": "simple",
 "metin": {},
@@ -47687,6 +52728,26 @@
 "besin": null,
 "db": "food",
 "dil": "de",
+"kat": [
+"en:beverages",
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:dairy-drinks",
+"en:fermented-drinks",
+"en:fermented-milk-drinks",
+"en:doogh-and-ayran",
+"en:ayran",
+"en:dugh-und-ayran",
+"en:fermentierte-getranke",
+"en:fermentierte-lebensmittel",
+"en:fermentierte-milch",
+"en:fermentierte-milchgetranke",
+"en:getranke",
+"en:milchgetranke",
+"en:milchprodukte",
+"en:ungezuckerte-getranke"
+],
 "kod": "8712052002209",
 "marka": "",
 "metin": {},
@@ -47737,6 +52798,15 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:vegetarian-sauces",
+"en:mayonnaises",
+"en:vegan-sauces",
+"en:egg-free-mayonnaises",
+"en:groceries"
+],
 "kod": "8715700422565",
 "marka": "HEINZ",
 "metin": {},
@@ -47757,6 +52827,13 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:condiments",
+"en:sauces",
+"en:tomato-sauces",
+"en:ketchup",
+"en:tomato-ketchup"
+],
 "kod": "87157260",
 "marka": "Heinz",
 "metin": {
@@ -47772,6 +52849,17 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:meats-and-their-products",
+"en:meats",
+"en:prepared-meats",
+"en:chicken-and-its-products",
+"en:poultries",
+"en:chickens",
+"fr:charcuteries-cuites",
+"en:poultry-hams",
+"en:cooked-chicken-breast-slices"
+],
 "kod": "8716221600609",
 "marka": "Anur",
 "metin": {},
@@ -47882,6 +52970,17 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:fats",
+"en:spreads",
+"en:plant-based-spreads",
+"en:salted-spreads",
+"en:spreadable-fats",
+"en:vegetable-fats",
+"en:margarines"
+],
 "kod": "8719200750579",
 "marka": "becel",
 "metin": {},
@@ -47902,6 +53001,18 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:plant-based-foods",
+"en:breakfasts",
+"en:fats",
+"en:spreads",
+"en:plant-based-spreads",
+"en:salted-spreads",
+"en:spreadable-fats",
+"en:vegetable-fats",
+"en:margarines"
+],
 "kod": "8719200750593",
 "marka": "Becel",
 "metin": {
@@ -48014,6 +53125,12 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "87345223",
 "marka": "Mentos",
 "metin": {
@@ -48088,6 +53205,12 @@
 "besin": null,
 "db": "food",
 "dil": "es",
+"kat": [
+"en:snacks",
+"en:sweet-snacks",
+"en:confectioneries",
+"en:candies"
+],
 "kod": "901222",
 "marka": "haribo",
 "metin": {},
@@ -48148,6 +53271,13 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:waters",
+"en:spring-waters",
+"en:mineral-waters",
+"en:natural-mineral-waters"
+],
 "kod": "90399138",
 "marka": "Coca-Cola",
 "metin": {
@@ -48170,6 +53300,15 @@
 },
 "db": "food",
 "dil": "fr",
+"kat": [
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:carbonated-drinks",
+"en:fruit-based-beverages",
+"en:sodas",
+"en:fruit-sodas"
+],
 "kod": "90448119",
 "marka": "Organics",
 "metin": {
@@ -48252,6 +53391,10 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:beverages",
+"en:carbonated-drinks"
+],
 "kod": "90495311",
 "marka": "DAMLA",
 "metin": {},
@@ -48272,6 +53415,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:beverages-and-beverages-preparations",
+"en:plant-based-foods-and-beverages",
+"en:beverages",
+"en:plant-based-beverages",
+"en:fruit-based-beverages",
+"en:juices-and-nectars",
+"en:fruit-juices",
+"en:orange-juices"
+],
 "kod": "90495434",
 "marka": "Cappy",
 "metin": {
@@ -48334,6 +53487,18 @@
 },
 "db": "food",
 "dil": "tr",
+"kat": [
+"en:dairies",
+"en:fermented-foods",
+"en:fermented-milk-products",
+"en:desserts",
+"en:dairy-desserts",
+"en:fermented-dairy-desserts",
+"en:yogurts",
+"en:greek-style-yogurts",
+"en:sheep-milk-yogurts",
+"en:yogurt-greek-style-ewe-s-milk"
+],
 "kod": "9055152417733",
 "marka": "migros",
 "metin": {},
@@ -48424,6 +53589,16 @@
 },
 "db": "food",
 "dil": "en",
+"kat": [
+"en:dairies",
+"en:fats",
+"en:spreads",
+"en:spreadable-fats",
+"en:animal-fats",
+"en:dairy-spreads",
+"en:milkfat",
+"en:butters"
+],
 "kod": "9415007002079",
 "marka": "Mainland",
 "metin": {
@@ -48511,6 +53686,9 @@
 "besin": null,
 "db": "food",
 "dil": "tr",
+"kat": [
+"tr:10"
+],
 "kod": "9789759018986",
 "marka": "fazilet",
 "metin": {},
@@ -48521,6 +53699,9 @@
 "besin": null,
 "db": "food",
 "dil": "ar",
+"kat": [
+"ar:hfvuh"
+],
 "kod": "9789933461683",
 "marka": "b v",
 "metin": {},

@@ -64,7 +64,7 @@ if(fs.existsSync(F)){
   const d=JSON.parse(fs.readFileSync(F,'utf8')),u=d.u,ks=Object.keys(u);
   ok(/ODbL/.test(d.meta.lisans)&&/Open Food Facts/.test(d.meta.atif),'lisans ve atıf yazılı');
   ok(ks.length===d.meta.sayi&&ks.filter(k=>Object.keys(u[k][4]).length).length===d.meta.icerikli,'sayılar meta ile uyumlu');
-  ok(ks.every(k=>/^\d{8,14}$/.test(k)&&Array.isArray(u[k])&&(u[k].length===5||(u[k].length===6&&Array.isArray(u[k][5])))&&['food','beauty','products'].includes(u[k][0])&&typeof u[k][4]==='object'),'her kayıt [db, ad, marka, t, {dil: metin}, besin?]');
+  ok(ks.every(k=>/^\d{8,14}$/.test(k)&&Array.isArray(u[k])&&(u[k].length===5||(u[k].length===6&&Array.isArray(u[k][5]))||(u[k].length===7&&(u[k][5]===null||Array.isArray(u[k][5]))&&Array.isArray(u[k][6])&&u[k][6].length>0&&u[k][6].every(e=>/^[a-z]{2}:[a-z0-9-]+$/.test(e))))&&['food','beauty','products'].includes(u[k][0])&&typeof u[k][4]==='object'),'her kayıt [db, ad, marka, t, {dil: metin}, besin?, kat?] (kat: dolu OFF kategori dizisi, besin yoksa null)');
   ok(ks.length>1000,'Türkiye verisi yüklü: '+ks.length);
 }else ok(false,'data/barkod_off.json yok (python3 off_al.py && python3 gen_barkod.py)');
 console.log(n+' barkod denetimi, '+fail+' hata');process.exit(fail?1:0);
