@@ -71,4 +71,14 @@ z=aylikOzet(o,'2026-10');ok(z.toplam===1&&z.tur.koz===1&&z.tur.gida===0&&!z.madd
 ok(aylikOzet(aylikSil(o,KASIM,'k1'),'2026-10').toplam===1,'başka ayın kaydı silinmez');
 const bz2=aylikNorm({ay:{'2026-10':{u:{x:{m:'gida',r:2,k:[['E1','A',null,'zz'],['E2','B',5,2],['E3','C','E3',3]]}},e:{},z:[]}}});
 ok(bz2.ay['2026-10'].u.x.k.length===1&&bz2.ay['2026-10'].u.x.k[0][0]==='E3','geçersiz sıra ve kimlik türü atılır');
+// Mutasyon ölçümünün kaçırdıkları (21.10.2026): madde sınırı tam, rozet tekilliği türe göre, kademe 0, aynı maddenin düzeyi yükselir
+ok(aylikUrun(P('gida',Array(45).fill(2)),null).k.length===AYLIK_AYAR.enFazlaMadde,'üründe tam enFazlaMadde madde');
+o=aylikRozet(null,EKIM,{aile:'okur',tur:'gida',kademe:1,ad:'a'});o=aylikRozet(o,EKIM,{aile:'okur',tur:'koz',kademe:1,ad:'b'});o=aylikRozet(o,EKIM,{aile:'dedektif',tur:'gida',kademe:1,ad:'c'});
+ok(aylikOzet(o,'2026-10').rozetler.length===3,'aynı kademe başka tür ya da ailede ayrı rozet');
+ok(aylikNorm({ay:{'2026-10':{u:{},e:{},z:[['okur','gida',0,'']]}}}).ay['2026-10'].z.length===0,'kademe 0 atılır');
+o=aylikTarama(null,EKIM,'a',{m:'gida',r:1,k:[['E9','X',null,2]]});o=aylikTarama(o,EKIM,'b',{m:'gida',r:2,k:[['E9','X',null,3]]});
+ok(aylikOzet(o,'2026-10').maddeler[0].rank===3,'aynı madde bir üründe uyarı düzeyindeyse uyarı gösterilir');
+o=aylikTarama(null,EKIM,'a',{m:'gida',r:2,k:[['E9','X',null,3]]});o=aylikTarama(o,EKIM,'b',{m:'gida',r:1,k:[['E9','X',null,2]]});
+ok(aylikOzet(o,'2026-10').maddeler[0].rank===3,'sonra gelen dikkat düzeyi uyarıyı düşürmez');
+ok(aylikRozet(null,EKIM,{aile:'okur',tur:'gida'})&&aylikAylar(aylikRozet(null,EKIM,{aile:'okur',tur:'gida'})).length===0,'kademesiz rozet yazılmaz');
 console.log(n+' test, '+fail+' hata');process.exit(fail?1:0);
