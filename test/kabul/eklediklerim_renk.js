@@ -323,7 +323,8 @@ module.exports=async({br,B,opt,ok})=>{
             const zem=[img.at(4,200),img.at(385,200),img.at(4,450)];
             ok(zem.every(c=>fark(c,hex(R.zemin))<=3),e+': Profilim sayfa zemini '+R.zemin+' değil: '+zem.map(yaz).join(' '));
             const ab=await al.first().boundingBox();
-            if(ab){const c=img.at(ab.x-8,ab.y+ab.height/2);ok(fark(c,hex(R.kart))<=3,e+': Profilim kutusu ("Sizin İçin Uyarılar" seçimleri) '+R.kart+' değil: '+yaz(c))}
+            // satır kutunun neredeyse tam genişliğinde: başlık yazısı ile sağdaki ok arasındaki boş yer (kutunun içi)
+            if(ab){const c=img.at(ab.x+ab.width*0.6,ab.y+ab.height/2);ok(fark(c,hex(R.kart))<=3,e+': Profilim kutusu ("Sizin İçin Uyarılar" seçimleri) '+R.kart+' değil: '+yaz(c))}
             else ok(false,e+': "Alerjenler" kutusu bulunamadı');
             const bb=await ay.first().boundingBox();
             const tb=await ay.first().getByText('Aylık Özetim',{exact:true}).boundingBox();
