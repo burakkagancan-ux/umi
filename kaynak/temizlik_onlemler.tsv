@@ -1,5 +1,5 @@
 # Önlem ifadeleri (P), tüketici ürünlerinde sık görülenler.
-# Sütunlar: kod<TAB>TR<TAB>EN<TAB>ilk yardım (1/0)<TAB>diğer TR yazımlar (" | " ile; etikette tanınsın diye, isteğe bağlı)
+# Sütunlar: kod<TAB>TR<TAB>EN<TAB>ilk yardım (1/0)<TAB>diğer yazımlar (" | " ile; TR ya da eski resmi EN; etikette tanınsın diye, isteğe bağlı)
 # TR: SEA Yönetmeliği (RG 11.12.2013, 28848) Ek-4'ün resmi metni (Resmî Gazete PDF'i, taranmış; 12.10.2026'da okundu). Üreticinin
 # dolduracağı "..." yerleri tabloda gösterilen seçenekle dolduruldu (P264 elleri, P501 "yerel/bölgesel/ulusal/uluslararası tüzüğe uygun
 # olarak"); iki yazım hatası düzeltildi (P270 "içmeyiniz", P403+P233 "depolayanız"). EN metinleri CLP Ek IV'ün güncel metni.
@@ -7,6 +7,7 @@
 # yalnızca "..." doldurulmuş; 8'i (P210, P251, P263, P301+P330+P331, P302+P352, P303+P361+P353, P305+P351+P338, P410+P412) 2020
 # metnine çevrildi, 2013 yazımı "diğer yazım" sütununda. P302+P352 "su/..." ve P303+P361+P353 "[veya duş alın]" EN metnine göre
 # dolduruldu (yalnızca su). P301+P312'de 2020'nin Ek-4 listesiyle Ek-1 tabloları ayrı yazıyor; tablo yazımı (bizimki) bırakıldı.
+# 21.10.2026: P302+P352'nin CLP ilk metnindeki İngilizcesi (OJ L 353, 31.12.2008, Ek IV; güncel metinde "water"; hangi değişiklikle değiştiği doğrulanmadı) diğer yazım: eski etiketlerde hâlâ geçer.
 P101	Tıbbi tavsiye gerekiyorsa, ambalajı veya etiketi saklayın.	If medical advice is needed, have product container or label at hand.	1	Tıbbi tavsiye gerekirse ürün kabını veya etiketini yanınızda bulundurun.
 P102	Çocukların erişemeyeceği yerde saklayın.	Keep out of reach of children.	0
 P103	Kullanmadan önce etiketi okuyun.	Read label before use.	0
@@ -27,7 +28,7 @@ P280	Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın.	W
 P301+P310	YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	IF SWALLOWED: Immediately call a POISON CENTER/doctor.	1	YUTULDUĞUNDA: Hemen ZEHİR DANIŞMA MERKEZİNİ veya doktoru arayın. | YUTULDUĞUNDA: ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru arayın.
 P301+P312	YUTULDUĞUNDA: kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU veya doktoru/hekimi arayın.	IF SWALLOWED: Call a POISON CENTER/doctor if you feel unwell.	1	YUTULDUĞUNDA: Kendinizi iyi hissetmezseniz ZEHİR MERKEZİNİ veya doktoru arayın. | YUTULDUĞUNDA: Kendinizi iyi hissetmiyorsanız ULUSAL ZEHİR DANIŞMA MERKEZİNİN 114 NOLU TELEFONUNU/doktoru/hekimi arayın.
 P301+P330+P331	YUTULDUĞUNDA: Ağzı çalkalayın. İstifra etmeye ÇALIŞMAYIN.	IF SWALLOWED: Rinse mouth. Do NOT induce vomiting.	1	YUTULDUĞUNDA: ağzınızı çalkalayın. İstifra etmeye ÇALIŞMAYIN. | YUTULDUĞUNDA: Ağzınızı çalkalayın. KUSTURMAYIN.
-P302+P352	CİLT İLE TEMAS HALİNDE İSE: Bol su ile yıkayın.	IF ON SKIN: Wash with plenty of water.	1	DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. | CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın. | CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın. | CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.
+P302+P352	CİLT İLE TEMAS HALİNDE İSE: Bol su ile yıkayın.	IF ON SKIN: Wash with plenty of water.	1	DERİ İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. | CİLT İLE TEMAS HALİNDE: Bol su ile yıkayın. | CİLT İLE TEMAS HALİNDE İSE: Bol su ve sabun ile yıkayın. | CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. | IF ON SKIN: Wash with plenty of soap and water.
 P303+P361+P353	CİLT (veya saç) ÜZERİNDE İSE: Bütün kirlenmiş giysileri hemen çıkarın. Cildi su ile durulayın.	IF ON SKIN (or hair): Take off immediately all contaminated clothing. Rinse skin with water.	1	DERİ (veya saç) İLE TEMAS HALİNDE İSE: Kirlenmiş tüm giysilerinizi hemen kaldırın/çıkartın. Cildinizi su/duş ile durulayın. | CİLT (veya saç) İLE TEMAS HALİNDE: Kirlenmiş giysilerin hepsini hemen çıkarın. Cildi su ile durulayın.
 P304+P340	SOLUNDUĞUNDA: Zarar gören kişiyi temiz havaya çıkartın ve kolay biçimde nefes alması için rahat bir pozisyonda tutun.	IF INHALED: Remove person to fresh air and keep comfortable for breathing.	1	SOLUNMASI HALİNDE: Kişiyi temiz havaya çıkarın ve rahat nefes alabileceği bir pozisyonda tutun.
 P305+P351+P338	GÖZLERDE İSE: Birkaç dakika su ile dikkatlice durulayın. Kontakt lens varsa ve kolaysa çıkartın. Durulamaya devam edin.	IF IN EYES: Rinse cautiously with water for several minutes. Remove contact lenses, if present and easy to do. Continue rinsing.	1	GÖZ İLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Takılı ve yapması kolaysa, kontak lensleri çıkartın. Durulamaya devam edin. | GÖZLE TEMASI HALİNDE: Su ile birkaç dakika dikkatlice durulayın. Varsa ve yapması kolaysa kontakt lensleri çıkarın. Durulamaya devam edin.

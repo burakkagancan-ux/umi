@@ -52,6 +52,22 @@ const cases=[
   ['EUH202'],{anyonik:'b5_15',sabun:'b5_15',parfum:null}],
  ["Fatal if swallowed. Immediately call a POISON CENTER/doctor. 5-15% anionic surfactants, soap, perfume.",
   ['H300'],{anyonik:'b5_15',sabun:'b5_15',parfum:null}],
+ // Aynı önlem ifadesi iki kez, CLP'nin 2008 İngilizcesi, başlıksız yıkama talimatı: "sabun" grup değildir; içerik listesindeki kalır (21.10.2026)
+ ["Su ile şiddetli tepkime verir. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. Çocukların erişemeyeceği yerde saklayın. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",['EUH014'],{},(A)=>A.prec.some(x=>x.code==='P302+P352')],
+ ["Reacts violently with water. IF ON SKIN: Wash with plenty of soap and water.",['EUH014'],{},(A)=>A.prec.some(x=>x.code==='P302+P352')],
+ ["Su ile şiddetli tepkime verir. Bol sabun ve su ile yıkayın.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Bol sabun ve suyla yıkayın.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Temas halinde su ve sabun ile yıkayın.",['EUH014'],{}],
+ ["Reacts violently with water. Ingredients: less than 5% soap, perfume. IF ON SKIN: Wash with plenty of soap and water.",['EUH014'],{sabun:'b5',parfum:null}],
+ ["İçindekiler: %5'ten az sabun, parfüm. Bol sabun ve suyla yıkayın.",[],{sabun:'b5',parfum:null}],
+ ["İçindekiler: su, sabun, parfüm.",[],{sabun:null,parfum:null}],
+ ["Reacts violently with water. Wash with plenty of soap and water.",['EUH014'],{}],
+ ["Reacts violently with water. In case of contact, rinse with water and soap.",['EUH014'],{}],
+ ["Reacts violently with water. Ingredients: soap, perfume.",['EUH014'],{sabun:null,parfum:null}],
+ ["Reacts violently with water. Wash with plenty of soap.",['EUH014'],{}],
+ ["Reacts violently with water. Wash skin with soap and water.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Sabun ve su ile yıkayın.",['EUH014'],{}],
+ ["İçindekiler: %5'ten az sabun ve suda çözünen polimer.",[],{sabun:'b5'}],
  // Bant grubun arkasında
  ["Anyonik yüzey aktif maddeler %15-30, noniyonik yüzey aktif maddeler %5'ten az, sabun.",[],{anyonik:'b15_30',noniyonik:'b5',sabun:null}],
  ["Fosfat içermez. %5-15 anyonik yüzey aktif madde.",[],{fosfat:'neg',anyonik:'b5_15'}],
@@ -121,6 +137,19 @@ AL.forEach(([t,yes,no,chk],i)=>{
  ok(tdb.precautions.length>=35&&tdb.precautions.every(p=>p.tr&&p.en),'önlem verisi');
  ok(!T.byCode.EUH208.needs_review&&!T.byCode.EUH071.needs_review&&T.byCode.EUH211.needs_review&&T.byCode.EUH380.needs_review,'EUH doğrulama bayrakları (SEA Ek-3)');
 ok(tdb.precautions.every(p=>!p.needs_review),'önlem ifadeleri SEA Ek-4 ile karşılaştırıldı');
+// Maske ifadenin her geçişini alır (sabun dışlamasından bağımsız: tekrarlanan ifadenin ikinci geçişi de maskelenir)
+{const t="CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. Çocukların erişemeyeceği yerde saklayın. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.";
+ const r=tPhrases(t,T,T.pphrases,true),h=r.hepsi.filter(x=>x.codes.join()==='P302+P352');
+ ok(r.filter(x=>x.codes.join()==='P302+P352').length===1,'tPhrases: gösterim için ifade başına tek eşleşme');
+ ok(h.length===2&&h[0].s!==h[1].s,'tPhrases hepsi: iki geçiş '+JSON.stringify(h));
+ ok(!/sabun/.test(tMaske(t,r.hepsi)),'tMaske: iki geçiş de maskelendi');
+ ok(tPhrases(t,T,T.pphrases).hepsi===undefined,'tPhrases: hepsi istenmezse alan yok');}
+// analyzeT grupları her geçişi maskelenmiş metinde arar: yapay grup "eldiven", P280 iki kez yazılı
+{const G={g:{id:'deneme',noband:true},rx:[/(?:^|[^a-z])eldiven(?![a-z])/g]},T2=Object.assign({},T,{groups:[G]});
+ const t="Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın. Çocukların erişemeyeceği yerde saklayın. Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın.";
+ ok(analyzeT(t,T2).prec.some(x=>x.code==='P280'),'analyzeT: P280 tanındı');
+ ok(!analyzeT(t,T2).groups.length,'analyzeT: tekrarlanan ifadenin ikinci geçişi de maskelendi '+JSON.stringify(analyzeT(t,T2).groups.map(x=>x.id)));
+ ok(analyzeT("İçindekiler: eldiven.",T2).groups.length===1,'analyzeT: yapay grup ifade dışında bulunur');}
 for(const [t,p,h] of [['Su ile şiddetli reaksiyona girer. Gebelik sırasında ve emzirirken temastan kaçının.','P263','EUH014'],
   ['Su ile şiddetli tepkime verir. Hamilelikte/anne sütü verirken temastan kaçının.','P263','EUH014']]){
  const A=TL.analyzeT(t,T,K);
