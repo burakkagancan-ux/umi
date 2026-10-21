@@ -49,4 +49,52 @@ ok(icerikBolge({text:'İçindekiler: a b c d',kutu:[['İçindekiler:',0,0,1,0,1,
 const uzak=V([['İçindekiler:',10,10,0],['su,',140,10,0],['şeker,',180,10,0],['tuz,',250,10,0],['sirke.',300,10,0,1],['Kampanya',10,400,1],['kodu',100,400,1],['ambalajın',150,400,1],['içindedir',250,400,1,1]]);
 const Bz=icerikBolge(uzak,'tr');ok(Bz&&!/Kampanya/.test(Bz.metin)&&Bz.y+Bz.h<0.2,'uzaktaki satır bölgeye girmez: '+(Bz&&Bz.metin));
 
+
+// ---- Bozma turu (21.10.2026) gerileme testleri: kırpma hiçbir gerçek alerjeni/maddeyi düşürmez ----
+// Satır satır sentetik kutular: L(metin, x, y, blok); her sözcük 10 px/harf, satır sonu işaretli. don: 90 → kutular saat yönünde döner
+const {idx}=require('./run.js');
+const bulP=tx=>kirpBulgu(degerlendir('gida',tx,{idx},null,''));
+function sahne(satirlar,don){
+  let text='',kutu=[];
+  for(const [m,x0,y0,b] of satirlar){let x=x0;const ws=m.split(' ');ws.forEach((w,i)=>{const g=10*w.length;let k=[w,x,y0,x+g,y0,x+g,y0+20,x,y0+20,b,i===ws.length-1?1:0];
+    if(don===90)k=[w,1000-y0,x,1000-y0,x+g,980-y0,x+g,980-y0,x,b,k[10]];kutu.push(k);x+=g+8});text+=(text?'\n':'')+m}
+  return {text,boyut:[1000,1000],kutu};
+}
+// Ana kural: öneri gösterilecekse (plan + güvenli) uygulanan metnin bulguları, adres dışındaki tam metnin bulgularını kapsar
+function guvenli(V,ad,adres,seviyeli){
+  const pl=kirpPlan(V,'tr',true);if(!pl)return true;const G=kirpGuvenli(pl,bulP);if(!G.ok)return true;   // öneri yok: güvenli
+  const tam=bulP(V.text.split('\n').filter(l=>!(adres||[]).some(a=>l.startsWith(a))).join('\n')),k=bulP(pl.metin);
+  const kayip=[...tam].filter(x=>!(seviyeli&&x.startsWith('m0:'))&&!k.has(x)&&!(x.endsWith('?')&&k.has(x.slice(0,-1)))&&!(x.startsWith('m0:')&&k.has('m:'+x.slice(3))));
+  ok(!kayip.length,ad+': öneri gerçek bulgu kaybettirmez: '+kayip+' | '+pl.metin.replace(/\n/g,' / '));
+  return !kayip.length;
+}
+const ADR=['Üretici: Sütçü Gıda A.Ş. Sütlüce Mah. İstanbul',10,400,9];
+// K1 büyük harfli uyarı ayrı satırda
+let V1=sahne([['İçindekiler: Buğday unu, şeker, kakao.',10,10,0],['Serin yerde saklayınız.',10,60,1],['ALERJEN UYARISI: FINDIK VE SÜT İÇEREBİLİR.',10,110,2],['GLUTEN İÇERİR.',10,160,3],ADR]);
+ok(izCumleleri('FINDIK VE SÜT İÇEREBİLİR. GLUTEN İÇERİR. ESER MİKTARDA YER FISTIĞI BULUNABİLİR.').length===3,'K1: büyük harfli iz cümleleri');
+guvenli(V1,'K1',['Üretici']);ok(/FINDIK/.test((kirpPlan(V1,'tr',true)||{metin:''}).metin),'K1: büyük harfli uyarı metinde kalır');
+// K2 fiilsiz alerjen bildirimi
+guvenli(sahne([['İçindekiler: Buğday unu, şeker, kakao.',10,10,0],['Alerjen bilgisi: süt, yumurta, fındık',10,80,1],ADR]),'K2',['Üretici']);
+// K3 listenin ortasında bölüm başı sözcüğüyle başlayan satır
+for(const w of ['serin','net','Store','Origin']){
+  const V=sahne([['İçindekiler: Buğday unu, şeker, kuru',10,10,0],[w+' kurutulmuş üzüm, süt tozu, yumurta tozu, fındık,',10,32,0],['tuz.',10,54,0],ADR]);
+  guvenli(V,'K3 '+w,['Üretici']);const pl=kirpPlan(V,'tr',true);ok(pl&&/süt tozu/.test(pl.metin),'K3 '+w+': sarılan satır listede kalır');}
+// K4 tek dilli liste iki sütunda
+guvenli(sahne([['İçindekiler: Buğday unu, şeker, bitkisel yağ,',10,10,0],['kakao, glukoz şurubu, tuz,',10,32,0],['yumurta tozu, fındık ezmesi,',520,10,0],['susam, süt tozu.',520,32,0],ADR]),'K4',['Üretici']);
+// K5 90° dönük fotoğraf
+guvenli(sahne([['İçindekiler: Buğday unu, şeker,',10,10,0],['süt tozu, yumurta, fındık.',10,32,0],ADR],90),'K5',['Üretici']);
+// K6 cümle içindeki "ingredients"/"bileşenler" başlık değildir
+const V6=sahne([['Allergy advice: for allergens see ingredients in bold below please',10,10,0],['Ingredients: Wheat flour, sugar, MILK powder, EGG, hazelnuts.',10,60,1],['Manufacturer: Example Ltd, London',10,300,2]]);
+const p6=kirpPlan(V6,'en',true);ok(p6&&/^Ingredients/.test(p6.B.metin),'K6: cümle içindeki "ingredients" başlık sayılmaz, gerçek liste seçilir: '+(p6&&p6.B.metin));
+const V6b=sahne([['Alerjiniz varsa bileşenler listesini okuyunuz ve dikkat ediniz',10,10,0],['İçindekiler: Buğday unu, süt tozu, yumurta, fındık.',10,60,1],ADR]);
+const p6b=kirpPlan(V6b,'tr',true);ok(p6b&&/^İçindekiler/.test(p6b.B.metin),'K6: Türkçe cümle içindeki "bileşenler" başlık sayılmaz');guvenli(V6b,'K6b',['Üretici']);
+// K7 kesik kutular
+const V7=sahne([['İçindekiler: Buğday unu, şeker, bitkisel yağ,',10,10,0],['süt tozu, fındık.',10,32,0],ADR]);V7.kutu=V7.kutu.slice(0,6);V7.kutu_kesik=true;
+ok(icerikBolge(V7,'tr')===null&&kirpPlan(V7,'tr',true)===null,'K7: kutu_kesik ise öneri yok');
+// Kozmetik: liste dışındaki koku alerjeni satırı (cümle değil) atılmaz
+const VK=sahne([['Ingredients: Aqua, Glycerin, Phenoxyethanol, Parfum.',10,10,0],['Contains Methylisothiazolinone. Hydroxyisohexyl 3-Cyclohexene Carboxaldehyde, Limonene',10,80,1],['Manufacturer: Example Ltd, London',10,300,2]]);
+const K_=require('./run.js');const pk=kirpPlan(VK,'en',false);
+if(pk&&K_.K){const bk=tx=>kirpBulgu(degerlendir('koz',tx,{idx,K:K_.K},null,''));const G=kirpGuvenli(pk,bk);ok(!G.ok||/Limonene/.test(pk.metin),'kozmetik: liste dışındaki koku alerjeni düşmez')}
+// Ana kural setin tamamında da
+for(const e of SET)guvenli(e.vision,e.ad,['Üretici','Sütlüce','Tüketici','0850'],true);   // başka dilin listesinde seviyesiz bileşen farkı (Water/Su) uyarı kaybı değil
 console.log(n+' test, '+fail+' hata');process.exit(fail?1:0);
