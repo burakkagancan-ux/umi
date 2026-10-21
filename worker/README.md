@@ -3,6 +3,8 @@
 `ocr.html`'den gelen fotoğrafı Google Cloud Vision'a gönderip okunan metni döndüren Cloudflare Worker'ı.
 Adres: https://inapp-ocr-3a8f.burakkagancan.workers.dev
 
+İstek: `POST /` gövde `{image: <base64>}` → `{text}`. Gövdede `kutu: true` varsa (21.10.2026, A-02 / O-27) yanıta sözcük kutuları da eklenir: `boyut: [genişlik, yükseklik]`, `kutu: [[sözcük, x0, y0, x1, y1, x2, y2, x3, y3], …]` (Vision'ın okuma sırası ve köşe sırası; en çok 3.000 sözcük, aşılırsa `kutu_kesik: true`). Vision'a giden istek aynıdır, ek maliyet yok.
+
 ## Korumalar
 - **İstek sınırı:** IP başına dakikada 6, toplamda dakikada 30 okuma (Cloudflare konumu başına; yaklaşık sayım). Aşınca 429 ve Türkçe mesaj.
 - **Köken denetimi:** Yalnızca `ALLOWED_ORIGIN` adresleri kabul edilir (virgülle birden çok adres yazılabilir; panelde tanımlı).
@@ -21,7 +23,7 @@ Adres: https://inapp-ocr-3a8f.burakkagancan.workers.dev
 `wrangler.toml` içindeki `name`, paneldeki Worker adıyla aynı olmalıdır.
 
 ## Test
-`node worker/test.mjs` — Vision ve istek sınırı taklit edilerek 13 durum denenir.
+`node worker/test.mjs` — Vision ve istek sınırı taklit edilerek denenir (sözcük kutuları dahil).
 `node worker/test_topluluk.mjs` — topluluk uç noktaları (/aranan, /topluluk), barkoda bağlı besin tablosu (/besin), katkı izi ve sayaçlar (yarıda kalan kurulum dahil), D1 yerine gerçek SQLite ile (Node 22.13+).
 `node worker/test_yonetim.mjs` — yönetim sayfası: listeler, silme, İşlem Kaydı ve geri alma, sayaç farkları.
 
