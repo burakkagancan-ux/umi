@@ -2,7 +2,7 @@
 // 1) i18n/diller.json'daki her dilin dosyası var; tr ve en tr.json'daki her anahtarı içeriyor (diğer diller kapsama raporu); yer tutucular ({n}, {ad}) her dilde aynı.
 // 2) Kodda (js/*.js, sayfalar) kullanılan her anahtar tanımlı; tr.json'da kullanılmayan anahtar yok.
 // 3) Arayüz dosyalarında anahtara taşınmamış Türkçe metin kalmadı (ğüşıöç taraması; bilinçli istisnalar aşağıda, gerekçesiyle).
-// 4) Sayfalardaki (ocr.html, ansiklopedi.html, index.html) data-i18n metinleri tr.json ile aynı (sayfa ilk açılışta Türkçe görünür, dil dosyası gelince aynı metin yazılır).
+// 4) Sayfalardaki (ocr.html, ansiklopedi.html, index.html, yontem.html) data-i18n metinleri tr.json ile aynı (sayfa ilk açılışta Türkçe görünür, dil dosyası gelince aynı metin yazılır).
 // 5) Hiçbir js dosyası t() işlevini yerel bir "t" değişkeniyle gölgelemiyor.
 // 6) t(), çoğul, sayı ve tarih biçimi (Türkçe çıktı eski görünümle aynı).
 const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..'),I=path.join(R,'i18n');
@@ -81,7 +81,7 @@ function parcala(src){
 const JS=fs.readdirSync(path.join(R,'js')).filter(f=>f.endsWith('.js'));
 const kaynak={};JS.forEach(f=>kaynak['js/'+f]=fs.readFileSync(path.join(R,'js',f),'utf8'));
 // Arayüzü çevrilen sayfalar (data-i18n). index.html'in satır içi betiği yalnızca Bakanlık önizleme verisini (RAW) taşır.
-const SAYFALAR=['ocr.html','ansiklopedi.html','index.html'];
+const SAYFALAR=['ocr.html','ansiklopedi.html','index.html','yontem.html'];
 const sayfaHtml={};SAYFALAR.forEach(f=>sayfaHtml[f]=fs.readFileSync(path.join(R,f),'utf8'));
 
 // 2) Kullanılan anahtarlar: koddaki anahtar biçimli dizgeler + sayfalardaki data-i18n. Birleştirilerek kurulan anahtarlar ("kars.az_"+tür) DINAMIK listesinde.

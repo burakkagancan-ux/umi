@@ -9,7 +9,7 @@ function geriBakis(name,code){if(/\(\?<[=!]/.test(code)){fail++;console.log('HAT
 function check(name,code){n++;try{new Function(code)}catch(e){fail++;console.log('HATA',name,e.message)}geriBakis(name,code)}
 // Modül: node --check (js/package.json "type": "module")
 function checkModul(name,file){n++;const r=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});if(r.status){fail++;console.log('HATA',name,(r.stderr||'').split('\n').filter(Boolean).slice(0,4).join(' | '))}geriBakis(name,fs.readFileSync(file,'utf8'))}
-const SAYFALAR=['ocr.html','index.html','ansiklopedi.html'];
+const SAYFALAR=['ocr.html','index.html','ansiklopedi.html','yontem.html'];
 for(const f of SAYFALAR){
   const h=fs.readFileSync(path.join(R,f),'utf8');
   [...h.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].forEach((m,i)=>check(f+' script '+i,m[1]));

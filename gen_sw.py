@@ -1,6 +1,6 @@
 """sw.js'in kurulumda önbelleğe aldığı dosya listesini (CORE) ve önbellek adını (CACHE) üretir (15.10.2026; önce elle yazılıyordu).
 
-CORE: sayfaların (index.html, ocr.html, ansiklopedi.html) yüklediği yerel dosyalar ve modüllerin içe aktardıkları, CSS'teki yazı tipleri, uygulama simgeleri,
+CORE: sayfaların (index.html, ocr.html, ansiklopedi.html, yontem.html) yüklediği yerel dosyalar ve modüllerin içe aktardıkları, CSS'teki yazı tipleri, uygulama simgeleri,
 js/*.js'in adıyla okuduğu data/*.json dosyaları ve kaynak dil (Türkçe). Dile ve sayfaya bağlı dosyalar (seçili dil, ansiklopedi
 madde sayfaları) CORE'a girmez, sayfa açılınca iner (sw.js DINAMIK). İstek geldikçe önbelleğe alınanlar ISTEKLE'de.
 CACHE: "tagsis-" + CORE dosyalarının içerik özeti. Kod, çeviri ya da veri değişince ad kendiliğinden değişir, service worker
@@ -12,7 +12,7 @@ python3 uret.py çalıştırır; CI (uret.py --denetle) sw.js'in güncel olduğu
 import hashlib, json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SAYFALAR = ["index.html", "ocr.html", "ansiklopedi.html"]
+SAYFALAR = ["index.html", "ocr.html", "ansiklopedi.html", "yontem.html"]
 KAYNAK_DIL = ["i18n/diller.json", "i18n/tr.json", "data/ansiklopedi_tr.json"]   # Türkçe her dilin son yedeği; öteki diller DINAMIK
 ISTEKLE = {"data/barkod_off.json"}                                              # kurulumu büyütmesin: istek geldikçe önbelleğe girer
 GUNLUK = {"data/tagsis.json", "data/arsiv.json", "data/durum.json"}             # update.yml her gün yazar; CACHE özetine girmez
