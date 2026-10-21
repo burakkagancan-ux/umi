@@ -52,6 +52,23 @@ const cases=[
   ['EUH202'],{anyonik:'b5_15',sabun:'b5_15',parfum:null}],
  ["Fatal if swallowed. Immediately call a POISON CENTER/doctor. 5-15% anionic surfactants, soap, perfume.",
   ['H300'],{anyonik:'b5_15',sabun:'b5_15',parfum:null}],
+ // Aynı önlem ifadesi iki kez, CLP'nin 2008 İngilizcesi, başlıksız yıkama talimatı: "sabun" grup değildir; içerik listesindeki kalır (21.10.2026)
+ ["Su ile şiddetli tepkime verir. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. Çocukların erişemeyeceği yerde saklayın. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.",['EUH014'],{},(A)=>A.prec.some(x=>x.code==='P302+P352')],
+ ["Reacts violently with water. IF ON SKIN: Wash with plenty of soap and water.",['EUH014'],{},(A)=>A.prec.some(x=>x.code==='P302+P352')],
+ ["Su ile şiddetli tepkime verir. Bol sabun ve su ile yıkayın.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Bol sabun ve suyla yıkayın.",['EUH014'],{}],
+ ["Su ile şiddetli tepkime verir. Temas halinde su ve sabun ile yıkayın.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["Reacts violently with water. Ingredients: less than 5% soap, perfume. IF ON SKIN: Wash with plenty of soap and water.",['EUH014'],{sabun:'b5',parfum:null}],
+ ["İçindekiler: %5'ten az sabun, parfüm. Bol sabun ve suyla yıkayın.",[],{sabun:'b5',parfum:null}],
+ ["İçindekiler: su, sabun, parfüm.",[],{sabun:null,parfum:null}],
+ ["Reacts violently with water. Wash with plenty of soap and water.",['EUH014'],{}],
+ ["Reacts violently with water. In case of contact, rinse with water and soap.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["Reacts violently with water. Ingredients: soap, perfume.",['EUH014'],{sabun:null,parfum:null}],
+ ["Reacts violently with water. Wash with plenty of soap.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["Reacts violently with water. Wash skin with soap and water.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["Su ile şiddetli tepkime verir. Sabun ve su ile yıkayın.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["Su ile şiddetli tepkime verir. Bol sabun ile yıkayın.",['EUH014'],{sabun:null}],   // bilinen sınır
+ ["İçindekiler: %5'ten az sabun ve suda çözünen polimer.",[],{sabun:'b5'}],
  // Bant grubun arkasında
  ["Anyonik yüzey aktif maddeler %15-30, noniyonik yüzey aktif maddeler %5'ten az, sabun.",[],{anyonik:'b15_30',noniyonik:'b5',sabun:null}],
  ["Fosfat içermez. %5-15 anyonik yüzey aktif madde.",[],{fosfat:'neg',anyonik:'b5_15'}],
@@ -121,6 +138,123 @@ AL.forEach(([t,yes,no,chk],i)=>{
  ok(tdb.precautions.length>=35&&tdb.precautions.every(p=>p.tr&&p.en),'önlem verisi');
  ok(!T.byCode.EUH208.needs_review&&!T.byCode.EUH071.needs_review&&T.byCode.EUH211.needs_review&&T.byCode.EUH380.needs_review,'EUH doğrulama bayrakları (SEA Ek-3)');
 ok(tdb.precautions.every(p=>!p.needs_review),'önlem ifadeleri SEA Ek-4 ile karşılaştırıldı');
+// Maske ifadenin her geçişini alır (sabun dışlamasından bağımsız: tekrarlanan ifadenin ikinci geçişi de maskelenir)
+{const t="CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın. Çocukların erişemeyeceği yerde saklayın. CİLT İLE TEMAS HALİNDE İSE: Bol sabun ve su ile yıkayın.";
+ const r=tPhrases(t,T,T.pphrases,true),h=r.hepsi.filter(x=>x.codes.join()==='P302+P352');
+ ok(r.filter(x=>x.codes.join()==='P302+P352').length===1,'tPhrases: gösterim için ifade başına tek eşleşme');
+ ok(h.length===2&&h[0].s!==h[1].s,'tPhrases hepsi: iki geçiş '+JSON.stringify(h));
+ ok(!/sabun/.test(tMaske(t,r.hepsi)),'tMaske: iki geçiş de maskelendi');
+ ok(tPhrases(t,T,T.pphrases).hepsi===undefined,'tPhrases: hepsi istenmezse alan yok');}
+// İçerik listesindeki sabun yıkama talimatı sayılmaz: sözcük sonu, "of", listede "su ve sabun", arkasında başka madde (bozma turu, 21.10.2026; eski kalıpla hepsi düşüyordu)
+["İçindekiler: limon kokusu ve sabun, parfüm.","Lavanta kokusu ve sabun içerir.","Ingredients: rosewater and soap, perfume.","Ingredients: seawater and soap.","Waterproof soap.",
+ "Contains: 5-15% anionic surfactants; less than 5% of: soap, phosphonates, perfume.","Ingredients: less than 5% of soap, perfume.","Contains: blend of soap, perfume.","Ingredients: mix of soap.",
+ "İçindekiler: su ve sabun, parfüm.","İçindekiler: deiyonize su ve sabun, parfüm.","İçindekiler: arıtılmış su ve sabun.","İçindekiler: %5'ten az noniyonik yüzey aktif madde, saf su ve sabun.",
+ "Ingredients: water and soap, perfume.","Ingredients: aqua (water) and soap, perfume.","Ingredients: less than 5% soap and water softener, perfume.","İçindekiler: su, sabun ve su yumuşatıcı.",
+ "İçindekiler: %5'ten az sabun ve su bazlı polimer.","Composition: <5% soap and water-soluble polymers.","Ingredients: 5-15% anionic surfactants, less than 5% soap and water, perfume.",
+ "İÇİNDEKİLER: %5'TEN AZ SABUN VE SU, PARFÜM.","İçindekiler: %5-15 anyonik yüzey aktif madde ve sabun ve su.","Ingredients: 15-30% soap and water.",
+ "İçindekiler: %5'ten az anyonik yüzey aktif madde, bol\nsabun, parfüm.",
+ "İçindekiler: su ve sabun, parfüm. Göze temasında suyla yıkayın.",
+ "Çamaşır yıkama sıvısı. Lavanta kokusu ve sabun içeren yıkama sıvısı.","Çamaşır yıkama deterjanı: %5'ten az sabun ve suda çözünen polimer."
+].forEach(t=>{ok(analyzeT(t,T).groups.some(g=>g.id==='sabun'),'içerik listesindeki sabun kayboldu: '+t);ok(analyzeT('Su ile şiddetli tepkime verir. '+t,T).groups.some(g=>g.id==='sabun'),'EUH014 ile sabun kayboldu: '+t)});
+// Yıkama sözcüğü ürün adında (yıkama deterjanı, washing, rinse aid) ya da noktasız OCR'da talimat içerik listesine bitişik: sabun kalır (bozma turu 2, 21.10.2026).
+// 0: maskelenen başlıksız yazım, sabun sayılmaz. 2 ve "bilinen sınır": veride olmayan talimat yazımında sabun (bilgi düzeyi) grup sayılır. Komşu sözcüğe bakan
+// dışlama kuralı üç bozma turunda da gerçek içerik listelerinde sabunu sildi; içerik kaybı yerine zararsız bir bilgi grubu seçildi. Biri genişletirse bu satırlar düşer.
+[
+ ["Çamaşır yıkama deterjanı. İçindekiler: su ve sabun, parfüm.",1],
+ ["Çamaşır yıkama deterjanı içindekiler: su ve sabun, parfüm.",1],
+ ["Bulaşık yıkama sıvısı: su ve sabun, parfüm",1],
+ ["Dishwashing liquid: water and soap, perfume.",1],
+ ["Dishwashing liquid. Ingredients: water and soap, perfume.",1],
+ ["For washing: soap and water softener, perfume.",1],
+ ["Washing powder. Ingredients: less than 5% soap and water softener.",1],
+ ["Ingredients for hand washing: <5% soap and water, perfume.",1],
+ ["İçindekiler: %5'ten az sabun ve su Bol su ile yıkayın",1],
+ ["İçindekiler: %5'ten az sabun ve su, parfüm Kullanımdan sonra elleri yıkayın",1],
+ ["Ingredients: less than 5% soap and water, perfume Wash hands after use",1],
+ ["Ingredients: 5% soap and water Rinse thoroughly",1],
+ ["ÇAMAŞIR YIKAMA DETERJANI İÇİNDEKİLER: SU VE SABUN, PARFÜM",1],
+ ["Çamaşır yıkama\ndeterjanı\nİçindekiler: su ve sabun\nparfüm",1],
+ ["Rinse aid. Contains: water and soap.",1],
+ ["Rinse aid contains water and soap",1],
+ ["Yıkama suyu ve sabun içerir",1],
+ ["Elde yıkama için: bol köpüklü sabun ve su yumuşatıcı",1],
+ ["Washing-up liquid with plenty of soap",1],
+ ["Çamaşır yıkamada: %5'ten az sabun ve suyu yumuşatan fosfonatlar.",1],
+ ["Yıkanabilir yüzeyler için. İçindekiler: arıtılmış su ve sabun",1],
+ ["Wash & clean: aqua, soap and water softeners (zeolite).",1],
+ ["İçindekiler 5-15% anyonik yüzey aktif madde, saf su ve sabun, yıkama sonrası durulayın",1],
+ ["Sabun ve bol suyla yıkayınız.",2],
+ ["Wash thoroughly with soap and plenty of water.",2],
+ ["Elleri sabunla yıkayın.",0],
+ ["Elleri sabun ile yıkayın.",2],
+ ["Cilde temasında sabunlu suyla yıkayın.",0],
+ ["Wash skin with soap.",2],
+ ["Rinse with soap and water.",2],
+ ["Wash with soap and running water.",2],
+ ["Wash with soap and warm water.",2],
+ ["Sabun ve ılık su ile yıkayın.",2],
+ ["Bol sabunlu su ile yıkayın.",0],
+ ["Deriyi su ve sabunla yıkayın.",0],
+ ["Cildi bol su ve sabunla yıkayınız.",0],
+ ["WASH WITH PLENTY OF SOAP AND WATER",0],
+ ["Bol sabun ve su ile\nyıkayın.",0],
+ ["Bol sabun ve su ile yı-\nkayın.",0],
+ ["Bol sabun ve suyla iyice yıkanmalıdır.",2],
+ ["Wash off with soap and water.",2],
+ ["Bol su ve sabun ile durulayın.",2],
+ ["Cilt ile temas halinde sabun ve su ile temizleyin.",2],
+ ["Take off contaminated clothing and wash it before reuse. Wash with soap and water.",2],
+ ["Wash the affected area thoroughly with plenty of warm water and soap.",2],
+ ["Rinse with running water and soap.",2],
+ ["Handwash with soap, aloe vera, perfume.",1],
+ ["Sabun ve su ile yıkayınca köpürür.",1],
+ // Bozma turu 3 (21.10.2026): beyaz listeli sözcüklerle kurulan içerik listeleri, ürün adında "wash/clean", noktasız OCR
+ ["Clean: water, soap, perfume.",1],
+ ["Clean water, soap, perfume.",1],
+ ["Ingredients: water, soap, perfume.",1],
+ ["Rinse aid: water and soap.",1],
+ ["Cleaning gel with water and soap.",1],
+ ["Hand wash with soap and aloe vera.",1],
+ ["Body wash with soap and glycerin.",1],
+ ["Hand wash: water, soap, perfume.",1],
+ ["Dish wash, water, soap, perfume",1],
+ ["Face wash - water, soap.",1],
+ ["Wash & Clean. Ingredients: water and soap.",1],
+ ["Clean & Fresh: water, soap",1],
+ ["Rinse-free formula with soap",1],
+ ["Laundry wash with soap flakes",1],
+ ["Gentle hand wash with mild soap",1],
+ ["Washing liquid. Wash with soap power!",1],
+ ["Pre-wash: soap, enzymes.",1],
+ ["Clean with soap and water based formula",1],
+ ["Ingredients: <5% soap. Wash with water. Rinse.",1],
+ ["Rinse with water and soap containing formula",1],
+ ["Ingredients: less than 5% soap Rinse with water",1],
+ ["İçindekiler: %5'ten az sabun, su Yıkayın",1],
+ ["İçindekiler: %5'ten az sabun\nSu ile durulayın",1],
+ ["İçindekiler: anyonik yüzey aktif madde, sabun Bol su ile durulayın.",1],
+ ["İçindekiler: sabun Temizleyin",1],
+ ["İçindekiler: su, sabun Kullandıktan sonra iyice durulayın",1],
+ ["İçindekiler: sabun, su Ilık suyla yıkayın",1],
+ ["İçindekiler: %5'ten az sabun ve su ile temizleyin",1],
+ ["Doğal sabun ile temizleyin, %5'ten az sabun içerir.",1],
+ ["İçeriğindeki sabun ile yüzeyleri temizleyin.",1],
+ ["Sabun içerir. Sabun ile temizleyin.",1],
+ ["%5'ten az sabun içerir ve su ile temizleyin",1],
+ ["İçindekiler: sabun ve su Yı-\nkayın",1],
+ ["İçindekiler: %5'ten az sabun, ılık su ile iyice durulayın",1],
+ ["İçindekiler: %5-15 anyonik, sabun SICAK SU İLE YIKAYIN",1],
+].forEach(([t,v])=>ok(analyzeT('Su ile şiddetli tepkime verir. '+t,T).groups.some(g=>g.id==='sabun')===!!v,(v?'sabun kayboldu: ':'talimattaki sabun grup sayıldı: ')+t));
+// Maskeye özel yazımlar (veride `maske`) resmi ifade değildir: P302+P352 diye listelenmez, yalnızca grup aramasından çıkar
+["Bol sabun ve su ile yıkayın.","Bol sabun ve suyla yıkayın.","Bol su ve sabun ile yıkayın.","Wash with plenty of soap and water."].forEach(t=>{const A=analyzeT('Su ile şiddetli tepkime verir. '+t,T);
+ ok(!A.prec.some(x=>x.code==='P302+P352'),'maske yazımı ifade sayıldı: '+t);ok(!A.groups.some(g=>g.id==='sabun'),'maske yazımında sabun: '+t)});
+ok(T.mphrases.length>=4&&tdb.precautions.every(p=>!(p.maske||[]).some(m=>(p.alt||[]).indexOf(m)>-1||m===p.tr||m===p.en)),'maske yazımları resmi/diğer yazımlarla aynı değil');
+// analyzeT grupları her geçişi maskelenmiş metinde arar: yapay grup "eldiven", P280 iki kez yazılı
+{const G={g:{id:'deneme',noband:true},rx:[/(?:^|[^a-z])eldiven(?![a-z])/g]},T2=Object.assign({},T,{groups:[G]});
+ const t="Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın. Çocukların erişemeyeceği yerde saklayın. Koruyucu eldiven/koruyucu kıyafet/göz koruyucu/yüz koruyucu kullanın.";
+ ok(analyzeT(t,T2).prec.some(x=>x.code==='P280'),'analyzeT: P280 tanındı');
+ ok(!analyzeT(t,T2).groups.length,'analyzeT: tekrarlanan ifadenin ikinci geçişi de maskelendi '+JSON.stringify(analyzeT(t,T2).groups.map(x=>x.id)));
+ ok(analyzeT("İçindekiler: eldiven.",T2).groups.length===1,'analyzeT: yapay grup ifade dışında bulunur');}
 for(const [t,p,h] of [['Su ile şiddetli reaksiyona girer. Gebelik sırasında ve emzirirken temastan kaçının.','P263','EUH014'],
   ['Su ile şiddetli tepkime verir. Hamilelikte/anne sütü verirken temastan kaçının.','P263','EUH014']]){
  const A=TL.analyzeT(t,T,K);

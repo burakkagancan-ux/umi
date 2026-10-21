@@ -6,19 +6,19 @@ import {lev, low, norm} from "./ortak.js";
 /* tdb: temizlik.json. Zararlılık ifadeleri hem koddan (H318, EUH208) hem metinden (Türkçe/İngilizce) bulunur. */
 export function tVariants(p){var out=[p];if(p.indexOf("yol acabilir")>-1){out.push(p.replace(/yol acabilir/g,"neden olabilir"));out.push(p.replace(/yol acabilir/g,"yol acar"))}if(p.indexOf("yol acar")>-1)out.push(p.replace(/yol acar/g,"neden olur"));return out}
 export function buildTIndex(tdb){
-  var byCode={},phrases=[],pByCode={},pphrases=[];
+  var byCode={},phrases=[],pByCode={},pphrases=[],mphrases=[];
   // Varyant ("yol açar") başka bir ifadenin asıl metnine denk gelirse eklenmez (H371 -> H370 olmasın)
   var prim={};tdb.hazards.concat(tdb.combos||[],tdb.precautions||[]).forEach(function(h){prim[norm(h.tr)]=1});
   function addPh(list,txt,codes){tVariants(norm(txt)).forEach(function(p,i){if(p.length>=8&&!(i&&prim[p]))list.push({p:p,tk:p.split(" "),codes:codes})})}
   tdb.hazards.forEach(function(h){byCode[h.code]=h;addPh(phrases,h.tr,[h.code]);addPh(phrases,h.en,[h.code]);(h.alt||[]).forEach(function(a){addPh(phrases,a,[h.code])})});
   (tdb.combos||[]).forEach(function(c){addPh(phrases,c.tr,c.codes);addPh(phrases,c.en,c.codes)});
-  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code]);(q.alt||[]).forEach(function(a){addPh(pphrases,a,[q.code])})});
+  (tdb.precautions||[]).forEach(function(q){pByCode[q.code]=q;addPh(pphrases,q.tr,[q.code]);addPh(pphrases,q.en,[q.code]);(q.alt||[]).forEach(function(a){addPh(pphrases,a,[q.code])});(q.maske||[]).forEach(function(a){addPh(mphrases,a,[q.code])})});
   function rx(a){return a.map(function(s){return new RegExp(s,"g")})}
   var groups=tdb.groups.map(function(g){return {g:g,rx:rx(g.pat)}});
   var subs=tdb.subs.map(function(s){return {s:s,rx:rx(s.pat||[])}});
   var subByInci={};tdb.subs.forEach(function(s){s.inci.forEach(function(a){subByInci[a]=s})});
   var cap=tdb.capsule?{rx:rx(tdb.capsule.pat),d:tdb.capsule}:null;
-  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
+  return {byCode:byCode,phrases:phrases,pByCode:pByCode,pphrases:pphrases,mphrases:mphrases,cap:cap,uzem:tdb.uzem||"",groups:groups,subs:subs,subByInci:subByInci,meta:tdb.meta,mix:tdb.mix_rule,aliases:tdb.aliases||[],ans:tdb.ans||{},am:null};
 }
 /* Temizlik eş anlamlıları (kaynak/temizlik_esanlamlilar.tsv) kozmetik dizinindeki INCI kayıtlarına bağlanır; ilk kullanımda kurulur */
 export function tAliasMap(T,K){
@@ -78,27 +78,35 @@ export function tEuh208(text){
   [re1,re2].forEach(function(r){while((m=r.exec(tx))){var n=m[1].replace(/^(EUH\s?208\s*:?\s*)/i,"").trim();if(n&&out.indexOf(n)<0)out.push(n)}});
   return out;
 }
-export function tPhrases(text,T,list){
-  var tk=norm(text).split(" ").filter(Boolean),pos={},cands=[];
+/* hepsi: dönen dizinin .hepsi alanında ifadenin etiketteki her geçişi (maske için; aynı ifade ön ve arka yüzde iki kez yazılabilir) */
+export function tPhrases(text,T,list,hepsi){
+  var tk=norm(text).split(" ").filter(Boolean),pos={},cands=[],candsH=[];
   tk.forEach(function(w,i){(pos[w]=pos[w]||[]).push(i)});
   (list||T.phrases).forEach(function(ph){
-    var m=ph.tk.length,max=ph.p.length>=30?3:ph.p.length>=16?2:ph.p.length>=10?1:0,best=null,tried={};
+    var m=ph.tk.length,max=ph.p.length>=30?3:ph.p.length>=16?2:ph.p.length>=10?1:0,best=null,tried={},all=[];
     ph.tk.forEach(function(w,j){
       if(w.length<5||!pos[w])return;
       pos[w].forEach(function(i){
         for(var s=i-j-1;s<=i-j+1;s++)for(var L=m-1;L<=m+1;L++){
           if(s<0||L<1||s+L>tk.length||tried[s+":"+L])continue;tried[s+":"+L]=1;
           var d=lev(tk.slice(s,s+L).join(" "),ph.p,max);
-          if(d<=max&&(!best||d<best.d||(d===best.d&&L===m)))best={s:s,e:s+L,d:d};
+          if(d<=max){if(!best||d<best.d||(d===best.d&&L===m))best={s:s,e:s+L,d:d};if(hepsi)all.push({s:s,e:s+L,d:d})}
         }
       });
     });
     if(best)cands.push({codes:ph.codes,s:best.s,e:best.e,d:best.d,len:ph.p.length});
+    // Her geçiş aday olur; birbirine binenlerden en yakın yazımlı olanı birles bırakır
+    all.forEach(function(x){candsH.push({codes:ph.codes,s:x.s,e:x.e,d:x.d,len:ph.p.length})});
   });
-  cands.sort(function(a,b){return b.len-a.len||a.d-b.d});
-  var acc=[];
-  // Uzun ifade önce kazanır; aynı kodun daha yakın yazımı (ör. eski resmi yazım birebir) çakışıyorsa benzerlik ondan alınır
-  cands.forEach(function(c){var o=acc.filter(function(a){return c.s<a.e&&a.s<c.e});if(o.length){o.forEach(function(a){if(c.d<a.d&&c.codes.join()===a.codes.join())a.d=c.d});return}acc.push(c)});
+  function birles(cs){
+    cs.sort(function(a,b){return b.len-a.len||a.d-b.d});
+    var acc=[];
+    // Uzun ifade önce kazanır; aynı kodun daha yakın yazımı (ör. eski resmi yazım birebir) çakışıyorsa benzerlik ondan alınır
+    cs.forEach(function(c){var o=acc.filter(function(a){return c.s<a.e&&a.s<c.e});if(o.length){o.forEach(function(a){if(c.d<a.d&&c.codes.join()===a.codes.join())a.d=c.d});return}acc.push(c)});
+    return acc;
+  }
+  var acc=birles(cands);
+  if(hepsi)acc.hepsi=birles(candsH);
   return acc;
 }
 /* Gruplar ve bantlar için sadeleştirilmiş metin: Türkçe harfler eşlenir, nokta cümle sonu "|" olur, %<>- korunur */
@@ -180,11 +188,12 @@ export function analyzeT(text,T,K){
   var N=tPrep(text),hz={},order=[];
   function add(code,how){var h=T.byCode[code];if(!h)return;if(!hz[code]){hz[code]={code:code,h:h,how:[]};order.push(code)}if(hz[code].how.indexOf(how)<0)hz[code].how.push(how)}
   tCodes(text,T).forEach(function(c){add(c,"kod")});
-  var hzP=tPhrases(text,T),pP=tPhrases(text,T,T.pphrases);
+  var hzP=tPhrases(text,T,null,true),pP=tPhrases(text,T,T.pphrases,true);
   hzP.forEach(function(p){p.codes.forEach(function(c){add(c,p.d?"benzer":"metin")})});
   var hazards=order.map(function(c){return hz[c]});
   // İçerik grupları tanınan tehlike/önlem ifadelerinin metninde aranmaz: P302+P352'nin 2013 yazımı "Bol sabun ve su ile yıkayın" sabun grubu değildir
-  var groups=tGroups(tPrep(tMaske(text,hzP.concat(pP))),T);
+  // Resmi olmayan başlıksız yazımlar ("Bol sabun ve su ile yıkayın.", veride `maske`) yalnızca maskelenir, ifade olarak listelenmez
+  var groups=tGroups(tPrep(tMaske(text,hzP.hepsi.concat(pP.hepsi,tPhrases(text,T,T.mphrases,true).hepsi))),T);
   var subs=[],seenS={};
   function addSub(s,how){if(seenS[s.id])return;seenS[s.id]=1;subs.push({s:s,how:how})}
   T.subs.forEach(function(S){S.rx.some(function(r){r.lastIndex=0;return r.test(N)})&&addSub(S.s,"isim")});
