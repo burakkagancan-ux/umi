@@ -95,6 +95,22 @@ ok(icerikBolge(V7,'tr')===null&&kirpPlan(V7,'tr',true)===null,'K7: kutu_kesik is
 const VK=sahne([['Ingredients: Aqua, Glycerin, Phenoxyethanol, Parfum.',10,10,0],['Contains Methylisothiazolinone. Hydroxyisohexyl 3-Cyclohexene Carboxaldehyde, Limonene',10,80,1],['Manufacturer: Example Ltd, London',10,300,2]]);
 const K_=require('./run.js');const pk=kirpPlan(VK,'en',false);
 if(pk&&K_.K){const bk=tx=>kirpBulgu(degerlendir('koz',tx,{idx,K:K_.K},null,''));const G=kirpGuvenli(pk,bk);ok(!G.ok||/Limonene/.test(pk.metin),'kozmetik: liste dışındaki koku alerjeni düşmez')}
+// Mutasyon ölçümünün kaçırdıkları (güvenlik yolunda)
+const fb=(o)=>({bul:tx=>new Set(o[tx]||[])});
+ok(kirpGuvenli(null,()=>new Set()).ok===false,'plan yoksa güvenli değil (öneri yok)');
+{const pl={metin:'T',dil2:[],diger:['D'],adres:[]};
+  ok(kirpGuvenli(pl,tx=>new Set(tx==='T'?['a:allergen_milk']:['a:allergen_milk?'])).ok,'atılan "içerebilir", tutulan "içerir"le karşılanır');
+  ok(!kirpGuvenli(pl,tx=>new Set(tx==='T'?['a:allergen_milk?']:['a:allergen_milk'])).ok,'atılan "içerir", tutulan "içerebilir"le karşılanmaz');
+  ok(kirpGuvenli(pl,tx=>new Set(tx==='T'?['m:E250']:['m0:E250'])).ok,'seviyesiz madde seviyelisiyle karşılanır');
+  ok(!kirpGuvenli(pl,tx=>new Set(tx==='T'?[]:['m0:B:sut'])).ok,'diğer satırlarda seviyesiz madde de aranır');
+  ok(kirpGuvenli({metin:'T',dil2:['D'],diger:[],adres:[]},tx=>new Set(tx==='T'?[]:['m0:B:su'])).ok,'başka dilin listesinde seviyesiz madde aranmaz');
+  ok(!kirpGuvenli({metin:'T',dil2:['D'],diger:[],adres:[]},tx=>new Set(tx==='T'?[]:['a:allergen_egg'])).ok,'başka dilin listesinde alerjen aranır');}
+// Adres bölümü blok değişince biter: sonraki bloktaki içerik atılabilir gürültü sayılmaz
+{const Vb=sahne([['İçindekiler: Buğday unu, şeker, kakao.',10,10,0],['Üretici: Örnek Gıda A.Ş. İstanbul',10,300,5],['Süt tozu ve yumurta tozu ile yapılmıştır',10,340,6]]);
+  const pl=kirpPlan(Vb,'tr',true);ok(pl&&pl.adres.length===1&&pl.diger.length===1,'adres bölümü blok değişince biter: '+JSON.stringify(pl&&{a:pl.adres,d:pl.diger}));
+  ok(pl&&!kirpGuvenli(pl,bulP).ok,'adres sonrası bloktaki süt/yumurta öneriyi engeller');
+  const Vt=sahne([['İçindekiler: Buğday unu, şeker, kakao.',10,10,0],['Besin Değerleri (100 g)',10,80,1],['Enerji 2100 kJ',10,104,1],['Saklama: serin yerde',10,200,2]]);
+  const pt=kirpPlan(Vt,'tr',true);ok(pt&&pt.diger.join('|')==='Saklama: serin yerde'&&/Enerji/.test(pt.metin),'besin tablosu atılmaz, sonraki bölüm diğer sayılır: '+JSON.stringify(pt&&pt.diger));}
 // Ana kural setin tamamında da
 for(const e of SET)guvenli(e.vision,e.ad,['Üretici','Sütlüce','Tüketici','0850'],true);   // başka dilin listesinde seviyesiz bileşen farkı (Water/Su) uyarı kaybı değil
 console.log(n+' test, '+fail+' hata');process.exit(fail?1:0);
