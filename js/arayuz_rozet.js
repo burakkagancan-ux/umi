@@ -23,6 +23,7 @@ function rozetSay(aile,tur,oge,goster){
     var d=s.d,y=rozetYeni(def,d,aile,tur);
     if(y)d=rozetGoruldu(d,aile,tur,y.kademe);
     if(!rozetStore(d))return null;   // saklanamıyorsa (gizli sekme) kutlama da yok: bir sonraki açılışta yeniden kutlanmasın
+    if(y&&typeof aylikRozetYaz==="function")aylikRozetYaz(y);   // Aylık Özetim (U-09)
     if(y&&goster)goster(rozetKutlama(y));
     return y;
   }).catch(function(){return null});

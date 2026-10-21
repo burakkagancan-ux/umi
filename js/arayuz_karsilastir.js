@@ -20,18 +20,24 @@ function histSave(text,mode){
   if(!scan&&hm==="tasi"&&HCUR){   // ekrandaki tarama yeni türe taşınır; o türde aynı metin varsa eski kayıt silinir
     var mv=a.filter(function(x){return x.id===HCUR})[0],dup=a.filter(function(x){return x.mode===mode&&x.text===tx})[0];
     if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);return}
-    if(mv){mv.mode=mode;mv.text=tx;mv.oz=histOz(mode,tx);histStore(a);return}
+    if(mv){var Pm=histUrun(mode,tx);mv.mode=mode;mv.text=tx;mv.oz=Pm?kayitOzet(Pm):null;histStore(a);histAylik(mv.id,tx,Pm);return}
   }
   var same=a.filter(function(x){return x.mode===mode&&x.text===tx})[0],cur=!scan&&HCUR?a.filter(function(x){return x.id===HCUR&&x.mode===mode})[0]:null,e;
   if(same)e=same;
   else if(cur){e=cur;e.text=tx}
   else e={id:"h"+Date.now(),t:Date.now(),mode:mode,name:histName(a),text:tx};
-  e.oz=histOz(mode,tx)||e.oz||null;
+  var P=histUrun(mode,tx);
+  e.oz=P?kayitOzet(P):e.oz||null;
   a=histAdd(a.filter(function(x){return x.id!==e.id}),e,KARS_AYAR.gecmisBoyut);
   histStore(a);HCUR=e.id;
+  histAylik(e.id,tx,P);
 }
-/* Kaydın uyarı/dikkat özeti (js/kayit.js kayitOzet; Son Okutulanlar listesi veri yüklemeden gösterir); veri yüklü değilse null */
-function histOz(mode,tx){return typeof kayitSimdi==="function"?kayitSimdi(mode,tx):null}
+/* Ekrandaki ürünün modeli (js/degerlendirme.js); oz: uyarı/dikkat özeti (js/kayit.js kayitOzet; Son Okutulanlar listesi veri yüklemeden gösterir).
+   Veri yüklü değilse null */
+function histUrun(mode,tx){try{return karsReady(mode)?karsProduct({mode:mode,text:tx,name:""}):null}catch(e){return null}}
+/* Aylık Özetim (U-09, js/arayuz_aylik.js): "Örnek metin dene"nin metni (yüklü her dilde, değiştirilmemiş) sayılmaz; değiştirilince kullanıcının metni sayılır */
+function histAylik(id,tx,P){if(typeof aylikTaramaYaz==="function"&&!histOrnek(tx))aylikTaramaYaz(id,P)}
+function histOrnek(tx){for(var k in DIL.sozluk){var s=DIL.sozluk[k]||{};if(["gida","koz","tem"].some(function(m){return (s["ornek."+m]||"").trim()===tx}))return true}return false}
 /* Türe göre karşılaştırma özeti; liste yüklenmemişse null */
 var KARS_TUR={gida:"gida",koz:"koz",tem:"tem"};   // çeviri anahtarı ekleri (kars.az_*, kars.yukleniyor_*, kars.baslik_*)
 function karsReady(mode){return degHazir(mode,degBaglam())}
