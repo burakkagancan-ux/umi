@@ -38,7 +38,9 @@ module.exports=async({br,B,opt,ok})=>{
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));const ara=d.textContent;
     await new Promise(r=>setTimeout(r,600));const son=d.textContent;d.remove();
     const ul=document.createElement('div'),li=document.createElement('div');li.textContent='x';ul.appendChild(li);document.body.appendChild(ul);
-    let bitti=false;hareketCik(li,()=>{bitti=true});const hemen=bitti;await new Promise(r=>setTimeout(r,400));ul.remove();
+    let bitti=false;hareketCik(li,()=>{bitti=true});const hemen=bitti;
+    // Sabit 400 ms yetmiyordu: paralel CI'da animasyon yavaşlayınca hareketCik'in 600 ms'lik yedeği devreye giriyor. 2 sn'ye kadar yoklanır.
+    for(let t=0;!bitti&&t<40;t++)await new Promise(r=>setTimeout(r,50));ul.remove();
     const b=document.createElement('button');document.body.appendChild(b);hareketTamam(b);const tm=b.classList.contains('tamam');b.remove();
     return {ara,son,hemen,bitti,tm};
   });
