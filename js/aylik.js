@@ -19,9 +19,9 @@ export function aylikNorm(o){
     if(!/^\d{4}-\d{2}$/.test(ay))return;var a=o.ay[ay];if(!a||typeof a!=="object")return;
     var n={u:{},e:{},z:[]};
     if(a.u&&typeof a.u==="object")Object.keys(a.u).forEach(function(id){var x=a.u[id];
-      if(x&&TURLER[x.m]&&(x.r===0||x.r===1||x.r===2))n.u[id]={m:x.m,r:x.r,k:Array.isArray(x.k)?x.k.filter(function(k){return Array.isArray(k)&&typeof k[0]==="string"&&typeof k[1]==="string"}):[]}});
+      if(x&&TURLER[x.m]&&(x.r===0||x.r===1||x.r===2))n.u[id]={m:x.m,r:x.r,k:Array.isArray(x.k)?x.k.filter(function(k){return Array.isArray(k)&&typeof k[0]==="string"&&typeof k[1]==="string"&&(k[3]===2||k[3]===3)&&(k[2]==null||typeof k[2]==="string")}):[]}});
     if(a.e&&typeof a.e==="object")Object.keys(a.e).forEach(function(k){if(/^\d{6,14}$/.test(k))n.e[k]=1});
-    if(Array.isArray(a.z))n.z=a.z.filter(function(z){return Array.isArray(z)&&typeof z[0]==="string"&&typeof z[1]==="string"&&z[2]===(z[2]|0)});
+    if(Array.isArray(a.z))n.z=a.z.filter(function(z){return Array.isArray(z)&&/^[a-z]{2,20}$/.test(z[0])&&/^[a-z]{2,8}$/.test(z[1])&&z[2]===(z[2]|0)&&z[2]>0&&z[2]<=20&&(z[3]==null||typeof z[3]==="string")});
     r.ay[ay]=n;
   });
   return aylikBudama(r);
@@ -46,6 +46,8 @@ export function aylikTarama(o,ms,id,urun){
   if(!a.u[id]&&Object.keys(a.u).length>=AYLIK_AYAR.enFazlaUrun)return o;
   a.u[id]=urun;return aylikBudama(o);
 }
+/* Tarama kimliğini bir ayın kaydından siler (öneri kartıyla taşınan tarama hedef türdeki aynı kayda katılınca) */
+export function aylikSil(o,ms,id){o=aylikNorm(o);var a=o.ay[ayAnahtar(ms)];if(a&&a.u[id])delete a.u[id];return o}
 /* Bu cihazdan gönderilen barkod katkısı (aynı barkod ayda bir) */
 export function aylikKatki(o,ms,kod){o=aylikNorm(o);kod=String(kod||"");if(!/^\d{6,14}$/.test(kod))return o;ayAl(o,ms).e[kod]=1;return aylikBudama(o)}
 /* Yeni rozet kademesi (rozetYeni sonucu: aile, tur, kademe, ad) */

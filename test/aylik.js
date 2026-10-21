@@ -51,7 +51,7 @@ const sadeceKatki=aylikKatki(null,KASIM,'4006381333931');
 ok(aylikAylar(sadeceKatki).join()==='2026-11'&&aylikOzet(sadeceKatki,'2026-11').toplam===0,'yalnızca katkı olan ay da listede');
 
 // Bozuk kayıt: okunurken geçersiz kısımlar atılır, geçerliler kalır
-const boz=aylikNorm({ay:{'2026-10':{u:{x:{m:'gida',r:2,k:[['E1','A',null,2],'bozuk']},y:{m:'?',r:1},z:null},e:{'123':1,'8690504025207':1},z:[['a','gida',1,''],['b']]},'kotu':{},'2026-11':'x'}});
+const boz=aylikNorm({ay:{'2026-10':{u:{x:{m:'gida',r:2,k:[['E1','A',null,2],'bozuk']},y:{m:'?',r:1},z:null},e:{'123':1,'8690504025207':1},z:[['okur','gida',1,''],['b'],['okur','gida',-1,''],['x','gida',1,'']]},'kotu':{},'2026-11':'x'}});
 ok(Object.keys(boz.ay).join()==='2026-10','geçersiz ay anahtarı ve değer atılır');
 ok(Object.keys(boz.ay['2026-10'].u).join()==='x'&&boz.ay['2026-10'].u.x.k.length===1,'geçersiz ürün ve madde atılır');
 ok(Object.keys(boz.ay['2026-10'].e).join()==='8690504025207'&&boz.ay['2026-10'].z.length===1,'geçersiz barkod ve rozet atılır');
@@ -65,4 +65,10 @@ o=null;['a','b','c'].forEach(id=>{o=aylikTarama(o,EKIM,id,{m:'gida',r:0,k:[]})})
 z=aylikOzet(o,'2026-10');ok(z.toplam===2&&z.dag.uyari===1,'ürün sınırı: yeni ürün eklenmez, var olan güncellenir');
 AYLIK_AYAR.enFazlaUrun=eski;
 
+// Bozma turu (21.10.2026): sil (taşınan tarama), madde sırası ve rozet kademesi doğrulanır
+o=aylikTarama(null,EKIM,'g1',{m:'gida',r:2,k:[['E1','A',null,2]]});o=aylikTarama(o,EKIM,'k1',{m:'koz',r:1,k:[]});o=aylikSil(o,EKIM,'g1');
+z=aylikOzet(o,'2026-10');ok(z.toplam===1&&z.tur.koz===1&&z.tur.gida===0&&!z.maddeler.length,'silinen tarama sayılmaz, maddeleri de gider');
+ok(aylikOzet(aylikSil(o,KASIM,'k1'),'2026-10').toplam===1,'başka ayın kaydı silinmez');
+const bz2=aylikNorm({ay:{'2026-10':{u:{x:{m:'gida',r:2,k:[['E1','A',null,'zz'],['E2','B',5,2],['E3','C','E3',3]]}},e:{},z:[]}}});
+ok(bz2.ay['2026-10'].u.x.k.length===1&&bz2.ay['2026-10'].u.x.k[0][0]==='E3','geçersiz sıra ve kimlik türü atılır');
 console.log(n+' test, '+fail+' hata');process.exit(fail?1:0);

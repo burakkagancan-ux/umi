@@ -4,7 +4,7 @@
 var SON_EN_FAZLA=10;
 function sonCiz(){
   var box=$("son");if(!box)return;box.textContent="";
-  var a=histLoad().filter(function(x){return x&&x.id&&(x.text||"").trim()}).slice(0,SON_EN_FAZLA);   // en yeni başta (histAdd)
+  var a=histLoad().filter(function(x){return x.text.trim()}).slice(0,SON_EN_FAZLA);   // en yeni başta (histAdd)
   box.hidden=!a.length;if(!a.length)return;
   box.appendChild(el("h2",null,t("son.baslik")));
   var dz=!1;
@@ -32,7 +32,7 @@ function sonCiz(){
 function sonAc(x){
   if(CMP_IDS)closeCompare();
   fotoTemizle();
-  $("metin").value=x.text;HSCAN=false;HMOD="gor";HCUR=x.id;
+  $("metin").value=x.text;HSCAN=false;HMOD="gor";HCUR=x.id;HGOR={mode:x.mode||"gida",text:x.text.trim()};
   if(MODE!==(x.mode||"gida"))setMode(x.mode||"gida",true);else run();
   var s=$("sonuc");if(s&&s.scrollIntoView)s.scrollIntoView({block:"start"});
 }

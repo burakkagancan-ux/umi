@@ -3,7 +3,13 @@ var HCUR=null,HSCAN=true,HOCR=false,CMP_IDS=null;   // HCUR: ekrandaki taramanı
 // Mod değişince kutudaki metin yeni modda yeniden analiz edilir. HMOD: "gor" sekmeyle geçiş (geçmişe yazılmaz, tarama kendi türünde kalır),
 // "tasi" öneri kartıyla geçiş ("Kozmetik olarak analiz et": ekrandaki tarama yeni türe taşınır). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır.
 var HMOD=null;
-function histLoad(){return depoDizi("taramalar")}
+/* HGOR: ekranda yeniden gösterilen kayıt {mode, text} (Son Okutulanlar, kayıtlı ürün, sekmeyle tür değişimi). Aynı tür + metin analizleri geçmişe ve aylık özete
+   yazılmaz; yalnızca ilk histSave'i değil, veri yüklenince gelen ikinci run'ı da kapsar (bozma turu 21.10.2026: HMOD tek kullanımlıktı, bekleyen
+   loadK().then(run) "elle düzeltme" sayılıp kaydı başa taşıyor, aylık özete yazıyordu). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır. */
+var HGOR=null;
+/* Geçersiz kayıtlar (bozuk veri, eski sürüm) okurken atılır: tek bozuk kayıt açılışı ve geçmişi kullanan her işi durdurmasın (bozma turu 21.10.2026) */
+function histLoad(){return depoDizi("taramalar").filter(histGecerli)}
+function histGecerli(x){return !!x&&typeof x==="object"&&typeof x.id==="string"&&typeof x.text==="string"&&typeof x.t==="number"&&isFinite(x.t)&&(x.name==null||typeof x.name==="string")}
 function histStore(a){depoYaz("taramalar",a)}
 /* Kayıtlı ürünler de karşılaştırılabilir: kimlik geçmişte yoksa kayıtlarda aranır (js/arayuz_kayit.js) */
 function histGet(id){return histLoad().filter(function(x){return x.id===id})[0]||(typeof kayitGet==="function"?kayitGet(id):null)}
@@ -16,10 +22,13 @@ function histSave(text,mode){
   var tx=(text||"").trim(),a=histLoad(),scan=HSCAN,hm=HMOD;
   if(!tx)return;
   HSCAN=false;HOCR=false;HMOD=null;
-  if(!scan&&hm==="gor")return;
+  if(scan)HGOR=null;
+  if(!scan&&hm==="gor"){HGOR={mode:mode,text:tx};return}
+  if(!scan&&HGOR&&HGOR.mode===mode&&HGOR.text===tx)return;
   if(!scan&&hm==="tasi"&&HCUR){   // ekrandaki tarama yeni türe taşınır; o türde aynı metin varsa eski kayıt silinir
     var mv=a.filter(function(x){return x.id===HCUR})[0],dup=a.filter(function(x){return x.mode===mode&&x.text===tx})[0];
-    if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);return}
+    if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);
+      if(typeof aylikSilYaz==="function")aylikSilYaz(mv.id);histAylik(dup.id,tx,histUrun(mode,tx));return}
     if(mv){var Pm=histUrun(mode,tx);mv.mode=mode;mv.text=tx;mv.oz=Pm?kayitOzet(Pm):null;histStore(a);histAylik(mv.id,tx,Pm);return}
   }
   var same=a.filter(function(x){return x.mode===mode&&x.text===tx})[0],cur=!scan&&HCUR?a.filter(function(x){return x.id===HCUR&&x.mode===mode})[0]:null,e;

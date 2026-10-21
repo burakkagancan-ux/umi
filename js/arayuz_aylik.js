@@ -15,6 +15,7 @@ function aylikAns(mode){
 }
 function aylikTaramaYaz(id,P){if(!P)return;try{aylikStore(aylikTarama(aylikLoad(),Date.now(),id,aylikUrun(P,aylikAns(P.mode))))}catch(e){}}
 function aylikKatkiYaz(kod){try{aylikStore(aylikKatki(aylikLoad(),Date.now(),kod))}catch(e){}}
+function aylikSilYaz(id){try{aylikStore(aylikSil(aylikLoad(),Date.now(),id))}catch(e){}}
 function aylikRozetYaz(r){try{aylikStore(aylikRozet(aylikLoad(),Date.now(),r))}catch(e){}}
 
 /* ---------- Profilim: "Aylık Özetim" düğmesi ---------- */
@@ -27,7 +28,7 @@ function aylikProfil(){
   b.onclick=function(){location.hash="#aylik"};box.appendChild(b);
 }
 /* ---------- Aylık Özetim ekranı ---------- */
-function aylikAc(){
+function aylikAc(odak){
   var box=$("aylik");box.textContent="";
   var simdi=ayAnahtar(Date.now());if(!AYLIK_GOSTER||AYLIK_GOSTER>simdi)AYLIK_GOSTER=simdi;
   var bk=el("button","alt kback",t("kayit.geri"));bk.type="button";bk.setAttribute("aria-label",t("aylik.geri"));bk.onclick=aylikKapat;box.appendChild(bk);
@@ -38,9 +39,9 @@ function aylikAc(){
   var on=el("button","alt",t("aylik.onceki"));on.type="button";on.setAttribute("aria-label",t("aylik.onceki"));on.textContent="‹";
   var sn=el("button","alt",t("aylik.sonraki"));sn.type="button";sn.setAttribute("aria-label",t("aylik.sonraki"));sn.textContent="›";
   on.disabled=!aylar.some(function(a){return a<ay});sn.disabled=ay>=simdi;
-  on.onclick=function(){AYLIK_GOSTER=ayKaydir(ay,-1);aylikAc();var b=document.querySelector("#aylik .aynav button");if(b&&!b.disabled)b.focus()};
-  sn.onclick=function(){AYLIK_GOSTER=ayKaydir(ay,1);aylikAc();var b=document.querySelectorAll("#aylik .aynav button")[1];if(b&&!b.disabled)b.focus()};
-  var ad=el("h3","ayad",dilTarih(ayZaman(ay),"ayyil"));ad.setAttribute("aria-live","polite");
+  on.onclick=function(){AYLIK_GOSTER=ayKaydir(ay,-1);aylikAc("onceki")};
+  sn.onclick=function(){AYLIK_GOSTER=ayKaydir(ay,1);aylikAc("sonraki")};
+  var ad=el("h3","ayad",dilTarih(ayZaman(ay),"ayyil"));ad.tabIndex=-1;
   nav.appendChild(on);nav.appendChild(ad);nav.appendChild(sn);box.appendChild(nav);
   var z=aylikOzet(o,ay);
   if(!z.toplam&&!z.katki&&!z.rozetler.length){box.appendChild(el("p","mut",t("aylik.bos")))}
@@ -73,7 +74,9 @@ function aylikAc(){
     box.appendChild(c4);
   }
   box.appendChild(el("p","how it",t("aylik.not")));
-  document.body.classList.add("mode-aylik");box.hidden=false;window.scrollTo(0,0);bk.focus();
+  document.body.classList.add("mode-aylik");box.hidden=false;
+  // Ay değişince odak ay seçicide kalır: aynı yöndeki düğme, kapandıysa ay başlığı (okunur; Enter'la ekrandan çıkılmaz). İlk açılışta Geri düğmesi.
+  if(odak){var hd=odak==="onceki"?on:sn;(hd.disabled?ad:hd).focus()}else{window.scrollTo(0,0);bk.focus()}
 }
 function aylikKapat(){
   document.body.classList.remove("mode-aylik");$("aylik").hidden=true;

@@ -333,4 +333,4 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 body.mode-aylik .w>:not(#aylik){display:none!important}#aylik[hidden]{display:none}body.mode-aylik .w>#aylik:not([hidden]){display:block!important}
 .aynav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 12px}.aynav button{min-width:44px;min-height:44px;font-size:22px;line-height:1;padding:0}
 .aynav .ayad{margin:0;font-size:17px;text-align:center;flex:1}
-.aykart{margin:0 0 10px}.aykart .aytur{display:flex;flex-wrap:wrap;gap:6px}.aykart .aydag,.aykart .aymad{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.aykart .aymad .mut{font-size:13px}
+.aykart{margin:0 0 10px}.aykart .aytur{display:flex;flex-wrap:wrap;gap:6px}.aykart .aydag{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.aykart .aymad{display:flex;align-items:flex-start;gap:6px}.aykart .aymad>a,.aykart .aymad>span:not(.ic):not(.mut){flex:1;min-width:0;overflow-wrap:anywhere}.aykart .aymad .mut{font-size:13px;white-space:nowrap}.aynav .ayad:focus{outline:none}.aynav .ayad:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
