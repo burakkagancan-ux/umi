@@ -322,3 +322,5 @@ body.sonuclu label.camera{padding:10px;border-radius:20px}body.sonuclu label.cam
 [data-tema="koyu"] .sheet.yuzen .sheet-pn{border:1px solid var(--line)}
 [data-tema="koyu"] label.camera .camic{background:rgba(13,20,51,.10)}
 [data-tema="koyu"] label.camera .cambtn{background:var(--onok)}
+/* Otomatik kırpma önerisi (A-04, js/arayuz_sayfa.js kirpOner) */
+.kirponer button{margin-top:8px;width:100%}

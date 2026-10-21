@@ -111,7 +111,7 @@ function fotoOku(){
   if(OKU.mesgul){OKU.bekle=true;return}
   var n=OKU.n,t0=Date.now();OKU.mesgul=true;ST.textContent=t("ocr.hazirlaniyor");
   function gecerli(){return n===OKU.n&&!OKU.bekle}
-  function yaz(tx,msj){
+  function yaz(tx,msj,V){
     if(!gecerli())return;
     // Besin tablosunun fotoğrafı: okunan metin içerik metninin sonuna eklenir, aynı tarama güncellenir (js/arayuz_besin.js)
     var yo=besinYenidenOku(n,tx);if(yo!=null){OKU.okundu=true;ST.textContent=yo;return}
@@ -120,6 +120,7 @@ function fotoOku(){
     $("metin").value=tx;HSCAN=!OKU.okundu;HOCR=true;OKU.okundu=true;
     if(HSCAN&&tx.trim()){rozetSay("dedektif",MODE,"f:"+rozetIz(tx),rozetGoster);olcumTarama("f",MODE)}   // aynı fotoğrafın yeniden okunması (çerçeve) sayılmaz
     if(typeof barkodFoto==="function")barkodFoto();ST.textContent=msj;run();
+    kirpOner(V);
   }
   function hata(m){if(gecerli())ST.textContent=m}
   function bitti(){OKU.mesgul=false;if(OKU.bekle){OKU.bekle=false;fotoOku()}}
@@ -127,9 +128,9 @@ function fotoOku(){
   var cv=prep(im,!OCR_URL);
   if(OCR_URL){
     ST.textContent=t("ocr.okunuyor");
-    fetch(OCR_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:cv.toDataURL("image/jpeg",0.85).split(",")[1]})})
+    fetch(OCR_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:cv.toDataURL("image/jpeg",0.85).split(",")[1],kutu:true})})
     .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||j.error){var er=new Error(j.error||("HTTP "+r.status));er.srv=true;throw er}return j})})
-    .then(function(j){yaz(j.text||"",t("ocr.tamam_vision",{sn:dilSayi((Date.now()-t0)/1000,1,true)}))})
+    .then(function(j){yaz(j.text||"",t("ocr.tamam_vision",{sn:dilSayi((Date.now()-t0)/1000,1,true)}),j)})
     .catch(function(e){hata(t(e.srv?"ocr.hata":"ocr.hata_internet",{m:e.message}))}).then(bitti);
     return;
   }
@@ -152,3 +153,44 @@ function tesseractYukle(){
     s.onload=function(){ok()};s.onerror=function(){TESS_YUK=null;no()};document.head.appendChild(s)});
   return TESS_YUK;
 }
+/* ---------- Otomatik kırpma önerisi (A-04, 21.10.2026; saf mantık js/foto.js icerikBolge) ----------
+   Fotoğrafın tamamı okunduğunda (çerçeve değiştirilmemişse) ve metinde içerik listesi başlığının dışında başka bölümler de varsa (besin tablosu,
+   adres, uyarı, ikinci dil) öneri kartı (liste dışındaki alerjen iz uyarısı cümleleri korunur, kirpMetni): çerçeve listeye çizilir, "Yalnızca içerik listesini analiz et" yeni okuma yapmadan (sözcük kutularından)
+   metni listeyle sınırlar. Kartta listenin dışında geçip sonuçtan çıkacak alerjen ve dikkat/uyarı maddeleri yazılır (ör. ayrı satırdaki
+   "… içerebilir"). Temizlikte önerilmez: tehlike ve önlem ifadeleri içerik listesinin dışındadır. Gıdada besin tablosu metni korunur. */
+var KIRP_ONERI=null;
+function kirpOner(V){
+  KIRP_ONERI=null;
+  if(MODE==="tem"||!V||!Array.isArray(V.kutu)||!V.kutu.length)return;
+  if(CROP.x!==0||CROP.y!==0||CROP.w!==1||CROP.h!==1)return;   // kullanıcı çerçeveyi kendisi seçti
+  var B=icerikBolge(V,DIL.kod);if(!B)return;
+  var tx=kirpMetni(V,B,MODE==="gida");
+  KIRP_ONERI={B:B,metin:tx,tam:$("metin").value};
+  var c=el("div","res u kirponer");c.setAttribute("role","status");
+  c.appendChild(el("div","t",t("foto.oneri.baslik")));
+  c.appendChild(el("div","ln",t("foto.oneri.ne")));
+  var cik=kirpCikanlar(MODE,KIRP_ONERI.tam,tx);
+  if(cik.length)c.appendChild(el("div","ln",t("foto.oneri.cikacak",{l:cik.join(", ")})));
+  var b=el("button",null,t("foto.oneri.uygula"));b.type="button";b.onclick=kirpUygula;c.appendChild(b);
+  sonucUst(c);
+}
+/* Listenin dışında kalıp sonuçtan çıkacaklar: dikkat/uyarı seviyeli maddeler ve (gıdada) alerjenler; veri yüklü değilse boş */
+function kirpCikanlar(mode,tam,kesik){
+  try{
+    if(!degHazir(mode,degBaglam()))return [];
+    var A=degerlendir(mode,tam,degBaglam(),PROF,""),K=degerlendir(mode,kesik,degBaglam(),PROF,""),var_={},o=[];
+    K.items.forEach(function(it){var_[it.key]=1});
+    A.items.forEach(function(it){if(it.rank>=2&&!var_[it.key])o.push(it.name)});
+    if(mode==="gida"&&A.S&&K.S){Object.keys(A.S.allergen).forEach(function(k){var a=A.S.allergen[k],b=K.S.allergen[k];
+      if((a.yes.length||a.may.length)&&!(b&&(b.yes.length||b.may.length)))o.push(alName(k))})}
+    return o;
+  }catch(e){return []}
+}
+function kirpUygula(){
+  var O=KIRP_ONERI;if(!O)return;KIRP_ONERI=null;
+  CROP={x:O.B.x,y:O.B.y,w:O.B.w,h:O.B.h};drawCrop();
+  $("metin").value=O.metin;HSCAN=false;HOCR=true;   // aynı tarama güncellenir (yeni kayıt açılmaz)
+  ST.textContent=t("foto.oneri.uygulandi");run();
+  var s=$("sonuc");if(s&&s.scrollIntoView)s.scrollIntoView({block:"start"});
+}
+
