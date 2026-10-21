@@ -196,5 +196,6 @@ function renderK(res){
   }
   if(S.parfum)box.appendChild(el("div","ln nt",t("koz.parfum_not")));
   box.appendChild(el("div","how it",t("koz.alt_not",{tr:ulke()==="TR"?t("ulke.tr.koz_uyum"):""})));
+  box.appendChild(yontemBag());
   payBar(box,{mode:"koz",res:res,S:S});
 }

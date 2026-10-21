@@ -8,6 +8,8 @@ function LBL(i){return t(LBL_K[i])}
 function degBaglam(){return {idx:IDX,K:typeof KIDX!=="undefined"?KIDX:null,T:typeof TIDX!=="undefined"?TIDX:null,ptype:typeof PTYPE!=="undefined"?PTYPE:""}}
 function $(i){return document.getElementById(i)}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+/* Sonuç ekranından ve Profilim'den yöntem sayfasına bağlantı (E-01) */
+function yontemBag(cls,anahtar){var a=el("a",cls||"yontem-bag",t(anahtar||"yontem.bag"));a.href="yontem.html";return a}
 /* Özet kartının satırı (gıda, kozmetik, temizlik; 17.10.2026): üstte ad, altında değer (telefonda dar iki sütun 4-5 satıra kırılıyordu). Değerin düzeyi
    (r/o uyarı, y dikkat) adın önünde sonuç kartlarındaki renk + şekil simgesiyle; ekran okuyucuya düzeyin adı metin olarak. Değer metni yazı renginde, kalın. */
 function ozetSatir(d,label,val,cls){

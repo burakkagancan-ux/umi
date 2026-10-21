@@ -33,7 +33,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 | i18n/sozluk.md | terim sözlüğü ve başlık yazımı (arayüz metni yazarken) |
 
 ## Dosya haritası
-- Sayfalar: ocr.html (Etiket Oku), ansiklopedi.html, index.html (Liste). Stil: fonts/ansiklopedi.css → tema.css → css/<sayfa>.css.
+- Sayfalar: ocr.html (Etiket Oku), ansiklopedi.html, index.html (Liste), yontem.html (Yöntem, E-01; durağan metin, data-i18n `yontem.*`). Stil: fonts/ansiklopedi.css → tema.css → css/<sayfa>.css.
 - js/ saf mantık (ES modülü, testli): ceviri, ortak, gida, kozmetik, temizlik, eslesme, degerlendirme (ortak ürün modeli), profil_kart, karsilastir(_ayar), paylas(_ayar), kayit, besin, barkod, rozet, topluluk, ansiklopedi, olcum. Sayfa girişleri giris_*.js + kopru.js.
 - js/ arayüz (klasik betik, `defer`, sayfadaki sırayla; yalnızca depo.js ve tema.js <head>'de defer'siz): depo.js (cihaz deposu, ilk), tema.js (açık/koyu), veri_surum.js, dil.js, yukari.js, alt_menu.js, hareket.js (küçük hareket detayları), arayuz_ortak/profil/sonuc.js, arayuz_<alan>.js.
 - worker/: Cloudflare Worker (OCR, barkod, D1, yönetim); ortak hesapları js/'ten içe aktarır.

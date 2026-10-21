@@ -153,5 +153,6 @@ function renderT(A){
     nb.appendChild(el("div","how it",t("tem.islev_not")));
   }
   box.appendChild(el("div","how it",t("tem.alt_not")));
+  box.appendChild(yontemBag());
   payBar(box,{mode:"tem",A:A,S:S});
 }

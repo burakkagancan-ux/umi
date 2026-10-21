@@ -5,7 +5,7 @@ const fs=require('fs'),path=require('path'),R=path.join(__dirname,'..');
 let fail=0,n=0;const ok=(c,m)=>{n++;if(!c){fail++;console.log('HATA',m)}};
 const sw=fs.readFileSync(path.join(R,'sw.js'),'utf8'),core=new Set((/const CORE = \[([\s\S]*?)\];/.exec(sw)[1].match(/"([^"]+)"/g)||[]).map(s=>s.slice(1,-1)));
 const want=new Set();
-['index.html','ocr.html','ansiklopedi.html'].forEach(p=>{
+['index.html','ocr.html','ansiklopedi.html','yontem.html'].forEach(p=>{
   want.add(p);
   for(const m of fs.readFileSync(path.join(R,p),'utf8').matchAll(/(?:src|href)="((?:js|fonts|data)\/[^"]+|[a-z_]+\.(?:css|webmanifest))"/g))want.add(m[1]);
 });
