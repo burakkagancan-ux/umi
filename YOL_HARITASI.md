@@ -109,7 +109,6 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 
 | Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
 |---|---|---|---|---|---|
-| E-01 | Herkese açık yöntem sayfası: renk ölçütleri (K1–K7), kaynak öncelik sırası, neyi yapmadığımız (teşhis, puan). 20.10.2026 (Lupa karşılaştırması): Lupa'nın en güçlü güven aracı uygulama içindeki sade yöntem ekranı; bizde kaynak her maddede var ama derli toplu anlatım yok. Ek kapsam: sonuç ekranından "Bu nasıl değerlendirildi?" bağlantısı, renk vermediğimiz durumlar (şüpheli değer, A-08 istisnaları) ve neden puan vermediğimiz kısa ve sade dille | Claude | B-02 | Türkçe ve İngilizce yayında; sonuç ekranından ulaşılıyor | ⬜ |
 | E-02 | Herkese açık değişiklik kaydı: her değerlendirme değişikliği tarihi ve kaynağıyla (ör. E553b sarı oldu, IARC 2025) | Claude | O-05 ✅ | Veri değişikliklerinden otomatik üretilir | 🔄 veri ve zorunlu kayıt hazır (O-05, 13.10.2026); kullanıcıya gösterilen sayfa ve çevirisi yok |
 | E-03 | Düzeltme süreci: "Hata bildir" → yanıt süresi hedefi → değişiklik kaydı | Claude + 👤 | E-02 | Süreç yöntem sayfasında yazılı | ⬜ |
 | E-04 | Bilim danışma kurulu (gıda bilimi, toksikoloji, dermatoloji) | 👤 | — | En az bir danışman; adları yöntem sayfasında | ⬜ 👤 |
@@ -171,7 +170,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 6. D-01 👤 gelir kararı → D-02
 7. E-05 tetik gelince hukuki görüş → F-01 Türkiye lansmanı → F-03
 
-20.10.2026, Lupa karşılaştırmasından öneri (👤 onay; sıra değişmedi): ~~A-08 küçük ve kaynaklı, araya alınabilir~~ ✅ 21.10.2026; E-01 yöntem sayfasının B-02'yi beklemeden Türkçe ve İngilizce yazılması önerilir (Lupa'nın en güçlü güven aracı). C-09, G-06 ve U-09 D-01 gelir kararıyla birlikte ele alınır.
+20.10.2026, Lupa karşılaştırmasından öneri (👤 onay; sıra değişmedi): ~~A-08 küçük ve kaynaklı, araya alınabilir~~ ✅ 21.10.2026; ~~E-01 yöntem sayfasının B-02'yi beklemeden Türkçe ve İngilizce yazılması önerilir (Lupa'nın en güçlü güven aracı)~~ ✅ 21.10.2026. C-09, G-06 ve U-09 D-01 gelir kararıyla birlikte ele alınır.
 
 Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 
