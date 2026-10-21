@@ -23,6 +23,7 @@ SIRA = [
     "gen_ceviri_veri",    # i18n/veri/<dil>.json (bütün veri metinleri)
     "gen_barkod",         # data/barkod_off.json (bağımsız)
     "gen_besin",          # data/besin.json (bağımsız)
+    "gen_ulke",           # data/ulke.json (e_kodlari)
     "gen_manifest",       # manifest.webmanifest, i18n/manifest/ (i18n/<dil>.json)
 ]
 CIKTI = ["data/", "i18n/veri/", "i18n/manifest/", "manifest.webmanifest", "sw.js"]

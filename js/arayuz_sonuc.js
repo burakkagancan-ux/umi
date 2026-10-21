@@ -1,5 +1,18 @@
 /* Arayüz: sonuç ekranı (özet kartı, gıda sonucu, katkı ve birlikte dikkat kartları), run() (moda göre analiz), örnek metin. Klasik betik;
    arayuz_profil.js'ten sonra. Kozmetik ve temizlik sonucu arayuz_kozmetik.js, arayuz_temizlik.js. */
+/* Ülke katmanı (B-05): katkının seçili ülkedeki durumu. Kendi notu olan ülkede (oz.katki_not) satır yok; öteki ülkelerde AB'den farklıysa,
+   kısıtlı/iptal/belirsizse ya da kaynak notu varsa "<Ülke>: <durum>" + not + kaynak. */
+function ulkeKatkiSatir(UK,x,cok){
+  var kk=UK.katki(x.id);if(!kk||ulkeOzellik(UK,"katki_not"))return null;
+  var not=ulkeNot(kk.not,DIL.kod),abIzinli=x.eu_status==="listed";
+  if(kk.d==="izinli"&&abIzinli&&!not)return null;
+  var p=el("div","ln ulkekatki");
+  p.appendChild(el("b",null,(cok?x.id+" · ":"")+t("ulke.katki.satir",{ulke:t("ulke.ad."+UK.kod.toLowerCase()),durum:t("ulke.durum."+kk.d)})));
+  if(not)p.appendChild(document.createTextNode(" "+not+(/[.!?)]$/.test(not)?"":".")));
+  if(UK.kaynak){p.appendChild(document.createTextNode(" "+t("ortak.kaynak")));var a=el("a",null,UK.kaynak.kisa);a.href=UK.kaynak.url;a.target="_blank";a.rel="noopener";p.appendChild(a)}
+  return p;
+}
+function ulkeAdDil(UK){return ulkeOzellik(UK,"ad_dil")||""}
 function profileCards(S,metin){return profilKartGida(S,metin==null?$("metin").value:metin,PROF,alName).map(kartEl)}
 /* Sonucun en üstündeki özet: kaç maddede uyarı/dikkat var, renk şeridi. Puan değil, yalnızca sayılar.
    ranks: her madde için 3 uyarı, 2 dikkat, 1 doğrulanmadı, 0 özel uyarı yok (koz/tem kendi seviyelerini bu ölçeğe çevirir) */
@@ -108,14 +121,17 @@ function additiveCard(r){
   var seenA={};items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(seenA[k])return;seenA[k]=1});
   var nA=Object.keys(seenA).length,doneA={};
   items.forEach(function(x){if(!x.adi)return;var k=JSON.stringify(x.adi);if(doneA[k])return;doneA[k]=1;pn.appendChild(adiBlock(x.adi,nA>1||items.length>1&&items.some(function(y){return !y.adi})?x.id:""))});
-  var same=items.length>1&&items.every(function(x){return ABOUT[x.id]===ABOUT[items[0].id]&&!(x.tgk_note&&ulke()==="TR")});
+  var UK=ulkeK();   // seçili ülkenin katmanı (B-05): katkının o ülkedeki durumu öne çıkar; ülke adı kodda yok
+  if(UK)items.forEach(function(x){var s=ulkeKatkiSatir(UK,x,items.length>1);if(s)pn.appendChild(s)});
+  var same=items.length>1&&items.every(function(x){var kk=UK&&UK.katki(x.id);return ABOUT[x.id]===ABOUT[items[0].id]&&!(kk&&kk.not&&ulkeOzellik(UK,"katki_not"))});
   if(same){var r4=veriMetin(ABOUT[items[0].id]||"","e."+items[0].id+".about"),p4=el("div","ln");p4.appendChild(el("b",null,t("gida.kart.nedir")));p4.appendChild(document.createTextNode(r4.s));pn.appendChild(vIsaret(p4,r4))}
   else items.forEach(function(x){
     var ab=ABOUT[x.id];
     if(items.length>1)pn.appendChild(el("div","ih",x.id+" · "+itAd(x)));
     if(ab){var r1=veriMetin(ab,"e."+x.id+".about"),p1=el("div","ln");p1.appendChild(el("b",null,t("gida.kart.nedir")));p1.appendChild(document.createTextNode(r1.s));pn.appendChild(vIsaret(p1,r1))}
-    if(ulke()==="TR"&&items.length===1&&x.tgk_name&&x.tgk_name.toLowerCase()!==x.primary_name.toLowerCase()){var p0=el("div","ln");p0.appendChild(el("b",null,t("ulke.tr.tgk_adi")));var tn=el("span",null,x.tgk_name);tn.lang="tr";p0.appendChild(tn);pn.appendChild(p0)}   // Türk Gıda Kodeksi'ndeki ad: çevrilmez
-    if(x.tgk_note&&ulke()==="TR"){var r3=veriMetin(x.tgk_note,"e."+x.id+".tgk_not"),p3=el("div","ln");p3.appendChild(el("b",null,t("ulke.tr.etiket")));p3.appendChild(document.createTextNode(r3.s));pn.appendChild(vIsaret(p3,r3))}
+    var kk=UK&&UK.katki(x.id);   // ülkenin resmi listesindeki ad (çevrilmez) ve ülke notu; etiketleri ülkenin özellik anahtarından
+    if(kk&&kk.ad&&items.length===1&&ulkeOzellik(UK,"katki_ad")){var p0=el("div","ln");p0.appendChild(el("b",null,t(ulkeOzellik(UK,"katki_ad"))));var tn=el("span",null,kk.ad);tn.lang=ulkeAdDil(UK);p0.appendChild(tn);pn.appendChild(p0)}
+    if(kk&&typeof kk.not==="string"&&kk.not&&ulkeOzellik(UK,"katki_not")){var r3=veriMetin(kk.not,"e."+x.id+".tgk_not"),p3=el("div","ln");p3.appendChild(el("b",null,t(ulkeOzellik(UK,"katki_not"))));p3.appendChild(document.createTextNode(r3.s));pn.appendChild(vIsaret(p3,r3))}
   });
   items.forEach(function(x){   // üretim yolu notu
     var u=x.uretim;if(!u)return;
@@ -134,7 +150,7 @@ function additiveCard(r){
     it.sources.forEach(function(u,i){var a=el("a",null,u.replace(/^https?:\/\/(www\.)?/,"").split("/")[0]);a.href=u;a.target="_blank";a.rel="noopener";if(i)ps.appendChild(document.createTextNode(" · "));ps.appendChild(a)});
     pn.appendChild(ps);
   }
-  var dn=!it.needs_review?null:it.sources&&it.verification!=="partially_checked"?(ulke()==="TR"?"ulke.tr.izin_dogrulanmadi":null):it.sources?"gida.kart.kismen_dogrulanmadi":"gida.kart.dogrulanmadi";   // TR izin durumu notu yalnızca Türkiye seçiliyse
+  var dn=!it.needs_review?null:it.sources&&it.verification!=="partially_checked"?(ulkeOz("izin_dogrulanmadi")||null):it.sources?"gida.kart.kismen_dogrulanmadi":"gida.kart.dogrulanmadi";   // TR izin durumu notu yalnızca Türkiye seçiliyse
   if(dn)pn.appendChild(el("div","how",t(dn)));
   // Ayrıntı alt sayfada açılır: (i) düğmesi ya da kartın kendisine dokunma; her madde için "Ansiklopedide oku"
   pn.hidden=false;pn.className="";
@@ -196,7 +212,7 @@ function render(res,br){
   if(PROF.kilo==null&&E.some(function(r){return r.ids.some(function(id){var a=IDX.byId[id].adi;return a&&a.st==="set"})}))box.appendChild(kiloNotu());
   box.appendChild(summaryCard(S,res));
   box.appendChild(besinKart($("metin").value));   // besin değeri tablosu (js/arayuz_besin.js)
-  if(LASTBR.length&&ulke()==="TR")box.appendChild(brandCard(LASTBR));
+  if(LASTBR.length&&ulkeOz("marka_listesi"))box.appendChild(brandCard(LASTBR));
   comboSection(box,findCombos(COMBO,"gida",comboItemsFood(res,IDX)));
   if(E.length){box.appendChild(el("h2",null,t("gida.katkilar")));gruplu(box,E,function(r){return r.rank},additiveCard)}
   var B=res.filter(function(r){return r.isB&&!r.neg}),notes=B.map(function(r){return IDX.byId[r.ids[0]]}).filter(function(it){return it.note});

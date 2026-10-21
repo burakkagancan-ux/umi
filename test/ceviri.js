@@ -85,7 +85,7 @@ const SAYFALAR=['ocr.html','ansiklopedi.html','index.html','yontem.html'];
 const sayfaHtml={};SAYFALAR.forEach(f=>sayfaHtml[f]=fs.readFileSync(path.join(R,f),'utf8'));
 
 // 2) Kullanılan anahtarlar: koddaki anahtar biçimli dizgeler + sayfalardaki data-i18n. Birleştirilerek kurulan anahtarlar ("kars.az_"+tür) DINAMIK listesinde.
-const DINAMIK=['besin.tip.','ulke.ad.','profil.bki.','profil.bki.aralik.','kars.az_','kars.yukleniyor_','kars.baslik_','kars.sev.','kars.noun.','kars.uyum.','kars.uyum.cmr_','kars.uyum.ed_','kars.uyum.yutma_','kars.uyum.kapsul_','gida.uretim.say_','kayit.yuklenemedi_','foto.kamera_','gida.adi.','gida.uretim.say_','pay.kart.ust_','pay.neden.','pay.nedenk.','pay.metin.','tem.prof.','ornek.','koz.yukleniyor','tem.yukleniyor','gida.yukleniyor','besin.alan.','besin.duzey.','besin.sorun.','besin.esik_','besin.baslik_','besin.birim_',
+const DINAMIK=['besin.tip.','ulke.durum.','ulke.ad.','profil.bki.','profil.bki.aralik.','kars.az_','kars.yukleniyor_','kars.baslik_','kars.sev.','kars.noun.','kars.uyum.','kars.uyum.cmr_','kars.uyum.ed_','kars.uyum.yutma_','kars.uyum.kapsul_','gida.uretim.say_','kayit.yuklenemedi_','foto.kamera_','gida.adi.','gida.uretim.say_','pay.kart.ust_','pay.neden.','pay.nedenk.','pay.metin.','tem.prof.','ornek.','koz.yukleniyor','tem.yukleniyor','gida.yukleniyor','besin.alan.','besin.duzey.','besin.sorun.','besin.esik_','besin.baslik_','besin.birim_',
   'manifest.','rozet.okur.','rozet.dedektif.','rozet.avci.','rozet.oncu.','rozet.dogrulayici.','rozet.tur.','ozet.ust.'];   // ozet.ust.<tür>: js/arayuz_sonuc.js ozetKart   // rozet.<aile>.*: aile kimliği data/rozetler.json'dan   // manifest.*: gen_manifest.py okur (uygulama adı ve açıklaması)
 const NS=new Set(Object.keys(tr).map(k=>k.split('.')[0]));
 const kullanilan=new Set(),dinamikKullanim=new Set();
@@ -95,6 +95,9 @@ for(const [f,src] of Object.entries(kaynak)){
     const m=/^([a-z]+\.[a-z0-9_.]*)$/.exec(s);if(m&&DINAMIK.some(p=>s===p||s.startsWith(p)))dinamikKullanim.add(s);
   }
 }
+// Ülke katmanının (B-05) arayüz özellikleri çeviri anahtarı taşıyabilir (data/ulke.json u.<ülke>.oz): kullanılmış sayılır, tanımlı olmalı
+for(const u of Object.values(JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','ulke.json'),'utf8')).u))
+  for(const v of Object.values(u.oz||{}))if(typeof v==='string'&&ANAHTAR.test(v)&&NS.has(v.split('.')[0])){kullanilan.add(v);ok(v in tr,'data/ulke.json özelliğindeki anahtar tr.json\'da yok: '+v)}
 for(const html of Object.values(sayfaHtml)){
   for(const m of html.matchAll(/data-i18n="([^"]+)"/g))kullanilan.add(m[1]);
   for(const m of html.matchAll(/data-i18n-attr="([^"]+)"/g))m[1].split(';').forEach(p=>kullanilan.add(p.split(':')[1].trim()));
