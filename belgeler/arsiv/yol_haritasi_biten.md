@@ -16,6 +16,7 @@ YOL_HARITASI.md'den taşındı (15.10.2026, U-07 9. adım; satırlar aynı). Sı
 |---|---|---|---|---|---|
 | B-01 | Çok dil altyapısı: t() işlevi, i18n/tr.json, Intl tarih/sayı/çoğul, sağdan sola hazırlığı, yedek yazı tipi mekanizması; arayüz metinleri anahtara taşınır, Türkçe görünüm birebir aynı | Claude (bulut, `claude/cok-dil`) | — | Mevcut testler değişmeden geçer, test/ceviri.js eklenir | ✅ #95 |
 | B-02 | İngilizce arayüz (en.json, dil seçici, terim sözlüğü i18n/sozluk.md) | Claude (bulut) | B-01 | İngilizce modda arayüz testi geçer, paylaşım kartı taşmaz | ✅ #96 |
+| B-03 | Ana içerik dili İngilizce: ansiklopedi, gerekçeler ve notlar önce İngilizce yazılır, Türkçe dahil öteki diller oradan çevrilir | Claude | B-02 | Yeni içerik İngilizce anahtarla girer; mevcut Türkçe içeriğin çevrilme oranı raporlanır | ✅ 21.10.2026: 1. adım çeviri oranı raporu; 2. adım `ceviri_oran.py --denetle` CI'da: yeni ya da değişen Türkçe metin İngilizcesiz (ya da bayat İngilizceyle) birleşemez. Yazım dili Türkçe kalır (O-12), İngilizce öteki bütün dillerin kaynağı. Ayrıntı belgeler/mimari/cok_dil.md |
 
 ### Faz C: Mağaza ve hız
 
