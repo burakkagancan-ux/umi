@@ -12,7 +12,7 @@ import json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 KAYNAK = os.path.join(HERE, "kaynak", "besin_adlari.tsv")
 ISTISNA = os.path.join(HERE, "kaynak", "besin_istisna.json")
-TIP_ALAN = {"id", "kaynak", "madde", "not", "sivi", "etiket", "haric_etiket", "haric_ad", "olmaz", "isaret", "isaret_re", "ana", "ek", "ek_e_kodu"}
+TIP_ALAN = {"id", "kaynak", "madde", "not", "sivi", "etiket", "haric_etiket", "haric_ad", "olmaz", "isaret", "isaret_re", "isaret_degil", "ana", "ek", "ek_e_kodu"}
 CIKTI = os.path.join(HERE, "data", "besin.json")
 ALANLAR = {"enerji", "yag", "doymus", "karb", "seker", "lif", "protein", "tuz", "sodyum", "kalori", "_atla", "_porsiyon", "_ri", "_boy"}
 KAYNAKLAR = {

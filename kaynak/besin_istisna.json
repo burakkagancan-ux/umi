@@ -1,66 +1,612 @@
 {
-  "aciklama": "A-08: besin renklerinin gösterilmediği ürün tipleri. gen_besin.py data/besin.json'a 'istisna' olarak yazar; js/besin.js besinIstisnaBul okur. Ürün tipi sırayla: (1) Open Food Facts kategorisi (etiket; hariç_etiket ya da ürün adında hariç_ad varsa sayılmaz), (2) metinde işaret (isaret: düz ifade, isaret_re: besinNorm'dan geçmiş metinde düzenli ifade), (3) içerik listesinin bütün öğeleri ana ya da ek adlardan ve en az biri ana ad. Adlar besinNorm ile karşılaştırılır (harf ve aksan duyarsız). dolgu: öğeden atılan nitelik sözcükleri; yoksay: tümüyle atlanan öğeler (asitlik oranı gibi). Tipin olmaz listesindeki bir ad içerik listesinde öğe olarak geçerse (hazırlama talimatındaki 'şeker ekleyin' değil) tip sayılmaz. sivi: false ise 100 ml'lik (içecek) değerlerde tip sayılmaz. Yeni ülke ya da dil: ad listeleri genişler, kod değişmez.",
+  "aciklama": "A-08: besin renklerinin gösterilmediği ürün tipleri. gen_besin.py data/besin.json'a 'istisna' olarak yazar; js/besin.js besinIstisnaBul okur. Ürün tipi sırayla: (1) Open Food Facts kategorisi (etiket; hariç_etiket ya da ürün adında hariç_ad varsa sayılmaz), (2) metinde işaret (isaret: düz ifade, isaret_re: besinNorm'dan geçmiş metinde düzenli ifade; isaret_degil metinde varsa işaret sayılmaz: 'bebek maması olarak kullanılmaz'), (3) içerik listesinin (başlık yoksa metnin tamamı tek cümle olmalı) bütün öğeleri ana ya da ek adlardan ve en az biri ana ad. Adlar besinNorm ile karşılaştırılır (harf ve aksan duyarsız). dolgu: öğeden atılan nitelik sözcükleri; yoksay: tümüyle atlanan öğeler (asitlik oranı gibi). Tipin olmaz listesindeki bir ad içerik listesinde öğe olarak geçerse (hazırlama talimatındaki 'şeker ekleyin' değil) tip sayılmaz. sivi: false ise yalnızca 100 g'lık değerde tip sayılır (100 ml ya da bilinmeyen birimde önce birim sorulur). ek_e_kodu: ek bileşen sayılan E kodları (tuzda topaklanmayı önleyiciler). Yeni ülke ya da dil: ad listeleri genişler, kod değişmez.",
   "kaynaklar": {
-    "ab1169_ek5": {"ad": "AB 1169/2011 Ek V: zorunlu beslenme bildiriminden muaf gıdalar", "url": "https://eur-lex.europa.eu/eli/reg/2011/1169/oj", "okundu": "2026-10-21", "not": "CELLAR'dan (publications.europa.eu/resource/celex/32011R1169) okundu; 19 madde."},
-    "tgk_ek14": {"ad": "TGK Gıda Etiketleme ve Tüketicileri Bilgilendirme Yönetmeliği Ek-14 (RG 26.01.2017, 29960 Mük.)", "url": "https://www.resmigazete.gov.tr/eskiler/2017/01/20170126M1-6-1.pdf", "okundu": "2026-10-21", "not": "Taranmış ek PDF'inin 20. sayfası; 19 madde, AB Ek V ile aynı. 2017 sonrası değişiklikleri okunmadı."},
-    "ab609": {"ad": "AB 609/2013: bebekler ve küçük çocuklar için gıdalar (ayrı mevzuat); eşikler yetişkin başvuru alımına göre (AB 1169/2011 Ek XIII B: 'average adult')", "url": "https://eur-lex.europa.eu/eli/reg/2013/609/oj", "okundu": "2026-10-21"}
+    "ab1169_ek5": {
+      "ad": "AB 1169/2011 Ek V: zorunlu beslenme bildiriminden muaf gıdalar",
+      "url": "https://eur-lex.europa.eu/eli/reg/2011/1169/oj",
+      "okundu": "2026-10-21",
+      "not": "CELLAR'dan (publications.europa.eu/resource/celex/32011R1169) okundu; 19 madde."
+    },
+    "tgk_ek14": {
+      "ad": "TGK Gıda Etiketleme ve Tüketicileri Bilgilendirme Yönetmeliği Ek-14 (RG 26.01.2017, 29960 Mük.)",
+      "url": "https://www.resmigazete.gov.tr/eskiler/2017/01/20170126M1-6-1.pdf",
+      "okundu": "2026-10-21",
+      "not": "Taranmış ek PDF'inin 20. sayfası; 19 madde, AB Ek V ile aynı. 2017 sonrası değişiklikleri okunmadı."
+    },
+    "ab609": {
+      "ad": "AB 609/2013: bebekler ve küçük çocuklar için gıdalar (ayrı mevzuat); eşikler yetişkin başvuru alımına göre (AB 1169/2011 Ek XIII B: 'average adult')",
+      "url": "https://eur-lex.europa.eu/eli/reg/2013/609/oj",
+      "okundu": "2026-10-21"
+    }
   },
   "dolgu": {
-    "tr": ["öğütülmüş", "çekilmiş", "toz", "kurutulmuş", "kuru", "doğal", "organik", "tane", "bütün", "kavrulmuş", "iri", "ince", "saf"],
-    "en": ["ground", "dried", "natural", "organic", "whole", "roasted", "pure", "crushed", "powder", "powdered", "flakes"]
+    "tr": [
+      "öğütülmüş",
+      "çekilmiş",
+      "toz",
+      "kurutulmuş",
+      "kuru",
+      "doğal",
+      "organik",
+      "tane",
+      "bütün",
+      "kavrulmuş",
+      "iri",
+      "ince",
+      "saf"
+    ],
+    "en": [
+      "ground",
+      "dried",
+      "natural",
+      "organic",
+      "whole",
+      "roasted",
+      "pure",
+      "crushed",
+      "powder",
+      "powdered",
+      "flakes"
+    ]
   },
-  "yoksay_re": ["^(asitlik|asitligi|asidite|acidity)( |$)"],
+  "yoksay_re": [
+    "^(asitlik|asitligi|asidite|acidity)( |$)"
+  ],
   "tip": [
     {
-      "id": "bebek", "kaynak": ["ab609"], "not": "bebek",
-      "etiket": ["en:baby-foods", "en:baby-milks", "en:infant-formulas"],
-      "isaret": {"tr": ["bebek maması", "bebek formülü", "devam formülü", "bebek ek gıdası"], "en": ["infant formula", "follow-on formula", "baby food"]},
-      "isaret_re": ["(^| )\\d{1,2} aydan itibaren( |$)", "(^| )from \\d{1,2} months( |$)"]
+      "id": "bebek",
+      "kaynak": [
+        "ab609"
+      ],
+      "not": "bebek",
+      "etiket": [
+        "en:baby-foods",
+        "en:baby-milks",
+        "en:infant-formulas"
+      ],
+      "isaret": {
+        "tr": [
+          "bebek maması",
+          "bebek formülü",
+          "devam formülü",
+          "bebek ek gıdası"
+        ],
+        "en": [
+          "infant formula",
+          "follow-on formula",
+          "baby food"
+        ]
+      },
+      "isaret_re": [
+        "(^| )(4|5|6|7|8|9|10) aydan itibaren( |$)",
+        "(^| )from (4|5|6|7|8|9|10) months( |$)"
+      ],
+      "isaret_degil": {
+        "tr": [
+          "olarak kullanılmaz",
+          "yerine kullanılmaz",
+          "yerine geçmez",
+          "uygun değildir"
+        ],
+        "en": [
+          "not to be used as",
+          "not suitable for",
+          "not a substitute for"
+        ]
+      }
     },
     {
-      "id": "sakiz", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 17,
-      "etiket": ["en:chewing-gum"],
-      "isaret": {"tr": ["sakız mayası", "sakız bazı", "sakız hamuru"], "en": ["gum base"]}
+      "id": "sakiz",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 17,
+      "etiket": [
+        "en:chewing-gum"
+      ],
+      "isaret": {
+        "tr": [
+          "sakız mayası",
+          "sakız bazı",
+          "sakız hamuru"
+        ],
+        "en": [
+          "gum base"
+        ]
+      }
     },
     {
-      "id": "kahve", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 7, "not": "kuru", "sivi": false,
-      "etiket": ["en:coffees"],
-      "haric_etiket": ["en:coffee-drinks", "en:coffee-milks", "en:iced-coffees", "en:instant-powder-for-coffee-with-milk", "en:sweetened-beverages"],
-      "haric_ad": {"tr": ["soğuk", "sütlü", "şekerli", "3ü1", "3 ü 1", "2si1", "2 si 1", "karışım"], "en": ["cappuccino", "latte", "mocha", "frappe", "iced", "mix", "3in1", "3 in 1", "2in1", "2 in 1"]},
-      "olmaz": {"tr": ["şeker", "süt", "süt tozu", "krema", "glukoz şurubu", "kakao"], "en": ["sugar", "milk", "milk powder", "cream", "glucose syrup", "cocoa"]},
-      "ana": {"tr": ["kahve", "türk kahvesi", "arabica kahve", "robusta kahve", "arabica", "robusta", "filtre kahve", "çözünebilir kahve", "hazır kahve", "kafeinsiz kahve", "kahve çekirdeği", "hindiba"], "en": ["coffee", "arabica coffee", "robusta coffee", "arabica", "robusta", "instant coffee", "soluble coffee", "decaffeinated coffee", "coffee beans", "chicory"]}
+      "id": "kahve",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 7,
+      "not": "kuru",
+      "sivi": false,
+      "etiket": [
+        "en:coffees"
+      ],
+      "haric_etiket": [
+        "en:coffee-drinks",
+        "en:coffee-milks",
+        "en:iced-coffees",
+        "en:instant-powder-for-coffee-with-milk",
+        "en:sweetened-beverages"
+      ],
+      "haric_ad": {
+        "tr": [
+          "soğuk",
+          "sütlü",
+          "şekerli",
+          "3ü1",
+          "3 ü 1",
+          "2si1",
+          "2 si 1",
+          "karışım",
+          "buzlu",
+          "krema",
+          "kreması"
+        ],
+        "en": [
+          "cappuccino",
+          "latte",
+          "mocha",
+          "frappe",
+          "iced",
+          "mix",
+          "3in1",
+          "3 in 1",
+          "2in1",
+          "2 in 1",
+          "ice",
+          "cold",
+          "creamer",
+          "drink"
+        ]
+      },
+      "olmaz": {
+        "tr": [
+          "şeker",
+          "süt",
+          "süt tozu",
+          "krema",
+          "glukoz şurubu",
+          "kakao"
+        ],
+        "en": [
+          "sugar",
+          "milk",
+          "milk powder",
+          "cream",
+          "glucose syrup",
+          "cocoa"
+        ]
+      },
+      "ana": {
+        "tr": [
+          "kahve",
+          "türk kahvesi",
+          "arabica kahve",
+          "robusta kahve",
+          "arabica",
+          "robusta",
+          "filtre kahve",
+          "çözünebilir kahve",
+          "hazır kahve",
+          "kafeinsiz kahve",
+          "kahve çekirdeği",
+          "hindiba",
+          "kahve çekirdekleri",
+          "arabica kahve çekirdeği",
+          "arabica kahve çekirdekleri",
+          "türk kahvesi çekirdeği"
+        ],
+        "en": [
+          "coffee",
+          "arabica coffee",
+          "robusta coffee",
+          "arabica",
+          "robusta",
+          "instant coffee",
+          "soluble coffee",
+          "decaffeinated coffee",
+          "coffee beans",
+          "chicory",
+          "coffee bean"
+        ]
+      }
     },
     {
-      "id": "cay", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 8, "not": "kuru", "sivi": false,
-      "etiket": ["en:teas", "en:herbal-teas"],
-      "haric_etiket": ["en:iced-teas", "en:tea-based-beverages", "en:sweetened-beverages"],
-      "haric_ad": {"tr": ["soğuk", "ice", "şekerli"], "en": ["iced", "ice"]},
-      "olmaz": {"tr": ["şeker", "süt", "süt tozu", "glukoz şurubu"], "en": ["sugar", "milk", "milk powder", "glucose syrup"]},
-      "ana": {"tr": ["çay", "siyah çay", "kara çay", "yeşil çay", "beyaz çay", "çay yaprağı", "ıhlamur", "adaçayı", "papatya", "kuşburnu", "melisa", "rooibos", "hibiskus", "ekinezya", "kiraz sapı"], "en": ["tea", "black tea", "green tea", "white tea", "tea leaves", "rooibos", "chamomile", "hibiscus", "linden", "sage", "rosehip", "lemon balm", "echinacea"]},
-      "ek": {"tr": ["aroma", "aroma verici", "aroma vericiler", "doğal aroma", "bergamot aroması", "bergamot yağı"], "en": ["flavouring", "flavourings", "flavoring", "flavorings", "natural flavouring", "natural flavoring", "bergamot flavouring", "bergamot oil"]}
+      "id": "cay",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 8,
+      "not": "kuru",
+      "sivi": false,
+      "etiket": [
+        "en:teas",
+        "en:herbal-teas"
+      ],
+      "haric_etiket": [
+        "en:iced-teas",
+        "en:tea-based-beverages",
+        "en:sweetened-beverages"
+      ],
+      "haric_ad": {
+        "tr": [
+          "soğuk",
+          "ice",
+          "şekerli",
+          "içecek",
+          "içeceği",
+          "granül",
+          "granul",
+          "limonlu",
+          "şeftalili"
+        ],
+        "en": [
+          "iced",
+          "ice",
+          "drink",
+          "fuse",
+          "peach",
+          "lemon"
+        ]
+      },
+      "olmaz": {
+        "tr": [
+          "şeker",
+          "süt",
+          "süt tozu",
+          "glukoz şurubu"
+        ],
+        "en": [
+          "sugar",
+          "milk",
+          "milk powder",
+          "glucose syrup"
+        ]
+      },
+      "ana": {
+        "tr": [
+          "çay",
+          "siyah çay",
+          "kara çay",
+          "yeşil çay",
+          "beyaz çay",
+          "çay yaprağı",
+          "ıhlamur",
+          "adaçayı",
+          "papatya",
+          "kuşburnu",
+          "melisa",
+          "rooibos",
+          "hibiskus",
+          "ekinezya",
+          "kiraz sapı",
+          "roybos",
+          "ıhlamur çiçeği"
+        ],
+        "en": [
+          "tea",
+          "black tea",
+          "green tea",
+          "white tea",
+          "tea leaves",
+          "rooibos",
+          "chamomile",
+          "hibiscus",
+          "linden",
+          "sage",
+          "rosehip",
+          "lemon balm",
+          "echinacea"
+        ]
+      },
+      "ek": {
+        "tr": [
+          "aroma",
+          "aroma verici",
+          "aroma vericiler",
+          "doğal aroma",
+          "bergamot aroması",
+          "bergamot yağı",
+          "limon aroması",
+          "nane aroması"
+        ],
+        "en": [
+          "flavouring",
+          "flavourings",
+          "flavoring",
+          "flavorings",
+          "natural flavouring",
+          "natural flavoring",
+          "bergamot flavouring",
+          "bergamot oil",
+          "lemon flavouring",
+          "lemon flavoring"
+        ]
+      }
     },
     {
-      "id": "tuz", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 5,
-      "etiket": ["en:salts", "en:table-salts", "en:sea-salts"],
-      "ana": {"tr": ["tuz", "sofra tuzu", "iyotlu tuz", "iyotlu sofra tuzu", "deniz tuzu", "kaya tuzu", "himalaya tuzu", "göl tuzu", "potasyum klorür"], "en": ["salt", "table salt", "sea salt", "rock salt", "iodised salt", "iodized salt", "himalayan salt", "potassium chloride"]},
-      "ek": {"tr": ["potasyum iyodat", "potasyum iyodür", "sodyum iyodür", "iyot", "topaklanmayı önleyici", "topaklanmayı önleyici madde"], "en": ["potassium iodate", "potassium iodide", "sodium iodide", "iodine", "anti caking agent", "anticaking agent"]},
-      "ek_e_kodu": true
+      "id": "tuz",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 5,
+      "etiket": [
+        "en:salts",
+        "en:table-salts",
+        "en:sea-salts"
+      ],
+      "ana": {
+        "tr": [
+          "tuz",
+          "sofra tuzu",
+          "iyotlu tuz",
+          "iyotlu sofra tuzu",
+          "deniz tuzu",
+          "kaya tuzu",
+          "himalaya tuzu",
+          "göl tuzu",
+          "potasyum klorür",
+          "sodyum klorür"
+        ],
+        "en": [
+          "salt",
+          "table salt",
+          "sea salt",
+          "rock salt",
+          "iodised salt",
+          "iodized salt",
+          "himalayan salt",
+          "potassium chloride",
+          "sodium chloride"
+        ]
+      },
+      "ek": {
+        "tr": [
+          "potasyum iyodat",
+          "potasyum iyodür",
+          "sodyum iyodür",
+          "iyot",
+          "topaklanmayı önleyici",
+          "topaklanmayı önleyici madde"
+        ],
+        "en": [
+          "potassium iodate",
+          "potassium iodide",
+          "sodium iodide",
+          "iodine",
+          "anti caking agent",
+          "anticaking agent"
+        ]
+      },
+      "ek_e_kodu": [
+        "E535",
+        "E536",
+        "E538",
+        "E550",
+        "E551",
+        "E552",
+        "E553a",
+        "E554",
+        "E556",
+        "E559"
+      ]
     },
     {
-      "id": "sirke", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 9,
-      "etiket": ["en:vinegars"],
-      "ana": {"tr": ["sirke", "üzüm sirkesi", "elma sirkesi", "nar sirkesi", "alkol sirkesi", "şarap sirkesi", "balzamik sirke", "alıç sirkesi"], "en": ["vinegar", "wine vinegar", "apple cider vinegar", "cider vinegar", "spirit vinegar", "grape vinegar", "balsamic vinegar"]},
-      "ek": {"tr": ["su", "aroma", "aroma verici"], "en": ["water", "flavouring", "flavoring"]}
+      "id": "sirke",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 9,
+      "etiket": [
+        "en:vinegars"
+      ],
+      "ana": {
+        "tr": [
+          "sirke",
+          "üzüm sirkesi",
+          "elma sirkesi",
+          "nar sirkesi",
+          "alkol sirkesi",
+          "şarap sirkesi",
+          "balzamik sirke",
+          "alıç sirkesi"
+        ],
+        "en": [
+          "vinegar",
+          "wine vinegar",
+          "apple cider vinegar",
+          "cider vinegar",
+          "spirit vinegar",
+          "grape vinegar",
+          "balsamic vinegar"
+        ]
+      },
+      "ek": {
+        "tr": [
+          "su",
+          "aroma",
+          "aroma verici"
+        ],
+        "en": [
+          "water",
+          "flavouring",
+          "flavoring"
+        ]
+      }
     },
     {
-      "id": "baharat", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 4,
-      "etiket": ["en:spices", "en:herbs"],
-      "haric_etiket": ["en:sauces"],
-      "haric_ad": {"tr": ["salça", "salçası", "sos", "sosu", "ezme", "ezmesi"], "en": ["sauce", "paste", "ketchup"]},
-      "ana": {"tr": ["baharat", "baharat karışımı", "karabiber", "beyaz biber", "pul biber", "kırmızı biber", "toz biber", "acı biber", "tatlı biber", "isot", "paprika", "kimyon", "kekik", "nane", "sumak", "tarçın", "zencefil", "zerdeçal", "köri", "yenibahar", "karanfil", "muskat", "kişniş", "rezene", "çörek otu", "defne", "defne yaprağı", "biberiye", "fesleğen", "dereotu", "maydanoz", "çemen", "safran", "anason", "kakule", "hardal tohumu", "sarımsak tozu", "soğan tozu", "kırmızı pul biber"], "en": ["spices", "spice", "herbs", "black pepper", "white pepper", "pepper", "chili", "chilli", "chili flakes", "cayenne", "paprika", "cumin", "oregano", "thyme", "mint", "sumac", "cinnamon", "ginger", "turmeric", "curry", "allspice", "cloves", "clove", "nutmeg", "coriander", "fennel", "nigella", "bay leaves", "bay leaf", "rosemary", "basil", "dill", "parsley", "fenugreek", "saffron", "anise", "cardamom", "mustard seeds", "garlic powder", "onion powder"]}
+      "id": "baharat",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 4,
+      "etiket": [
+        "en:spices",
+        "en:herbs"
+      ],
+      "haric_etiket": [
+        "en:sauces"
+      ],
+      "haric_ad": {
+        "tr": [
+          "salça",
+          "salçası",
+          "sos",
+          "sosu",
+          "ezme",
+          "ezmesi",
+          "ketçap",
+          "çorba",
+          "çorbası",
+          "bulyon",
+          "cips",
+          "çerez",
+          "sucuk",
+          "pastırma"
+        ],
+        "en": [
+          "sauce",
+          "paste",
+          "ketchup",
+          "soup",
+          "bouillon",
+          "stock",
+          "chips",
+          "crisps"
+        ]
+      },
+      "ana": {
+        "tr": [
+          "baharat",
+          "baharat karışımı",
+          "karabiber",
+          "beyaz biber",
+          "pul biber",
+          "kırmızı biber",
+          "toz biber",
+          "acı biber",
+          "tatlı biber",
+          "isot",
+          "paprika",
+          "kimyon",
+          "kekik",
+          "nane",
+          "sumak",
+          "tarçın",
+          "zencefil",
+          "zerdeçal",
+          "köri",
+          "yenibahar",
+          "karanfil",
+          "muskat",
+          "kişniş",
+          "rezene",
+          "çörek otu",
+          "defne",
+          "defne yaprağı",
+          "biberiye",
+          "fesleğen",
+          "dereotu",
+          "maydanoz",
+          "çemen",
+          "safran",
+          "anason",
+          "kakule",
+          "hardal tohumu",
+          "sarımsak tozu",
+          "soğan tozu",
+          "kırmızı pul biber"
+        ],
+        "en": [
+          "spices",
+          "spice",
+          "herbs",
+          "black pepper",
+          "white pepper",
+          "pepper",
+          "chili",
+          "chilli",
+          "chili flakes",
+          "cayenne",
+          "paprika",
+          "cumin",
+          "oregano",
+          "thyme",
+          "mint",
+          "sumac",
+          "cinnamon",
+          "ginger",
+          "turmeric",
+          "curry",
+          "allspice",
+          "cloves",
+          "clove",
+          "nutmeg",
+          "coriander",
+          "fennel",
+          "nigella",
+          "bay leaves",
+          "bay leaf",
+          "rosemary",
+          "basil",
+          "dill",
+          "parsley",
+          "fenugreek",
+          "saffron",
+          "anise",
+          "cardamom",
+          "mustard seeds",
+          "garlic powder",
+          "onion powder"
+        ]
+      }
     },
-    {"id": "maya", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 16, "etiket": ["en:yeast"]},
-    {"id": "jelatin", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 14, "etiket": ["en:gelatin"]},
-    {"id": "katki", "kaynak": ["ab1169_ek5", "tgk_ek14"], "madde": 11, "etiket": ["en:food-additives"], "haric_etiket": ["en:yeast"]}
+    {
+      "id": "maya",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 16,
+      "etiket": [
+        "en:yeast"
+      ]
+    },
+    {
+      "id": "jelatin",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 14,
+      "etiket": [
+        "en:gelatin"
+      ]
+    },
+    {
+      "id": "katki",
+      "kaynak": [
+        "ab1169_ek5",
+        "tgk_ek14"
+      ],
+      "madde": 11,
+      "etiket": [
+        "en:food-additives"
+      ],
+      "haric_etiket": [
+        "en:yeast"
+      ]
+    }
   ]
 }

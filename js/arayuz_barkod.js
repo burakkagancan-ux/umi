@@ -105,13 +105,13 @@ function barkodFoto(){
   ["icerik","ek","soru","cevap","besinSoru","besinCevap","besinGitti"].forEach(function(k){BARKOD[k]=null});   // yeni içerik fotoğrafı: baştan
 }
 /* Bekleyen (bulunamayan) barkod oturum deposunda: kamera açılırken sayfa yeniden yüklenirse barkodGeriAl geri getirir */
-function barkodBekleYaz(){try{sessionStorage.setItem(BARKOD_BEKLE,JSON.stringify({kod:BARKOD.kod,ad:BARKOD.ad,tur:MODE,t:BARKOD.t}))}catch(e){}}
+function barkodBekleYaz(){try{sessionStorage.setItem(BARKOD_BEKLE,JSON.stringify({kod:BARKOD.kod,ad:BARKOD.ad,kat:BARKOD.kat||[],tur:MODE,t:BARKOD.t}))}catch(e){}}
 function barkodBekleSil(){try{sessionStorage.removeItem(BARKOD_BEKLE)}catch(e){}}
 function barkodGeriAl(){   // açılışta, dil ve mod hazır olunca (js/arayuz_sayfa.js)
   if(!BARKOD_AYAR.acik||!$("barkodb"))return;
   var b=null;try{b=JSON.parse(sessionStorage.getItem(BARKOD_BEKLE)||"null")}catch(e){}
   if(!b||!barkodGecerli(b.kod)||!(Date.now()-b.t<BARKOD_FOTO_SURE)||BARKOD||$("metin").value.trim()){barkodBekleSil();return}
-  BARKOD={kod:b.kod,r:null,ad:String(b.ad||""),metin:null,t:b.t,foto:false,katki:false};
+  BARKOD={kod:b.kod,r:null,ad:String(b.ad||""),kat:Array.isArray(b.kat)?b.kat.filter(function(x){return typeof x==="string"}).slice(0,60):[],metin:null,t:b.t,foto:false,katki:false};
   if(b.tur&&b.tur!==MODE&&["gida","koz","tem"].indexOf(b.tur)>-1)setMode(b.tur,true);
   barkodYokKart(b.kod,MODE,false);
 }
@@ -119,6 +119,13 @@ function barkodGeriAl(){   // açılışta, dil ve mod hazır olunca (js/arayuz_
 function barkodEkranda(tx){
   if(!BARKOD)return false;tx=String(tx||"").trim();
   return !!tx&&(tx===BARKOD.ek||(BARKOD.foto?tx===BARKOD.icerik:!!BARKOD.metin&&tx===BARKOD.metin.trim()));
+}
+/* Besin kartı için metnin bağlı olduğu barkod (A-08 ürün tipi: kategori ve ad). Fotoğraf barkoddan sonra okunduysa ilk çizimde
+   BARKOD.icerik henüz atanmamıştır (barkodSonra kart çizildikten sonra atar): o anda ekrandaki metin o fotoğrafın metnidir. */
+function barkodBesinBag(tx){
+  if(!BARKOD)return null;
+  if(barkodEkranda(tx))return BARKOD;
+  return BARKOD.foto&&!BARKOD.icerik&&String(tx||"").trim()?BARKOD:null;
 }
 /* Besin tablosu metne eklendi (js/arayuz_besin.js besinEkUygula; eski: tablodan önceki metin(ler)) */
 function barkodBesinEk(eski,ek){
@@ -170,7 +177,9 @@ function barkodEslestir(ham,tx,kart){
   ST.textContent=t("barkod.araniyor",{kod:kod});
   barkodAra(kod).then(function(r){
     if(B!==BARKOD)return;
-    B.ad=r?barkodAd(r):"";
+    B.ad=r?barkodAd(r):"";B.kat=r&&r.kat||[];
+    // A-08: besin kartı barkoddan önce çizildi; ürün tipi kategoriden bilinince kart yeniden çizilir
+    var bk=$("sonuc").querySelector(".res.besin");if(bk&&B.kat.length&&typeof besinKart==="function")bk.replaceWith(besinKart(tx));
     ST.textContent=t("barkod.eslesti",{kod:kod});
     barkodSonra();
   });

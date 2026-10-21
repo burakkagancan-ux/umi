@@ -18,9 +18,10 @@ function besinElleYaz(a){return depoYaz("besin_elle",a)}
 function besinKaynak(tx,kayitsiz){
   var K=besinKaynakDeger(tx,kayitsiz);if(!K)return null;
   // A-08: renk gösterilmeyen ürün tipi. Barkodun ekranındaki metinse OFF kategorisi ve ürün adı da kullanılır; bulunamazsa kayıtta saklanan tip
-  var bk=typeof barkodEkranda==="function"&&barkodEkranda(tx)?BARKOD:null,r=bk&&bk.r;
+  var bk=typeof barkodBesinBag==="function"?barkodBesinBag(tx):null,r=bk&&bk.r;
   var T=besinIstisnaBul({kat:(r&&r.kat)||(bk&&bk.kat)||[],ad:r?barkodAd(r):(bk&&bk.ad)||"",metin:tx,birim:K.k.birim},BESIN_SOZ);
   if(!T&&K.k.tip)T=besinIstisnaKimlik(K.k.tip);
+  if(!T&&!kayitsiz){var kb=besinKayitli(tx);if(kb&&kb.tip)T=besinIstisnaKimlik(kb.tip)}   // elle düzeltilen kayıtlı ürün: tip kayıtta
   var k={};for(var a in K.k)k[a]=K.k[a];
   if(T)k.tip=T.id;else delete k.tip;
   K.k=k;K.istisna=T;return K;
@@ -50,6 +51,7 @@ function besinKayitYenile(tx){
   if(typeof kayitLoad!=="function")return;
   var a=kayitLoad(),k=kayitFind(a,"gida",tx);if(!k)return;
   var bs=besinKayitKopya(besinKaynak(tx,true));
+  if(bs&&!bs.tip&&k.besin&&k.besin.tip)bs.tip=k.besin.tip;   // ürün tipi değerlerden değil üründen gelir: elle düzeltmede kaybolmaz (A-08)
   if(bs)k.besin=bs;else if(k.besin&&k.besin.kaynak==="elle")delete k.besin;else return;
   kayitStore(a);
 }

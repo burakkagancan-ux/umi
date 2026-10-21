@@ -116,21 +116,24 @@ export function besinIstisnaHazirla(v){
   return {dolgu:dolgu,yoksay:(v.yoksay_re||[]).map(function(r){return new RegExp(r,"u")}),tip:v.tip.map(function(x){
     return {id:x.id,not:x.not||"",kaynak:x.kaynak||[],madde:x.madde||null,sivi:x.sivi!==false,etiket:x.etiket||[],haricEtiket:x.haric_etiket||[],
       haricAd:Object.keys(besinKume(x.haric_ad)),olmaz:Object.keys(besinKume(x.olmaz)),isaret:Object.keys(besinKume(x.isaret)),
-      isaretRe:(x.isaret_re||[]).map(function(r){return new RegExp(r,"u")}),ana:besinKume(x.ana),ek:besinKume(x.ek),eKodu:!!x.ek_e_kodu};
+      isaretRe:(x.isaret_re||[]).map(function(r){return new RegExp(r,"u")}),isaretDegil:Object.keys(besinKume(x.isaret_degil)),ana:besinKume(x.ana),ek:besinKume(x.ek),eKodu:besinKume({e:x.ek_e_kodu||[]})};
   })};
 }
 function besinSozcukVar(metin,ifade){return (" "+metin+" ").indexOf(" "+ifade+" ")>=0}
 /* İçerik listesinin öğeleri (besinNorm'dan geçmiş): "İçindekiler:/Ingredients:" başlığından (yoksa metnin başından) ilk cümle sonuna kadar,
    virgül, noktalı virgül ve parantezle bölünür; yüzde ve sayılar atılır. Başlık her dilde aynı biçimde aranır (harf ve aksan duyarsız). */
-var BESIN_ICERIK_BASLIK=/(icindekiler|bilesenler|ingredients?|zutaten|ingredienti|ingredientes|ingredienten)\s*:?/;
+var BESIN_ICERIK_BASLIK=/(icindekiler|bilesenler|ingredients?|zutaten|ingredienti|ingredientes|ingredienten|malzemeler)\s*:?|icerik\s*:/;
 export function besinIcerikOgeleri(metin){
-  var s=String(metin==null?"":metin),kat="";
+  var s=String(metin==null?"":metin).replace(/(\p{L})-[ \t]*\r?\n[ \t]*(\p{L})/gu,"$1$2"),kat="";   // satır sonunda bölünmüş sözcük ("Kim-\nyon")
   for(var i=0;i<s.length;i++){var c=s[i].toLowerCase().normalize("NFD")[0];kat+=c&&c.length?c:" "}   // konumları koruyan katlama
   var m=BESIN_ICERIK_BASLIK.exec(kat),bas=m?m.index+m[0].length:0;
   var son=s.slice(bas).search(/\.(\s|$)|\n\s*\n/);
+  // Başlık yoksa metnin tamamı tek cümle olmalı ("Baharat karışımı. Dana eti ve yağı." sucuğun içerik metni; ilk cümle içerik listesi değil)
+  if(!m&&son>=0&&s.slice(bas+son+1).trim())return [];
   var parca=(son<0?s.slice(bas):s.slice(bas,bas+son)).slice(0,1500);
   return parca.split(/[,;()\[\]]/).map(function(x){
-    return besinNorm(x).split(" ").filter(function(w){return w&&!/^%?\d+(?:[.,]\d+)?%?$/.test(w)&&w!=="%"}).join(" ");
+    return besinNorm(x.replace(/(^|[^\p{L}])[Ee][\s-]+(\d{3}[a-z]?)(?!\d)/gu,"$1E$2")).split(" ")   // "E 535" tek öğe
+      .filter(function(w){return w&&!/^%?\d+(?:[.,]\d+)?%?$/.test(w)&&w!=="%"}).join(" ");
   }).filter(Boolean);
 }
 function besinDolgusuz(o,I){return o.split(" ").filter(function(w){return !I.dolgu[w]}).join(" ")}
@@ -138,7 +141,7 @@ function besinOgeTip(o,T,I){
   if(I.yoksay.some(function(r){return r.test(o)}))return "bos";
   var d=besinDolgusuz(o,I);
   if(T.ana[o]||(d&&T.ana[d]))return "ana";
-  if(T.ek[o]||(d&&T.ek[d])||(T.eKodu&&/^e ?\d{3}[a-z]?$/.test(o)))return "ek";
+  if(T.ek[o]||(d&&T.ek[d])||T.eKodu[o])return "ek";
   return null;
 }
 /* Ürün tipi. g: {kat: OFF kategori etiketleri, ad: ürün adı, metin: içerik / etiket metni, birim: "g"|"ml"|""}, S: besinSozluk sonucu.
@@ -150,14 +153,15 @@ export function besinIstisnaBul(g,S){
   var kat=Array.isArray(g.kat)?g.kat:[],ad=besinNorm(g.ad),norm=besinNorm(g.metin),ogeler=null;
   for(var i=0;i<I.tip.length;i++){
     var T=I.tip[i],yol=null;
-    if(!T.sivi&&g.birim==="ml")continue;
+    if(!T.sivi&&g.birim!=="g")continue;   // kuru ürün notu yalnızca 100 g'lık değerde; birim bilinmiyorsa önce sorulur
     if(T.olmaz.length){   // olmaz: içerik listesinde öğe olarak geçen bileşen (hazırlama talimatındaki "şeker ekleyin" sayılmaz)
       if(!ogeler)ogeler=besinIcerikOgeleri(g.metin);
       if(ogeler.some(function(o){var d=besinDolgusuz(o,I);return T.olmaz.indexOf(o)>=0||T.olmaz.indexOf(d)>=0}))continue;
     }
     if(T.etiket.some(function(x){return kat.indexOf(x)>=0})&&!T.haricEtiket.some(function(x){return kat.indexOf(x)>=0})
       &&!T.haricAd.some(function(x){return besinSozcukVar(ad,x)}))yol="kategori";
-    else if(T.isaret.some(function(x){return besinSozcukVar(norm,x)||besinSozcukVar(ad,x)})||T.isaretRe.some(function(r){return r.test(norm)||r.test(ad)}))yol="isaret";
+    else if((T.isaret.some(function(x){return besinSozcukVar(norm,x)||besinSozcukVar(ad,x)})||T.isaretRe.some(function(r){return r.test(norm)||r.test(ad)}))
+      &&!T.isaretDegil.some(function(x){return besinSozcukVar(norm,x)||besinSozcukVar(ad,x)}))yol="isaret";   // "bebek maması olarak kullanılmaz" işaret değil
     else if(Object.keys(T.ana).length){
       if(!ogeler)ogeler=besinIcerikOgeleri(g.metin);
       var tur=ogeler.map(function(o){return besinOgeTip(o,T,I)});

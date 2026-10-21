@@ -339,22 +339,30 @@ Potassium 450 mg 10 %`;
    ['İçindekiler: Siyah çay.','cay'],['İçindekiler: Siyah çay, bergamot aroması.','cay'],['İçindekiler: %100 Arabica kahve.','kahve'],
    ['İçindekiler: Tatlandırıcılar (sorbitol, ksilitol), sakız mayası, aroma.','sakiz'],['Ingredients: sweeteners, gum base, flavourings.','sakiz'],
    ['6. aydan itibaren. İçindekiler: pirinç unu.','bebek'],['From 6 months. Ingredients: rice.','bebek'],['Devam formülü. İçindekiler: süt.','bebek'],
-   ['paprika','baharat'],['Siyah çay','cay']   // barkoddaki içerik metni (başlıksız)
-  ].forEach(([m,b])=>ok(tip({metin:m})===b,'tip '+b+': '+m+' → '+tip({metin:m})));
+   ['paprika','baharat'],['Siyah çay','cay'],   // barkoddaki içerik metni (başlıksız)
+   ['İçerik: Pul biber.','baharat'],['Malzemeler: kimyon, kekik.','baharat'],['İçindekiler: Kim-\nyon, karabiber.','baharat'],['İçindekiler: Sodyum klorür.','tuz'],
+   ['İçindekiler: Tuz, topaklanmayı önleyici (E 535).','tuz'],['İçindekiler: %100 Arabica kahve çekirdekleri.','kahve'],['İçindekiler: Yeşil çay, limon aroması.','cay']
+  ].forEach(([m,b])=>ok(tip({metin:m,birim:'g'})===b,'tip '+b+': '+m+' → '+tip({metin:m,birim:'g'})));
   // Olumsuz: tip sayılmaz, bugünkü davranış (karışık içerik, başka bileşen, bal uyarısı, boş)
   ['İçindekiler: Domates, şeker, sirke, tuz, baharat.','İçindekiler: Yer fıstığı, tuz.','İçindekiler: Su, kahve, şeker, süt tozu.',
    'İçindekiler: Kahve, şeker.','Çiçek balı. 1 yaşından küçük bebeklere verilmemelidir.','Ingredients: Black pepper, salt.','İçindekiler: Soğan.',
-   'İçindekiler: Kimyon, 50 g','','İçindekiler: Su.','Ingredients: water, flavouring.','İçindekiler: Bebek bisküvisi değildir, buğday unu, şeker.','İçindekiler: Sakız tadında şeker, glikoz şurubu.'
-  ].forEach(m=>ok(tip({metin:m})===null,'tip yok: '+m+' → '+tip({metin:m})));
+   'İçindekiler: Kimyon, 50 g','','İçindekiler: Su.','Ingredients: water, flavouring.','İçindekiler: Bebek bisküvisi değildir, buğday unu, şeker.','İçindekiler: Sakız tadında şeker, glikoz şurubu.',
+   // bozma turu (21.10.2026): sucuğun başlıksız metni ilk cümlesiyle baharat sayılıyordu; olumsuz bebek cümleleri; tuzda çeşni E kodu; oyuncak/bal ayı
+   'Baharat karışımı. Dana eti ve yağı.','Bebek maması olarak kullanılmaz. İçindekiler: peynir altı suyu tozu.','Not to be used as infant formula. Ingredients: whey.',
+   'Bebek maması yerine kullanılmaz.','36 aydan itibaren. Küçük parçalar içerir.','Bal 12 aydan itibaren tüketilebilir.','İçindekiler: Tuz, E621.'
+  ].forEach(m=>ok(tip({metin:m,birim:'g'})===null,'tip yok: '+m+' → '+tip({metin:m,birim:'g'})));
   // Kategori (OFF): gerçek barkod kayıtları (data/barkod_off.json) ve hariç etiket / adda hariç sözcük / sıvı
   const U=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','barkod_off.json'),'utf8')).u;
   const kayit=k=>{const r=B.barkodOffKayit(k,U[k]);const b=r&&r.besin;return {kat:r?r.kat:[],ad:r?r.ad:'',metin:r?Object.values(r.metin)[0]||'':'',birim:b?b.birim:''}};
   [['8699118059905','baharat'],['8697447040519','kahve'],['8682287820094','kahve'],['8690105000436','cay'],['4009900531221','sakiz'],['8690770322215','maya']]
     .forEach(([k,b])=>ok(U[k]&&tip(kayit(k))===b,'gerçek barkod '+k+' ('+(U[k]&&U[k][1])+') → '+b+': '+tip(kayit(k))));
-  [['8691573007194','salça (OFF\'ta baharat kategorisinde, adda "salçası")'],['8693440010849','soğuk kahve (adda "soğuk")'],['8690508601841','ketçap']]
+  [['8680181084857','sucuk (içerik metni "Baharat karışımı. Dana eti ve yağı.")'],['8691573007194','salça (OFF\'ta baharat kategorisinde, adda "salçası")'],['8693440010849','soğuk kahve (adda "soğuk")'],['8690508601841','ketçap']]
     .forEach(([k,n])=>ok(U[k]&&tip(kayit(k))===null,'gerçek barkod '+k+' '+n+': tip yok → '+tip(kayit(k))));
   ok(tip({kat:['en:coffees','en:coffee-drinks'],ad:'Kahve'})===null,'hariç etiket (kahve içeceği) tipi kaldırır');
   ok(tip({kat:['en:teas'],ad:'Çay',birim:'ml'})===null&&tip({kat:['en:teas'],ad:'Çay',birim:'g'})==='cay','100 ml değerinde (içecek) kuru çay notu yok');
+  ok(tip({kat:['en:teas'],ad:'Çay',birim:''})===null&&tip({metin:'İçindekiler: Siyah çay.'})===null,'birim bilinmiyorsa kuru çay/kahve tipi yok: önce birim sorulur (bozma turu)');
+  [['en:spices','Baharatlı Ketçap'],['en:spices','Domates Çorbası'],['en:spices','Tavuk Bulyon'],['en:spices','Baharatlı Cips'],['en:coffees','Ice Coffee'],['en:coffees','Coffee Creamer'],
+   ['en:teas','Peach Tea Drink'],['en:teas','Granül Çay Limonlu']].forEach(([k,a])=>ok(tip({kat:[k],ad:a,birim:'g'})===null,'kategoride hariç ad: '+a+' → '+tip({kat:[k],ad:a,birim:'g'})));
   ok(tip({kat:['en:coffees'],metin:'Kahve, şeker'})===null,'kategori kahve ama içerikte şeker: tip yok (Ek V 7-8: başka bileşen yok)');
   ok(tip({kat:['en:herbal-teas'],ad:'Bebek Rezene Çayı',metin:'4. aydan itibaren'})==='bebek','bebek işareti çay kategorisinden önce gelir');
   // Gösterim: tip varsa düzey yok, renk yok, birim sorulmaz; özet (karşılaştırma, paylaşım kartı) yok; kayıtla taşınır
