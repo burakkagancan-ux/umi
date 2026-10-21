@@ -729,6 +729,8 @@
  "risk.dogrulanmadi": "Durum doğrulanmadı",
  "risk.uyari": "Uyarı",
  "risk.yok": "Özel uyarı yok",
+ "son.baslik": "Son Okutulanlar",
+ "son.not": "Son okuttuğunuz en çok {n} ürün; yalnızca bu cihazda saklanır. Dokununca sonuç yeniden açılır.",
  "sayfa.baslik": "Etiket Oku",
  "sayfa.deneme": "Deneme Sürümü",
  "sayfa.deneme_not": "Katkı maddesi ve bileşen bilgileri taslaktır ve doğrulanmamıştır; tıbbi veya resmi bir tavsiye değildir. Bu resmi bir uygulama değildir.",

@@ -1,4 +1,4 @@
-/* Arayüz: aynı türden (gıda, kozmetik ya da temizlik) iki ürünü karşılaştırma ve tarama geçmişi (localStorage "taramalar"). Saf mantık js/karsilastir.js, ayarlar js/karsilastir_ayar.js. */
+/* Arayüz: aynı türden (gıda, kozmetik ya da temizlik) iki ürünü karşılaştırma ve tarama geçmişi (localStorage "taramalar" {id,t,mode,name,text,oz}; Etiket Oku'daki Son Okutulanlar da bunu gösterir, js/arayuz_son.js). Saf mantık js/karsilastir.js, ayarlar js/karsilastir_ayar.js. */
 var HCUR=null,HSCAN=true,HOCR=false,CMP_IDS=null;   // HCUR: ekrandaki taramanın kaydı; HSCAN: sonraki analiz yeni kayıt açar; HOCR: metin fotoğraftan/örnekten geldi
 // Mod değişince kutudaki metin yeni modda yeniden analiz edilir. HMOD: "gor" sekmeyle geçiş (geçmişe yazılmaz, tarama kendi türünde kalır),
 // "tasi" öneri kartıyla geçiş ("Kozmetik olarak analiz et": ekrandaki tarama yeni türe taşınır). Kullanıcı metni değiştirince ya da yeni tarama gelince sıfırlanır.
@@ -20,15 +20,18 @@ function histSave(text,mode){
   if(!scan&&hm==="tasi"&&HCUR){   // ekrandaki tarama yeni türe taşınır; o türde aynı metin varsa eski kayıt silinir
     var mv=a.filter(function(x){return x.id===HCUR})[0],dup=a.filter(function(x){return x.mode===mode&&x.text===tx})[0];
     if(mv&&dup&&dup.id!==mv.id){a=a.filter(function(x){return x.id!==mv.id});HCUR=dup.id;histStore(a);return}
-    if(mv){mv.mode=mode;mv.text=tx;histStore(a);return}
+    if(mv){mv.mode=mode;mv.text=tx;mv.oz=histOz(mode,tx);histStore(a);return}
   }
   var same=a.filter(function(x){return x.mode===mode&&x.text===tx})[0],cur=!scan&&HCUR?a.filter(function(x){return x.id===HCUR&&x.mode===mode})[0]:null,e;
   if(same)e=same;
   else if(cur){e=cur;e.text=tx}
   else e={id:"h"+Date.now(),t:Date.now(),mode:mode,name:histName(a),text:tx};
+  e.oz=histOz(mode,tx)||e.oz||null;
   a=histAdd(a.filter(function(x){return x.id!==e.id}),e,KARS_AYAR.gecmisBoyut);
   histStore(a);HCUR=e.id;
 }
+/* Kaydın uyarı/dikkat özeti (js/kayit.js kayitOzet; Son Okutulanlar listesi veri yüklemeden gösterir); veri yüklü değilse null */
+function histOz(mode,tx){return typeof kayitSimdi==="function"?kayitSimdi(mode,tx):null}
 /* Türe göre karşılaştırma özeti; liste yüklenmemişse null */
 var KARS_TUR={gida:"gida",koz:"koz",tem:"tem"};   // çeviri anahtarı ekleri (kars.az_*, kars.yukleniyor_*, kars.baslik_*)
 function karsReady(mode){return degHazir(mode,degBaglam())}
@@ -60,7 +63,7 @@ function karsOpen(pre,ret){
   go.onclick=function(){if(sel.length!==2)return;var p=sel.slice();closeSheet();showCompare(p[0],p[1])};
   body.appendChild(go);
   var cl=el("button","alt kclr",t("kars.temizle"));cl.type="button";
-  cl.onclick=function(){histStore([]);HCUR=null;closeSheet();ST.textContent=t("kars.silindi")};
+  cl.onclick=function(){histStore([]);HCUR=null;closeSheet();ST.textContent=t("kars.silindi");if(typeof sonCiz==="function")sonCiz()};
   body.appendChild(cl);
   body.appendChild(el("div","how",t("kars.gizlilik",{n:KARS_AYAR.gecmisBoyut})));
   upd();
