@@ -87,20 +87,21 @@ export function izCumleleri(tx){
   return String(tx||"").replace(/\n/g," ").replace(/([.!?])\s+/g,"$1\u0000").split("\u0000").map(function(s){return s.trim()})
     .filter(function(s){if(!s)return false;var a=s.replace(/İ/g,"i");return IZ_CUMLE.test(a.replace(/I/g,"ı").toLowerCase())||IZ_CUMLE.test(a.toLowerCase())});
 }
-/* Önerinin uygulanacak metni: içerik listesi + (liste dışındaysa) iz uyarısı cümleleri + (gıdada) besin tablosu bölümü */
-export function kirpMetni(V,B,gida){
+/* Önerinin uygulanacak metni: içerik listesi + (liste dışındaysa) iz uyarısı cümleleri + (gıdada) besin tablosu bölümü.
+   tablo: okunan metindeki tablo sözcük kutularından kurulduysa (js/besin.js besinKonumMetni) kurulan satırlar; Vision'ın bölümü yerine eklenir */
+export function kirpMetni(V,B,gida,tablo){
   var tx=B.metin,ek=izCumleleri(V&&V.text).filter(function(c){return tx.replace(/\s+/g," ").indexOf(c)<0});
   if(ek.length)tx+="\n"+ek.join(" ");
-  if(gida){var bs=besinBolum(V);if(bs&&tx.indexOf(bs)<0)tx+="\n"+bs}
+  if(gida){var bs=tablo||besinBolum(V);if(bs&&tx.indexOf(bs)<0)tx+="\n"+bs}
   return tx;
 }
 /* Kırpma planı: bölge, uygulanacak metin ve atılacak satırlar üç grupta: adres (üretici/ithalatçı/tüketici hattı … ile başlayan bölüm,
    aynı Vision bloğunda sürer; her zaman atılabilir), dil2 (başka dilin içerik listesi), diger (geri kalan: saklama, uyarı, ikinci sütun,
    bölge bulmanın kaçırdığı her şey). Besin tablosu bölümü sayılmaz (gıdada metne eklenir). Bölge yoksa null. */
 export var ADRES_BAS=["üretici","imalatçı","ithalatçı","dağıtıcı","tüketici","üretim","adres","manufacturer","manufactured","produced","distributed","importer","imported","hersteller","importeur","fabricant","adres:","tel","e-posta","www"];
-export function kirpPlan(V,dil,gida){
+export function kirpPlan(V,dil,gida,tablo){
   var B=icerikBolge(V,dil);if(!B)return null;
-  var S=fotoSatirlar(V),tx=V.text||"",tut={},besin={},o={B:B,metin:kirpMetni(V,B,gida),adres:[],dil2:[],diger:[]};
+  var S=fotoSatirlar(V),tx=V.text||"",tut={},besin={},o={B:B,metin:kirpMetni(V,B,gida,tablo),adres:[],dil2:[],diger:[]};
   B.satir.forEach(function(i){tut[i]=1});
   var bi=S.findIndex(function(s){return BESIN_BASLIK.test(kucuk(s.w[0]&&s.w[0].s))});
   if(bi>=0){besin[bi]=1;for(var j=bi+1;j<S.length;j++){var k=kucuk(S[j].w[0]&&S[j].w[0].s);if(BESIN_BASLIK.test(k)){besin[j]=1;continue}if(BOLUM_SON.indexOf(k)>=0||satirBaslik(S[j]))break;besin[j]=1}}

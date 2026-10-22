@@ -3,10 +3,10 @@
 // Kullanım: node test/hepsi.js [ad süzgeci …]   ör. node test/hepsi.js besin barkod
 const fs=require('fs'),path=require('path'),os=require('os'),{spawn}=require('child_process');
 const K=path.join(__dirname,'..');
-// Test olmayan dosyalar: yükleyici, komut satırı aracı, ölçüm raporları, tarayıcı testi
+// Test olmayan dosyalar: yükleyici, komut satırı aracı, ölçüm raporları (olcum_), veri üreticileri (uret_: dış servise istek atar), tarayıcı testi
 const DEGIL=new Set(['hepsi.js','yukle.js','run.js','arayuz.js']);
 const testler=[
-  ...fs.readdirSync(__dirname).filter(f=>f.endsWith('.js')&&!DEGIL.has(f)&&!f.startsWith('olcum_')).map(f=>['node',path.join('test',f)]),
+  ...fs.readdirSync(__dirname).filter(f=>f.endsWith('.js')&&!DEGIL.has(f)&&!f.startsWith('olcum_')&&!f.startsWith('uret_')).map(f=>['node',path.join('test',f)]),
   ...fs.readdirSync(__dirname).filter(f=>f.endsWith('.py')).map(f=>['python3',path.join('test',f)]),
   ...fs.readdirSync(path.join(K,'worker')).filter(f=>/^test.*\.mjs$/.test(f)).map(f=>['node',path.join('worker',f)]),
 ].filter(([,f])=>process.argv.length<3||process.argv.slice(2).some(s=>f.includes(s)));
