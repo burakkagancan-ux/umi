@@ -22,7 +22,10 @@
 --onok:#0D1433;--okline:#34407A;--notr:#8F9590;--hic:#E0552B;--ambc:#EFC64E;--bos:#4A504C;--cam:rgba(24,28,26,.72);--camzemin:rgba(8,10,9,.72);--camline:rgba(255,255,255,.08)}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--bf)}
+/* Yazı boyu (22.10.2026, kullanıcı isteği: "okunabilir olsun ama ekranda çok yer kaplamasın"): gövde 16 → 15 px, sabit yazılmış bütün yazı boyları (tema.css, css/*.css) yaklaşık %8 küçüldü, en küçüğü 11 px.
+   Form alanları 16 px'te kalır: iOS Safari 16 px'ten küçük alana dokununca sayfayı yakınlaştırır (aşağıdaki kural; kendi boyu yazılı alanlar dokunulmadı). */
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--bf)}
+input:not([type=checkbox]):not([type=radio]),select{font-size:16px}
 a{color:var(--ok);font-weight:600}
 h1,h2,h3{font-family:var(--hf);font-weight:700;line-height:1.2}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--ok);outline-offset:2px}
@@ -34,7 +37,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
    bulanıksız yarı saydam zeminde arkadaki yazı simgelerle karışır. Küçülme js/alt_menu.js'in koyduğu .kucuk sınıfıyla; yazılar opacity ile gizlenir
    (display:none değil), ekran okuyucu okumayı sürdürür. */
 @supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){.tabbar{background:var(--cam);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);border-color:var(--camline)}}
-.tabbar a{flex:1;max-width:240px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:7px 4px 6px;font-size:11.5px;font-weight:600;color:var(--mute);text-decoration:none;transition:min-height .22s ease,padding .22s ease}
+.tabbar a{flex:1;max-width:240px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:7px 4px 6px;font-size:11px;font-weight:600;color:var(--mute);text-decoration:none;transition:min-height .22s ease,padding .22s ease}
 .tabbar a svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:width .22s ease,height .22s ease}
 .tabbar a span{max-height:18px;overflow:hidden;transition:opacity .18s ease,max-height .22s ease}
 .tabbar.kucuk a{min-height:40px;padding:4px}.tabbar.kucuk a svg{width:22px;height:22px}.tabbar.kucuk a span{opacity:0;max-height:0}
@@ -44,25 +47,25 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 /* Rozetler (js/arayuz_rozet.js; ocr.html ve ansiklopedi.html): madalya simgesi, kutlama kartı, Rozetlerim aile kartları, ekranın üstündeki küçük simge */
 .rzs{display:inline-flex;flex:none;width:40px;height:40px}.rzs svg{width:100%;height:100%}.rzs.orta{width:56px;height:56px}.rzs.buyuk{width:88px;height:88px}
 .rozetkut{position:relative;display:flex;gap:14px;align-items:flex-start;background:var(--okbg);border:1px solid var(--okline);border-radius:16px;padding:14px 44px 14px 14px;margin:10px 0}
-.rozetkut .rzx{position:absolute;top:6px;inset-inline-end:6px;width:36px;height:36px;min-height:0;padding:0;border-radius:50%;background:none;color:var(--ink);border:0;font-size:22px;line-height:1}
-.rozetkut .rzu{font-size:13px;font-weight:600;color:var(--ok);text-transform:uppercase;letter-spacing:.04em}
-.rzg{flex:1;min-width:0}.rza{font-family:var(--hf);font-weight:700;font-size:20px;line-height:1.2}.rzf{font-size:14px;color:var(--ok);font-weight:600}.rzp{margin:6px 0 0;font-size:14px}
+.rozetkut .rzx{position:absolute;top:6px;inset-inline-end:6px;width:36px;height:36px;min-height:0;padding:0;border-radius:50%;background:none;color:var(--ink);border:0;font-size:20px;line-height:1}
+.rozetkut .rzu{font-size:12px;font-weight:600;color:var(--ok);text-transform:uppercase;letter-spacing:.04em}
+.rzg{flex:1;min-width:0}.rza{font-family:var(--hf);font-weight:700;font-size:18.5px;line-height:1.2}.rzf{font-size:13px;color:var(--ok);font-weight:600}.rzp{margin:6px 0 0;font-size:13px}
 .rzrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.rzlink{display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
 .rozetkut .rzrow button,.rzaile .rzrow button{font:inherit;font-weight:600;min-height:44px;padding:8px 14px;border-radius:12px;border:1.5px solid var(--ok);background:var(--ok);color:var(--bg);cursor:pointer}
-.rzaile .rzrow button.alt{background:none;color:var(--ok)}.rozetkut .how,.rzaile .how{font-size:12px;color:var(--mute);margin-top:4px}
+.rzaile .rzrow button.alt{background:none;color:var(--ok)}.rozetkut .how,.rzaile .how{font-size:11px;color:var(--mute);margin-top:4px}
 .rzaile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}.rzaile.yakinda{opacity:.75}
-.rzhd{display:flex;gap:12px;align-items:center}.rzaile h3{font-size:14px;margin:0;color:var(--mute);font-family:var(--bf);font-weight:600}
+.rzhd{display:flex;gap:12px;align-items:center}.rzaile h3{font-size:13px;margin:0;color:var(--mute);font-family:var(--bf);font-weight:600}
 .rzbar{height:8px;border-radius:999px;background:var(--sunk);overflow:hidden;margin:10px 0 4px}.rzbar span{display:block;height:100%;background:var(--ok);border-radius:999px}
-.rzil{font-size:13px;color:var(--mute)}
+.rzil{font-size:12px;color:var(--mute)}
 .rzks{display:flex;flex-wrap:wrap;gap:6px 4px;margin-top:10px}.rzk{display:flex;flex-direction:column;align-items:center;width:40px;font-size:11px;color:var(--mute);font-variant-numeric:tabular-nums}.rzk .rzs{width:32px;height:32px}.rzk:not(.on) .rzs{opacity:.6}.rzk.on{color:var(--ink);font-weight:600}
 .okd{flex:none;margin-inline-start:auto;width:22px;height:22px;color:var(--ok)}.okd svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.okfil,.rfil{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:6px 14px;margin:0 0 6px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line);cursor:pointer}.okfil[aria-pressed="true"],.rfil[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}
+.okfil,.rfil{font:inherit;font-size:13px;font-weight:600;min-height:40px;padding:6px 14px;margin:0 0 6px;border-radius:999px;background:var(--card);color:var(--ok);border:1.5px solid var(--line);cursor:pointer}.okfil[aria-pressed="true"],.rfil[aria-pressed="true"]{border-color:var(--ok);background:var(--ok);color:var(--bg)}
 /* Ürün türü renkleri (15.10.2026, kullanıcı isteği): Gıda mor (17.10.2026: çivitten mora; seçili Gıda düğmesi kobalt fotoğraf kartının hemen üstünde neredeyse aynı mavi görünüyordu), Kozmetik erik, Temizlik camgöbeği. Risk renklerinden (yeşil, amber, turuncu, kırmızı, gri) bilerek uzak;
    renk tek başına ayırt etmez, yanında hep türün adı yazar. data-tur="gida|koz|tem" taşıyan öğe --tur/--turbg alır: tür sekmeleri (.seg) ve tür etiketi (.turr) */
 [data-tur="gida"]{--tur:var(--tgida);--turbg:var(--tgidabg)}[data-tur="koz"]{--tur:var(--tkoz);--turbg:var(--tkozbg)}[data-tur="tem"]{--tur:var(--ttem);--turbg:var(--ttembg)}
 .seg button[data-tur]:not([aria-disabled="true"]){color:var(--tur)}
 .seg button[data-tur][aria-checked="true"]{background:var(--tur);color:var(--onok)}
-.turr[data-tur]{display:inline-flex;align-items:center;gap:5px;border:0;border-radius:999px;padding:1px 8px;background:var(--turbg);color:var(--tur);font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap}
+.turr[data-tur]{display:inline-flex;align-items:center;gap:5px;border:0;border-radius:999px;padding:1px 8px;background:var(--turbg);color:var(--tur);font-size:11px;font-weight:600;line-height:1.5;white-space:nowrap}
 .turr[data-tur]::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
 /* Birden çok sayfada aynı olan kurallar (U-07 8. adım, 15.10.2026; önce sayfaların kendi stilinde ayrı ayrı yazılıydı) */
 /* Tür seçici (.seg): Etiket Oku'daki Gıda | Kozmetik | Temizlik anahtarının biçimi bütün tür seçicilerinde (Etiket Oku, Kaydedilenler, Rozetlerim, Topluluk, Ansiklopedi; 15.10.2026, kullanıcı isteği):
@@ -70,7 +73,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .seg{display:flex;gap:4px;padding:4px;margin:12px 0 8px;border:0;border-radius:999px;background:var(--sunk)}
 .seg button{flex:1;min-width:0;min-height:40px;margin:0;padding:8px;border:0;border-radius:999px;background:transparent;color:var(--mute);font:inherit;font-weight:600;line-height:1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
 .seg button[aria-checked="true"]{background:var(--ok);color:var(--bg);box-shadow:0 1px 2px rgba(27,33,30,.12),0 2px 8px rgba(27,33,30,.06)}
-.seg small{font-size:12px;font-weight:400}
+.seg small{font-size:11px;font-weight:400}
 body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 /* Hafif hareketler (17.10.2026, kullanıcı isteği): basılan düğme hafifçe içe göçer, açılan bölümün içeriği belirerek gelir. Sonuç kartları, özet şeridi ve alt sayfa
    css/ocr.css'te. Telefonda "hareketi azalt" açıksa hiçbiri çalışmaz (en alttaki blok). */

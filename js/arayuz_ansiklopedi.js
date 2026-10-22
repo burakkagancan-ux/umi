@@ -121,7 +121,7 @@ function panelOtorite(r){
     var row=h("div","ag"),l=h("div");
     l.appendChild(h("div","who",atAd(g.agency)+" · "+(at("region."+g.region)||g.region)+(g.year?" · "+g.year:"")));
     l.appendChild(h("div","d",at(g.detail)));
-    if(g.source_url){var a=h("a",null,t("ans.kaynagi_ac"));a.href=g.source_url;a.target="_blank";a.rel="noopener";a.style.fontSize="14px";l.appendChild(a)}
+    if(g.source_url){var a=h("a",null,t("ans.kaynagi_ac"));a.href=g.source_url;a.target="_blank";a.rel="noopener";a.style.fontSize="13px";l.appendChild(a)}
     row.appendChild(l);row.appendChild(h("span","st "+g.status,at("status."+g.status)));p.appendChild(row);
   });
   return p;
