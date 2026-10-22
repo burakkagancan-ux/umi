@@ -35,8 +35,10 @@ async function sonucMetni(p){
 async function yeniSonuc(p,eski){
   let s='';
   for(let k=0;k<40;k++){s=await sonucMetni(p);if(s&&s!==eski&&!/Henüz analiz yapılmadı/.test(s))break;await p.waitForTimeout(200)}
-  await p.waitForTimeout(400);
-  return sonucMetni(p);
+  // Yerleşene dek: art arda iki okuma aynı olmalı (sonuç yeniden çizilirken bir an yalnızca "Kaydet" okunup
+  // denetim düşüyordu, 22.10.2026, PR #226'nın CI'ı)
+  for(let k=0;k<20;k++){await p.waitForTimeout(400);const y=await sonucMetni(p);if(y===s)break;s=y}
+  return s;
 }
 const onayVarMi=s=>{const m=s.toLocaleLowerCase('tr').match(ONAY);return m?m[0]:null};
 
