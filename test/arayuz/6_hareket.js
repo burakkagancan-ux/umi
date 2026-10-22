@@ -26,8 +26,10 @@ module.exports=async({br,B,opt,ok})=>{
     'başka sayfada işaret eski sekmeden (Profilim) başlar: '+await p.evaluate(()=>window.__ilk));
   ok(await p.evaluate(()=>sessionStorage.getItem('sekme_once'))===null,'eski sekme bilgisi okunduktan sonra silinir');
   // Seçim pop'u: süzgeç baştan çizilse de yeni seçili düğme .pop alır; seçimi kaldırmak pop vermez
+  // .pop 400 ms sonra kalkar; yavaş CI'da tıklamadan sonraki okuma geç kalabiliyor (22.10.2026), bu yüzden sınıfın eklendiği an sayfada kaydedilir
+  await p.evaluate(()=>{window.__pop=false;new MutationObserver(m=>{if(m.some(r=>r.target.matches('.rfil.red.pop')))window.__pop=true}).observe(document.getElementById('ana'),{subtree:true,attributes:true,attributeFilter:['class']})});
   await p.click('#ana .rfil.red');
-  ok(await p.evaluate(()=>{const b=document.querySelector('#ana .rfil.red');return b.getAttribute('aria-pressed')==='true'&&b.classList.contains('pop')}),'seçilen süzgeç bir an büyür (.pop)');
+  ok(await p.evaluate(()=>document.querySelector('#ana .rfil.red').getAttribute('aria-pressed')==='true'&&window.__pop),'seçilen süzgeç bir an büyür (.pop)');
   await p.waitForTimeout(450);
   ok(await p.evaluate(()=>!document.querySelector('#ana .pop')),'.pop kısa süre sonra kalkar');
   await p.click('#ana .okfil');await p.click('#ana .okfil');
