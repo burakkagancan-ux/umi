@@ -36,6 +36,17 @@ function de2000([L1,a1,b1],[L2,a2,b2]){
   const x=(L2-L1)/SL,y=(C2-C1)/SC,z=dH/SH;return Math.sqrt(x*x+y*y+z*z+RT*y*z)}
 const RISK=[['--hic','uyarı'],['--ambc','dikkat'],['--yesil','yeşil'],['--bos','bilgi yok']];
 // Belirteçler sayfanın hesaplanmış stilinden okunur (tema.css'te elle kopyalanmış değer değil): her biri bir öğenin zemini yapılıp rgb'si alınır
+// Renkli özet kartı zeminden ayrışır (22.10.2026, bozma turu): zemin C'de açık yeşil özet (--yesilbg) zeminle 1,01:1 kalıyor, kart kayboluyordu.
+// Ölçüt: kart yüzeyi zeminden parlaklıkta ≥1,10 ya da kart çerçevesi zeminden ≥1,5 ayrışır.
+async function ozetAyrimi(p,tema,ok){
+  for(const [m,t] of [['gida',pairs.gida[0]],['gida',pairs.gida[1]],['tem',pairs.tem[0]]]){
+    await scan(p,m,t);
+    const [s,o,c,b]=await p.evaluate(()=>{const e=document.querySelector('#sonuc .ozet'),g=getComputedStyle(e),n=x=>x.match(/[\d.]+/g).slice(0,3).map(Number);
+      return [e.className,n(g.backgroundColor),n(g.borderTopColor),n(getComputedStyle(document.body).backgroundColor)]});
+    const ky=oran(o,b),kc=oran(c,b);
+    ok(ky>=1.1||kc>=1.5,tema+': özet kartı zeminden ayrışır ('+s+'): yüzey '+ky.toFixed(2)+':1, çerçeve '+kc.toFixed(2)+':1');
+  }
+}
 async function riskAyrimi(p,tema,ok){
   const renk=await p.evaluate(adlar=>adlar.map(v=>{const e=document.createElement('span');e.style.background='var('+v+')';document.body.appendChild(e);
     const m=getComputedStyle(e).backgroundColor.match(/[\d.]+/g).map(Number);e.remove();return m.slice(0,3)}),RISK.map(r=>r[0]));
@@ -71,7 +82,7 @@ module.exports=async({br,B,opt,ok})=>{
     ok(!r.acik.length,ad+': koyu temada açık zemin: '+r.acik.join(' | '));
   };
   await p.goto(B+'ocr.html');await p.waitForFunction(ACILIS,null,{timeout:15000});
-  await riskAyrimi(p,'koyu',ok);
+  await riskAyrimi(p,'koyu',ok);await ozetAyrimi(p,'koyu',ok);
   await denetle('Etiket Oku açılış');
   for(const m of ['gida','koz','tem']){await sample(p,m);await denetle('sonuç '+m)}
   // Alt sayfa ve karşılaştırma (gıda)
@@ -106,7 +117,7 @@ module.exports=async({br,B,opt,ok})=>{
   const ctx2=await br.newContext({...opt,colorScheme:'light',reducedMotion:'reduce'}),errs2=[],p2=await newPage(ctx2);watch(p2,errs2);
   await p2.goto(B+'ocr.html');await p2.waitForFunction(ACILIS,null,{timeout:15000});
   ok(await p2.evaluate(()=>document.documentElement.dataset.tema)==='acik','görünüm: telefon açıkken telefona göre açık');
-  await riskAyrimi(p2,'açık',ok);
+  await riskAyrimi(p2,'açık',ok);await ozetAyrimi(p2,'açık',ok);
   await p2.evaluate(()=>localStorage.setItem('tema','koyu'));
   await p2.goto(B+'ocr.html');await p2.waitForFunction(ACILIS,null,{timeout:15000});
   z=await p2.evaluate(()=>[document.documentElement.dataset.tema,getComputedStyle(document.body).backgroundColor,document.querySelector('meta[name="theme-color"][media*="light"]').content]);
