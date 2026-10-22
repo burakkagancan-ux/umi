@@ -423,9 +423,9 @@ Potassium 450 mg 10 %`;
   // Yapay etiket seti (gerçek Vision yanıtları): yanlış renk yok; bugün renk gösterilen her etiket aynı değerlerle kalır; okuma artar
   const {olc}=require('./olcum_besin_konum.js');
   const SET=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_sentetik.json'),'utf8')).etiketler,M=olc(SET);
-  // 22.10.2026 ölçümü: renk gösterilen 4 → 17, doğru satır 63 → 141. Eski yolun 4 yanlış rengi: ikisi çelişkiyle şüpheliye döndü, ikisi
+  // 22.10.2026 ölçümü (bozma turu düzeltmelerinden sonra): renk gösterilen 4 → 13, doğru satır 63 → 115. Eski yolun 4 yanlış rengi: ikisi çelişkiyle şüpheliye döndü, ikisi
   // (enerjisiz 1 satırlık tablo: iki_dil_ml__kavis, yatay_tablo__egik) eski yolda kalıyor, konum bunları kurmuyor (TEKNIK_BORC)
-  const KONUM_ESIK=15;
+  const KONUM_ESIK=12;
   ok(M.satir.every(s=>!s.degisti||!s.b.yanlisRenk.length),'konumdan kurulan tabloda yanlış renk yok '+M.satir.filter(s=>s.degisti&&s.b.yanlisRenk.length).map(s=>s.e.ad));
   ok(M.yeni.yanlisRenk<=M.eski.yanlisRenk,'yanlış renk artmaz '+M.eski.yanlisRenk+' → '+M.yeni.yanlisRenk);
   ok(M.satir.every(s=>!s.a.renk||s.a.yanlisRenk.length||s.b.renk&&!s.degisti),'eski yolda doğru renkli olanlar değişmez');

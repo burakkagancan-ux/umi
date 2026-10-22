@@ -480,7 +480,7 @@ function besinKonumSatirlar(W){
   // yavaşça kayar), yoksa son sözcüğün kendi eğimi (tek kısa sözcüğün eğimi gürültülüdür, uzak değer sütununa uzatılmaz)
   function bekle(s,u){
     var l=s.w[s.w.length-1],ilk=s.w[0];
-    if(l.u-ilk.u>=4*H){var f=besinDogru(s.w.map(function(x){return [x.u,x.v]}));return f(u)}
+    if(l.u-ilk.u>=4*H){var f=besinDogru(s.w.slice(-8).map(function(x){return [x.u,x.v]}));return f(u)}   // son 8 sözcük: uzun satırda O(n²) olmasın
     return l.v+(u-l.u)*(l.g>=2*H?l.e:0);
   }
   W.slice().sort(function(a,b){return a.u-b.u}).forEach(function(w){
@@ -496,8 +496,9 @@ function besinKonumSatirlar(W){
   return {S:S.sort(function(a,b){return a.v-b.v}),H:H};
 }
 /* Satırın j. sözcüğünden başlayan metin bir besin adıyla mı başlıyor ve ardından sayı var mı */
+function besinKonumYazi(ws){return ws.map(function(w,n){return n>0&&/^[Oo][Gg]$/.test(w.s)?"0 g":w.s}).join(" ")}
 function besinKonumAd(s,j,S){
-  var p=besinParcala(s.w.slice(j).map(function(w){return w.s}).join(" "));
+  var p=besinParcala(besinKonumYazi(s.w.slice(j)));
   if(!p.length||p[0].t!=="w")return false;
   var a=besinAdBul(p,0,S);if(!a||a.alan.charAt(0)==="_")return false;
   // ayrıştırıcıdaki gibi: addan sonra en çok adlarArasiSozcuk bilinmeyen sözcük ("Enerji değeri 2100 kJ"); "şeker, Besin değerleri 100 g" satır değil
@@ -513,8 +514,13 @@ function besinKonumBaslik(s,j,S){
   return false;
 }
 /* Kurulan tablo: {metin: tablo satırları yerine yazılmış tam metin, tablo: yalnızca tablo satırları} ya da null (kutu yok, kesik, tablo yok) */
+var BESIN_KONUM_ON=typeof WeakMap==="function"?new WeakMap():null;   // aynı yanıt için bir kez (okuma ve kırpma önerisi)
 export function besinKonumMetni(V,S){
-  if(!V||V.kutu_kesik||!S)return null;
+  if(!V||typeof V!=="object"||V.kutu_kesik||!S)return null;
+  var on=BESIN_KONUM_ON&&BESIN_KONUM_ON.get(V);if(on&&on.S===S&&on.text===V.text&&on.kutu===V.kutu)return on.r;
+  var r=besinKonumKur(V,S);if(BESIN_KONUM_ON)BESIN_KONUM_ON.set(V,{S:S,text:V.text,kutu:V.kutu,r:r});return r;
+}
+function besinKonumKur(V,S){
   var W=besinKonumSozcuk(V);if(!W||W.length<4)return null;
   var R=besinKonumSatirlar(W),L=R.S,H=R.H,tab=[],aday={},i,j;
   for(i=0;i<L.length;i++){
@@ -528,7 +534,7 @@ export function besinKonumMetni(V,S){
   var sutun=besinSaglamDogru(nk,H),bas={};
   // adı sütundan uzak satır tablo satırı değil ("şeker, Besin değerleri 100 g": tablonun solundaki içerik listesinin son sözcüğü)
   tab=tab.filter(function(i){var en=null;aday[i].forEach(function(j){var f=Math.abs(L[i].w[j].u0-sutun(L[i].v));if(en==null||f<en.f)en={j:j,f:f}});
-    if(en.f>2*H)return false;bas[i]=en.j;return true});
+    var fark=L[i].w[en.j].u0-sutun(L[i].v);if(fark<-2*H||fark>4*H)return false;bas[i]=en.j;return true});   // sağda girinti ("bunlardan doymuş yağ") olabilir
   if(tab.length<2)return null;
   sutun=besinDogru(tab.map(function(i){return [L[i].v,L[i].w[bas[i]].u0]}));
   var sol=function(i){return Math.min(sutun(L[i].v),bas[i]!=null?L[i].w[bas[i]].u0:Infinity)-BESIN_KONUM.kenar*H};
@@ -539,15 +545,44 @@ export function besinKonumMetni(V,S){
     var bj=0;while(bj<L[i].w.length&&L[i].w[bj].u0<sol(i))bj++;
     if(bj<L[i].w.length&&besinKonumBaslik(L[i],bj,S))ust=i;
   }
-  var satir=[],cikar=[];
+  var satir=[],cikar=[],hucre=[];
   for(i=ust;i<=son;i++){
     var si=sol(i),ws=L[i].w.filter(function(w){return w.u0>=si});
     if(!ws.length)continue;
+    // Bütünlük (bozma turu 22.10.2026: çok sütunlu tabloda satırından düşen 100 g hücresi ayrı satır olunca porsiyon değeri 100 g sütununa
+    // kayıyordu; enerji denetimi doymuş yağ / şeker / tuz kaymasını görmez): bölgede adsız ama sayılı satır yalnızca enerjinin ayrı
+    // yazılmış kJ ya da kcal satırı olabilir; tablo satırlarının (enerji dışı) sayı hücresi sayısı hepsinde aynı olmalı
     // OCR'da "0 g" çoğu zaman "Og" / "og" okunur (sözcük sayılır, değer kaybolur, satırlar kayar): kurulan tablo satırında sayı yerinde 0 g
     // (yalnızca konumdan kurulan satırda; "og" İskandinav dillerinde "ve" demek, okunan metinde dokunulmaz)
-    satir.push(ws.map(function(w,n){return n>0&&/^[Oo][Gg]$/.test(w.s)?"0 g":w.s}).join(" "));
+    var yazi=besinKonumYazi(ws),pk=besinParcala(yazi);
+    var say=pk.filter(function(x){return x.t==="s"&&x.u!=="%"});
+    if(bas[i]==null){
+      // Adsız sayılı satır yalnızca (a) enerjinin ayrı yazılmış kJ ya da kcal satırı, (b) yalnızca adı olan (değersiz) satırın hemen
+      // altındaki değer satırı olabilir ("Şekerler" ⏎ "4,8 g": geniş boşluklu tabloda değer ayrı satıra düşer; önceki satıra katılır)
+      if(i!==ust&&say.length&&!say.every(function(x){return x.u==="kj"||x.u==="kcal"})){
+        var on=satir.length?satir[satir.length-1]:null;
+        if(!on||!on.ad||on.n!=null)return null;
+        on.y+=" "+yazi;on.n=say.length;ws.forEach(function(w){cikar.push(w)});continue;
+      }
+      satir.push({y:yazi,ad:!say.length&&pk.length>0&&pk[0].t==="w"&&!!besinAdBul(pk,0,S)});
+    }else{
+      var ad=besinAdBul(besinParcala(L[i].w.slice(bas[i]).map(function(w){return w.s}).join(" ")),0,S);
+      satir.push({y:yazi});
+      if(ad&&ad.alan!=="enerji"&&ad.alan!=="kalori")hucre.push(say.length);
+    }
     ws.forEach(function(w){cikar.push(w)});
   }
+  // Tablonun ortasında değersiz kalan ad (değeri bir alt satıra kaymış: "Lif" ⏎ "Protein 1 g" ⏎ "Tuz 5 g"; fuzz 22.10.2026, enerji farkı
+  // payın altındaydı) ya da tablonun hemen altında adsız sayı satırı (kayan son değer) varsa kurulan tablo güvenilmez
+  if(satir.some(function(x){return x.ad&&x.n==null}))return null;
+  for(i=son+1;i<L.length&&L[i].v-L[son].v<=BESIN_KONUM.ustAralik*H;i++){
+    var sa=sol(i),alt=L[i].w.filter(function(w){return w.u0>=sa}),ap=besinParcala(alt.map(function(w){return w.s}).join(" "));
+    // yalnızca kJ/kcal ya da % taşıyan satır (dipnot: "Referans alım … 8400 kJ / 2000 kcal") kayan değer değildir
+    if(ap.some(function(x){return x.t==="s"&&x.u!=="%"&&x.u!=="kj"&&x.u!=="kcal"})&&!(ap[0]&&ap[0].t==="w"&&besinAdBul(ap,0,S)))return null;
+  }
+  satir.forEach(function(x){if(x.n!=null)hucre.push(x.n)});
+  if(hucre.some(function(n){return n!==hucre[0]}))return null;
+  satir=satir.map(function(x){return x.y});
   cikar.sort(function(a,b){return a.bas-b.bas});
   var tx=V.text,parca=[],imlec=0,tablo=satir.join("\n");
   cikar.forEach(function(w,n){parca.push(tx.slice(imlec,w.bas));if(n===0)parca.push("\n"+tablo+"\n");imlec=w.bit});
@@ -569,7 +604,7 @@ export function besinKonumSec(tx,V,S){
   // iki okuma da temiz ama bir değerde ayrışıyor: hangisinin doğru olduğu bilinemez (gerçekte görülen: Vision değerleri adlardan önce okur,
   // okunan metinde satırlar bir kayar ve denetim yakalamaz). Kurulan tablo okunan metnin sonuna eklenir; aynı satırın iki farklı değeri
   // (cok_satir) tabloyu şüpheli yapar, renk gösterilmez, kullanıcıya sorulur.
-  var ayri=BESIN_ALAN.some(function(a){var x=o.b[a],y=k.b[a];return x!=null&&y!=null&&(Math.abs(x-y)>1e-9||!!o.lt[a]!==!!k.lt[a])});
+  var ayri=BESIN_ALAN.some(function(a){var x=o.b[a],y=k.b[a];return x!=null&&y!=null&&Math.abs(x-y)>1e-9});   // yalnızca "<" farkı cok_satir değildir: metin değişmez (aşağıdaki denetim)
   if(ayri)return tx+"\n"+K.tablo;
   // okunan da temizse: kurulan yalnızca okunanın bütün değerlerini (ve birimini) aynen taşıyıp eksik satırları tamamlıyorsa (okunanın renkli
   // gösterdiği hiçbir değer değişmez)

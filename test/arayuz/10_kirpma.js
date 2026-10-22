@@ -1,6 +1,7 @@
 // Arayüz testi, 10. grup: A-04 otomatik kırpma önerisi bozma turu (21.10.2026) gerileme testleri.
 // K8: öneri kartı çıktıktan sonra yeni fotoğraf seçilince ya da çerçeve değişince eski kart kalkar; eski düğme metne ve çerçeveye dokunmaz.
 // K9: kozmetik verisi geç gelirken okunan fotoğrafta kart veri gelince çıkar (yeniden çizimde kaybolmaz).
+// K10: okunan ve konumdan kurulan besin tablosu ayrışıyorsa (A-02 / O-27) kırpma önerisi yok.
 // Tek başına çalışmaz; test/arayuz.js bütün grupları kendi sunucularıyla paralel çalıştırır.
 const path=require('path');
 const {R,newPage,watch,ACILIS}=require('./ortak.js');
@@ -50,4 +51,19 @@ module.exports=async({br,B,opt,ok})=>{
     await p.waitForSelector('#sonuc .kirponer button',{timeout:8000}).catch(()=>{});
     ok(await p.locator('#sonuc .kirponer').count()===1,'K9: kozmetik verisi gelince öneri kartı görünür');
     ok(!errs.length,'K9: sayfa hatası yok: '+errs.join(' | '));await ctx.close();}
+  // K10 (konumdan besin tablosu bozma turu, 22.10.2026): okunan ve konumdan kurulan tablo ayrışıyorsa (şüpheli, renk yok) kırpma önerisi
+  // gösterilmez; önerinin metni ikisinden birini atıp belirsizliği sessizce çözer, yanlış renk gösterirdi
+  {const ctx=await br.newContext(opt),errs=[],p=await newPage(ctx);watch(p,errs);
+    const C=require('../veri/besin_konum_celiski.json').vision;
+    await p.goto(B+'ocr.html');await p.waitForFunction(ACILIS);
+    const ocr=await p.evaluate(()=>OCR_URL),ocrYol=u=>u.href.startsWith(ocr)&&u.pathname==='/';
+    await p.route(ocrYol,r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(C)}));
+    await p.click('#m-gida');await p.setInputFiles('#dosya',path.join(R,'icon-192.png'));
+    await p.waitForFunction(()=>/İçindekiler/.test(document.getElementById('metin').value),null,{timeout:8000}).catch(()=>{});
+    await p.waitForTimeout(800);
+    const m=await p.inputValue('#metin');
+    ok(m.startsWith(C.text)&&m.length>C.text.length,'K10 ön koşul: iki okuma ayrışıyor, kurulan tablo metne eklendi');
+    ok(await p.locator('#sonuc .res.besin .duz').count()===0||!(await p.locator('#sonuc .res.besin').innerText()).match(/Yüksek|Düşük|Orta/),'K10: ayrışan tabloda düzey yok');
+    ok(await p.locator('#sonuc .kirponer').count()===0,'K10: ayrışmada kırpma önerisi yok');
+    ok(!errs.length,'K10: sayfa hatası yok: '+errs.join(' | '));await ctx.close();}
 };

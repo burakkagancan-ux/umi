@@ -46,7 +46,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 - `node test/arayuz.js [grup]`: tarayıcı testi (~11 sn; Playwright 1.47.2).
 - `node gen_simge.js`: uygulama simgeleri (kaynak/simge/*.svg → kökteki PNG'ler; simge değişince, ardından `python3 uret.py`).
 - `node test/arayuz.js kabul`: yalnızca kabul testleri. `python3 kabul_denetle.py origin/main`: PR'daki commit'ler yazan/sınayan ayrımına uyuyor mu (CI).
-- Ölçümler (CI'da değil): `node test/olcum_mutasyon.js <dosya>` (testler hata yakalıyor mu), `node test/olcum_besin.js`, `node test/olcum_ingilizce.js`, `node test/olcum_turkce.js`.
+- Ölçümler (CI'da değil): `node test/olcum_mutasyon.js <dosya>` (testler hata yakalıyor mu), `node test/olcum_besin.js`, `node test/olcum_besin_konum.js` (besin tablosu konumdan), `node test/olcum_ingilizce.js`, `node test/olcum_turkce.js`.
 
 ## Roller ve dil
 - Kullanıcı (BKC) iş mimarı, kod yazmıyor. Claude yazılımcı. Dil: Türkçe.

@@ -176,8 +176,10 @@ function kirpOner(V){
   var hazir=degHazir(mode,degBaglam())?Promise.resolve():mode==="koz"?loadK():Promise.reject();
   hazir.then(function(){
     if(n!==KIRP_SAY||MODE!==mode||$("metin").value!==tam)return;   // bu arada yeni fotoğraf, tür değişimi ya da elle düzeltme
-    // Tablo konumdan kurulduysa (metin Vision'ınkinden farklı) öneri metnine kurulan tablo girer, Vision'ın karışık bölümü değil
+    // Tablo konumdan kurulduysa öneri metnine kurulan tablo girer, Vision'ın karışık bölümü değil. İki okuma ayrıştıysa (metin = Vision
+    // metni + kurulan tablo, şüpheli) öneri yok: kırpma ikisinden birini atıp belirsizliği sessizce çözerdi (bozma turu 22.10.2026)
     var K=mode==="gida"&&tam!==V.text&&BESIN_SOZ?besinKonumMetni(V,BESIN_SOZ):null;
+    if(K&&tam!==K.metin)return;
     var plan=kirpPlan(V,DIL.kod,mode==="gida",K&&K.tablo);if(!plan)return;
     var bul=function(tx){return kirpBulgu(degerlendir(mode,tx,degBaglam(),PROF,""))};
     if(!kirpGuvenli(plan,bul).ok)return;
