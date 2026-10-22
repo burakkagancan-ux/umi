@@ -24,6 +24,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 | [Çok dil](belgeler/mimari/cok_dil.md) | çeviri anahtarları, veri çevirisi, bayat çeviri, yeni dil ekleme, manifest, sağdan sola |
 | [Rozetler, Eklediklerim, Topluluk](belgeler/mimari/rozet_topluluk.md) | G-01, G-02, G-04 |
 | [Barkod ve Worker](belgeler/mimari/barkod_worker.md) | barkod akışı, OFF verisi, katkı, D1, Worker uç noktaları ve korumaları, yönetim sayfası |
+| [Barkod analizi ve gelecek planı](belgeler/mimari/barkod_analiz.md) | C-10–C-17, O-28–O-32'nin gerekçesi: veri mimarisi, ölçek, OFF/ticari API/GS1 yasal koşulları (kaynaklı), her işte kullanılacak ajan; barkod işi planlarken |
 | [Besin değeri tablosu](belgeler/mimari/besin.md) | A-02: ayrıştırıcı, denetim, eşikler, porsiyon, ölçüm, topluluk tablosu |
 | [Testler](belgeler/mimari/testler.md) | test komutları ve her testin denetledikleri, altın çıktı, tarayıcı testi, CI |
 | [Kararlar, sınırlamalar, gelişim alanları](belgeler/mimari/kararlar.md) | kullanıcı kararları (tam metin), bilinen sınırlamalar, eş anlamlı ölçümü, gelişim alanları, araştırma belgeleri |
