@@ -14,8 +14,15 @@ module.exports=async({br,B,opt,ok})=>{
   await p.goto(B+'ocr.html');await p.waitForFunction(ACILIS,null,{timeout:15000});
   ok(await isaretFark()<1.5,'açılışta sekme işareti seçili sekmenin üstünde: fark '+(await isaretFark()).toFixed(1));
   ok(await p.evaluate(()=>getComputedStyle(document.querySelector('.tabbar')).viewTransitionName)==='tabbar','sayfa geçişinde menü yerinde kalır (view-transition-name)');
+  // zipla ve kay kısa ömürlü sınıflar: tıklamadan önce kurulan gözlemci bir an bile konduklarını kaydeder (tıklamadan sonra bakmak yavaş CI'da
+  // sınıf kalkmış olunca düşüyordu, 22.10.2026, PR #225'in CI'ı)
+  await p.evaluate(()=>{window.__hz={zipla:false,kay:false};const s=document.querySelector('.tabbar a[data-tab="profil"] svg'),i=document.querySelector('.sekme-isaret');
+    const bak=()=>{if(s.classList.contains('zipla'))window.__hz.zipla=true;if(i.classList.contains('kay'))window.__hz.kay=true};
+    new MutationObserver(bak).observe(s,{attributes:true,attributeFilter:['class']});new MutationObserver(bak).observe(i,{attributes:true,attributeFilter:['class']});bak()});
   await p.click('.tabbar a[data-tab="profil"]');
-  ok(await p.evaluate(()=>{const s=document.querySelector('.tabbar a[data-tab="profil"] svg');return s.classList.contains('zipla')&&document.querySelector('.sekme-isaret').classList.contains('kay')}),'Profilim seçilince simge zıplar, işaret kayar');
+  await p.waitForFunction(()=>window.__hz.zipla&&window.__hz.kay,null,{timeout:3000}).catch(()=>{});
+  const hz=await p.evaluate(()=>window.__hz);
+  ok(hz.zipla&&hz.kay,'Profilim seçilince simge zıplar, işaret kayar '+JSON.stringify(hz));
   await p.waitForTimeout(400);
   ok(await isaretFark()<1.5,'kayma bitince işaret Profilim\'in üstünde: fark '+(await isaretFark()).toFixed(1));
   // Sayfalar arası: Ansiklopedi'ye geçilince işaret eski sekmeden başlar, Ansiklopedi'de durur
