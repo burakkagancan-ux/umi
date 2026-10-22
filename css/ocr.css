@@ -283,6 +283,7 @@ body.sonuclu .ipucu,body.sonuclu #son,#son[hidden],body:not(.sonuclu) #sonuch,bo
 .altbilgi button.deneme{min-height:44px;margin:0;padding:0 12px;background:none;border:0;color:var(--mute);font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 
 .ozet{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;margin:6px 0 12px;box-shadow:0 1px 2px rgba(27,33,30,.04)}
+.ozet.r{background:var(--hibg);border-color:var(--hi)}.ozet.y{background:var(--ambbg);border-color:var(--amb)}.ozet.g{background:var(--yesilbg);border-color:var(--yesil)}   /* özet kartı en yüksek durumun açık tonunda (22.10.2026, kullanıcı seçimi); durum yazıda da var. Çerçeve durumun renginde: açık tonlar zemin C ile aynı parlaklıkta, kart çerçevesiz kayboluyordu (bozma turu) */
 .oz-ust{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .oz-b{font-family:var(--hf);font-weight:700;font-size:28px;line-height:1.1;margin:4px 0 2px}.oz-b.r{color:var(--hi)}.oz-b.y{color:var(--amb)}.oz-b.g{color:var(--yesil)}
 .oz-alt{color:var(--mute);font-size:15px}

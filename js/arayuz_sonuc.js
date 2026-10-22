@@ -21,7 +21,7 @@ function ozetKart(tur,ranks){
   var d=el("section","ozet");d.setAttribute("aria-label",t("ortak.ozet"));
   d.appendChild(el("div","oz-ust",t("ozet.ust."+tur,{n:ranks.length})));
   var tm=tur==="tem",b=c[3]?["r",t(tm?"ozet.uyari_tem":"ozet.uyari",{n:c[3]})]:c[2]?["y",t(tm?"ozet.dikkat_tem":"ozet.dikkat",{n:c[2]})]:ranks.length?["g",t("ozet.temiz")]:["",t("ozet.madde_yok")];
-  d.appendChild(el("div","oz-b "+b[0],b[1]));
+  if(b[0])d.classList.add(b[0]);d.appendChild(el("div","oz-b "+b[0],b[1]));
   var alt=[];if(c[3]&&c[2])alt.push(t("ozet.say.dikkat",{n:c[2]}));if(c[1])alt.push(t("ozet.say.dogrulanmadi",{n:c[1]}));if(c[0]&&(c[3]||c[2]))alt.push(t("ozet.say.yok",{n:c[0]}));
   if(alt.length)d.appendChild(el("div","oz-alt",alt.join(" · ")));
   if(ranks.length){var sr=el("div","oz-serit");sr.setAttribute("aria-hidden","true");ranks.slice().sort(function(x,y){return y-x}).forEach(function(k){sr.appendChild(el("span",CLS[k]))});d.appendChild(sr)}
