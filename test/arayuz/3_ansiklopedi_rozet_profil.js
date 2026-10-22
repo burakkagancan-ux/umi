@@ -4,18 +4,21 @@ const fs=require('fs'),path=require('path');
 const {R,newPage,watch,onbellekte,sample,scan,pairs,ACILIS}=require('./ortak.js');
 module.exports=async({br,B,opt,ok,server})=>{
   let ctx=await br.newContext(opt),errs=[],p=await newPage(ctx);watch(p,errs);
+  // Ansiklopedi okumayı rozet tanımları (data/rozetler.json) gelince sayar (rozetSay, eşzamansız): sayım bitmeden rozet durumu okunmasın ya da üstüne yazılmasın.
+  // rozetDefYukle aynı sözü döndürür; ona sonradan bağlanan then, sayımın then'inden sonra çalışır. (CI'da 22.10.2026: geç gelen sayım E322'yi 9 maddelik duruma ekledi, 4 hata.)
+  const sayildi=()=>p.evaluate(()=>rozetDefYukle().then(()=>0,()=>0));
   await p.goto(B+'ocr.html');await p.waitForFunction(ACILIS,null,{timeout:15000});
   // Bu grubun beklediği önceki durum (eskiden 1. grubun bıraktığı): bulunan barkodlarla gıda Etiket Dedektifi'nin ilk kademesi ve katkıcı kimliği
   await p.evaluate(()=>{localStorage.setItem('rozetler',JSON.stringify({v:1,okur:{},dedektif:{gida:['b:8690504025208','b:86920131']},gor:{'dedektif.gida':1}}));
     localStorage.setItem('katkici','0123456789abcdef0123456789abcdef')});
   // 4) Ansiklopedi: renk kuralı (yeşil yalnızca doğal üretimde), arama
   for(const [id,cls] of [['E322','green'],['E162','green'],['E330','green n'],['E250','red'],['E553b','red'],['E211','amber']]){
-    await p.goto(B+'ansiklopedi.html?id='+id);await p.waitForSelector('#ana .risk');
+    await p.goto(B+'ansiklopedi.html?id='+id);await p.waitForSelector('#ana .risk');await sayildi();
     const c=await p.getAttribute('#ana .risk','class');
     ok(c.split(' ').slice(2).join(' ')===cls,id+' risk kartı sınıfı "'+c+'", beklenen '+cls);
   }
   // Türkçede veri metni Türkçe (12.10.2026: yedek dil İngilizce seçili dilin üstüne yazıyordu)
-  await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');
+  await p.goto(B+'ansiklopedi.html?id=E322');await p.waitForSelector('#ana .risk');await sayildi();
   {const s=await p.textContent('#ana');ok(/Lesitinler/.test(s)&&!/Lecithins/.test(s),'ansiklopedi Türkçe metin: '+s.slice(0,80))}
   // Rozet (G-01): açılan her farklı sayfa gıda Okuru'na sayılır; ilk sayfada kutlama, sonra yalnızca yeni kademede
   {
@@ -23,7 +26,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     ok(o.n===6&&o.g===1&&!o.kut,'ansiklopedi: 6 farklı sayfa sayıldı, aynı sayfa bir kez, kutlama yalnızca ilkinde: '+JSON.stringify(o));
     ok(!o.simge,'ansiklopedi üstünde rozet simgesi yok (16.10.2026, kullanıcı kararı)');
     await p.evaluate(()=>localStorage.setItem('rozetler',JSON.stringify({v:1,okur:{gida:'E100,E101,E102,E104,E110,E120,E122,E123,E124'.split(',')},dedektif:rozetLoad().dedektif,gor:{'okur.gida':1,'dedektif.gida':1}})));
-    await p.goto(B+'ansiklopedi.html?id=E127');await p.waitForSelector('#ana .risk');await p.waitForSelector('#ana .rozetkut',{timeout:5000}).catch(()=>{});
+    await p.goto(B+'ansiklopedi.html?id=E127');await p.waitForSelector('#ana .risk');await sayildi();await p.waitForSelector('#ana .rozetkut',{timeout:5000}).catch(()=>{});
     ok(/Okur/.test(await p.textContent('#ana .rozetkut').catch(()=>''))&&/10 farklı ansiklopedi sayfası/.test(await p.textContent('#ana .rozetkut').catch(()=>'')),'10. sayfa: "Okur" kademesi kutlanır');
     await p.goto(B+'ansiklopedi.html');await p.waitForSelector('#ara');await p.waitForSelector('#ana .okfil');
     const t0=await p.evaluate(()=>({okd:document.querySelectorAll('#ana a.row .okd').length,satir:document.querySelectorAll('#ana a.row').length,fil:document.querySelector('#ana .okfil').textContent}));
@@ -38,7 +41,7 @@ module.exports=async({br,B,opt,ok,server})=>{
       const t2=await p.evaluate(()=>({sec:document.querySelector('#tur-tem').getAttribute('aria-checked'),toplam:[...document.querySelectorAll('#ana p.mut')].map(x=>x.textContent).join('|'),
         gida:/Renklendirici/.test(document.getElementById('ana').textContent),sakli:localStorage.getItem('ans_tur')}));
       ok(t2.sec==='true'&&/30 maddenin/.test(t2.toplam)&&!t2.gida&&t2.sakli==='tem','temizlik türü seçilir, yalnızca temizlik grupları: '+JSON.stringify(t2));
-      await p.goto(B+'ansiklopedi.html?id=7681-52-9');await p.waitForSelector('#ana .risk');
+      await p.goto(B+'ansiklopedi.html?id=7681-52-9');await p.waitForSelector('#ana .risk');await sayildi();
       const t3=await p.evaluate(()=>({ad:document.querySelector('#ana h2.name').textContent,risk:document.querySelector('#ana .risk').className,quick:!!document.querySelector('#ana .quick'),
         metin:document.getElementById('ana').textContent}));
       ok(t3.ad==='Sodyum Hipoklorit'&&/red/.test(t3.risk)&&!t3.quick&&/H314/.test(t3.metin)&&/EUH031/.test(t3.metin),'çamaşır suyu sayfası: kırmızı, H ifadeleri, vegan/glüten kartı yok: '+JSON.stringify(t3).slice(0,300));
@@ -52,12 +55,12 @@ module.exports=async({br,B,opt,ok,server})=>{
       const k1=await p.evaluate(()=>({sec:document.querySelector('#tur-koz').getAttribute('aria-checked'),dis:document.querySelector('#tur-koz').getAttribute('aria-disabled'),
         toplam:[...document.querySelectorAll('#ana p.mut')].map(x=>x.textContent).join('|'),tem:/Yüzey Aktif Madde/.test(document.getElementById('ana').textContent)}));
       ok(k1.sec==='true'&&k1.dis===null&&/32 maddenin/.test(k1.toplam)&&!k1.tem,'kozmetik türü seçilir, yalnızca kozmetik grupları: '+JSON.stringify(k1));
-      await p.goto(B+'ansiklopedi.html?id=SODIUM_LAURETH_SULFATE');await p.waitForSelector('#ana .risk');
+      await p.goto(B+'ansiklopedi.html?id=SODIUM_LAURETH_SULFATE');await p.waitForSelector('#ana .risk');await sayildi();
       const k2=await p.evaluate(()=>({kod:document.querySelector('#ana .ecode').textContent,ad:document.querySelector('#ana h2.name').textContent,quick:!!document.querySelector('#ana .quick'),
         tur:document.querySelector('#ana .turr').getAttribute('data-tur'),metin:document.getElementById('ana').textContent}));
       ok(k2.kod==='SODIUM LAURETH SULFATE'&&/SLES/.test(k2.ad)&&!k2.quick&&k2.tur==='koz'&&/H318/.test(k2.metin),'SLES kozmetik sayfası: INCI adı, tür etiketi, ECHA satırı: '+JSON.stringify(k2).slice(0,300));
       // Türkiye ek durumu ayrı satır, CosIng bağlantısı maddenin kendi sayfası (16.10.2026)
-      await p.goto(B+'ansiklopedi.html?id=RETINOL');await p.waitForSelector('#ana .risk');
+      await p.goto(B+'ansiklopedi.html?id=RETINOL');await p.waitForSelector('#ana .risk');await sayildi();
       const k3=await p.evaluate(()=>({metin:document.getElementById('ana').textContent,cosing:[...document.querySelectorAll('#ana a')].map(a=>a.href).filter(h=>/cosing/.test(h))}));
       ok(/Türkiye/.test(k3.metin)&&/Eylül 2026 yönetmelik taslağında/.test(k3.metin)&&k3.cosing.length&&k3.cosing.every(h=>/\/cosing\/details\/\d+$/.test(h)),'retinol: Türkiye satırı, CosIng madde sayfası: '+JSON.stringify(k3.cosing));
       // Sonuç ekranından ansiklopediye (16.10.2026): dikkat kartının ayrıntısında düğme, tüm içerik listesinde bağlantı; ansiklopedide olmayan maddede yok
