@@ -116,6 +116,8 @@ function fotoOku(){
   function gecerli(){return n===OKU.n&&!OKU.bekle}
   function yaz(tx,msj,V){
     if(!gecerli())return;
+    // Besin tablosu karışık sırayla okunduysa sözcük kutularının konumundan kurulur (A-02 / O-27, js/besin.js besinKonumSec; yalnızca gıda)
+    if(V&&MODE==="gida"&&BESIN_SOZ)tx=besinKonumSec(tx,V,BESIN_SOZ);
     // Besin tablosunun fotoğrafı: okunan metin içerik metninin sonuna eklenir, aynı tarama güncellenir (js/arayuz_besin.js)
     var yo=besinYenidenOku(n,tx);if(yo!=null){OKU.okundu=true;ST.textContent=yo;return}
     var ek=besinEkMetin(n,tx);
@@ -174,7 +176,9 @@ function kirpOner(V){
   var hazir=degHazir(mode,degBaglam())?Promise.resolve():mode==="koz"?loadK():Promise.reject();
   hazir.then(function(){
     if(n!==KIRP_SAY||MODE!==mode||$("metin").value!==tam)return;   // bu arada yeni fotoğraf, tür değişimi ya da elle düzeltme
-    var plan=kirpPlan(V,DIL.kod,mode==="gida");if(!plan)return;
+    // Tablo konumdan kurulduysa (metin Vision'ınkinden farklı) öneri metnine kurulan tablo girer, Vision'ın karışık bölümü değil
+    var K=mode==="gida"&&tam!==V.text&&BESIN_SOZ?besinKonumMetni(V,BESIN_SOZ):null;
+    var plan=kirpPlan(V,DIL.kod,mode==="gida",K&&K.tablo);if(!plan)return;
     var bul=function(tx){return kirpBulgu(degerlendir(mode,tx,degBaglam(),PROF,""))};
     if(!kirpGuvenli(plan,bul).ok)return;
     var O={B:plan.B,metin:plan.metin,tam:tam,n:n};KIRP_ONERI=O;

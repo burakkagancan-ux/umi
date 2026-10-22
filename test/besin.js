@@ -379,5 +379,64 @@ Potassium 450 mg 10 %`;
   const E=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_etiketler.json'),'utf8')).etiketler;
   ok(E.every(e=>tip({metin:e.metin})===null),'gerçek etiket setinde istisna tipi yok: '+E.filter(e=>tip({metin:e.metin})).map(e=>e.id));
 }
+// Konumdan tablo (A-02 / O-27): Vision metni tabloyu sütun sütun verse de sözcük kutularının konumundan satırlar kurulur
+{
+  // Yapay Vision yanıtı: satırlar (sözcükler soldan sağa, x konumlarıyla) çizilir; metin ve kutu sırası "sira"daki satır parçalarına göre
+  // (Vision'ın okuma sırası). aci: derece (eğik fotoğraf). Döner {text, boyut, kutu}
+  function vision(satirlar,sira,aci){
+    const a=(aci||0)*Math.PI/180,c=Math.cos(a),s=Math.sin(a),dn=(x,y)=>[Math.round(x*c-y*s+200),Math.round(x*s+y*c+50)];
+    const parca=[];
+    satirlar.forEach((sat,i)=>{const y=40+i*36;parca[i]=sat.map(([x,ws])=>ws.split(' ').map((w,k)=>{const x0=x+k*70,x1=x0+w.length*11;return {w,k:[w,...dn(x0,y),...dn(x1,y),...dn(x1,y+24),...dn(x0,y+24)]}}))});
+    const kutu=[],txt=[];
+    for(const [i,h] of sira){const ws=parca[i][h];ws.forEach((p,k)=>kutu.push([...p.k,0,k===ws.length-1?1:0]));txt.push(ws.map(p=>p.w).join(' '))}
+    return {text:txt.join('\n'),boyut:[1400,1000],kutu_surum:1,kutu};
+  }
+  const T=[[[0,'İçindekiler: Buğday unu, şeker, palm yağı, tuz.']],[[0,'Besin değerleri'],[520,'100 g']],[[0,'Enerji'],[520,'2100 kJ / 502 kcal']],[[0,'Yağ'],[520,'24 g']],
+    [[0,'Doymuş yağ'],[520,'11 g']],[[0,'Karbonhidrat'],[520,'63 g']],[[0,'Şekerler'],[520,'30 g']],[[0,'Protein'],[520,'6,5 g']],[[0,'Tuz'],[520,'0,6 g']]];
+  // Vision önce bütün adları, sonra bütün değerleri okumuş (gerçek etiketlerdeki "değerler tablonun sonunda toplu" düzeni)
+  const sira=[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[1,1],[2,1],[3,1],[4,1],[5,1],[6,1],[7,1],[8,1]];
+  const dogru={kcal:502,yag:24,doymus:11,karb:63,seker:30,protein:6.5,tuz:0.6},es=(b)=>Object.keys(dogru).every(k=>yakin(b[k],dogru[k]));
+  for(const aci of [0,7,-5]){
+    const V=vision(T,sira,aci),eski=ay(V.text),sec=besinKonumSec(V.text,V,S),yeni=ay(sec);
+    ok(!eski||eski.durum!=='tamam','konum '+aci+'°: sütun sütun metin bugün temiz okunmuyor '+j(eski&&eski.sorun));
+    ok(sec!==V.text&&yeni&&yeni.durum==='tamam'&&es(yeni.b),'konum '+aci+'°: satırlar kutulardan kurulur '+j(yeni&&yeni.b)+'\n'+sec);
+    ok(/Yağ 24 g/.test(sec)&&sec.includes('İçindekiler: Buğday unu, şeker, palm yağı, tuz.'),'konum '+aci+'°: tablo satır satır, içerik listesi aynen '+sec);
+  }
+  const V=vision(T,sira,0);
+  ok(besinKonumSec(V.text,{text:V.text},S)===V.text,'kutu yoksa okunan metin kalır');
+  ok(besinKonumSec(V.text,{...V,kutu_kesik:true},S)===V.text,'kutular kesikse okunan metin kalır');
+  ok(besinKonumSec(V.text+' ',V,S)===V.text+' ','metin Vision metni değilse (elle düzeltilmiş) dokunulmaz');
+  ok(besinKonumMetni({...V,kutu:V.kutu.map((k,i)=>i===3?[k[0],NaN,...k.slice(2)]:k)},S)===null,'bozuk kutu: konum kullanılmaz');
+  ok(besinKonumMetni({...V,kutu:[...V.kutu,['yokboylesozcuk',1,1,2,1,2,2,1,2,0,1]]},S)===null,'metinde olmayan sözcük: konum kullanılmaz');
+  ok(besinKonumSec(V.text,V,null)===V.text&&besinKonumSec(V.text,null,S)===V.text,'sözlük ya da yanıt yoksa okunan metin');
+  // Vision metni zaten satır satırsa (temiz): konum hiçbir şeyi değiştirmez
+  const Vs=vision(T,T.map((_,i)=>T[i].map((x,h)=>[i,h])).flat(),0);
+  ok(ay(Vs.text).durum==='tamam'&&besinKonumSec(Vs.text,Vs,S)===Vs.text,'temiz okunan tablo değişmez');
+  // Kurulan tablo da tutarsızsa (değer yanlış satırda: yağ 63, karbonhidrat 24) okunan metin kalır, renk gösterilmez
+  const Tk=T.map(r=>r.map(x=>x.slice()));Tk[3][1][1]='63 g';Tk[5][1][1]='24 g';Tk[2][1][1]='2100 kJ / 900 kcal';
+  const Vk=vision(Tk,sira,0);ok(besinKonumSec(Vk.text,Vk,S)===Vk.text,'kurulan tablo denetimi geçmezse okunan metin kalır');
+  // Yan yana: solda içerik listesi, sağda tablo; listenin satırları tabloya karışmaz
+  const Ty=T.slice(1).map((r,i)=>[[0,['Buğday unu, şeker,','palm yağı, tuz,','kakao, süt tozu,','emülgatör soya','lesitini, aroma.','Fındık içerebilir.','','',''][i]],...r.map(([x,w])=>[x+600,w])]).map(r=>r.filter(x=>x[1]));
+  const siray=[];Ty.forEach((r,i)=>siray.push([i,0]));Ty.forEach((r,i)=>{for(let h=1;h<r.length;h++)siray.push([i,h])});
+  const Vy=vision(Ty,siray,0),Ky=besinKonumSec(Vy.text,Vy,S),ry=ay(Ky);
+  ok(Ky!==Vy.text&&ry&&ry.durum==='tamam'&&es(ry.b)&&Ky.includes('Fındık içerebilir.'),'yan yana içerik listesi ve tablo '+j(ry&&ry.b)+'\n'+Ky);
+  // Yapay etiket seti (gerçek Vision yanıtları): yanlış renk yok; bugün renk gösterilen her etiket aynı değerlerle kalır; okuma artar
+  const {olc}=require('./olcum_besin_konum.js');
+  const SET=JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_sentetik.json'),'utf8')).etiketler,M=olc(SET);
+  // 22.10.2026 ölçümü: renk gösterilen 4 → 17, doğru satır 63 → 141. Eski yolun 4 yanlış rengi: ikisi çelişkiyle şüpheliye döndü, ikisi
+  // (enerjisiz 1 satırlık tablo: iki_dil_ml__kavis, yatay_tablo__egik) eski yolda kalıyor, konum bunları kurmuyor (TEKNIK_BORC)
+  const KONUM_ESIK=15;
+  ok(M.satir.every(s=>!s.degisti||!s.b.yanlisRenk.length),'konumdan kurulan tabloda yanlış renk yok '+M.satir.filter(s=>s.degisti&&s.b.yanlisRenk.length).map(s=>s.e.ad));
+  ok(M.yeni.yanlisRenk<=M.eski.yanlisRenk,'yanlış renk artmaz '+M.eski.yanlisRenk+' → '+M.yeni.yanlisRenk);
+  ok(M.satir.every(s=>!s.a.renk||s.a.yanlisRenk.length||s.b.renk&&!s.degisti),'eski yolda doğru renkli olanlar değişmez');
+  ok(M.yeni.renk>=KONUM_ESIK,`yapay sette renk gösterilen ${M.eski.renk} → ${M.yeni.renk} (eşik ${KONUM_ESIK})`);
+  // Çelişki: iki okuma da temiz ama değerler ayrışıyor → şüpheli (iki_dil_ml__egik: Vision değerleri adlardan önce okudu, eski yol kaymış renk gösteriyordu)
+  const C=M.satir.find(s=>s.e.ad==='iki_dil_ml__egik');ok(C&&C.a.renk&&!C.b.renk&&C.b.sorun.includes('cok_satir'),'çelişen okumalar şüpheli '+j(C&&C.b));
+  // "Og" (OCR'da 0 g) yalnızca kurulan tablo satırında 0 g sayılır; okunan metinde dokunulmaz ("og": İskandinav dillerinde "ve")
+  {const o=ay('Yağ 3 g\nKarbonhidrat og 5 g\nProtein 2 g\nTuz 0,1 g');ok(o&&o.b.karb===5,'okunan metinde og sözcük kalır '+j(o&&o.b))}
+  // Gerçek etiket seti (34 Türk etiketi, kutusuz): konum devreye girmez, CI'daki yanlış renk denetimi aynen geçerli
+  for(const e of JSON.parse(fs.readFileSync(path.join(__dirname,'veri','besin_etiketler.json'),'utf8')).etiketler)
+    if(besinKonumSec(e.metin,{text:e.metin},S)!==e.metin){ok(false,'kutusuz gerçek etiket değişti '+e.id);break}
+}
 console.log(n+' besin denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();
