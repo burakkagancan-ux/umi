@@ -34,6 +34,7 @@ function tabSync(){
   document.querySelector("h1").textContent=t(prof?"profil.baslik":"sayfa.baslik");
   document.title=t(prof?"profil.baslik":"sayfa.baslik");
   if(prof&&CMP_IDS)closeCompare();
+  if(prof&&location.hash!=="#profil"&&document.body.classList.contains("mode-kayit"))kayitKapat();   // Kaydedilen Ürünlerim hash kullanmaz: tarayıcı ileri/geri ile ikinci ekran üstüne açılmasın
   if(prof){$("pd").open=true;window.scrollTo(0,0)}
 }
 $("pd").addEventListener("toggle",function(){if(!$("pd").open&&location.hash==="#profil")history.replaceState(null,"",location.pathname+location.search);tabSync()});

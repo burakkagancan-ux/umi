@@ -5,6 +5,7 @@ CLAUDE.md'den taşındı (15.10.2026, U-07 9. adım; metin aynı). Bu alana doku
 ## Kararlar
 - Lisans (09.10.2026, kullanıcı kararı; O-03): depo "tüm hakları saklıdır" (LICENSE). Üçüncü taraf verisi eklenince kaynağı ve lisansı dosya başına ve LICENSE'taki listeye yazılır. Depo GitHub Pages yüzünden şimdilik açık; gizleme alan adı/Cloudflare Pages taşımasıyla (O-01).
 - Bakanlık verisi değiştirilmez. Marka eşleşmesi suçlama değil, nötr bağlantı.
+- Skor (22.10.2026, kullanıcı kararı; "Bir yerde Nutri-Score'u göstersek mi" sorusuna "kaynağıyla bilgi olarak göster"): bizim puanımız yine yok. Başka kurumun resmi yöntemiyle hesaplanan derece (Nutri-Score) yöntemin sahibi ve sürümüyle, bilgi olarak gösterilebilir; renkler ve uyarılar ondan türetilmez. İş: YOL_HARITASI.md U-10.
 - Uygulama asla "güvenli/uygun" demez; "bulunamadı, bu bir onay değildir" der. "Zararlı" ifadesi her zaman kaynağa (yönetmelik, tarih) bağlanır.
 - Kozmetik, besin tablosu ve helalin önüne geçti. Gıda ve kozmetik JSON'ları ayrı; kozmetik dosyaları sayfada yalnızca Kozmetik seçilince yüklenir, ama service worker kurulumda (08.10.2026'dan beri) kozmetik ve temizlik verisini de önbelleğe alır (~2,8 MB) ki internetsiz açılsın. Dile ve sayfaya bağlı dosyalar kurulumda inmez (Çok dil > Dosya bölme). Kamera kilitlenmez.
 - Etiket oku'daki "Profilim" kutusu kalıyor. Kırpma kalıyor.

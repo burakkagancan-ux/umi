@@ -66,7 +66,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 ## Değişmez kararlar (tam metin ve diğer kararlar: belgeler/mimari/kararlar.md)
 - Uygulama asla "güvenli/uygun" demez; "bulunamadı, bu bir onay değildir" der. "Zararlı" ifadesi her zaman kaynağa (yönetmelik, tarih) bağlanır.
 - Bakanlık verisi değiştirilmez. Marka eşleşmesi suçlama değil, nötr bağlantı.
-- Skor yok; dil olasılık bildirir ("yol açabilir / bildirilmiştir"); renk hiçbir zaman tek başına değil.
+- Skor yok (bizim puanımız yok; başka kurumun resmi yöntemiyle hesaplanan derece, ör. Nutri-Score, kaynağı ve yöntemiyle bilgi olarak gösterilebilir: 22.10.2026, kullanıcı kararı, YOL_HARITASI.md U-10); dil olasılık bildirir ("yol açabilir / bildirilmiştir"); renk hiçbir zaman tek başına değil.
 - Lisans: depo "tüm hakları saklıdır"; üçüncü taraf verisinin kaynağı ve lisansı dosya başına ve LICENSE'a yazılır.
 
 ## Sıradaki işler

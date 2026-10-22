@@ -96,8 +96,8 @@ module.exports=async({br,B,opt,ok})=>{
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#temasec');
   ok(await p.$eval('#temasec',s=>s.value)==='','görünüm: varsayılan telefona göre');
   await p.selectOption('#temasec','acik');
-  let z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(255, 255, 255)'&&z[2]==='#2741c8','görünüm: telefon koyuyken Açık seçilince açık: '+z);
-  await p.goto(B+'ansiklopedi.html');z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(255, 255, 255)','görünüm: seçim başka sayfada da geçerli: '+z);
+  let z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(243, 245, 243)'&&z[2]==='#2741c8','görünüm: telefon koyuyken Açık seçilince açık: '+z);
+  await p.goto(B+'ansiklopedi.html');z=await zemin();ok(z[0]==='acik'&&z[1]==='rgb(243, 245, 243)','görünüm: seçim başka sayfada da geçerli: '+z);
   await p.goto(B+'ocr.html#profil');await p.waitForSelector('#temasec');await p.selectOption('#temasec','');
   z=await zemin();ok(z[0]==='koyu','görünüm: telefona göreye dönünce yeniden koyu: '+z);
   ok(!errs.length,'koyu tema: konsol hatası yok: '+errs.join(' | '));
@@ -110,7 +110,7 @@ module.exports=async({br,B,opt,ok})=>{
   await p2.evaluate(()=>localStorage.setItem('tema','koyu'));
   await p2.goto(B+'ocr.html');await p2.waitForFunction(ACILIS,null,{timeout:15000});
   z=await p2.evaluate(()=>[document.documentElement.dataset.tema,getComputedStyle(document.body).backgroundColor,document.querySelector('meta[name="theme-color"][media*="light"]').content]);
-  ok(z[0]==='koyu'&&z[1]==='rgb(15, 18, 17)'&&z[2]==='#0F1211','görünüm: telefon açıkken Koyu seçimi koyu: '+z);
+  ok(z[0]==='koyu'&&z[1]==='rgb(11, 14, 13)'&&z[2]==='#0B0E0D','görünüm: telefon açıkken Koyu seçimi koyu: '+z);
   ok(!errs2.length,'görünüm: konsol hatası yok: '+errs2.join(' | '));
   await ctx2.close();
 };

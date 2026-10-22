@@ -3,7 +3,7 @@
    sayfa çizilmeden <html data-tema="acik|koyu"> konur, açılışta yanlış renk bir an bile görünmez. Koyu renkler tema.css ve sayfa dosyalarında
    :root[data-tema="koyu"] / [data-tema="koyu"] ile (önceki @media (prefers-color-scheme:dark) yerine). Telefona göre seçiliyken telefonun modu
    değişince sayfa da değişir; başka sekmede seçim değişince bu sekme de uyar. Tarayıcı çubuğunun rengi (theme-color) seçime uyar. */
-var TEMA_RENK={acik:"#2741c8",koyu:"#0F1211"};
+var TEMA_RENK={acik:"#2741c8",koyu:"#0B0E0D"};
 /* Kayıtlı seçim: "acik", "koyu" ya da "" (telefona göre) */
 function temaSecim(){var s=depoMetin("tema");return s==="acik"||s==="koyu"?s:""}
 function temaTelefonKoyu(){try{return !!(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)}catch(e){return false}}
