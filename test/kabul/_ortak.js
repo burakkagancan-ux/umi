@@ -19,4 +19,12 @@ async function gorunur(loc,ms){
   try{await loc.first().waitFor({state:'visible',timeout:ms||5000});return true}catch(e){return false}
 }
 
-module.exports={ac,gorunur};
+// Okuyucu art arda iki kez aynı değeri verene dek okur (en çok ms), son değeri döndürür. Tahmini bekleme + tek okuma yerine:
+// sayfa yeniden çizerken ya da eşzamansız yazıcısı sürerken tek okuma ara değeri yakalar (testler.md "Bekle, sonra oku yok").
+// ör. const t=await yerlesince(()=>p.locator('body').innerText());
+async function yerlesince(oku,ms,aralik){
+  const son=Date.now()+(ms||8000);let once=await oku();
+  for(;;){await new Promise(r=>setTimeout(r,aralik||250));const simdi=await oku();if(simdi===once||Date.now()>son)return simdi;once=simdi}
+}
+
+module.exports={ac,gorunur,yerlesince};

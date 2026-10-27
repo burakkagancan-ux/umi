@@ -46,4 +46,12 @@ const pairs={
   gida:['İçindekiler: Şeker, kakao, E322.','İçindekiler: Şeker, kakao, E250.','A'],
   koz:['Ingredients: Aqua, Glycerin, Parfum, Linalool, Phenoxyethanol.','Ingredients: Aqua, Glycerin, Butylphenyl Methylpropional, Phenoxyethanol.','A'],
   tem:['İçindekiler: %5-15 anyonik yüzey aktif maddeler, parfüm. DİKKAT. Cilt tahrişine yol açar.','İçindekiler: %5-15 anyonik yüzey aktif maddeler. TEHLİKE. Ciddi göz hasarına yol açar.','A']};
-module.exports={R,sunucu,watch,newPage,onbellekte,sample,scan,ACILIS,pairs};
+// Okuyucu art arda iki kez aynı değeri verene dek okur (en çok ms), son değeri döndürür. Tahmini bekleme + tek okuma yerine:
+// sayfa yeniden çizerken ya da eşzamansız yazıcısı sürerken tek okuma ara değeri yakalar (testler.md "Bekle, sonra oku yok").
+// ör. const t=await yerlesince(()=>p.locator('body').innerText());
+async function yerlesince(oku,ms,aralik){
+  const son=Date.now()+(ms||8000);let once=await oku();
+  for(;;){await new Promise(r=>setTimeout(r,aralik||250));const simdi=await oku();if(simdi===once||Date.now()>son)return simdi;once=simdi}
+}
+
+module.exports={R,sunucu,watch,newPage,onbellekte,sample,scan,ACILIS,pairs,yerlesince};
