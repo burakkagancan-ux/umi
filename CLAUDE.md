@@ -56,6 +56,7 @@ Bu dosya her oturumda kendiliğinden okunur; kısa tutulur (15.10.2026'dan beri 
 - Test ile commit/push/PR aynı zincirde çalıştırılmaz (`test | tail && git commit` hatayı gizler; zorunluysa `set -o pipefail`); PR'daki test sayıları çalıştırma çıktısından alınır. Test yazma kuralları: belgeler/mimari/testler.md.
 - Değişiklikler `claude/...` dalında yapılır, PR açılır; kullanıcı GitHub'da "Merge pull request" der.
 - Kullanıcıya "birleştirin" denmiş bir PR'a yeni iş eklenmez: yeni istek güncel main'den açılan yeni dala ve yeni PR'a gider (kullanıcı o arada birleştirmiş olabilir). İstisnada itmeden önce ve sonra `gh pr view <no> --json state` bakılır; MERGED ise commit'in main'de olup olmadığı `git merge-base --is-ancestor <commit> origin/main` ile denetlenir.
+- "Birleşti / yayında" bildirimi (durum raporu dahil) PR'ın `state` alanından değil, commit'in `origin/main` atası olmasından verilir: başka dala birleşen PR da MERGED görünür (#217, 21.10.2026). PR tabanı her zaman main; iş başka PR'a bağlıysa onun commit'leri de taşınır (yığılmış PR açmayı `~/.claude/hooks/pr-push-kalkani.py` reddeder).
 
 ## Vizyon ve ilkeler (kullanıcı kararı, 08.10.2026)
 - Amaç: para kazanan, küresel bir uygulama (hedef onlarca dil, olası 60). Türkiye ilk pazar, son değil.

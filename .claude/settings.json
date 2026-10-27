@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"$CLAUDE_PROJECT_DIR/.claude/hooks/kabul_once.py\"; [ -f \"$f\" ] && python3 \"$f\" || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
