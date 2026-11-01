@@ -90,7 +90,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 | C-04 | Cihaz içi metin okuma (Google ML Kit / Apple Vision); Google Vision yedek kalır. Tarama maliyeti sıfırlanır, bütün alfabeler okunur | Claude | C-02, C-03 | İnternetsiz okuma çalışır | ⬜ |
 | C-06 | Mağaza sayfaları çok dilli (ekran görüntüleri, açıklama) | Claude | B-02, C-02 | Türkçe ve İngilizce sayfa | ⬜ |
 | C-07 | Alternatif ürün önerisi (aynı kategoride daha az uyarılı ürün; markadan para alınmaz) | Claude | C-05 | Yalnızca veritabanı yeterliyse | ⬜ |
-| C-09 | **Ürün adıyla ya da markasıyla arama** (20.10.2026, Lupa karşılaştırmasından; Lupa'da Premium'un ana sebebi). Barkodu okunamayan ya da elde olmayan ürünü barkod verisinde (data/barkod_off.json + D1 doğrulanmış kayıtlar) adla bulmak; Türkçe harf duyarsız. Sonuç bulunan ürünün değerlendirmesini açar, uyarılar hiçbir yolda kısılmaz. D-01'de Premium adayı (kolaylık; ilke denetimi 3'e aykırı değil) | Claude | D-01 (ücretli mi kararı), katalog büyüklüğü | Arama cihazda çalışır, sonuç değerlendirmeyi değiştirmez; bulunamayınca fotoğraf yolu önerilir | ⬜ |
+| C-09 | **Ürün adıyla ya da markasıyla arama** (20.10.2026, Lupa karşılaştırmasından; Lupa'da Premium'un ana sebebi). Barkodu okunamayan ya da elde olmayan ürünü barkod verisinde (data/barkod_off.json + D1 doğrulanmış kayıtlar) adla bulmak; Türkçe harf duyarsız. Sonuç bulunan ürünün değerlendirmesini açar, uyarılar hiçbir yolda kısılmaz. D-01 kararı (02.11.2026): ücretsiz | Claude | D-01 (ücretli mi kararı), katalog büyüklüğü | Arama cihazda çalışır, sonuç değerlendirmeyi değiştirmez; bulunamayınca fotoğraf yolu önerilir | ⬜ |
 | C-10 | **Kısıtlı önekli barkodlar** (22.10.2026, barkod analizi; gerekçe belgeler/mimari/barkod_analiz.md §3.1, §4). 20–29, 02, 04 (mağaza içi / tartılı ürün; her mağazada başka ürün), 978–979 ISBN, 977 ISSN, 98–99 kupon: OFF'a sorulmaz, katkı almaz, aranan listesine girmez; kullanıcıya "mağazanın tartı etiketi, ürünü tanımlamaz; içerik listesini fotoğrafla" kartı. Önek tablosu kaynak/gs1_onek.tsv → üreteç; Worker POST /urun ve /aranan da reddeder | Claude | — | Tartılı ürün barkodu hiçbir yolda D1'e yazılmaz (Worker testi); kart iki dilde; mevcut D1'deki kısıtlı önekli satırlar yönetimde listelenir | ⬜ |
 | C-11 | **Barkod kayıt ülkesi satırı** (isteğe bağlı; 👤 göster/gösterme kararı). Kaynak kartında "Barkod kaydı: GS1 Türkiye (üretim yeri olmayabilir)" + (i) açıklama; GS1'in kendi ifadesi: önek menşei göstermez. Bayrak ya da "yerli" rozeti yok. Tablo C-10'daki dosyaya ülke sütunu olarak | Claude | C-10, 👤 karar | Hiçbir metinde "menşei / üretim yeri" iddiası yok (test); ülke adları ulke.* anahtarından | ⬜ 👤 |
 | C-12 | **Ticari barkod API'si (koşullu; yalnızca ürün adı için).** Go-UPC / Barcode Lookup içerik listesi vermiyor; sözleşmeleri kalıcı katalog ve yeniden sunumu yasaklıyor (barkod_analiz.md §5.2). Yalnızca C-15 ölçümü "hiç bulunamadı" > %30 derse: ayrı depo, abonelik bitince silinebilir, D1/OFF/C-09 dizinine karışmaz, sağlayıcıdan yazılı gösterim izni | 👤 karar + Claude | C-15 | Sözleşme maddeleri PR'da alıntılı; IP ve katkıcı kimliği sağlayıcıya gitmez | ⏸ |
@@ -105,7 +105,7 @@ Sütunlar: kimlik · iş · sahibi · bağımlılık · kabul ölçütü · duru
 
 | Kimlik | İş | Sahibi | Bağımlı | Kabul ölçütü | Durum |
 |---|---|---|---|---|---|
-| D-01 | Gelir modeli kararı. Öneri: ücretsiz çekirdek + Premium kolaylık. **Her zaman ücretsiz:** bütün uyarılar, kaynaklar, kişisel uyarılar, ansiklopedi, paylaşım. **Premium adayları:** sınırsız kayıt ve geçmiş, aile profilleri, cihazlar arası eşitleme, gelişmiş karşılaştırma, internetsiz tam veri, reklamsız (zaten reklam yok) destek rozeti. 20.10.2026 kıyas (Lupa, 49,99 TL/ay): Premium'u ürün adıyla arama (C-09), favoriler ve uzun geçmişle satıyor; tarama ve uyarılar ücretsiz, yani bizim ilkemizle aynı ayrım | 👤 karar, Claude öneri | — | Liste bu dosyaya yazılır | ⬜ 👤 |
+| D-01 | Gelir modeli kararı (02.11.2026, kullanıcı kararı): ücretsiz çekirdek + Premium kolaylık. **Her zaman ücretsiz:** tarama (fotoğraf ve barkod, sınırsız), bütün uyarılar ve kaynakları, kişisel hassasiyet uyarıları, ansiklopedi, paylaşım, katkı ve rozetler, ürün adıyla arama (C-09), geçmiş ve kayıtlı ürünler, karşılaştırma, eşitleme ve internetsiz veri (yapılırlarsa); bugün ücretsiz olan hiçbir şey ücretliye alınmaz. **Premium:** aile profilleri (ücretsizde tek profil; birden çok kişinin hassasiyeti Premium). Profil başına uyarılar her profilde ücretsiz kuralıyla çalışır: Premium yalnızca ek profil sayısını açar. **Fiyat biçimi:** aylık + yıllık abonelik (yıllık indirimli); tutar D-02'de mağaza fiyat basamaklarından seçilir (kıyas: Lupa 49,99 TL/ay, belgeler/rakipler/lupa.md). **Maliyet sınırı Premium değildir:** bulut okumada (Google Vision) kötüye kullanıma karşı günlük üst sınır C-04'e kadar herkese aynı, Premium'la kalkmaz (§7 notu). Katkı ödülü (G-03) sonra kararlaştırılacak. Eski öneri (02.11.2026 öncesi Premium adayları: sınırsız kayıt/geçmiş, eşitleme, gelişmiş karşılaştırma, internetsiz veri, adla arama) kullanıcı tarafından ücretsiz bırakıldı | 👤 karar, Claude öneri | — | Liste bu dosyaya yazılır | ✅ 02.11.2026 |
 | D-02 | Uygulama içi satın alma (Apple/Google; komisyon %15–30) | Claude | C-02, C-03, D-01 | Satın alma çalışır, geri yükleme çalışır | ⬜ |
 | D-03 | Bağımsızlık sayfası: gelir kaynakları ve dağılımı herkese açık (Yuka örneği) | Claude + 👤 | D-02 | Yılda bir güncellenir | ⬜ |
 | D-04 | B2B veri ve API lisansı (kaynaklı madde veritabanı; diyetisyen, eczane, e-ticaret). Sözleşmede: lisans alan değerlendirmeyi etkileyemez | 👤 + Claude | E-01 | Örnek sözleşme maddesi ve API taslağı | ⬜ |
@@ -174,7 +174,7 @@ Amaç: kullanıcıları barkodlu ürün eklemeye (C-05 katkısı) ve doğrulamay
 3. C-01 👤 hesaplar → C-02 Android → C-04 cihaz içi okuma → **C-08 sayaç ve sınır denetimi**
 4. ~~A-03 ölçüm~~ ✅ 16.10.2026 (sonuçlar /yonetim › Ölçüm)
 5. ~~B-05 ülke katmanı~~ ✅, ~~B-03 İngilizce ana içerik~~ ✅ 21.10.2026
-6. D-01 👤 gelir kararı → D-02
+6. ~~D-01 👤 gelir kararı~~ ✅ 02.11.2026 → D-02
 7. E-05 tetik gelince hukuki görüş → F-01 Türkiye lansmanı → F-03
 
 20.10.2026, Lupa karşılaştırmasından öneri (👤 onay; sıra değişmedi): ~~A-08 küçük ve kaynaklı, araya alınabilir~~ ✅ 21.10.2026; ~~E-01 yöntem sayfasının B-02'yi beklemeden Türkçe ve İngilizce yazılması önerilir (Lupa'nın en güçlü güven aracı)~~ ✅ 21.10.2026. C-09 ve G-06 D-01 gelir kararıyla birlikte ele alınır; ~~U-09~~ ✅ 21.10.2026 (kullanıcı isteği, ücretsiz).
@@ -201,7 +201,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 
 - 👤 Telefon testleri (A-01, sürekli)
 - 👤 Geliştirici hesapları (C-01)
-- 👤 Gelir modeli kararı (D-01)
+- ~~👤 Gelir modeli kararı (D-01)~~ ✅ 02.11.2026 (Premium: aile profilleri; aylık + yıllık)
 - 👤 Şirketleşme (D-06)
 - 👤 Danışma kurulu (E-04)
 - 👤 Hukuki görüş, tetik gelince (E-05)
@@ -209,7 +209,7 @@ Sıra kullanıcı kararıyla değişebilir; değişince bu bölüm güncellenir.
 - 👤 Çeviri kontrolcüleri (B-06)
 - 👤 Barkod (22.10.2026 analizi): C-11 kayıt ülkesi satırı gösterilsin mi; O-32 katkı koşulu metninin onayı; C-12 ticari API C-15 verisi gelince
 - 👤 Not: ÜTS (TİTCK) kozmetik ürün kaydı için resmi veri paylaşımı başvurusu E-05'ten sonra, F-01 öncesi değerlendirilir (barkod_analiz.md §5.4)
-- 👤 Ver-al ödülünün türü ve oranı (G-03; öneri: tarama hakkı değil Premium günü)
+- 👤 Ver-al ödülünün türü ve oranı (G-03; öneri: tarama hakkı değil Premium günü; 02.11.2026: D-01 kararından sonra ertelendi, kullanıcı "sonra karar")
 - 👤 **Önleyici kararlar (§9.1, ucuzken):** alan adı (O-01), ~~küresel marka adı (O-02)~~ ✅ 15.10.2026 (Umi), depo ve veri lisansı (O-03), GitHub organizasyonu ve şirket adına hesaplar (O-04; 2FA ✅ 15.10.2026); ~~bulut bütçe uyarıları (O-08)~~ ✅ 15.10.2026
 
 ---
