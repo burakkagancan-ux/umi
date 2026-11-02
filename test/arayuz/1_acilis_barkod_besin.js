@@ -123,7 +123,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     ok(/başka kullanıcılar için kaydedelim/.test(await p.textContent('#sonuc'))&&!besinG.length&&urunN===1,'tablo eklenince soru yerinde, izinsiz gönderim yok');
     await p.click('#sonuc .bkaynak .row button:not(.alt)');
     for(let i=0;i<20&&(!besinG.length||urunN<2);i++)await p.waitForTimeout(100);
-    ok(urunN===2&&besinG.length===1&&/içerik ve besin tablosu/.test(await p.textContent('#sonuc')),'"Kaydet": içerik ve tablo birlikte gider');
+    ok(urunN===2&&besinG.length===1&&/[İi]çerik ve besin tablosu/.test(await p.textContent('#sonuc')),'"Kaydet": içerik ve tablo birlikte gider');
     await p.unroute(ocrYol);await p.unroute(/workers\.dev\/besin$/);
     await p.evaluate(()=>fotoTemizle());
     await p.unroute(/workers\.dev\/urun$/);

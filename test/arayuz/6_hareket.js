@@ -23,12 +23,12 @@ module.exports=async({br,B,opt,ok})=>{
   await p.waitForFunction(()=>window.__hz.zipla&&window.__hz.kay,null,{timeout:3000}).catch(()=>{});
   const hz=await p.evaluate(()=>window.__hz);
   ok(hz.zipla&&hz.kay,'Profilim seçilince simge zıplar, işaret kayar '+JSON.stringify(hz));
-  await p.waitForTimeout(400);
-  ok(await isaretFark()<1.5,'kayma bitince işaret Profilim\'in üstünde: fark '+(await isaretFark()).toFixed(1));
+  // Kayma bitene dek yoklanır (02.11.2026; sabit 400 ms bekleyip tek okuma, kareler yavaşlayınca yetmiyordu)
+  const farkBekle=async()=>{let f;for(let t=0;t<40;t++){f=await isaretFark();if(f<1.5)break;await p.waitForTimeout(100)}return f};
+  {const f=await farkBekle();ok(f<1.5,'kayma bitince işaret Profilim\'in üstünde: fark '+f.toFixed(1))}
   // Sayfalar arası: Ansiklopedi'ye geçilince işaret eski sekmeden başlar, Ansiklopedi'de durur
   await p.click('.tabbar a[data-tab="ansiklopedi"]');await p.waitForSelector('#ana .okfil');
-  await p.waitForTimeout(400);
-  ok(await isaretFark()<1.5,'başka sayfada işaret yeni sekmenin üstünde: fark '+(await isaretFark()).toFixed(1));
+  {const f=await farkBekle();ok(f<1.5,'başka sayfada işaret yeni sekmenin üstünde: fark '+f.toFixed(1))}
   ok(await p.evaluate(()=>{const a=document.querySelector('.tabbar a[data-tab="profil"]'),x=parseFloat((window.__ilk||'').replace('translateX(',''));return Math.abs(x-(a.offsetLeft+a.offsetWidth/2))<1.5}),
     'başka sayfada işaret eski sekmeden (Profilim) başlar: '+await p.evaluate(()=>window.__ilk));
   ok(await p.evaluate(()=>sessionStorage.getItem('sekme_once'))===null,'eski sekme bilgisi okunduktan sonra silinir');
@@ -43,9 +43,16 @@ module.exports=async({br,B,opt,ok})=>{
   ok(await p.evaluate(()=>!document.querySelector('#ana .okfil').classList.contains('pop')),'seçimi kaldırılan düğme pop almaz');
   // Yardımcılar: sayma, silme, ✓
   const yard=await p.evaluate(async()=>{
-    const d=document.createElement('div');d.textContent='12 madde, E330, %5';document.body.appendChild(d);hareketSay(d);
-    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));const ara=d.textContent;
-    await new Promise(r=>setTimeout(r,600));const son=d.textContent;d.remove();
+    // Ara değer, sayma başlamadan kurulan gözlemciyle toplanır (02.11.2026): iki kare bekleyip tek okuma, paralel CI'da kareler
+    // 450 ms'lik sayma süresinden seyrek gelince hep bitmiş metni okuyordu (PR #231/#232; requestAnimationFrame 300 ms geciktirilerek üretildi).
+    const d=document.createElement('div');d.textContent='12 madde, E330, %5';document.body.appendChild(d);
+    const gorulen=[],mo=new MutationObserver(()=>gorulen.push(d.textContent));mo.observe(d,{subtree:true,characterData:true,childList:true});
+    hareketSay(d);
+    for(let t=0;!gorulen.length&&t<60;t++)await new Promise(r=>setTimeout(r,50));
+    const ara=gorulen.find(x=>x!=='12 madde, E330, %5')||d.textContent;
+    // Sayma biter bitmez metin eski hâline döner; yavaş karede 600 ms yetmeyebilir, 3 sn'ye kadar yoklanır
+    for(let t=0;d.textContent!=='12 madde, E330, %5'&&t<60;t++)await new Promise(r=>setTimeout(r,50));
+    const son=d.textContent;mo.disconnect();d.remove();
     const ul=document.createElement('div'),li=document.createElement('div');li.textContent='x';ul.appendChild(li);document.body.appendChild(ul);
     let bitti=false;hareketCik(li,()=>{bitti=true});const hemen=bitti;
     // Sabit 400 ms yetmiyordu: paralel CI'da animasyon yavaşlayınca hareketCik'in 600 ms'lik yedeği devreye giriyor. 2 sn'ye kadar yoklanır.
