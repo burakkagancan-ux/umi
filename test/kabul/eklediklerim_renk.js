@@ -14,9 +14,9 @@
 //  3. Ürün eklemiş kullanıcı: POST …/katki {kim} yanıtı iki ürün (1 doğrulanmış ve Öncü, 1 bekleyen). Mevcut özetin
 //     ("2 ürün eklediniz, 1 tanesi doğrulandı.") altında "Kazanımlarınız" başlığı, "Siz: …" ve "Herkes: …" satırları.
 //     Öncü 0 ise "Siz" satırında Öncü yarısı yok; doğrulanmış 0 ise "Siz: ürünleriniz doğrulanınca rozetlerinize sayılacak."
-//  4. Renkler: açık temada sayfa zemini #E9EDEA, sonuç kartı ve Profilim kutusu #FFFFFF; koyu temada zemin #080A09, kart
-//     #1D2320 (22.10.2026 güncellendi: kullanıcı "zemin seçeneği C (zemin daha koyu)" seçti; önceki #F3F5F3 / #0B0E0D /
-//     #1A1F1C). Profilim'de "Aylık Özetim" başlık yazısı açıkta #6B4A2E zemini #F2EBE3, koyuda yazı #D8B48F zemin #2A2018;
+//  4. Renkler (02.11.2026 güncellendi: kullanıcı "Sanzo Wada renk kombinasyonları" istedi): açık temada sayfa zemini #E9ECEC, sonuç kartı ve Profilim kutusu #FFFFFF; koyu temada zemin #111314, kart
+//     #1F272A (22.10.2026 güncellendi: kullanıcı "zemin seçeneği C (zemin daha koyu)" seçti; önceki #F3F5F3 / #0B0E0D /
+//     #1A1F1C). Profilim'de "Aylık Özetim" başlık yazısı açıkta #71502F (Pale Raw Umber) zemini #F1EEEA, koyuda yazı #C2AE93 (Ecru) zemin #363A39;
 //     Eklediklerim düğmesinin renginden farklı. Koyu tema Profilim > Görünüm seçiminden.
 //  5. Değişmez: bu ekranlarda "güvenli/uygun" (EN safe/suitable) geçmez.
 //
@@ -302,8 +302,8 @@ module.exports=async({br,B,opt,ok})=>{
     (async()=>{
       const ctx=await br.newContext(opt);
       try{
-        for(const [tema,R] of [['Açık',{zemin:'#E9EDEA',kart:'#FFFFFF',yazi:'#6B4A2E',dz:'#F2EBE3'}],
-                               ['Koyu',{zemin:'#080A09',kart:'#1D2320',yazi:'#D8B48F',dz:'#2A2018'}]]){
+        for(const [tema,R] of [['Açık',{zemin:'#E9ECEC',kart:'#FFFFFF',yazi:'#71502F',dz:'#F1EEEA'}],
+                               ['Koyu',{zemin:'#111314',kart:'#1F272A',yazi:'#C2AE93',dz:'#363A39'}]]){
           const e=tema+' tema';
           {
             const {p}=await ac(ctx,B+'ocr.html#profil');

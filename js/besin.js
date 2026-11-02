@@ -415,7 +415,7 @@ export function besinDuzey(alan,v,lt,birim,ara){
 }
 /* Ekrandaki model. k: {b, lt, birim, sorun (ayrıştırma + denetim), onay (kullanıcı değerleri doğruladı ya da düzeltti), por? (porsiyondan çevrildi)}.
    k.tip: renk gösterilmeyen ürün tipi (A-08, besinIstisnaBul); varsa düzey yok, birim sorulmaz.
-   Döner: {renk: bool, neden: "suphe"|"birim"|"" , tip?, birim, satir: [{alan, v, lt, duzey}], enerji, sorun, eksik, por: {m, u} | null} ya da null (değer yok).
+   Döner: {renk: bool, neden: "suphe"|"birim"|"" , tip?, birim, satir: [{alan, v, lt, duzey}] (renkli dört satır), tum: kartta gösterilen bütün satırlar, enerji, sorun, eksik, por: {m, u} | null} ya da null (değer yok).
    Renk yalnızca: tip yok, birim biliniyor ve (sorun yok ya da kullanıcı onayladı ve kesin çelişki yok). */
 export function besinGorunum(k){
   if(!k||!k.b)return null;
@@ -431,6 +431,12 @@ export function besinGorunum(k){
     enerji:besinSayi(k.b.kcal),por:k.por?{m:k.por.m,u:k.por.u}:null,
     satir:BESIN_AYAR.anaSatir.map(function(a){var v=besinSayi(k.b[a]);return {alan:a,v:v,lt:!!lt[a],duzey:neden||tip?null:besinDuzey(a,v,lt[a],birim,ara[a])}})
   };
+  // Kartta etiketteki sırayla bütün satırlar (02.11.2026, kullanıcı: "karbonhidrat ve lif gözükmüyor"): renkli dört satır aynı nesne;
+  // karbonhidrat, lif, protein düzeysiz (eşik kaynağında bu satırlar için sınır yok), okunmadıysa listeye girmez
+  G.tum=BESIN_ALAN.filter(function(a){return a!=="kcal"}).map(function(a){
+    var i=BESIN_AYAR.anaSatir.indexOf(a);if(i>=0)return G.satir[i];
+    var v=besinSayi(k.b[a]);return v==null?null:{alan:a,v:v,lt:!!lt[a],duzey:null};
+  }).filter(Boolean);
   if(tip)G.tip=tip;
   return G;
 }

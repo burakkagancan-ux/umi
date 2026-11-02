@@ -9,8 +9,10 @@
    Kamera: tarayıcının BarcodeDetector'ı; yoksa (iOS Safari) js/vendor/zxing (yalnızca gerekince yüklenir). */
 var BARKOD=null;                 // {kod, r: bulunan sonuç ya da null, metin: kutuya yazılan içerik, t: zaman, foto: sonrasında etiket fotoğrafı okundu, katki: öneri bitti,
                                  //  icerik: fotoğraftan okunan içerik (katkı metni), ek: besin tablosu eklenmiş metin, soru/besinSoru: yanıtlanmamış soru kartı,
-                                 //  cevap/besinCevap: "evet"|"hayir", besinGitti: gönderilen tablo (aynısı yeniden gitmez)}
+                                 //  cevap/besinCevap: "evet"|"hayir", besinGitti: gönderilen tablo (aynısı yeniden gitmez),
+                                 //  kart: fotoğrafın barkodun kartındaki düğmeyle istendiği an (yalnızca o fotoğraf barkodla eşleşir; BARKOD_KART_SURE)}
 var BARKOD_OFF=null;             // data/barkod_off.json (ilk barkodda yüklenir)
+var BARKOD_KART_SURE=3*60000;    // kart düğmesinden sonra bu süre içinde seçilen fotoğraf eşleşir (dosya seçicinin "cancel" olayı gelmeyen eski tarayıcıda bayrak asılı kalmasın)
 var BARKOD_FOTO_SURE=10*60000;   // barkoddan sonra en çok bu süre içinde okunan etiket fotoğrafı o barkodla ilişkilendirilir
 var BARKOD_FOTO_METIN=null;      // son okunan içerik fotoğrafının metni ("Barkodu okut ve eşleştir" yalnızca ona sunulur)
 var BARKOD_BEKLE="barkod_bekleyen";   // sessionStorage: bulunamayan barkod {kod, ad, tur, t}, fotoğraf gelene kadar
@@ -89,12 +91,22 @@ function barkodYokKart(kod,tur,bildir){
   d.appendChild(el("div","t",BARKOD.ad?t("barkod.icerik_yok",{ad:BARKOD.ad}):t("barkod.yok_baslik")));
   d.appendChild(el("div","ln",t("barkod.yok_metin")));
   d.appendChild(el("div","how",t("barkod.kod",{kod:kod})));
-  var row=el("div","row"),b=el("button",null,t("barkod.foto_cek"));b.type="button";b.onclick=function(){$("foto").click()};
-  var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){$("dosya").click()};
+  var row=el("div","row"),b=el("button",null,t("barkod.foto_cek"));b.type="button";b.onclick=function(){barkodKartFoto("foto")};
+  var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){barkodKartFoto("dosya")};
   row.appendChild(b);row.appendChild(g);d.appendChild(row);box.appendChild(d);
   ST.textContent=t("barkod.yok_durum",{kod:kod});
   // Topluluk (G-04): eksik ürünler listesi için bir kez bildirilir; başkaları da aradıysa söylenir
   if(bildir)arananBildir(kod,tur,function(n){if(BARKOD&&BARKOD.kod===kod&&d.isConnected)d.insertBefore(el("div","how",t("topluluk.yok_arandi",{n:n,s:dilSayi(n)})),row)});
+}
+/* Barkodla eşleşecek fotoğraf yalnızca barkodun kartındaki düğmeyle istenir (02.11.2026, kullanıcı: A'nın barkodundan sonra ana "Fotoğraf çek"le
+   çekilen B'nin içeriği A'ya kaydedilmeye önerildi). Ana kamera/galeri düğmesi yeni bir tarama başlatır: barkod unutulur (barkodFotoSecim). */
+function barkodKartFoto(inp){if(BARKOD){BARKOD.kart=Date.now();BARKOD.t=BARKOD.kart}$(inp).click()}   // kart düğmesi açık istek: eşleşme süresi de yenilenir
+function barkodKartIptal(){if(BARKOD)BARKOD.kart=false}   // dosya seçici kapatıldı: sonraki ana düğme fotoğrafı eşleşmez
+/* Fotoğraf seçildi (fotoSec, besinFotoSecildi'den sonra): kart düğmesiyle ya da besin tablosu için istendiyse barkod kalır, yoksa unutulur */
+function barkodFotoSecim(){
+  if(!BARKOD)return;
+  if(BARKOD.kart&&Date.now()-BARKOD.kart<BARKOD_KART_SURE||BESIN_EKLE){BARKOD.kart=false;return}
+  BARKOD=null;barkodBekleSil();
 }
 /* Etiket fotoğrafı okundu (js/arayuz_sayfa.js çağırır): barkoddan sonra süre içindeyse o barkodla ilişkilenir */
 function barkodFoto(){
@@ -202,7 +214,7 @@ function barkodKaynakKart(){
   d.appendChild(l);
   if(BARKOD.dil&&BARKOD.dil!==DIL.kod)d.appendChild(el("div","how",t("barkod.dil",{dil:barkodDilAdi(BARKOD.dil)})));
   d.appendChild(el("div","how",t("barkod.etiket_asil")));
-  var b=el("button","alt",t("barkod.dogrula"));b.type="button";b.onclick=function(){BARKOD.t=Date.now();$("foto").click()};
+  var b=el("button","alt",t("barkod.dogrula"));b.type="button";b.onclick=function(){BARKOD.t=Date.now();barkodKartFoto("foto")};
   d.appendChild(b);
   return d;
 }

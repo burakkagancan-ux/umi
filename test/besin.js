@@ -206,6 +206,10 @@ ok(!B.besinGorunum({b:ters,birim:'g',onay:true}).renk,'çelişkili değer (doymu
 ok(B.besinGorunum(null)===null&&B.besinGorunum({b:{}})===null,'değer yok');
 g=B.besinGorunum({b:{kcal:40,karb:10,seker:4},birim:'g'});
 ok(g.renk&&g.satir.filter(s=>s.v==null).length===3&&g.satir[2].duzey==='dusuk','eksik satır boş, olan renkli');
+// Kartta bütün satırlar (02.11.2026): etiket sırası, karbonhidrat/lif/protein düzeysiz, okunmayanı yok; renkli dördü her zaman (boş da olsa)
+ok(g.tum.map(s=>s.alan+':'+s.v+':'+s.duzey).join()==='yag:null:null,doymus:null:null,karb:10:null,seker:4:dusuk,tuz:null:null'&&g.tum[3]===g.satir[2],'tum: okunmayan karb/lif/protein yok, renkli dört aynı nesne '+j(g.tum));
+g=B.besinGorunum({b:{yag:3,doymus:1,karb:70,seker:4,lif:0,protein:9,tuz:0.9},lt:{lif:true},birim:'g'});
+ok(g.tum.map(s=>s.alan).join()==='yag,doymus,karb,seker,lif,protein,tuz'&&g.tum[4].v===0&&g.tum[4].lt&&g.tum.filter(s=>s.duzey).length===4,'tum: etiket sırası, lif 0 ve "<" korunur, yalnızca dört satır düzeyli '+j(g.tum));
 // Metinden uçtan uca: tablo + renk
 g=B.besinGorunum(ay(T1));
 ok(g&&g.renk&&g.satir[0].duzey==='yuksek','etiket metninden renk '+j(g&&g.satir));
