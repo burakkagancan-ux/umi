@@ -244,6 +244,35 @@ function barkodGonder(B,tx){
   return barkodWorker("/urun",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kod:B.kod,tur:MODE,dil:barkodDil(tx),metin:tx,kim:katkiciKimlik()||undefined})})
     .then(function(j){if(j&&typeof aylikKatkiYaz==="function")aylikKatkiYaz(B.kod);return j});   // Aylık Özetim: bu cihazdan eklenen (U-09)
 }
+/* Katkıdan sonra teşekkür kartı (01.11.2026, kullanıcı seçimi "A · Kutlama"): madalyonda onay, kısa konfeti, başlık, bu ayki katkı sırası.
+   Sayı Aylık Özetim'in yerel kaydından (aylikKatkiYaz Worker yanıtından sonra yazar; bu barkod henüz yoksa +1). Hareketi azaltta animasyon yok. */
+function barkodTesekkur(B,besin){
+  var c=el("section","tesekkur");c.setAttribute("role","status");
+  var x=el("button","rzx","×");x.type="button";x.setAttribute("aria-label",t("ortak.kapat"));x.onclick=function(){c.remove()};
+  var m=el("div","tkmed");m.setAttribute("aria-hidden","true");
+  m.innerHTML='<span class="tkhal"></span><span class="tkdisk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>';
+  var kf=el("div","tkkonfeti");kf.setAttribute("aria-hidden","true");
+  for(var i=0;i<22;i++){   // Umi renklerinde, çember üstünde simetrik dağılım; konum CSS değişkenleriyle
+    var p=el("span","k"+(i%4)+(i%3===0?" yuv":"")),a=i/22*Math.PI*2+(i%2?.12:-.12),r=70+i*37%50;
+    p.style.setProperty("--dx",Math.round(Math.cos(a)*r*1.4)+"px");p.style.setProperty("--dy",Math.round(Math.sin(a)*r*.9-20)+"px");
+    p.style.setProperty("--r",i*67%360+"deg");p.style.animationDelay=(.18+i%5*.02)+"s";kf.appendChild(p);
+  }
+  var g=el("div","tkg");
+  g.appendChild(el("h3","tkh",t("barkod.tesekkur_baslik")));
+  g.appendChild(el("p","tkp",t(besin?"barkod.tesekkur_besin":"barkod.tesekkur_metin")));
+  var n=barkodAySira(B.kod);
+  if(n)g.appendChild(el("span","tkay",n===1?t("barkod.tesekkur_ay_ilk"):t("barkod.tesekkur_ay",{n:n})));
+  c.appendChild(x);c.appendChild(m);c.appendChild(kf);c.appendChild(g);
+  return c;
+}
+/* Bu barkodun bu ay bu cihazdan eklenenler arasındaki sırası (zaten sayıldıysa toplam); okunamazsa 0 */
+function barkodAySira(kod){
+  try{
+    if(typeof aylikLoad!=="function")return 0;
+    var a=aylikLoad().ay[ayAnahtar(Date.now())],e=a&&a.e?a.e:{};
+    return Object.keys(e).length+(e[kod]?0:1);
+  }catch(err){return 0}
+}
 /* İçerik katkısı önerisi (fotoğraftan okunan içerik için bir kez). Sonuç yeniden çizilince (ör. tablo eklendi) yanıtlanmamış soru yerinde kalır. */
 function barkodKatki(){
   var B=BARKOD,tx=B.icerik;
@@ -253,7 +282,7 @@ function barkodKatki(){
   if(iz==="hayir"||!OCR_URL)return;
   // İçerik listesine benzemiyorsa (ör. bütün paket okundu) sessizce düşmesin: nedeni ve çaresi söylenir
   if(!barkodUygun(tx)){B.uygunDegil=el("div","res u bkaynak how",t("barkod.uygun_degil",{kod:B.kod}));sonucUst(B.uygunDegil);return}
-  if(iz==="evet"){barkodGonder(B,tx);B.cevap="evet";sonucUst(el("div","res u bkaynak how",t("barkod.katki_gitti",{kod:B.kod})));return}
+  if(iz==="evet"){var c0=barkodTesekkur(B,false);barkodGonder(B,tx);B.cevap="evet";var g0=c0.querySelector(".tkg");if(MODE==="gida"&&!barkodBesinAl())g0.appendChild(el("div","how",t("barkod.besin_ipucu")));g0.appendChild(el("div","how",t("barkod.tesekkur_tercih")));sonucUst(c0);return}
   var d=el("div","res u bkaynak");
   d.appendChild(el("div","t",t("barkod.katki_soru")));
   d.appendChild(el("div","ln",t("barkod.katki_ne",{kod:B.kod})+(B.ad?" ("+B.ad+")":"")));
@@ -264,8 +293,9 @@ function barkodKatki(){
   e.onclick=function(){
     if(cb.checked)barkodIzinYaz("evet");barkodGonder(B,tx);B.cevap="evet";B.soru=null;
     var bs=B===BARKOD&&barkodBesinGonder(B);   // tablo eklenmişse o da gider (soru tabloyu da anlatıyor)
-    d.textContent="";d.appendChild(el("div","how",t(bs?"barkod.katki_tesekkur_besin":"barkod.katki_tesekkur")));
-    if(!bs&&MODE==="gida")d.appendChild(el("div","how",t("barkod.besin_ipucu")));
+    var c=barkodTesekkur(B,!!bs);
+    if(!bs&&MODE==="gida")c.querySelector(".tkg").appendChild(el("div","how",t("barkod.besin_ipucu")));
+    d.replaceWith(c);
   };
   h.onclick=function(){if(cb.checked)barkodIzinYaz("hayir");B.cevap="hayir";B.soru=null;d.remove()};
   row.appendChild(e);row.appendChild(h);d.appendChild(row);d.appendChild(lb);
