@@ -63,7 +63,13 @@ module.exports=async({br,B,opt,ok,server})=>{
   {const g=await p.$eval('#grup option[value="Et ve Et Ürünleri"]',o=>o.textContent);ok(g==='Meat and meat products','Liste ürün grubu İngilizce: '+g);
    await p.selectOption('#grup','Et ve Et Ürünleri');
    const tg=await p.$$eval('#list .rec .tag',e=>e.map(x=>x.textContent));
-   ok(tg.length&&tg.every(x=>!/Tespit|Olması|Edilmemesi/.test(x))&&tg.includes('Poultry meat detected'),'Liste uygunsuzluk türleri İngilizce: '+tg.slice(0,4).join(', '));
+   // Liste canlı Bakanlık verisidir ve günlük güncellenir: Bakanlık yeni bir tür adı eklediğinde çevirisi yazılana kadar Türkçe
+   // görünmesi kural gereğidir (belgeler/mimari/cok_dil.md; test/ceviri.js BİLGİ satırıyla listeler). Burada denetlenen, çevirisi
+   // OLAN bir adın Türkçe kalmamasıdır; çevirisiz yeni ad testi düşürmez (02.11.2026, "Domuz Eti Tespiti" #231–#233'ü düşürdü).
+   const sozluk=JSON.parse(fs.readFileSync(path.join(R,'i18n/veri/en.json'),'utf8'));
+   const cevrilmemis=tg.filter(x=>('liste:'+x) in sozluk);
+   const ingilizce=new Set(Object.keys(sozluk).filter(k=>k.startsWith('liste:')).map(k=>sozluk[k]));
+   ok(tg.length&&!cevrilmemis.length&&tg.some(x=>ingilizce.has(x)),'Liste uygunsuzluk türleri İngilizce; çevirisi olduğu hâlde Türkçe kalan: '+cevrilmemis.slice(0,4).join(', '));
    const dd=await p.$eval('#list .rec dd:nth-of-type(3)',e=>e.textContent);ok(dd==='Meat and meat products','Liste ayrıntıda ürün grubu İngilizce: '+dd);
    await p.selectOption('#grup','')}
   // Alt menü (12.10.2026): Ansiklopedi solda, Etiket Oku ortada, Profilim sağda; Liste şimdilik gizli (sayfa çalışır)
