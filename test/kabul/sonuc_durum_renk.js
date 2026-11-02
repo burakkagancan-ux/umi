@@ -3,7 +3,7 @@
 //  "Uygulamayı biraz renklendir: zemin seçeneği C (zemin daha koyu) + sonucun en üstü en yüksek durumun renginde."
 //
 // Kabul ölçütleri (Etiket Oku ocr.html):
-//  1. Zemin (seçenek C): açık tema sayfa zemini #E9EDEA, kartlar #FFFFFF; koyu tema zemini #080A09, kartlar #1D2320.
+//  1. Zemin (seçenek C): açık tema sayfa zemini #E9ECEC, kartlar #FFFFFF; koyu tema zemini #111314, kartlar #1F272A (02.11.2026, Sanzo Wada renkleri).
 //     (Bu ölçüt eklediklerim_renk.js'te ölçülür; bu dosya yalnızca kart rengini "normal kart" beklentisi için kullanır.)
 //  2. Sonucun en üstündeki özet kartı ("Özet" / EN "Summary" aria etiketli bölge; başlığı "N maddede uyarı",
 //     "N maddede dikkat" ya da "Özel uyarısı olan madde yok") zemini en yüksek durumun açık tonunda:
@@ -50,7 +50,7 @@ const yaz=c=>'rgb('+c.join(',')+')';
 
 const RENK={
   'Açık':{uyari:'#FCE9DA',dikkat:'#FFF3D1',temiz:'#E6EFE9',kart:'#FFFFFF'},
-  'Koyu':{uyari:'#36200F',dikkat:'#2F260E',temiz:'#14261D',kart:'#1D2320'},
+  'Koyu':{uyari:'#36200F',dikkat:'#2F260E',temiz:'#14261D',kart:'#1F272A'},
 };
 const DURUMLAR=[
   {ad:'uyarı',tur:'Gıda',metin:'İçindekiler: un, E102, E211, su.',baslik:'1 maddede uyarı',renk:'uyari'},
