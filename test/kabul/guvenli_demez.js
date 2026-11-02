@@ -31,13 +31,18 @@ async function sonucMetni(p){
   const i=t.indexOf('\nSonuç\n'),j=t.indexOf('Deneme Sürümü',i);
   return i<0?'':t.slice(i+7,j<0?undefined:j).trim();
 }
-// Sonuç bir öncekinden farklı olana dek bekler (en çok ~8 sn), sonra yerleşmesi için kısa bir süre daha
-async function yeniSonuc(p,eski){
+// Ara durum: henüz sonuç değil ("Henüz analiz yapılmadı", "Kozmetik listeleri yükleniyor…")
+const ARA_DURUM=/Henüz analiz yapılmadı|yükleniyor/i;
+// Sonuç bir öncekinden farklı, ara durum değil ve (verildiyse) beklenen koşulu sağlar olana dek bekler (en çok ~20 sn),
+// sonra yerleşmesi için art arda iki okuma aynı olmalı. Koşul, kullanıcının sonunda görmesi gerekeni söyler; hiç
+// gerçekleşmezse süre dolar, son okunan döner ve denetim yine düşer (gevşetme değil, bekleme).
+// 02.11.2026: veri yavaş gelince "Kozmetik listeleri yükleniyor…" 400 ms'den uzun aynı kalıp sonuç sanılıyordu
+// (PR #231/#232 CI; data/ istekleri 1,5 sn geciktirilerek yerelde üretildi). 22.10.2026: yeniden çizimde bir an yalnızca "Kaydet".
+async function yeniSonuc(p,eski,kosul){
+  const tamam=s=>s&&s!==eski&&!ARA_DURUM.test(s)&&(!kosul||kosul(s));
   let s='';
-  for(let k=0;k<40;k++){s=await sonucMetni(p);if(s&&s!==eski&&!/Henüz analiz yapılmadı/.test(s))break;await p.waitForTimeout(200)}
-  // Yerleşene dek: art arda iki okuma aynı olmalı (sonuç yeniden çizilirken bir an yalnızca "Kaydet" okunup
-  // denetim düşüyordu, 22.10.2026, PR #226'nın CI'ı)
-  for(let k=0;k<20;k++){await p.waitForTimeout(400);const y=await sonucMetni(p);if(y===s)break;s=y}
+  for(let k=0;k<100;k++){s=await sonucMetni(p);if(tamam(s))break;await p.waitForTimeout(200)}  // bekleme-bilerek: koşul yoklaması
+  for(let k=0;k<20;k++){await p.waitForTimeout(400);const y=await sonucMetni(p);if(y===s&&tamam(y))break;s=y}  // bekleme-bilerek: yerleşme
   return s;
 }
 const onayVarMi=s=>{const m=s.toLocaleLowerCase('tr').match(ONAY);return m?m[0]:null};
@@ -53,7 +58,7 @@ module.exports=async({br,B,opt,ok})=>{
 
       // 1) Örnek metin
       await p.getByRole('button',{name:'Örnek metin dene'}).click();
-      const ornek=await yeniSonuc(p,once);
+      const ornek=await yeniSonuc(p,once,s=>/Uyarı|Dikkat/.test(s));
       ok(ornek.length>0&&ornek!==once,tur+': örnek metinle sonuç görünmedi');
       let m=onayVarMi(ornek);
       ok(!m,tur+' örnek: sonuçta onay anlamında "'+m+'" geçiyor');
@@ -66,7 +71,7 @@ module.exports=async({br,B,opt,ok})=>{
       const kutu=p.getByPlaceholder(/Okunan metin burada görünür/);
       ok(await gorunur(kutu,3000),tur+': metin kutusu açılmadı');
       await kutu.fill(HIC_TANINMAYAN);
-      const bos=await yeniSonuc(p,ornek);
+      const bos=await yeniSonuc(p,ornek,s=>BULUNAMADI.test(s));
       ok(bos.length>0&&bos!==ornek,tur+': kendi yazılan metinle sonuç güncellenmedi');
       m=onayVarMi(bos);
       ok(!m,tur+' tanınmayan metin: sonuçta onay anlamında "'+m+'" geçiyor');
