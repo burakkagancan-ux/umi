@@ -145,6 +145,24 @@ module.exports=async({br,B,opt,ok,server})=>{
     await p.evaluate(k=>barkodYok(k,null),yok);{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.click('#sonuc .bkaynak button:not(.alt)')]);await fc.setFiles(path.join(R,'icon-192.png'))}   // eşleşme yalnızca kartın düğmesiyle (02.11.2026)
     await p.waitForFunction(()=>/içerik listesine benzemiyor/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).catch(()=>{});
     ok(/içerik listesine benzemiyor/.test(await p.textContent('#sonuc'))&&!/kaydedelim/.test(await p.textContent('#sonuc')),'içerik listesine benzemeyen metin: eşleşme sessizce düşmez, nedeni yazılır');
+    // Bozma turu (02.11.2026): dosya seçici kapatılınca istek biter; kart düğmesi süreyi yeniler; cancel gelmeyen tarayıcıda bayrak süreyle düşer
+    {okunan=ICERIK;const foto=async()=>{await p.setInputFiles('#foto',path.join(R,'icon-192.png'));await p.waitForFunction(()=>!OKU.mesgul&&OKU.okundu,null,{timeout:8000}).catch(()=>{})};
+     const kartAc=async(alt)=>{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.click('#sonuc .bkaynak button'+(alt?'.alt':':not(.alt)'))]);return fc};
+     // H1: tablo fotoğrafı istenip seçici kapatılınca ana düğme fotoğrafı barkodu unutur, önceki metne eklenmez
+     await p.evaluate(k=>{fotoTemizle();barkodYok(k,null)},yok);
+     await Promise.all([p.waitForEvent('filechooser'),p.evaluate(()=>besinFotoIste('Önceki metin','foto'))]);await p.dispatchEvent('#foto','cancel');
+     await foto();
+     const h1=await p.evaluate(()=>({b:BARKOD&&BARKOD.kod,be:BESIN_EKLE,m:document.getElementById('metin').value.trim()}));
+     ok(h1.b==null&&h1.be==null&&h1.m===ICERIK&&!/kaydedelim/.test(await p.textContent('#sonuc')),'tablo isteği iptal → ana fotoğraf: barkod unutulur, metin eklenmez '+JSON.stringify(h1));
+     // H2: kart 10 dakikadan eskiyse de kart düğmesiyle verilen fotoğraf eşleşir
+     await p.evaluate(k=>{fotoTemizle();barkodYok(k,null);BARKOD.t-=11*60000},yok);
+     {const fc=await kartAc(false);await fc.setFiles(path.join(R,'icon-192.png'))}
+     ok(await soruVar(),'süresi geçmiş kartın düğmesi yine eşleştirir');
+     // R1: cancel olayı gelmezse kart bayrağı 3 dakikada düşer, sonraki ana fotoğraf eşleşmez
+     await p.evaluate(k=>{fotoTemizle();barkodYok(k,null)},yok);
+     await kartAc(true);await p.evaluate(()=>{BARKOD.kart-=4*60000});
+     await foto();
+     ok(await p.evaluate(()=>BARKOD===null)&&!/kaydedelim/.test(await p.textContent('#sonuc')),'cancel gelmeyen tarayıcı: bayrak süreyle düşer, ana fotoğraf eşleşmez');}
     okunan=ICERIK;await p.evaluate(()=>{BARKOD=null;fotoTemizle()});
     await p.setInputFiles('#dosya',path.join(R,'icon-192.png'));await p.waitForSelector('#sonuc .beslestir button',{timeout:8000}).catch(()=>{});
     ok(!!await p.$('#sonuc .beslestir button'),'önce fotoğraf: sonuçta "Barkodu okut ve eşleştir"');

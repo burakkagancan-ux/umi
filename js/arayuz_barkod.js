@@ -10,8 +10,9 @@
 var BARKOD=null;                 // {kod, r: bulunan sonuç ya da null, metin: kutuya yazılan içerik, t: zaman, foto: sonrasında etiket fotoğrafı okundu, katki: öneri bitti,
                                  //  icerik: fotoğraftan okunan içerik (katkı metni), ek: besin tablosu eklenmiş metin, soru/besinSoru: yanıtlanmamış soru kartı,
                                  //  cevap/besinCevap: "evet"|"hayir", besinGitti: gönderilen tablo (aynısı yeniden gitmez),
-                                 //  kart: fotoğraf barkodun kartındaki düğmeyle istendi (yalnızca o fotoğraf barkodla eşleşir)}
+                                 //  kart: fotoğrafın barkodun kartındaki düğmeyle istendiği an (yalnızca o fotoğraf barkodla eşleşir; BARKOD_KART_SURE)}
 var BARKOD_OFF=null;             // data/barkod_off.json (ilk barkodda yüklenir)
+var BARKOD_KART_SURE=3*60000;    // kart düğmesinden sonra bu süre içinde seçilen fotoğraf eşleşir (dosya seçicinin "cancel" olayı gelmeyen eski tarayıcıda bayrak asılı kalmasın)
 var BARKOD_FOTO_SURE=10*60000;   // barkoddan sonra en çok bu süre içinde okunan etiket fotoğrafı o barkodla ilişkilendirilir
 var BARKOD_FOTO_METIN=null;      // son okunan içerik fotoğrafının metni ("Barkodu okut ve eşleştir" yalnızca ona sunulur)
 var BARKOD_BEKLE="barkod_bekleyen";   // sessionStorage: bulunamayan barkod {kod, ad, tur, t}, fotoğraf gelene kadar
@@ -99,12 +100,12 @@ function barkodYokKart(kod,tur,bildir){
 }
 /* Barkodla eşleşecek fotoğraf yalnızca barkodun kartındaki düğmeyle istenir (02.11.2026, kullanıcı: A'nın barkodundan sonra ana "Fotoğraf çek"le
    çekilen B'nin içeriği A'ya kaydedilmeye önerildi). Ana kamera/galeri düğmesi yeni bir tarama başlatır: barkod unutulur (barkodFotoSecim). */
-function barkodKartFoto(inp){if(BARKOD)BARKOD.kart=true;$(inp).click()}
+function barkodKartFoto(inp){if(BARKOD){BARKOD.kart=Date.now();BARKOD.t=BARKOD.kart}$(inp).click()}   // kart düğmesi açık istek: eşleşme süresi de yenilenir
 function barkodKartIptal(){if(BARKOD)BARKOD.kart=false}   // dosya seçici kapatıldı: sonraki ana düğme fotoğrafı eşleşmez
 /* Fotoğraf seçildi (fotoSec, besinFotoSecildi'den sonra): kart düğmesiyle ya da besin tablosu için istendiyse barkod kalır, yoksa unutulur */
 function barkodFotoSecim(){
   if(!BARKOD)return;
-  if(BARKOD.kart||BESIN_EKLE){BARKOD.kart=false;return}
+  if(BARKOD.kart&&Date.now()-BARKOD.kart<BARKOD_KART_SURE||BESIN_EKLE){BARKOD.kart=false;return}
   BARKOD=null;barkodBekleSil();
 }
 /* Etiket fotoğrafı okundu (js/arayuz_sayfa.js çağırır): barkoddan sonra süre içindeyse o barkodla ilişkilenir */
