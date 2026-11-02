@@ -142,7 +142,7 @@ module.exports=async({br,B,opt,ok,server})=>{
     {const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.click('#sonuc .bkaynak button:not(.alt)')]);await fc.setFiles(path.join(R,'icon-192.png'))}
     ok(await soruVar()&&await p.evaluate(()=>sessionStorage.getItem('barkod_bekleyen')===null),'yeniden yüklemeden sonra çekilen içerik fotoğrafı barkodla eşleşir');
     okunan='MARKA 250 g Üretici: Örnek Gıda A.Ş. İstanbul Tüketici hattı 0850 000 00 00';
-    await p.evaluate(k=>barkodYok(k,null),yok);await p.setInputFiles('#foto',path.join(R,'icon-192.png'));
+    await p.evaluate(k=>barkodYok(k,null),yok);{const [fc]=await Promise.all([p.waitForEvent('filechooser'),p.click('#sonuc .bkaynak button:not(.alt)')]);await fc.setFiles(path.join(R,'icon-192.png'))}   // eşleşme yalnızca kartın düğmesiyle (02.11.2026)
     await p.waitForFunction(()=>/içerik listesine benzemiyor/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).catch(()=>{});
     ok(/içerik listesine benzemiyor/.test(await p.textContent('#sonuc'))&&!/kaydedelim/.test(await p.textContent('#sonuc')),'içerik listesine benzemeyen metin: eşleşme sessizce düşmez, nedeni yazılır');
     okunan=ICERIK;await p.evaluate(()=>{BARKOD=null;fotoTemizle()});
@@ -160,12 +160,13 @@ module.exports=async({br,B,opt,ok,server})=>{
   // düzeltince renk; tablo fotoğrafı metnin sonuna eklenir ve aynı tarama güncellenir; elle düzeltme metne bağlı saklanır
   {
     const TABLO='İçindekiler: şeker, bitkisel yağ (palm), kakao, tuz.\nBesin değerleri 100 g\nEnerji 2151 kJ / 505 kcal\nYağ 25,1 g\nDoymuş yağ 16 g\nKarbonhidrat 68,8 g\nŞekerler 30,5 g\nProtein 3,2 g\nTuz 0,1 g';
-    const kart=()=>p.evaluate(()=>{const d=document.querySelector('#sonuc .besin');return d?{t:d.querySelector('.t').textContent,dz:[...d.querySelectorAll('.bdz')].map(x=>x.className.split(' ')[1]),deg:[...d.querySelectorAll('.bdeg')].map(x=>x.textContent),metin:d.textContent,btn:[...d.querySelectorAll('button')].map(b=>b.getAttribute('aria-label')||b.textContent)}:null});
+    const kart=()=>p.evaluate(()=>{const d=document.querySelector('#sonuc .besin');return d?{t:d.querySelector('.t').textContent,dz:[...d.querySelectorAll('.bdz')].map(x=>x.className.split(' ')[1]),deg:[...d.querySelectorAll('.brow')].filter(r=>/^(Yağ|Doymuş yağ|Şekerler|Tuz|Enerji)$/.test(r.querySelector('.bad').textContent)).map(r=>r.querySelector('.bdeg').textContent),ad:[...d.querySelectorAll('.bad')].map(x=>x.textContent),metin:d.textContent,btn:[...d.querySelectorAll('button')].map(b=>b.getAttribute('aria-label')||b.textContent)}:null});
     await p.evaluate(()=>localStorage.removeItem('besin_elle'));
     await scan(p,'gida',TABLO);
     await p.waitForFunction(()=>document.querySelector('#sonuc .besin .btab'),null,{timeout:8000}).catch(()=>{});
     let k=await kart();
     ok(k&&k.t==='Besin Değerleri (100 g başına)'&&k.dz.join()==='yuksek,yuksek,yuksek,dusuk'&&k.deg.slice(0,4).join('|')==='25,1 g|16 g|30,5 g|0,1 g'&&k.deg[4]==='505 kcal','besin kartı: dört satır, düzey etiketleri, enerji renksiz: '+JSON.stringify(k));
+    ok(k&&k.ad.join('|')==='Yağ|Doymuş yağ|Karbonhidrat|Şekerler|Protein|Tuz|Enerji','besin kartı: karbonhidrat ve protein de etiket sırasıyla, düzeysiz (02.11.2026): '+JSON.stringify(k&&k.ad));
     ok(k&&/okunan etiket metnindeki tablo/.test(k.metin),'kaynak satırı');
     ok(await p.evaluate(()=>{const s=document.querySelector('#sonuc .sumbox');return s&&s.nextElementSibling&&s.nextElementSibling.classList.contains('besin')}),'kart özetin hemen altında');
     await p.click('#sonuc .besin .info');

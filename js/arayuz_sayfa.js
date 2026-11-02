@@ -77,10 +77,11 @@ $("denemeb").onclick=function(){openSheet(t("sayfa.deneme"),null,el("p",null,t("
 function fotoSec(){
   var f=this.files[0];if(!f)return;var im=$("pre");im.src=URL.createObjectURL(f);
   $("cropwrap").style.display="block";$("cropbar").style.display="flex";resetCrop();
-  OKU.n++;OKU.okundu=false;kirpKaldir();besinFotoSecildi();im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
+  OKU.n++;OKU.okundu=false;kirpKaldir();besinFotoSecildi();if(typeof barkodFotoSecim==="function")barkodFotoSecim();im.onload=function(){im.onload=null;okuIste(0)};   // ayrı düğme yok: fotoğraf gelince okunur
   this.value="";   // aynı dosya yeniden seçilebilsin
 }
 $("foto").onchange=fotoSec;$("dosya").onchange=fotoSec;
+$("foto").oncancel=$("dosya").oncancel=function(){if(typeof barkodKartIptal==="function")barkodKartIptal()};
 // Seçilen fotoğrafı ekrandan kaldırır: kayıttan sonra, sekme değişince, örnek/barkod/kayıtlı ürün açılınca eski görsel kalmasın
 function fotoTemizle(){
   var im=$("pre");if(im.src&&im.src.indexOf("blob:")===0)URL.revokeObjectURL(im.src);im.removeAttribute("src");

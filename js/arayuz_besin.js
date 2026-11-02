@@ -72,7 +72,7 @@ function besinKart(tx){
   hd.appendChild(el("div","t",t(G.birim?"besin.baslik_"+G.birim:"besin.baslik")));
   var ib=el("button","info sm","i");ib.type="button";ib.setAttribute("aria-label",t("besin.esik_aria"));ib.setAttribute("aria-expanded","false");hd.appendChild(ib);
   var tb=el("div","btab");
-  G.satir.forEach(function(s){
+  G.tum.forEach(function(s){
     var r=el("div","brow");r.appendChild(el("span","bad",t("besin.alan."+s.alan)));
     r.appendChild(el("span","bdeg",s.v==null?"—":besinDeger(s.v,s.lt)));
     if(s.duzey)r.appendChild(el("span","bdz "+s.duzey,t("besin.duzey."+s.duzey)));
