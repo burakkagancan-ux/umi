@@ -49,9 +49,11 @@ const pairs={
 // Okuyucu art arda iki kez aynı değeri verene dek okur (en çok ms), son değeri döndürür. Tahmini bekleme + tek okuma yerine:
 // sayfa yeniden çizerken ya da eşzamansız yazıcısı sürerken tek okuma ara değeri yakalar (testler.md "Bekle, sonra oku yok").
 // ör. const t=await yerlesince(()=>p.locator('body').innerText());
+// Yükleme yazısı aynı kaldı diye yerleşmiş sayılmaz (02.11.2026: "Kozmetik listeleri yükleniyor…" yavaş CI'da sonuç sanıldı)
+const ARA_DURUM=/yükleniyor|loading/i;
 async function yerlesince(oku,ms,aralik){
   const son=Date.now()+(ms||8000);let once=await oku();
-  for(;;){await new Promise(r=>setTimeout(r,aralik||250));const simdi=await oku();if(simdi===once||Date.now()>son)return simdi;once=simdi}
+  for(;;){await new Promise(r=>setTimeout(r,aralik||250));const simdi=await oku();if((simdi===once&&!ARA_DURUM.test(typeof simdi==='string'?simdi:''))||Date.now()>son)return simdi;once=simdi}
 }
 
 module.exports={R,sunucu,watch,newPage,onbellekte,sample,scan,ACILIS,pairs,yerlesince};
