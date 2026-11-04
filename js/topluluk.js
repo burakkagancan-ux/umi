@@ -3,7 +3,7 @@
    - Eksik ürünler: çok aranan ama içeriği olmayan barkodlar (Worker GET /topluluk). Uygulamadaki Open Food Facts verisinde içeriği olan
      barkod listeden çıkar (kullanıcı onu zaten bulur), adı biliniyorsa ad eklenir (ad yalnızca ekranda, sunucuya gitmez).
    - Arama bildirimi: içerik bulunamayan barkod bu cihazdan bir kez bildirilir (localStorage "aranan"); aynı kişi aynı ürünü şişirmez. */
-import {barkodGecerli, barkodIcerikli, barkodOffBul, barkodTur} from "./barkod.js";
+import {barkodGecerli, barkodIcerikli, barkodOffBul, barkodTur, barkodKisitli} from "./barkod.js";
 export var TOPLULUK_AYAR={
   hedefler:[100,1000,10000,100000,1000000],   // ortak hedef eşikleri (doğrulanmış ürün); sıradaki eşik gösterilir
   arananEnCok:300                              // bu cihazdan bildirilen barkodların en çok bu kadarı hatırlanır
@@ -21,7 +21,7 @@ export function toplulukToplam(o){var s=0;for(var k in o||{})s+=+o[k]||0;return 
 export function toplulukEksik(liste,off,sira){
   var o=[];
   (liste||[]).forEach(function(x){
-    if(!x||!barkodGecerli(x.kod)||!(+x.n>0))return;
+    if(!x||!barkodGecerli(x.kod)||!(+x.n>0)||barkodKisitli(x.kod))return;   // C-10: eski veride kalmış kısıtlı önekli barkod gösterilmez
     var r=off?barkodOffBul(off,x.kod):null;
     if(r&&barkodIcerikli(r,sira))return;
     o.push({kod:String(x.kod),tur:barkodTur(x.tur),n:+x.n,son:+x.son||0,ad:r&&r.ad||"",marka:r&&r.marka||""});

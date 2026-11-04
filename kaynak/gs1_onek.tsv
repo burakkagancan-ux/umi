@@ -1,0 +1,20 @@
+# GS1 önekleri: ürünü tanımlamayan (kısıtlı) barkodlar (C-10, 04.11.2026). gen_gs1_onek.py okur → js/barkod_onek.js; js/barkod.js barkodKisitli kullanır.
+# Kaynak (okundu): GS1, "GS1 Company Prefix" önek tablosu, https://www.gs1.org/standards/id-keys/company-prefix
+#   Canlı sayfa 04.11.2026'da 403 verdi; okunan kopya Wayback Machine 24.04.2025:
+#   https://web.archive.org/web/20250424044341/https://www.gs1.org/standards/id-keys/company-prefix
+#   Aynı sayfanın notu: "For 12-digit GTINs, and only 12-digit GTINs, there is an implied leading zero" → önek 13 haneli anahtarda (barkodNorm) aranır.
+#   Aynı sayfa: "GS1 Prefix ... do not identify the country of origin" (C-11 için).
+# Yalnızca 13 haneli anahtara uygulanır. EAN-8'in kısıtlı aralığı (RCN-8) bu tabloda yok: kaynağı okunmadı (TEKNIK_BORC "Barkod").
+# Sütunlar: bas<TAB>son<TAB>tur<TAB>kaynaktaki ifade
+#   bas, son: aynı uzunlukta önek aralığı (uçlar dahil); tur: magaza (mağaza içi / tartılı ürün), yayin (ISSN, ISBN), urun_degil (kupon, fiş, örnek, ayrılmış)
+0000000	0000000	magaza	Used to issue Restricted Circulation Numbers within a company
+020	029	magaza	Used to issue Restricted Circulation Numbers within a geographic region (MO defined)
+040	049	magaza	Used to issue GS1 Restricted Circulation Numbers within a company
+050	059	urun_degil	GS1 US reserved for future use
+200	299	magaza	Used to issue GS1 Restricted Circulation Numbers within a geographic region (MO defined)
+952	952	urun_degil	Used for demonstrations and examples of the GS1 system
+977	977	yayin	Serial publications (ISSN)
+978	979	yayin	Bookland (ISBN)
+980	980	urun_degil	Refund receipts
+981	983	urun_degil	GS1 coupon identification for common currency areas
+99	99	urun_degil	GS1 coupon identification

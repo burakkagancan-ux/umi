@@ -56,9 +56,13 @@
 //   Kimlik, ürün, metin, barkod ve IP yazılmaz; bilinmeyen değer 400 (js/olcum.js olcumAnahtar). Okuma yalnızca yönetim sayfasından.
 //   KV yerine D1: ücretsiz katmanda KV günde 1.000, D1 100.000 yazma; UPSERT eşzamanlı istekte de sayıyı kaybetmez.
 
-import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, sozcukler, toplamFark, toplulukSay, urunSec } from "./barkod.js";
+import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, kisitliKosul, sozcukler, toplamFark, toplulukSay, urunSec } from "./barkod.js";
 import { YONETIM_CSP, YONETIM_CSS, YONETIM_HTML, YONETIM_JS, sayacGunler, toplamUygula, yonetimApi, yonetimYetki } from "./yonetim.js";
 import { olcumAnahtar } from "../../js/olcum.js";
+import { barkodKisitli } from "../../js/barkod.js";
+// C-10: ürünü tanımlamayan barkod (GS1 önek tablosu, kaynak/gs1_onek.tsv) OFF'a sorulmaz, D1'de aranmaz, hiçbir tabloya yazılmaz. Uygulama da
+// aramaz; bu denetim eski uygulama sürümleri ve doğrudan istekler için. Yanıt: GET → bulundu:false + kisitli, POST → 400 + kisitli.
+const KISITLI = { error: "Bu barkod bir ürünü tanımlamaz (mağaza içi, yayın ya da kupon); katkı alınmaz." };
 
 const MAX_BODY = 4_000_000;          // ~4 MB (eski Worker'la aynı); uygulama 1800 px JPEG gönderir (genelde 0,3-1 MB)
 const VISION_TIMEOUT_MS = 20_000;
@@ -265,6 +269,7 @@ async function urun(request, env, kod, R) {
   const metin = String((j && j.metin) || "").replace(/\s+/g, " ").trim();
   const kim = j && j.kim != null && j.kim !== "" ? String(j.kim) : null;   // eski uygulama sürümleri kimlik göndermez
   if (!barkodGecerli(k)) return R(400, { error: "Geçersiz barkod." });
+  if (barkodKisitli(k)) return R(400, { ...KISITLI, kisitli: barkodKisitli(k) });
   if (!["gida", "koz", "tem"].includes(tur)) return R(400, { error: "Geçersiz tür." });
   if (dil && !/^[a-z]{2}$/.test(dil)) return R(400, { error: "Geçersiz dil." });
   if (kim && !KATKICI_RE.test(kim)) return R(400, { error: "Geçersiz katkıcı kimliği." });
@@ -298,6 +303,7 @@ async function besinEkle(request, env, R) {
   const kod = String((j && j.kod) || "").replace(/[^0-9]/g, "");
   const kim = j && j.kim != null && j.kim !== "" ? String(j.kim) : null;
   if (!barkodGecerli(kod)) return R(400, { error: "Geçersiz barkod." });
+  if (barkodKisitli(kod)) return R(400, { ...KISITLI, kisitli: barkodKisitli(kod) });
   if (kim && !KATKICI_RE.test(kim)) return R(400, { error: "Geçersiz katkıcı kimliği." });
   const b = besinKatki(j && j.besin);
   if (!b) return R(400, { error: "Besin tablosu uygun değil." });
@@ -325,6 +331,7 @@ async function aranan(request, env, R) {
   try { const raw = await request.text(); if (raw.length > 500) return R(413, { error: "Geçersiz istek." }); j = JSON.parse(raw); } catch { return R(400, { error: "Geçersiz istek." }); }
   const kod = String((j && j.kod) || "").replace(/[^0-9]/g, ""), tur = j && j.tur;
   if (!barkodGecerli(kod)) return R(400, { error: "Geçersiz barkod." });
+  if (barkodKisitli(kod)) return R(400, { ...KISITLI, kisitli: barkodKisitli(kod) });
   if (!TURLER.includes(tur)) return R(400, { error: "Geçersiz tür." });
   if (!env.URUNLER) return new Response(null, { status: 204 });
   if (env.ARANAN_LIMIT) {   // aynı IP aynı barkodu dakikada bir kez sayar; IP yalnızca bu sınırın anahtarında, saklanmaz
@@ -377,7 +384,8 @@ async function topluluk(request, env, R) {
   const sayilar = { urun: {}, dogrulanan: {} };
   for (const r of say || []) { const [a, tr] = String(r.ad).split(":"); if (sayilar[a] && TURLER.includes(tr)) sayilar[a][tr] = Number(r.n) || 0; }
   const eksikSql = "SELECT kod, tur, n, son FROM aranan WHERE " + (tur ? "tur = ? AND " : "") +
-    "NOT EXISTS (SELECT 1 FROM katki WHERE katki.kod = aranan.kod) ORDER BY n DESC, son DESC LIMIT " + EKSIK_EN_COK;
+    "NOT EXISTS (SELECT 1 FROM katki WHERE katki.kod = aranan.kod) AND NOT " + kisitliKosul("aranan.kod") +   // C-10: LIMIT'ten önce (bozma turu O1)
+    " ORDER BY n DESC, son DESC LIMIT " + EKSIK_EN_COK;
   const st = db.prepare(eksikSql);
   const { results: eksik } = await (tur ? st.bind(tur) : st).all();
   const j = { sayilar, eksik: (eksik || []).map((r) => ({ kod: r.kod, tur: r.tur, n: r.n, son: r.son })), t: Date.now() };
@@ -393,7 +401,7 @@ async function katki(request, env, R) {
   const bos = { eklenen: {}, avci: {}, oncu: {}, dogrulayici: {}, urunler: [] };
   if (!env.URUNLER) return R(200, { ...bos, devreDisi: true });
   const db = await d1(env);
-  const { results } = await db.prepare("SELECT kod, tur, metin, t, kim, iz FROM katki WHERE kod IN (SELECT kod FROM katki WHERE kim = ? GROUP BY kod ORDER BY MAX(t) DESC LIMIT " + KATKICI_BARKOD_EN_COK + ") ORDER BY t DESC").bind(kim).all();
+  const { results } = await db.prepare("SELECT kod, tur, metin, t, kim, iz FROM katki WHERE kod IN (SELECT kod FROM katki WHERE kim = ? AND NOT " + kisitliKosul("kod") + " GROUP BY kod ORDER BY MAX(t) DESC LIMIT " + KATKICI_BARKOD_EN_COK + ") ORDER BY t DESC").bind(kim).all();
   return R(200, katkiOzet(results || [], kim));   // reply zaten no-store
 }
 
@@ -435,6 +443,8 @@ async function barkod(request, env, allowed, R, yol) {
   if (request.method !== "GET" || p.length !== 2) return R(405, { error: "Geçersiz istek." });
   const kod = p[1];
   if (!/^\d{8,14}$/.test(kod)) return R(400, { error: "Geçersiz barkod." });
+  const ks = barkodKisitli(kod);
+  if (ks) return R(200, { bulundu: false, kisitli: ks });
   return p[0] === "off" ? off(request, kod, R) : urun(request, env, kod, R);
 }
 
