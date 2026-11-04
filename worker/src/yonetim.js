@@ -6,7 +6,8 @@
 //   GET  /yonetim                       sayfa (anahtar sayfada girilir, yalnızca o sekmede tutulur)
 //   GET  /yonetim/api/liste?gor=son|celiski|aranan&sayfa=N
 //        son: en son katkı alan barkodlar; celiski: içerik ya da besin tablosu birbirine uymayan (birden çok grup) barkodlar;
-//        aranan: "aranıyor" listesi (G-04; kötüye kullanılan barkod çıkarılabilir)
+//        aranan: "aranıyor" listesi (G-04; kötüye kullanılan barkod çıkarılabilir);
+//        kisitli: ürünü tanımlamayan önekli barkodların (C-10) güncellemeden önce D1'e girmiş katkı, tablo ve aranan satırları (silinmek için)
 //   GET  /yonetim/api/urun/:barkod      bir barkodun bütün içerik katkıları ve besin tabloları, grup ve gösterilen grup bilgisiyle
 //   GET  /yonetim/api/kim/:kimlik       bir katkıcı kimliğinin bütün katkıları (kötü niyetli katkıcıyı bulmak için)
 //   POST /yonetim/api/sil               {tablo: "katki"|"besin", id} tek satır · {kim} o kimliğin bütün katkıları ve tabloları ·
@@ -18,6 +19,7 @@
 //   GET  /yonetim/api/olcum             A-03 ölçümü: son 60 günün günlük toplamları (D1 olcum + paylaşım sayacı KV) ve son 7 günün özeti
 import { barkodGecerli, besinGrupla, grupla, toplamFark, urunSec } from "./barkod.js";
 import { OLCUM_AYAR, olcumGun, olcumOzet } from "../../js/olcum.js";
+import { BARKOD_ONEK } from "../../js/barkod_onek.js";
 
 export const YONETIM_ANAHTAR_EN_AZ = 32;   // daha kısa anahtar kabul edilmez (yönetim kapalı kalır)
 const SAYFA_BOY = 50;
@@ -76,6 +78,11 @@ function ozetler(katki, besin) {
   return [...kodlar].map((kod) => yonetimOzet(kod, k.get(kod) || [], b.get(kod) || [])).sort((a, b) => b.son - a.son);
 }
 
+// C-10: kısıtlı önek koşulu (SQL). 12 haneli kayıt 13 haneye tamamlanarak bakılır (js/barkod.js barkodKisitli ile aynı kural);
+// aralık uçları aynı uzunlukta rakam dizisi olduğundan dizgi karşılaştırması sayı karşılaştırmasıyla aynıdır. Değerler üretilmiş tablodan, kullanıcıdan değil.
+const ONEK_K = "(CASE WHEN length(kod) = 12 THEN '0' || kod ELSE kod END)";
+export const KISITLI_KOSUL = "(length(" + ONEK_K + ") = 13 AND (" + BARKOD_ONEK.map(([a, b]) =>
+  "substr(" + ONEK_K + ", 1, " + a.length + ") BETWEEN '" + a + "' AND '" + b + "'").join(" OR ") + "))";
 const SON_KODLAR = "SELECT kod FROM (SELECT kod, t FROM katki UNION ALL SELECT kod, t FROM besin) GROUP BY kod ORDER BY MAX(t) DESC LIMIT ? OFFSET ?";
 async function satirlar(db, kosul, ...args) {
   const [{ results: k }, { results: b }] = await Promise.all([
@@ -199,6 +206,11 @@ export async function yonetimApi(request, env, db, yol, R) {
       const hepsi = ozetler(k, b).filter((o) => o.celiski);
       return R(200, { gor, sayfa, urunler: hepsi.slice(sayfa * SAYFA_BOY, (sayfa + 1) * SAYFA_BOY), devam: hepsi.length > (sayfa + 1) * SAYFA_BOY, tarama: CELISKI_TARA });
     }
+    if (gor === "kisitli") {
+      const [k, b] = await satirlar(db, KISITLI_KOSUL);
+      const { results: ar } = await db.prepare("SELECT kod, tur, n, ilk, son FROM aranan WHERE " + KISITLI_KOSUL + " ORDER BY n DESC").all();
+      return R(200, { gor, sayfa: 0, urunler: ozetler(k, b), aranan: ar || [], devam: false });
+    }
     if (gor !== "son") return R(400, { error: "Geçersiz liste." });
     const [k, b] = await satirlar(db, "kod IN (" + SON_KODLAR + ")", SAYFA_BOY, sayfa * SAYFA_BOY);
     const urunler = ozetler(k, b);
@@ -260,7 +272,7 @@ export const YONETIM_HTML = `<!doctype html>
 </section>
 <section id="ana" hidden>
   <nav id="sekmeler">
-    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button><button data-gor="olcum">Ölçüm</button><button data-gor="islem">İşlem Kaydı</button>
+    <button data-gor="son" class="on">Son Katkılar</button><button data-gor="celiski">Çelişenler</button><button data-gor="aranan">Aranan Listesi</button><button data-gor="kisitli">Kısıtlı Önek</button><button data-gor="olcum">Ölçüm</button><button data-gor="islem">İşlem Kaydı</button>
   </nav>
   <div class="ara"><input id="ara" placeholder="Barkod ya da katkıcı kimliği" autocomplete="off"><button id="ara_b">Aç</button></div>
   <p id="msj" class="msj"></p>
@@ -341,6 +353,16 @@ function liste(g,s){
   GOR=g;SAYFA=s;sekme(g);msj("Yükleniyor…");
   return api("/liste?gor="+g+"&sayfa="+s).then(function(j){
     var d=$("icerik");d.textContent="";msj("");
+    if(g==="kisitli"){
+      d.appendChild(el("p","kucuk","Ürünü tanımlamayan önekli barkodlar (mağaza içi/tartılı 02, 04, 2; yayın 977–979; kupon/fiş 98, 99; örnek 952). Uygulama ve Worker bunları artık kabul etmiyor; burada görünenler önceden girmiş satırlar. Silin."));
+      if(!j.urunler.length&&!j.aranan.length){d.appendChild(el("p",null,"Kısıtlı önekli satır yok."));return}
+      if(j.urunler.length)d.appendChild(urunTablo(j.urunler));
+      if(j.aranan.length){var tk=el("table"),hk=el("tr");["Barkod","Tür","Arama",""].forEach(function(x){hk.appendChild(el("th",null,x))});tk.appendChild(hk);
+        j.aranan.forEach(function(o){var r=el("tr");r.appendChild(el("td","kod",o.kod));r.appendChild(el("td",null,TUR[o.tur]||o.tur));r.appendChild(el("td",null,o.n));
+          var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı?"+GERI))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("kisitli",0)}).catch(hata)};c.appendChild(b);r.appendChild(c);tk.appendChild(r)});
+        var wk=el("div","tablo");wk.appendChild(tk);d.appendChild(el("h3",null,"Aranan Listesinde"));d.appendChild(wk)}
+      return;
+    }
     if(g==="aranan"){
       if(!j.aranan.length){d.appendChild(el("p",null,"Aranan listesi boş."));return}
       var tb=el("table"),h=el("tr");["Barkod","Tür","Arama","Son Arama",""].forEach(function(x){h.appendChild(el("th",null,x))});tb.appendChild(h);

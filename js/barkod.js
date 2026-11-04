@@ -2,6 +2,7 @@
    Akış (arayüz js/arayuz_barkod.js): barkod → (1) uygulamadaki Open Food Facts verisi (data/barkod_off.json) ve (2) kendi veritabanımız (Worker /urun, D1)
    → (3) Open Food Facts canlı sorgu (Worker /off) → (4) bulunamadı: etiketin fotoğrafı. Ürünün üzerindeki etiket her zaman asıl kaynaktır. */
 import {besinDiziden} from "./besin.js";
+import {BARKOD_ONEK} from "./barkod_onek.js";
 export var BARKOD_AYAR={
   acik:true,
   offDosya:"data/barkod_off.json",
@@ -43,6 +44,15 @@ export function barkodNorm(s){
   if(s.length===12)return "0"+s;
   if(s.length===8&&barkodKontrol(s.slice(0,7))!==+s[7])return "0"+barkodUpcE(s);
   return s;
+}
+/* Ürünü tanımlamayan barkod (C-10): GS1 önek tablosu (js/barkod_onek.js, kaynak/gs1_onek.tsv). Önek 13 haneli anahtarda aranır
+   (12 haneli UPC-A'nın önündeki 0 dahil; GS1: "implied leading zero"). Döner: "magaza" (mağaza içi / tartılı ürün; her mağazada başka ürün),
+   "yayin" (ISSN, ISBN), "urun_degil" (kupon, fiş, örnek, ayrılmış) ya da null. Böyle barkod aranmaz, katkı almaz, aranan listesine girmez;
+   Worker da aynı işlevle reddeder. EAN-8 (8 hane) denetlenmez: kısıtlı aralığının (RCN-8) kaynağı okunmadı (TEKNIK_BORC "Barkod"). */
+export function barkodKisitli(s){
+  var k=barkodNorm(s);if(!k||k.length!==13)return null;
+  for(var i=0;i<BARKOD_ONEK.length;i++){var a=BARKOD_ONEK[i],p=k.slice(0,a[0].length);if(p>=a[0]&&p<=a[1])return a[2]}
+  return null;
 }
 /* Aynı ürün için denenecek anahtarlar (veride 12 haneli UPC ya da başında 0 olmadan kayıtlı olabilir) */
 export function barkodAdaylar(s){

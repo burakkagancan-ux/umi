@@ -59,8 +59,33 @@ function barkodAra(kod){
 function barkodIsle(ham){
   var kod=barkodNorm(ham);
   if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
+  var ks=barkodKisitli(kod);if(ks){barkodKisitliGoster(kod,ks,null);return}   // C-10: aranmaz, katkı ve aranan bildirimi yok
   ST.textContent=t("barkod.araniyor",{kod:kod});
   barkodAra(kod).then(function(r){if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r)});
+}
+/* Ürünü tanımlamayan barkod (C-10; tür js/barkod.js barkodKisitli): açıklama kartı. Barkod unutulur (BARKOD yok, bekleyen kayıt silinir),
+   Worker'a hiçbir istek gitmez. Mağaza içi barkodda kartın fotoğraf düğmeleri olağan taramayı başlatır, fotoğraf bu barkodla eşleşmez.
+   yer: ters sırada (barkodEslestir) okunan içeriğin sonucu yerinde kalır, kart eşleştirme kartının yerine konur; yoksa sonuç alanı temizlenir. */
+var BARKOD_KISITLI_METIN={   // tür → [başlık, açıklama] (anahtarlar açık yazılır: test/ceviri.js kullanılan anahtarı metinden bulur)
+  magaza:["barkod.kisitli.magaza_baslik","barkod.kisitli.magaza"],
+  yayin:["barkod.kisitli.yayin_baslik","barkod.kisitli.yayin"],
+  urun_degil:["barkod.kisitli.urun_degil_baslik","barkod.kisitli.urun_degil"]
+};
+function barkodKisitliGoster(kod,tur,yer){
+  BARKOD=null;barkodBekleSil();
+  var m=BARKOD_KISITLI_METIN[tur]||BARKOD_KISITLI_METIN.urun_degil;
+  var d=el("div","res u bkaynak");
+  d.appendChild(el("div","t",t(m[0])));
+  d.appendChild(el("div","ln",t(m[1])));
+  d.appendChild(el("div","how",t("barkod.kod",{kod:kod})));
+  if(tur==="magaza"){
+    var row=el("div","row"),b=el("button",null,t("barkod.foto_cek"));b.type="button";b.onclick=function(){$("foto").click()};
+    var g=el("button","alt",t("foto.dosya"));g.type="button";g.onclick=function(){$("dosya").click()};
+    row.appendChild(b);row.appendChild(g);d.appendChild(row);
+  }
+  if(yer&&yer.isConnected)yer.replaceWith(d);
+  else{fotoTemizle();$("metin").value="";var box=$("sonuc");box.textContent="";box.appendChild(d)}
+  ST.textContent=t("barkod.kisitli_durum",{kod:kod});
 }
 function barkodAd(r){return r&&r.ad?((r.marka&&r.ad.toLocaleLowerCase(DIL.yerel).indexOf(r.marka.toLocaleLowerCase(DIL.yerel))<0?r.marka+" ":"")+r.ad):""}
 function barkodGoster(kod,r){
@@ -122,7 +147,7 @@ function barkodBekleSil(){try{sessionStorage.removeItem(BARKOD_BEKLE)}catch(e){}
 function barkodGeriAl(){   // açılışta, dil ve mod hazır olunca (js/arayuz_sayfa.js)
   if(!BARKOD_AYAR.acik||!$("barkodb"))return;
   var b=null;try{b=JSON.parse(sessionStorage.getItem(BARKOD_BEKLE)||"null")}catch(e){}
-  if(!b||!barkodGecerli(b.kod)||!(Date.now()-b.t<BARKOD_FOTO_SURE)||BARKOD||$("metin").value.trim()){barkodBekleSil();return}
+  if(!b||!barkodGecerli(b.kod)||barkodKisitli(b.kod)||!(Date.now()-b.t<BARKOD_FOTO_SURE)||BARKOD||$("metin").value.trim()){barkodBekleSil();return}   // kısıtlı: güncellemeden önce kalmış kayıt
   BARKOD={kod:b.kod,r:null,ad:String(b.ad||""),kat:Array.isArray(b.kat)?b.kat.filter(function(x){return typeof x==="string"}).slice(0,60):[],metin:null,t:b.t,foto:false,katki:false};
   if(b.tur&&b.tur!==MODE&&["gida","koz","tem"].indexOf(b.tur)>-1)setMode(b.tur,true);
   barkodYokKart(b.kod,MODE,false);
@@ -184,6 +209,7 @@ function barkodEslestir(ham,tx,kart){
   var kod=barkodNorm(ham);
   if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
   if($("metin").value.trim()!==tx){barkodIsle(kod);return}   // arada metin değişti: olağan barkod akışı
+  var ks=barkodKisitli(kod);if(ks){barkodKisitliGoster(kod,ks,kart);return}   // C-10: içerik bu barkoda bağlanmaz
   var B=BARKOD={kod:kod,r:null,ad:"",metin:null,t:Date.now(),foto:true,katki:false,sonradan:true};
   if(kart)kart.remove();
   ST.textContent=t("barkod.araniyor",{kod:kod});
