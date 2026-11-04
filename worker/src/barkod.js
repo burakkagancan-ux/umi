@@ -2,6 +2,7 @@
 // kopya değil: js/barkod.js ve js/besin.js'ten içe aktarılır (U-07, 15.10.2026); wrangler dağıtımda paketler. Burada yalnızca Worker'a özgü olanlar.
 import { BARKOD_AYAR, barkodBenzer, barkodGecerli, barkodKontrol, barkodSozcukler } from "../../js/barkod.js";
 import { BESIN_ALAN, besinBirim, besinOff, besinPorNorm } from "../../js/besin.js";
+import { BARKOD_ONEK } from "../../js/barkod_onek.js";
 export { barkodGecerli, BESIN_ALAN, besinBirim, besinOff, besinPorNorm };
 export const kontrolHanesi = barkodKontrol, sozcukler = barkodSozcukler, benzerlik = barkodBenzer;
 export const BENZERLIK = BARKOD_AYAR.benzerlik;
@@ -151,4 +152,14 @@ export function besinGrupla(satirlar) {
 export function besinSec(satirlar) {
   const g = besinGrupla(satirlar)[0];
   return g ? { besin: g.son.v, besinT: g.son.t, besinDogrulandi: g.dogrulandi } : null;
+}
+
+// C-10: kısıtlı önek koşulu (SQL), js/barkod.js barkodKisitli ile aynı kural: 12 haneye önüne 0, 14 haneli başı 0 olana baştaki 0 atılır,
+// 13 haneye indirgenmiş anahtarın öneki üretilmiş tablodaki aralıklardan birinde. Aralık uçları aynı uzunlukta rakam dizisi olduğundan dizgi
+// karşılaştırması sayı karşılaştırmasıyla aynı; değerler üretilmiş tablodan (gen_gs1_onek.py rakam olduğunu denetler), kullanıcıdan değil.
+// sutun: tablo nitelemeli sütun adı (ör. "aranan.kod"). test/barkod ve worker/test_kisitli.mjs iki kuralı rastgele kodlarla karşılaştırır.
+export function kisitliKosul(sutun = "kod") {
+  const k = "(CASE WHEN length(" + sutun + ") = 12 THEN '0' || " + sutun + " WHEN length(" + sutun + ") = 14 AND substr(" + sutun + ", 1, 1) = '0' THEN substr(" + sutun + ", 2) ELSE " + sutun + " END)";
+  return "(length(" + k + ") = 13 AND length(" + sutun + ") IN (12, 13, 14) AND (" + BARKOD_ONEK.map(([a, b]) =>
+    "substr(" + k + ", 1, " + a.length + ") BETWEEN '" + a + "' AND '" + b + "'").join(" OR ") + "))";
 }

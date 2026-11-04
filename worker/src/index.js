@@ -56,7 +56,7 @@
 //   Kimlik, ürün, metin, barkod ve IP yazılmaz; bilinmeyen değer 400 (js/olcum.js olcumAnahtar). Okuma yalnızca yönetim sayfasından.
 //   KV yerine D1: ücretsiz katmanda KV günde 1.000, D1 100.000 yazma; UPSERT eşzamanlı istekte de sayıyı kaybetmez.
 
-import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, sozcukler, toplamFark, toplulukSay, urunSec } from "./barkod.js";
+import { barkodGecerli, besinKatki, besinOff, besinSec, katkiOzet, kisitliKosul, sozcukler, toplamFark, toplulukSay, urunSec } from "./barkod.js";
 import { YONETIM_CSP, YONETIM_CSS, YONETIM_HTML, YONETIM_JS, sayacGunler, toplamUygula, yonetimApi, yonetimYetki } from "./yonetim.js";
 import { olcumAnahtar } from "../../js/olcum.js";
 import { barkodKisitli } from "../../js/barkod.js";
@@ -384,10 +384,11 @@ async function topluluk(request, env, R) {
   const sayilar = { urun: {}, dogrulanan: {} };
   for (const r of say || []) { const [a, tr] = String(r.ad).split(":"); if (sayilar[a] && TURLER.includes(tr)) sayilar[a][tr] = Number(r.n) || 0; }
   const eksikSql = "SELECT kod, tur, n, son FROM aranan WHERE " + (tur ? "tur = ? AND " : "") +
-    "NOT EXISTS (SELECT 1 FROM katki WHERE katki.kod = aranan.kod) ORDER BY n DESC, son DESC LIMIT " + EKSIK_EN_COK;
+    "NOT EXISTS (SELECT 1 FROM katki WHERE katki.kod = aranan.kod) AND NOT " + kisitliKosul("aranan.kod") +   // C-10: LIMIT'ten önce (bozma turu O1)
+    " ORDER BY n DESC, son DESC LIMIT " + EKSIK_EN_COK;
   const st = db.prepare(eksikSql);
   const { results: eksik } = await (tur ? st.bind(tur) : st).all();
-  const j = { sayilar, eksik: (eksik || []).filter((r) => !barkodKisitli(r.kod)).map((r) => ({ kod: r.kod, tur: r.tur, n: r.n, son: r.son })), t: Date.now() };
+  const j = { sayilar, eksik: (eksik || []).map((r) => ({ kod: r.kod, tur: r.tur, n: r.n, son: r.son })), t: Date.now() };
   if (cache) await cache.put(key, new Response(JSON.stringify(j), { headers: { "Cache-Control": "max-age=" + TOPLULUK_CACHE_SN } }));
   return R(200, j);
 }
@@ -400,7 +401,7 @@ async function katki(request, env, R) {
   const bos = { eklenen: {}, avci: {}, oncu: {}, dogrulayici: {}, urunler: [] };
   if (!env.URUNLER) return R(200, { ...bos, devreDisi: true });
   const db = await d1(env);
-  const { results } = await db.prepare("SELECT kod, tur, metin, t, kim, iz FROM katki WHERE kod IN (SELECT kod FROM katki WHERE kim = ? GROUP BY kod ORDER BY MAX(t) DESC LIMIT " + KATKICI_BARKOD_EN_COK + ") ORDER BY t DESC").bind(kim).all();
+  const { results } = await db.prepare("SELECT kod, tur, metin, t, kim, iz FROM katki WHERE kod IN (SELECT kod FROM katki WHERE kim = ? AND NOT " + kisitliKosul("kod") + " GROUP BY kod ORDER BY MAX(t) DESC LIMIT " + KATKICI_BARKOD_EN_COK + ") ORDER BY t DESC").bind(kim).all();
   return R(200, katkiOzet(results || [], kim));   // reply zaten no-store
 }
 

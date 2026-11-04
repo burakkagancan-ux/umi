@@ -80,5 +80,58 @@ const tablo = { b: { kcal: 505, yag: 25.1, doymus: 16, karb: 68.8, seker: 30.5, 
   ok(!r.txt.includes(NORMAL) && !r.txt.includes(SINIR), "yönetim kisitli: normal ve sınır barkodu listelenmez");
   ok((await cagir(w, env, "/yonetim/api/liste?gor=kisitli")).s !== 200, "yönetim kisitli: anahtarsız açılmaz");
 }
+
+// --- Bozma turu gerileme testleri (04.11.2026) ---
+import { barkodKisitli as jsKisitli, barkodKontrol } from "../js/barkod.js";
+import { kisitliKosul } from "./src/barkod.js";
+{
+  // O1: topluluk süzmesi LIMIT'ten önce: 60 eski kısıtlı aranan satırı + 1 normal → normal listede
+  const w = (await import("./src/index.js?kisitli-o1")).default;
+  const env = { ALLOWED_ORIGIN: ORIGIN, URUNLER: d1(), ARANAN_LIMIT: lim(), BARKOD_LIMIT: lim(), YONETIM_ANAHTARI: ANAHTAR };
+  await cagir(w, env, "/aranan", { method: "POST", body: { kod: NORMAL, tur: "gida" } });   // tabloları kurar, normal n=1
+  const db = env.URUNLER.db;
+  const kodlar = [];
+  for (let i = 0; i < 60; i++) { const g = "20" + String(i).padStart(10, "0"); const k = g + barkodKontrol(g); kodlar.push(k);
+    db.prepare("INSERT INTO aranan (kod, tur, n, ilk, son) VALUES (?, 'gida', ?, ?, ?)").run(k, 1000 - i, SIMDI, SIMDI); }
+  let r = await cagir(w, env, "/topluluk?tur=gida");
+  ok(r.s === 200 && r.j.eksik.map((x) => x.kod).join() === NORMAL, "O1: 60 eski kısıtlı aranan satırı normal barkodu listeden itmez", r.j && r.j.eksik.length);
+  // O2: yönetim kisitli sayfalı (50'lik sayfa; 2. sayfa 10 satır, devam yok)
+  r = await cagir(w, env, "/yonetim/api/liste?gor=kisitli&sayfa=0", { yonetim: true });
+  ok(r.s === 200 && r.j.aranan.length === 50 && r.j.devam === true && r.j.sayfa === 0, "O2: kisitli 1. sayfa 50 satır, devam var", r.j && [r.j.aranan.length, r.j.devam]);
+  const r2 = await cagir(w, env, "/yonetim/api/liste?gor=kisitli&sayfa=1", { yonetim: true });
+  ok(r2.s === 200 && r2.j.aranan.length === 10 && r2.j.devam === false && r2.j.sayfa === 1 && !r2.j.aranan.some((x) => r.j.aranan.some((y) => y.kod === x.kod)), "O2: 2. sayfa kalan 10 satır, tekrar yok", r2.j && [r2.j.aranan.length, r2.j.devam]);
+  ok(Array.isArray(r.j.onek) && r.j.onek.some((o) => o.aralik === "981–983" && o.tur === "urun_degil") && r.j.onek.some((o) => o.aralik === "0000000"), "D5: yönetim açıklaması üretilmiş tablodan (981–983, 0000000)", r.j.onek);
+  // D1: Eklediklerim eski kısıtlı katkıyı saymaz ve listelemez
+  const K = "c".repeat(32);
+  db.prepare("INSERT INTO katki (kod, tur, dil, metin, t, kim) VALUES ('2012345001503', 'gida', 'tr', ?, ?, ?)").run(metin, SIMDI, K);
+  db.prepare("INSERT INTO katki (kod, tur, dil, metin, t, kim) VALUES ('9780306406157', 'gida', 'tr', ?, ?, ?)").run(metin, SIMDI, K);
+  db.prepare("INSERT INTO katki (kod, tur, dil, metin, t, kim) VALUES (?, 'gida', 'tr', ?, ?, ?)").run(NORMAL, metin, SIMDI, K);
+  r = await cagir(w, env, "/katki", { method: "POST", body: { kim: K } });
+  ok(r.s === 200 && r.j.urunler.map((u) => u.kod).join() === NORMAL && r.j.eklenen.gida === 1, "D1: Eklediklerim eski kısıtlı katkıyı saymaz", r.j);
+  // D3: 14 haneli GTIN-14 (başı 0) kısıtlı sayılır, OFF'a sorulmaz
+  offIstek = [];
+  r = await cagir(w, env, "/off/02012345001503");
+  ok(r.s === 200 && r.j.kisitli === "magaza" && offIstek.length === 0, "D3: GTIN-14 02012345001503 kısıtlı, OFF'a istek yok", [r.j, offIstek.length]);
+}
+{
+  // D2: JS kuralı ile SQL koşulu aynı (8/12/13/14 haneli rastgele geçerli kodlar + tümü sıfır UPC-E + sınırlar)
+  const db = new DatabaseSync(":memory:");
+  db.exec("CREATE TABLE t (kod TEXT)");
+  let tohum = 7; const rnd = (n) => { tohum = (tohum * 48271) % 2147483647; return tohum % n; };
+  const kodlar = new Set(["00000030", "00000107", "02012345001503", "00000000123457", "12012345001503", "981123456786", "20123451"]);
+  for (let i = 0; i < 20000; i++) {
+    const L = [7, 11, 12, 13][rnd(4)];
+    let g = ""; const bas = ["0", "00", "02", "04", "05", "2", "97", "98", "99", "95", "1", "3", "8", ""][rnd(14)];
+    g = bas; while (g.length < L) g += String(rnd(10)); g = g.slice(0, L);
+    kodlar.add(g + barkodKontrol(g));
+  }
+  const ekle = db.prepare("INSERT INTO t (kod) VALUES (?)");
+  for (const k of kodlar) ekle.run(k);
+  const sql = new Set(db.prepare("SELECT kod FROM t WHERE " + kisitliKosul("kod")).all().map((x) => x.kod));
+  const fark = [...kodlar].filter((k) => !!jsKisitli(k) !== sql.has(k));
+  ok(fark.length === 0, "D2: " + kodlar.size + " kodda JS kuralı (barkodKisitli) ile SQL koşulu (kisitliKosul) aynı", fark.slice(0, 10));
+  ok(sql.size > 1000 && sql.size < kodlar.size - 1000, "D2: örneklem iki tarafı da kapsıyor (" + sql.size + " kısıtlı)");
+  ok(!jsKisitli("00000030") && !sql.has("00000030"), "D2: tümü sıfır UPC-E iki kuralda da kısıtlı değil");
+}
 if (fail) { console.log("\n" + fail + " hata"); process.exit(1); }
 console.log("\nkısıtlı önek: hepsi geçti");

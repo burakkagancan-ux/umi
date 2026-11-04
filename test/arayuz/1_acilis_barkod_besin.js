@@ -1,7 +1,7 @@
 // Arayüz testi, 1. grup: açılış ve eski veri, fotoğraf, barkod ve katkı, besin değeri tablosu (1–1d)
 // Tek başına çalışmaz; test/arayuz.js bütün grupları kendi sunucularıyla paralel çalıştırır.
 const fs=require('fs'),path=require('path');
-const {R,newPage,watch,onbellekte,sample,scan,pairs,ACILIS}=require('./ortak.js');
+const {R,newPage,watch,onbellekte,sample,scan,pairs,ACILIS,yerlesince}=require('./ortak.js');
 module.exports=async({br,B,opt,ok,server})=>{
   // 1) Ana sayfa ve Etiket Oku açılışı
   let ctx=await br.newContext(opt),errs=[],p=await newPage(ctx);watch(p,errs);
@@ -380,4 +380,24 @@ module.exports=async({br,B,opt,ok,server})=>{
   }
   ok(!errs.length,'1. grup konsol hatası: '+errs.join(' | '));
   await ctx.close();
+  // 1z) C-10 bozma turu (04.11.2026): yavaş gelen normal barkod araması sonradan girilen kısıtlı barkodun kartını ezmez, onun için /aranan gitmez.
+  // Düzeltme (BARKOD_ISTEK) geri alınınca düştüğü görüldü.
+  {
+    const c2=await br.newContext(opt),e2=[],q=await newPage(c2);watch(q,e2);
+    const N='4006381333931',K='2012345001503';let aranan=[];
+    await q.route(/workers\.dev\/(urun|off)\//,async r=>{await new Promise(z=>setTimeout(z,2500));r.fulfill({status:200,contentType:'application/json',body:'{"bulundu":false}'})});
+    await q.route(/workers\.dev\/aranan$/,r=>{aranan.push(r.request().postDataJSON().kod);r.fulfill({status:200,contentType:'application/json',body:'{"n":1}'})});
+    await q.goto(B+'ocr.html');await q.waitForLoadState('networkidle');
+    const gir=async k=>{await q.click('#barkodb');await q.waitForSelector('#sheet:not([hidden]) .belle input');await q.fill('#sheet .belle input',k);await q.click('#sheet .belle button')};
+    await gir(N);await gir(K);
+    await q.waitForFunction(()=>/Mağaza İçi Barkod/.test(document.getElementById('sonuc').textContent),null,{timeout:8000}).catch(()=>{});
+    // N'in iki isteği (urun + off) bitene kadar bekle: yanıtlar düştükten sonra ekran
+    await q.waitForResponse(r=>/\/off\//.test(r.url()),{timeout:15000}).catch(()=>{});
+    await q.waitForTimeout(500);   // bekleme-bilerek: yanıtın then zinciri çalışsın; okuma yerlesince ile
+    const son=await yerlesince(()=>q.evaluate(()=>document.getElementById('sonuc').textContent));
+    ok(/Mağaza İçi Barkod/.test(son)&&!/henüz veritabanında yok/.test(son),'yarış: yavaş N araması sonradan girilen kısıtlı K kartını ezmez: '+son.slice(0,80));
+    ok(!aranan.length,'yarış: eski N araması için /aranan gitmez: '+aranan.join());
+    ok(!e2.length,'yarış: konsol hatası yok: '+e2.join(' | '));
+    await c2.close();
+  }
 };

@@ -17,7 +17,7 @@
 //   GET  /yonetim/api/islem?sayfa=N     İşlem Kaydı: silmeler, kaç satır, geri alındı mı
 //   POST /yonetim/api/geri              {islem} o silmeyi geri alır (satırlar aynı numarayla geri yazılır, sayaçlara fark uygulanır)
 //   GET  /yonetim/api/olcum             A-03 ölçümü: son 60 günün günlük toplamları (D1 olcum + paylaşım sayacı KV) ve son 7 günün özeti
-import { barkodGecerli, besinGrupla, grupla, toplamFark, urunSec } from "./barkod.js";
+import { barkodGecerli, besinGrupla, grupla, kisitliKosul, toplamFark, urunSec } from "./barkod.js";
 import { OLCUM_AYAR, olcumGun, olcumOzet } from "../../js/olcum.js";
 import { BARKOD_ONEK } from "../../js/barkod_onek.js";
 
@@ -78,11 +78,7 @@ function ozetler(katki, besin) {
   return [...kodlar].map((kod) => yonetimOzet(kod, k.get(kod) || [], b.get(kod) || [])).sort((a, b) => b.son - a.son);
 }
 
-// C-10: kısıtlı önek koşulu (SQL). 12 haneli kayıt 13 haneye tamamlanarak bakılır (js/barkod.js barkodKisitli ile aynı kural);
-// aralık uçları aynı uzunlukta rakam dizisi olduğundan dizgi karşılaştırması sayı karşılaştırmasıyla aynıdır. Değerler üretilmiş tablodan, kullanıcıdan değil.
-const ONEK_K = "(CASE WHEN length(kod) = 12 THEN '0' || kod ELSE kod END)";
-export const KISITLI_KOSUL = "(length(" + ONEK_K + ") = 13 AND (" + BARKOD_ONEK.map(([a, b]) =>
-  "substr(" + ONEK_K + ", 1, " + a.length + ") BETWEEN '" + a + "' AND '" + b + "'").join(" OR ") + "))";
+export const KISITLI_KOSUL = kisitliKosul("kod");   // C-10 (worker/src/barkod.js)
 const SON_KODLAR = "SELECT kod FROM (SELECT kod, t FROM katki UNION ALL SELECT kod, t FROM besin) GROUP BY kod ORDER BY MAX(t) DESC LIMIT ? OFFSET ?";
 async function satirlar(db, kosul, ...args) {
   const [{ results: k }, { results: b }] = await Promise.all([
@@ -207,9 +203,13 @@ export async function yonetimApi(request, env, db, yol, R) {
       return R(200, { gor, sayfa, urunler: hepsi.slice(sayfa * SAYFA_BOY, (sayfa + 1) * SAYFA_BOY), devam: hepsi.length > (sayfa + 1) * SAYFA_BOY, tarama: CELISKI_TARA });
     }
     if (gor === "kisitli") {
-      const [k, b] = await satirlar(db, KISITLI_KOSUL);
-      const { results: ar } = await db.prepare("SELECT kod, tur, n, ilk, son FROM aranan WHERE " + KISITLI_KOSUL + " ORDER BY n DESC").all();
-      return R(200, { gor, sayfa: 0, urunler: ozetler(k, b), aranan: ar || [], devam: false });
+      // Sayfalı (SAYFA_BOY barkod): koşul dizin kullanamaz, ama yalnızca güncellemeden önce girmiş satırlar için; silindikçe küçülür
+      const kodlar = "SELECT kod FROM (SELECT kod FROM katki WHERE " + KISITLI_KOSUL + " UNION SELECT kod FROM besin WHERE " + KISITLI_KOSUL + ") ORDER BY kod LIMIT ? OFFSET ?";
+      const [k, b] = await satirlar(db, "kod IN (" + kodlar + ")", SAYFA_BOY, sayfa * SAYFA_BOY);
+      const { results: ar } = await db.prepare("SELECT kod, tur, n, ilk, son FROM aranan WHERE " + KISITLI_KOSUL + " ORDER BY n DESC, kod LIMIT ? OFFSET ?").bind(SAYFA_BOY, sayfa * SAYFA_BOY).all();
+      const urunler = ozetler(k, b);
+      return R(200, { gor, sayfa, urunler, aranan: ar || [], devam: urunler.length === SAYFA_BOY || (ar || []).length === SAYFA_BOY,
+        onek: BARKOD_ONEK.map(([a, z, t]) => ({ aralik: a === z ? a : a + "–" + z, tur: t })) });
     }
     if (gor !== "son") return R(400, { error: "Geçersiz liste." });
     const [k, b] = await satirlar(db, "kod IN (" + SON_KODLAR + ")", SAYFA_BOY, sayfa * SAYFA_BOY);
@@ -354,13 +354,15 @@ function liste(g,s){
   return api("/liste?gor="+g+"&sayfa="+s).then(function(j){
     var d=$("icerik");d.textContent="";msj("");
     if(g==="kisitli"){
-      d.appendChild(el("p","kucuk","Ürünü tanımlamayan önekli barkodlar (mağaza içi/tartılı 02, 04, 2; yayın 977–979; kupon/fiş 98, 99; örnek 952). Uygulama ve Worker bunları artık kabul etmiyor; burada görünenler önceden girmiş satırlar. Silin."));
-      if(!j.urunler.length&&!j.aranan.length){d.appendChild(el("p",null,"Kısıtlı önekli satır yok."));return}
+      var ONEK_AD={magaza:"mağaza içi / tartılı",yayin:"yayın (ISSN, ISBN)",urun_degil:"kupon, fiş, örnek, ayrılmış"},og={};(j.onek||[]).forEach(function(o){(og[o.tur]=og[o.tur]||[]).push(o.aralik)});
+      d.appendChild(el("p","kucuk","Ürünü tanımlamayan önekli barkodlar (13 haneli anahtarın başı; GS1 tablosu): "+Object.keys(og).map(function(t){return (ONEK_AD[t]||t)+" "+og[t].join(", ")}).join("; ")+". Uygulama ve Worker bunları artık kabul etmiyor; burada görünenler önceden girmiş satırlar. Silin."));
+      if(!j.urunler.length&&!j.aranan.length){d.appendChild(el("p",null,j.sayfa?"Bu sayfada satır yok.":"Kısıtlı önekli satır yok."));if(j.sayfa)d.appendChild(sayfaDugme(j,function(n){liste("kisitli",n)}));return}
       if(j.urunler.length)d.appendChild(urunTablo(j.urunler));
       if(j.aranan.length){var tk=el("table"),hk=el("tr");["Barkod","Tür","Arama",""].forEach(function(x){hk.appendChild(el("th",null,x))});tk.appendChild(hk);
         j.aranan.forEach(function(o){var r=el("tr");r.appendChild(el("td","kod",o.kod));r.appendChild(el("td",null,TUR[o.tur]||o.tur));r.appendChild(el("td",null,o.n));
-          var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı?"+GERI))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("kisitli",0)}).catch(hata)};c.appendChild(b);r.appendChild(c);tk.appendChild(r)});
+          var c=el("td"),b=el("button","sil","Listeden Çıkar");b.onclick=function(){if(confirm(o.kod+" aranan listesinden çıkarılsın mı?"+GERI))api("/sil",{tablo:"aranan",kod:o.kod}).then(function(){liste("kisitli",SAYFA)}).catch(hata)};c.appendChild(b);r.appendChild(c);tk.appendChild(r)});
         var wk=el("div","tablo");wk.appendChild(tk);d.appendChild(el("h3",null,"Aranan Listesinde"));d.appendChild(wk)}
+      d.appendChild(sayfaDugme(j,function(n){liste("kisitli",n)}));
       return;
     }
     if(g==="aranan"){

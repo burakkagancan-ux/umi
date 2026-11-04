@@ -48,9 +48,12 @@ export function barkodNorm(s){
 /* Ürünü tanımlamayan barkod (C-10): GS1 önek tablosu (js/barkod_onek.js, kaynak/gs1_onek.tsv). Önek 13 haneli anahtarda aranır
    (12 haneli UPC-A'nın önündeki 0 dahil; GS1: "implied leading zero"). Döner: "magaza" (mağaza içi / tartılı ürün; her mağazada başka ürün),
    "yayin" (ISSN, ISBN), "urun_degil" (kupon, fiş, örnek, ayrılmış) ya da null. Böyle barkod aranmaz, katkı almaz, aranan listesine girmez;
-   Worker da aynı işlevle reddeder. EAN-8 (8 hane) denetlenmez: kısıtlı aralığının (RCN-8) kaynağı okunmadı (TEKNIK_BORC "Barkod"). */
+   Worker da aynı işlevle reddeder. 8 hane (EAN-8 ve UPC-E) denetlenmez: EAN-8'in kısıtlı aralığının (RCN-8) kaynağı okunmadı (TEKNIK_BORC "Barkod").
+   14 hane yalnızca başı 0 ise (GTIN-14 dolgusu) 13 haneye indirilip denetlenir. D1'deki eski satırlar için aynı kural SQL'de: worker/src/barkod.js kisitliKosul. */
 export function barkodKisitli(s){
-  var k=barkodNorm(s);if(!k||k.length!==13)return null;
+  var tm=barkodTemiz(s);if(tm.length===14&&tm[0]==="0")tm=tm.slice(1);   // GTIN-14 (dolgu 0) → GTIN-13
+  if(tm.length!==12&&tm.length!==13)return null;                      // 8 hane (EAN-8, UPC-E) denetlenmez: SQL koşuluyla aynı kural (worker/src/barkod.js)
+  var k=barkodNorm(tm);if(!k||k.length!==13)return null;
   for(var i=0;i<BARKOD_ONEK.length;i++){var a=BARKOD_ONEK[i],p=k.slice(0,a[0].length);if(p>=a[0]&&p<=a[1])return a[2]}
   return null;
 }

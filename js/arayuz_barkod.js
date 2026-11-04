@@ -56,12 +56,13 @@ function barkodAra(kod){
   });
 }
 /* Barkod bulundu: sırayla ara, sonucu göster */
+var BARKOD_ISTEK=0;               // son okutulan barkodun sıra numarası: yavaş gelen eski aramanın yanıtı yenisinin ekranını ezmesin (C-10 bozma turu)
 function barkodIsle(ham){
-  var kod=barkodNorm(ham);
+  var kod=barkodNorm(ham),no=++BARKOD_ISTEK;
   if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
-  var ks=barkodKisitli(kod);if(ks){barkodKisitliGoster(kod,ks,null);return}   // C-10: aranmaz, katkı ve aranan bildirimi yok
+  var ks=barkodKisitli(ham);if(ks){barkodKisitliGoster(kod,ks,null);return}   // C-10: aranmaz, katkı ve aranan bildirimi yok
   ST.textContent=t("barkod.araniyor",{kod:kod});
-  barkodAra(kod).then(function(r){if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r)});
+  barkodAra(kod).then(function(r){if(no!==BARKOD_ISTEK)return;if(!r||r.icerikYok)barkodYok(kod,r);else barkodGoster(kod,r)});
 }
 /* Ürünü tanımlamayan barkod (C-10; tür js/barkod.js barkodKisitli): açıklama kartı. Barkod unutulur (BARKOD yok, bekleyen kayıt silinir),
    Worker'a hiçbir istek gitmez. Mağaza içi barkodda kartın fotoğraf düğmeleri olağan taramayı başlatır, fotoğraf bu barkodla eşleşmez.
@@ -209,7 +210,8 @@ function barkodEslestir(ham,tx,kart){
   var kod=barkodNorm(ham);
   if(!kod){ST.textContent=t("barkod.gecersiz",{kod:barkodTemiz(ham)});return}
   if($("metin").value.trim()!==tx){barkodIsle(kod);return}   // arada metin değişti: olağan barkod akışı
-  var ks=barkodKisitli(kod);if(ks){barkodKisitliGoster(kod,ks,kart);return}   // C-10: içerik bu barkoda bağlanmaz
+  ++BARKOD_ISTEK;   // bekleyen olağan arama sonuçlanınca bu ekranı ezmesin
+  var ks=barkodKisitli(ham);if(ks){barkodKisitliGoster(kod,ks,kart);return}   // C-10: içerik bu barkoda bağlanmaz
   var B=BARKOD={kod:kod,r:null,ad:"",metin:null,t:Date.now(),foto:true,katki:false,sonradan:true};
   if(kart)kart.remove();
   ST.textContent=t("barkod.araniyor",{kod:kod});

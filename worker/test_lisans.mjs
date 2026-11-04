@@ -87,29 +87,39 @@ async function cagir(w, env, yol, o) { const r = await w.fetch(istek(yol, o), en
 
 // --- 2) Durağan denetim: SQL yazımlarının hedef tabloları ---
 export function sqlTablolar(src) {
-  // Yalnızca SQL dizgileri: "..." ya da `...` içinde, SQL anahtar sözcüğüyle başlayan
-  const yaz = [], anilan = [];
-  const dizgi = /"((?:[^"\\]|\\.)*)"|`((?:[^`\\]|\\.)*)`/g;
+  // Yalnızca SQL dizgileri ("...", '...', `...`). Bitişik dizgiler ("a " + "b") önce birleştirilir; SQL anahtar sözcüğü taşıyanlar okunur.
+  // degisken: tablo adı dizginin dışından gelen deyimler ("INSERT INTO " + t): durağan denetim bunların tablosunu göremez, sayısı tabanla sınırlıdır.
+  src = src.replace(/(["'`])\s*\+\s*\n?\s*(["'`])/g, (m, a, b) => (a === b ? "" : m));
+  const yaz = [], anilan = [], degisken = [];
+  const dizgi = /"((?:[^"\\\n]|\\.)*)"|'((?:[^'\\\n]|\\.)*)'|`((?:[^`\\]|\\.)*)`/g;
   let m;
   while ((m = dizgi.exec(src))) {
-    const s = m[1] ?? m[2];
+    const s = m[1] ?? m[2] ?? m[3];
     if (!/\b(SELECT|INSERT|UPDATE|DELETE|CREATE TABLE|REPLACE)\b/.test(s)) continue;
+    if (/\b(?:INTO|UPDATE|FROM|JOIN|TABLE)\s*$/.test(s) && /^\s*\+/.test(src.slice(dizgi.lastIndex))) degisken.push(s.trim());
     const ad = [];
     for (const x of s.matchAll(/\b(?:INSERT(?:\s+OR\s+\w+)?\s+INTO|REPLACE\s+INTO|UPDATE|CREATE\s+TABLE(?:\s+IF\s+NOT\s+EXISTS)?|DELETE\s+FROM)\s+([A-Za-z_]\w*)/g)) yaz.push(x[1]);
     for (const x of s.matchAll(/\b(?:FROM|JOIN|INTO|UPDATE|TABLE(?:\s+IF\s+NOT\s+EXISTS)?)\s+([A-Za-z_]\w*)/g)) ad.push(x[1]);
+    // virgüllü birleşim: FROM a x, b y
+    for (const x of s.matchAll(/\bFROM\s+([A-Za-z_]\w*(?:\s+(?:AS\s+)?[A-Za-z_]\w*)?(?:\s*,\s*[A-Za-z_]\w*(?:\s+(?:AS\s+)?[A-Za-z_]\w*)?)+)/gi))
+      for (const p of x[1].split(",")) ad.push(p.trim().split(/\s+/)[0]);
     anilan.push({ sql: s, tablolar: [...new Set(ad)] });
   }
-  return { yaz: [...new Set(yaz)], anilan };
+  return { yaz: [...new Set(yaz)], anilan, degisken };
 }
+// Tablo adı değişkenden gelen deyim sayısı dosya başına en çok (04.11.2026'daki yerler; yalnızca azalır). yonetim.js: silme/geri alma, tablo adı
+// SUTUNLAR beyaz listesinden (katki, besin, aranan). Yeni bir tane eklemek tabanı artırmayı gerektirir: inceleme o PR'da görünür.
+const DEGISKEN_TABAN = { "index.js": 0, "yonetim.js": 2, "barkod.js": 0 };
 {
   const dizin = new URL("./src/", import.meta.url);
   const dosyalar = readdirSync(dizin).filter((f) => f.endsWith(".js"));
   ok(dosyalar.length >= 2, "durağan: worker/src dosyaları okundu", dosyalar);
   const ANAHTAR = new Set(["IF", "NOT", "EXISTS", "SELECT", "WHERE", "VALUES", "SET"]);
   for (const f of dosyalar) {
-    const { yaz, anilan } = sqlTablolar(readFileSync(new URL(f, dizin), "utf-8"));
+    const { yaz, anilan, degisken } = sqlTablolar(readFileSync(new URL(f, dizin), "utf-8"));
     const bilinmeyen = yaz.filter((t) => !ANAHTAR.has(t) && !KATKI_TABLO.includes(t) && !OFF_TABLO.test(t));
     ok(!bilinmeyen.length, "durağan: " + f + " yalnızca sınıflanmış tablolara yazar (yeni tablo KATKI_TABLO'ya ya da off_ önekine)", bilinmeyen);
+    ok(degisken.length <= (DEGISKEN_TABAN[f] ?? 0), "durağan: " + f + " tablo adı değişkenden gelen deyim sayısı " + degisken.length + " ≤ taban " + (DEGISKEN_TABAN[f] ?? 0), degisken);
     const karisik = anilan.filter((a) => a.tablolar.some((t) => KATKI_TABLO.includes(t)) && a.tablolar.some((t) => OFF_TABLO.test(t)));
     ok(!karisik.length, "durağan: " + f + " katkı ve OFF tablolarını tek sorguda birleştirmez", karisik.map((a) => a.sql));
   }
@@ -118,6 +128,14 @@ export function sqlTablolar(src) {
   ok(s1.yaz.includes("off_onbellek") && s1.yaz.includes("urunler_hepsi"), "durağan: ölçer INSERT ve CREATE TABLE hedefini bulur", s1.yaz);
   ok(!KATKI_TABLO.includes("urunler_hepsi") && !OFF_TABLO.test("urunler_hepsi"), "durağan: sınıflanmamış yeni tablo düşer");
   const s2 = sqlTablolar('db.prepare(`SELECT k.metin, o.yanit FROM katki k JOIN off_onbellek o ON o.kod = k.kod`)');
+  const s3 = sqlTablolar("db.prepare('INSERT INTO urunler_hepsi (kod) VALUES (?)')");
+  ok(s3.yaz.includes("urunler_hepsi"), "durağan: ölçer tek tırnaklı dizgiyi okur", s3.yaz);
+  const s4 = sqlTablolar('db.prepare("SELECT k.metin FROM katki k " +\n  "JOIN off_onbellek o ON o.kod = k.kod")');
+  ok(s4.anilan.some((a) => a.tablolar.includes("katki") && a.tablolar.includes("off_onbellek")), "durağan: ölçer bölünmüş dizgiyi birleştirir", s4.anilan);
+  const s5 = sqlTablolar('db.prepare("SELECT k.metin FROM katki k, off_onbellek o WHERE o.kod = k.kod")');
+  ok(s5.anilan.some((a) => a.tablolar.includes("katki") && a.tablolar.includes("off_onbellek")), "durağan: ölçer virgüllü birleşimi bulur", s5.anilan);
+  const s6 = sqlTablolar('db.prepare("INSERT INTO " + t + " (kod) VALUES (?)")');
+  ok(s6.degisken.length === 1, "durağan: ölçer değişken tablo adını sayar", s6.degisken);
   ok(s2.anilan.some((a) => a.tablolar.includes("katki") && a.tablolar.includes("off_onbellek")), "durağan: ölçer katkı + OFF birleşimini bulur", s2.anilan);
 }
 if (fail) { console.log("\n" + fail + " hata"); process.exit(1); }
