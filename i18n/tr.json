@@ -108,6 +108,13 @@
   "other": "İçerik, kullanıcıların etiket fotoğraflarından okundu ve doğrulandı ({n} okuma)."
  },
  "barkod.kod": "Barkod: {kod}",
+ "barkod.kisitli.magaza_baslik": "Mağaza İçi Barkod",
+ "barkod.kisitli.magaza": "Bu barkod mağazanın kendi tartı ya da raf etiketidir; her mağazada başka bir ürünü gösterebilir, ürünü tanımlamaz. İçeriği öğrenmek için ambalajdaki içerik listesini fotoğraflayın.",
+ "barkod.kisitli.yayin_baslik": "Kitap ya da Dergi Barkodu",
+ "barkod.kisitli.yayin": "Bu barkod bir kitap, dergi ya da nota yayınını tanımlar (ISBN, ISSN); gıda, kozmetik ya da temizlik ürünü değildir.",
+ "barkod.kisitli.urun_degil_baslik": "Ürün Barkodu Değil",
+ "barkod.kisitli.urun_degil": "Bu barkod kupon, fiş ya da örnek için ayrılmış; bir ürünü tanımlamaz.",
+ "barkod.kisitli_durum": "{kod}: bu barkod bir ürünü tanımlamadığı için ürün veritabanında aranmadı.",
  "barkod.not": "Barkod yalnızca ürünü bulmak için kullanılır. Ürün bulunamazsa içerik listesinin fotoğrafını isteriz.",
  "barkod.off_ad": "Open Food Facts (ODbL)",
  "barkod.yok_baslik": "Bu ürün henüz veritabanında yok",
