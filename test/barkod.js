@@ -67,5 +67,23 @@ if(fs.existsSync(F)){
   ok(ks.every(k=>/^\d{8,14}$/.test(k)&&Array.isArray(u[k])&&(u[k].length===5||(u[k].length===6&&Array.isArray(u[k][5]))||(u[k].length===7&&(u[k][5]===null||Array.isArray(u[k][5]))&&Array.isArray(u[k][6])&&u[k][6].length>0&&u[k][6].every(e=>/^[a-z]{2}:[a-z0-9-]+$/.test(e))))&&['food','beauty','products'].includes(u[k][0])&&typeof u[k][4]==='object'),'her kayıt [db, ad, marka, t, {dil: metin}, besin?, kat?] (kat: dolu OFF kategori dizisi, besin yoksa null)');
   ok(ks.length>1000,'Türkiye verisi yüklü: '+ks.length);
 }else ok(false,'data/barkod_off.json yok (python3 off_al.py && python3 gen_barkod.py)');
+// C-10: ürünü tanımlamayan önekler (kaynak/gs1_onek.tsv → js/barkod_onek.js). Uç değerler aralığın iki yanından seçildi.
+{ const K=globalThis.barkodKisitli;
+  ok(typeof K==='function','barkodKisitli yüklü');
+  const d=[['2012345001503','magaza'],['2990000000002','magaza'],['212345678909','magaza'],['0212345678909','magaza'],['0291234567890','magaza'],['0412345678903','magaza'],['0000000123457','magaza'],
+    ['9780306406157','yayin'],['9771234567003','yayin'],['9791234567896','yayin'],['9912345678909','urun_degil'],['9801234567892','urun_degil'],['9811234567891','urun_degil'],['9831234567899','urun_degil'],
+    ['9521234567899','urun_degil'],['0501234567890','urun_degil'],['0591234567891','urun_degil'],
+    ['8690504025207',null],['3001234567892',null],['1991234567898',null],['0191234567893',null],['0301234567896',null],['0601234567897',null],['981123456786',null],['9761234567899',null],
+    ['9841234567898',null],['9511234567890',null],['9531234567898',null],['0000001234565',null],['96385074',null],['20123451',null],['97812340',null],['99123451',null],['01234565',null],['2012345001504',null],['',null]];
+  for(const [k,b] of d){const g=barkodGecerli(k)||!b?K(k):'?';ok(g===b,'barkodKisitli('+k+') = '+b+' (çıkan '+g+')')}
+  ok(d.every(([k,b])=>!b||barkodGecerli(k)),'kısıtlı örneklerin hepsinin kontrol hanesi geçerli (geçersiz örnek denetimi boşa çıkarmasın)');
+  ok(d.filter(([k,b])=>!b&&k.length>=12&&k!=='2012345001504').every(([k])=>barkodGecerli(k)),'kısıtlı olmayan sınır örnekleri de geçerli barkod');
+  // Tablonun kendisi: çakışma yok, her tür bilinen, uçlar aynı uzunlukta (gen_gs1_onek.py de denetler)
+  const T=require(path.join(__dirname,'..','js','barkod_onek.js')).BARKOD_ONEK;
+  ok(Array.isArray(T)&&T.length>=10&&T.every(([a,b,t])=>a.length===b.length&&a<=b&&['magaza','yayin','urun_degil'].includes(t)),'BARKOD_ONEK biçimi');
+  // Topluluk eksik listesi kısıtlı barkodu atar (eski veri)
+  const l=toplulukEksik([{kod:'2012345001503',tur:'gida',n:5},{kod:'9780306406157',tur:'gida',n:4},{kod:'8690504025207',tur:'gida',n:1}],null,['tr']);
+  ok(l.length===1&&l[0].kod==='8690504025207','toplulukEksik kısıtlı barkodu listelemez');
+}
 console.log(n+' barkod denetimi, '+fail+' hata');process.exit(fail?1:0);
 })();

@@ -58,8 +58,9 @@ async function barkodAra(p,kod){
   await el.first().fill(kod);
   await p.getByRole('button',{name:T.ara,exact:true}).click();
 }
-// Barkod kartı ekranda mı: "Barkod: <kod>" ve kartın fotoğraf düğmesi görünür
-async function kartVar(p,kod,ms){return await gorunur(p.getByText(T.kod(kod),{exact:true}),ms||5000)&&await gorunur(p.getByRole('button',{name:T.kartFoto}),500)}
+// Barkod kartı ekranda mı: "Barkod: <kod>" ve kartın fotoğraf düğmesi görünür. Süre 20 sn (04.11.2026): kart data/barkod_off.json (528 KB) inince çizilir;
+// paralel koşuda 5 sn aşılıyordu (main CI 02.11.2026'dan beri kırmızı). Veri 5,5 sn geciktirilince 5 sn ile 18 hata, 20 sn ile 0.
+async function kartVar(p,kod,ms){return await gorunur(p.getByText(T.kod(kod),{exact:true}),ms||20000)&&await gorunur(p.getByRole('button',{name:T.kartFoto}),500)}
 async function dosyaVer(p,loc){
   const fc=p.waitForEvent('filechooser',{timeout:5000});
   await loc.click();

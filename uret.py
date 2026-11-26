@@ -22,11 +22,13 @@ SIRA = [
     "gen_rozetler",       # data/rozetler.json (ansiklopedi)
     "gen_ceviri_veri",    # i18n/veri/<dil>.json (bütün veri metinleri)
     "gen_barkod",         # data/barkod_off.json (bağımsız)
+    "gen_gs1_onek",       # js/barkod_onek.js (bağımsız; C-10 kısıtlı önekler)
     "gen_besin",          # data/besin.json (bağımsız)
     "gen_ulke",           # data/ulke.json (e_kodlari)
     "gen_manifest",       # manifest.webmanifest, i18n/manifest/ (i18n/<dil>.json)
 ]
-CIKTI = ["data/", "i18n/veri/", "i18n/manifest/", "manifest.webmanifest", "sw.js"]
+# js/ altındaki üretilmiş modüller de denetlenir (04.11.2026: js/ulke_oz.js denetimin dışındaydı; elle değişirse CI görmüyordu)
+CIKTI = ["data/", "i18n/veri/", "i18n/manifest/", "manifest.webmanifest", "sw.js", "js/ulke_oz.js", "js/barkod_onek.js"]
 # En son: sw.js CORE ve CACHE (dosya içeriklerinin özeti). Tarih satırı geri alındıktan sonra çalışır ki özet depodaki içerikten hesaplansın.
 SON = "gen_sw"
 

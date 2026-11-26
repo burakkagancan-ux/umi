@@ -114,6 +114,13 @@
   "other": "Ingredients read from users' photos of the label and verified ({n} readings)."
  },
  "barkod.kod": "Barcode: {kod}",
+ "barkod.kisitli.magaza_baslik": "In-Store Barcode",
+ "barkod.kisitli.magaza": "This barcode is the shop's own scale or shelf label; it can mean a different product in every shop and does not identify the product. To see the ingredients, take a photo of the ingredient list on the pack.",
+ "barkod.kisitli.yayin_baslik": "Book or Magazine Barcode",
+ "barkod.kisitli.yayin": "This barcode identifies a book, magazine or sheet-music publication (ISBN, ISSN); it is not a food, cosmetic or cleaning product.",
+ "barkod.kisitli.urun_degil_baslik": "Not a Product Barcode",
+ "barkod.kisitli.urun_degil": "This barcode is reserved for coupons, receipts or examples; it does not identify a product.",
+ "barkod.kisitli_durum": "{kod}: this barcode does not identify a product, so it was not looked up in the product database.",
  "barkod.not": "The barcode is only used to find the product. If the product is not found, we ask for a photo of the ingredient list.",
  "barkod.off_ad": "Open Food Facts (ODbL)",
  "barkod.yok_baslik": "This product is not in the database yet",
